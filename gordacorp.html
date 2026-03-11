@@ -246,6 +246,9 @@
 <body>
 
 <div class="container">
+    <div id="audio-prompt" style="background:var(--accent); color:black; padding:10px; text-align:center; font-weight:bold; cursor:pointer; margin-bottom:20px; text-transform:uppercase; letter-spacing:2px; font-size:0.85rem;" class="glitch-hover">
+        ► INICIALIZAR TELEMETRÍA DE AUDIO O(1)
+    </div>
     <div class="timestamp">v5.1 // UNAUTHORIZED DIAGNOSTIC RECORD</div>
     
     <header>
@@ -366,5 +369,67 @@
     </footer>
 </div>
 
+<script>
+    // Sovereign Audio Synthesis (O(1) footprint, no external assets)
+    document.getElementById('audio-prompt').addEventListener('click', function initAudio() {
+        this.style.display = 'none';
+        
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        // Context: Low Manteca Drone (Industrial)
+        const osc1 = ctx.createOscillator();
+        const osc2 = ctx.createOscillator();
+        const lfo = ctx.createOscillator();
+        const gainNode = ctx.createGain();
+        const filter = ctx.createBiquadFilter();
+        
+        osc1.type = 'sawtooth';
+        osc1.frequency.value = 45; // Deep bass
+        
+        osc2.type = 'square';
+        osc2.frequency.value = 44.5; // Slight detune for phasing tension
+        
+        lfo.type = 'sine';
+        lfo.frequency.value = 0.2; // Slow modulation breathing
+        
+        const lfoGain = ctx.createGain();
+        lfoGain.gain.value = 5;
+        lfo.connect(lfoGain);
+        lfoGain.connect(osc1.frequency);
+        
+        filter.type = 'lowpass';
+        filter.frequency.value = 150; // Muffled, heavy corporate vibe
+        
+        gainNode.gain.value = 0.4; // Moderated volume
+        
+        osc1.connect(filter);
+        osc2.connect(filter);
+        filter.connect(gainNode);
+        gainNode.connect(ctx.destination);
+        
+        osc1.start();
+        osc2.start();
+        lfo.start();
+
+        // High-pitch Telemetry Beeps (Randomized Anomalies)
+        setInterval(() => {
+            if (Math.random() > 0.6) {
+                const beepOsc = ctx.createOscillator();
+                const beepGain = ctx.createGain();
+                beepOsc.type = 'square';
+                beepOsc.frequency.value = 1000 + (Math.random() * 2000); // Sharp tech signals
+                beepGain.gain.value = 0.03;
+                
+                beepGain.gain.setValueAtTime(0.03, ctx.currentTime);
+                beepGain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.15);
+                
+                beepOsc.connect(beepGain);
+                beepGain.connect(ctx.destination);
+                beepOsc.start();
+                beepOsc.stop(ctx.currentTime + 0.15);
+            }
+        }, 600);
+    });
+</script>
 </body>
 </html>
