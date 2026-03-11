@@ -12,6 +12,9 @@ class AutoDJAesthetic {
     this.activeDeck = 'a';
     this.isCrossfading = false;
     this.globalMuted = false;
+    this.mixCount = 0;
+    this.trackStartTime = Date.now();
+    this.elapsedTimer = null;
     this.isBackgroundPausedByEmbed = false;
     
     // Harmony & Timing
@@ -171,30 +174,92 @@ class AutoDJAesthetic {
 
   initAgentUI() {
     this.agentUI = document.createElement('div');
-    this.agentUI.className = 'agent-dj-status';
-    this.agentUI.innerHTML = '🤖 MOSKV-1 DJ: INICIANDO...';
-    Object.assign(this.agentUI.style, {
-        position: 'fixed',
-        bottom: '80px',
-        right: '20px',
-        color: '#CCFF00',
-        fontFamily: '"Space Grotesk", sans-serif',
-        fontSize: '0.75rem',
-        textTransform: 'uppercase',
-        letterSpacing: '0.1em',
-        background: 'rgba(0,0,0,0.8)',
-        border: '1px solid #CCFF00',
-        padding: '8px 12px',
-        zIndex: '1000',
-        pointerEvents: 'none',
-        boxShadow: '0 0 10px rgba(204, 255, 0, 0.2)',
-        transition: 'all 0.3s ease'
-    });
+    this.agentUI.className = 'moskv-dj-hud idle';
+    this.agentUI.innerHTML = `
+        <div class="dj-header">
+            <div><span class="dj-live-dot"></span> MOSKV-1 AUTODJ</div>
+            <div class="dj-header-right">
+                <span id="dj-mix-count" class="dj-mix-count">MIX #0</span>
+                <span id="dj-bpm-master">130 BPM</span>
+            </div>
+        </div>
+        <div class="dj-decks">
+            <div class="dj-deck active" id="dj-deck-a-ui">
+                <span>DK-A ▶</span>
+                <span id="dj-track-a">LOADING...</span>
+            </div>
+            <div class="dj-deck" id="dj-deck-b-ui">
+                <span>DK-B ⏸</span>
+                <span id="dj-track-b">STANDBY</span>
+            </div>
+        </div>
+        <div class="dj-waveform" id="dj-waveform">
+            ${Array.from({length: 32}, () => `<div class="wv-bar"></div>`).join('')}
+        </div>
+        <div class="dj-progress-row">
+            <span id="dj-elapsed">00:00</span>
+            <div class="dj-progress-bar"><div class="dj-progress-fill" id="dj-progress-fill"></div></div>
+            <span id="dj-next-in">--:--</span>
+        </div>
+        <div class="dj-eq">
+            <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
+        </div>
+        <div class="dj-status" id="dj-status-text">INITIALIZING CORE...</div>
+    `;
     document.body.appendChild(this.agentUI);
-    
+
+    this.glitchOverlay = document.createElement('div');
+    this.glitchOverlay.className = 'dj-glitch-overlay';
+    document.body.appendChild(this.glitchOverlay);
+
+    // Animate waveform bars randomly
+    this.waveformBars = document.querySelectorAll('.wv-bar');
+    this._animateWaveform();
+
+    // Elapsed timer
+    this.trackStartTime = Date.now();
+    this.elapsedTimer = setInterval(() => this._updateElapsed(), 1000);
+
     setTimeout(() => {
-        if (this.agentUI) this.agentUI.innerHTML = '🤖 MOSKV-1 DJ: IDLE';
-    }, 2000);
+        const titleA = window.DATA?.works?.find(w => w.id === this.currentVideoId)?.title || "UNKNOWN";
+        document.getElementById('dj-track-a').innerText = titleA.substring(0,18);
+        document.getElementById('dj-status-text').innerText = 'LIVE';
+        document.getElementById('dj-bpm-master').innerText = `${this.masterBPM} BPM`;
+    }, 2500);
+  }
+
+  _animateWaveform() {
+    if (!this.waveformBars || this.waveformBars.length === 0) return;
+    const animate = () => {
+        this.waveformBars.forEach(bar => {
+            const h = 5 + Math.random() * 95;
+            bar.style.height = `${h}%`;
+        });
+        this._waveRaf = requestAnimationFrame(() => {
+            setTimeout(animate, 80 + Math.random() * 60);
+        });
+    };
+    animate();
+  }
+
+  _updateElapsed() {
+    const elapsed = Math.floor((Date.now() - this.trackStartTime) / 1000);
+    const mins = String(Math.floor(elapsed / 60)).padStart(2, '0');
+    const secs = String(elapsed % 60).padStart(2, '0');
+    const el = document.getElementById('dj-elapsed');
+    if (el) el.innerText = `${mins}:${secs}`;
+
+    // Progress bar (based on 40s mix interval)
+    const progress = Math.min(100, (elapsed / (this.mixIntervalMs / 1000)) * 100);
+    const fill = document.getElementById('dj-progress-fill');
+    if (fill) fill.style.width = `${progress}%`;
+
+    // Next In countdown
+    const remaining = Math.max(0, Math.floor(this.mixIntervalMs / 1000) - elapsed);
+    const rMins = String(Math.floor(remaining / 60)).padStart(2, '0');
+    const rSecs = String(remaining % 60).padStart(2, '0');
+    const nextEl = document.getElementById('dj-next-in');
+    if (nextEl) nextEl.innerText = `${rMins}:${rSecs}`;
   }
 
   scheduleNextMix() {
@@ -243,11 +308,32 @@ class AutoDJAesthetic {
     // E.g., if Master is 130 and Next is 120, rate needs to be 130/120 = 1.083x
     const syncRate = Math.max(0.5, Math.min(2.0, this.masterBPM / nextBPM));
 
+    // Increment mix counter & reset timer
+    this.mixCount++;
+    this.trackStartTime = Date.now();
+
     if (this.agentUI) {
-        this.agentUI.innerHTML = `🤖 MOSKV-1 DJ: CROSSFADING A ${nextBPM} BPM...`;
-        this.agentUI.style.borderColor = '#FF003C';
-        this.agentUI.style.color = '#FF003C';
-        this.agentUI.style.boxShadow = '0 0 10px rgba(255, 0, 60, 0.5)';
+        this.agentUI.classList.remove('idle');
+        this.agentUI.classList.add('syncing');
+        document.getElementById('dj-status-text').innerText = `BEATMATCHING → ${nextBPM} BPM`;
+        document.getElementById('dj-mix-count').innerText = `MIX #${this.mixCount}`;
+        
+        const trackTitle = window.DATA?.works?.find(w => w.id === nextTrack)?.title || "INCOMING";
+        document.getElementById(`dj-deck-${toDeckId}-ui`).querySelector('span:last-child').innerText = trackTitle.substring(0, 18);
+        document.getElementById(`dj-deck-${toDeckId}-ui`).querySelector('span:first-child').innerText = `DK-${toDeckId.toUpperCase()} ▶`;
+        document.getElementById(`dj-deck-${toDeckId}-ui`).classList.add('active');
+        document.getElementById(`dj-deck-${fromDeckId}-ui`).querySelector('span:first-child').innerText = `DK-${fromDeckId.toUpperCase()} ⏸`;
+        document.getElementById(`dj-deck-${fromDeckId}-ui`).classList.remove('active');
+        
+        // GSAP Wow: Glitch + Screen Shake + Hue Rotate
+        if (typeof gsap !== 'undefined') {
+             gsap.to(this.glitchOverlay, { opacity: 0.8, duration: 0.1, yoyo: true, repeat: 5 });
+             gsap.to(document.body, { filter: 'hue-rotate(90deg)', duration: 0.15, yoyo: true, repeat: 2 });
+             // Screen shake
+             gsap.to('.video-container', { x: 5, duration: 0.05, yoyo: true, repeat: 8, ease: 'none',
+                 onComplete: () => gsap.set('.video-container', { x: 0 })
+             });
+        }
     }
 
     toPlayer.mute();
@@ -286,10 +372,12 @@ class AutoDJAesthetic {
               this.activeDeck = toDeckId;
               this.isCrossfading = false;
               if (this.agentUI) {
-                  this.agentUI.innerHTML = '🤖 MOSKV-1 DJ: IDLE';
-                  this.agentUI.style.borderColor = '#CCFF00';
-                  this.agentUI.style.color = '#CCFF00';
-                  this.agentUI.style.boxShadow = '0 0 10px rgba(204, 255, 0, 0.2)';
+                  this.agentUI.classList.remove('syncing');
+                  document.getElementById('dj-status-text').innerText = 'MIXING COMPLETE';
+                  setTimeout(() => {
+                      this.agentUI.classList.add('idle');
+                      document.getElementById('dj-status-text').innerText = 'READY / IDLE';
+                  }, 3000);
               }
               this.scheduleNextMix();
             }
@@ -300,10 +388,12 @@ class AutoDJAesthetic {
             this.activeDeck = toDeckId;
             this.isCrossfading = false;
             if (this.agentUI) {
-                this.agentUI.innerHTML = '🤖 MOSKV-1 DJ: IDLE';
-                this.agentUI.style.borderColor = '#CCFF00';
-                this.agentUI.style.color = '#CCFF00';
-                this.agentUI.style.boxShadow = '0 0 10px rgba(204, 255, 0, 0.2)';
+                this.agentUI.classList.remove('syncing');
+                document.getElementById('dj-status-text').innerText = 'MIXING COMPLETE';
+                setTimeout(() => {
+                    this.agentUI.classList.add('idle');
+                    document.getElementById('dj-status-text').innerText = 'READY / IDLE';
+                }, 3000);
             }
             this.scheduleNextMix();
           }, this.fadeDurationMs);
