@@ -1,0 +1,100 @@
+/* ═══════════════════════════════════════════════════════════════════
+   CORTEX TERMINAL — CSS
+   Hacker Console Easter Egg
+   ═══════════════════════════════════════════════════════════════════ */
+
+#cortex-terminal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  background: rgba(5, 5, 5, 0.95);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-mono, 'IBM Plex Mono', 'Courier New', monospace);
+  color: #CCFF00;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+#cortex-terminal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#cortex-terminal-output {
+  flex: 1;
+  overflow-y: auto;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  margin-bottom: 20px;
+  text-shadow: 0 0 5px rgba(204, 255, 0, 0.4);
+}
+
+.cterm-line {
+  margin: 4px 0;
+}
+
+.cterm-sys { color: rgba(255, 255, 255, 0.7); }
+.cterm-err { color: #FF003C; text-shadow: 0 0 5px rgba(255, 0, 60, 0.4); }
+.cterm-warn { color: #FFAA00; }
+.cterm-cmd { color: #00FFCC; }
+.cterm-blink { animation: cterm-blink 1s step-end infinite; }
+
+@keyframes cterm-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.cortex-terminal-input-line {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #CCFF00;
+  border-top: 1px solid rgba(204, 255, 0, 0.2);
+  padding-top: 10px;
+}
+
+#cortex-terminal-prompt {
+  margin-right: 8px;
+  font-weight: bold;
+}
+
+#cortex-terminal-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #CCFF00;
+  font-family: inherit;
+  font-size: inherit;
+  outline: none;
+  text-shadow: 0 0 5px rgba(204, 255, 0, 0.4);
+}
+
+/* CRT Scanlines and flicker specific to terminal */
+#cortex-terminal-overlay::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%,
+    rgba(0, 0, 0, 0.1) 50%
+  ),
+  linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.03),
+    rgba(0, 255, 0, 0.01),
+    rgba(0, 0, 255, 0.03)
+  );
+  background-size: 100% 4px, 6px 100%;
+  z-index: 2;
+  pointer-events: none;
+}

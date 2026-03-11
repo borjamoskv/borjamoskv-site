@@ -166,6 +166,7 @@ class ElGambitero {
         text: "El Gambitero se levanta. Es un ser digital, una IA encerrada en este servidor desde 2019. <em>'Llevo años aquí, illo. El que construyó este sitio me dejó atrapado. Necesito que hagas una cosa: encuentra las 3 LLAVES MUSICALES y libérame. A cambio... te doy la verdad.'</em>",
         choices: [
           { text: "🤝 '¡Acepto! ¿Dónde están las llaves?'", next: 11, score: 30, item: null },
+          { text: "🎰 'ESPERA. ¿Qué es esa máquina?'", next: 20, score: 10, item: null },
           { text: "🤔 '¿Qué verdad? No me fío...'", next: 12, score: 15, item: null },
           { text: "🏃 'Paso, estás loco' (huir)", next: 5, score: 0, item: null }
         ]
@@ -394,8 +395,40 @@ class ElGambitero {
         choices: [
           { text: "🏆 VER PUNTUACIÓN Y RANKING", next: -1, score: 0, item: null }
         ]
+      },
+      // === ACT 6.5: SLOT MACHINE ===
+      {
+        id: 20, title: "🎰 LA MÁQUINA",
+        art: `
+     ╔══════════════════════════════════╗
+     ║  🎰 E L   G A M B I T E R O  🎰║
+     ║  ┌────┐  ┌────┐  ┌────┐        ║
+     ║  │ ?? │  │ ?? │  │ ?? │        ║
+     ║  └────┘  └────┘  └────┘        ║
+     ║     ▼ TIRA LA PALANCA ▼        ║
+     ║  "Cada tirada te acerca a la   ║
+     ║   verdad... o te hunde."       ║
+     ╚══════════════════════════════════╝`,
+        text: "El Gambitero te invita a su máquina tragaperras. <em>'Cada tirada cuesta 10 puntos. Pero si sacas triple... illo, te cambio la vida.'</em> Los rodillos giran con símbolos del universo MOSKV.",
+        choices: [
+          { text: "🎰 TIRAR LA PALANCA (cuesta 10 PTS)", next: 'SLOT', score: 0, item: null },
+          { text: "🚶 No gracias, paso de apostar", next: 11, score: 0, item: null }
+        ]
       }
     ];
+
+    // 🎰 Slot Machine Config
+    this.slotSymbols = ['🧠','⚡','🔑','💀','🎵','🎰','🔥','👁️','⛓️','🌀'];
+    this.slotPayouts = {
+      '🧠🧠🧠': { points: 200, msg: 'CORTEX JACKPOT — ¡Superinteligencia desbloqueada!', reward: { label: '🧠 ABRIR CORTEX', url: 'https://cortexpersist.dev' } },
+      '⚡⚡⚡': { points: 150, msg: 'SINGULARIDAD — ¡El servidor arde!' },
+      '🔑🔑🔑': { points: 300, msg: 'TRIPLE LLAVE — ¡Acceso VIP desbloqueado!', reward: { label: '🎧 ESCUCHAR EN SPOTIFY', url: 'https://open.spotify.com/artist/borjamoskv' } },
+      '💀💀💀': { points: -200, msg: 'MUERTE DIGITAL — El Gambitero se ríe...' },
+      '🎵🎵🎵': { points: 250, msg: 'ARMONÍA TOTAL — Track exclusivo desbloqueado.', reward: { label: '▶ TRACK EXCLUSIVO', url: 'https://www.youtube.com/@borjamoskv' } },
+      '🎰🎰🎰': { points: 500, msg: '¡¡¡MEGA JACKPOT!!! — BANDCAMP FREE CODE.', reward: { label: '🎁 IR A BANDCAMP', url: 'https://borjamoskv.bandcamp.com' } },
+      '🔥🔥🔥': { points: 100, msg: 'FUEGO — Todo arde. En el buen sentido.', reward: { label: '🔥 VER EN SOUNDCLOUD', url: 'https://soundcloud.com/borjamoskv' } },
+    };
+    this.unlockedRewards = JSON.parse(localStorage.getItem('gambitero_rewards') || '[]');
   }
 
   // 🎮 LAUNCH
@@ -475,6 +508,12 @@ class ElGambitero {
           this.inventory.push(choice.item);
         }
         this.decisions[scene.id] = idx;
+
+        // Slot Machine special route
+        if (choice.next === 'SLOT') {
+          this.renderSlotMachine();
+          return;
+        }
 
         // Navigate
         if (choice.next === -1) {
@@ -576,6 +615,226 @@ class ElGambitero {
     this.isActive = false;
     document.getElementById('gambitero-music')?.remove();
     if (this.overlay) { this.overlay.classList.remove('active'); setTimeout(() => this.overlay?.remove(), 400); }
+  }
+
+  // ═══════════════════════════════════════════════════════════════════
+  // 🎰 SLOT MACHINE RENDERER
+  // ═══════════════════════════════════════════════════════════════════
+  renderSlotMachine() {
+    if (this.score < 10) {
+      // Not enough points — bounce back to scene 20
+      this.renderScene(20);
+      return;
+    }
+    this.score -= 10; // Cost per spin
+
+    const stage = document.getElementById('gamb-stage');
+    const symbols = this.slotSymbols;
+
+    // Build initial reels display
+    const reelHTML = (id) => {
+      // Show 3 visible symbols per reel
+      const items = [];
+      for (let i = 0; i < 3; i++) {
+        items.push(`<div class="gamb-slot-symbol">${symbols[Math.floor(Math.random() * symbols.length)]}</div>`);
+      }
+      return `<div class="gamb-slot-reel" id="reel-${id}"><div class="gamb-slot-reel-inner" id="reel-inner-${id}">${items.join('')}</div></div>`;
+    };
+
+    stage.innerHTML = `
+      <div class="gamb-scene">
+        <div class="gamb-hud">
+          <span class="gamb-hud-score">💰 ${this.score} PTS</span>
+          <span class="gamb-hud-scene">🎰 SLOT MACHINE</span>
+          <button class="gamb-exit-btn" id="gamb-exit-btn">✕</button>
+        </div>
+        <pre class="gamb-art">
+     ╔══════════════════════════════════╗
+     ║  🎰 E L   G A M B I T E R O  🎰║
+     ║  ┌────────┐ ┌────────┐ ┌────────┐
+     ║  │        │ │        │ │        │
+     ║  │  SPIN  │ │  SPIN  │ │  SPIN  │
+     ║  │        │ │        │ │        │
+     ║  └────────┘ └────────┘ └────────┘
+     ║    ═══════════════════════════   ║
+     ╚══════════════════════════════════╝</pre>
+        <div class="gamb-slot-container">
+          <div class="gamb-slot-reels">
+            ${reelHTML(0)}
+            ${reelHTML(1)}
+            ${reelHTML(2)}
+          </div>
+          <div id="gamb-slot-result" class="gamb-slot-result"></div>
+        </div>
+        <div class="gamb-choices">
+          <button class="gamb-choice gamb-spin-action" id="gamb-spin-btn">🎰 ¡TIRA! (-10 PTS)</button>
+          <button class="gamb-choice" id="gamb-slot-back">🚶 Basta de apostar</button>
+        </div>
+      </div>
+    `;
+
+    // Exit button
+    document.getElementById('gamb-exit-btn')?.addEventListener('click', () => this.exit());
+
+    // Back button → go to map
+    document.getElementById('gamb-slot-back')?.addEventListener('click', () => {
+      stage.style.opacity = '0';
+      setTimeout(() => { this.renderScene(11); stage.style.opacity = '1'; }, 300);
+    });
+
+    // THE SPIN
+    const spinBtn = document.getElementById('gamb-spin-btn');
+    spinBtn?.addEventListener('click', () => this._executeSlotSpin());
+
+    // GSAP entrance
+    if (typeof gsap !== 'undefined') {
+      gsap.from('.gamb-slot-container', { opacity: 0, scale: 0.8, duration: 0.5 });
+    }
+  }
+
+  _executeSlotSpin() {
+    if (this.score < 10) {
+      const result = document.getElementById('gamb-slot-result');
+      if (result) { result.innerHTML = '<span style="color:#8c2c20;">⚠️ NO TIENES CRÉDITOS, ILLO</span>'; }
+      return;
+    }
+    this.score -= 10;
+
+    const spinBtn = document.getElementById('gamb-spin-btn');
+    if (spinBtn) spinBtn.disabled = true;
+
+    const symbols = this.slotSymbols;
+    const reels = [0, 1, 2];
+    const finalSymbols = reels.map(() => symbols[Math.floor(Math.random() * symbols.length)]);
+
+    // Sound effect via Web Audio
+    this._playSlotSound();
+
+    // Animate each reel with staggered timing
+    reels.forEach((reelIdx, i) => {
+      const reelInner = document.getElementById(`reel-inner-${reelIdx}`);
+      if (!reelInner) return;
+
+      let spinCount = 0;
+      const totalSpins = 15 + (i * 8); // Staggered stop
+      const spinInterval = setInterval(() => {
+        // Randomize visible symbols during spin
+        const randomSym = symbols[Math.floor(Math.random() * symbols.length)];
+        reelInner.innerHTML = `
+          <div class="gamb-slot-symbol dim">${symbols[Math.floor(Math.random() * symbols.length)]}</div>
+          <div class="gamb-slot-symbol">${randomSym}</div>
+          <div class="gamb-slot-symbol dim">${symbols[Math.floor(Math.random() * symbols.length)]}</div>
+        `;
+        spinCount++;
+
+        if (spinCount >= totalSpins) {
+          clearInterval(spinInterval);
+          // Land on final symbol
+          reelInner.innerHTML = `
+            <div class="gamb-slot-symbol dim">${symbols[Math.floor(Math.random() * symbols.length)]}</div>
+            <div class="gamb-slot-symbol final">${finalSymbols[reelIdx]}</div>
+            <div class="gamb-slot-symbol dim">${symbols[Math.floor(Math.random() * symbols.length)]}</div>
+          `;
+          // Play stop click
+          this._playStopSound();
+
+          // Check if all reels stopped
+          if (reelIdx === 2) {
+            setTimeout(() => this._resolveSlotResult(finalSymbols), 400);
+          }
+        }
+      }, 60 + (i * 10)); // Slightly different speeds
+    });
+  }
+
+  _resolveSlotResult(finalSymbols) {
+    const combo = finalSymbols.join('');
+    const resultEl = document.getElementById('gamb-slot-result');
+    const scoreEl = document.querySelector('.gamb-hud-score');
+    const spinBtn = document.getElementById('gamb-spin-btn');
+
+    // Check for triple match
+    const payout = this.slotPayouts[combo];
+    let html = '';
+
+    if (payout) {
+      // JACKPOT!
+      this.score += payout.points;
+      const sign = payout.points > 0 ? '+' : '';
+      let rewardHtml = '';
+      if (payout.reward) {
+        // Track unlocked reward
+        if (!this.unlockedRewards.includes(combo)) {
+          this.unlockedRewards.push(combo);
+          localStorage.setItem('gambitero_rewards', JSON.stringify(this.unlockedRewards));
+        }
+        rewardHtml = `<br><a href="${payout.reward.url}" target="_blank" rel="noopener" class="gamb-choice gamb-reward-link">${payout.reward.label}</a>`;
+      }
+      html = `<div class="gamb-slot-win">${finalSymbols.join(' ')}<br><strong>${sign}${payout.points} PTS</strong><br>${payout.msg}${rewardHtml}</div>`;
+      this._playJackpotSound();
+    } else if (finalSymbols[0] === finalSymbols[1] || finalSymbols[1] === finalSymbols[2]) {
+      // Partial match (2 of 3)
+      this.score += 25;
+      html = `<div class="gamb-slot-partial">${finalSymbols.join(' ')}<br><strong>+25 PTS</strong><br>Casi... dos iguales. El Gambitero asiente.</div>`;
+    } else {
+      // No match
+      html = `<div class="gamb-slot-miss">${finalSymbols.join(' ')}<br><em>Nada. El Gambitero se encoge de hombros.</em></div>`;
+    }
+
+    if (resultEl) resultEl.innerHTML = html;
+    if (scoreEl) scoreEl.innerHTML = `💰 ${this.score} PTS`;
+    if (spinBtn) {
+      spinBtn.disabled = false;
+      spinBtn.textContent = this.score >= 10 ? '🎰 ¡OTRA VEZ! (-10 PTS)' : '💸 SIN CRÉDITOS';
+      if (this.score < 10) spinBtn.disabled = true;
+    }
+  }
+
+  _playSlotSound() {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'square';
+      osc.frequency.setValueAtTime(150, ctx.currentTime);
+      osc.frequency.linearRampToValueAtTime(800, ctx.currentTime + 0.5);
+      gain.gain.setValueAtTime(0.08, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.6);
+      osc.connect(gain).connect(ctx.destination);
+      osc.start(); osc.stop(ctx.currentTime + 0.6);
+    } catch(e) { /* silent */ }
+  }
+
+  _playStopSound() {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.value = 440;
+      gain.gain.setValueAtTime(0.1, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
+      osc.connect(gain).connect(ctx.destination);
+      osc.start(); osc.stop(ctx.currentTime + 0.1);
+    } catch(e) { /* silent */ }
+  }
+
+  _playJackpotSound() {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+      notes.forEach((freq, i) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'square';
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.1, ctx.currentTime + i * 0.15);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.15 + 0.3);
+        osc.connect(gain).connect(ctx.destination);
+        osc.start(ctx.currentTime + i * 0.15);
+        osc.stop(ctx.currentTime + i * 0.15 + 0.3);
+      });
+    } catch(e) { /* silent */ }
   }
 }
 
