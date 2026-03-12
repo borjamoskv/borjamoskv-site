@@ -129,6 +129,20 @@ button {
   will-change: transform, width, height;
 }
 
+/* 0-Latency Custom Image Cursor for Drops */
+body.buko-cursor-active {
+  cursor: url('img/le_buko_cursor.png') 32 32, auto !important;
+}
+
+body.buko-cursor-active .cursor, 
+body.buko-cursor-active .magnetic-cursor {
+  display: none !important;
+}
+
+body.buko-cursor-active * {
+  cursor: url('img/le_buko_cursor.png') 32 32, auto !important;
+}
+
 @media (max-width: 768px) {
   .cursor {
     display: none; /* Hide on mobile devices */

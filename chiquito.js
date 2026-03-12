@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     overlay.innerHTML = `
         <div class="chiquito-content">
             <img src="borjarl.jpg" alt="Borjarl" class="borjarl-img">
-            <div class="chiquito-text">"ESTO NO ES UNA WEB" ES UN SENTIMIENTO::: NO PUEDOOO PARaaaar</div>
+            <div class="chiquito-text">"ESTO NO ES UNA WEB" ES UN SENTIMIENTO::: NO PUEDOOOr PARaaaar</div>
         </div>
     `;
     
@@ -14,50 +14,59 @@ document.addEventListener('DOMContentLoaded', () => {
         #chiquito-overlay {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0,0,0,0.85);
+            background: rgba(204, 0, 0, 0.9);
             z-index: 999999;
             display: none;
             justify-content: center;
             align-items: center;
             flex-direction: column;
             pointer-events: none;
+            mix-blend-mode: difference;
         }
         .chiquito-content {
             text-align: center;
-            transform: scale(0.1);
+            transform: scale(0.1) rotate(-180deg);
             opacity: 0;
-            transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         #chiquito-overlay.active {
             display: flex;
             pointer-events: all;
+            animation: strobe 0.1s infinite;
         }
         #chiquito-overlay.active .chiquito-content {
-            transform: scale(1) rotate(5deg);
+            transform: scale(1.5) rotate(5deg);
             opacity: 1;
-            animation: borjarlGlitch 0.2s infinite alternate;
+            animation: borjarlGlitch 0.1s infinite alternate;
         }
         .borjarl-img {
-            max-width: 80vw;
-            max-height: 50vh;
-            margin-bottom: 20px;
-            filter: contrast(150%) hue-rotate(90deg) saturate(300%);
-            mix-blend-mode: screen;
-            border-radius: 20px;
+            max-width: 90vw;
+            max-height: 70vh;
+            margin-bottom: -40px;
+            filter: contrast(200%) hue-rotate(180deg) saturate(500%) invert(1);
+            mix-blend-mode: hard-light;
+            border-radius: 5px;
+            box-shadow: 0 0 50px red;
         }
         .chiquito-text {
             font-family: 'Courier New', Courier, monospace;
-            font-size: 2.5rem;
-            color: #ccff00;
-            text-shadow: 0 0 10px #ccff00, 2px 2px 0px #ff003c;
+            font-size: 4rem;
+            color: #fff;
+            text-shadow: 0 0 20px #ccff00, 5px 5px 0px #000;
             text-transform: uppercase;
-            font-weight: bold;
-            letter-spacing: 2px;
+            font-weight: 900;
+            letter-spacing: -2px;
             padding: 0 20px;
+            line-height: 1;
         }
         @keyframes borjarlGlitch {
-            0% { transform: scale(1.05) translate(4px, -4px) skewX(2deg); filter: hue-rotate(0deg); }
-            100% { transform: scale(0.95) translate(-4px, 4px) skewX(-2deg); filter: hue-rotate(45deg); }
+            0% { transform: scale(1.55) translate(10px, -10px) skewX(5deg); filter: hue-rotate(0deg); }
+            100% { transform: scale(1.45) translate(-10px, 10px) skewX(-5deg); filter: hue-rotate(90deg); }
+        }
+        @keyframes strobe {
+            0% { background: rgba(204, 0, 0, 0.9); }
+            50% { background: rgba(0, 0, 0, 0.9); }
+            100% { background: rgba(255, 255, 255, 0.9); }
         }
     `;
     
@@ -70,27 +79,44 @@ document.addEventListener('DOMContentLoaded', () => {
         // Visual
         overlay.classList.add('active');
         
+        // Ensure sound is allowed or warn
+        if(window.AutoDJ && window.AutoDJ.globalMuted) {
+            console.warn("Audio is muted, Chiquito cannot scream.");
+        }
+        
         // Audio synthesis (Chiquito voice)
-        const utterance = new SpeechSynthesisUtterance("Jarllll!! No puedo, no puedoooooo");
+        const utterance = new SpeechSynthesisUtterance("Jarllll!! No puedo, no puedoooooooorl");
         utterance.lang = "es-ES";
-        utterance.pitch = 1.5; // High pitch, glitchy
-        utterance.rate = 1.3;
+        utterance.pitch = 0.5; // Demonic low pitch
+        utterance.rate = 1.8;  // Fast panic
         window.speechSynthesis.speak(utterance);
 
         // Hide after some time
         setTimeout(() => {
             overlay.classList.remove('active');
-        }, 3500);
+            window.speechSynthesis.cancel();
+        }, 2000); // Shorter, more aggressive burst
     }
 
     // Trigger randomly roughly every 45-60 secs, but ONLY sometimes
     setInterval(() => {
-        // 15% chance to appear every check
-        if(Math.random() > 0.85) {
+        // 5% chance to appear every check (rarer but crazier)
+        if(Math.random() > 0.95) {
             triggerChiquito();
         }
-    }, 40000);
+    }, 45000);
     
+    // Check if user is typing the konami code or secret word
+    let secretCode = '';
+    document.addEventListener('keydown', (e) => {
+        secretCode += e.key.toLowerCase();
+        if (secretCode.length > 10) secretCode = secretCode.substring(1);
+        if (secretCode.includes('puedoor')) {
+            triggerChiquito();
+            secretCode = '';
+        }
+    });
+
     // Expose for debugging or manual trigger
     window.triggerChiquito = triggerChiquito;
 });

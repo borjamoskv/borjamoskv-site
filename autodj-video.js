@@ -21,10 +21,11 @@ class AutoDJAesthetic {
     this.fadeDurationMs = 3000; 
     this.masterBPM = 125; // Default master tempo
 
-    // Automated DJ Sequence Configuration (40s Transitions)
+    // Automated DJ Sequence Configuration
     this.autoMixTimer = null;
-    this.mixSequence = ['b9ktVQN48OU', 'x8E9HInpzE4']; // LES BUKO, GLITCH IN THE MIRROR
-    this.mixIntervalMs = 40000; // 40 seconds per track
+    // Massive initial sequence to guarantee different mixes and themes as requested
+    this.mixSequence = ['x8E9HInpzE4', 'rmzKC8AYkVw', 'Otvpn9vfXOE', 'NYhOQTcNLkA', 'Yr5CMXrJgIo', 'ZB13zY5h4bc', '0S43IwBF0uM']; 
+    this.mixIntervalMs = 40000; // Default fallback (dynamic phrases used instead)
 
     // Real BPM mapping for known tracks to perfectly beatmatch
     this.bpmCache = {
@@ -134,7 +135,8 @@ class AutoDJAesthetic {
   initPlayers() {
     if (!window.DATA || !window.DATA.videoThumbnails) return;
     
-    const startVidA = window.DATA.videoThumbnails[Math.floor(Math.random() * window.DATA.videoThumbnails.length)];
+    // [EXPERT DJ] Forzamos "LES BUKO" como primer track
+    const startVidA = 'b9ktVQN48OU';
     const startVidB = window.DATA.videoThumbnails[Math.floor(Math.random() * window.DATA.videoThumbnails.length)];
 
     this.masterBPM = this.getTrackBPM(startVidA);
@@ -906,6 +908,15 @@ class AutoDJAesthetic {
   scheduleNextMix() {
     if (this.autoMixTimer) clearTimeout(this.autoMixTimer);
     
+    // [EXPERT DJ] Dynamic phrase-based interval calculation
+    const msPerBeat = (60 / this.masterBPM) * 1000;
+    const msPerPhrase = msPerBeat * 32;
+    // Decide to mix between 4 and 8 phrases (typically 1 to 2.5 minutes depending on BPM)
+    const phrasesToWait = Math.floor(Math.random() * 5) + 4;
+    const dynamicIntervalMs = msPerPhrase * phrasesToWait;
+    
+    console.log(`[🎧 EXPERTO DJ] Decidí mantener la tensión durante ${phrasesToWait} frases musicales (${Math.round(dynamicIntervalMs/1000)}s)...`);
+
     this.autoMixTimer = setTimeout(() => {
         if (this.isBackgroundPausedByEmbed) {
             // Check again shortly if paused by embed
@@ -913,13 +924,13 @@ class AutoDJAesthetic {
             return;
         }
         
-        console.log("[CORTEX AutoDJ] Automated Sequence Interval Reached.");
+        console.log("[CORTEX AutoDJ] Automated Phrase Interval Reached. Initiating transition.");
         let nextTrack = null;
         if (this.mixSequence.length > 0) {
             nextTrack = this.mixSequence.shift();
         }
         this.triggerCrossfade(nextTrack);
-    }, this.mixIntervalMs);
+    }, dynamicIntervalMs);
   }
 
   triggerCrossfade(forcedNextTrack = null) {
@@ -998,6 +1009,11 @@ class AutoDJAesthetic {
     
     const nextBPM = this.getTrackBPM(nextTrack);
     console.log(`[CORTEX Auto-DJ] Syncing BPM: Master(${this.masterBPM}) <- Target(${nextBPM})`);
+
+    // Dynamic Fade Time based on Energy
+    if (this.energyPhase === 'peak') this.fadeDurationMs = 1500;
+    else if (this.energyPhase === 'warmup') this.fadeDurationMs = 5000;
+    else this.fadeDurationMs = 3000;
     
     // ═══════════════════════════════════════════
     // DYNAMIC FADE DURATION (Long Blends - Pro DJ)

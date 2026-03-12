@@ -248,7 +248,7 @@ document.addEventListener("DOMContentLoaded", () => {
             egg.style.transform = 'scale(1.5) rotate(720deg)';
             egg.style.transition = 'all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
             setTimeout(() => {
-                window.location.href = egg.href || 'https://naroa.online';
+                window.location.href = 'https://naroa.online';
             }, 1000);
         });
     };
@@ -435,6 +435,17 @@ document.addEventListener("DOMContentLoaded", () => {
                     start: 'top 80%',
                     toggleActions: 'play none none none'
                 }
+            });
+
+            // 🟢 CUSTOM CURSOR FOR PLAYERS SECTION (Buko Cursor)
+            ScrollTrigger.create({
+                trigger: '#players',
+                start: 'top center',
+                end: 'bottom center',
+                onEnter: () => document.body.classList.add('buko-cursor-active'),
+                onLeave: () => document.body.classList.remove('buko-cursor-active'),
+                onEnterBack: () => document.body.classList.add('buko-cursor-active'),
+                onLeaveBack: () => document.body.classList.remove('buko-cursor-active')
             });
         }
 
@@ -1052,7 +1063,8 @@ document.addEventListener('DOMContentLoaded', () => {
     class MagneticCursor {
         constructor() {
             this.cursor = document.querySelector('.cursor');
-            if (!this.cursor) return;
+            this.magneticCursor = document.querySelector('.magnetic-cursor');
+            if (!this.cursor && !this.magneticCursor) return;
             
             this.pos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
             this.target = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
@@ -1124,8 +1136,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     y: this.pos.y - 16 
                 });
             } else {
-                this.cursor.style.transform = `translate3d(${this.pos.x - 16}px, ${this.pos.y - 16}px, 0)`;
-            }
+                if (this.cursor) {
+                    this.cursor.style.transform = `translate3d(${this.pos.x - 16}px, ${this.pos.y - 16}px, 0)`;
+                }
+                if (this.magneticCursor) {
+                    this.magneticCursor.style.transform = `translate3d(${this.pos.x - 10}px, ${this.pos.y - 10}px, 0)`;
+                }
+            };
             
             requestAnimationFrame(() => this.raf());
         }
