@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // Re-mount in new order before contact section
             sectionsToShuffle.forEach(sec => {
                 if (contactSection) {
-                    parent.insertBefore(sec, contactSection);
+                    contactSection.before(sec);
                 } else {
                     parent.appendChild(sec);
                 }
@@ -130,39 +130,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 2.5 EMPTY CLICKS TO ROTATE VIDEO
     // (Feature removed to prevent unexpected song changes on casual clicks)
-    /*
-    document.addEventListener('click', (e) => {
-        // Prevent if clicking on interactive elements
-        const isInteractive = e.target.closest('a, button, input, textarea, select, .hero-sound-toggle, .custom-cursor, .cursor-text');
-        if (isInteractive) return;
-
-        try {
-            if (typeof DATA === 'undefined' || !DATA.bgVideos || DATA.bgVideos.length === 0) return;
-            const iframe = document.getElementById('bg-video');
-            if (!iframe) return;
-
-            let nextVideoId = currentVideoId;
-            // Pick a new one that isn't the current one (if possible)
-            if (DATA.bgVideos.length > 1) {
-                while (nextVideoId === currentVideoId) {
-                    nextVideoId = DATA.bgVideos[Math.floor(Math.random() * DATA.bgVideos.length)];
-                }
-            } else {
-                nextVideoId = DATA.bgVideos[0];
-            }
-
-            currentVideoId = nextVideoId;
-            // When user clicks, we can safely play WITH sound natively
-            const src = `https://www.youtube-nocookie.com/embed/${currentVideoId}?autoplay=1&mute=0&controls=0&loop=1&playlist=${currentVideoId}&playsinline=1&enablejsapi=1&rel=0&modestbranding=1&vq=hd1080`;
-            iframe.src = src;
-            
-            console.log(`[CORTEX] Tactical shift to video: ${currentVideoId}`);
-
-        } catch (err) {
-            console.error("[CORTEX] Background swap failed:", err);
-        }
-    });
-    */
 
     // 3. BACKGROUND VIDEO YOUTUBE API HANDLING (Mute/Unmute)
     const initVideoControls = () => {
@@ -183,7 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     event: 'command',
                     func: command,
                     args: []
-                }), '*'); // Or replace '*' with target origin for better security
+                }), 'https://www.youtube-nocookie.com');
             }
 
             if (isMuted) {
@@ -239,7 +206,7 @@ document.addEventListener("DOMContentLoaded", () => {
             egg.style.transform = 'scale(1.5) rotate(360deg)';
             egg.style.transition = 'all 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
             // Also open the link
-            window.open('https://naroa.online', '_blank');
+            globalThis.open('https://naroa.online', '_blank');
         });
         
         // Allow left click to open the link directly and play the animation
@@ -248,7 +215,7 @@ document.addEventListener("DOMContentLoaded", () => {
             egg.style.transform = 'scale(1.5) rotate(720deg)';
             egg.style.transition = 'all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
             setTimeout(() => {
-                window.location.href = 'https://naroa.online';
+                globalThis.location.href = 'https://naroa.online';
             }, 1000);
         });
     };
@@ -316,59 +283,7 @@ document.addEventListener("DOMContentLoaded", () => {
         { title: "THE LAST 10% DOCTRINE", text: "Construir el 90% es simple logística. Forjar el 10% final es imponer soberanía absoluta sobre la entropía." }
     ];
 
-    const initFloatingLore = () => {
-        const container = document.getElementById('loreContainer');
-        if (!container || window.innerWidth <= 768) return; // Skip on mobile to avoid overlap mess
 
-        // We wait a tick to ensure the document has reached its full expanded height 
-        // after dynamic content (like Data.js injections) is parsed.
-        setTimeout(() => {
-            const pageHeight = document.body.scrollHeight;
-            const startY = 800; // Start below hero
-            const endY = pageHeight - 1000; // End before footer
-            
-            if (endY <= startY) return; // Not enough scroll space
-
-            const verticalSlice = (endY - startY) / COMPLETE_LORE.length;
-
-            COMPLETE_LORE.forEach((lore, index) => {
-                const box = document.createElement('div');
-                box.className = 'lore-floating-box glass';
-                box.innerHTML = `
-                    <span class="lore-floating-title">${lore.title}</span>
-                    <p class="lore-floating-text">${lore.text}</p>
-                `;
-
-                // Calculate random positions
-                // Alternate sides mostly to avoid bunching in the middle
-                const isLeftEdge = Math.random() > 0.5;
-                const randomLeft = isLeftEdge 
-                    ? 5 + Math.random() * 20  // 5% to 25% (Left side)
-                    : 60 + Math.random() * 25; // 60% to 85% (Right side)
-
-                const baseTop = startY + (index * verticalSlice);
-                const randomTop = baseTop + (Math.random() * (verticalSlice * 0.7)); // Variance within slice
-
-                box.style.top = `${randomTop}px`;
-                box.style.left = `${randomLeft}vw`;
-
-                container.appendChild(box);
-
-                // Add parallax scroll trigger for a floating feel
-                gsap.to(box, {
-                    y: -150 - (Math.random() * 200), // Random upward drift
-                    rotation: -5 + (Math.random() * 10), // Slight tilt 
-                    ease: "none",
-                    scrollTrigger: {
-                        trigger: box,
-                        start: "top bottom",
-                        end: "bottom top",
-                        scrub: 1 // smooth scrubbing
-                    }
-                });
-            });
-        }, 500); // Slight delay ensures layout calculation
-    };
 
     const initChoreography = () => {
         // Hero title glitch
@@ -479,14 +394,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Main GSAP tween for horizontal movement
             const scrollTween = gsap.to(hTrack, {
-                x: () => -(hTrack.scrollWidth - window.innerWidth),
+                x: () => -(hTrack.scrollWidth - globalThis.innerWidth),
                 ease: "none",
                 scrollTrigger: {
                     trigger: hContainer,
                     pin: true,
                     scrub: 1.2,
                     start: "top top",
-                    end: () => "+=" + (hTrack.scrollWidth - window.innerWidth),
+                    end: () => "+=" + (hTrack.scrollWidth - globalThis.innerWidth),
                     invalidateOnRefresh: true,
                     snap: {
                         snapTo: 1 / (hPanels.length - 1),
@@ -627,7 +542,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 // Remove active from all
                 Array.from(filterBar.children).forEach(btn => btn.classList.remove('active'));
                 e.target.classList.add('active');
-                renderGrid(e.target.getAttribute('data-filter'));
+                renderGrid(e.target.dataset.filter);
             }
         });
     };
@@ -642,7 +557,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let width, height;
         let particles = [];
         const config = {
-            count: window.innerWidth > 768 ? 120 : 60, // Less on mobile
+            count: globalThis.innerWidth > 768 ? 120 : 60, // Less on mobile
             maxDistance: 120,    // Connection radius
             mouseRadius: 150,    // Attraction radius
             baseSpeed: 0.4,
@@ -654,13 +569,13 @@ document.addEventListener("DOMContentLoaded", () => {
         let isPulsing = false;
 
         const resize = () => {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
+            width = canvas.width = globalThis.innerWidth;
+            height = canvas.height = globalThis.innerHeight;
             // Optionally, reinitialize the swarm here if needed
             // initSwarm(false); 
         };
 
-        window.addEventListener('resize', resize);
+        globalThis.addEventListener('resize', resize);
         resize();
 
 // =========================================================================
@@ -676,7 +591,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Sonido infernal usando Web Audio API
             try {
-                const ac = new (window.AudioContext || window.webkitAudioContext)();
+                const ac = new (globalThis.AudioContext || globalThis.webkitAudioContext)();
                 if (ac.state === 'suspended') ac.resume();
                 
                 const osc = ac.createOscillator();
@@ -757,7 +672,7 @@ document.addEventListener('DOMContentLoaded', () => {
             particles = [];
             
             // 1. Base ambient nodes (for the void)
-            const baseCount = window.innerWidth > 768 ? 40 : 20;
+            const baseCount = globalThis.innerWidth > 768 ? 40 : 20;
             for (let i = 0; i < baseCount; i++) {
                 particles.push(new Node());
             }
@@ -791,7 +706,7 @@ document.addEventListener('DOMContentLoaded', () => {
             pulse(force) {
                 const dx = this.x - mouse.x;
                 const dy = this.y - mouse.y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
+                const dist = Math.hypot(dx, dy);
                 if (dist < config.mouseRadius * 1.5) {
                     const angle = Math.atan2(dy, dx);
                     // Heavy memory nodes get pushed less
@@ -806,7 +721,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (mouse.x > 0 && mouse.y > 0) {
                     const dx = mouse.x - this.x;
                     const dy = mouse.y - this.y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    const dist = Math.hypot(dx, dy);
 
                     if (dist < config.mouseRadius && !mouse.pressed) {
                         const force = (config.mouseRadius - dist) / config.mouseRadius;
@@ -821,8 +736,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 // --- SPATIAL AUDIO REACTIVITY ---
                 // Read CSS variables generated by spatial-audio.js
                 const root = document.documentElement;
-                const rawEnergy = parseFloat(root.style.getPropertyValue('--spatial-energy-raw')) || 0;
-                const rawBass = parseFloat(root.style.getPropertyValue('--spatial-bass-raw')) || 0;
+                const rawEnergy = Number.parseFloat(root.style.getPropertyValue('--spatial-energy-raw')) || 0;
+                const rawBass = Number.parseFloat(root.style.getPropertyValue('--spatial-bass-raw')) || 0;
                 
                 // Enjambre "breathes" with the energy
                 let currentSize = this.size + (rawBass * 2.5);
@@ -840,7 +755,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.vy *= this.isMemory ? 0.94 : 0.98;
 
                 // Enforce minimum base wandering speed
-                const speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
+                const speed = Math.hypot(this.vx, this.vy);
                 const minSpeed = this.isMemory ? (config.baseSpeed * 0.3) : config.baseSpeed;
                 
                 if (speed < minSpeed) {
@@ -907,7 +822,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         // Expose add node function globally for memory injection
-        window.addSwarmNode = (x, y) => {
+        globalThis.addSwarmNode = (x, y) => {
             particles.push(new Node(x, y));
             updateHud();
             
@@ -915,7 +830,7 @@ document.addEventListener('DOMContentLoaded', () => {
             particles.forEach(p => {
                 const dx = p.x - x;
                 const dy = p.y - y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
+                const dist = Math.hypot(dx, dy);
                 if (dist < config.mouseRadius) {
                     const angle = Math.atan2(dy, dx);
                     p.vx += Math.cos(angle) * (config.pulseForce * 0.5) * (1 / (dist * 0.05 + 1));
@@ -929,7 +844,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 for (let b = a + 1; b < particles.length; b++) {
                     let dx = particles[a].x - particles[b].x;
                     let dy = particles[a].y - particles[b].y;
-                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    let distance = Math.hypot(dx, dy);
 
                     if (distance < config.maxDistance) {
                         // Opacity based on distance
@@ -1066,8 +981,8 @@ document.addEventListener('DOMContentLoaded', () => {
             this.magneticCursor = document.querySelector('.magnetic-cursor');
             if (!this.cursor && !this.magneticCursor) return;
             
-            this.pos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-            this.target = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+            this.pos = { x: globalThis.innerWidth / 2, y: globalThis.innerHeight / 2 };
+            this.target = { x: globalThis.innerWidth / 2, y: globalThis.innerHeight / 2 };
             this.lerp = 0.15; // Snappy lerp
             this.magnetStrength = 0.4;
             this.isHovering = false;
@@ -1149,8 +1064,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Initialize cursor if not on mobile
-    if (window.innerWidth > 768) {
-        window.magneticCursor = new MagneticCursor();
+    if (globalThis.innerWidth > 768) {
+        globalThis.magneticCursor = new MagneticCursor();
     }
 
     // 9. DRAGGABLE WINDOWS (Music Lab)
@@ -1192,7 +1107,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const parentRect = win.parentElement.getBoundingClientRect();
                 
                 // Get offset from transform if it exists, otherwise use top/left
-                const style = window.getComputedStyle(win);
+                const style = globalThis.getComputedStyle(win);
                 const transform = style.getPropertyValue('transform');
                 
                 if (transform && transform !== 'none') {
@@ -1326,15 +1241,15 @@ document.addEventListener('DOMContentLoaded', () => {
             if (isInteractive) return;
 
             // Calculate percentage based on current document scroll dimensions
-            const scrollWidth = document.documentElement.scrollWidth || window.innerWidth;
-            const scrollHeight = document.documentElement.scrollHeight || window.innerHeight;
+            const scrollWidth = document.documentElement.scrollWidth || globalThis.innerWidth;
+            const scrollHeight = document.documentElement.scrollHeight || globalThis.innerHeight;
             
             const xPct = (e.pageX / scrollWidth) * 100;
             const yPct = (e.pageY / scrollHeight) * 100;
 
             // Render locally instantly in the Swarm
-            if (typeof window.addSwarmNode === 'function') {
-                window.addSwarmNode(e.pageX, e.pageY);
+            if (typeof globalThis.addSwarmNode === 'function') {
+                globalThis.addSwarmNode(e.pageX, e.pageY);
             }
             markCount++;
 
@@ -1447,13 +1362,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const maxPoints = 50;
         
         function resize() {
-            width = window.innerWidth;
-            height = window.innerHeight;
+            width = globalThis.innerWidth;
+            height = globalThis.innerHeight;
             canvas.width = width;
             canvas.height = height;
         }
         
-        window.addEventListener('resize', resize);
+        globalThis.addEventListener('resize', resize);
         resize();
         
         document.addEventListener('mousemove', (e) => {
@@ -1543,7 +1458,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         glitchElements.forEach(el => {
             setInterval(() => {
-                const originalColor = window.getComputedStyle(el).color;
+                const originalColor = globalThis.getComputedStyle(el).color;
                 gsap.to(el, {
                     duration: 0.1,
                     x: () => Math.random() * 10 - 5,

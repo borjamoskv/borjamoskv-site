@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
         overlay.classList.add('active');
         
         // Ensure sound is allowed or warn
-        if(window.AutoDJ && window.AutoDJ.globalMuted) {
+        if(globalThis.AutoDJ && globalThis.AutoDJ.globalMuted) {
             console.warn("Audio is muted, Chiquito cannot scream.");
         }
         
@@ -89,12 +89,12 @@ document.addEventListener('DOMContentLoaded', () => {
         utterance.lang = "es-ES";
         utterance.pitch = 0.5; // Demonic low pitch
         utterance.rate = 1.8;  // Fast panic
-        window.speechSynthesis.speak(utterance);
+        globalThis.speechSynthesis.speak(utterance);
 
         // Hide after some time
         setTimeout(() => {
             overlay.classList.remove('active');
-            window.speechSynthesis.cancel();
+            globalThis.speechSynthesis.cancel();
         }, 2000); // Shorter, more aggressive burst
     }
 
@@ -118,5 +118,5 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Expose for debugging or manual trigger
-    window.triggerChiquito = triggerChiquito;
+    globalThis.triggerChiquito = triggerChiquito;
 });

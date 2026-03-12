@@ -116,7 +116,7 @@ class AutoDJAesthetic {
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
     // Global callback required by YT API
-    window.onYouTubeIframeAPIReady = () => this.initPlayers();
+    globalThis.onYouTubeIframeAPIReady = () => this.initPlayers();
     
     // Start listening to clicks
     this.bindClickEvents();
@@ -133,11 +133,11 @@ class AutoDJAesthetic {
   }
 
   initPlayers() {
-    if (!window.DATA || !window.DATA.videoThumbnails) return;
+    if (!globalThis.DATA || !globalThis.DATA.videoThumbnails) return;
     
     // [EXPERT DJ] Forzamos "LES BUKO" como primer track
     const startVidA = 'b9ktVQN48OU';
-    const startVidB = window.DATA.videoThumbnails[Math.floor(Math.random() * window.DATA.videoThumbnails.length)];
+    const startVidB = globalThis.DATA.videoThumbnails[Math.floor(Math.random() * globalThis.DATA.videoThumbnails.length)];
 
     this.masterBPM = this.getTrackBPM(startVidA);
     this.audioA.src = `audio/${startVidA}.webm`;
@@ -217,7 +217,7 @@ class AutoDJAesthetic {
       
       // Initialize Web Audio Engine Context on user interaction
       if (!this.audioContext) {
-          this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+          this.audioContext = new (globalThis.AudioContext || globalThis.webkitAudioContext)();
           
           this.analyser = this.audioContext.createAnalyser();
           this.analyser.fftSize = 128; // Small size for punchy bass detection
@@ -328,8 +328,8 @@ class AutoDJAesthetic {
       this.scheduleNextMix();
       
       // Remove mousemove/scroll listeners once unlocked to save perf
-      window.removeEventListener('mousemove', unlockAudio, { capture: true });
-      window.removeEventListener('scroll', unlockAudio, { capture: true });
+      globalThis.removeEventListener('mousemove', unlockAudio, { capture: true });
+      globalThis.removeEventListener('scroll', unlockAudio, { capture: true });
     };
 
     ['click', 'touchstart', 'keydown', 'mousemove', 'scroll', 'wheel'].forEach(evt => 
@@ -425,7 +425,7 @@ class AutoDJAesthetic {
     this.elapsedTimer = setInterval(() => this._updateElapsed(), 1000);
 
     setTimeout(() => {
-        const titleA = window.DATA?.works?.find(w => w.id === this.currentVideoId)?.title || "UNKNOWN";
+        const titleA = globalThis.DATA?.works?.find(w => w.id === this.currentVideoId)?.title || "UNKNOWN";
         document.getElementById('dj-track-a').innerText = titleA.substring(0,18);
         document.getElementById('dj-status-text').innerText = 'LIVE';
         document.getElementById('dj-bpm-master').innerText = `${this.masterBPM} BPM`;
@@ -565,7 +565,7 @@ class AutoDJAesthetic {
 
     // 📱 DEVICE ORIENTATION (Waveform tilt effect on mobile)
     if ('DeviceOrientationEvent' in window) {
-        window.addEventListener('deviceorientation', (e) => {
+        globalThis.addEventListener('deviceorientation', (e) => {
             if (e.gamma !== null && this.waveformBars) {
                 const tilt = Math.abs(e.gamma) / 90; // 0-1 normalized
                 this.waveformBars.forEach((bar, i) => {
@@ -589,7 +589,7 @@ class AutoDJAesthetic {
     for (let i = 0; i < 2; i++) {
         const el = document.getElementById(`dj-prefetch-${i+1}`);
         if (el && this.prefetchQueue[i]) {
-            const title = window.DATA?.works?.find(w => w.id === this.prefetchQueue[i])?.title || this.prefetchQueue[i];
+            const title = globalThis.DATA?.works?.find(w => w.id === this.prefetchQueue[i])?.title || this.prefetchQueue[i];
             el.innerText = title.substring(0, 12);
         } else if (el) {
             el.innerText = '---';
@@ -752,7 +752,7 @@ class AutoDJAesthetic {
   _djSpeak(text) {
     if (!this.voiceEnabled) return;
     try {
-        window.speechSynthesis.cancel();
+        globalThis.speechSynthesis.cancel();
         // MICA Stitch is a high-tech synthesized persona
         const formattedText = text.replace(/BPM/g, "B. P. M.");
         const utter = new SpeechSynthesisUtterance(formattedText);
@@ -760,7 +760,7 @@ class AutoDJAesthetic {
         utter.pitch = 0.4; // Low, assertive, synthetic
         utter.volume = 0.6; // Not too loud, sits in the mix
         
-        const voices = window.speechSynthesis.getVoices();
+        const voices = globalThis.speechSynthesis.getVoices();
         // Prefer Basque (eu-ES) if available, otherwise Spanish (es-ES) for acceptable pronunciation of Euskera
         const djVoice = voices.find(v => v.lang.startsWith('eu')) 
                       || voices.find(v => v.name.includes('Monica'))
@@ -769,7 +769,7 @@ class AutoDJAesthetic {
         if (djVoice) utter.voice = djVoice;
         
         // Add minimal echo effect if possible (Web Audio API hack)
-        window.speechSynthesis.speak(utter);
+        globalThis.speechSynthesis.speak(utter);
         
         console.log(`[🎤 MICA STITCH]: "${text}"`);
     } catch(e) {
@@ -779,15 +779,15 @@ class AutoDJAesthetic {
 
   // 🎵 MOOD FILTER — Get tracks matching current mood
   _getTracksForMood() {
-    if (!window.DATA?.works) return window.DATA?.videoThumbnails || [];
+    if (!globalThis.DATA?.works) return globalThis.DATA?.videoThumbnails || [];
     
-    let pool = window.DATA.works;
+    let pool = globalThis.DATA.works;
     if (this.currentMood !== 'all') {
         pool = pool.filter(w => w.categories && w.categories.includes(this.currentMood));
         
         // CORTEX V5 OVERRIDE: ALWAYS INCLUDE "LES BUKO" (b9ktVQN48OU) if not already present
         // Because "es que el LES BUKO queda bRUTAL"
-        const lesBuko = window.DATA.works.find(w => w.id === 'b9ktVQN48OU');
+        const lesBuko = globalThis.DATA.works.find(w => w.id === 'b9ktVQN48OU');
         if (lesBuko && !pool.some(w => w.id === 'b9ktVQN48OU')) {
             pool.push(lesBuko);
         }
@@ -990,7 +990,7 @@ class AutoDJAesthetic {
     const fromEl = document.getElementById(`bg-video-${fromDeckId}`);
     const toEl = document.getElementById(`bg-video-${toDeckId}`);
 
-    const availableTracks = window.DATA.videoThumbnails;
+    const availableTracks = globalThis.DATA.videoThumbnails;
     const moodPool = this._getTracksForMood();
     // ═══ HARMONIC FILTERING (Camelot Wheel) ═══
     const harmonicPool = this._getHarmonicTracks(moodPool);
@@ -1044,7 +1044,7 @@ class AutoDJAesthetic {
         document.getElementById('dj-status-text').innerText = `BEATMATCHING → ${nextBPM} BPM`;
         document.getElementById('dj-mix-count').innerText = `MIX #${this.mixCount}`;
         
-        const trackTitle = window.DATA?.works?.find(w => w.id === nextTrack)?.title || "INCOMING";
+        const trackTitle = globalThis.DATA?.works?.find(w => w.id === nextTrack)?.title || "INCOMING";
         document.getElementById(`dj-deck-${toDeckId}-ui`).querySelector('span:last-child').innerText = trackTitle.substring(0, 18);
         document.getElementById(`dj-deck-${toDeckId}-ui`).querySelector('span:first-child').innerText = `DK-${toDeckId.toUpperCase()} ▶`;
         document.getElementById(`dj-deck-${toDeckId}-ui`).classList.add('active');
@@ -1236,7 +1236,7 @@ class AutoDJAesthetic {
   }
 
   bindEmbedListeners() {
-    window.addEventListener('blur', () => {
+    globalThis.addEventListener('blur', () => {
       setTimeout(() => {
         if (document.activeElement instanceof HTMLIFrameElement) {
           const iframe = document.activeElement;
@@ -1249,7 +1249,7 @@ class AutoDJAesthetic {
       }, 100);
     });
     
-    window.addEventListener('focus', () => {
+    globalThis.addEventListener('focus', () => {
        console.log("[CORTEX] Focus returned home. Checking resumption.");
        this.resumeBackgroundMusic();
     });
@@ -1293,5 +1293,5 @@ class AutoDJAesthetic {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  window.autoDJAesthetic = new AutoDJAesthetic();
+  globalThis.autoDJAesthetic = new AutoDJAesthetic();
 });
