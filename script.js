@@ -1415,4 +1415,134 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 4500);
     };
     initMultilingualMorph();
+
+    // ═══════════════════════════════════════════════════════════════════
+    // AWWWARDS-GRADE VISUAL ENHANCEMENTS (PAINT TRAIL, 3D TILT, GLITCH)
+    // ═══════════════════════════════════════════════════════════════════
+    
+    // 1. Ambient Cursor Paint Trail Effect
+    const initCursorTrail = () => {
+        const canvas = document.getElementById('cursorTrail');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let points = [];
+        const maxPoints = 50;
+        
+        function resize() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+        }
+        
+        window.addEventListener('resize', resize);
+        resize();
+        
+        document.addEventListener('mousemove', (e) => {
+            points.push({ x: e.clientX, y: e.clientY, age: 0 });
+            if (points.length > maxPoints) points.shift();
+        }, {passive: true});
+        
+        function drawTrail() {
+            ctx.clearRect(0, 0, width, height);
+            if (points.length < 2) {
+                requestAnimationFrame(drawTrail);
+                return;
+            }
+            
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, points[0].y);
+            
+            for (let i = 1; i < points.length; i++) {
+                const pt = points[i];
+                const prevPt = points[i-1];
+                const xc = (pt.x + prevPt.x) / 2;
+                const yc = (pt.y + prevPt.y) / 2;
+                ctx.quadraticCurveTo(prevPt.x, prevPt.y, xc, yc);
+                pt.age++;
+            }
+            
+            ctx.lineTo(points[points.length-1].x, points[points.length-1].y);
+            
+            // Decaying brush stroke style
+            ctx.strokeStyle = `rgba(204, 255, 0, 0.4)`;
+            ctx.lineWidth = 15;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = '#CCFF00';
+            ctx.stroke();
+            
+            points = points.filter(p => p.age < 25);
+            requestAnimationFrame(drawTrail);
+        }
+        drawTrail();
+    };
+    initCursorTrail();
+
+    // 2. 3D Hover Tilt Effect on Cards/Blocks
+    const init3DHoverTilt = () => {
+        if (typeof gsap === 'undefined') return;
+        const cards = document.querySelectorAll('.player-container, .drag-window, .nav-logo, .haiku-line');
+        
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = ((y - centerY) / centerY) * -15; // Max 15 deg tilt
+                const rotateY = ((x - centerX) / centerX) * 15;
+                
+                gsap.to(card, {
+                    rotationX: rotateX,
+                    rotationY: rotateY,
+                    transformPerspective: 1000,
+                    ease: "power2.out",
+                    duration: 0.5
+                });
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                gsap.to(card, {
+                    rotationX: 0,
+                    rotationY: 0,
+                    ease: "elastic.out(1, 0.3)",
+                    duration: 1
+                });
+            });
+        });
+    };
+    init3DHoverTilt();
+
+    // 3. Random Glitch Text Trigger
+    const initRandomGlitch = () => {
+        if (typeof gsap === 'undefined') return;
+        const glitchElements = document.querySelectorAll('.glitch-mega, .glitch-text, .nav-bizarre');
+        
+        glitchElements.forEach(el => {
+            setInterval(() => {
+                const originalColor = window.getComputedStyle(el).color;
+                gsap.to(el, {
+                    duration: 0.1,
+                    x: () => Math.random() * 10 - 5,
+                    y: () => Math.random() * 10 - 5,
+                    skewX: () => Math.random() * 20 - 10,
+                    color: Math.random() > 0.5 ? '#CCFF00' : '#FF2A2A',
+                    yoyo: true,
+                    repeat: 3,
+                    onComplete: () => {
+                        // Reset to original state
+                        gsap.to(el, { x: 0, y: 0, skewX: 0, color: originalColor, duration: 0.1, clearProps: "color" });
+                    }
+                });
+            }, Math.random() * 5000 + 4000);
+        });
+    };
+    initRandomGlitch();
+
 });
