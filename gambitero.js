@@ -808,7 +808,8 @@ class ElGambitero {
 
 // GLOBAL
 window.elGambitero = new ElGambitero();
-document.addEventListener('DOMContentLoaded', () => {
+
+function _initGambitero() {
   document.getElementById('gambitero-trigger')?.addEventListener('click', () => window.elGambitero.launch());
   document.addEventListener('keydown', (e) => {
     if (e.key === 'g' && !e.ctrlKey && !e.metaKey && !window.elGambitero?.isActive) {
@@ -817,4 +818,10 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   });
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', _initGambitero);
+} else {
+  _initGambitero();
+}
