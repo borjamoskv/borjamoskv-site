@@ -1,0 +1,4 @@
+# Excluir herramientas de build/dev del deploy a Cloudflare Pages
+_tools/
+.git/
+.wrangler/

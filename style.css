@@ -17,12 +17,11 @@
   --bg-color: #0A0A0A;
   --bg-surface: #1A1A1A;
   --accent-primary: #CCFF00; /* Cyber Lime */
-  --accent-secondary: #0A0A0A; /* Black */
-  --accent-gold: #D4AF37; /* Gold */
-  --accent-blue: #2E5090; /* YInMn Blue */
   --accent-secondary: #00E5FF; /* Cyan */
   --accent-tertiary: #6600FF; /* Violet */
   --accent-gold: #D4AF37; /* Sovereign Gold */
+  --accent-blue: #2E5090; /* YInMn Blue */
+  --accent-black: #0A0A0A; /* Pure Black (contrast) */
   
   --text-main: #FFFFFF;
   --text-muted: #888888;
