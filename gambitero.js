@@ -12,14 +12,33 @@ class ElGambitero {
     this.score = 0;
     this.inventory = [];
     this.decisions = {};
+    this.path = [];
     this.isActive = false;
     this.overlay = null;
+    this.uiMode = 'boot';
+    this.slotReturnScene = null;
+    this.focusedChoiceIndex = 0;
+    this.combo = 0;
+    this.flow = 54;
+    this.currentObjective = '';
+    this.saveKey = 'gambitero_save';
+    this.metaKey = 'gambitero_meta';
+    this.boundKeyHandler = this._handleKeyDown.bind(this);
 
     // 🏆 Arcade Rankings
     this.rankings = JSON.parse(localStorage.getItem('gambitero_rankings') || '[]');
 
     // 🎵 Background music (borjamoskv)
     this.musicTracks = ['b9ktVQN48OU','x8E9HInpzE4','tMorCDfedf8','hsdOCzJpUMg','4Cb-Iu8DnJM'];
+    this.chipAudioContext = null;
+    this.chipMasterGain = null;
+    this.chipMusicTimer = null;
+    this.chipMusicPlaying = false;
+    this.chipMusicStep = 0;
+    this.chipTempo = 132;
+    this.chipRootHz = 130.81;
+    this.chipPatterns = this._createChipPatterns();
+    this.chipTrackLabel = 'LYRIA 3 · LOCRIO LOOP';
 
     // 🎬 20 ESCENAS — Aventura Gráfica
     this.scenes = [
@@ -375,15 +394,625 @@ class ElGambitero {
       '🔥🔥🔥': { points: 100, msg: 'FUEGO — Todo arde. En el buen sentido.', reward: { label: '🔥 VER EN SOUNDCLOUD', url: 'https://soundcloud.com/borjamoskv' } },
     };
     this.unlockedRewards = JSON.parse(localStorage.getItem('gambitero_rewards') || '[]');
+    this.meta = this._normalizeMeta(JSON.parse(localStorage.getItem(this.metaKey) || '{}'));
+    this.stats = this._createBaseStats();
+    this._publishTestingHooks();
   }
 
-  // 🎮 LAUNCH
-  launch() {
+  _createBaseStats() {
+    return { cuerpo: 72, lucidez: 56, destino: 18 };
+  }
+
+  _normalizeMeta(meta = {}) {
+    return {
+      totalRuns: Number.isFinite(meta.totalRuns) ? meta.totalRuns : 0,
+      bestScore: Number.isFinite(meta.bestScore) ? meta.bestScore : 0,
+      endings: Array.isArray(meta.endings) ? meta.endings : [],
+      relics: Array.isArray(meta.relics) ? meta.relics : [],
+      lastTitle: meta.lastTitle || 'SIN HISTORIAL',
+      lastScore: Number.isFinite(meta.lastScore) ? meta.lastScore : 0
+    };
+  }
+
+  _saveMeta() {
+    localStorage.setItem(this.metaKey, JSON.stringify(this.meta));
+  }
+
+  _getSavedRun() {
+    try {
+      const raw = localStorage.getItem(this.saveKey);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      return parsed && typeof parsed === 'object' ? parsed : null;
+    } catch {
+      return null;
+    }
+  }
+
+  _saveRun() {
+    if (!this.isActive || (this.uiMode !== 'run' && this.uiMode !== 'slot')) return;
+    localStorage.setItem(this.saveKey, JSON.stringify({
+      currentScene: this.currentScene,
+      score: this.score,
+      inventory: this.inventory,
+      decisions: this.decisions,
+      path: this.path,
+      stats: this.stats,
+      slotReturnScene: this.slotReturnScene
+    }));
+  }
+
+  _clearSavedRun() {
+    localStorage.removeItem(this.saveKey);
+  }
+
+  _clamp(value, min, max) {
+    return Math.min(max, Math.max(min, value));
+  }
+
+  _getScene(id) {
+    return this.scenes.find((scene) => scene.id === id) || null;
+  }
+
+  _recordSceneVisit(id) {
+    if (this.path[this.path.length - 1] !== id) {
+      this.path.push(id);
+    }
+  }
+
+  _getEndingKey() {
+    if (this.currentScene === 17) return 'transcendencia';
+    if (this.currentScene === 19 || this.currentScene === 21) return 'derrota-maxima';
+    if (this.currentScene === 24) return 'fran-perea';
+    return 'ruta-secreta';
+  }
+
+  _getEndingLabel(key) {
+    const labels = {
+      'transcendencia': 'FINAL 1 · TRASCENDENCIA',
+      'derrota-maxima': 'FINAL 2 · DERROTA MÁXIMA',
+      'fran-perea': 'FINAL 3 · FELICIDAD ABSOLUTA',
+      'ruta-secreta': 'FINAL DESCONOCIDO'
+    };
+    return labels[key] || key;
+  }
+
+  _createChipPatterns() {
+    return {
+      lead: [1, 3, 5, 6, 5, 3, 1, 3, 5, 6, 8, 6, 5, 3, 1, 8],
+      bass: [6, 8, 10, 8, 6, 8, 10, 8, 5, 6, 8, 6, 5, 6, 8, 10],
+      drums: [1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1]
+    };
+  }
+
+  _ensureChipAudio() {
+    if (this.chipAudioContext) return;
+
+    this.chipAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const filter = this.chipAudioContext.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.value = 2200;
+    filter.Q.value = 0.8;
+
+    this.chipMasterGain = this.chipAudioContext.createGain();
+    this.chipMasterGain.gain.value = 0.07;
+
+    filter.connect(this.chipMasterGain);
+    this.chipMasterGain.connect(this.chipAudioContext.destination);
+    this.chipFilter = filter;
+  }
+
+  _frequencyFromOffset(offset, octaveShift = 0) {
+    return this.chipRootHz * Math.pow(2, (offset + (octaveShift * 12)) / 12);
+  }
+
+  _playChipVoice({ offset, duration, type = 'square', gain = 0.04, octaveShift = 0, detune = 0 }) {
+    if (!this.chipAudioContext || !this.chipMasterGain) return;
+
+    const now = this.chipAudioContext.currentTime;
+    const osc = this.chipAudioContext.createOscillator();
+    const amp = this.chipAudioContext.createGain();
+
+    osc.type = type;
+    osc.frequency.setValueAtTime(this._frequencyFromOffset(offset, octaveShift), now);
+    if (detune) osc.detune.setValueAtTime(detune, now);
+
+    amp.gain.setValueAtTime(0.0001, now);
+    amp.gain.exponentialRampToValueAtTime(gain, now + 0.02);
+    amp.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+    osc.connect(amp).connect(this.chipFilter || this.chipMasterGain);
+    osc.start(now);
+    osc.stop(now + duration + 0.04);
+  }
+
+  _updateChipMusicCard(step) {
+    if (this.chipStatusEl) {
+      this.chipStatusEl.textContent = `LOOP INFINITO · PASO ${String(step + 1).padStart(2, '0')}`;
+    }
+
+    if (!this.chipBarsEl) return;
+    const bars = Array.from(this.chipBarsEl.querySelectorAll('.gamb-chip-bar'));
+    bars.forEach((bar, index) => {
+      bar.classList.toggle('is-active', index === (step % bars.length));
+      bar.classList.toggle('is-secondary', index === ((step + 4) % bars.length));
+    });
+  }
+
+  _scheduleChipStep() {
+    if (!this.chipMusicPlaying || !this.chipAudioContext) return;
+
+    const { lead, bass, drums } = this.chipPatterns;
+    const step = this.chipMusicStep % lead.length;
+    const stepDuration = 60 / this.chipTempo / 4;
+
+    this._playChipVoice({
+      offset: lead[step],
+      duration: stepDuration * 0.9,
+      type: 'square',
+      gain: 0.045,
+      octaveShift: 1,
+      detune: step % 2 === 0 ? -5 : 5
+    });
+
+    this._playChipVoice({
+      offset: bass[step],
+      duration: stepDuration * 1.15,
+      type: 'triangle',
+      gain: 0.03,
+      octaveShift: -1,
+      detune: 0
+    });
+
+    if (drums[step]) {
+      this._playChipVoice({
+        offset: 10,
+        duration: stepDuration * 0.45,
+        type: 'sawtooth',
+        gain: 0.02,
+        octaveShift: -2,
+        detune: -12
+      });
+    }
+
+    this._updateChipMusicCard(step);
+    this.chipMusicStep = (step + 1) % lead.length;
+    this.chipMusicTimer = window.setTimeout(() => this._scheduleChipStep(), stepDuration * 1000);
+  }
+
+  _toggleMusicPlayback() {
+    if (!this.chipAudioContext) return;
+
+    if (this.chipMusicPlaying) {
+      this.chipMusicPlaying = false;
+      if (this.chipMusicTimer) {
+        window.clearTimeout(this.chipMusicTimer);
+        this.chipMusicTimer = null;
+      }
+      if (this.chipToggleBtn) this.chipToggleBtn.textContent = 'REANUDAR';
+      if (this.chipStatusEl) this.chipStatusEl.textContent = 'PAUSA ACTIVA';
+      return;
+    }
+
+    this.chipMusicPlaying = true;
+    if (this.chipToggleBtn) this.chipToggleBtn.textContent = 'PAUSAR';
+    if (this.chipAudioContext.state === 'suspended') {
+      this.chipAudioContext.resume().catch(() => {});
+    }
+    this._scheduleChipStep();
+  }
+
+  _stopMusic() {
+    this.chipMusicPlaying = false;
+    if (this.chipMusicTimer) {
+      window.clearTimeout(this.chipMusicTimer);
+      this.chipMusicTimer = null;
+    }
+
+    if (this.chipAudioContext) {
+      try {
+        this.chipAudioContext.close();
+      } catch {
+        // ignore teardown errors
+      }
+    }
+
+    this.chipAudioContext = null;
+    this.chipMasterGain = null;
+    this.chipFilter = null;
+    this.chipStatusEl = null;
+    this.chipToggleBtn = null;
+    this.chipBarsEl = null;
+  }
+
+  _normalizeChoice(choice) {
+    return {
+      ...choice,
+      requiresItem: choice.requiresItem || choice.requires || choice.req || null,
+      requiresScore: Number.isFinite(choice.requiresScore) ? choice.requiresScore : null,
+      requiresStats: choice.requiresStats || null,
+      requiresScene: Number.isFinite(choice.requiresScene) ? choice.requiresScene : null,
+      hint: choice.hint || null
+    };
+  }
+
+  _choiceIsUnlocked(choice) {
+    if (choice.requiresItem && !this.inventory.includes(choice.requiresItem)) return false;
+    if (choice.requiresScore !== null && this.score < choice.requiresScore) return false;
+    if (choice.requiresScene !== null && !this.path.includes(choice.requiresScene)) return false;
+    if (choice.requiresStats) {
+      const failed = Object.entries(choice.requiresStats).some(([stat, min]) => (this.stats[stat] || 0) < min);
+      if (failed) return false;
+    }
+    return true;
+  }
+
+  _requirementHint(choice) {
+    if (choice.hint) return choice.hint;
+    if (choice.requiresItem) return `Necesitas: ${choice.requiresItem}`;
+    if (choice.requiresScore !== null) return `Necesitas ${choice.requiresScore} puntos`;
+    if (choice.requiresStats) {
+      const [stat, min] = Object.entries(choice.requiresStats)[0];
+      return `Necesitas ${stat} ${min}+`;
+    }
+    return 'Ruta bloqueada';
+  }
+
+  _applyChoiceOutcome(choice, scene) {
+    this.score += (choice.score || 0);
+
+    if (choice.item && !this.inventory.includes(choice.item)) {
+      this.inventory.push(choice.item);
+    }
+
+    this.decisions[scene.id] = choice.text;
+
+    const scoreSwing = choice.score || 0;
+    const itemName = choice.item || '';
+    const bodyShift = scoreSwing >= 0 ? -4 : -8;
+    const clarityShift = Math.round(scoreSwing / 6);
+    const omenShift = scoreSwing < 0 ? 8 : 4;
+
+    this.stats.cuerpo = this._clamp(this.stats.cuerpo + bodyShift, 0, 100);
+    this.stats.lucidez = this._clamp(this.stats.lucidez + clarityShift, 0, 100);
+    this.stats.destino = this._clamp(this.stats.destino + omenShift, 0, 100);
+
+    if (/Ansiedad|Rastrojo|Sin_Buen_Humor/.test(itemName)) {
+      this.stats.cuerpo = this._clamp(this.stats.cuerpo - 8, 0, 100);
+      this.stats.lucidez = this._clamp(this.stats.lucidez - 10, 0, 100);
+      this.stats.destino = this._clamp(this.stats.destino + 12, 0, 100);
+    }
+
+    if (/Porro_Intacto|El_Costo_de_Agosto|Claridad|Identidad_Perea/.test(itemName)) {
+      this.stats.cuerpo = this._clamp(this.stats.cuerpo + 6, 0, 100);
+      this.stats.lucidez = this._clamp(this.stats.lucidez + 12, 0, 100);
+      this.stats.destino = this._clamp(this.stats.destino + 6, 0, 100);
+    }
+
+    if (scene.id === 20 || choice.next === 20) {
+      this.stats.cuerpo = this._clamp(this.stats.cuerpo - 4, 0, 100);
+      this.stats.destino = this._clamp(this.stats.destino + 10, 0, 100);
+    }
+  }
+
+  _renderStatBar(label, value, tone = 'cyan') {
+    return `
+      <div class="gamb-stat-row">
+        <div class="gamb-stat-top">
+          <span>${label}</span>
+          <strong>${value}</strong>
+        </div>
+        <div class="gamb-stat-bar">
+          <span class="gamb-stat-fill ${tone}" style="width:${value}%"></span>
+        </div>
+      </div>
+    `;
+  }
+
+  _renderScenePanels(scene) {
+    const recentPath = this.path.slice(-5).map((id) => this._getScene(id)?.title || `ESCENA ${id}`);
+    const recentChoices = Object.entries(this.decisions).slice(-3).map(([, text]) => text);
+    const inventory = this.inventory.length > 0
+      ? this.inventory.map((item) => `<span class="gamb-inv-item">${item}</span>`).join('')
+      : '<span class="gamb-empty-state">Sin reliquias todavía</span>';
+
+    return `
+      <aside class="gamb-side-panels">
+        <section class="gamb-panel">
+          <div class="gamb-panel-title">ESTADO</div>
+          ${this._renderStatBar('CUERPO', this.stats.cuerpo, 'pink')}
+          ${this._renderStatBar('LUCIDEZ', this.stats.lucidez, 'cyan')}
+          ${this._renderStatBar('DESTINO', this.stats.destino, 'lime')}
+        </section>
+        <section class="gamb-panel">
+          <div class="gamb-panel-title">CRONOLOGÍA</div>
+          <div class="gamb-route-list">
+            ${recentPath.map((step, idx) => `<div class="gamb-route-step"><span>${this.path.length - recentPath.length + idx + 1}</span><strong>${step}</strong></div>`).join('')}
+          </div>
+        </section>
+        <section class="gamb-panel">
+          <div class="gamb-panel-title">RELIQUIAS</div>
+          <div class="gamb-panel-tags">${inventory}</div>
+        </section>
+        <section class="gamb-panel">
+          <div class="gamb-panel-title">ÚLTIMAS DECISIONES</div>
+          <div class="gamb-echo-list">
+            ${recentChoices.length > 0 ? recentChoices.map((entry) => `<div class="gamb-echo-item">${entry}</div>`).join('') : '<span class="gamb-empty-state">Aún no has elegido nada</span>'}
+          </div>
+          <div class="gamb-controls-help">Teclas: <kbd>↑↓</kbd> moverte · <kbd>Enter</kbd> elegir · <kbd>1-9</kbd> acceso rápido · <kbd>Esc</kbd> salir</div>
+        </section>
+      </aside>
+    `;
+  }
+
+  _renderMenu() {
+    this.uiMode = 'menu';
+    const stage = document.getElementById('gamb-stage');
+    if (!stage) return;
+
+    const save = this._getSavedRun();
+    const topRanks = this.rankings.slice(0, 5);
+    const endings = this.meta.endings.length > 0
+      ? this.meta.endings.map((ending) => `<span class="gamb-badge">${this._getEndingLabel(ending)}</span>`).join('')
+      : '<span class="gamb-empty-state">Ningún final desbloqueado</span>';
+    const relics = this.meta.relics.length > 0
+      ? this.meta.relics.slice(-6).map((relic) => `<span class="gamb-inv-item">${relic}</span>`).join('')
+      : '<span class="gamb-empty-state">Todavía no has dejado huella</span>';
+
+    stage.innerHTML = `
+      <div class="gamb-menu-screen">
+        <div class="gamb-menu-hero">
+          <div class="gamb-menu-kicker">GAMBITER</div>
+          <h2 class="gamb-menu-title">BILBAO ODYSSEY DELUXE</h2>
+          <p class="gamb-menu-text">La aventura ahora guarda partida, recuerda reliquias, muestra tu ruta y convierte cada run en historia acumulada.</p>
+        </div>
+        <div class="gamb-menu-actions">
+          <button class="gamb-choice" data-menu-action="new">1. NUEVA ODISEA</button>
+          <button class="gamb-choice" data-menu-action="continue" ${save ? '' : 'disabled'}>${save ? '2. CONTINUAR RUN' : '2. CONTINUAR RUN 🔒'}</button>
+          <button class="gamb-choice" data-menu-action="archive">3. VER ARCHIVO</button>
+          <button class="gamb-choice" data-menu-action="exit">ESC. SALIR</button>
+        </div>
+        <div class="gamb-menu-grid">
+          <section class="gamb-panel">
+            <div class="gamb-panel-title">META</div>
+            <div class="gamb-meta-line"><span>Runs</span><strong>${this.meta.totalRuns}</strong></div>
+            <div class="gamb-meta-line"><span>Mejor score</span><strong>${this.meta.bestScore}</strong></div>
+            <div class="gamb-meta-line"><span>Último rango</span><strong>${this.meta.lastTitle}</strong></div>
+            <div class="gamb-meta-line"><span>Finales</span><strong>${this.meta.endings.length}</strong></div>
+            ${save ? `<div class="gamb-menu-save">RUN EN CURSO: <strong>${this._getScene(save.currentScene)?.title || 'ESCENA DESCONOCIDA'}</strong></div>` : '<div class="gamb-menu-save">No hay run guardada</div>'}
+          </section>
+          <section class="gamb-panel">
+            <div class="gamb-panel-title">FINALES DESCUBIERTOS</div>
+            <div class="gamb-panel-tags">${endings}</div>
+          </section>
+          <section class="gamb-panel">
+            <div class="gamb-panel-title">RELIQUIAS DE CARRERA</div>
+            <div class="gamb-panel-tags">${relics}</div>
+          </section>
+          <section class="gamb-panel">
+            <div class="gamb-panel-title">TOP ARCADE</div>
+            <div class="gamb-route-list">
+              ${topRanks.length > 0 ? topRanks.map((rank, idx) => `<div class="gamb-route-step"><span>${idx + 1}</span><strong>${rank.name}</strong><em>${rank.score} PTS</em></div>`).join('') : '<span class="gamb-empty-state">Aún no hay marcas</span>'}
+            </div>
+          </section>
+        </div>
+      </div>
+    `;
+
+    stage.querySelector('[data-menu-action="new"]')?.addEventListener('click', () => this.startNewRun());
+    stage.querySelector('[data-menu-action="continue"]')?.addEventListener('click', () => this.resumeRun());
+    stage.querySelector('[data-menu-action="archive"]')?.addEventListener('click', () => this._renderArchive());
+    stage.querySelector('[data-menu-action="exit"]')?.addEventListener('click', () => this.exit());
+    this._syncChoiceFocus(0);
+  }
+
+  _renderArchive() {
+    this.uiMode = 'archive';
+    const stage = document.getElementById('gamb-stage');
+    if (!stage) return;
+
+    const rewards = this.unlockedRewards.length > 0
+      ? this.unlockedRewards.map((reward) => `<span class="gamb-badge">${reward}</span>`).join('')
+      : '<span class="gamb-empty-state">La máquina aún no te debe favores</span>';
+
+    stage.innerHTML = `
+      <div class="gamb-menu-screen gamb-archive-screen">
+        <div class="gamb-menu-hero">
+          <div class="gamb-menu-kicker">ARCHIVO</div>
+          <h2 class="gamb-menu-title">MEMORIA DEL GAMBITER</h2>
+          <p class="gamb-menu-text">Aquí vive todo lo que ya te ha pasado: finales, reliquias, premios de la máquina y mejor score.</p>
+        </div>
+        <div class="gamb-menu-grid">
+          <section class="gamb-panel">
+            <div class="gamb-panel-title">FINALES</div>
+            <div class="gamb-panel-tags">${this.meta.endings.length ? this.meta.endings.map((ending) => `<span class="gamb-badge">${this._getEndingLabel(ending)}</span>`).join('') : '<span class="gamb-empty-state">Nada todavía</span>'}</div>
+          </section>
+          <section class="gamb-panel">
+            <div class="gamb-panel-title">PREMIOS DE TRAGAPERRAS</div>
+            <div class="gamb-panel-tags">${rewards}</div>
+          </section>
+          <section class="gamb-panel">
+            <div class="gamb-panel-title">TOP 10</div>
+            ${this.rankings.length ? this.rankings.map((rank, idx) => `<div class="gamb-route-step"><span>${idx + 1}</span><strong>${rank.name}</strong><em>${rank.score} PTS</em></div>`).join('') : '<span class="gamb-empty-state">Arcade vacío</span>'}
+          </section>
+          <section class="gamb-panel">
+            <div class="gamb-panel-title">ÚLTIMO ECO</div>
+            <div class="gamb-meta-line"><span>Título</span><strong>${this.meta.lastTitle}</strong></div>
+            <div class="gamb-meta-line"><span>Score</span><strong>${this.meta.lastScore}</strong></div>
+            <div class="gamb-meta-line"><span>Runs totales</span><strong>${this.meta.totalRuns}</strong></div>
+            <div class="gamb-meta-line"><span>Mejor score</span><strong>${this.meta.bestScore}</strong></div>
+          </section>
+        </div>
+        <div class="gamb-menu-actions">
+          <button class="gamb-choice" data-menu-action="back">1. VOLVER AL MENÚ</button>
+          <button class="gamb-choice" data-menu-action="new">2. NUEVA ODISEA</button>
+        </div>
+      </div>
+    `;
+
+    stage.querySelector('[data-menu-action="back"]')?.addEventListener('click', () => this._renderMenu());
+    stage.querySelector('[data-menu-action="new"]')?.addEventListener('click', () => this.startNewRun());
+    this._syncChoiceFocus(0);
+  }
+
+  _handleKeyDown(event) {
+    if (!this.overlay || !this.isActive) return;
+    const tag = document.activeElement?.tagName;
+
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      this.exit();
+      return;
+    }
+
+    if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+
+    if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
+      event.preventDefault();
+      this._moveChoiceFocus(1);
+      return;
+    }
+
+    if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
+      event.preventDefault();
+      this._moveChoiceFocus(-1);
+      return;
+    }
+
+    if (event.key === 'Enter' || event.code === 'Space') {
+      if (event.code === 'Space') {
+        event.preventDefault();
+      }
+      this._getFocusableChoices()[this.focusedChoiceIndex]?.click();
+      return;
+    }
+
+    if (this.uiMode === 'menu') {
+      if (event.key === '1') this.overlay.querySelector('[data-menu-action="new"]')?.click();
+      if (event.key === '2') this.overlay.querySelector('[data-menu-action="continue"]')?.click();
+      if (event.key === '3') this.overlay.querySelector('[data-menu-action="archive"]')?.click();
+      return;
+    }
+
+    if (this.uiMode === 'archive') {
+      if (event.key === '1') this.overlay.querySelector('[data-menu-action="back"]')?.click();
+      if (event.key === '2') this.overlay.querySelector('[data-menu-action="new"]')?.click();
+      return;
+    }
+
+    const choiceIndex = Number.parseInt(event.key, 10);
+    if (!Number.isNaN(choiceIndex) && choiceIndex > 0) {
+      const choices = Array.from(this.overlay.querySelectorAll('.gamb-choice:not(.locked):not([disabled])'));
+      choices[choiceIndex - 1]?.click();
+    }
+  }
+
+  _publishTestingHooks() {
+    window.render_game_to_text = () => this.renderGameToText();
+    window.advanceTime = (ms = 16) => {
+      void ms;
+      return this.renderGameToText();
+    };
+  }
+
+  renderGameToText() {
+    const currentScene = this._getScene(this.currentScene);
+    const visibleChoices = Array.from(document.querySelectorAll('#gamb-stage .gamb-choice')).map((button, index) => ({
+      index: index + 1,
+      text: button.textContent.trim(),
+      disabled: button.disabled || button.classList.contains('locked')
+    }));
+
+    return JSON.stringify({
+      active: this.isActive,
+      mode: this.uiMode,
+      currentScene: currentScene ? { id: currentScene.id, title: currentScene.title } : null,
+      score: this.score,
+      stats: this.stats,
+      inventory: this.inventory,
+      path: this.path.slice(-6).map((id) => this._getScene(id)?.title || `ESCENA ${id}`),
+      endings: this.meta.endings,
+      choices: visibleChoices,
+      canContinue: Boolean(this._getSavedRun()),
+      music: {
+        label: this.chipTrackLabel,
+        playing: this.chipMusicPlaying,
+        step: this.chipMusicStep
+      }
+    });
+  }
+
+  _getFocusableChoices() {
+    return Array.from(this.overlay?.querySelectorAll('.gamb-choice:not(.locked):not([disabled])') || []);
+  }
+
+  _syncChoiceFocus(index = 0) {
+    const choices = this._getFocusableChoices();
+    if (choices.length === 0) {
+      this.focusedChoiceIndex = 0;
+      return;
+    }
+
+    const normalizedIndex = ((index % choices.length) + choices.length) % choices.length;
+    this.focusedChoiceIndex = normalizedIndex;
+
+    choices.forEach((choice, choiceIndex) => {
+      const isFocused = choiceIndex === normalizedIndex;
+      choice.classList.toggle('is-focused', isFocused);
+      if (isFocused) {
+        choice.focus({ preventScroll: true });
+      }
+    });
+  }
+
+  _moveChoiceFocus(delta) {
+    const choices = this._getFocusableChoices();
+    if (choices.length === 0) return;
+    this._syncChoiceFocus(this.focusedChoiceIndex + delta);
+  }
+
+  startNewRun() {
     this.currentScene = 0;
     this.score = 0;
     this.inventory = [];
     this.decisions = {};
+    this.path = [];
+    this.stats = this._createBaseStats();
+    this.slotReturnScene = null;
+    this.uiMode = 'run';
+    this._clearSavedRun();
+    this.renderScene(0);
+  }
+
+  resumeRun() {
+    const savedRun = this._getSavedRun();
+    if (!savedRun) {
+      this._renderMenu();
+      return;
+    }
+
+    this.currentScene = savedRun.currentScene || 0;
+    this.score = savedRun.score || 0;
+    this.inventory = Array.isArray(savedRun.inventory) ? savedRun.inventory : [];
+    this.decisions = savedRun.decisions && typeof savedRun.decisions === 'object' ? savedRun.decisions : {};
+    this.path = Array.isArray(savedRun.path) ? savedRun.path : [];
+    this.stats = savedRun.stats && typeof savedRun.stats === 'object'
+      ? { ...this._createBaseStats(), ...savedRun.stats }
+      : this._createBaseStats();
+    this.slotReturnScene = Number.isFinite(savedRun.slotReturnScene) ? savedRun.slotReturnScene : null;
+    this.uiMode = 'run';
+    this.renderScene(this.currentScene);
+  }
+
+  // 🎮 LAUNCH
+  launch() {
+    if (this.isActive && this.overlay?.isConnected) {
+      this._renderMenu();
+      return;
+    }
+
     this.isActive = true;
+    this.uiMode = 'menu';
 
     this.overlay = document.createElement('div');
     this.overlay.id = 'gambitero-overlay';
@@ -391,91 +1020,126 @@ class ElGambitero {
     document.body.appendChild(this.overlay);
     requestAnimationFrame(() => this.overlay.classList.add('active'));
 
+    document.addEventListener('keydown', this.boundKeyHandler);
+    globalThis.MOSKV?.audioFocus?.claim?.('gambitero', {
+      reason: 'gambitero-open',
+      resume: false
+    });
+
     this._startMusic();
-    this.renderScene(0);
+    this._renderMenu();
   }
 
-  // 🎵 MUSIC (INCREDIBLE CRISIS SPOTIFY)
+  // 🎵 MUSIC (8-BIT LOCRIO LOOP)
   _startMusic() {
+    const bars = Array.from({ length: 8 }, (_, index) => {
+      const active = index === 0 ? ' is-active' : '';
+      return `<span class="gamb-chip-bar${active}"></span>`;
+    }).join('');
+
     const el = document.createElement('div');
     el.id = 'gambitero-music';
-    // Estilo Incredible Crisis para el reproductor
-    el.style.cssText = 'position:absolute; bottom:20px; right:20px; width:90%; max-width:320px; z-index:1000; box-shadow: 10px 10px 0px #FF00A0, -5px -5px 0px #00F0FF; border-radius:12px; transform: rotate(-3deg); transition: transform 0.2s;';
-    
-    // Añadir hover effect al vuelo
-    el.onmouseover = () => el.style.transform = 'rotate(0deg) scale(1.02)';
-    el.onmouseleave = () => el.style.transform = 'rotate(-3deg) scale(1)';
+    el.className = 'gamb-chip-player';
+    el.innerHTML = `
+      <div class="gamb-chip-shell">
+        <div class="gamb-chip-head">
+          <span class="gamb-chip-kicker">${this.chipTrackLabel}</span>
+          <strong class="gamb-chip-title">8-BIT INFINITO</strong>
+        </div>
+        <div class="gamb-chip-status" id="gamb-chip-status">LOOP INFINITO · PASO 01</div>
+        <div class="gamb-chip-bars" aria-hidden="true">${bars}</div>
+        <div class="gamb-chip-actions">
+          <button class="gamb-chip-toggle" id="gamb-chip-toggle" type="button">PAUSAR</button>
+          <span class="gamb-chip-note">SQ · TRI · NOISE</span>
+        </div>
+      </div>
+    `;
 
-    el.innerHTML = `<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/6BAoy65EuilzdKV2ZTfg6V?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`;
+    this.chipStatusEl = el.querySelector('#gamb-chip-status');
+    this.chipToggleBtn = el.querySelector('#gamb-chip-toggle');
+    this.chipBarsEl = el.querySelector('.gamb-chip-bars');
+    this.chipToggleBtn?.addEventListener('click', () => this._toggleMusicPlayback());
     
     if (this.overlay) {
       this.overlay.appendChild(el);
     } else {
       document.body.appendChild(el);
     }
+
+    this._ensureChipAudio();
+    if (this.chipAudioContext?.state === 'suspended') {
+      this.chipAudioContext.resume().catch(() => {});
+    }
+    this.chipMusicPlaying = true;
+    this.chipMusicStep = 0;
+    this._scheduleChipStep();
   }
 
   // 🎬 RENDER SCENE
   renderScene(id) {
-    const scene = this.scenes.find(s => s.id === id);
+    if (id === 20) {
+      this.renderSlotMachine();
+      return;
+    }
+
+    const scene = this._getScene(id);
     if (!scene) { this.endGame(); return; }
 
     this.currentScene = id;
+    this.uiMode = 'run';
+    this._recordSceneVisit(id);
     const stage = document.getElementById('gamb-stage');
+    if (!stage) return;
 
-    // Build choices HTML with requirement checks
-    const choicesHTML = scene.choices.map((c, i) => {
-      const hasItem = !c.requires || this.inventory.includes(c.requires);
-      const locked = c.requires && !hasItem;
-      return `<button class="gamb-choice ${locked ? 'locked' : ''}" 
-        data-idx="${i}" ${locked ? 'disabled title="Necesitas: '+c.requires+'"' : ''}>
-        ${c.text}${locked ? ' 🔒' : ''}
-      </button>`;
+    const choicesHTML = scene.choices.map((choice, i) => {
+      const normalized = this._normalizeChoice(choice);
+      const unlocked = this._choiceIsUnlocked(normalized);
+      const hint = unlocked ? '' : this._requirementHint(normalized);
+      return `
+        <button
+          class="gamb-choice ${unlocked ? '' : 'locked'}"
+          data-idx="${i}"
+          ${unlocked ? '' : `disabled title="${hint}"`}
+        >
+          <span class="gamb-choice-index">${i + 1}.</span> ${normalized.text}${unlocked ? '' : ' 🔒'}
+        </button>
+        ${unlocked ? '' : `<div class="gamb-choice-hint">${hint}</div>`}
+      `;
     }).join('');
 
-    // Inventory display
-    const invHTML = this.inventory.length > 0 
-      ? `<div class="gamb-inventory">🎒 ${this.inventory.map(i => `<span class="gamb-inv-item">${i}</span>`).join(' ')}</div>`
-      : '';
-
     stage.innerHTML = `
-      <div class="gamb-scene gamb-shake-active" onanimationend="this.classList.remove(\'gamb-shake-active\')">
+      <div class="gamb-scene gamb-scene-grid gamb-shake-active" onanimationend="this.classList.remove('gamb-shake-active')">
         <div class="gamb-hud">
           <span class="gamb-hud-score">💰 ${this.score} PTS</span>
           <span class="gamb-hud-scene">${scene.title}</span>
           <button class="gamb-exit-btn" id="gamb-exit-btn">✕</button>
         </div>
-        <pre class="gamb-art">${scene.art}</pre>
-        <div class="gamb-text">${scene.text}</div>
-        ${invHTML}
-        <div class="gamb-choices">${choicesHTML}</div>
+        <div class="gamb-main-column">
+          <div class="gamb-scene-kicker">NO HAY PLAN. SOLO INSISTENCIA.</div>
+          <div class="gamb-art">${scene.art}</div>
+          <div class="gamb-text">${scene.text}</div>
+          <div class="gamb-choices">${choicesHTML}</div>
+        </div>
+        ${this._renderScenePanels(scene)}
       </div>
     `;
 
-    // Bind choice clicks
     stage.querySelectorAll('.gamb-choice:not(.locked)').forEach(btn => {
       btn.addEventListener('click', () => {
         const idx = parseInt(btn.dataset.idx);
-        const choice = scene.choices[idx];
+        const choice = this._normalizeChoice(scene.choices[idx]);
 
-        // Apply effects
-        this.score += (choice.score || 0);
-        if (choice.item && !this.inventory.includes(choice.item)) {
-          this.inventory.push(choice.item);
-        }
-        this.decisions[scene.id] = idx;
+        this._applyChoiceOutcome(choice, scene);
 
-        // Slot Machine special route
-        if (choice.next === 'SLOT') {
+        if (choice.next === 20 || choice.next === 'SLOT') {
+          this.slotReturnScene = scene.id;
           this.renderSlotMachine();
           return;
         }
 
-        // Navigate
         if (choice.next === -1) {
           this.endGame();
         } else {
-          // Transition effect
           stage.style.opacity = '0';
           setTimeout(() => {
             this.renderScene(choice.next);
@@ -485,38 +1149,66 @@ class ElGambitero {
       });
     });
 
-    // Exit button
     document.getElementById('gamb-exit-btn')?.addEventListener('click', () => this.exit());
+    this._saveRun();
+    this._syncChoiceFocus(0);
 
-    // GSAP entrance
     if (typeof gsap !== 'undefined') {
       gsap.from('.gamb-art', { opacity: 0, y: -20, duration: 0.4 });
-      gsap.from('.gamb-text', { opacity: 0, y: 20, duration: 0.5, delay: 0.2 });
-      gsap.from('.gamb-choices', { opacity: 0, y: 20, duration: 0.4, delay: 0.4 });
+      gsap.from('.gamb-text', { opacity: 0, y: 20, duration: 0.5, delay: 0.12 });
+      gsap.from('.gamb-side-panels .gamb-panel', { opacity: 0, x: 18, duration: 0.35, stagger: 0.06, delay: 0.18 });
+      gsap.from('.gamb-choices', { opacity: 0, y: 20, duration: 0.4, delay: 0.28 });
     }
+  }
+
+  _getRankTitle() {
+    if (this.score >= 300) return 'LEYENDA DEL SERVIDOR';
+    if (this.score >= 200) return 'GAMBITER SUPREMO';
+    if (this.score >= 150) return 'EXPLORADOR SOBERANO';
+    if (this.score >= 100) return 'HACKER NOVATO';
+    if (this.score >= 50) return 'TURISTA DEL CÓDIGO';
+    return 'PARDILLO DIGITAL';
   }
 
   // 🏁 END GAME
   endGame() {
-    this.isActive = false;
+    this.uiMode = 'end';
     const stage = document.getElementById('gamb-stage');
+    if (!stage) return;
 
-    let title = 'PARDILLO DIGITAL';
-    if (this.score >= 300) title = 'LEYENDA DEL SERVIDOR';
-    else if (this.score >= 200) title = 'GAMBITERO SUPREMO';
-    else if (this.score >= 150) title = 'EXPLORADOR SOBERANO';
-    else if (this.score >= 100) title = 'HACKER NOVATO';
-    else if (this.score >= 50) title = 'TURISTA DEL CÓDIGO';
-
+    const title = this._getRankTitle();
+    const endingKey = this._getEndingKey();
+    const endingLabel = this._getEndingLabel(endingKey);
     let endingHTML = '';
-    // Determine ending type based on precisely where the player came from
     if (this.currentScene === 17) {
       endingHTML = '<div class="gamb-ending-text gamb-ending-1">★ FINAL 1: TRASCENDENCIA ★</div>';
-    } else if (this.currentScene === 19 || this.currentScene === 20 || this.currentScene === 21) {
+    } else if (this.currentScene === 19 || this.currentScene === 21) {
       endingHTML = '<div class="gamb-ending-text gamb-ending-2">☠️ FINAL 2: DERROTA MÁXIMA ☠️</div>';
     } else if (this.currentScene === 24) {
       endingHTML = '<div class="gamb-ending-text gamb-ending-3">🌀 FINAL 3: FELICIDAD ABSOLUTA 🌀<br><span style="font-size:1.2rem; color:#fff;">(SIEMPRE FUI FRAN PEREA)</span></div>';
+    } else {
+      endingHTML = `<div class="gamb-ending-text gamb-ending-1">${endingLabel}</div>`;
     }
+
+    this.meta.totalRuns += 1;
+    this.meta.bestScore = Math.max(this.meta.bestScore, this.score);
+    this.meta.lastTitle = title;
+    this.meta.lastScore = this.score;
+    if (!this.meta.endings.includes(endingKey)) {
+      this.meta.endings.push(endingKey);
+    }
+    this.inventory.forEach((item) => {
+      if (!this.meta.relics.includes(item)) {
+        this.meta.relics.push(item);
+      }
+    });
+    this._saveMeta();
+    this._clearSavedRun();
+
+    const visitedScenes = [...new Set(this.path)].length;
+    const relics = this.inventory.length > 0
+      ? this.inventory.map((item) => `<span class="gamb-inv-item">${item}</span>`).join('')
+      : '<span class="gamb-empty-state">Ninguna reliquia</span>';
 
     stage.innerHTML = `
       <div class="gamb-end">
@@ -524,8 +1216,12 @@ class ElGambitero {
         <div class="gamb-subtitle">DISEÑA TU AVENTURA 2</div>
         ${endingHTML}
         <div class="gamb-end-score">${this.score} PUNTOS</div>
-        <div class="gamb-end-items">Objetos: ${this.inventory.length > 0 ? this.inventory.join(', ') : 'ninguno'}</div>
-        <div class="gamb-end-scenes">Escenas visitadas: ${Object.keys(this.decisions).length}/20</div>
+        <div class="gamb-end-meta">
+          <div class="gamb-meta-line"><span>Ruta</span><strong>${visitedScenes} escenas</strong></div>
+          <div class="gamb-meta-line"><span>Archivo</span><strong>${this.meta.totalRuns} runs</strong></div>
+          <div class="gamb-meta-line"><span>Mejor marca</span><strong>${this.meta.bestScore}</strong></div>
+        </div>
+        <div class="gamb-end-items gamb-panel-tags">${relics}</div>
         <div class="gamb-initials">
           <p>TUS INICIALES (3 LETRAS):</p>
           <div class="gamb-initial-inputs">
@@ -536,12 +1232,14 @@ class ElGambitero {
           <button class="gamb-choice gamb-save-btn" id="gamb-save">💾 GUARDAR</button>
         </div>
         <div id="gamb-rankings"></div>
-        <button class="gamb-choice" id="gamb-replay">🎰 JUGAR DE NUEVO</button>
-        <button class="gamb-choice" id="gamb-quit">✕ SALIR</button>
+        <div class="gamb-menu-actions">
+          <button class="gamb-choice" id="gamb-menu-return">1. VOLVER AL MENÚ</button>
+          <button class="gamb-choice" id="gamb-replay">2. NUEVA RUN</button>
+          <button class="gamb-choice" id="gamb-quit">ESC. SALIR</button>
+        </div>
       </div>
     `;
 
-    // Input auto-advance
     const inputs = [document.getElementById('gl1'), document.getElementById('gl2'), document.getElementById('gl3')];
     inputs.forEach((inp, i) => {
       inp?.addEventListener('input', () => {
@@ -561,16 +1259,21 @@ class ElGambitero {
       document.getElementById('gamb-save').innerText = '✅ GUARDADO';
     });
 
-    document.getElementById('gamb-replay')?.addEventListener('click', () => { this.exit(); setTimeout(() => this.launch(), 300); });
+    document.getElementById('gamb-menu-return')?.addEventListener('click', () => this._renderMenu());
+    document.getElementById('gamb-replay')?.addEventListener('click', () => this.startNewRun());
     document.getElementById('gamb-quit')?.addEventListener('click', () => this.exit());
 
     this._renderRankings();
+    this._syncChoiceFocus(0);
   }
 
   _renderRankings() {
     const el = document.getElementById('gamb-rankings');
     if (!el) return;
-    if (this.rankings.length === 0) { el.innerHTML = '<p style="opacity:0.5">SIN RECORDS AÚN</p>'; return; }
+    if (this.rankings.length === 0) {
+      el.innerHTML = '<p style="opacity:0.5">SIN RECORDS AÚN</p>';
+      return;
+    }
     el.innerHTML = '<div class="gamb-rank-title">🏆 HALL OF FAME 🏆</div>' +
       this.rankings.map((r, i) => {
         const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `${i+1}.`;
@@ -580,28 +1283,35 @@ class ElGambitero {
 
   // 🚪 EXIT
   exit() {
+    if ((this.uiMode === 'run' || this.uiMode === 'slot') && this.isActive) {
+      this._saveRun();
+    }
     this.isActive = false;
+    this.uiMode = 'boot';
+    document.removeEventListener('keydown', this.boundKeyHandler);
+    globalThis.MOSKV?.audioFocus?.release?.('gambitero', { reason: 'gambitero-close' });
+    this._stopMusic();
     document.getElementById('gambitero-music')?.remove();
-    if (this.overlay) { this.overlay.classList.remove('active'); setTimeout(() => this.overlay?.remove(), 400); }
+    if (this.overlay) {
+      this.overlay.classList.remove('active');
+      setTimeout(() => this.overlay?.remove(), 400);
+    }
+    this.overlay = null;
   }
 
   // ═══════════════════════════════════════════════════════════════════
   // 🎰 SLOT MACHINE RENDERER
   // ═══════════════════════════════════════════════════════════════════
   renderSlotMachine() {
-    if (this.score < 10) {
-      // Not enough points — bounce back to scene 20
-      this.renderScene(20);
-      return;
-    }
-    this.score -= 10; // Cost per spin
-
+    this.currentScene = 20;
+    this.uiMode = 'slot';
     const stage = document.getElementById('gamb-stage');
+    if (!stage) return;
     const symbols = this.slotSymbols;
+    const returnScene = this.slotReturnScene ?? 11;
+    const returnTitle = this._getScene(returnScene)?.title || 'LA RUTA';
 
-    // Build initial reels display
     const reelHTML = (id) => {
-      // Show 3 visible symbols per reel
       const items = [];
       for (let i = 0; i < 3; i++) {
         items.push(`<div class="gamb-slot-symbol">${symbols[Math.floor(Math.random() * symbols.length)]}</div>`);
@@ -627,6 +1337,10 @@ class ElGambitero {
      ║    ═══════════════════════════   ║
      ╚══════════════════════════════════╝</pre>
         <div class="gamb-slot-container">
+          <div class="gamb-slot-meta">
+            <span>Entrada desde: <strong>${returnTitle}</strong></span>
+            <span>Cada tirada cuesta <strong>10 PTS</strong></span>
+          </div>
           <div class="gamb-slot-reels">
             ${reelHTML(0)}
             ${reelHTML(1)}
@@ -636,25 +1350,35 @@ class ElGambitero {
         </div>
         <div class="gamb-choices">
           <button class="gamb-choice gamb-spin-action" id="gamb-spin-btn">🎰 ¡TIRA! (-10 PTS)</button>
-          <button class="gamb-choice" id="gamb-slot-back">🚶 Basta de apostar</button>
+          <button class="gamb-choice" id="gamb-slot-back">🚶 Volver a ${returnTitle}</button>
+          <button class="gamb-choice" id="gamb-slot-quit">☠️ RENDIRSE</button>
         </div>
       </div>
     `;
 
-    // Exit button
     document.getElementById('gamb-exit-btn')?.addEventListener('click', () => this.exit());
-
-    // Back button → go to map
     document.getElementById('gamb-slot-back')?.addEventListener('click', () => {
       stage.style.opacity = '0';
-      setTimeout(() => { this.renderScene(11); stage.style.opacity = '1'; }, 300);
+      setTimeout(() => {
+        this.renderScene(returnScene);
+        stage.style.opacity = '1';
+      }, 300);
+    });
+    document.getElementById('gamb-slot-quit')?.addEventListener('click', () => {
+      this.currentScene = 19;
+      this.endGame();
     });
 
-    // THE SPIN
     const spinBtn = document.getElementById('gamb-spin-btn');
     spinBtn?.addEventListener('click', () => this._executeSlotSpin());
+    if (this.score < 10 && spinBtn) {
+      spinBtn.disabled = true;
+      spinBtn.textContent = '💸 SIN CRÉDITOS';
+    }
 
-    // GSAP entrance
+    this._saveRun();
+    this._syncChoiceFocus(0);
+
     if (typeof gsap !== 'undefined') {
       gsap.from('.gamb-slot-container', { opacity: 0, scale: 0.8, duration: 0.5 });
     }
@@ -756,6 +1480,7 @@ class ElGambitero {
       spinBtn.textContent = this.score >= 10 ? '🎰 ¡OTRA VEZ! (-10 PTS)' : '💸 SIN CRÉDITOS';
       if (this.score < 10) spinBtn.disabled = true;
     }
+    this._saveRun();
   }
 
   _playSlotSound() {

@@ -16,6 +16,8 @@ class AutoDJAesthetic {
     this.trackStartTime = Date.now();
     this.elapsedTimer = null;
     this.isBackgroundPausedByEmbed = false;
+    this.pauseReasons = new Set();
+    this.singleSourceAudio = true;
     
     // Harmony & Timing
     this.fadeDurationMs = 3000; 
@@ -23,8 +25,10 @@ class AutoDJAesthetic {
 
     // Automated DJ Sequence Configuration
     this.autoMixTimer = null;
-    // Massive initial sequence to guarantee different mixes and themes as requested
-    this.mixSequence = ['x8E9HInpzE4', 'rmzKC8AYkVw', 'Otvpn9vfXOE', 'NYhOQTcNLkA', 'Yr5CMXrJgIo', 'ZB13zY5h4bc', '0S43IwBF0uM']; 
+    this.heroVisualId = globalThis.DATA?.heroBackground?.id || 'b9ktVQN48OU';
+    this.currentVideoId = this.heroVisualId;
+    // Curated initial sequence, driven from data.js so the background deck stays easy to tune.
+    this.mixSequence = [...(globalThis.DATA?.backgroundVisuals || ['x8E9HInpzE4', 'b9ktVQN48OU', 'hsdOCzJpUMg'])];
     this.mixIntervalMs = 40000; // Default fallback (dynamic phrases used instead)
 
     // Real BPM mapping for known tracks to perfectly beatmatch
@@ -69,6 +73,7 @@ class AutoDJAesthetic {
     // ═══════════════════════════════════════════
     this.cueCache = {
       'b9ktVQN48OU': 5,   // LES BUKO
+      'hY0G0Zxf_uo': 5,   // 32 Y PICO
       'Otvpn9vfXOE': 10,  // ME CAIGO
       'Yr5CMXrJgIo': 30,  // LINDSTROM (Long intro)
       'NYhOQTcNLkA': 15,  // ECOS
@@ -82,7 +87,7 @@ class AutoDJAesthetic {
     // 🎤 Spotify-style DJ Voice & Mood System
     this.currentMood = localStorage.getItem('moskv_dj_mood') || 'original';
     this.playedTracks = JSON.parse(localStorage.getItem('moskv_dj_history') || '[]');
-    this.voiceEnabled = 'speechSynthesis' in window;
+    this.voiceEnabled = false; // Voice-off by default; keep the mix silent unless explicitly re-enabled later.
 
     // 💾 Persistent User Memory (TikTok-style)
     this.userProfile = JSON.parse(localStorage.getItem('moskv_user') || '{}');
@@ -117,6 +122,19 @@ class AutoDJAesthetic {
 
     // Global callback required by YT API
     globalThis.onYouTubeIframeAPIReady = () => this.initPlayers();
+
+    globalThis.MOSKV?.audioFocus?.register?.('autodj', {
+      resume: () => this.resumeBackgroundMusic('focus'),
+      suspend: () => this.pauseBackgroundMusic('focus'),
+      restorable: true
+    });
+    globalThis.MOSKV?.audioFocus?.register?.('external-embed', {
+      resume: () => {},
+      suspend: () => {},
+      restorable: false
+    });
+
+    requestAnimationFrame(() => this._renderVideoReel());
     
     // Start listening to clicks
     this.bindClickEvents();
@@ -132,43 +150,88 @@ class AutoDJAesthetic {
     return bpm;
   }
 
+  _claimFocus(reason = 'autodj-active', options = {}) {
+    if (this.globalMuted || !this.audioUnlocked) return;
+    globalThis.MOSKV?.audioFocus?.claim?.('autodj', {
+      reason,
+      resume: false,
+      ...options
+    });
+  }
+
+  _releaseFocus(reason = 'autodj-idle') {
+    globalThis.MOSKV?.audioFocus?.release?.('autodj', { reason });
+  }
+
+  _getBackgroundVisuals() {
+    const visualPool = globalThis.DATA?.backgroundVisuals || globalThis.DATA?.bgVideos || [];
+    return [...new Set(visualPool.filter(Boolean))];
+  }
+
   initPlayers() {
-    if (!globalThis.DATA || !globalThis.DATA.videoThumbnails) return;
+    const visualPool = this._getBackgroundVisuals();
+    if (visualPool.length === 0) return;
     
-    // [EXPERT DJ] Forzamos "LES BUKO" como primer track
-    const startVidA = 'b9ktVQN48OU';
-    const startVidB = globalThis.DATA.videoThumbnails[Math.floor(Math.random() * globalThis.DATA.videoThumbnails.length)];
+    // [EXPERT DJ] Abrimos con visuales más cinematográficos y mantenemos el segundo deck preparado
+    const startVidA = visualPool.includes(this.heroVisualId) ? this.heroVisualId : visualPool[0];
+    const secondaryPool = visualPool.filter(id => id !== startVidA);
+    const startVidB = secondaryPool[Math.floor(Math.random() * secondaryPool.length)] || startVidA;
+    const startCueA = this.cueCache[startVidA] || 0;
+    const startCueB = this.cueCache[startVidB] || 0;
+    this.currentVideoId = startVidA;
+    this._updateVideoIdentity(startVidA, true);
+    this._setDeckPoster('a', startVidA);
+    this._setDeckPoster('b', startVidB);
+    this._showDeckPoster('a');
+    this._showDeckPoster('b');
+    this._renderVideoReel();
 
     this.masterBPM = this.getTrackBPM(startVidA);
     this.audioA.src = `audio/${startVidA}.webm`;
     this.audioB.src = `audio/${startVidB}.webm`;
 
     const commonParams = {
-      autoplay: 1, controls: 0, disablekb: 1, fs: 0, 
-      iv_load_policy: 3, loop: 1, modestbranding: 1, playsinline: 1, rel: 0
+      autoplay: 1, mute: 1, controls: 0, disablekb: 1, fs: 0,
+      iv_load_policy: 3, loop: 1, modestbranding: 1, playsinline: 1, rel: 0,
+      vq: 'highres', origin: window.location.origin
     };
 
     this.deckA = new YT.Player('bg-video-a', {
       videoId: startVidA,
-      playerVars: { ...commonParams, playlist: startVidA },
-      events: { 'onReady': (e) => this.onPlayerReady(e, 'a') }
+      playerVars: { ...commonParams, playlist: startVidA, start: startCueA },
+      events: {
+        'onReady': (e) => this.onPlayerReady(e, 'a'),
+        'onStateChange': (e) => this.onPlayerStateChange(e, 'a')
+      }
     });
 
     this.deckB = new YT.Player('bg-video-b', {
       videoId: startVidB,
-      playerVars: { ...commonParams, playlist: startVidB },
-      events: { 'onReady': (e) => this.onPlayerReady(e, 'b') }
+      playerVars: { ...commonParams, playlist: startVidB, start: startCueB },
+      events: {
+        'onReady': (e) => this.onPlayerReady(e, 'b'),
+        'onStateChange': (e) => this.onPlayerStateChange(e, 'b')
+      }
     });
   }
 
   onPlayerReady(event, deckId) {
     // ALWAYS MUTE YOUTUBE VIDEOS. We use standalone Audio context for DJing.
     event.target.mute();
+    if (typeof event.target.setPlaybackQuality === 'function') {
+      event.target.setPlaybackQuality('highres');
+      setTimeout(() => event.target.setPlaybackQuality('highres'), 800);
+      setTimeout(() => event.target.setPlaybackQuality('hd1080'), 1600);
+    }
     
     if (deckId === 'a') {
+      const cuePoint = this.cueCache[this.currentVideoId] || 0;
       event.target.setPlaybackRate(1.0); // Native speed initially
       document.getElementById('video-deck-a').style.opacity = 1;
       event.target.playVideo();
+      if (cuePoint > 0 && typeof event.target.seekTo === 'function') {
+        setTimeout(() => event.target.seekTo(cuePoint, true), 250);
+      }
     } else {
       document.getElementById('video-deck-b').style.opacity = 0;
       event.target.pauseVideo();
@@ -187,6 +250,40 @@ class AutoDJAesthetic {
     }
   }
 
+  onPlayerStateChange(event, deckId) {
+    if (typeof YT === 'undefined' || !YT.PlayerState) return;
+
+    if (event.data === YT.PlayerState.PLAYING) {
+      setTimeout(() => this._hideDeckPoster(deckId), 4500);
+    }
+  }
+
+  _getPosterUrl(videoId) {
+    return [
+      `url("https://i.ytimg.com/vi_webp/${videoId}/maxresdefault.webp")`,
+      `url("https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg")`,
+      `url("https://i.ytimg.com/vi/${videoId}/hqdefault.jpg")`
+    ].join(', ');
+  }
+
+  _setDeckPoster(deckId, videoId) {
+    const poster = document.getElementById(`video-poster-${deckId}`);
+    if (!poster) return;
+    poster.style.backgroundImage = this._getPosterUrl(videoId);
+  }
+
+  _showDeckPoster(deckId) {
+    const poster = document.getElementById(`video-poster-${deckId}`);
+    if (!poster) return;
+    poster.classList.remove('is-hidden');
+  }
+
+  _hideDeckPoster(deckId) {
+    const poster = document.getElementById(`video-poster-${deckId}`);
+    if (!poster) return;
+    poster.classList.add('is-hidden');
+  }
+
   toggleGlobalMute() {
     this.globalMuted = !this.globalMuted;
     
@@ -194,6 +291,14 @@ class AutoDJAesthetic {
     if (this.audioContext) {
         const activeGain = this.activeDeck === 'a' ? this.gainA : this.gainB;
         activeGain.gain.setValueAtTime(this.globalMuted ? 0 : 1, this.audioContext.currentTime);
+    }
+
+    if (this.globalMuted) {
+      this.pauseBackgroundMusic('manual-mute');
+      this._releaseFocus('autodj-muted');
+    } else {
+      this.resumeBackgroundMusic('manual-mute');
+      this._claimFocus('autodj-unmuted');
     }
     
     const iconUnmute = document.querySelector('.icon-unmute');
@@ -322,6 +427,10 @@ class AutoDJAesthetic {
           this.audioB.play().catch(e => console.warn(e));
       }
 
+      if (!this.globalMuted) {
+        this._claimFocus('autodj-unlock');
+      }
+
       // Start the automated DJ setlist loop once audio is unblocked
       console.log("[CORTEX AutoDJ] Starting Automated Mix Sequence (40s intervals)");
       this.initAgentUI();
@@ -351,6 +460,24 @@ class AutoDJAesthetic {
 
       this.triggerCrossfade();
     });
+
+    const backgroundTrigger = document.getElementById('av-trigger');
+    if (backgroundTrigger && !backgroundTrigger.dataset.autodjBound) {
+      backgroundTrigger.dataset.autodjBound = 'true';
+      const activateBackgroundMix = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        if (this.isBackgroundPausedByEmbed || this.isCrossfading) return;
+        this.firstCrossfadeReady = true;
+        this.triggerCrossfade();
+      };
+
+      backgroundTrigger.addEventListener('click', activateBackgroundMix);
+      backgroundTrigger.addEventListener('keydown', (event) => {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        activateBackgroundMix(event);
+      });
+    }
   }
 
   initAgentUI() {
@@ -425,7 +552,7 @@ class AutoDJAesthetic {
     this.elapsedTimer = setInterval(() => this._updateElapsed(), 1000);
 
     setTimeout(() => {
-        const titleA = globalThis.DATA?.works?.find(w => w.id === this.currentVideoId)?.title || "UNKNOWN";
+        const titleA = this._getTrackTitle(this.currentVideoId);
         document.getElementById('dj-track-a').innerText = titleA.substring(0,18);
         document.getElementById('dj-status-text').innerText = 'LIVE';
         document.getElementById('dj-bpm-master').innerText = `${this.masterBPM} BPM`;
@@ -557,9 +684,9 @@ class AutoDJAesthetic {
 
     // Auto-set mood based on time if user hasn't manually chosen
     if (!localStorage.getItem('moskv_dj_mood')) {
-        this.currentMood = timeMood;
+        this.currentMood = globalThis.DATA?.heroBackground?.mood || timeMood;
         this.agentUI?.querySelectorAll('.dj-mood-btn').forEach(b => {
-            b.classList.toggle('active', b.dataset.mood === timeMood);
+            b.classList.toggle('active', b.dataset.mood === this.currentMood);
         });
     }
 
@@ -627,6 +754,10 @@ class AutoDJAesthetic {
             const snareAvg = (freqData[20] + freqData[21] + freqData[22]) / 3;
             
             const vContainer = document.querySelector('.video-container');
+            if (vContainer) {
+                const reactiveEnergy = Math.max(0, Math.min(1, bassAvg / 255));
+                vContainer.style.setProperty('--video-reactive-energy', reactiveEnergy.toFixed(3));
+            }
             
             // 2026 Trend: Liquid Glass / Performance Inmersivo. Throttle kicks to 400ms max.
             if (bassAvg > 220 && Date.now() - lastPulse > 400) {
@@ -777,23 +908,127 @@ class AutoDJAesthetic {
     }
   }
 
+  _getTrackTitle(videoId) {
+    if (videoId === this.heroVisualId && globalThis.DATA?.heroBackground?.title) {
+      return globalThis.DATA.heroBackground.title;
+    }
+    return globalThis.DATA?.works?.find(work => work.id === videoId)?.title || videoId || 'UNKNOWN';
+  }
+
+  _getTrackUrl(videoId) {
+    if (videoId === this.heroVisualId && globalThis.DATA?.heroBackground?.url) {
+      return globalThis.DATA.heroBackground.url;
+    }
+    return `https://www.youtube.com/watch?v=${videoId}`;
+  }
+
+  _getTrackMeta(videoId) {
+    const work = globalThis.DATA?.works?.find((entry) => entry.id === videoId);
+    const categories = work?.categories || [];
+    let badge = 'YT';
+    if (categories.includes('8k')) badge = '8K';
+    else if (categories.includes('4k')) badge = '4K';
+    else if (categories.includes('ambient')) badge = 'AMB';
+    else if (categories.includes('experimental')) badge = 'EXP';
+
+    return {
+      title: this._getTrackTitle(videoId),
+      badge
+    };
+  }
+
+  _renderVideoReel() {
+    const reel = document.getElementById('videoReel');
+    if (!reel) return;
+
+    const visuals = this._getBackgroundVisuals();
+    reel.innerHTML = visuals.map((videoId) => {
+      const meta = this._getTrackMeta(videoId);
+      const activeClass = videoId === this.currentVideoId ? ' is-active' : '';
+      const pressed = videoId === this.currentVideoId ? 'true' : 'false';
+      return `
+        <button class="video-reel-btn${activeClass}" type="button" data-video-id="${videoId}" aria-pressed="${pressed}">
+          <span class="video-reel-btn-label">${meta.badge}</span>
+          <strong>${meta.title}</strong>
+        </button>
+      `;
+    }).join('');
+
+    reel.querySelectorAll('.video-reel-btn').forEach((button) => {
+      button.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        const nextVideoId = button.dataset.videoId;
+        if (!nextVideoId || nextVideoId === this.currentVideoId) {
+          this._syncVideoReel(this.currentVideoId);
+          return;
+        }
+        this.triggerCrossfade(nextVideoId);
+      });
+    });
+
+    this._syncVideoReel(this.currentVideoId);
+  }
+
+  _syncVideoReel(activeVideoId) {
+    document.querySelectorAll('.video-reel-btn').forEach((button) => {
+      const isActive = button.dataset.videoId === activeVideoId;
+      button.classList.toggle('is-active', isActive);
+      button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    });
+  }
+
+  _updateVideoIdentity(videoId, isHeroLaunch = false) {
+    this.currentVideoId = videoId;
+    const identityEl = document.getElementById('videoIdentity');
+    const labelEl = document.getElementById('videoIdentityLabel');
+    const titleEl = document.getElementById('videoIdentityTitle');
+    const heroLabel = globalThis.DATA?.heroBackground?.label || 'EMBEDDED BACKGROUND REEL';
+
+    if (identityEl && identityEl.tagName === 'A') {
+      const trackTitle = this._getTrackTitle(videoId);
+      identityEl.href = this._getTrackUrl(videoId);
+      identityEl.setAttribute('aria-label', `Abrir ${trackTitle} en reproductor embebido`);
+      identityEl.title = `${trackTitle} · Borja Moskv en el reproductor embebido`;
+    }
+
+    if (labelEl) {
+      labelEl.innerText = isHeroLaunch || videoId === this.heroVisualId ? heroLabel : 'NOW PLAYING BACKGROUND';
+    }
+
+    if (titleEl) {
+      titleEl.innerText = this._getTrackTitle(videoId);
+    }
+
+    this._syncVideoReel(videoId);
+  }
+
   // 🎵 MOOD FILTER — Get tracks matching current mood
   _getTracksForMood() {
-    if (!globalThis.DATA?.works) return globalThis.DATA?.videoThumbnails || [];
-    
-    let pool = globalThis.DATA.works;
+    const backgroundIds = globalThis.DATA?.backgroundVisuals || globalThis.DATA?.videoThumbnails || [];
+    if (!globalThis.DATA?.works) return backgroundIds;
+
+    let pool = globalThis.DATA.works.filter(work => backgroundIds.includes(work.id));
+    if (pool.length === 0) {
+        pool = globalThis.DATA.works;
+    }
     if (this.currentMood !== 'all') {
         pool = pool.filter(w => w.categories && w.categories.includes(this.currentMood));
         
-        // CORTEX V5 OVERRIDE: ALWAYS INCLUDE "LES BUKO" (b9ktVQN48OU) if not already present
-        // Because "es que el LES BUKO queda bRUTAL"
-        const lesBuko = globalThis.DATA.works.find(w => w.id === 'b9ktVQN48OU');
-        if (lesBuko && !pool.some(w => w.id === 'b9ktVQN48OU')) {
-            pool.push(lesBuko);
-        }
+        // Keep the curated background deck available even when the mood filter is narrow.
+        backgroundIds.forEach(priorityId => {
+            const track = globalThis.DATA.works.find(w => w.id === priorityId);
+            if (track && !pool.some(w => w.id === priorityId)) {
+                pool.push(track);
+            }
+        });
     }
     // Filter out recently played (avoid repeats)
     const ids = pool.map(w => w.id).filter(id => !this.playedTracks.includes(id));
+    const heroIndex = ids.indexOf(this.heroVisualId);
+    if (heroIndex > 0) {
+        ids.unshift(ids.splice(heroIndex, 1)[0]);
+    }
     
     // If all played, reset history
     if (ids.length === 0) {
@@ -936,8 +1171,13 @@ class AutoDJAesthetic {
   triggerCrossfade(forcedNextTrack = null) {
     if (this.isCrossfading || !this.deckA || !this.deckB) return;
     if (typeof this.deckA.getPlayerState !== 'function' || typeof this.deckB.getPlayerState !== 'function') return;
+    if (forcedNextTrack && forcedNextTrack === this.currentVideoId) {
+      this._syncVideoReel(this.currentVideoId);
+      return;
+    }
 
     if (this.autoMixTimer) clearTimeout(this.autoMixTimer);
+    document.querySelector('.video-container')?.classList.add('is-transitioning');
     
     // Trigger Awwwards morph shader overlay
     if (typeof globalThis.triggerGlobalMorph === 'function') {
@@ -995,7 +1235,7 @@ class AutoDJAesthetic {
     const fromEl = document.getElementById(`video-deck-${fromDeckId}`);
     const toEl = document.getElementById(`video-deck-${toDeckId}`);
 
-    const availableTracks = globalThis.DATA.videoThumbnails;
+    const availableTracks = globalThis.DATA.backgroundVisuals || globalThis.DATA.videoThumbnails;
     const moodPool = this._getTracksForMood();
     // ═══ HARMONIC FILTERING (Camelot Wheel) ═══
     const harmonicPool = this._getHarmonicTracks(moodPool);
@@ -1009,6 +1249,7 @@ class AutoDJAesthetic {
         nextTrack = harmonicPool[Math.floor(Math.random() * harmonicPool.length)] || availableTracks[Math.floor(Math.random() * availableTracks.length)];
     }
     this._recordTrack(nextTrack);
+    this._updateVideoIdentity(nextTrack);
     // Immediately refill prefetch queue for NEXT transition
     this._prefetchNext();
     
@@ -1077,6 +1318,8 @@ class AutoDJAesthetic {
 
     toPlayer.mute();
     const cuePoint = this.cueCache[nextTrack] || 0;
+    this._setDeckPoster(toDeckId, nextTrack);
+    this._showDeckPoster(toDeckId);
     toPlayer.loadVideoById({videoId: nextTrack, startSeconds: cuePoint});
     
     // Sync external audio too
@@ -1146,72 +1389,35 @@ class AutoDJAesthetic {
                 break;
         }
         
-        // Fluid Audio Equal-Power crossfade via Web Audio API
+        // Single-source audio switch: visuals can blend, but the sound never overlaps.
         if (!this.globalMuted && this.audioContext) {
-            toAudio.play().catch(e => console.warn(e));
-            
             const activeGain = toDeckId === 'a' ? this.gainA : this.gainB;
             const prevGain = toDeckId === 'a' ? this.gainB : this.gainA;
             const now = this.audioContext.currentTime;
-            const fadeSecs = this.fadeDurationMs / 1000;
-            
-            // Equal Power Crossfader
-            const steps = 30;
-            const curveIn = new Float32Array(steps);
-            const curveOut = new Float32Array(steps);
-            for (let i = 0; i < steps; i++) {
-                const step = i / (steps - 1);
-                curveIn[i] = Math.sin(step * Math.PI / 2);
-                curveOut[i] = Math.cos(step * Math.PI / 2);
-            }
-            
-            activeGain.gain.cancelScheduledValues(now);
-            activeGain.gain.setValueAtTime(0, now);
-            activeGain.gain.setValueCurveAtTime(curveIn, now, fadeSecs);
-            
-            prevGain.gain.cancelScheduledValues(now);
-            prevGain.gain.setValueAtTime(1, now);
-            prevGain.gain.setValueCurveAtTime(curveOut, now, fadeSecs);
-
-            // DJ BASS SWAP (EQ Routing) + HPF SWEEP + ECHO OUT
             const activeEQ = toDeckId === 'a' ? this.eqA : this.eqB;
             const prevEQ = toDeckId === 'a' ? this.eqB : this.eqA;
-            const prevAux = toDeckId === 'a' ? this.auxB : this.auxA;
-            
-            if (activeEQ && prevEQ) {
-                // HPF Sweep: Slowly wash out the previous track while fading
-                prevEQ.hpf.frequency.setValueAtTime(0, now);
-                prevEQ.hpf.frequency.exponentialRampToValueAtTime(3000, now + fadeSecs);
-                
-                // Echo Out FX: Send previous track to Dub Delay halfway through the crossfade
-                prevAux.gain.setValueAtTime(0, now);
-                prevAux.gain.linearRampToValueAtTime(0.8, now + (fadeSecs * 0.7));
-                prevAux.gain.linearRampToValueAtTime(0, now + fadeSecs);
-                
-                // Swap Lows
-                prevEQ.low.gain.setTargetAtTime(-30, now, 0.5); // Kill old bass fast
-                activeEQ.low.gain.setValueAtTime(-20, now);
-                activeEQ.low.gain.setTargetAtTime(0, now + (fadeSecs * 0.5), 0.5); // Bring new bass midway
-                
-                // Keep Mids/Highs for color
-                prevEQ.high.gain.setTargetAtTime(-10, now, fadeSecs);
-                activeEQ.high.gain.setValueAtTime(5, now);
-                activeEQ.high.gain.setTargetAtTime(0, now + fadeSecs, 0.5);
-                
-                // Reset EQs on complete
-                setTimeout(() => {
-                    if (prevEQ) { 
-                        prevEQ.low.gain.value = 0; 
-                        prevEQ.high.gain.value = 0; 
-                        prevEQ.hpf.frequency.value = 0;
-                    }
-                    if (activeEQ) { 
-                        activeEQ.low.gain.value = 0; 
-                        activeEQ.high.gain.value = 0; 
-                        activeEQ.hpf.frequency.value = 0;
-                    }
-                }, this.fadeDurationMs + 100);
+
+            fromAudio.pause();
+            fromAudio.currentTime = 0;
+
+            activeGain.gain.cancelScheduledValues(now);
+            activeGain.gain.setValueAtTime(0, now);
+            prevGain.gain.cancelScheduledValues(now);
+            prevGain.gain.setValueAtTime(0, now);
+            activeGain.gain.linearRampToValueAtTime(1, now + 0.12);
+
+            if (activeEQ) {
+                activeEQ.low.gain.setValueAtTime(0, now);
+                activeEQ.high.gain.setValueAtTime(0, now);
+                activeEQ.hpf.frequency.setValueAtTime(0, now);
             }
+            if (prevEQ) {
+                prevEQ.low.gain.setValueAtTime(0, now);
+                prevEQ.high.gain.setValueAtTime(0, now);
+                prevEQ.hpf.frequency.setValueAtTime(0, now);
+            }
+
+            toAudio.play().catch(e => console.warn(e));
         }
         
         // Cleanup visuals and inactive decks after crossfade
@@ -1220,6 +1426,7 @@ class AutoDJAesthetic {
             fromAudio.pause();
             this.activeDeck = toDeckId;
             this.isCrossfading = false;
+            document.querySelector('.video-container')?.classList.remove('is-transitioning');
             // Record new track start time NOW (when the drop hit) to align the new phrase
             this.trackStartTime = Date.now();
             
@@ -1241,35 +1448,80 @@ class AutoDJAesthetic {
   }
 
   bindEmbedListeners() {
-    globalThis.addEventListener('blur', () => {
-      setTimeout(() => {
-        if (document.activeElement instanceof HTMLIFrameElement) {
-          const iframe = document.activeElement;
-          
-          if (!iframe.id.includes('bg-video')) {
-            console.log("[CORTEX] External Embed engaged. Pausing background A/V.");
-            this.pauseBackgroundMusic();
-          }
-        }
-      }, 100);
-    });
+    // ═══════════════════════════════════════════
+    // SOVEREIGN CORTEX V5: NEVER PAUSE MUSIC
+    // ═══════════════════════════════════════════
+    // Auto-pause logic has been eradicated to ensure continuous immersive playback.
     
-    globalThis.addEventListener('focus', () => {
-       console.log("[CORTEX] Focus returned home. Checking resumption.");
-       this.resumeBackgroundMusic();
-    });
+    this.mouseX = 0;
+    this.mouseY = 0;
     
-    const labs = document.querySelectorAll('.lab-card-content, .player-wrapper');
-    labs.forEach(el => {
-      el.addEventListener('click', () => {
-        this.pauseBackgroundMusic();
+    globalThis.addEventListener('mousemove', (e) => {
+        this.mouseX = (e.clientX / globalThis.innerWidth - 0.5) * 30; // Max 15px movement
+        this.mouseY = (e.clientY / globalThis.innerHeight - 0.5) * 30;
+        this._updateParallax();
+    });
+
+    globalThis.addEventListener('scroll', () => {
+        this._updateParallax();
+    }, { passive: true });
+
+    const audioEmbeds = document.querySelectorAll([
+      '.manifesto-iframe-wrapper iframe',
+      '.player-card iframe',
+      '.drag-window iframe'
+    ].join(','));
+
+    audioEmbeds.forEach((embed) => {
+      embed.addEventListener('pointerdown', () => {
+        globalThis.MOSKV?.audioFocus?.claim?.('external-embed', {
+          reason: 'external-embed',
+          resume: false
+        });
       });
     });
+
+    document.addEventListener('pointerdown', (event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      if (!target.matches('iframe')) return;
+      if (!target.closest('.manifesto-iframe-wrapper, .player-card, .drag-window')) return;
+      globalThis.MOSKV?.audioFocus?.claim?.('external-embed', {
+        reason: 'external-embed',
+        resume: false
+      });
+    }, true);
   }
 
-  pauseBackgroundMusic() {
-    if (this.isBackgroundPausedByEmbed) return;
-    this.isBackgroundPausedByEmbed = true;
+  _updateParallax() {
+      const scrolled = globalThis.scrollY || 0;
+      const container = document.querySelector('.video-container');
+      if (container) {
+          globalThis.requestAnimationFrame(() => {
+              container.style.transform = `translate3d(${this.mouseX || 0}px, ${(this.mouseY || 0) + (scrolled * 0.25)}px, 0) scale(1.05)`;
+          });
+      }
+  }
+
+  getLowFrequencyData() {
+    if (!this.analyser) return 0;
+    const dataArray = new Uint8Array(this.analyser.frequencyBinCount);
+    this.analyser.getByteFrequencyData(dataArray);
+    
+    // Average lower frequencies (first 10 bins represent bass)
+    let sum = 0;
+    const binsToAverage = 10;
+    for (let i = 0; i < binsToAverage; i++) {
+        sum += dataArray[i];
+    }
+    return sum / binsToAverage / 255.0; // Normalized 0-1
+  }
+
+  pauseBackgroundMusic(reason = 'external') {
+    const alreadyPaused = this.pauseReasons.size > 0;
+    this.pauseReasons.add(reason);
+    this.isBackgroundPausedByEmbed = this.pauseReasons.size > 0;
+    if (alreadyPaused) return;
     
     // Pause both Video & new Audio engines
     const activePlayer = this.activeDeck === 'a' ? this.deckA : this.deckB;
@@ -1280,9 +1532,10 @@ class AutoDJAesthetic {
     if (activeAudio) activeAudio.pause();
   }
 
-  resumeBackgroundMusic() {
-    if (!this.isBackgroundPausedByEmbed) return;
-    this.isBackgroundPausedByEmbed = false;
+  resumeBackgroundMusic(reason = 'external') {
+    this.pauseReasons.delete(reason);
+    this.isBackgroundPausedByEmbed = this.pauseReasons.size > 0;
+    if (this.isBackgroundPausedByEmbed) return;
     
     const activePlayer = this.activeDeck === 'a' ? this.deckA : this.deckB;
     const activeAudio = this.activeDeck === 'a' ? this.audioA : this.audioB;

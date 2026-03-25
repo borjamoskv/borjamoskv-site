@@ -26,7 +26,14 @@ if (typeof THREE === 'undefined') {
                 opacity: '0',
                 transition: 'opacity 0.2s ease-out'
             });
-            document.body.appendChild(this.container);
+
+            if (document.body) {
+                document.body.appendChild(this.container);
+            } else {
+                document.addEventListener('DOMContentLoaded', () => {
+                    document.body.appendChild(this.container);
+                });
+            }
 
             this.scene = new THREE.Scene();
             this.camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);

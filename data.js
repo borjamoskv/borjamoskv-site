@@ -2,19 +2,43 @@
 // DATA STORE: Centralized configuration and content arrays
 // ═══════════════════════════════════════════════════════════════════════════
 
+const HQ_BACKGROUND_VISUALS = [
+    'b9ktVQN48OU', // LES BUKO [8K]
+    'x8E9HInpzE4', // Glitch in the mirror [4K]
+    'NYhOQTcNLkA', // Ecos del cosmos [4K]
+    'Otvpn9vfXOE', // Me caigo y me levanto
+    'hY0G0Zxf_uo', // 32 Y PICO [4K]
+    'T_rU7WfOVTI', // Eclectic Electronic Visual Set Live [4K]
+    'vxD2l4cIp7I', // Eclectic Electronic Cowpunk Set VJ [4K]
+    'EP5s0yKZUKk', // Void Cascade [4K]
+    'hsdOCzJpUMg', // Antes de las guerras
+    'CFQ1smlFYjQ', // Lamento Bolivariano
+    'Izt6bzo0PO8', // El Cuy del Altiplano
+    'zzHETLKSeT4', // Metafashion
+    '4Cb-Iu8DnJM', // BLAC [4K]
+    'YvGpocK-Iqg', // Neural Transfer [4K]
+    'NJqC3Xf6RzE', // Patadas
+    'LDzdKd4WxvI', // 4 Drogas
+    'eIrt6Uw-SEo', // Prisma del Xokas
+    'PCjZruRuoNY', // Building Your Own Universe
+    'AL46Orm0LS4', // Algorithms vs Human Attention
+    'U2faQ81sRpg'  // The Ghost of the Torn Panties
+];
+
+const HERO_BACKGROUND = {
+    id: 'b9ktVQN48OU',
+    title: 'LES BUKO',
+    label: 'EMBEDDED BACKGROUND REEL [4K/8K]',
+    url: 'https://www.youtube.com/watch?v=b9ktVQN48OU',
+    mood: 'electronic'
+};
+
 const DATA = {
+    heroBackground: { ...HERO_BACKGROUND },
+
     // Videos para el fondo (loop automático)
-    bgVideos: [
-        'rmzKC8AYkVw', // 32 Electronic Music Visual Tracks
-        'NYhOQTcNLkA', // Ecos del cosmos [4K]
-        'x8E9HInpzE4', // Glitch in the mirror [4K]
-        'Otvpn9vfXOE', // ME CAIGO Y ME LEVANTO
-        'Yr5CMXrJgIo', // LINDSTRØM & PRINS THOMAS — NAA ER DRUENE (Costumbrismo)
-        'b9ktVQN48OU', // LES BUKO
-        'ZB13zY5h4bc', // El Cigala y en la luna sonando Aphex Twin
-        '0S43IwBF0uM', // The Chemical Brothers - Star Guitar
-        'UrX4mqXmapE'  // El Chombo - Chacarron
-    ],
+    bgVideos: [...HQ_BACKGROUND_VISUALS],
+    backgroundVisuals: [...HQ_BACKGROUND_VISUALS],
 
     // Bandcamp Sovereign Bridge (Ω_BANDCAMP)
     bandcampPlayers: [
@@ -30,6 +54,7 @@ const DATA = {
         'b9ktVQN48OU', 'gDquDpykJIc', 'I3jJXm8aG-A', '3iQFsgZrDZk', 'tMorCDfedf8',
         'GeHP3ADsans', 'AcouyGSki-8', '4RXo5uD-wF4', 'ya59utbBStM', 'D8hjJ17vZYc',
         'MH-YirWPNmI', 'YvGpocK-Iqg', 'EP5s0yKZUKk', 'T_rU7WfOVTI', 'vxD2l4cIp7I',
+        'hY0G0Zxf_uo',
         '_zT6jP2OvXk', 'VqhnG94f5pE', 'rmzKC8AYkVw', 'zzHETLKSeT4',
         '4Cb-Iu8DnJM'
     ],
@@ -44,6 +69,7 @@ const DATA = {
         { id: 'techno', label: 'Techno' },
         { id: 'electronic', label: 'Electronic' },
         { id: '4k', label: '4K Visuals' },
+        { id: '8k', label: '8K Visuals' },
         { id: 'experimental', label: 'Experimental' },
         { id: 'parkour', label: 'Parkour' },
         { id: 'hard-bachata', label: 'Hard Bachata' },
@@ -54,7 +80,8 @@ const DATA = {
     works: [
         { id: "NYhOQTcNLkA", title: "ECOS DEL COSMOS", desc: "Original · Ambient / Sci-Fi [4K]", categories: ["original", "ambient", "4k"], featured: true },
         { id: "x8E9HInpzE4", title: "GLITCH IN THE MIRROR", desc: "Original · Experimental [4K]", categories: ["original", "experimental", "4k"], featured: true },
-        { id: "b9ktVQN48OU", title: "LES BUKO", desc: "Original · Electronic [4K]", categories: ["original", "electronic", "4k"], featured: true },
+        { id: "b9ktVQN48OU", title: "LES BUKO", desc: "Original · Electronic [8K]", categories: ["original", "electronic", "4k", "8k"], featured: true },
+        { id: "hY0G0Zxf_uo", title: "32 Y PICO", desc: "Visual Compilation · Electronic", categories: ["original", "electronic", "4k"], featured: true },
         { id: "NJqC3Xf6RzE", title: "PATADAS", desc: "Original · Electronic", categories: ["original", "electronic", "experimental"] },
         { id: "rakTVLzdc44", title: "1", desc: "Original · Experimental", categories: ["original", "experimental"] },
         { id: "LDzdKd4WxvI", title: "4 DROGAS", desc: "Original · Techno", categories: ["original", "techno"] },
@@ -90,7 +117,7 @@ const DATA = {
         { id: "TOuixj79kDU", title: "TAA LUU VAA NAA SHEE DOOO", desc: "Original · Experimental", categories: ["original", "experimental"] },
         { id: "c4Wz6M2_y1s", title: "EL TUPAS", desc: "Original · Salmorejo", categories: ["original", "electronic", "salmorejo"] },
         { id: "CFQ1smlFYjQ", title: "LAMENTO BOLIVARIANO", desc: "Original · Ambient", categories: ["original", "ambient"] },
-        { id: "Otvpn9vfXOE", title: "ME CAIGO Y ME LEVANTO", desc: "Original · Parkour", categories: ["original", "electronic", "parkour"] },
+        { id: "Otvpn9vfXOE", title: "ME CAIGO Y ME LEVANTO", desc: "Original · Parkour [4K]", categories: ["original", "electronic", "parkour", "4k"] },
         { id: "hCkD67O9H2o", title: "INCREÍBLE", desc: "Original · Electronic", categories: ["original", "electronic"] },
         { id: "Z_S9hMVOizo", title: "COCODRILO COJONES", desc: "Original · Hard Bachata Frontflip", categories: ["original", "electronic", "hard-bachata", "parkour"] },
         { id: "YvGpocK-Iqg", title: "NEURAL TRANSFER", desc: "Original · Electronic", categories: ["original", "electronic"] },
@@ -107,3 +134,7 @@ const DATA = {
         { id: "UrX4mqXmapE", title: "EL CHOMBO — CHACARRON", desc: "MICA Inject · Electronic", categories: ["original", "electronic"] },
     ],
 };
+
+globalThis.HQ_BACKGROUND_VISUALS = HQ_BACKGROUND_VISUALS;
+globalThis.HERO_BACKGROUND = HERO_BACKGROUND;
+globalThis.DATA = DATA;

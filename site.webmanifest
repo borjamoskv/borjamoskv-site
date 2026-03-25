@@ -1,0 +1,22 @@
+{
+  "name": "BORJA MOSKV | Productor Experimental",
+  "short_name": "BORJA MOSKV",
+  "icons": [
+    {
+      "src": "/img/favicon.ico",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/img/favicon.ico",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#2E5090",
+  "background_color": "#0A0A0A",
+  "display": "standalone",
+  "start_url": "/",
+  "description": "Música, glitch y sistemas para abrir grietas en la realidad. IDM, Techno, Ambient, AI Visuals y Web3.",
+  "orientation": "portrait-primary"
+}

@@ -2,3 +2,5 @@
 _tools/
 .git/
 .wrangler/
+.playwright-cli/
+outfit.zip

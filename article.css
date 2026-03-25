@@ -37,13 +37,29 @@
   font-size: 0.75rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  transition: var(--transition-smooth);
+  transition: color 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+              border-color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.article-back::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 20px rgba(46, 80, 144, 0.3);
+  opacity: 0;
+  transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  pointer-events: none;
+  z-index: -1;
 }
 
 .article-back:hover {
   color: var(--text-primary);
   border-color: var(--accent-primary);
-  box-shadow: 0 0 20px rgba(46, 80, 144, 0.3);
+}
+
+.article-back:hover::after {
+  opacity: 1;
 }
 
 .article-back svg {
@@ -252,6 +268,9 @@
 .article-section {
   margin-bottom: 4rem;
   scroll-margin-top: 2rem;
+  contain: layout paint;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
 }
 
 .section-number {
@@ -315,6 +334,7 @@
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   position: relative;
+  contain: layout paint;
 }
 
 .pull-quote p {
@@ -407,7 +427,9 @@
   text-decoration: none;
   border-left: 2px solid transparent;
   border-radius: 0 4px 4px 0;
-  transition: all 200ms ease;
+  transition: color 200ms ease,
+              background 200ms ease,
+              border-left-color 200ms ease;
 }
 
 .toc-link:hover {
@@ -444,6 +466,7 @@
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 12px;
   text-align: center;
+  contain: layout paint;
 }
 
 .epilogue-title {
@@ -473,6 +496,18 @@
   color: var(--accent-secondary, #b4ff00);
   margin-top: 2rem;
   letter-spacing: 0.05em;
+}
+
+/* ── Nexo Links (Cross-Article Bridge) ────────────────────────────────── */
+.nexo-link {
+  color: var(--accent-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 200ms ease;
+}
+
+.nexo-link:hover {
+  color: var(--accent-secondary, #b4ff00);
 }
 
 .article-epilogue--final {
@@ -508,7 +543,8 @@
   border-radius: 20px;
   color: var(--text-secondary);
   text-decoration: none;
-  transition: all 200ms ease;
+  transition: color 200ms ease,
+              border-color 200ms ease;
 }
 
 .article-tag:hover {

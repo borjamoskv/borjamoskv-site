@@ -52,7 +52,7 @@
 
 .gambitero-container {
   width: 100%;
-  max-width: 680px;
+  max-width: 1240px;
   min-height: 100vh;
   padding: 20px;
   position: relative;
@@ -141,7 +141,7 @@
   padding: 20px;
   overflow-x: auto;
   margin: 0 0 20px 0;
-  white-space: pre;
+  white-space: pre-wrap;
   box-shadow: inset 0 0 20px rgba(0, 255, 51, 0.4);
   text-align: center;
   animation: ascii-pulse 2s infinite alternate;
@@ -246,6 +246,17 @@
   transform: translateY(-5px) scale(1.03) rotate(1deg);
   box-shadow: 10px 10px 0px #000;
   text-shadow: none;
+}
+
+.gamb-choice:focus-visible,
+.gamb-choice.is-focused {
+  outline: none;
+  background: #FFF000;
+  color: #000;
+  border-color: #00F0FF;
+  text-shadow: none;
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 10px 10px 0px #000, 0 0 0 4px rgba(0, 240, 255, 0.45);
 }
 
 .gamb-choice.locked {
@@ -444,6 +455,443 @@
   position: relative;
 }
 
+/* ── New Layout / Meta ── */
+.gamb-scene-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(280px, 0.9fr);
+  gap: 20px;
+}
+
+.gamb-main-column {
+  min-width: 0;
+}
+
+.gamb-scene-kicker {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 14px;
+  padding: 8px 14px;
+  border: 4px solid #000;
+  border-radius: 999px;
+  background: #00F0FF;
+  color: #000;
+  font-family: 'Bangers', cursive;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+  box-shadow: 4px 4px 0px #000;
+}
+
+.gamb-choice-index {
+  opacity: 0.7;
+  margin-right: 8px;
+}
+
+.gamb-choice-hint {
+  margin: -8px 12px 4px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.68);
+  border-left: 5px solid #FFF000;
+  color: #FFF000;
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+.gamb-side-panels {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+}
+
+.gamb-panel {
+  background: rgba(255, 255, 255, 0.08);
+  border: 4px solid #fff;
+  border-radius: 18px;
+  padding: 16px;
+  box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.72);
+}
+
+.gamb-panel-title {
+  margin-bottom: 12px;
+  font-family: 'Bangers', cursive;
+  font-size: 1.45rem;
+  letter-spacing: 1px;
+  color: #FFF000;
+  text-shadow: 2px 2px 0px #000;
+}
+
+.gamb-panel-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.gamb-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #FF00A0;
+  border: 3px solid #fff;
+  color: #fff;
+  font-size: 0.92rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  box-shadow: 3px 3px 0px #000;
+}
+
+.gamb-empty-state {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.96rem;
+  font-style: italic;
+}
+
+.gamb-route-list,
+.gamb-echo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.gamb-route-step,
+.gamb-echo-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid rgba(255, 255, 255, 0.16);
+  font-size: 0.98rem;
+}
+
+.gamb-route-step span:first-child {
+  min-width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #00F0FF;
+  color: #000;
+  font-weight: 800;
+}
+
+.gamb-route-step em {
+  margin-left: auto;
+  color: #FFF000;
+  font-style: normal;
+}
+
+.gamb-stat-row + .gamb-stat-row {
+  margin-top: 12px;
+}
+
+.gamb-stat-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+.gamb-stat-bar {
+  margin-top: 6px;
+  height: 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.22);
+}
+
+.gamb-stat-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  transition: width 0.28s ease;
+}
+
+.gamb-stat-fill.pink { background: linear-gradient(90deg, #FF00A0, #FFF000); }
+.gamb-stat-fill.cyan { background: linear-gradient(90deg, #00F0FF, #ffffff); }
+.gamb-stat-fill.lime { background: linear-gradient(90deg, #00FF33, #FFF000); }
+
+.gamb-controls-help {
+  margin-top: 12px;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.74);
+}
+
+.gamb-controls-help kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  margin: 0 3px;
+  padding: 3px 6px;
+  border-radius: 6px;
+  border: 2px solid #fff;
+  background: rgba(0, 0, 0, 0.5);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.62rem;
+}
+
+.gamb-menu-screen {
+  background: #111;
+  border: 10px solid #00F0FF;
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: 18px 18px 0px #FF00A0, -12px -12px 0px #FFF000;
+  transform: rotate(-0.7deg);
+}
+
+.gamb-menu-hero {
+  margin-bottom: 24px;
+}
+
+.gamb-menu-kicker {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: #FFF000;
+  border: 4px solid #000;
+  color: #000;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.72rem;
+  box-shadow: 4px 4px 0px #000;
+}
+
+.gamb-menu-title {
+  margin: 16px 0 8px;
+  font-family: 'Bangers', cursive;
+  font-size: clamp(2.3rem, 5vw, 4.6rem);
+  letter-spacing: 2px;
+  color: #fff;
+  text-shadow: 4px 4px 0px #000, 0 0 15px rgba(0, 240, 255, 0.35);
+}
+
+.gamb-menu-text {
+  max-width: 760px;
+  margin: 0;
+  font-size: 1.12rem;
+  line-height: 1.6;
+  color: #f6f6f6;
+}
+
+.gamb-menu-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.gamb-menu-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.gamb-meta-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 10px 0;
+  border-bottom: 2px dashed rgba(255, 255, 255, 0.18);
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.gamb-meta-line:last-child {
+  border-bottom: 0;
+}
+
+.gamb-menu-save {
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: rgba(0, 240, 255, 0.14);
+  border-radius: 12px;
+  border: 2px solid rgba(0, 240, 255, 0.7);
+  color: #00F0FF;
+  font-weight: 800;
+}
+
+.gamb-end-meta {
+  display: grid;
+  gap: 10px;
+  margin: 20px auto 24px;
+  max-width: 520px;
+}
+
+.gamb-slot-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+  color: #000;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+/* ── 8-BIT CHIP LOOP ── */
+#gambitero-music.gamb-chip-player {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  width: min(360px, calc(100% - 40px));
+  z-index: 1000;
+  pointer-events: auto;
+  transform: rotate(-2deg);
+  filter: drop-shadow(12px 12px 0 rgba(0, 0, 0, 0.8));
+}
+
+.gamb-chip-shell {
+  position: relative;
+  overflow: hidden;
+  padding: 18px;
+  border: 5px solid #00FF33;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.12), transparent 38%),
+    radial-gradient(circle at 80% 0%, rgba(0, 240, 255, 0.22), transparent 28%),
+    radial-gradient(circle at 50% 100%, rgba(255, 0, 160, 0.16), transparent 35%),
+    linear-gradient(135deg, rgba(0, 0, 0, 0.96), rgba(17, 17, 17, 0.94));
+  box-shadow: 0 0 0 4px #000, 14px 14px 0 #FF00A0, -10px -10px 0 #00F0FF;
+}
+
+.gamb-chip-shell::before {
+  content: '';
+  position: absolute;
+  inset: -30% -20%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.12), transparent 35%);
+  opacity: 0.7;
+  animation: chipGlow 10s linear infinite;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.gamb-chip-head,
+.gamb-chip-actions {
+  position: relative;
+  z-index: 1;
+}
+
+.gamb-chip-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.gamb-chip-kicker {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 8px;
+  border: 2px solid #000;
+  border-radius: 8px;
+  background: #FFF000;
+  color: #000;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.64rem;
+  text-transform: uppercase;
+  box-shadow: 3px 3px 0 #000;
+}
+
+.gamb-chip-title {
+  font-family: 'Bangers', cursive;
+  font-size: 1.95rem;
+  letter-spacing: 2px;
+  color: #fff;
+  text-shadow: 2px 2px 0 #000, 0 0 12px rgba(0, 255, 51, 0.35);
+}
+
+.gamb-chip-status {
+  position: relative;
+  z-index: 1;
+  margin: 10px 0 12px;
+  color: #00FF33;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.56rem;
+  line-height: 1.5;
+  text-shadow: 1px 1px 0 #000;
+}
+
+.gamb-chip-bars {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 8px;
+  align-items: end;
+  height: 52px;
+}
+
+.gamb-chip-bar {
+  display: block;
+  height: 12px;
+  border: 2px solid #000;
+  background: linear-gradient(180deg, #00F0FF, #00FF33);
+  box-shadow: 2px 2px 0 #000;
+  opacity: 0.45;
+  transform-origin: bottom center;
+  transition: transform 0.12s ease, opacity 0.12s ease, filter 0.12s ease;
+}
+
+.gamb-chip-bar.is-active {
+  opacity: 1;
+  transform: scaleY(2.8);
+  filter: drop-shadow(0 0 10px rgba(0, 255, 51, 0.45));
+}
+
+.gamb-chip-bar.is-secondary {
+  opacity: 0.82;
+  transform: scaleY(1.7);
+}
+
+.gamb-chip-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.gamb-chip-toggle {
+  padding: 8px 14px;
+  border: 3px solid #fff;
+  border-radius: 999px;
+  background: #FF00A0;
+  color: #fff;
+  font-family: 'Bangers', cursive;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: 4px 4px 0 #000;
+  transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.gamb-chip-toggle:hover {
+  background: #FFF000;
+  color: #000;
+  transform: translateY(-2px) rotate(-2deg);
+}
+
+.gamb-chip-note {
+  flex: 1;
+  color: #FFF000;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.52rem;
+  line-height: 1.5;
+  text-align: right;
+  text-shadow: 1px 1px 0 #000;
+}
+
+@keyframes chipGlow {
+  0% { transform: rotate(0deg) scale(1); }
+  100% { transform: rotate(360deg) scale(1.08); }
+}
+
 /* ── Trigger Button (main page) - ESTILO GAMBERRO MAXIMO ── */
 .gambitero-trigger-btn {
   position: fixed;
@@ -520,6 +968,7 @@
 
 /* ── Mobile ── */
 @media (max-width: 640px) {
+  .gambitero-container { padding: 14px; }
   .gamb-scene { padding: 15px; border-width: 6px; }
   .gamb-art { font-size: 0.35rem; padding: 10px; } /* Need smaller for mobile pixel art */
   .gamb-text { font-size: 1rem; }
@@ -528,6 +977,26 @@
   .gamb-slot-reel { width: 70px; height: 110px; border-width: 3px; }
   .gamb-slot-symbol { font-size: 1.8rem; height: 36px; }
   .gambitero-trigger-btn { font-size: 1.4rem; bottom: 120px; padding: 10px 15px; }
+  .gamb-scene-grid { grid-template-columns: 1fr; }
+  .gamb-menu-screen { padding: 18px; }
+  .gamb-menu-grid { grid-template-columns: 1fr; }
+  .gamb-menu-actions { flex-direction: column; }
+  .gamb-hud { flex-wrap: wrap; gap: 10px; font-size: 1.3rem; }
+  .gamb-slot-meta { font-size: 0.9rem; }
+  #gambitero-music.gamb-chip-player {
+    right: 12px;
+    left: 12px;
+    bottom: 12px;
+    width: auto;
+    transform: none;
+  }
+  .gamb-chip-title { font-size: 1.55rem; }
+  .gamb-chip-bars { gap: 6px; height: 44px; }
+  .gamb-chip-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .gamb-chip-note { text-align: left; }
 }
 
 /* ═══════════════════════════════════════════════════════════════════

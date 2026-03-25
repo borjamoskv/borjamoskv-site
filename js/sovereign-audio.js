@@ -8,18 +8,118 @@
   'use strict';
 
   let audioInitialized = false;
+  let wakeOverlayTimer = null;
+  let bodyClickHandler = null;
 
-  document.body.addEventListener('click', function() {
+  const WAKE_GLYPHS = ['⟡', '⧉', '◈', '⌬', '▒', '░', '▣', '▦', '✦', '✧', '⟁', '⟠'];
+
+  function prefersReducedMotion() {
+    return !!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  }
+
+  function launchWakeSequence(initBtn, event, reducedMotion) {
+    const existingOverlay = document.querySelector('.sovereign-wake-overlay');
+    existingOverlay?.remove();
+
+    const overlay = document.createElement('div');
+    overlay.className = 'sovereign-wake-overlay';
+    overlay.setAttribute('aria-hidden', 'true');
+
+    const backdrop = document.createElement('div');
+    backdrop.className = 'sovereign-wake-backdrop';
+
+    const pulse = document.createElement('div');
+    pulse.className = 'sovereign-wake-pulse';
+
+    const panel = document.createElement('div');
+    panel.className = 'sovereign-wake-panel';
+    panel.innerHTML = [
+      '<span class="sovereign-wake-kicker">[ + ] MATRIX SIGNAL</span>',
+      '<strong class="sovereign-wake-title">AUDIO ONLINE</strong>',
+      '<span class="sovereign-wake-subtitle">single-source mode · neon lock engaged</span>'
+    ].join('');
+
+    const glyphs = document.createElement('div');
+    glyphs.className = 'sovereign-wake-glyphs';
+
+    const rect = initBtn?.getBoundingClientRect?.();
+    const originX = event?.clientX ?? (rect ? rect.left + rect.width / 2 : window.innerWidth / 2);
+    const originY = event?.clientY ?? (rect ? rect.top + rect.height / 2 : window.innerHeight / 2);
+    overlay.style.setProperty('--wake-x', `${originX}px`);
+    overlay.style.setProperty('--wake-y', `${originY}px`);
+
+    const glyphCount = reducedMotion ? 6 : 18;
+    const spread = reducedMotion ? 140 : 320;
+    for (let index = 0; index < glyphCount; index += 1) {
+      const glyph = document.createElement('span');
+      glyph.className = 'sovereign-wake-glyph';
+      glyph.textContent = WAKE_GLYPHS[index % WAKE_GLYPHS.length];
+      const angle = Math.random() * Math.PI * 2;
+      const distance = spread * (0.25 + Math.random() * 0.75);
+      const x = originX + Math.cos(angle) * distance;
+      const y = originY + Math.sin(angle) * distance;
+      glyph.style.left = `${x}px`;
+      glyph.style.top = `${y}px`;
+      glyph.style.setProperty('--wake-delay', `${(index * 0.035).toFixed(3)}s`);
+      glyph.style.setProperty('--wake-rotate', `${Math.round((Math.random() * 2 - 1) * 28)}deg`);
+      glyph.style.setProperty('--wake-scale', `${(0.85 + Math.random() * 0.65).toFixed(2)}`);
+      glyphs.appendChild(glyph);
+    }
+
+    overlay.append(backdrop, pulse, panel, glyphs);
+    document.body.appendChild(overlay);
+
+    document.documentElement.classList.add('sovereign-wake-active');
+    requestAnimationFrame(() => overlay.classList.add('is-visible'));
+
+    if (initBtn) {
+      initBtn.classList.add('is-booting');
+      initBtn.classList.add('is-awake');
+      initBtn.setAttribute('aria-pressed', 'true');
+      initBtn.setAttribute('aria-busy', 'true');
+      initBtn.textContent = '[ ✓ ] MATRIX ONLINE';
+    }
+
+    const activeDuration = reducedMotion ? 1200 : 2200;
+    const teardownDelay = reducedMotion ? 160 : 900;
+
+    window.clearTimeout(wakeOverlayTimer);
+    wakeOverlayTimer = window.setTimeout(() => {
+      overlay.classList.add('is-exiting');
+      initBtn?.classList.remove('is-booting');
+      window.setTimeout(() => {
+        overlay.remove();
+        document.documentElement.classList.remove('sovereign-wake-active');
+      }, teardownDelay);
+    }, activeDuration);
+  }
+
+  function bootstrapSovereignAudio(event) {
     if (audioInitialized) return;
     audioInitialized = true;
 
-    const initBtn = document.getElementById('sovereign-audio-init');
-    if (initBtn) {
-      initBtn.style.opacity = '0';
-      setTimeout(() => initBtn.style.display = 'none', 300);
+    if (bodyClickHandler) {
+      document.body.removeEventListener('click', bodyClickHandler);
     }
 
-    const ctx = new (globalThis.AudioContext || globalThis.webkitAudioContext)();
+    const audioFocus = globalThis.MOSKV?.audioFocus;
+    const initBtn = document.getElementById('sovereign-audio-init');
+    const reducedMotion = prefersReducedMotion();
+
+    if (initBtn) {
+      initBtn.classList.add('is-booting');
+      initBtn.setAttribute('aria-busy', 'true');
+    }
+
+    launchWakeSequence(initBtn, event, reducedMotion);
+
+    const AudioCtx = globalThis.AudioContext || globalThis.webkitAudioContext;
+    if (!AudioCtx) return;
+
+    const ctx = new AudioCtx();
+    if (ctx.state === 'suspended') {
+      void ctx.resume();
+    }
 
     // ═══ MASTER CHAIN ═══
     const masterGain = ctx.createGain();
@@ -70,8 +170,8 @@
     const noiseBufferSize = ctx.sampleRate * 2;
     const noiseBuffer = ctx.createBuffer(1, noiseBufferSize, ctx.sampleRate);
     const output = noiseBuffer.getChannelData(0);
-    for (let i = 0; i < noiseBufferSize; i++) {
-      output[i] = Math.random() * 2 - 1;
+    for (let index = 0; index < noiseBufferSize; index += 1) {
+      output[index] = Math.random() * 2 - 1;
     }
 
     const delayNode = ctx.createDelay(5);
@@ -108,11 +208,11 @@
       noiseSrc.stop(ctx.currentTime + 0.5);
     }
 
-    setInterval(() => {
+    const noiseTimer = window.setInterval(() => {
       if (Math.random() > 0.4) {
         triggerNoiseChord();
         if (Math.random() > 0.7) {
-          setTimeout(triggerNoiseChord, 375);
+          window.setTimeout(triggerNoiseChord, 375);
         }
       }
     }, 3000);
@@ -146,11 +246,12 @@
       const autoDJ = globalThis.autoDJAesthetic;
       const autoDJPlaying = autoDJ && !autoDJ.globalMuted && autoDJ.audioUnlocked;
       const spatialActive = typeof SpatialAudio !== 'undefined' && SpatialAudio.isActive;
-      const shouldDuck = autoDJPlaying || spatialActive;
+      const heroVideo = !!globalThis.heroVideoUnmuted;
+      const shouldDuck = autoDJPlaying || spatialActive || !!globalThis.lyriaActive || heroVideo;
 
       if (shouldDuck && !isDucked) {
         isDucked = true;
-        masterGain.gain.setTargetAtTime(targetVolume * 0.15, ctx.currentTime, 0.8);
+        masterGain.gain.setTargetAtTime(0, ctx.currentTime, 0.25);
       } else if (!shouldDuck && isDucked) {
         isDucked = false;
         masterGain.gain.setTargetAtTime(targetVolume, ctx.currentTime, 1.2);
@@ -159,10 +260,45 @@
       }
     }
 
-    setInterval(coordinationLoop, 500);
+    const coordinationTimer = window.setInterval(coordinationLoop, 500);
 
-    // Fade in gently on init
-    masterGain.gain.setTargetAtTime(targetVolume, ctx.currentTime + 0.1, 2);
+    audioFocus?.register?.('dub-drone', {
+      resume: () => {
+        isDucked = false;
+        masterGain.gain.setTargetAtTime(targetVolume, ctx.currentTime, 1.2);
+      },
+      suspend: () => {
+        isDucked = true;
+        masterGain.gain.setTargetAtTime(0, ctx.currentTime, 0.25);
+      },
+      restorable: true
+    });
+
+    if (!audioFocus?.getActiveOwner?.()) {
+      audioFocus?.claim?.('dub-drone', {
+        reason: 'dub-drone-init',
+        resume: false
+      });
+      masterGain.gain.setTargetAtTime(targetVolume, ctx.currentTime + 0.1, 2);
+    }
+
+    document.addEventListener('moskv:audio-focus-change', (focusEvent) => {
+      if (!audioFocus) return;
+      if (!focusEvent.detail?.activeOwner) {
+        audioFocus.claim('dub-drone', {
+          reason: 'dub-drone-fallback',
+          resume: true
+        });
+      }
+    });
+
+    const duckForWake = () => {
+      masterGain.gain.cancelScheduledValues(ctx.currentTime);
+      masterGain.gain.setValueAtTime(0, ctx.currentTime);
+      masterGain.gain.linearRampToValueAtTime(Math.min(0.48, targetVolume + 0.12), ctx.currentTime + 0.15);
+      masterGain.gain.linearRampToValueAtTime(targetVolume, ctx.currentTime + 1.8);
+    };
+    duckForWake();
 
     // ═══ EXPOSE GLOBAL HANDLE ═══
     globalThis.dubDrone = {
@@ -172,7 +308,35 @@
       feedbackGain,
       mute: () => masterGain.gain.setTargetAtTime(0, ctx.currentTime, 0.3),
       unmute: () => masterGain.gain.setTargetAtTime(targetVolume, ctx.currentTime, 1),
-      get isDucked() { return isDucked; },
+      get isDucked() { return isDucked; }
     };
-  }, { once: true });
+
+    window.addEventListener('beforeunload', () => {
+      window.clearInterval(noiseTimer);
+      window.clearInterval(coordinationTimer);
+      window.removeEventListener('scroll', onScrollModulate);
+    }, { once: true });
+  }
+
+  function attachWakeListeners() {
+    const initBtn = document.getElementById('sovereign-audio-init');
+
+    if (initBtn) {
+      initBtn.addEventListener('click', (event) => {
+        event.stopPropagation();
+        bootstrapSovereignAudio(event);
+      }, { once: true });
+    }
+
+    bodyClickHandler = (event) => {
+      if (audioInitialized) return;
+      const target = event.target;
+      if (target instanceof Element && target.closest('#sovereign-audio-init')) return;
+      bootstrapSovereignAudio(event);
+    };
+
+    document.body.addEventListener('click', bodyClickHandler);
+  }
+
+  attachWakeListeners();
 })();

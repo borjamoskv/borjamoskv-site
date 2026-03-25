@@ -3,8 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog – Borja Moskv</title>
-  <meta name="description" content="Set Lore & Data – análisis IA de cada set, gráficos y visualizaciones interactivas.">
+  <title>DIARIO – Borja Moskv</title>
+  <meta name="description" content="Diario de Borja Moskv: textos, analisis, set lore y archivo editorial.">
+  <link rel="icon" type="image/png" href="/borjamoskv_profile.png">
+  <link rel="apple-touch-icon" href="/borjamoskv_profile.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
@@ -14,7 +16,7 @@
   <!-- BOOT LOADER -->
   <div id="loader" class="loader">
     <div class="spinner"></div>
-    <div class="loader-text pulse-text">Sincronizando The Blog...</div>
+    <div class="loader-text pulse-text">Sincronizando Diario...</div>
   </div>
 
   <!-- NAVIGATION -->
@@ -27,7 +29,7 @@
       <a href="/#music">Music</a>
       <a href="/#sets">Sets</a>
       <a href="/#lab">Lab</a>
-      <a href="blog.html" class="active">Blog</a>
+      <a href="blog.html" class="active">Diario</a>
       <a href="/#contact">Contact</a>
     </div>
     <div class="nav-platforms">
@@ -42,8 +44,8 @@
   <!-- Header -->
   <header class="banner glass" style="margin-top: 80px;">
     <div class="banner-content">
-      <h1 class="hero-title">Set Lore &amp; Data</h1>
-      <p class="hero-subtitle">Análisis IA, visualizaciones y gráficos de cada DJ‑set.</p>
+      <h1 class="hero-title">DIARIO</h1>
+      <p class="hero-subtitle">Textos, analisis, set lore y archivo editorial de Borja Moskv.</p>
     </div>
   </header>
 
@@ -75,7 +77,10 @@
         <span class="post-tag">MARATHON</span>
       </div>
       <div class="player-wrapper">
-        <iframe src="https://www.youtube.com/embed/YvGpocK-Iqg?playsinline=1" title="15H Marathon DJ Set" frameborder="0" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <a href="https://www.youtube.com/watch?v=YvGpocK-Iqg" target="_blank" rel="noopener" class="player-wrapper-link" aria-label="Abrir 15H Marathon DJ Set en YouTube">
+          <img src="https://img.youtube.com/vi/YvGpocK-Iqg/hqdefault.jpg" alt="15H Marathon DJ Set">
+          <span class="player-wrapper-cta">Ver set en YouTube →</span>
+        </a>
       </div>
       <section class="analysis">
         <h3>IA Analysis</h3>
@@ -93,7 +98,10 @@
         <span class="post-tag">IDM</span>
       </div>
       <div class="player-wrapper">
-        <iframe src="https://www.youtube.com/embed/EP5s0yKZUKk?playsinline=1" title="Dark Disco IDM Set" frameborder="0" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <a href="https://www.youtube.com/watch?v=EP5s0yKZUKk" target="_blank" rel="noopener" class="player-wrapper-link" aria-label="Abrir Dark Disco IDM Set en YouTube">
+          <img src="https://img.youtube.com/vi/EP5s0yKZUKk/hqdefault.jpg" alt="Dark Disco IDM Set">
+          <span class="player-wrapper-cta">Ver set en YouTube →</span>
+        </a>
       </div>
       <section class="analysis">
         <h3>IA Analysis</h3>
@@ -111,7 +119,10 @@
         <span class="post-tag">LIVE</span>
       </div>
       <div class="player-wrapper">
-        <iframe src="https://www.youtube.com/embed/T_rU7WfOVTI?playsinline=1" title="Eclectic Electronic Visual Set" frameborder="0" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <a href="https://www.youtube.com/watch?v=T_rU7WfOVTI" target="_blank" rel="noopener" class="player-wrapper-link" aria-label="Abrir Eclectic Electronic Visual Set en YouTube">
+          <img src="https://img.youtube.com/vi/T_rU7WfOVTI/hqdefault.jpg" alt="Eclectic Electronic Visual Set">
+          <span class="player-wrapper-cta">Ver set en YouTube →</span>
+        </a>
       </div>
       <section class="analysis">
         <h3>IA Analysis</h3>
@@ -129,7 +140,10 @@
         <span class="post-tag">VJ</span>
       </div>
       <div class="player-wrapper">
-        <iframe src="https://www.youtube.com/embed/vxD2l4cIp7I?playsinline=1" title="Cowpunk Electronic Set" frameborder="0" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <a href="https://www.youtube.com/watch?v=vxD2l4cIp7I" target="_blank" rel="noopener" class="player-wrapper-link" aria-label="Abrir Eclectic Electronic Cowpunk Set en YouTube">
+          <img src="https://img.youtube.com/vi/vxD2l4cIp7I/hqdefault.jpg" alt="Eclectic Electronic Cowpunk Set">
+          <span class="player-wrapper-cta">Ver set en YouTube →</span>
+        </a>
       </div>
       <section class="analysis">
         <h3>IA Analysis</h3>
@@ -165,24 +179,42 @@
     </div>
   </footer>
 
-  <!-- CHATQUITO DE LA CALZADA (FRONTIER AI) -->
+  <button id="chatquitoOpen" class="chatquito-open-btn">RITXIE HAWTING</button>
   <div id="chatquito" class="chatquito">
     <div class="chatquito-header">
-      <span class="chatquito-title">Chatquito de La calzada 🤖</span>
+      <span class="chatquito-title">RITXIE HAWTING</span>
       <button class="chatquito-close" id="chatquitoClose">✖</button>
     </div>
     <div class="chatquito-body" id="chatquitoBody">
-      <div class="chat-msg bot">Hola fistro pecador, soy la IA frontera que te cagas. ¿De qué vamos a hablar en el blog?</div>
+      <div class="chat-msg bot">Soy RITXIE HAWTING. Si quieres, te oriento entre textos, sets y archivo.</div>
     </div>
     <div class="chatquito-input">
-      <input type="text" id="chatquitoInput" placeholder="Pregunta algo bizarro..." autocomplete="off">
+      <input type="text" id="chatquitoInput" placeholder="Escribe a RITXIE HAWTING..." autocomplete="off">
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="data.js"></script>
-  <script src="script.js"></script>
+  <script>window.MOSKV = window.MOSKV || {};</script>
+  <script src="js/chat.js"></script>
   <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const navToggle = document.getElementById('navToggle');
+      const navLinks = document.getElementById('navLinks');
+
+      navToggle?.addEventListener('click', () => {
+        navLinks?.classList.toggle('active');
+      });
+
+      navLinks?.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => navLinks.classList.remove('active'));
+      });
+
+      if (window.MOSKV?.chat?.init) {
+        window.MOSKV.chat.init();
+      }
+    });
+
     // Fetch Paragraph Posts
     async function loadParagraphPosts() {
       const container = document.getElementById('paragraph-posts-grid');

@@ -730,28 +730,38 @@ const SpatialAudio = (() => {
     if (e.beta !== null) mouseY = Math.max(-1, Math.min(1, (e.beta - 45) / 35));
   }
 
-  // ─── TOGGLE ───
-  function toggle() {
-    if (!ctx) {
-      init();
-      // Duck the dub drone when spatial activates
-      if (window.dubDrone) window.dubDrone.mute();
-      return true;
-    }
-    if (isActive) {
-      masterGain.gain.setTargetAtTime(0, ctx.currentTime, 1.2);
-      isActive = false;
-      if (animFrame) cancelAnimationFrame(animFrame);
-      setTimeout(resetVisuals, 400);
-      // Restore dub drone
-      if (window.dubDrone) window.dubDrone.unmute();
-      return false;
-    }
+  function activateFromFocus() {
+    if (!ctx) init();
+    if (isActive) return true;
     masterGain.gain.setTargetAtTime(C.masterVol, ctx.currentTime, 2.0);
     isActive = true;
     startTracking();
     if (window.dubDrone) window.dubDrone.mute();
     return true;
+  }
+
+  function deactivateFromFocus() {
+    if (!ctx || !isActive) return false;
+    masterGain.gain.setTargetAtTime(0, ctx.currentTime, 1.2);
+    isActive = false;
+    if (animFrame) cancelAnimationFrame(animFrame);
+    setTimeout(resetVisuals, 400);
+    if (window.dubDrone) window.dubDrone.unmute();
+    return false;
+  }
+
+  // ─── TOGGLE ───
+  function toggle() {
+    if (isActive) {
+      deactivateFromFocus();
+      globalThis.MOSKV?.audioFocus?.release?.('spatial', { reason: 'spatial-toggle' });
+      return false;
+    }
+    globalThis.MOSKV?.audioFocus?.claim?.('spatial', {
+      reason: 'spatial-toggle',
+      resume: false
+    });
+    return activateFromFocus();
   }
 
   // ─── BINAURAL STATE CONTROL ───
@@ -795,6 +805,10 @@ const SpatialAudio = (() => {
 
   // ─── DESTROY ───
   function destroy() {
+    globalThis.MOSKV?.audioFocus?.release?.('spatial', {
+      reason: 'spatial-destroy',
+      resumePrevious: false
+    });
     if (animFrame) cancelAnimationFrame(animFrame);
     nodes.oscillators.forEach(s => { try { s.stop(); } catch(ex) { /* */ } });
     nodes.grains.forEach(s => { try { s.stop(); } catch(ex) { /* */ } });
@@ -805,6 +819,12 @@ const SpatialAudio = (() => {
     resetVisuals();
     if (window.dubDrone) window.dubDrone.unmute();
   }
+
+  globalThis.MOSKV?.audioFocus?.register?.('spatial', {
+    resume: () => activateFromFocus(),
+    suspend: () => deactivateFromFocus(),
+    restorable: true
+  });
 
   return { init, toggle, destroy, setBinauralState, get isActive() { return isActive; }, get energy() { return getBand(20, 2000); }, get bass() { return getBand(20, 100); } };
 })();
