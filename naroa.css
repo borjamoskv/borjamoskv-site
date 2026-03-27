@@ -1,0 +1,91 @@
+:root {
+  --bg-color: #0A0A0A;
+  --text-main: #FFFFFF;
+  --text-dim: #444444;
+  --accent: #B4FF00;
+  --font-mono: 'JetBrains Mono', monospace;
+  --scroll-velocity: 0;
+}
+
+body.infinite-body, html {
+  margin: 0; padding: 0;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  font-family: var(--font-mono);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* Euclidean Cursor & Canvas */
+#euclidean-canvas {
+  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+  pointer-events: none; z-index: 9998;
+}
+
+.euclidean-reticle {
+  position: fixed; top: 0; left: 0;
+  width: 40px; height: 40px;
+  pointer-events: none; z-index: 9999;
+  /* Transform origin centered via margin or transform. Left/Top updated by JS directly */
+  margin-top: -20px;
+  margin-left: -20px;
+}
+
+.reticle-h {
+  position: absolute; top: 50%; left: -50%; width: 200%; height: 1px;
+  background: var(--accent); opacity: 0.6;
+}
+.reticle-v {
+  position: absolute; top: -50%; left: 50%; width: 1px; height: 200%;
+  background: var(--accent); opacity: 0.6;
+}
+.reticle-data {
+  position: absolute; top: 100%; left: 100%;
+  color: var(--accent); font-size: 0.70rem; font-weight: 700;
+  padding: 4px; white-space: nowrap;
+  text-shadow: 0 0 5px rgba(0,0,0,1);
+}
+
+/* Infinite Rail */
+.rail-container {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 20vh 0;
+}
+
+.rail-section {
+  width: 60vw; height: 80vh;
+  margin: 10vh 0;
+  position: relative;
+  display: flex; justify-content: center; align-items: center;
+  /* Chromatic aberration reacting to --scroll-velocity */
+  filter: drop-shadow(calc(var(--scroll-velocity) * 4px) 0 0 rgba(255,0,0,0.8))
+          drop-shadow(calc(var(--scroll-velocity) * -4px) 0 0 rgba(0,255,255,0.8));
+  will-change: filter, transform;
+}
+
+.rail-section.asym-left { align-self: flex-start; margin-left: 10vw; }
+.rail-section.asym-right { align-self: flex-end; margin-right: 10vw; }
+
+.focal-point {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  border: 1px solid #222;
+  filter: grayscale(100%) contrast(1.2);
+}
+
+.focal-target {
+  position: absolute; width: 10px; height: 10px;
+  background: transparent; border-radius: 50%;
+  top: 50%; left: 50%; transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* HUD Metadata */
+.rail-meta {
+  position: absolute;
+  bottom: -40px; right: 0;
+  font-size: 0.75rem; color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.rail-meta span { color: var(--text-main); font-weight: 700; }

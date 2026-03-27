@@ -124,14 +124,14 @@ MOSKV.interactions = (() => {
     };
 
 
-    // ── CURSOR PAINT TRAIL ──
+    // ── CURSOR PAINT TRAIL (Lightweight — heavy FX deferred to cursor.js distortion ring) ──
     const initCursorTrail = () => {
         const canvas = document.getElementById('cursorTrail');
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
         let width, height;
         let points = [];
-        const maxPoints = 50;
+        const maxPoints = 32;
         
         function resize() {
             width = globalThis.innerWidth;
@@ -144,43 +144,99 @@ MOSKV.interactions = (() => {
         resize();
         
         document.addEventListener('mousemove', (e) => {
-            points.push({ x: e.clientX, y: e.clientY, age: 0 });
+            points.push({ x: e.clientX, y: e.clientY, age: 0, t: performance.now() });
             if (points.length > maxPoints) points.shift();
         }, { passive: true });
         
         function drawTrail() {
             ctx.clearRect(0, 0, width, height);
-            if (points.length < 2) {
+            if (points.length < 3) {
                 requestAnimationFrame(drawTrail);
                 return;
             }
             
-            ctx.beginPath();
-            ctx.moveTo(points[0].x, points[0].y);
-            
-            for (let i = 1; i < points.length; i++) {
-                const pt = points[i];
-                const prevPt = points[i - 1];
-                const xc = (pt.x + prevPt.x) / 2;
-                const yc = (pt.y + prevPt.y) / 2;
-                ctx.quadraticCurveTo(prevPt.x, prevPt.y, xc, yc);
-                pt.age++;
+            // Draw fading bezier segments
+            for (let i = 2; i < points.length; i++) {
+                const p0 = points[i - 2];
+                const p1 = points[i - 1];
+                const p2 = points[i];
+                
+                const progress = i / points.length;
+                const alpha = progress * 0.35;
+                const lineW = progress * 8 + 1;
+                
+                ctx.beginPath();
+                ctx.moveTo(p0.x, p0.y);
+                const xc = (p1.x + p2.x) / 2;
+                const yc = (p1.y + p2.y) / 2;
+                ctx.quadraticCurveTo(p1.x, p1.y, xc, yc);
+                
+                ctx.strokeStyle = `rgba(204, 255, 0, ${alpha})`;
+                ctx.lineWidth = lineW;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.stroke();
+                
+                p2.age++;
             }
             
-            ctx.lineTo(points.at(-1).x, points.at(-1).y);
+            // Glow on head
+            if (points.length > 0) {
+                const head = points.at(-1);
+                ctx.beginPath();
+                ctx.arc(head.x, head.y, 4, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(204, 255, 0, 0.5)';
+                ctx.shadowBlur = 12;
+                ctx.shadowColor = '#CCFF00';
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
             
-            ctx.strokeStyle = `rgba(204, 255, 0, 0.4)`;
-            ctx.lineWidth = 15;
-            ctx.lineCap = 'round';
-            ctx.lineJoin = 'round';
-            ctx.shadowBlur = 10;
-            ctx.shadowColor = '#CCFF00';
-            ctx.stroke();
-            
-            points = points.filter(p => p.age < 25);
+            points = points.filter(p => p.age < 20);
             requestAnimationFrame(drawTrail);
         }
         drawTrail();
+    };
+
+    // ── SCROLL REVEAL (IntersectionObserver) ──
+    const initScrollReveal = () => {
+        const targets = document.querySelectorAll(
+            '.reveal-on-scroll, section, .player-container, .haiku-line, .drag-window'
+        );
+        if (!targets.length) return;
+
+        // Add the class for CSS animation setup
+        targets.forEach(el => {
+            if (!el.classList.contains('reveal-on-scroll')) {
+                el.classList.add('reveal-on-scroll');
+            }
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Stagger children if they exist
+                    const children = entry.target.querySelectorAll('.reveal-child');
+                    if (children.length && typeof gsap !== 'undefined') {
+                        gsap.to(children, {
+                            opacity: 1,
+                            y: 0,
+                            stagger: 0.08,
+                            duration: 0.6,
+                            ease: 'power3.out',
+                            delay: 0.1
+                        });
+                    }
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.15,
+            rootMargin: '0px 0px -60px 0px'
+        });
+
+        targets.forEach(el => observer.observe(el));
     };
 
     // ── 3D HOVER TILT ──
@@ -269,7 +325,7 @@ MOSKV.interactions = (() => {
             
             stitchEgg.addEventListener('mouseenter', () => {
                 placeholder.textContent = '{ W E B }';
-                gsap.to(placeholder, { color: '#fff', borderColor: '#fff', duration: 0.2 });
+                gsap.to(placeholder, { color: '#D4D4D4', borderColor: '#D4D4D4', duration: 0.2 });
             });
             stitchEgg.addEventListener('mouseleave', () => {
                 placeholder.textContent = '{ W E N }';
@@ -331,15 +387,121 @@ MOSKV.interactions = (() => {
         });
     };
 
+    // ── STELLAR APPARITIONS (RANDOM 4-WAY FLASHES) ──
+    const initStellarApparitions = () => {
+        const apparitions = [
+            {
+                id: 'chiquito',
+                className: 'stellar-apparition--chiquito',
+                kicker: 'stellar glitch',
+                title: 'CHIQUITO',
+                sub: 'entra / corta / desaparece'
+            },
+            {
+                id: 'bertin',
+                className: 'stellar-apparition--bertin',
+                kicker: 'orbital crooner',
+                title: 'BERTIN OSBORNE',
+                sub: 'flash dorado / paso lateral'
+            },
+            {
+                id: 'carlton',
+                className: 'stellar-apparition--carlton',
+                kicker: 'dance anomaly',
+                title: 'CARLTON BANKS',
+                sub: 'swing / neón / fuga'
+            },
+            {
+                id: 'arevalo',
+                className: 'stellar-apparition--arevalo',
+                kicker: 'comet talk',
+                title: 'AREVALO',
+                sub: 'humo / foco / corte'
+            }
+        ];
+
+        const shell = document.createElement('div');
+        shell.className = 'stellar-apparition-shell';
+        shell.setAttribute('aria-hidden', 'true');
+        document.body.appendChild(shell);
+
+        let timer = 0;
+        let hideTimer = 0;
+        let lastId = '';
+
+        const buildMarkup = (item) => `
+            <div class="stellar-apparition-card ${item.className}">
+                <span class="stellar-apparition-kicker">${item.kicker}</span>
+                <strong class="stellar-apparition-title">${item.title}</strong>
+                <span class="stellar-apparition-sub">${item.sub}</span>
+                <div class="stellar-apparition-stars" aria-hidden="true">
+                    <span></span><span></span><span></span><span></span><span></span>
+                </div>
+            </div>
+        `;
+
+        const pickApparition = () => {
+            const pool = apparitions.filter((item) => item.id !== lastId);
+            return pool[Math.floor(Math.random() * pool.length)] || apparitions[0];
+        };
+
+        const scheduleNext = (delay = 47000 + Math.random() * 26000) => {
+            window.clearTimeout(timer);
+            timer = window.setTimeout(triggerRandomApparition, delay);
+        };
+
+        const clearApparition = () => {
+            shell.classList.remove('is-visible');
+            window.clearTimeout(hideTimer);
+            hideTimer = window.setTimeout(() => {
+                shell.innerHTML = '';
+            }, 260);
+        };
+
+        const triggerRandomApparition = (forcedId = '') => {
+            if (document.hidden) {
+                scheduleNext(12000 + Math.random() * 8000);
+                return;
+            }
+
+            const item = forcedId
+                ? apparitions.find((entry) => entry.id === forcedId) || pickApparition()
+                : pickApparition();
+
+            lastId = item.id;
+            shell.innerHTML = buildMarkup(item);
+            shell.classList.add('is-visible');
+
+            globalThis.autoDJAesthetic?.triggerEruptionTransition?.(item.id);
+
+            window.clearTimeout(hideTimer);
+            hideTimer = window.setTimeout(() => {
+                clearApparition();
+                scheduleNext();
+            }, 760);
+        };
+
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden && !shell.classList.contains('is-visible')) {
+                scheduleNext(14000 + Math.random() * 9000);
+            }
+        });
+
+        globalThis.triggerStellarApparition = triggerRandomApparition;
+        scheduleNext(26000 + Math.random() * 9000);
+    };
+
     // ── MASTER INIT ──
     const init = () => {
         initPuntazos();
 
         initCursorTrail();
+        initScrollReveal();
         init3DHoverTilt();
         initRandomGlitch();
         setTimeout(initStitchEgg, 500);
         initDJAutomata();
+        initStellarApparitions();
     };
 
     return { init };

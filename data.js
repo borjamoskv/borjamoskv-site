@@ -3,6 +3,7 @@
 // ═══════════════════════════════════════════════════════════════════════════
 
 const HQ_BACKGROUND_VISUALS = [
+    '7AO4w4Y_L24', // Nvidia Just Open-Sourced
     'b9ktVQN48OU', // LES BUKO [8K]
     'x8E9HInpzE4', // Glitch in the mirror [4K]
     'NYhOQTcNLkA', // Ecos del cosmos [4K]
@@ -33,12 +34,60 @@ const HERO_BACKGROUND = {
     mood: 'electronic'
 };
 
+const LOCAL_AUDIO_TRACK_IDS = [
+    '-s5ZB4djvEw',
+    '3iQFsgZrDZk',
+    '4Cb-Iu8DnJM',
+    '4RXo5uD-wF4',
+    '8Encp3vIb9M',
+    'AL46Orm0LS4',
+    'AcouyGSki-8',
+    'CFQ1smlFYjQ',
+    'D8hjJ17vZYc',
+    'GeHP3ADsans',
+    'I3jJXm8aG-A',
+    'Icz_FGJAQ78',
+    'Izt6bzo0PO8',
+    'KuBNnC4mYuU',
+    'LDzdKd4WxvI',
+    'MH-YirWPNmI',
+    'N66gquS-zLw',
+    'NJqC3Xf6RzE',
+    'NYhOQTcNLkA',
+    'Otvpn9vfXOE',
+    'PCjZruRuoNY',
+    'TOuixj79kDU',
+    'U2faQ81sRpg',
+    'Yr5CMXrJgIo',
+    'ZB13zY5h4bc',
+    'Z_S9hMVOizo',
+    'Zc8QEQ8y1f8',
+    'ZtOVq-nMgqo',
+    '_1XOjBK4wJc',
+    '_l1J37XK8vM',
+    'b9ktVQN48OU',
+    'bmD0YmLm45A',
+    'c4Wz6M2_y1s',
+    'cFOFcUPUUNs',
+    'eIrt6Uw-SEo',
+    'gDquDpykJIc',
+    'hCkD67O9H2o',
+    'hsdOCzJpUMg',
+    'rakTVLzdc44',
+    'tMorCDfedf8',
+    'uhw1ZQrp-9g',
+    'x8E9HInpzE4',
+    'ya59utbBStM',
+    'zzHETLKSeT4'
+];
+
 const DATA = {
     heroBackground: { ...HERO_BACKGROUND },
 
     // Videos para el fondo (loop automático)
     bgVideos: [...HQ_BACKGROUND_VISUALS],
     backgroundVisuals: [...HQ_BACKGROUND_VISUALS],
+    audioTrackIds: [...LOCAL_AUDIO_TRACK_IDS],
 
     // Bandcamp Sovereign Bridge (Ω_BANDCAMP)
     bandcampPlayers: [
@@ -48,6 +97,7 @@ const DATA = {
 
     // Thumbnails HD de videos propios del artista
     videoThumbnails: [
+        '7AO4w4Y_L24',
         'NJqC3Xf6RzE', 'rakTVLzdc44', 'LDzdKd4WxvI', 'N66gquS-zLw', 'hsdOCzJpUMg',
         'eIrt6Uw-SEo', 'PCjZruRuoNY', 'AL46Orm0LS4', '-s5ZB4djvEw', 'uhw1ZQrp-9g',
         'lbQ1aKrnGNs', '_1XOjBK4wJc', 'bmD0YmLm45A', 'NYhOQTcNLkA', 'x8E9HInpzE4',
@@ -78,6 +128,7 @@ const DATA = {
 
     // Works — enriched with categories for filtering
     works: [
+        { id: "7AO4w4Y_L24", title: "NVIDIA JUST OPEN-SOURCED", desc: "Added by User · AI", categories: ["experimental", "4k"], featured: true },
         { id: "NYhOQTcNLkA", title: "ECOS DEL COSMOS", desc: "Original · Ambient / Sci-Fi [4K]", categories: ["original", "ambient", "4k"], featured: true },
         { id: "x8E9HInpzE4", title: "GLITCH IN THE MIRROR", desc: "Original · Experimental [4K]", categories: ["original", "experimental", "4k"], featured: true },
         { id: "b9ktVQN48OU", title: "LES BUKO", desc: "Original · Electronic [8K]", categories: ["original", "electronic", "4k", "8k"], featured: true },
@@ -118,6 +169,7 @@ const DATA = {
         { id: "c4Wz6M2_y1s", title: "EL TUPAS", desc: "Original · Salmorejo", categories: ["original", "electronic", "salmorejo"] },
         { id: "CFQ1smlFYjQ", title: "LAMENTO BOLIVARIANO", desc: "Original · Ambient", categories: ["original", "ambient"] },
         { id: "Otvpn9vfXOE", title: "ME CAIGO Y ME LEVANTO", desc: "Original · Parkour [4K]", categories: ["original", "electronic", "parkour", "4k"] },
+        { id: "T_rU7WfOVTI", title: "FRASES CON NATA", desc: "Pulso tenue.\nNiebla abierta.\nVisual vivo.", categories: ["original", "electronic", "4k"] },
         { id: "hCkD67O9H2o", title: "INCREÍBLE", desc: "Original · Electronic", categories: ["original", "electronic"] },
         { id: "Z_S9hMVOizo", title: "COCODRILO COJONES", desc: "Original · Hard Bachata Frontflip", categories: ["original", "electronic", "hard-bachata", "parkour"] },
         { id: "YvGpocK-Iqg", title: "NEURAL TRANSFER", desc: "Original · Electronic", categories: ["original", "electronic"] },
@@ -137,4 +189,5 @@ const DATA = {
 
 globalThis.HQ_BACKGROUND_VISUALS = HQ_BACKGROUND_VISUALS;
 globalThis.HERO_BACKGROUND = HERO_BACKGROUND;
+globalThis.LOCAL_AUDIO_TRACK_IDS = LOCAL_AUDIO_TRACK_IDS;
 globalThis.DATA = DATA;

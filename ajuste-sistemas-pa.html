@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cómo Aprender a Ajustar un Sistema PA — borjamoskv</title>
+  <meta name="description" content="El mapa de conocimiento para aprender a ajustar sistemas de sonido en vivo: de la física acústica de Bob McCarthy hasta Smaart v9. Orden correcto, fuentes correctas.">
+  <meta property="og:title" content="Cómo Aprender a Ajustar un Sistema PA">
+  <meta property="og:description" content="Bob McCarthy primero. Smaart después. El orden importa más que el software.">
+  <meta property="og:type" content="article">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;900&family=Inter:wght@300;400;500;600&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="article.css">
+
+  <style>
+    :root {
+      --accent-gradient: linear-gradient(135deg, var(--accent-primary), #00ffe0);
+      --radius-full: 9999px;
+    }
+
+    /* ── RESOURCE CARDS ─────────────────────────────── */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .resource-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(43,59,229,0.25);
+      border-radius: 12px;
+      padding: 1.75rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.2s;
+    }
+
+    .resource-card:hover {
+      border-color: var(--accent-primary, #2B3BE5);
+      transform: translateY(-3px);
+    }
+
+    .resource-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: var(--accent-gradient);
+    }
+
+    .resource-card .card-number {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.7rem;
+      color: var(--accent-primary, #2B3BE5);
+      letter-spacing: 0.12em;
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+    }
+
+    .resource-card h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 0 0 0.5rem;
+      line-height: 1.3;
+    }
+
+    .resource-card .card-author {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 1rem;
+    }
+
+    .resource-card p {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.75);
+      margin: 0;
+    }
+
+    /* ── ORDER DIAGRAM ───────────────────────────────── */
+    .order-diagram {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin: 2.5rem 0;
+      flex-wrap: wrap;
+    }
+
+    .order-step {
+      flex: 1;
+      min-width: 140px;
+      text-align: center;
+      padding: 1.5rem 1rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      position: relative;
+    }
+
+    .order-step:first-child { border-radius: 12px 0 0 12px; }
+    .order-step:last-child  { border-radius: 0 12px 12px 0; border-left: none; }
+    .order-step:not(:first-child):not(:last-child) { border-left: none; border-right: none; }
+
+    .order-step.step-highlight {
+      background: rgba(43,59,229,0.12);
+      border-color: rgba(43,59,229,0.4);
+    }
+
+    .order-step .step-label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.65rem;
+      color: var(--accent-primary, #2B3BE5);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+
+    .order-step .step-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .order-step .step-sub {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.45);
+      margin-top: 0.25rem;
+    }
+
+    /* ── CONCEPT GRID ────────────────────────────────── */
+    .concept-list {
+      list-style: none;
+      padding: 0;
+      margin: 1.5rem 0;
+    }
+
+    .concept-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .concept-list li:last-child { border-bottom: none; }
+
+    .concept-list .concept-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: rgba(43,59,229,0.15);
+      border: 1px solid rgba(43,59,229,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ── SEARCH TERMS BOX ───────────────────────────── */
+    .search-box {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(43,59,229,0.3);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      font-family: 'JetBrains Mono', 'Courier New', monospace;
+      font-size: 0.88rem;
+      margin: 1.5rem 0;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.8;
+    }
+
+    .search-box .search-label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.65rem;
+      color: var(--accent-primary, #2B3BE5);
+      letter-spacing: 0.12em;
+      display: block;
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+    }
+
+    .search-box .search-term {
+      display: block;
+      padding: 0.3rem 0.75rem;
+      background: rgba(255,255,255,0.05);
+      border-radius: 4px;
+      margin-bottom: 0.4rem;
+      border-left: 2px solid var(--accent-primary, #2B3BE5);
+    }
+
+    /* ── AXIOM CALLOUT ───────────────────────────────── */
+    .axiom-block {
+      background: rgba(43,59,229,0.08);
+      border: 1px solid rgba(43,59,229,0.35);
+      border-radius: 12px;
+      padding: 1.75rem 2rem;
+      margin: 2.5rem 0;
+      position: relative;
+    }
+
+    .axiom-block::before {
+      content: 'AXIOMA';
+      position: absolute;
+      top: -0.6rem;
+      left: 1.5rem;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      background: #0A0A0A;
+      padding: 0 0.75rem;
+      color: var(--accent-primary, #2B3BE5);
+    }
+
+    .axiom-block p {
+      margin: 0;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Reading Progress Bar -->
+  <div id="readingProgress" class="reading-progress" aria-hidden="true"></div>
+
+  <!-- Back Navigation -->
+  <a href="blog.html" class="article-back" aria-label="Volver al blog">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 12H5m0 0l7 7m-7-7l7-7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Blog
+  </a>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!--  HERO                                                              -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <header class="article-hero">
+    <span class="hero-label">Técnica · Sistema PA · Guía de Estudio</span>
+    <h1 class="hero-title">
+      <span class="title-accent">Cómo Aprender</span><br>
+      a Ajustar un Sistema PA
+    </h1>
+    <p class="hero-subtitle">El mapa de conocimiento para dominar el ajuste de sistemas de sonido en vivo. Física acústica primero, software después. El orden es la clave que nadie te explica.</p>
+    <div class="hero-meta">
+      <span class="hero-author">Borja Moskv</span>
+      <span class="hero-divider"></span>
+      <span class="hero-date">26 de marzo de 2026</span>
+      <span class="hero-divider"></span>
+      <span class="hero-reading-time" id="readingTime">— min de lectura</span>
+    </div>
+    <div class="hero-scroll-hint">
+      Scroll
+      <span class="scroll-arrow"></span>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!--  ARTICLE LAYOUT                                                    -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <div class="article-layout">
+
+    <!-- Epigraph -->
+    <div class="article-epigraph">
+      <p>Hay un error de ruta muy común en el mundo del sonido en directo.</p>
+      <p>El ingeniero compra Smaart. Aprende a manejar Smaart. Ve curvas de transferencia, ángulos de fase, respuestas de impulso. Y no entiende nada. Porque <strong>Smaart no te enseña acústica. Te muestra acústica.</strong></p>
+      <p>Para que la pantalla te diga algo útil, primero tienes que saber qué estás mirando. Y eso no viene del software. Viene de la física del sonido en el aire.</p>
+      <p>Este artículo es el mapa de estudio que debería existir. El orden correcto. Las fuentes de alta densidad técnica. Sin relleno.</p>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!--  ARTICLE BODY                                                  -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <main class="article-body">
+
+      <!-- I -->
+      <section id="el-error" class="article-section">
+        <div class="section-number">I</div>
+        <h2 class="section-title">El error de ruta habitual</h2>
+        <p>La mayoría de las personas que quieren aprender a ajustar un sistema PA empiezan por el software. Abren Smaart, ven una curva de respuesta en frecuencia que parece un electrocardiograma en crisis y empiezan a mover EQ hasta que la línea queda más o menos plana.</p>
+        <p>Eso no es ajuste de sistema. Es <strong>cosmética digital sobre física no entendida</strong>.</p>
+        <p>El problema no es el software. Smaart es una herramienta brillante. El problema es la secuencia. Intentar aprender a ajustar sistemas arrancando por el software es como intentar aprender a leer un ECG sin haber estudiado cardiología. Ves los picos. No sabes qué significan.</p>
+        <p>El orden correcto tiene dos capas. Y no son intercambiables.</p>
+
+        <div class="order-diagram">
+          <div class="order-step step-highlight">
+            <div class="step-label">Capa 1 · Primero</div>
+            <div class="step-title">Física acústica</div>
+            <div class="step-sub">Bob McCarthy</div>
+          </div>
+          <div class="order-step">
+            <div class="step-label">Capa 2 · Después</div>
+            <div class="step-title">Herramientas operativas</div>
+            <div class="step-sub">Smaart v8/v9 · AES</div>
+          </div>
+          <div class="order-step">
+            <div class="step-label">Resultado</div>
+            <div class="step-title">Comprensión real</div>
+            <div class="step-sub">La pantalla habla</div>
+          </div>
+        </div>
+
+        <p>Capas al revés y tienes a alguien que mueve parámetros con confianza y sin comprensión. Capas en orden y tienes a alguien que entiende <em>por qué</em> mueve cada parámetro.</p>
+      </section>
+
+      <hr class="section-divider">
+
+      <!-- II -->
+      <section id="bob-mccarthy" class="article-section">
+        <div class="section-number">II</div>
+        <h2 class="section-title">Bob McCarthy — La física que no caduca</h2>
+        <p>Bob McCarthy es el equivalente al creador de la arquitectura moderna de ajuste de sistemas. Fue pionero en el uso de analizadores FFT (SIM) en los años 80. Autor del libro <em>Sound Systems: Design and Optimization</em>, que sigue siendo la referencia técnica más densa y útil del sector tres décadas después.</p>
+        <p>Su trabajo con Meyer Sound, y sus seminarios y masterclasses documentados en YouTube, son el punto de entrada correcto para quien quiere entender el campo desde la física y no desde la interfaz.</p>
+
+        <div class="axiom-block">
+          <p>"It measures good but sounds bad" — la desmitificación de esta frase es uno de los ejes centrales de McCarthy. Una curva plana no garantiza un buen sistema. Entender por qué es el primer axioma del ajuste real.</p>
+        </div>
+
+        <h3 class="subsection-heading">Qué aprenderás con McCarthy</h3>
+        <ul class="concept-list">
+          <li>
+            <span class="concept-icon">〜</span>
+            <span><strong>Física de la interacción acústica.</strong> Cómo interactúan múltiples fuentes sonoras en el aire. Interferencia constructiva y destructiva. Por qué dos altavoces apuntando en la misma dirección no suenan siempre dos veces mejor.</span>
+          </li>
+          <li>
+            <span class="concept-icon">φ</span>
+            <span><strong>Alineación de fase y respuesta al impulso.</strong> Filosofía y métodos de lectura. La diferencia entre alineación de tiempo y alineación de fase — y cuándo importa cada una.</span>
+          </li>
+          <li>
+            <span class="concept-icon">▤</span>
+            <span><strong>Diseño y ajuste de Line Arrays.</strong> La geometría del arreglo, el coupling entre elementos, la cobertura vertical y horizontal. Por qué el primer elemento de un J-array suena diferente al último.</span>
+          </li>
+          <li>
+            <span class="concept-icon">◎</span>
+            <span><strong>Predicción vs. medición.</strong> El papel del software de predicción (ArrayCalc, Soundvision, Composer) antes de instalar y del analizador FFT después. Nunca al revés.</span>
+          </li>
+          <li>
+            <span class="concept-icon">∿</span>
+            <span><strong>El mapa acústico del recinto.</strong> Cómo leer un espacio antes de poner un altavoz. Tiempo de reverberación, reflexiones tempranas, modos de sala, comportamiento del aire a frecuencias graves.</span>
+          </li>
+        </ul>
+
+        <div class="search-box">
+          <span class="search-label">Búsquedas exactas en YouTube</span>
+          <span class="search-term">"Bob McCarthy system tuning"</span>
+          <span class="search-term">"Bob McCarthy Meyer Sound optimization"</span>
+          <span class="search-term">"Bob McCarthy sound system design AES"</span>
+          <span class="search-term">"Sound Systems Design and Optimization McCarthy"</span>
+        </div>
+      </section>
+
+      <hr class="section-divider">
+
+      <!-- III -->
+      <section id="smaart-oper" class="article-section">
+        <div class="section-number">III</div>
+        <h2 class="section-title">La capa operativa — Smaart y las AES masterclasses</h2>
+        <p>Una vez tienes los axiomas físicos de McCarthy internalizados, el software cobra sentido. Cada ventana de Smaart — FFT, transfer function, spectrograph — pasa de ser ruido visual a ser información accionable.</p>
+        <p>Las fuentes de densidad técnica operativa son las masterclasses orientadas a software de la AES (Audio Engineering Society) y los eventos como PSSound (Professional Sound + Stage). No todas las masterclasses tienen la misma densidad. Las que valen son las que parten de física y usan el software como demostración, no las que hacen lo contrario.</p>
+
+        <div class="resource-grid">
+          <div class="resource-card">
+            <div class="card-number">Herramienta Principal</div>
+            <h3>Smaart v8 / v9</h3>
+            <div class="card-author">Rational Acoustics</div>
+            <p>Analizador FFT dual-channel. Transfer function, impulse response, spectrograph, RT60. El estándar de facto en sistemas pro. La curva de aprendizaje baja un 70% si llegas con física previa.</p>
+          </div>
+          <div class="resource-card">
+            <div class="card-number">Fuente Institucional</div>
+            <h3>AES Convention Papers & Workshops</h3>
+            <div class="card-author">Audio Engineering Society</div>
+            <p>Papers técnicos y workshops de la convención AES. Nivel de densidad máximo. Buscar ponentes que trabajen en sistemas de gran formato: festivals, óperas, estadios.</p>
+          </div>
+          <div class="resource-card">
+            <div class="card-number">Fabricantes</div>
+            <h3>Formación oficial Meyer / d&b / L-Acoustics</h3>
+            <div class="card-author">Varios</div>
+            <p>Los tres fabricantes principales tienen programas de formación técnica documentados. Sesgados hacia su ecosistema pero con material físico sólido. Meyer University es especialmente densa.</p>
+          </div>
+        </div>
+
+        <div class="search-box">
+          <span class="search-label">Búsquedas AES / Smaart</span>
+          <span class="search-term">"Smaart tutorial transfer function alignment"</span>
+          <span class="search-term">"AES masterclass system optimization 2024"</span>
+          <span class="search-term">"rational acoustics Smaart measurement techniques"</span>
+          <span class="search-term">"d&b audiotechnik ArrayCalc R1 training"</span>
+          <span class="search-term">"Meyer Sound University system tuning"</span>
+        </div>
+      </section>
+
+      <hr class="section-divider">
+
+      <!-- IV -->
+      <section id="mapa-estudio" class="article-section">
+        <div class="section-number">IV</div>
+        <h2 class="section-title">El mapa de estudio completo</h2>
+        <p>El itinerario depende de dónde estás. Hay tres puntos de entrada posibles.</p>
+
+        <div class="resource-grid">
+          <div class="resource-card">
+            <div class="card-number">Punto de entrada A · Sin base</div>
+            <h3>Empezar desde cero</h3>
+            <div class="card-author">Fundamentos → McCarthy → Software</div>
+            <p>Física del sonido básica (propagación, dB SPL, frecuencia) → Libro McCarthy → Vídeos McCarthy en YouTube → Smaart con un sistema real → AES workshops para casos específicos.</p>
+          </div>
+          <div class="resource-card">
+            <div class="card-number">Punto de entrada B · Know técnico</div>
+            <h3>Con base en producción/estudio</h3>
+            <div class="card-author">McCarthy directo → Software</div>
+            <p>Si ya entiendes EQ, dinámica y señal, puedes ir directo a McCarthy. El salto conceptual está en pasar de "sonido en una DAW" a "sonido en el aire en un recinto con múltiples fuentes".</p>
+          </div>
+          <div class="resource-card">
+            <div class="card-number">Punto de entrada C · Ya usas Smaart</div>
+            <h3>Con herramientas pero sin física</h3>
+            <div class="card-author">McCarthy retroactivo</div>
+            <p>El retorno de inversión más alto: leer a McCarthy con Smaart ya conocido. Cada capítulo recontextualiza lo que ya ves en pantalla. La pantalla empieza a hablar.</p>
+          </div>
+        </div>
+
+        <blockquote class="pull-quote">
+          <span class="quote-mark">"</span>
+          <p>El software es un microscopio. Puedes comprar el mejor microscopio del mundo. Pero si no sabes biología celular, solo ves formas. McCarthy te enseña biología celular del sonido.</p>
+        </blockquote>
+      </section>
+
+      <hr class="section-divider">
+
+      <!-- V -->
+      <section id="libro" class="article-section">
+        <div class="section-number">V</div>
+        <h2 class="section-title">El libro que tienes que leer</h2>
+        <p><em>Sound Systems: Design and Optimization</em> de Bob McCarthy (Focal Press, actualmente en 3ª edición) es la referencia canónica. No es un libro de anécdotas ni de historia. Es un libro de mecánica aplicada. Cada capítulo construye sobre el anterior.</p>
+
+        <ul class="concept-list">
+          <li>
+            <span class="concept-icon">1</span>
+            <span><strong>Transmission.</strong> Cómo viaja el sonido. Pérdida por distancia, absorción, reflexión, difracción. Los axiomas que gobiernan todo lo demás.</span>
+          </li>
+          <li>
+            <span class="concept-icon">2</span>
+            <span><strong>Perception.</strong> El oído humano no es lineal. Lo que mide el analizador y lo que percibe el oyente divergen de formas específicas y predecibles.</span>
+          </li>
+          <li>
+            <span class="concept-icon">3</span>
+            <span><strong>Acoustic Interaction.</strong> Qué ocurre cuando dos o más fuentes suenan simultáneamente. El núcleo técnico del ajuste de sistemas modernos.</span>
+          </li>
+          <li>
+            <span class="concept-icon">4</span>
+            <span><strong>Signal Processing.</strong> EQ, delay, crossover — no como botones, sino como operaciones con consecuencias físicas medibles.</span>
+          </li>
+          <li>
+            <span class="concept-icon">5</span>
+            <span><strong>Measurement & Verification.</strong> Cómo usar los datos para confirmar hipótesis, no para generar decisiones arbitrarias.</span>
+          </li>
+        </ul>
+
+        <p>La 3ª edición (2016) incorpora material específico sobre Line Arrays y sistemas modernos de gran formato. Si solo tienes tiempo para una fuente, es esta.</p>
+      </section>
+
+      <hr class="section-divider">
+
+      <!-- VI -->
+      <section id="por-que-importa" class="article-section">
+        <div class="section-number">VI</div>
+        <h2 class="section-title">Por qué el orden importa más que el software</h2>
+        <p>El campo del ajuste de sistemas PA ha tenido históricamente un problema de transmisión de conocimiento. El conocimiento tácito — lo que sabe alguien que ha ajustado 500 sistemas — es difícil de codificar. Durante décadas, se transmitió por apprenticeship: trabajabas con alguien que sabía, y absorbías.</p>
+        <p>McCarthy codificó ese conocimiento. Lo convirtió en física verificable y en procedimientos reproducibles. Eso no lo hace el software. El software ejecuta procedimientos. No los enseña.</p>
+        <p>El ingeniero que aprende en el orden correcto tiene una ventaja estructural sobre el que aprende al revés: <strong>puede diagnosticar sin el software</strong>. Puede escuchar un sistema y saber dónde está el problema antes de abrir Smaart. El analizador confirma lo que el oído educado ya sospecha. No al revés.</p>
+
+        <div class="axiom-block">
+          <p>El ajuste de sistemas no es un problema de medición. Es un problema de comprensión acústica con la medición como herramienta de verificación. Cuando tienes la física, el software reduce la incertidumbre. Sin la física, solo añade confianza injustificada.</p>
+        </div>
+      </section>
+
+    </main>
+
+    <hr class="section-divider">
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!--  EPILOGUE                                                      -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <section id="epilogo" class="article-epilogue">
+      <h2 class="epilogue-title">El Resumen Ejecutivo</h2>
+      <div class="epilogue-text">
+        <p>Si tuvieras que quedarte con una sola cosa de este artículo, sería esta:</p>
+        <p><strong>Bob McCarthy primero. Smaart después.</strong> El libro antes que el software. La física acústica antes que la curva de transferencia. Sin esa secuencia, tienes una persona con una herramienta cara que no sabe qué está mirando.</p>
+        <p>Con esa secuencia, tienes a alguien que puede entrar en cualquier recinto — una sala de 200 personas, un festival de 10.000, un estadio de 80.000 — y tomar decisiones basadas en principios físicos invariantes. El recinto cambia. Los principios no.</p>
+        <p>Eso es lo que separa al técnico del ingeniero de sistemas.</p>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <section id="mapa-final" class="article-epilogue article-epilogue--final">
+      <h2 class="epilogue-title">El Stack Completo</h2>
+      <div class="epilogue-text">
+        <p><strong>Nivel 0 (Axiomas físicos):</strong> McCarthy — <em>Sound Systems: Design and Optimization</em>, 3ª ed. + vídeos YouTube.<br>
+        <strong>Nivel 1 (Herramienta de medición):</strong> Smaart v9 + tutoriales oficiales Rational Acoustics.<br>
+        <strong>Nivel 2 (Casos aplicados):</strong> AES Convention workshops + masterclasses de fabricante (Meyer University, d&b, L-Acoustics).<br>
+        <strong>Nivel 3 (Práctica con sistema real):</strong> Ningún libro o vídeo sustituye ajustar un sistema físico en un recinto real. El laboratorio es el escenario.</p>
+      </div>
+      <p class="epilogue-mantra">🔊 Física primero. Software después. Oído siempre.</p>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!--  FOOTER                                                        -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <footer class="article-footer">
+      <div class="article-tags">
+        <span class="article-tag">#SonidoEnVivo</span>
+        <span class="article-tag">#SistemaPA</span>
+        <span class="article-tag">#BobMcCarthy</span>
+        <span class="article-tag">#Smaart</span>
+        <span class="article-tag">#LineArray</span>
+        <span class="article-tag">#AcústicaAplicada</span>
+        <span class="article-tag">#AES</span>
+      </div>
+      <p class="article-copyright">© 2026 borjamoskv. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!--  TABLE OF CONTENTS (Sidebar)                                   -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <aside class="article-toc" aria-label="Tabla de contenidos">
+      <h3 class="toc-title">Índice</h3>
+      <ol class="toc-list">
+        <li><a href="#el-error" class="toc-link">I. El error de ruta</a></li>
+        <li><a href="#bob-mccarthy" class="toc-link">II. Bob McCarthy</a></li>
+        <li><a href="#smaart-oper" class="toc-link">III. Smaart & AES</a></li>
+        <li><a href="#mapa-estudio" class="toc-link">IV. Mapa de estudio</a></li>
+        <li><a href="#libro" class="toc-link">V. El libro</a></li>
+        <li><a href="#por-que-importa" class="toc-link">VI. Por qué el orden importa</a></li>
+        <li><a href="#epilogo" class="toc-link">Resumen ejecutivo</a></li>
+        <li><a href="#mapa-final" class="toc-link">El stack completo</a></li>
+      </ol>
+    </aside>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="article.js"></script>
+
+</body>
+</html>

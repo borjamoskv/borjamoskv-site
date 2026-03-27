@@ -9,6 +9,9 @@ class AutoDJAesthetic {
   constructor() {
     this.deckA = null;
     this.deckB = null;
+    this.nativeDeckA = document.getElementById('bg-native-a');
+    this.nativeDeckB = document.getElementById('bg-native-b');
+    this.deckVisuals = { a: null, b: null };
     this.activeDeck = 'a';
     this.isCrossfading = false;
     this.globalMuted = false;
@@ -22,13 +25,15 @@ class AutoDJAesthetic {
     // Harmony & Timing
     this.fadeDurationMs = 3000; 
     this.masterBPM = 125; // Default master tempo
+    this.audioTrackIds = new Set(globalThis.DATA?.audioTrackIds || []);
+    this.audioMissingWarnings = new Set();
 
     // Automated DJ Sequence Configuration
     this.autoMixTimer = null;
     this.heroVisualId = globalThis.DATA?.heroBackground?.id || 'b9ktVQN48OU';
     this.currentVideoId = this.heroVisualId;
-    // Curated initial sequence, driven from data.js so the background deck stays easy to tune.
-    this.mixSequence = [...(globalThis.DATA?.backgroundVisuals || ['x8E9HInpzE4', 'b9ktVQN48OU', 'hsdOCzJpUMg'])];
+    // Curated initial sequence, narrowed to tracks with real local audio when available.
+    this.mixSequence = this._buildMixSequence();
     this.mixIntervalMs = 40000; // Default fallback (dynamic phrases used instead)
 
     // Real BPM mapping for known tracks to perfectly beatmatch
@@ -86,7 +91,45 @@ class AutoDJAesthetic {
 
     // 🎤 Spotify-style DJ Voice & Mood System
     this.currentMood = localStorage.getItem('moskv_dj_mood') || 'original';
-    this.playedTracks = JSON.parse(localStorage.getItem('moskv_dj_history') || '[]');
+    this.playedTracks = JSON.parse(localStorage.getItem('moskv_dj_history')) || [];
+    this.keyCache = {
+      ...this.keyCache,
+      ...(globalThis.DATA?.keyCache || {})
+    };
+
+    // ==========================================
+    // AUDIO FOCUS INTEGRATION
+    // ==========================================
+    if (globalThis.MOSKV?.audioFocus) {
+      globalThis.MOSKV.audioFocus.register('autodj', {
+        resume: (ctx) => {
+          console.log('[CORTEX AutoDJ] Focus Resumed. Resuming playback.', ctx);
+          this.isBackgroundPausedByEmbed = false;
+          this.globalMuted = false;
+          if (this.activeDeck === 'a') {
+              this.deckA?.playVideo();
+              this.audioA?.play();
+          } else {
+              this.deckB?.playVideo();
+              this.audioB?.play();
+          }
+          document.getElementById('dj-status-text').innerText = 'FOCUS RESTORED';
+          // Sync UI
+          document.querySelectorAll('.dj-deck').forEach(d => d.classList.toggle('active', d.id === `dj-deck-${this.activeDeck}-ui`));
+        },
+        suspend: (ctx) => {
+          console.log('[CORTEX AutoDJ] Focus Suspended by ' + (ctx.nextOwner || 'unknown'), ctx);
+          this.isBackgroundPausedByEmbed = true;
+          this.globalMuted = true;
+          this.deckA?.pauseVideo();
+          this.deckB?.pauseVideo();
+          this.audioA?.pause();
+          this.audioB?.pause();
+          document.getElementById('dj-status-text').innerText = 'FOCUS SUSPENDED';
+        }
+      });
+    }
+
     this.voiceEnabled = false; // Voice-off by default; keep the mix silent unless explicitly re-enabled later.
 
     // 💾 Persistent User Memory (TikTok-style)
@@ -143,6 +186,8 @@ class AutoDJAesthetic {
 
   // Harmonic approximation: Assigns a persistent random BPM to unknown tracks
   getTrackBPM(videoId) {
+    const visual = this._getVisualEntry(videoId);
+    if (visual?.bpm) return visual.bpm;
     if (this.bpmCache[videoId]) return this.bpmCache[videoId];
     // Assign a synthetic BPM between 110 and 135 to simulate DJ environments
     const bpm = 110 + Math.floor(Math.random() * 25);
@@ -163,9 +208,139 @@ class AutoDJAesthetic {
     globalThis.MOSKV?.audioFocus?.release?.('autodj', { reason });
   }
 
+  _getNativeDeck(deckId) {
+    return deckId === 'a' ? this.nativeDeckA : this.nativeDeckB;
+  }
+
+  _getDeckPlayer(deckId) {
+    return deckId === 'a' ? this.deckA : this.deckB;
+  }
+
+  _makeVisualId(entry, index = 0) {
+    if (!entry || typeof entry !== 'object') return `visual-${index}`;
+    const raw = entry.id || entry.videoId || entry.youtubeId || entry.src || entry.url || `visual-${index}`;
+    return String(raw)
+      .replace(/^https?:\/\//, '')
+      .replace(/[^a-zA-Z0-9_-]+/g, '-')
+      .replace(/^-+|-+$/g, '') || `visual-${index}`;
+  }
+
+  _normalizeVisualEntry(entry, index = 0) {
+    if (!entry) return null;
+    if (typeof entry === 'string') {
+      return {
+        id: entry,
+        type: 'youtube',
+        videoId: entry,
+        poster: this._buildYouTubePoster(entry),
+        url: `https://www.youtube.com/watch?v=${entry}`
+      };
+    }
+
+    if (typeof entry !== 'object') return null;
+
+    const type = entry.type === 'video' || entry.src ? 'video' : 'youtube';
+    const id = this._makeVisualId(entry, index);
+    const videoId = entry.videoId || entry.youtubeId || (type === 'youtube' ? id : null);
+    const src = entry.src || (type === 'video' ? entry.url : null);
+
+    return {
+      ...entry,
+      id,
+      type,
+      videoId,
+      src,
+      cuePoint: Number(entry.cuePoint ?? entry.start ?? 0) || 0,
+      bpm: Number(entry.bpm || 0) || null,
+      audioSrc: entry.audioSrc || null,
+      poster: entry.poster || (type === 'youtube' && videoId ? this._buildYouTubePoster(videoId) : ''),
+      url: entry.href || entry.watchUrl || (type === 'youtube' && videoId ? `https://www.youtube.com/watch?v=${videoId}` : src || '#'),
+      badge: entry.badge || (type === 'video' ? 'VID' : 'YT')
+    };
+  }
+
+  _getVisualEntry(trackRef) {
+    if (!trackRef) return null;
+    if (typeof trackRef === 'object') return this._normalizeVisualEntry(trackRef);
+
+    const visuals = this._getBackgroundVisuals();
+    return visuals.find((visual) => visual.id === trackRef || visual.videoId === trackRef) || this._normalizeVisualEntry(trackRef);
+  }
+
+  _buildYouTubePoster(videoId) {
+    return [
+      `url("https://i.ytimg.com/vi_webp/${videoId}/maxresdefault.webp")`,
+      `url("https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg")`,
+      `url("https://i.ytimg.com/vi/${videoId}/hqdefault.jpg")`
+    ].join(', ');
+  }
+
+  _getCuePoint(trackRef) {
+    const visual = this._getVisualEntry(trackRef);
+    if (!visual) return 0;
+    return Number(visual.cuePoint ?? this.cueCache[visual.id] ?? this.cueCache[visual.videoId] ?? 0) || 0;
+  }
+
+  _buildMixSequence() {
+    const mixableIds = this._getMixableTrackIds();
+    if (mixableIds.length === 0) {
+      return [...(globalThis.DATA?.backgroundVisuals || ['x8E9HInpzE4', 'b9ktVQN48OU', 'hsdOCzJpUMg'])];
+    }
+
+    const sequence = [...mixableIds];
+    const heroIndex = sequence.indexOf(this.heroVisualId);
+    if (heroIndex > 0) {
+      sequence.unshift(sequence.splice(heroIndex, 1)[0]);
+    }
+    return sequence;
+  }
+
+  _hasTrackAudio(trackRef) {
+    const visual = this._getVisualEntry(trackRef);
+    if (!visual) return false;
+    if (visual.audioSrc) return true;
+    if (visual.type !== 'youtube') return Boolean(visual.src);
+    if (this.audioTrackIds.size === 0) return true;
+    return this.audioTrackIds.has(visual.id);
+  }
+
+  _getMixableTrackIds() {
+    const visualIds = this._getBackgroundVisuals().map((visual) => visual.id);
+    const mixableIds = visualIds.filter((id) => this._hasTrackAudio(id));
+    return mixableIds.length > 0 ? mixableIds : visualIds;
+  }
+
+  _getTrackAudioSrc(trackRef) {
+    const visual = this._getVisualEntry(trackRef);
+    if (!visual) return null;
+    if (visual.audioSrc) return visual.audioSrc;
+    if (!this._hasTrackAudio(visual)) {
+      if (!this.audioMissingWarnings.has(visual.id)) {
+        console.info(
+          `[CORTEX AutoDJ] Skipping local audio for ${visual.id}; no matching asset found.`
+        );
+        this.audioMissingWarnings.add(visual.id);
+      }
+      return null;
+    }
+    return visual.type === 'youtube' ? `audio/${visual.id}.webm` : null;
+  }
+
   _getBackgroundVisuals() {
     const visualPool = globalThis.DATA?.backgroundVisuals || globalThis.DATA?.bgVideos || [];
-    return [...new Set(visualPool.filter(Boolean))];
+    const uniqueVisuals = [];
+    const seen = new Set();
+
+    visualPool
+      .map((entry, index) => this._normalizeVisualEntry(entry, index))
+      .filter(Boolean)
+      .forEach((visual) => {
+        if (seen.has(visual.id)) return;
+        seen.add(visual.id);
+        uniqueVisuals.push(visual);
+      });
+
+    return uniqueVisuals;
   }
 
   initPlayers() {
@@ -173,22 +348,35 @@ class AutoDJAesthetic {
     if (visualPool.length === 0) return;
     
     // [EXPERT DJ] Abrimos con visuales más cinematográficos y mantenemos el segundo deck preparado
-    const startVidA = visualPool.includes(this.heroVisualId) ? this.heroVisualId : visualPool[0];
-    const secondaryPool = visualPool.filter(id => id !== startVidA);
-    const startVidB = secondaryPool[Math.floor(Math.random() * secondaryPool.length)] || startVidA;
-    const startCueA = this.cueCache[startVidA] || 0;
-    const startCueB = this.cueCache[startVidB] || 0;
-    this.currentVideoId = startVidA;
-    this._updateVideoIdentity(startVidA, true);
-    this._setDeckPoster('a', startVidA);
-    this._setDeckPoster('b', startVidB);
+    const youtubeFallback = visualPool.find((visual) => visual.type === 'youtube') || this._normalizeVisualEntry('b9ktVQN48OU');
+    const mixableIdSet = new Set(this._getMixableTrackIds());
+    const preferredStartVisual = visualPool.find((visual) => visual.id === this.heroVisualId) || visualPool[0];
+    const startVisualA = mixableIdSet.has(preferredStartVisual.id)
+      ? preferredStartVisual
+      : visualPool.find((visual) => mixableIdSet.has(visual.id)) || preferredStartVisual;
+    const secondaryPool = visualPool.filter(
+      (visual) => visual.id !== startVisualA.id && mixableIdSet.has(visual.id)
+    );
+    const startVisualB = secondaryPool[Math.floor(Math.random() * secondaryPool.length)]
+      || visualPool.find((visual) => visual.id !== startVisualA.id)
+      || startVisualA;
+    const startCueA = this._getCuePoint(startVisualA.id);
+    const startCueB = this._getCuePoint(startVisualB.id);
+    this.currentVideoId = startVisualA.id;
+    this.deckVisuals.a = startVisualA;
+    this.deckVisuals.b = startVisualB;
+    this._updateVideoIdentity(startVisualA.id, true);
+    this._setDeckPoster('a', startVisualA.id);
+    this._setDeckPoster('b', startVisualB.id);
     this._showDeckPoster('a');
     this._showDeckPoster('b');
     this._renderVideoReel();
 
-    this.masterBPM = this.getTrackBPM(startVidA);
-    this.audioA.src = `audio/${startVidA}.webm`;
-    this.audioB.src = `audio/${startVidB}.webm`;
+    this.masterBPM = this.getTrackBPM(startVisualA.id);
+    const startAudioA = this._getTrackAudioSrc(startVisualA.id);
+    const startAudioB = this._getTrackAudioSrc(startVisualB.id);
+    if (startAudioA) this.audioA.src = startAudioA;
+    if (startAudioB) this.audioB.src = startAudioB;
 
     const commonParams = {
       autoplay: 1, mute: 1, controls: 0, disablekb: 1, fs: 0,
@@ -197,8 +385,12 @@ class AutoDJAesthetic {
     };
 
     this.deckA = new YT.Player('bg-video-a', {
-      videoId: startVidA,
-      playerVars: { ...commonParams, playlist: startVidA, start: startCueA },
+      videoId: startVisualA.type === 'youtube' ? startVisualA.videoId : youtubeFallback.videoId,
+      playerVars: {
+        ...commonParams,
+        playlist: startVisualA.type === 'youtube' ? startVisualA.videoId : youtubeFallback.videoId,
+        start: startCueA
+      },
       events: {
         'onReady': (e) => this.onPlayerReady(e, 'a'),
         'onStateChange': (e) => this.onPlayerStateChange(e, 'a')
@@ -206,8 +398,12 @@ class AutoDJAesthetic {
     });
 
     this.deckB = new YT.Player('bg-video-b', {
-      videoId: startVidB,
-      playerVars: { ...commonParams, playlist: startVidB, start: startCueB },
+      videoId: startVisualB.type === 'youtube' ? startVisualB.videoId : youtubeFallback.videoId,
+      playerVars: {
+        ...commonParams,
+        playlist: startVisualB.type === 'youtube' ? startVisualB.videoId : youtubeFallback.videoId,
+        start: startCueB
+      },
       events: {
         'onReady': (e) => this.onPlayerReady(e, 'b'),
         'onStateChange': (e) => this.onPlayerStateChange(e, 'b')
@@ -223,18 +419,31 @@ class AutoDJAesthetic {
       setTimeout(() => event.target.setPlaybackQuality('highres'), 800);
       setTimeout(() => event.target.setPlaybackQuality('hd1080'), 1600);
     }
+
+    const deckVisual = this.deckVisuals[deckId];
     
     if (deckId === 'a') {
-      const cuePoint = this.cueCache[this.currentVideoId] || 0;
       event.target.setPlaybackRate(1.0); // Native speed initially
       document.getElementById('video-deck-a').style.opacity = 1;
-      event.target.playVideo();
-      if (cuePoint > 0 && typeof event.target.seekTo === 'function') {
-        setTimeout(() => event.target.seekTo(cuePoint, true), 250);
+      if (deckVisual?.type === 'video') {
+        this._loadVisualIntoDeck('a', deckVisual, { autoplay: true });
+      } else {
+        const cuePoint = this._getCuePoint(this.currentVideoId);
+        event.target.playVideo();
+        if (cuePoint > 0 && typeof event.target.seekTo === 'function') {
+          setTimeout(() => event.target.seekTo(cuePoint, true), 250);
+        }
+        // Fallback: if the YT state event arrives late, don't let the poster mask the whole hero.
+        setTimeout(() => this._hideDeckPoster('a'), 1400);
       }
     } else {
       document.getElementById('video-deck-b').style.opacity = 0;
-      event.target.pauseVideo();
+      if (deckVisual?.type === 'video') {
+        this._loadVisualIntoDeck('b', deckVisual, { autoplay: false });
+      } else {
+        event.target.pauseVideo();
+        setTimeout(() => this._hideDeckPoster('b'), 1400);
+      }
     }
 
     const soundToggle = document.getElementById('heroSoundToggle');
@@ -258,18 +467,22 @@ class AutoDJAesthetic {
     }
   }
 
-  _getPosterUrl(videoId) {
-    return [
-      `url("https://i.ytimg.com/vi_webp/${videoId}/maxresdefault.webp")`,
-      `url("https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg")`,
-      `url("https://i.ytimg.com/vi/${videoId}/hqdefault.jpg")`
-    ].join(', ');
+  _getPosterUrl(trackRef) {
+    const visual = this._getVisualEntry(trackRef);
+    if (!visual) return '';
+    if (visual.poster) return visual.poster;
+    if (visual.type === 'youtube' && visual.videoId) {
+      return this._buildYouTubePoster(visual.videoId);
+    }
+    return '';
   }
 
-  _setDeckPoster(deckId, videoId) {
+  _setDeckPoster(deckId, trackRef) {
     const poster = document.getElementById(`video-poster-${deckId}`);
     if (!poster) return;
-    poster.style.backgroundImage = this._getPosterUrl(videoId);
+    const posterUrl = this._getPosterUrl(trackRef);
+    poster.style.backgroundImage = posterUrl;
+    poster.style.display = posterUrl ? 'block' : 'none';
   }
 
   _showDeckPoster(deckId) {
@@ -282,6 +495,117 @@ class AutoDJAesthetic {
     const poster = document.getElementById(`video-poster-${deckId}`);
     if (!poster) return;
     poster.classList.add('is-hidden');
+  }
+
+  _resetNativeDeck(deckId) {
+    const nativeVideo = this._getNativeDeck(deckId);
+    if (!nativeVideo) return;
+    nativeVideo.pause();
+    nativeVideo.classList.remove('is-active');
+  }
+
+  _pauseDeckVisual(deckId) {
+    const visual = this.deckVisuals[deckId];
+    const player = this._getDeckPlayer(deckId);
+    const nativeVideo = this._getNativeDeck(deckId);
+
+    if (visual?.type === 'video') {
+      nativeVideo?.pause();
+      return;
+    }
+
+    if (player && typeof player.pauseVideo === 'function') {
+      player.pauseVideo();
+    }
+  }
+
+  _playDeckVisual(deckId) {
+    const visual = this.deckVisuals[deckId];
+    const player = this._getDeckPlayer(deckId);
+    const nativeVideo = this._getNativeDeck(deckId);
+
+    if (visual?.type === 'video') {
+      nativeVideo?.play().catch((error) => console.warn(error));
+      return;
+    }
+
+    if (player && typeof player.playVideo === 'function') {
+      player.playVideo();
+    }
+  }
+
+  _setDeckPlaybackRate(deckId, rate) {
+    const visual = this.deckVisuals[deckId];
+    const player = this._getDeckPlayer(deckId);
+    const nativeVideo = this._getNativeDeck(deckId);
+
+    if (visual?.type === 'video') {
+      if (nativeVideo) nativeVideo.playbackRate = rate;
+      return;
+    }
+
+    if (player && typeof player.setPlaybackRate === 'function') {
+      player.setPlaybackRate(rate);
+    }
+  }
+
+  _loadVisualIntoDeck(deckId, trackRef, { autoplay = false } = {}) {
+    const visual = this._getVisualEntry(trackRef);
+    const player = this._getDeckPlayer(deckId);
+    const nativeVideo = this._getNativeDeck(deckId);
+    if (!visual) return;
+
+    this.deckVisuals[deckId] = visual;
+    this._setDeckPoster(deckId, visual.id);
+
+    if (visual.type === 'video') {
+      if (!nativeVideo || !visual.src) return;
+      if (player && typeof player.pauseVideo === 'function') {
+        player.pauseVideo();
+      }
+
+      nativeVideo.src = visual.src;
+      nativeVideo.poster = visual.poster || '';
+      nativeVideo.currentTime = 0;
+      nativeVideo.classList.add('is-active');
+
+      const cuePoint = this._getCuePoint(visual.id);
+      const seekNative = () => {
+        if (cuePoint <= 0) return;
+        try {
+          nativeVideo.currentTime = cuePoint;
+        } catch (error) {
+          console.warn(error);
+        }
+      };
+
+      nativeVideo.onloadedmetadata = seekNative;
+      nativeVideo.load();
+      if (autoplay) {
+        nativeVideo.play().catch((error) => console.warn(error));
+        setTimeout(() => this._hideDeckPoster(deckId), 900);
+      } else {
+        nativeVideo.pause();
+      }
+      return;
+    }
+
+    if (nativeVideo) {
+      nativeVideo.pause();
+      nativeVideo.removeAttribute('src');
+      nativeVideo.load();
+      nativeVideo.classList.remove('is-active');
+    }
+
+    if (!player) return;
+
+    const cuePoint = this._getCuePoint(visual.id);
+    player.mute();
+    if (autoplay && typeof player.loadVideoById === 'function') {
+      player.loadVideoById({ videoId: visual.videoId, startSeconds: cuePoint });
+    } else if (typeof player.cueVideoById === 'function') {
+      player.cueVideoById({ videoId: visual.videoId, startSeconds: cuePoint });
+    }
   }
 
   toggleGlobalMute() {
@@ -428,7 +752,7 @@ class AutoDJAesthetic {
       }
 
       if (!this.globalMuted) {
-        this._claimFocus('autodj-unlock');
+        this._claimFocus('unlock-interaction');
       }
 
       // Start the automated DJ setlist loop once audio is unblocked
@@ -620,29 +944,34 @@ class AutoDJAesthetic {
         });
     }
 
-    // 🌐 GEOLOCATION (reverse geocode via free API)
-    if ('geolocation' in navigator) {
-        navigator.geolocation.getCurrentPosition(pos => {
-            const { latitude, longitude } = pos.coords;
-            const el = document.getElementById('sensor-location');
-            // Reverse geocode
-            fetch(`https://geocode.maps.co/reverse?lat=${latitude}&lon=${longitude}`)
-                .then(r => r.json())
-                .then(data => {
-                    const city = data?.address?.city || data?.address?.town || data?.address?.village || '??';
-                    const country = data?.address?.country_code?.toUpperCase() || '';
-                    if (el) el.innerText = `${city}, ${country}`;
-                    this.userProfile.lastCity = city;
-                    localStorage.setItem('moskv_user', JSON.stringify(this.userProfile));
-                    this._djSpeak(`Broadcasting from ${city}. Let's go.`);
-                })
-                .catch(() => {
-                    if (el) el.innerText = `${latitude.toFixed(1)}°, ${longitude.toFixed(1)}°`;
-                });
-        }, () => {
-            const el = document.getElementById('sensor-location');
-            if (el) el.innerText = 'DENIED';
-        });
+    // 🌐 LOCATION SENSOR (local-only; avoids brittle third-party reverse geocoding)
+    {
+        const el = document.getElementById('sensor-location');
+        const metaPlace = document.querySelector('meta[name="geo.placename"]')?.content || '';
+        const metaRegion = document.querySelector('meta[name="geo.region"]')?.content || '';
+        const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+        const timeZoneCity = timeZone.split('/').pop()?.replace(/_/g, ' ') || '';
+        let localeRegion = '';
+
+        try {
+            localeRegion = new Intl.Locale(navigator.language || 'es-ES').region || '';
+        } catch (error) {
+            localeRegion = (navigator.language || '').split('-')[1]?.toUpperCase() || '';
+        }
+
+        const city = timeZoneCity || this.userProfile.lastCity || metaPlace || 'LOCAL';
+        const country = localeRegion || metaRegion.replace(/^.*-/, '') || '';
+        const locationLabel = country ? `${city}, ${country}` : city;
+
+        if (el) {
+            el.innerText = locationLabel;
+            if (timeZone) {
+                el.title = timeZone;
+            }
+        }
+
+        this.userProfile.lastCity = city;
+        localStorage.setItem('moskv_user', JSON.stringify(this.userProfile));
     }
 
     // 📡 NETWORK INFORMATION API
@@ -716,7 +1045,7 @@ class AutoDJAesthetic {
     for (let i = 0; i < 2; i++) {
         const el = document.getElementById(`dj-prefetch-${i+1}`);
         if (el && this.prefetchQueue[i]) {
-            const title = globalThis.DATA?.works?.find(w => w.id === this.prefetchQueue[i])?.title || this.prefetchQueue[i];
+            const title = this._getTrackTitle(this.prefetchQueue[i]);
             el.innerText = title.substring(0, 12);
         } else if (el) {
             el.innerText = '---';
@@ -724,9 +1053,10 @@ class AutoDJAesthetic {
     }
     // Pre-cue first prefetch on standby deck
     const standbyDeck = this.activeDeck === 'a' ? this.deckB : this.deckA;
-    if (standbyDeck && this.prefetchQueue[0] && typeof standbyDeck.cueVideoById === 'function') {
-        standbyDeck.cueVideoById(this.prefetchQueue[0]);
-        console.log(`[MOSKV DJ] Prefetched: ${this.prefetchQueue[0]}`);
+    const prefetchedVisual = this._getVisualEntry(this.prefetchQueue[0]);
+    if (standbyDeck && prefetchedVisual?.type === 'youtube' && typeof standbyDeck.cueVideoById === 'function') {
+        standbyDeck.cueVideoById(prefetchedVisual.videoId);
+        console.log(`[MOSKV DJ] Prefetched: ${prefetchedVisual.id}`);
     }
   }
 
@@ -753,17 +1083,37 @@ class AutoDJAesthetic {
             // Snare/Clap detection (Mids/Highs)
             const snareAvg = (freqData[20] + freqData[21] + freqData[22]) / 3;
             
-            const vContainer = document.querySelector('.video-container');
+            const vContainer = document.querySelector('.video-background-system') || document.querySelector('.video-container');
             if (vContainer) {
                 const reactiveEnergy = Math.max(0, Math.min(1, bassAvg / 255));
+                const snareEnergy = Math.max(0, Math.min(1, snareAvg / 255));
+                
                 vContainer.style.setProperty('--video-reactive-energy', reactiveEnergy.toFixed(3));
+                document.documentElement.style.setProperty('--dj-bass-energy', reactiveEnergy.toFixed(3));
+                document.documentElement.style.setProperty('--dj-snare-energy', snareEnergy.toFixed(3));
+                document.documentElement.style.setProperty('--dj-freq-avg', (bassAvg / 255).toFixed(3));
             }
             
             // 2026 Trend: Liquid Glass / Performance Inmersivo. Throttle kicks to 400ms max.
             if (bassAvg > 220 && Date.now() - lastPulse > 400) {
                 if (vContainer) {
                     gsap.killTweensOf(vContainer);
-                    gsap.to(vContainer, { scale: 1.015, filter: 'contrast(1.1) saturate(1.2)', duration: 0.05, ease: "power1.out", yoyo: true, repeat: 1 });
+                    gsap.to(vContainer, { scale: 1.015, filter: 'contrast(1.15) saturate(1.2) hue-rotate(3deg)', duration: 0.05, ease: "power1.out", yoyo: true, repeat: 1 });
+                }
+                
+                // Chromatic aberration on UI elements
+                const texts = document.querySelectorAll('.moskv-dj-hud');
+                if (texts.length) {
+                    gsap.killTweensOf(texts);
+                    gsap.to(texts, { 
+                        textShadow: '3px 0 rgba(255,0,0,0.9), -3px 0 rgba(0,255,255,0.9)', 
+                        x: () => Math.random() * 4 - 2,
+                        y: () => Math.random() * 4 - 2,
+                        duration: 0.05, 
+                        yoyo: true, 
+                        repeat: 1, 
+                        clearProps: 'all'
+                    });
                 }
                 
                 lastPulse = Date.now();
@@ -771,8 +1121,19 @@ class AutoDJAesthetic {
                 // Glow effect on active deck UI (Dopamine hit)
                 const activeUI = document.getElementById(`dj-deck-${this.activeDeck}-ui`);
                 if (activeUI) {
-                    gsap.to(activeUI, { color: '#ffffff', textShadow: '0 0 15px #ccff00', duration: 0.1, yoyo: true, repeat: 1 });
+                    gsap.killTweensOf(activeUI);
+                    gsap.to(activeUI, { color: '#FFFFFF', textShadow: '0 0 20px var(--accent-primary)', scale: 1.05, duration: 0.1, yoyo: true, repeat: 1 });
                 }
+                
+                // Matrix-like scramble of visit sensors or numbers
+                const sensorValues = document.querySelectorAll('.dj-sensor-value');
+                sensorValues.forEach(el => {
+                    if (Math.random() > 0.5) {
+                        const original = el.innerText;
+                        el.innerText = Math.random().toString(16).substr(2, 4).toUpperCase();
+                        setTimeout(() => el.innerText = original, 100);
+                    }
+                });
 
                 // --- 🚄 STAR GUITAR EFFECT (Spawn landscape objects on Kicks) ---
                 this._spawnStarGuitarObject('kick');
@@ -819,17 +1180,31 @@ class AutoDJAesthetic {
           width = 20 + Math.random() * 80 + 'vw';
           height = 40 + Math.random() * 60 + 'vh';
           bottom = '0px';
-          bg = `rgba(5, 5, 5, ${0.7 + Math.random() * 0.3})`;
-          duration = 1.5 + Math.random() * 1.5; // Relies on master BPM theoretically, but random looks ok
+          bg = `rgba(5, 5, 5, ${0.5 + Math.random() * 0.4})`;
+          duration = 1.0 + Math.random() * 1.5;
           blur = `blur(${2 + Math.random() * 5}px)`;
+          
+          if (Math.random() > 0.6) {
+              const text = document.createElement('span');
+              text.innerText = ['CORTEX', 'EXERGY', 'BPM', 'SYNC', 'MOSKV', 'ZERO-STATE'][Math.floor(Math.random() * 6)];
+              text.style.color = 'rgba(242, 221, 51, 0.4)';
+              text.style.fontFamily = 'var(--font-mono, monospace)';
+              text.style.fontSize = (5 + Math.random() * 10) + 'vh';
+              text.style.position = 'absolute';
+              text.style.bottom = '10px';
+              text.style.left = '10px';
+              text.style.fontWeight = 'bold';
+              text.style.letterSpacing = '-0.05em';
+              obj.appendChild(text);
+          }
       } else {
           // Snares / secondary beats: passing lights, distant buildings (background, slower)
           width = 5 + Math.random() * 20 + 'vw';
-          height = 5 + Math.random() * 10 + 'vh';
-          bottom = 10 + Math.random() * 40 + 'vh';
-          bg = `rgba(204, 255, 0, ${0.1 + Math.random() * 0.4})`; // Cyber Lime highlights
-          duration = 3 + Math.random() * 2;
-          blur = `blur(${8 + Math.random() * 10}px)`;
+          height = 2 + Math.random() * 10 + 'vh';
+          bottom = 10 + Math.random() * 60 + 'vh';
+          bg = `rgba(43, 59, 229, ${0.1 + Math.random() * 0.4})`; // BlueYlb highlights
+          duration = 2.5 + Math.random() * 2;
+          blur = `blur(${4 + Math.random() * 10}px)`;
       }
       
       obj.style.width = width;
@@ -837,6 +1212,7 @@ class AutoDJAesthetic {
       obj.style.bottom = bottom;
       obj.style.background = bg;
       obj.style.backdropFilter = blur;
+      obj.style.border = type === 'kick' ? '1px solid rgba(220, 220, 220, 0.1)' : '1px solid rgba(43, 59, 229, 0.4)';
       overlay.appendChild(obj);
       
       // Hardware-accelerated GPU 60fps translation across the screen
@@ -909,23 +1285,26 @@ class AutoDJAesthetic {
   }
 
   _getTrackTitle(videoId) {
+    const visual = this._getVisualEntry(videoId);
     if (videoId === this.heroVisualId && globalThis.DATA?.heroBackground?.title) {
       return globalThis.DATA.heroBackground.title;
     }
-    return globalThis.DATA?.works?.find(work => work.id === videoId)?.title || videoId || 'UNKNOWN';
+    return visual?.title || globalThis.DATA?.works?.find(work => work.id === videoId)?.title || 'BACKGROUND VISUAL';
   }
 
   _getTrackUrl(videoId) {
+    const visual = this._getVisualEntry(videoId);
     if (videoId === this.heroVisualId && globalThis.DATA?.heroBackground?.url) {
       return globalThis.DATA.heroBackground.url;
     }
-    return `https://www.youtube.com/watch?v=${videoId}`;
+    return visual?.url || `https://www.youtube.com/watch?v=${videoId}`;
   }
 
   _getTrackMeta(videoId) {
+    const visual = this._getVisualEntry(videoId);
     const work = globalThis.DATA?.works?.find((entry) => entry.id === videoId);
     const categories = work?.categories || [];
-    let badge = 'YT';
+    let badge = visual?.badge || 'YT';
     if (categories.includes('8k')) badge = '8K';
     else if (categories.includes('4k')) badge = '4K';
     else if (categories.includes('ambient')) badge = 'AMB';
@@ -942,12 +1321,12 @@ class AutoDJAesthetic {
     if (!reel) return;
 
     const visuals = this._getBackgroundVisuals();
-    reel.innerHTML = visuals.map((videoId) => {
-      const meta = this._getTrackMeta(videoId);
-      const activeClass = videoId === this.currentVideoId ? ' is-active' : '';
-      const pressed = videoId === this.currentVideoId ? 'true' : 'false';
+    reel.innerHTML = visuals.map((visual) => {
+      const meta = this._getTrackMeta(visual.id);
+      const activeClass = visual.id === this.currentVideoId ? ' is-active' : '';
+      const pressed = visual.id === this.currentVideoId ? 'true' : 'false';
       return `
-        <button class="video-reel-btn${activeClass}" type="button" data-video-id="${videoId}" aria-pressed="${pressed}">
+        <button class="video-reel-btn${activeClass}" type="button" data-video-id="${visual.id}" aria-pressed="${pressed}">
           <span class="video-reel-btn-label">${meta.badge}</span>
           <strong>${meta.title}</strong>
         </button>
@@ -1005,7 +1384,7 @@ class AutoDJAesthetic {
 
   // 🎵 MOOD FILTER — Get tracks matching current mood
   _getTracksForMood() {
-    const backgroundIds = globalThis.DATA?.backgroundVisuals || globalThis.DATA?.videoThumbnails || [];
+    const backgroundIds = this._getMixableTrackIds();
     if (!globalThis.DATA?.works) return backgroundIds;
 
     let pool = globalThis.DATA.works.filter(work => backgroundIds.includes(work.id));
@@ -1025,6 +1404,11 @@ class AutoDJAesthetic {
     }
     // Filter out recently played (avoid repeats)
     const ids = pool.map(w => w.id).filter(id => !this.playedTracks.includes(id));
+    backgroundIds.forEach((id) => {
+        if (!ids.includes(id) && !this.playedTracks.includes(id)) {
+            ids.push(id);
+        }
+    });
     const heroIndex = ids.indexOf(this.heroVisualId);
     if (heroIndex > 0) {
         ids.unshift(ids.splice(heroIndex, 1)[0]);
@@ -1034,7 +1418,7 @@ class AutoDJAesthetic {
     if (ids.length === 0) {
         this.playedTracks = [];
         localStorage.setItem('moskv_dj_history', '[]');
-        return pool.map(w => w.id);
+        return backgroundIds;
     }
     return ids;
   }
@@ -1069,9 +1453,7 @@ class AutoDJAesthetic {
 
   // Filters tracks that are harmonically compatible with the current one
   _getHarmonicTracks(pool) {
-      const currentTrackId = this.activeDeck === 'a' 
-          ? this.audioA.src.split('/').pop()?.replace('.webm', '')
-          : this.audioB.src.split('/').pop()?.replace('.webm', '');
+      const currentTrackId = this.currentVideoId;
       
       const currentKey = this.keyCache[currentTrackId];
       if (!currentKey) return pool; // No key data, return unfiltered
@@ -1091,16 +1473,169 @@ class AutoDJAesthetic {
   // ═══════════════════════════════════════════
   _updateEnergyPhase() {
       const elapsedMin = (Date.now() - this.setStartTime) / 60000;
+      let newPhase = 'warmup';
       if (elapsedMin < 3) {
-          this.energyPhase = 'warmup';
+          newPhase = 'warmup';
       } else if (elapsedMin < 8) {
-          this.energyPhase = 'buildup';
+          newPhase = 'buildup';
       } else if (elapsedMin < 15) {
-          this.energyPhase = 'peak';
+          newPhase = 'peak';
       } else {
-          this.energyPhase = 'cooldown';
+          newPhase = 'cooldown';
       }
+
+      // Trigger GPGPU Physics States based on phase changes
+      if (typeof window !== 'undefined' && this.energyPhase !== newPhase) {
+          document.documentElement.dataset.energyPhase = newPhase;
+          this._choreographPhase(newPhase);
+          if (newPhase === 'buildup') {
+               // Activate Zero-G anomaly: DOM floats upwards
+               document.documentElement.style.setProperty('--cortex-gravity', '-9.8');
+               document.documentElement.style.setProperty('--cortex-viscosity', '0.05');
+          } else if (newPhase === 'peak') {
+               // Heavy gravity + turbulence
+               document.documentElement.style.setProperty('--cortex-gravity', '18.5');
+               document.documentElement.style.setProperty('--cortex-viscosity', '0.8');
+          } else {
+               // Normal resting state
+               document.documentElement.style.setProperty('--cortex-gravity', '9.8');
+               document.documentElement.style.setProperty('--cortex-viscosity', '0.3');
+          }
+      }
+
+      this.energyPhase = newPhase;
       return this.energyPhase;
+  }
+
+  // GSAP Zero-G Choreography Engine (v3)
+  // Stores active timelines/intervals for cleanup on phase switch
+  _activeBreathingTL = null;
+  _activeJoltInterval = null;
+
+  _choreographPhase(phase) {
+      if (typeof gsap === 'undefined') return;
+      const windows = '.drag-window';
+      const cards = '.player-card, .hero-signal-card';
+      const marquee = '.marquee__inner';
+      const rand = (min, max) => Math.random() * (max - min) + min;
+
+      // Kill any running phase tweens + timelines
+      gsap.killTweensOf(windows);
+      gsap.killTweensOf(cards);
+      gsap.killTweensOf('.hero-title');
+      gsap.killTweensOf('.haiku-line');
+      gsap.killTweensOf(marquee);
+      if (this._activeBreathingTL) { this._activeBreathingTL.kill(); this._activeBreathingTL = null; }
+      if (this._activeJoltInterval) { clearInterval(this._activeJoltInterval); this._activeJoltInterval = null; }
+
+      if (phase === 'buildup') {
+          // ── Continuous Breathing: elements oscillate in zero-G ──
+          const winEls = document.querySelectorAll(windows);
+          const cardEls = document.querySelectorAll(cards);
+          const haikuEls = document.querySelectorAll('.haiku-line');
+
+          this._activeBreathingTL = gsap.timeline({ repeat: -1, yoyo: true, defaults: { ease: 'sine.inOut' } });
+
+          // Each window gets a unique amplitude + duration for non-robotic drift
+          winEls.forEach((el, i) => {
+              const amp = rand(20, 55);
+              const dur = rand(3, 5.5);
+              const rot = rand(-2.5, 2.5);
+              this._activeBreathingTL.to(el, {
+                  y: -amp,
+                  rotation: rot,
+                  duration: dur,
+              }, i * 0.15); // staggered start
+          });
+
+          cardEls.forEach((el, i) => {
+              this._activeBreathingTL.to(el, {
+                  y: -rand(10, 30),
+                  rotation: rand(-1, 1),
+                  duration: rand(2.8, 4.5),
+              }, i * 0.08);
+          });
+
+          haikuEls.forEach((el, i) => {
+              this._activeBreathingTL.to(el, {
+                  y: -rand(6, 18),
+                  duration: rand(4, 6),
+              }, i * 0.25);
+          });
+
+          // Marquee: slow drift (weightless)
+          gsap.to(marquee, { css: { animationDuration: '55s' }, duration: 3 });
+
+      } else if (phase === 'peak') {
+          // ── Gravity slam: snap down with elastic overshoot ──
+          gsap.to(windows, {
+              y: () => rand(3, 12),
+              rotation: 0,
+              duration: 0.3,
+              ease: 'back.out(3)',
+              stagger: { each: 0.03, from: 'random' }
+          });
+          gsap.to(cards, {
+              y: () => rand(2, 8),
+              rotation: 0,
+              duration: 0.25,
+              ease: 'back.out(4)',
+              stagger: { each: 0.02, from: 'random' }
+          });
+          gsap.to('.haiku-line', {
+              y: 0,
+              duration: 0.2,
+              ease: 'power4.out',
+              stagger: 0.05
+          });
+
+          // Marquee: frantic acceleration
+          gsap.to(marquee, { css: { animationDuration: '10s' }, duration: 0.5 });
+
+          // ── Continuous micro-jolts during peak ──
+          const joltTargets = [windows, cards, '.section-kicker', '.hero-title'];
+          this._activeJoltInterval = setInterval(() => {
+              const target = joltTargets[Math.floor(Math.random() * joltTargets.length)];
+              const els = document.querySelectorAll(target);
+              if (!els.length) return;
+              const el = els[Math.floor(Math.random() * els.length)];
+              gsap.to(el, {
+                  x: rand(-5, 5),
+                  y: rand(-3, 3),
+                  duration: 0.12,
+                  ease: 'power3.out',
+                  onComplete: () => {
+                      gsap.to(el, { x: 0, y: 0, duration: 0.3, ease: 'elastic.out(1, 0.4)' });
+                  }
+              });
+          }, rand(800, 1800));
+
+      } else {
+          // ── Warmup / Cooldown: gentle restoration ──
+          gsap.to(windows, {
+              y: 0,
+              rotation: 0,
+              duration: 2.5,
+              ease: 'power2.out',
+              stagger: { each: 0.1, from: 'start' }
+          });
+          gsap.to(cards, {
+              y: 0,
+              rotation: 0,
+              duration: 2,
+              ease: 'power2.out',
+              stagger: { each: 0.06, from: 'start' }
+          });
+          gsap.to('.haiku-line', {
+              y: 0,
+              duration: 2,
+              ease: 'power2.out',
+              stagger: 0.15
+          });
+
+          // Marquee: restore normal
+          gsap.to(marquee, { css: { animationDuration: '30s' }, duration: 2 });
+      }
   }
 
   // MICA STITCH CONTEXTUAL INSIGHT (fires every 3rd mix)
@@ -1113,24 +1648,24 @@ class AutoDJAesthetic {
       
       const insights = {
           warmup: [
-              `Berotzen. ${listenMin} minutu igaro dira. Tentsioa igotzen.`,
-              `Lehen fasea. Energia baxuko inguratzailea detektatuta. Igoera prestatzen.`,
-              `Saioa ${this.userProfile.visits}. Ongi etorri berriro. Maiztasun-eskanerra hasieratzen.`
+              `MOSKV. Berotzen. ${listenMin} minutu igaro dira. Sistemak egonkor.`,
+              `Lehen fasea. Energia baxuko inguratzailea detektatuta. Tentsioa igotzen.`,
+              `Saioa ${this.userProfile.visits}. Ongi etorri. Objektiboak finkatzen.`
           ],
           buildup: [
-              `Energia igotzen. BPM altuagoko barrutira aldatzen.`,
-              `Dopamina-kurba gorantz. ${this.mixCount} nahasketa sakon.`,
-              `Momentua hartzen. ${totalListenHrs} ordu sistema osoan.`
+              `Txanda azeleratua. Grabitate Zero (Zero-G) egitura. Exergia igotzen.`,
+              `Dopamina-kurba gorantz. ${this.mixCount} nahasketa sakon. Físicas inestables.`,
+              `Momentua hartzen. Sare neurala sinkronizatzen ari da.`
           ],
           peak: [
-              `Energia maximoa. Sistema guztiak potentzia gorenean.`,
-              `${this.mixCount} nahasketa. Hau da gailurra. Eutsi goiari.`,
-              `Potentzia osoa. Konpromiso neurala masa kritikoan.`
+              `Energia maximoa. CORTEX sistema potentzia gorenean. Grabitate masiboa!`,
+              `${this.mixCount} interakzio. Hau da gailurra. Kontrol absolutua.`,
+              `Potentzia osoa. Termodinamika lehertzen. Murgildu.`
           ],
           cooldown: [
-              `Jaitsiera hasten. ${listenMin} minutu. Dezelerazio mailakatua.`,
-              `Hoztea hasita. BPM inguratzailea murrizten.`,
-              `Saioa amaitzen ari da. ${this.mixCount} nahasketa burututa.`
+              `Atenuazio fasea. ${listenMin} minutu eboluzioan. Dezelerazio mailakatua.`,
+              `Energia jaisten. Oihartzuna hozten.`,
+              `Saioa erlaxatzen. Físicas restauradas. ${this.mixCount} trantsizio burututa.`
           ]
       };
       
@@ -1228,17 +1763,28 @@ class AutoDJAesthetic {
 
     const fromDeckId = this.activeDeck;
     const toDeckId = this.activeDeck === 'a' ? 'b' : 'a';
-    
-    const fromPlayer = fromDeckId === 'a' ? this.deckA : this.deckB;
-    const toPlayer = toDeckId === 'a' ? this.deckA : this.deckB;
 
     const fromEl = document.getElementById(`video-deck-${fromDeckId}`);
     const toEl = document.getElementById(`video-deck-${toDeckId}`);
 
-    const availableTracks = globalThis.DATA.backgroundVisuals || globalThis.DATA.videoThumbnails;
+    const availableTracks = this._getMixableTrackIds();
     const moodPool = this._getTracksForMood();
     // ═══ HARMONIC FILTERING (Camelot Wheel) ═══
     const harmonicPool = this._getHarmonicTracks(moodPool);
+    
+    // ═══ INTELLIGENT ENERGY ARC (BPM Matching) ═══
+    let intelligentPool = [...harmonicPool];
+    if (intelligentPool.length > 2) {
+        intelligentPool.sort((a, b) => this.getTrackBPM(a) - this.getTrackBPM(b));
+        if (this.energyPhase === 'buildup') {
+            intelligentPool = intelligentPool.slice(Math.floor(intelligentPool.length / 2));
+        } else if (this.energyPhase === 'cooldown') {
+            intelligentPool = intelligentPool.slice(0, Math.ceil(intelligentPool.length / 2));
+        } else if (this.energyPhase === 'peak') {
+            intelligentPool = intelligentPool.slice(Math.max(0, intelligentPool.length - 3));
+        }
+    }
+
     // Use prefetch queue if available (TikTok-style)
     let nextTrack;
     if (forcedNextTrack) {
@@ -1246,8 +1792,15 @@ class AutoDJAesthetic {
     } else if (this.prefetchQueue.length > 0) {
         nextTrack = this.prefetchQueue.shift();
     } else {
-        nextTrack = harmonicPool[Math.floor(Math.random() * harmonicPool.length)] || availableTracks[Math.floor(Math.random() * availableTracks.length)];
+        nextTrack = intelligentPool[Math.floor(Math.random() * intelligentPool.length)] || availableTracks[Math.floor(Math.random() * availableTracks.length)];
     }
+    const nextVisual = this._getVisualEntry(nextTrack);
+    if (!nextVisual) {
+        this.isCrossfading = false;
+        document.querySelector('.video-container')?.classList.remove('is-transitioning');
+        return;
+    }
+    nextTrack = nextVisual.id;
     this._recordTrack(nextTrack);
     this._updateVideoIdentity(nextTrack);
     // Immediately refill prefetch queue for NEXT transition
@@ -1290,7 +1843,7 @@ class AutoDJAesthetic {
         document.getElementById('dj-status-text').innerText = `BEATMATCHING → ${nextBPM} BPM`;
         document.getElementById('dj-mix-count').innerText = `MIX #${this.mixCount}`;
         
-        const trackTitle = globalThis.DATA?.works?.find(w => w.id === nextTrack)?.title || "INCOMING";
+        const trackTitle = this._getTrackTitle(nextTrack) || "INCOMING";
         document.getElementById(`dj-deck-${toDeckId}-ui`).querySelector('span:last-child').innerText = trackTitle.substring(0, 18);
         document.getElementById(`dj-deck-${toDeckId}-ui`).querySelector('span:first-child').innerText = `DK-${toDeckId.toUpperCase()} ▶`;
         document.getElementById(`dj-deck-${toDeckId}-ui`).classList.add('active');
@@ -1316,32 +1869,35 @@ class AutoDJAesthetic {
         this._stitchInsight();
     }
 
-    toPlayer.mute();
-    const cuePoint = this.cueCache[nextTrack] || 0;
+    const cuePoint = this._getCuePoint(nextTrack);
     this._setDeckPoster(toDeckId, nextTrack);
     this._showDeckPoster(toDeckId);
-    toPlayer.loadVideoById({videoId: nextTrack, startSeconds: cuePoint});
+    this._loadVisualIntoDeck(toDeckId, nextTrack, { autoplay: true });
     
     // Sync external audio too
     const toAudio = toDeckId === 'a' ? this.audioA : this.audioB;
     const fromAudio = fromDeckId === 'a' ? this.audioA : this.audioB;
-    toAudio.src = `audio/${nextTrack}.webm`;
-    // We can't practically cue HTML5 audio over network exactly without seeking,
-    // but we can set currentTime when it buffers.
-    toAudio.onloadeddata = () => {
-        toAudio.currentTime = cuePoint;
-    };
+    const audioSrc = this._getTrackAudioSrc(nextTrack);
+    if (audioSrc) {
+        toAudio.src = audioSrc;
+        toAudio.onloadeddata = () => {
+            toAudio.currentTime = cuePoint;
+        };
+    } else {
+        toAudio.pause();
+        toAudio.removeAttribute('src');
+        toAudio.load();
+        toAudio.onloadeddata = null;
+    }
     
     // Apply Harmonic Pitch & Rhythm Sync
     setTimeout(() => {
-        if(typeof toPlayer.setPlaybackRate === 'function') {
-           toPlayer.setPlaybackRate(syncRate);
+        this._setDeckPlaybackRate(toDeckId, syncRate);
+        if (audioSrc) {
+            toAudio.playbackRate = syncRate;
+            toAudio.preservesPitch = false; // Vinyl feel
         }
-        toAudio.playbackRate = syncRate;
-        toAudio.preservesPitch = false; // Vinyl feel
     }, 500);
-
-    toPlayer.playVideo();
 
     if (typeof gsap !== 'undefined') {
       setTimeout(() => {
@@ -1417,12 +1973,14 @@ class AutoDJAesthetic {
                 prevEQ.hpf.frequency.setValueAtTime(0, now);
             }
 
-            toAudio.play().catch(e => console.warn(e));
+            if (audioSrc) {
+                toAudio.play().catch(e => console.warn(e));
+            }
         }
         
         // Cleanup visuals and inactive decks after crossfade
         setTimeout(() => {
-            fromPlayer.pauseVideo();
+            this._pauseDeckVisual(fromDeckId);
             fromAudio.pause();
             this.activeDeck = toDeckId;
             this.isCrossfading = false;
@@ -1494,11 +2052,10 @@ class AutoDJAesthetic {
   }
 
   _updateParallax() {
-      const scrolled = globalThis.scrollY || 0;
       const container = document.querySelector('.video-container');
       if (container) {
           globalThis.requestAnimationFrame(() => {
-              container.style.transform = `translate3d(${this.mouseX || 0}px, ${(this.mouseY || 0) + (scrolled * 0.25)}px, 0) scale(1.05)`;
+              container.style.transform = `translate3d(${this.mouseX || 0}px, ${this.mouseY || 0}px, 0) scale(1.05)`;
           });
       }
   }
@@ -1524,10 +2081,7 @@ class AutoDJAesthetic {
     if (alreadyPaused) return;
     
     // Pause both Video & new Audio engines
-    const activePlayer = this.activeDeck === 'a' ? this.deckA : this.deckB;
-    if (activePlayer && typeof activePlayer.pauseVideo === 'function') {
-      activePlayer.pauseVideo();
-    }
+    this._pauseDeckVisual(this.activeDeck);
     const activeAudio = this.activeDeck === 'a' ? this.audioA : this.audioB;
     if (activeAudio) activeAudio.pause();
   }
@@ -1537,16 +2091,85 @@ class AutoDJAesthetic {
     this.isBackgroundPausedByEmbed = this.pauseReasons.size > 0;
     if (this.isBackgroundPausedByEmbed) return;
     
-    const activePlayer = this.activeDeck === 'a' ? this.deckA : this.deckB;
     const activeAudio = this.activeDeck === 'a' ? this.audioA : this.audioB;
     
-    if (activePlayer && typeof activePlayer.playVideo === 'function') {
-      activePlayer.playVideo();
-    }
+    this._playDeckVisual(this.activeDeck);
     
     if (!this.globalMuted && activeAudio) {
         activeAudio.play().catch(e => console.warn(e));
     }
+  }
+
+  triggerEruptionTransition(profile = 'default') {
+    if (this.globalMuted || !this.audioContext) return;
+
+    const now = this.audioContext.currentTime;
+    const activeGain = this.activeDeck === 'a' ? this.gainA : this.gainB;
+    const activeEQ = this.activeDeck === 'a' ? this.eqA : this.eqB;
+    const activeAux = this.activeDeck === 'a' ? this.auxA : this.auxB;
+
+    if (!activeGain || !activeEQ) return;
+
+    const profiles = {
+      chiquito: { duck: 0.72, peak: 920, echo: 0.22, bodyClass: 'eruption-chiquito' },
+      bertin: { duck: 0.68, peak: 760, echo: 0.18, bodyClass: 'eruption-bertin' },
+      carlton: { duck: 0.64, peak: 1180, echo: 0.28, bodyClass: 'eruption-carlton' },
+      arevalo: { duck: 0.7, peak: 640, echo: 0.16, bodyClass: 'eruption-arevalo' },
+      default: { duck: 0.7, peak: 840, echo: 0.2, bodyClass: 'eruption-default' }
+    };
+
+    const settings = profiles[profile] || profiles.default;
+    const activeTarget = 1;
+
+    activeGain.gain.cancelScheduledValues(now);
+    activeGain.gain.setValueAtTime(Math.max(0.0001, activeGain.gain.value), now);
+    activeGain.gain.linearRampToValueAtTime(settings.duck, now + 0.08);
+    activeGain.gain.linearRampToValueAtTime(activeTarget, now + 0.66);
+
+    activeEQ.low.gain.cancelScheduledValues(now);
+    activeEQ.mid.gain.cancelScheduledValues(now);
+    activeEQ.high.gain.cancelScheduledValues(now);
+    activeEQ.hpf.frequency.cancelScheduledValues(now);
+
+    activeEQ.low.gain.setValueAtTime(0, now);
+    activeEQ.mid.gain.setValueAtTime(0, now);
+    activeEQ.high.gain.setValueAtTime(0, now);
+    activeEQ.hpf.frequency.setValueAtTime(0, now);
+
+    activeEQ.low.gain.linearRampToValueAtTime(-4.5, now + 0.12);
+    activeEQ.low.gain.linearRampToValueAtTime(0, now + 0.58);
+    activeEQ.mid.gain.linearRampToValueAtTime(1.8, now + 0.18);
+    activeEQ.mid.gain.linearRampToValueAtTime(0, now + 0.62);
+    activeEQ.high.gain.linearRampToValueAtTime(3.8, now + 0.12);
+    activeEQ.high.gain.linearRampToValueAtTime(0, now + 0.62);
+    activeEQ.hpf.frequency.linearRampToValueAtTime(settings.peak, now + 0.16);
+    activeEQ.hpf.frequency.exponentialRampToValueAtTime(1, now + 0.7);
+
+    if (activeAux) {
+      activeAux.gain.cancelScheduledValues(now);
+      activeAux.gain.setValueAtTime(0, now);
+      activeAux.gain.linearRampToValueAtTime(settings.echo, now + 0.08);
+      activeAux.gain.linearRampToValueAtTime(0, now + 0.72);
+    }
+
+    const root = document.documentElement;
+    root.classList.remove(
+      'eruption-chiquito',
+      'eruption-bertin',
+      'eruption-carlton',
+      'eruption-arevalo',
+      'eruption-default'
+    );
+    root.classList.add(settings.bodyClass);
+    document.querySelector('.video-container')?.classList.add('is-transitioning');
+
+    window.clearTimeout(this.eruptionFxTimer);
+    this.eruptionFxTimer = window.setTimeout(() => {
+      root.classList.remove(settings.bodyClass);
+      if (!this.isCrossfading) {
+        document.querySelector('.video-container')?.classList.remove('is-transitioning');
+      }
+    }, 820);
   }
 }
 

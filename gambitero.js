@@ -219,7 +219,7 @@ class ElGambitero {
      ╚══════════════════════════════════╝`,
         text: "Sobrevives al ataque lusitano. Al final del sendero, el legendario Patrón de Alonsotegi te bloquea el paso hacia el refugio divino. <em>'Mortal. Has andado 10 horas y tres cuartos. ¿Has sucumbido a la tentación?'</em>",
         choices: [
-          { text: "💎 Mostrarle que NO FUMASTE el Cañón Perfecto", req: "Porro_Intacto", next: 15, score: 100, item: "El_Costo_de_Agosto" },
+          { text: "💎 Mostrarle que NO FUMASTE el Cañón Perfecto", requiresItem: "Porro_Intacto", next: 15, score: 100, item: "El_Costo_de_Agosto" },
           { text: "🤥 Mentorar sobre tu historial intachable", next: 14, score: -10, item: null }
         ]
       },
@@ -1075,6 +1075,32 @@ class ElGambitero {
     this._scheduleChipStep();
   }
 
+  _applyVisualStorytelling() {
+    if (!this.overlay) return;
+    const container = this.overlay.querySelector('.gambitero-container');
+    if (!container) return;
+
+    container.classList.remove(
+      'gamb-state-tired',
+      'gamb-state-exhausted',
+      'gamb-state-confused',
+      'gamb-state-delirious',
+      'gamb-state-doomed'
+    );
+
+    if (this.stats.locura >= 8) {
+      container.classList.add('gamb-state-delirious');
+    } else if (this.stats.locura >= 6) {
+      container.classList.add('gamb-state-confused');
+    } else if (this.stats.reputacion <= 2) {
+      container.classList.add('gamb-state-doomed');
+    } else if (this.stats.energia <= 2) {
+      container.classList.add('gamb-state-exhausted');
+    } else if (this.stats.energia <= 4) {
+      container.classList.add('gamb-state-tired');
+    }
+  }
+
   // 🎬 RENDER SCENE
   renderScene(id) {
     if (id === 20) {
@@ -1088,6 +1114,7 @@ class ElGambitero {
     this.currentScene = id;
     this.uiMode = 'run';
     this._recordSceneVisit(id);
+    this._applyVisualStorytelling();
     const stage = document.getElementById('gamb-stage');
     if (!stage) return;
 
@@ -1185,7 +1212,7 @@ class ElGambitero {
     } else if (this.currentScene === 19 || this.currentScene === 21) {
       endingHTML = '<div class="gamb-ending-text gamb-ending-2">☠️ FINAL 2: DERROTA MÁXIMA ☠️</div>';
     } else if (this.currentScene === 24) {
-      endingHTML = '<div class="gamb-ending-text gamb-ending-3">🌀 FINAL 3: FELICIDAD ABSOLUTA 🌀<br><span style="font-size:1.2rem; color:#fff;">(SIEMPRE FUI FRAN PEREA)</span></div>';
+      endingHTML = '<div class="gamb-ending-text gamb-ending-3">🌀 FINAL 3: FELICIDAD ABSOLUTA 🌀<br><span style="font-size:1.2rem; color:#D4D4D4;">(SIEMPRE FUI FRAN PEREA)</span></div>';
     } else {
       endingHTML = `<div class="gamb-ending-text gamb-ending-1">${endingLabel}</div>`;
     }
@@ -1391,6 +1418,7 @@ class ElGambitero {
       return;
     }
     this.score -= 10;
+    this._saveRun();
 
     const spinBtn = document.getElementById('gamb-spin-btn');
     if (spinBtn) spinBtn.disabled = true;
@@ -1452,6 +1480,12 @@ class ElGambitero {
     if (payout) {
       // JACKPOT!
       this.score += payout.points;
+      
+      // TRIGGER FRONTERA x10 SENSORY OVERLOAD
+      if (typeof window.triggerCortexFronteraX10 === 'function') {
+        window.triggerCortexFronteraX10();
+      }
+
       const sign = payout.points > 0 ? '+' : '';
       let rewardHtml = '';
       if (payout.reward) {

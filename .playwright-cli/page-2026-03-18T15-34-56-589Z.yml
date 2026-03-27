@@ -1,0 +1,147 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]: Sincronizando Diario...
+  - navigation [ref=e4]:
+    - link "MOSKV" [ref=e5]:
+      - /url: /
+    - generic [ref=e6]:
+      - link "Music" [ref=e7]:
+        - /url: /#music
+      - link "Sets" [ref=e8]:
+        - /url: /#sets
+      - link "Lab" [ref=e9]:
+        - /url: /#lab
+      - link "Diario" [ref=e10]:
+        - /url: blog.html
+      - link "Contact" [ref=e11]:
+        - /url: /#contact
+    - generic [ref=e12]:
+      - link "BC" [ref=e13]:
+        - /url: https://borjamoskv.bandcamp.com
+      - link "SP" [ref=e14]:
+        - /url: https://open.spotify.com/intl-es/artist/4p7wMuZpktE5aBFhBoQdqa
+      - link "SC" [ref=e15]:
+        - /url: https://soundcloud.com/borja-moskv
+      - link "YT" [ref=e16]:
+        - /url: https://www.youtube.com/@borjamoskv
+      - button "☢️" [ref=e17]
+  - banner [ref=e18]:
+    - generic [ref=e19]:
+      - heading "DIARIO" [level=1] [ref=e20]
+      - paragraph [ref=e21]: Textos, analisis, set lore y archivo editorial de Borja Moskv.
+  - main [ref=e22]:
+    - 'link "2026‑02‑12 ARTÍCULO Catarsis Colectiva: Los 20 Pilares del Duelo Por qué la muerte de Robe Iniesta ha sido, con diferencia brutal, la que más ha conmovido al pueblo español — y qué dice esto de nosotros como sociedad. LEER ARTÍCULO →" [ref=e23]':
+      - /url: catarsis-colectiva.html
+      - generic [ref=e24]: 2026‑02‑12 ARTÍCULO
+      - 'heading "Catarsis Colectiva: Los 20 Pilares del Duelo" [level=2] [ref=e25]'
+      - paragraph [ref=e26]: Por qué la muerte de Robe Iniesta ha sido, con diferencia brutal, la que más ha conmovido al pueblo español — y qué dice esto de nosotros como sociedad.
+      - text: LEER ARTÍCULO →
+    - generic [ref=e27]:
+      - article [ref=e28] [cursor=pointer]:
+        - img "Thumbnail" [ref=e29]
+        - generic [ref=e30]:
+          - heading "Los Elefantes que Bañaban sus Trombones en Delay" [level=2] [ref=e31]
+          - generic [ref=e32]: 2025-08-30 PARAGRAPH
+          - generic [ref=e33]: READ TRANSMIT →
+      - article [ref=e34] [cursor=pointer]:
+        - img "Thumbnail" [ref=e35]
+        - generic [ref=e36]:
+          - heading "100 Gargantas y un duda" [level=2] [ref=e37]
+          - generic [ref=e38]: 2025-07-31 PARAGRAPH
+          - generic [ref=e39]: READ TRANSMIT →
+      - article [ref=e40] [cursor=pointer]:
+        - img "Thumbnail" [ref=e41]
+        - generic [ref=e42]:
+          - 'heading "2 : 12 Hours Party People" [level=2] [ref=e43]'
+          - generic [ref=e44]: 2025-07-31 PARAGRAPH
+          - generic [ref=e45]: READ TRANSMIT →
+    - article [ref=e46]:
+      - heading "15H NON‑STOP DJ SET 🔥 (Marathon)" [level=2] [ref=e47]
+      - generic [ref=e48]: "2025‑12‑31 BPM: 120-145 MARATHON"
+      - link "Abrir 15H Marathon DJ Set en YouTube" [ref=e50]:
+        - /url: https://www.youtube.com/watch?v=YvGpocK-Iqg
+        - img "15H Marathon DJ Set" [ref=e51]
+        - text: Ver set en YouTube →
+      - generic [ref=e52]:
+        - heading "IA Analysis" [level=3] [ref=e53]
+        - paragraph [ref=e54]: "Sesión épica de 15 horas que atraviesa múltiples géneros: desde ambient introductorio hasta techno industrial en el pico. Curva de energía ascendente con mesetas estratégicas. Tonalidades predominantes: Am, Dm, Gm. Motivos recurrentes: texturas granulares, kicks comprimidos, pads etéreos."
+    - article [ref=e56]:
+      - heading "DARK DISCO & IDM SET 2025" [level=2] [ref=e57]
+      - generic [ref=e58]: "2025‑11‑15 BPM: 115-128 IDM"
+      - link "Abrir Dark Disco IDM Set en YouTube" [ref=e60]:
+        - /url: https://www.youtube.com/watch?v=EP5s0yKZUKk
+        - img "Dark Disco IDM Set" [ref=e61]
+        - text: Ver set en YouTube →
+      - generic [ref=e62]:
+        - heading "IA Analysis" [level=3] [ref=e63]
+        - paragraph [ref=e64]: "Fusión oscura entre disco deconstruido e IDM glitchy. Ritmos sincopados sobre bajos profundos. Predominan escalas menores con modulaciones inesperadas. Influencias detectadas: Aphex Twin, Burial, Depeche Mode."
+    - article [ref=e66]:
+      - heading "ECLECTIC ELECTRONIC VISUAL SET" [level=2] [ref=e67]
+      - generic [ref=e68]: "2025‑10‑20 BPM: 100-140 LIVE"
+      - link "Abrir Eclectic Electronic Visual Set en YouTube" [ref=e70]:
+        - /url: https://www.youtube.com/watch?v=T_rU7WfOVTI
+        - img "Eclectic Electronic Visual Set" [ref=e71]
+        - text: Ver set en YouTube →
+      - generic [ref=e72]:
+        - heading "IA Analysis" [level=3] [ref=e73]
+        - paragraph [ref=e74]: Set audiovisual con transiciones fluidas entre electro, breakbeat y ambient. Sincronización perfecta entre visuales generativos y dinámicas sonoras. Arquitectura sonora en capas con elementos orgánicos.
+    - article [ref=e76]:
+      - heading "ECLECTIC ELECTRONIC COWPUNK SET" [level=2] [ref=e77]
+      - generic [ref=e78]: "2025‑09‑05 BPM: 110-135 VJ"
+      - link "Abrir Eclectic Electronic Cowpunk Set en YouTube" [ref=e80]:
+        - /url: https://www.youtube.com/watch?v=vxD2l4cIp7I
+        - img "Eclectic Electronic Cowpunk Set" [ref=e81]
+        - text: Ver set en YouTube →
+      - generic [ref=e82]:
+        - heading "IA Analysis" [level=3] [ref=e83]
+        - paragraph [ref=e84]: Experimento híbrido que fusiona electrónica con elementos country deconstructivos. Guitarras distorsionadas sobre 808s. Estética visual western-futurista. Tonalidades mayores con resoluciones inesperadas.
+    - article [ref=e86]:
+      - heading "📡 TODOS MIS SETS EN SOUNDCLOUD" [level=2] [ref=e87]
+      - generic [ref=e88]: Colección completa ARCHIVE
+      - iframe [ref=e90]:
+        - generic [active] [ref=f1e1]:
+          - generic [ref=f1e2]:
+            - generic [ref=f1e3]:
+              - paragraph [ref=f1e4]: Oops, we couldn’t find that profile.
+              - link "SoundCloud.com" [ref=f1e5] [cursor=pointer]:
+                - /url: http://soundcloud.com
+            - link "SoundCloud privacy policy" [ref=f1e7] [cursor=pointer]:
+              - /url: https://soundcloud.com/pages/privacy
+              - generic [ref=f1e8]: SoundCloud privacy policy
+              - text: Privacy policy
+          - iframe [ref=f1e10]:
+            - generic [ref=f3e2]:
+              - paragraph [ref=f3e7]: El acceso está restringido temporalmente
+              - generic [ref=f3e9]:
+                - generic [ref=f3e10]:
+                  - paragraph [ref=f3e11]: ¿Por qué este bloqueo? Algo sobre el comportamiento del navegador nos ha intrigado.
+                  - paragraph [ref=f3e12]: "Varias posibilidades:"
+                  - list [ref=f3e13]:
+                    - listitem [ref=f3e14]: usted navega y hace clic a una velocidad sobrehumana
+                    - listitem [ref=f3e15]: algo bloquea el funcionamiento de JavaScript en su ordenador
+                    - listitem [ref=f3e16]: un robot se encuentra en la misma red (IP 88.14.43.90) que usted
+                - generic [ref=f3e17]:
+                  - paragraph [ref=f3e18]:
+                    - text: ¿Tiene dificultades para acceder al sitio?
+                    - button "Ponerse en contacto con el servicio de asistencia" [ref=f3e19] [cursor=pointer]
+                  - paragraph [ref=f3e20]: "ID: 88ab28a6-07ff-1ccc-7284-c264cfa7f051"
+      - generic [ref=e91]:
+        - heading "IA Analysis" [level=3] [ref=e92]
+        - paragraph [ref=e93]: "Archivo completo de sets en SoundCloud. Incluye sesiones exclusivas, reworks y material inédito. Exploración continua de géneros: IDM, techno, ambient, electro experimental."
+  - contentinfo [ref=e94]:
+    - generic [ref=e95]: © 2026 BORJA MOSKV · INDUSTRIAL NOIR SYSTEM
+    - generic [ref=e96]:
+      - link "borjamoskv.com" [ref=e97]:
+        - /url: https://borjamoskv.com
+      - link "portrait.so/borja" [ref=e98]:
+        - /url: https://portrait.so/borja
+      - link "demo-padres" [ref=e99]:
+        - /url: https://borjamoskv.github.io/Cortex-Persist/demo-padres/
+  - button "CHIQUICHAT" [ref=e100] [cursor=pointer]
+  - generic:
+    - generic:
+      - generic: ✨ CHIQUICHAT
+      - button "✖"
+    - generic:
+      - generic: Soy CHIQUICHAT. Si quieres, te oriento entre textos, sets y archivo.
+    - generic:
+      - textbox "Escribe a CHIQUICHAT..."

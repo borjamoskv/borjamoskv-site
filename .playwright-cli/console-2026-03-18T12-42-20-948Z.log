@@ -1,0 +1,26 @@
+Total messages: 18 (Errors: 6, Warnings: 6)
+Returning 16 messages for level "info"
+
+[ERROR] Failed to load resource: the server responded with a status of 404 () @ https://fonts.gstatic.com/s/inter/v21/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfAZ9hjQ.woff2:0
+[WARNING] Allow attribute will take precedence over 'allowfullscreen'. @ http://127.0.0.1:4173/:355
+[LOG] %c SYSTEM ONLINE %c v2.0 MODULAR  background:#CCFF00; color:#0A0A0A; font-weight:bold; background:#0A0A0A; color:#CCFF00; @ http://127.0.0.1:4173/js/core.js:79
+[LOG] [CORTEX] Theme Mutated: Cyber Lime (Noir Default) @ http://127.0.0.1:4173/js/mutator.js:27
+[LOG] 13:42:20.165: ErrorCollector: enabled @ https://s4.bcbits.com/client-bundle/1/trackpipe/embedded_player-9e3d6caa4ed872ec7c1b4732e0d28d5b.js:0
+[INFO] user not opted in: skipping Tracker record. @ https://s4.bcbits.com/client-bundle/1/Tracker_1/impl-2fd8d3e0ca4ebe03fd7a3b7d60fa3671.js:0
+[ERROR] Permissions policy violation: encrypted-media is not allowed in this document. @ https://player-widget.mixcloud.com/assets/index-qdIOgoop.js:704
+[WARNING] Encrypted Media access has been blocked because of a Feature Policy applied to the current document. See https://crbug.com/414348233 for more details. @ https://player-widget.mixcloud.com/assets/index-qdIOgoop.js:704
+[ERROR] Permissions policy violation: encrypted-media is not allowed in this document. @ https://player-widget.mixcloud.com/assets/index-qdIOgoop.js:704
+[WARNING] Encrypted Media access has been blocked because of a Feature Policy applied to the current document. See https://crbug.com/414348233 for more details. @ https://player-widget.mixcloud.com/assets/index-qdIOgoop.js:704
+[ERROR] Permissions policy violation: encrypted-media is not allowed in this document. @ https://player-widget.mixcloud.com/assets/index-qdIOgoop.js:704
+[WARNING] Encrypted Media access has been blocked because of a Feature Policy applied to the current document. See https://crbug.com/414348233 for more details. @ https://player-widget.mixcloud.com/assets/index-qdIOgoop.js:704
+[WARNING] GSAP target .hero-axiom not found. https://gsap.com @ https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js:9
+[WARNING] GSAP target  not found. https://gsap.com @ https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js:9
+HierarchyRequestError: Failed to execute 'before' on 'Element': The new child element contains the parent.
+    at http://127.0.0.1:4173/js/mutator.js:58:36
+    at Array.forEach (<anonymous>)
+    at Object.init (http://127.0.0.1:4173/js/mutator.js:56:31)
+    at Object.boot (http://127.0.0.1:4173/js/core.js:89:42)
+    at HTMLDocument.<anonymous> (http://127.0.0.1:4173/js/core.js:114:16)
+TypeError: Cannot read properties of null (reading 'addEventListener')
+    at Object.init (http://127.0.0.1:4173/js/lyria.js:211:24)
+    at HTMLDocument.<anonymous> (http://127.0.0.1:4173/js/lyria.js:239:34)

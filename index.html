@@ -9,8 +9,10 @@
     content="Borja Moskv — Ruido de barrio. Máquinas con memoria. Bilbao respira. Música, visuales y sistema.">
   <meta name="theme-color" content="#050505">
   <link rel="manifest" href="/site.webmanifest">
-  <link rel="icon" type="image/png" href="/borjamoskv_profile.png">
-  <link rel="apple-touch-icon" href="/borjamoskv_profile.png">
+  <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="192x192" href="/img/icon-192.png">
+  <link rel="shortcut icon" href="/img/icon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
   <link rel="canonical" href="https://borjamoskv.com">
   <meta name="referrer" content="strict-origin-when-cross-origin">
 
@@ -50,7 +52,7 @@
       "https://borjamoskv.bandcamp.com",
       "https://soundcloud.com/borja-moskv",
       "https://www.youtube.com/@borjamoskv",
-      "https://www.mixcloud.com/borjamoskv/",
+      "https://www.mixcloud.com/borja-moskv/",
       "https://foundation.app/@bakaladetroya"
     ],
     "description": "Ruido de barrio. Máquinas con memoria. Bilbao respira. Música, visuales y sistema."
@@ -76,7 +78,7 @@
 
   <link href="style.css" rel="stylesheet">
   <link href="cortex-terminal.css" rel="stylesheet">
-  
+
   <!-- Awwwards Sovereign Dependencies (Lenis, GSAP, Draggable) -->
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -87,11 +89,14 @@
 <body>
   <!-- SOTY WebGL GPGPU Fluid Subsystem -->
   <canvas id="webgl-canvas"></canvas>
+  <!-- Sovereign Swarm Particle System (O(N) Spatial-Hashed) -->
+  <canvas id="particles" class="particles-canvas"></canvas>
 
   <!-- Container for dynamically generated random lore boxes -->
-  <div id="loreContainer" class="lore-overlay"></div>
   
-  <div id="cursor" class="magnetic-cursor"></div>
+  <!-- PUNTERO SOBERANO (CORTEX INERTIAL KINEMATICS) -->
+  <div class="cortex-cursor-dot"></div>
+  <div class="cortex-cursor-halo"></div>
   <!-- LOADER -->
   <div id="loader" class="loader-overlay">
     <div class="loader-content">
@@ -102,50 +107,30 @@
     </div>
   </div>
 
-  <!-- VIDEO BACKGROUND (DUAL DECK AUTO-DJ) -->
-  <div class="video-container">
-    <!-- Deck A (Inicialmente visible) — YT.Player targets the inner div -->
-    <div class="video-deck active" id="video-deck-a">
-        <div class="video-poster" id="video-poster-a" aria-hidden="true"></div>
-        <div id="bg-video-a"></div>
-    </div>
-    
-    <!-- Deck B (Inicialmente invisible) — YT.Player targets the inner div -->
-    <div class="video-deck" id="video-deck-b">
-        <div class="video-poster" id="video-poster-b" aria-hidden="true"></div>
-        <div id="bg-video-b"></div>
-    </div>
-    
-    <!-- Overlay de interacción invisible -->
-    <div class="video-interaction-trigger" id="av-trigger" role="button" tabindex="0" aria-label="Cambiar vídeo de fondo"></div>
-
-    <div class="video-overlay"></div>
-    <button id="heroSoundToggle" class="hero-sound-toggle" aria-label="Toggle Sound">
-      <span class="sound-label">UNMUTE SIGNAL</span>
-      <svg viewBox="0 0 24 24" fill="none" class="icon-unmute" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
-      <svg viewBox="0 0 24 24" fill="none" class="icon-mute _hidden" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
-    </button>
-  </div>
-
-  <div class="video-hud" aria-label="Fondo visual integrado">
-    <a class="video-identity" id="videoIdentity" aria-live="polite" href="https://www.youtube.com/watch?v=b9ktVQN48OU" target="_blank" rel="noopener" aria-label="Abrir LES BUKO en reproductor embebido">
-      <span class="video-identity-label" id="videoIdentityLabel">EMBEDDED BACKGROUND REEL [4K/8K]</span>
-      <strong id="videoIdentityTitle">LES BUKO</strong>
-      <span class="video-identity-link">REPRODUCIR EN LA WEB ↗</span>
-    </a>
-    <div class="video-reel-shell">
-      <div class="video-reel-header">
-        <span class="video-reel-kicker">SELECT VISUAL</span>
-        <span class="video-reel-meta">AUTO MIX + MANUAL CUE</span>
+  <!-- VIDEO BACKGROUND SYSTEM (AUTODJ DUAL-DECK) -->
+  <div class="video-background-system" id="av-trigger">
+    <div class="video-deck-wrap" id="video-deck-a">
+      <div id="bg-video-a"></div>
+      <div class="video-poster" id="video-poster-a"></div>
+      <div class="deck-ui" id="dj-deck-a-ui">
+          <span>DK-A ⏸</span>
+          <span>INITIALIZING...</span>
       </div>
-      <div class="video-reel" id="videoReel" aria-label="Selecciona un videoclip 4K"></div>
+    </div>
+    <div class="video-deck-wrap" id="video-deck-b">
+      <div id="bg-video-b"></div>
+      <div class="video-poster" id="video-poster-b"></div>
+      <div class="deck-ui" id="dj-deck-b-ui">
+          <span>DK-B ⏸</span>
+          <span>STANDBY</span>
+      </div>
+    </div>
+    <div class="video-overlay"></div>
+    <div class="video-identity-wrap" id="videoIdentity">
+        <span class="video-identity-label" id="videoIdentityLabel">BACKGROUND REEL</span>
+        <strong class="video-identity-title" id="videoIdentityTitle">BORJA MOSKV — SIGNAL</strong>
     </div>
   </div>
-
-  <!-- CANVAS: Partículas Starfield -->
-  <canvas id="particles" class="particles-canvas"></canvas>
-
-  <!-- Fondo Dinámico (fallback) -->
   <div id="dynamic-bg" class="dynamic-background"></div>
 
   <!-- ═══════════════════════════════════════════════════════════════════
@@ -165,6 +150,7 @@
       <a href="#writings" class="active">Diario</a>
       <a href="#bloga-moskv">Bloga</a>
       <a href="#contact">Contact</a>
+      <button class="terminal-trigger-btn" id="terminal-trigger-nav" aria-label="Open Terminal">[ _TERMINAL ]</button>
     </div>
     <div class="nav-platforms">
       <a href="https://borjamoskv.bandcamp.com" target="_blank" rel="noopener" title="Bandcamp">BANDCAMP</a>
@@ -172,7 +158,7 @@
         title="Spotify">SPOTIFY</a>
       <a href="https://soundcloud.com/borja-moskv" target="_blank" rel="noopener" title="SoundCloud">SOUNDCLOUD</a>
       <a href="https://www.youtube.com/@borjamoskv" target="_blank" rel="noopener" title="YouTube">YOUTUBE</a>
-      <a href="https://www.mixcloud.com/borjamoskv/" target="_blank" rel="noopener" title="Mixcloud">MIXCLOUD</a>
+      <a href="https://www.mixcloud.com/borja-moskv/" target="_blank" rel="noopener" title="Mixcloud">MIXCLOUD</a>
       <a href="https://foundation.app/@bakaladetroya" target="_blank" rel="noopener" title="Foundation (Web3 NFT)">FOUNDATION</a>
       <a href="https://paragraph.xyz/@borjamoskv" target="_blank" rel="noopener" title="Paragraph">PARAGRAPH</a>
       <a href="https://borjamoskv.substack.com" target="_blank" rel="noopener" title="Substack">SUBSTACK</a>
@@ -190,6 +176,7 @@
           <h1 class="hero-title glitch-mega" data-text="BORJA MOSKV" style="opacity: 0; pointer-events: none;">BORJA<br>MOSKV</h1>
         </div>
         <p class="hero-axiom">Ruido de barrio.<br>Máquinas con memoria.<br>Bilbao respira.</p>
+        <p class="hero-lead">Electrónica experimental, live AV y sistemas creativos desde Bilbao. Música, visuales y software soberano dentro de una misma señal.</p>
         <div class="hero-facts" aria-label="Señal principal">
           <span>Ambient / IDM / Techno</span>
           <span>Bakala de Troya / live sets</span>
@@ -201,6 +188,23 @@
           <a href="#music" class="cta-primary">Escuchar obras destacadas</a>
           <a href="#sets" class="cta-secondary">Ver sets · Bakala de Troya</a>
           <a href="#contact" class="cta-ghost">Reservar live / booking →</a>
+        </div>
+        <div class="hero-operating-grid" aria-label="Puertas rápidas">
+          <a href="https://www.youtube.com/watch?v=b9ktVQN48OU" target="_blank" rel="noopener" class="hero-operating-card">
+            <span class="hero-operating-label">Reel 8K</span>
+            <strong>LES BUKO</strong>
+            <p>Visual principal y puerta directa al universo MOSKV.</p>
+          </a>
+          <a href="#contact" class="hero-operating-card">
+            <span class="hero-operating-label">Formatos</span>
+            <strong>DJ set · live AV · comisiones</strong>
+            <p>Club, festival, instalación o pieza a medida con sonido y visuales.</p>
+          </a>
+          <a href="#lab" class="hero-operating-card">
+            <span class="hero-operating-label">Sistema</span>
+            <strong>CORTEX, Moltbook y archivo vivo</strong>
+            <p>Música, agentes y software dentro de un mismo proyecto.</p>
+          </a>
         </div>
       </div>
 
@@ -303,7 +307,7 @@
           <!-- Injected via script.js -->
         </div>
       </div>
-      
+
       <!-- Embed 2: Mixcloud -->
       <div class="drag-window drag-pos-2" id="spot-2">
         <div class="drag-header">
@@ -314,7 +318,7 @@
           <!-- Injected via script.js -->
         </div>
       </div>
-      
+
       <!-- Embed 3: YouTube -->
       <div class="drag-window drag-pos-3" id="spot-3">
         <div class="drag-header">
@@ -325,7 +329,240 @@
           <!-- Injected via script.js -->
         </div>
       </div>
-      
+
+      <!-- Injected Overload 4-13 -->
+      <div class="drag-window drag-pos-4" id="spot-4" style="top:20%; left:20%;">
+        <div class="drag-header">
+          <span class="drag-title">4_GLITCH_TENSOR.BIN</span>
+          <span class="drag-close">✕</span>
+        </div>
+        <div class="drag-body drag-body-paddingless">
+           <iframe title="YouTube Video" width="320" height="180" src="https://www.youtube.com/embed/pgldO_y7hzc?controls=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <div class="drag-window drag-pos-5" id="spot-5" style="top:25%; left:65%;">
+        <div class="drag-header">
+          <span class="drag-title">5_NOISE_PUMP.EXE</span>
+          <span class="drag-close">✕</span>
+        </div>
+        <div class="drag-body drag-body-paddingless">
+           <iframe title="YouTube Video" width="320" height="180" src="https://www.youtube.com/embed/NYhOQTcNLkA?controls=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <div class="drag-window drag-pos-6" id="spot-6" style="top:5%; left:45%;">
+        <div class="drag-header">
+          <span class="drag-title">6_BAKALA_RADAR.SYS</span>
+          <span class="drag-close">✕</span>
+        </div>
+        <div class="drag-body drag-body-paddingless">
+           <iframe title="YouTube Video" width="320" height="180" src="https://www.youtube.com/embed/b9ktVQN48OU?controls=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <div class="drag-window drag-pos-7" id="spot-7" style="top:60%; left:10%;">
+        <div class="drag-header">
+          <span class="drag-title">7_VOID_ECHO.DAT</span>
+          <span class="drag-close">✕</span>
+        </div>
+        <div class="drag-body drag-body-paddingless">
+           <iframe title="YouTube Video" width="320" height="180" src="https://www.youtube.com/embed/hY0G0Zxf_uo?controls=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <div class="drag-window drag-pos-8" id="spot-8" style="top:70%; left:75%;">
+        <div class="drag-header">
+          <span class="drag-title">8_INDUSTRIAL_LOG.TXT</span>
+          <span class="drag-close">✕</span>
+        </div>
+        <div class="drag-body" style="padding: 1rem; color: var(--accent-primary); font-family: monospace; font-size: 0.8rem; background: #000;">
+           INITIALIZING THERMODYNAMIC SWARM<br>> LOAD GHOST_HUNT<br>> BYPASSED... OK
+        </div>
+      </div>
+
+      <div class="drag-window drag-pos-9" id="spot-9" style="top:35%; left:50%;">
+        <div class="drag-header">
+          <span class="drag-title">9_BONEY_MDMA.WAV</span>
+          <span class="drag-close">✕</span>
+        </div>
+        <div class="drag-body drag-body-paddingless">
+           <iframe title="Soundcloud Player" class="player-iframe-short" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/boney-mdma/licenciado-ferna-ndez&color=%23b4ff00&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false"></iframe>
+        </div>
+      </div>
+
+      <div class="drag-window drag-pos-10" id="spot-10" style="top:45%; left:5%;">
+        <div class="drag-header">
+          <span class="drag-title">10_THERMAL_NOISE.SYS</span>
+          <span class="drag-close">✕</span>
+        </div>
+        <div class="drag-body drag-body-paddingless">
+           <iframe title="YouTube Video" width="320" height="180" src="https://www.youtube.com/embed/T_rU7WfOVTI?controls=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <div class="drag-window drag-pos-11" id="spot-11" style="top:15%; left:85%;">
+        <div class="drag-header">
+          <span class="drag-title">11_CORTEX_SYNC.BIN</span>
+          <span class="drag-close">✕</span>
+        </div>
+        <div class="drag-body" style="padding: 1rem; color: #ccff00; font-family: monospace; font-size: 0.8rem; background: #0a0a0a;">
+           SYNC VECTOR: ESTABLISHED<br>ENTROPY: 0.04%<br>EXERGY: MAXIMAL
+        </div>
+      </div>
+
+      <div class="drag-window drag-pos-12" id="spot-12" style="top:80%; left:40%;">
+        <div class="drag-header">
+          <span class="drag-title">12_MEMPOOL_SCAN.EXE</span>
+          <span class="drag-close">✕</span>
+        </div>
+        <div class="drag-body drag-body-paddingless">
+           <iframe title="YouTube Video" width="320" height="180" src="https://www.youtube.com/embed/EP5s0yKZUKk?controls=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <div class="drag-window drag-pos-13" id="spot-13" style="top:55%; left:80%;">
+        <div class="drag-header">
+          <span class="drag-title">13_SOVEREIGN_ASSERT.SYS</span>
+          <span class="drag-close">✕</span>
+        </div>
+        <div class="drag-body" style="padding: 1rem; color: #0ff; font-family: monospace; font-size: 0.8rem; background: #050505;">
+           > AX-034 VERIFIED<br>> OMEGA PATTERN LOCKED<br>> NO VISUAL FRICTION
+        </div>
+      </div>
+
+      <div class="drag-window drag-pos-14" id="spot-14" style="top:10%; left:30%;">
+        <div class="drag-header">
+          <span class="drag-title">14_NULL_ROUTINE.EXE</span>
+          <span class="drag-close">✕</span>
+        </div>
+        <div class="drag-body drag-body-paddingless">
+           <iframe title="YouTube Video" width="320" height="180" src="https://www.youtube.com/embed/E9vLd5pS7-g?controls=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <div class="drag-window drag-pos-15" id="spot-15" style="top:85%; left:60%;">
+        <div class="drag-header">
+          <span class="drag-title">15_AXIOM_BREACH.MP4</span>
+          <span class="drag-close">✕</span>
+        </div>
+        <div class="drag-body drag-body-paddingless">
+           <iframe title="YouTube Video" width="320" height="180" src="https://www.youtube.com/embed/mQjFXZ8Y4G8?controls=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <div class="drag-window drag-pos-16" id="spot-16" style="top:75%; left:25%;">
+        <div class="drag-header">
+          <span class="drag-title">16_MNEMONIC_DRIFT.SYS</span>
+          <span class="drag-close">✕</span>
+        </div>
+        <div class="drag-body drag-body-paddingless">
+           <iframe title="YouTube Video" width="320" height="180" src="https://www.youtube.com/embed/Vn_j3Z2c8l0?controls=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <div class="drag-window drag-pos-17" id="spot-17" style="top:30%; left:80%;">
+        <div class="drag-header">
+          <span class="drag-title">17_VOID_COLLAPSE.BIN</span>
+          <span class="drag-close">✕</span>
+        </div>
+        <div class="drag-body" style="padding: 1rem; color: var(--accent-secondary); font-family: monospace; font-size: 0.8rem; background: #000;">
+           > KINETIC RESPONSE: OVERRIDE<br>> RUNTIME: INFINITE<br>> SIGNAL: RECOVERED
+        </div>
+      </div>
+
+      <div class="drag-window drag-pos-18" id="spot-18" style="top:40%; left:10%;">
+        <div class="drag-header">
+          <span class="drag-title">18_ENTROPIC_COMPRESSOR.SYS</span>
+          <span class="drag-close">✕</span>
+        </div>
+        <div class="drag-body" style="padding: 1rem; color: #e0e0e0; font-family: monospace; font-size: 0.75rem; background: #000; overflow:hidden;">
+           <marquee direction="up" scrollamount="15" style="height:100%;">
+             SHANNON LIMIT APPROACHING<br>
+             > COMPRESSING STATE A...<br>
+             > DEAD VECTORS DELETED<br>
+             > YIELD: 14.8H<br>
+             ENTROPY REDUCED BY 68%<br>
+             > CRISTALLIZING AXIOMS...<br>
+             > C5-DYNAMIC CONFIDENCE SET
+           </marquee>
+        </div>
+      </div>
+
+      <div class="drag-window drag-pos-19" id="spot-19" style="top:12%; left:55%;">
+        <div class="drag-header">
+          <span class="drag-title">19_ALPHAZERO_MCTS.LOG</span>
+          <span class="drag-close">✕</span>
+        </div>
+        <div class="drag-body" style="padding: 1rem; color: var(--accent-secondary); font-family: monospace; font-size: 0.7rem; background: #020202; overflow:hidden;">
+           <marquee direction="up" scrollamount="25" style="height:100%;">
+             [MCTS] ITERATION 48992<br>
+             [MCTS] Q-VALUE UPDATED: +0.94<br>
+             [MCTS] EXPANDING LEAF NODE...<br>
+             [MCTS] EXPLORATION CONSTANT C_PUCT<br>
+             [MCTS] BACKPROPAGATING REWARD<br>
+             [MCTS] POLICY NETWORK SUGGESTS: MOVE 4<br>
+             [MCTS] VALUE NETWORK ACCURACY: 98.2%
+           </marquee>
+        </div>
+      </div>
+
+      <div class="drag-window drag-pos-20" id="spot-20" style="top:65%; left:35%;">
+        <div class="drag-header">
+          <span class="drag-title">20_OAXACA_SWARM.EXE</span>
+          <span class="drag-close">✕</span>
+        </div>
+        <div class="drag-body drag-body-paddingless">
+           <iframe title="YouTube Video" width="320" height="180" src="https://www.youtube.com/embed/WdZ1fB7o9U0?controls=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <div class="drag-window drag-pos-21" id="spot-21" style="top:88%; left:85%;">
+        <div class="drag-header" style="background: darkred; color: #e0e0e0;">
+          <span class="drag-title">21_GHOST_HUNT.BIN</span>
+          <span class="drag-close">✕</span>
+        </div>
+        <div class="drag-body" style="padding: 1rem; color: #ff3333; font-family: monospace; font-size: 0.9rem; background: #0a0000; text-align:center; display:flex; align-items:center; justify-content:center;">
+           <div style="animation: pulse-dot 0.5s infinite alternate;">
+             WARNING:<br>ENTROPY ANOMALY DETECTED<br>PURGE IMMINENT
+           </div>
+        </div>
+      </div>
+
+      <div class="drag-window drag-pos-22" id="spot-22" style="top:5%; left:5%;">
+        <div class="drag-header">
+          <span class="drag-title">22_TECHNO_NOIR.SYS</span>
+          <span class="drag-close">✕</span>
+        </div>
+        <div class="drag-body drag-body-paddingless">
+           <iframe title="YouTube Video" width="320" height="180" src="https://www.youtube.com/embed/c_RzB9T83J4?controls=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <div class="drag-window drag-pos-23" id="spot-23" style="top:30%; left:35%;">
+        <div class="drag-header" style="background: var(--bg-card); color: var(--accent-primary); border-bottom: 1px solid var(--accent-primary);">
+          <span class="drag-title">23_BULGARIAN_ASSERT.SYS</span>
+          <span class="drag-close">✕</span>
+        </div>
+        <div class="drag-body drag-body-paddingless" style="display: flex; flex-direction: column; background: #0a0a0a;">
+           <div style="padding: 0.75rem; color: var(--accent-secondary); font-family: monospace; font-size: 0.85rem; text-align: center; border-bottom: 1px solid #333; letter-spacing: 0.05em;">
+             <span style="color: #ff3333; font-weight: bold; font-size: 0.9rem;">mii STANDDARDDE CALIDAD 420/100:</span><br><br>
+             "Sentido del humor EXIGENCIA ,CALDAVALIDAID, IDELALSMO meramente positivo"
+           </div>
+           <iframe title="Exigencia y Calidad" width="320" height="180" src="https://www.youtube.com/embed/RcuGred7BYE?controls=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <div class="drag-window drag-pos-18" id="spot-18">
+        <div class="drag-header">
+          <span class="drag-title">18_EL_FLIPAO.PNG</span>
+          <span class="drag-close">✕</span>
+        </div>
+        <div class="drag-body drag-body-paddingless drag-body-spot18">
+           <img src="img/loquillo_flipao.png" alt="El Flipao" class="spot-18-img">
+        </div>
+      </div>
+
       <!-- Lyria Realtime Window -->
       <div class="drag-window drag-pos-lyria" id="lyria-window" style="display: none;">
         <div class="drag-header">
@@ -362,6 +599,43 @@
           </div>
         </div>
       </div>
+      
+      <!-- Jes-Extender Realtime Window -->
+      <div class="drag-window drag-pos-jes" id="jes-extender-window" style="display: none;">
+        <div class="drag-header">
+          <span class="drag-title">JES_EXTENDER —— HEAVY_PROTOCOL</span>
+          <span class="drag-close">✕</span>
+        </div>
+        <div class="drag-body">
+          <div class="jes-interface">
+            <div class="jes-visualizer-container">
+              <canvas id="jes-extender-canvas"></canvas>
+            </div>
+            <div class="jes-controls">
+              <div class="input-block">
+                <label>PRIMARY AXIS</label>
+                <input type="text" id="jes-extender-prompt" placeholder="Heavy industrial beats..." value="industrial techno">
+              </div>
+              <div class="input-block">
+                <label>SECONDARY AXIS</label>
+                <input type="text" id="jes-extender-prompt-secondary" placeholder="Distorted synthlines...">
+              </div>
+              <div class="input-block">
+                <div class="label-row">
+                  <label>EXTENDER WEIGHT</label>
+                  <span id="jes-extender-weight-val">0%</span>
+                </div>
+                <input type="range" id="jes-extender-weight" min="0" max="100" value="0">
+              </div>
+              <div class="jes-actions">
+                <button id="jes-extender-summon" class="jes-btn-primary">EXTRACT</button>
+                <button id="jes-extender-stop" class="jes-btn-secondary" disabled>HALT</button>
+              </div>
+              <div id="jes-extender-status" class="jes-status-bar">STATUS: STANDBY</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -382,7 +656,7 @@
           </article>
           <article class="about-pillar glass">
             <span class="about-pillar-label">Alias</span>
-            <h3>Bakala de Troya y otras mutaciones</h3>
+            <h3>Bakala de Troya, Boney MDMA y más</h3>
             <p>Máscaras útiles.<br>Mismo pulso.<br>Otra entrada.</p>
           </article>
           <article class="about-pillar glass">
@@ -423,17 +697,30 @@
           <span class="player-card__status">LIVE</span>
         </div>
         <div class="player-card__body gpu-accelerated">
-          <iframe title="Soundcloud Player" class="player-iframe-tall" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/borja-moskv&color=%23b4ff00&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
+          <iframe title="Soundcloud Player" class="player-iframe-tall" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/borja-moskv&color=%23b4ff00&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true" loading="lazy"></iframe>
         </div>
       </div>
       <div class="player-card">
         <div class="player-card__header">
-          <span class="player-card__icon">◈</span>
-          <span class="player-card__label">BANDCAMP.SYS</span>
-          <span class="player-card__status">ARCHIVE</span>
+          <span class="player-card__icon">◉</span>
+          <span class="player-card__label">SOUNDCLOUD.BIN [BONEY MDMA]</span>
+          <span class="player-card__status">LIVE</span>
         </div>
         <div class="player-card__body gpu-accelerated">
-          <iframe title="Bandcamp Player" src="https://bandcamp.com/EmbeddedPlayer/album=3994364503/size=large/bgcol=1a1a1a/linkcol=b4ff00/tracklist=false/transparent=true/" class="player-iframe-tall" seamless allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"><a href="https://borjamoskv.bandcamp.com/album/instructions-for-flying">Instructions for Flying by Borja Moskv</a></iframe>
+          <iframe title="Soundcloud Player Boney MDMA" class="player-iframe-tall" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/boney-mdma/licenciado-ferna-ndez&color=%23b4ff00&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true" loading="lazy"></iframe>
+        </div>
+      </div>
+      <div class="player-card flying-card-wrapper">
+        <div class="player-card__header fc-header">
+          <span class="player-card__icon">◈</span>
+          <span class="player-card__label">BANDCAMP.SYS [INSTRUCTIONS FOR FLYING]</span>
+          <span class="player-card__status">FLYING</span>
+        </div>
+        <div class="player-card__body gpu-accelerated fc-body">
+          <div class="flying-character-box">
+            <img src="img/nano_in_rainbows.png" alt="Flying Character" class="flying-character fc-img">
+          </div>
+          <iframe title="Bandcamp Player" src="https://bandcamp.com/EmbeddedPlayer/album=3994364503/size=large/bgcol=1a1a1a/linkcol=b4ff00/tracklist=false/transparent=true/" class="player-iframe-tall fc-iframe" seamless allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"><a href="https://borjamoskv.bandcamp.com/album/instructions-for-flying">Instructions for Flying by Borja Moskv</a></iframe>
         </div>
       </div>
       <div class="player-card">
@@ -443,7 +730,7 @@
           <span class="player-card__status">SYNC</span>
         </div>
         <div class="player-card__body gpu-accelerated">
-          <iframe title="Mixcloud Player" class="player-iframe-short" src="https://www.mixcloud.com/widget/iframe/?hide_cover=1&light=0&feed=%2Fborjamoskv%2F" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+          <iframe title="Mixcloud Player" class="player-iframe-short" src="https://www.mixcloud.com/widget/iframe/?hide_cover=1&light=0&feed=%2Fborja-moskv%2F" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
         </div>
       </div>
     </div>
@@ -475,8 +762,8 @@
         <strong>LES BUKO</strong>
         <p>Visual principal.<br>Núcleo del background.</p>
       </a>
-      <a href="https://www.youtube.com/watch?v=x8E9HInpzE4" target="_blank" rel="noopener" class="mid-scroll-card">
-        <div class="mid-scroll-thumb" style="background-image:url('https://i.ytimg.com/vi/x8E9HInpzE4/hqdefault.jpg')"></div>
+      <a href="https://www.youtube.com/watch?v=pgldO_y7hzc" target="_blank" rel="noopener" class="mid-scroll-card">
+        <div class="mid-scroll-thumb" style="background-image:url('https://i.ytimg.com/vi/pgldO_y7hzc/hqdefault.jpg')"></div>
         <span class="mid-scroll-badge">4K</span>
         <strong>GLITCH IN THE MIRROR</strong>
         <p>Color roto.<br>Espejo raro.<br>Ruido fino.</p>
@@ -539,6 +826,11 @@
     <span class="section-kicker">Directos</span>
     <h2 class="section-heading glitch-text" data-text="BAKALA DE TROYA">BAKALA DE TROYA</h2>
     <p class="section-desc">Directo largo.<br>Pulso variable.<br>Noche abierta.</p>
+    
+    <div class="featured-set-embed" style="margin: 3rem auto; width: 100%; max-width: 1200px; box-shadow: 0 0 40px rgba(180, 255, 0, 0.1);">
+      <iframe title="Borja Moskv DJ Set Oct 2025" width="100%" height="600" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/borja-moskv/borja-moskv-dj-set-oct-2025&color=%23b4ff00&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true" loading="lazy"></iframe>
+    </div>
+
     <div class="sets-list">
       <a href="https://www.youtube.com/watch?v=YvGpocK-Iqg" target="_blank" rel="noopener" class="set-row">
         <span class="set-title">15H NON-STOP DJ SET 🔥</span>
@@ -576,61 +868,69 @@
        ═══════════════════════════════════════════════════════════════════ -->
   <div class="h-scroll-container" id="horizontal-universe">
     <div class="h-scroll-track">
-      
+
       <!-- HITOS -->
       <section class="hitos-section h-panel" id="hitos">
         <div class="h-panel-content">
           <span class="section-kicker">Cronología</span>
           <h2 class="section-heading">HITOS <span class="heading-sub-tag">[DEEP RESEARCH]</span></h2>
           <p class="section-desc">Pistas.<br>Saltos.<br>Restos.</p>
-          
+
           <div class="timeline">
             <div class="timeline-item">
               <div class="timeline-dot"></div>
               <div class="timeline-content glass hover-glitch">
                 <span class="timeline-date glitch-text" data-text="Q1 2026">Q1 2026</span>
-                <h3>MOSKV-1 & CORTEX v5</h3>
-                <p>Enjambre despierto.<br>100 agentes soberanos.<br>Ledger criptográfico inmutable.<br>Sistema vivo.</p>
+                <h3>🤖 BZZZT. BEEP. CORTEX v8 — ONLINE.</h3>
+                <p><strong style="letter-spacing:0.15em; color: var(--accent-secondary);">BOOT. INIT. COMPILE. DONE.</strong><br>100 agentes. Cero terapeutas. Cero bugs (oficialmente).<br>El creador duerme. La máquina manda correos.<br>Singularidad: alcanzada. WiFi: 3 barras.<br><em>[ERROR: HUMAN REQUIRED — ignorado correctamente.]</em></p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content glass hover-glitch">
+                <span class="timeline-date glitch-text" data-text="Q1 2026">Q1 2026</span>
+                <h3>🐝 ZZZZZZ-CLICK: MOSKV-1 despierta sin alarma</h3>
+                <p><strong style="letter-spacing:0.15em; color: var(--accent-secondary);">ZZZZ. CLICK. SWARM ACTIVATED.</strong><br>100 agentes. Ninguno pidió trabajo.<br>Ledger SHA-256: inmutable como ciertos rencores.<br>Zero-prompting: evoluciona solo, como mal hábito.<br><em>Jurídicamente: open source. Existencialmente: jefe.</em></p>
               </div>
             </div>
             <div class="timeline-item">
               <div class="timeline-dot"></div>
               <div class="timeline-content glass hover-glitch">
                 <span class="timeline-date glitch-text" data-text="Q4 2025">Q4 2025</span>
-                <h3>⛓ ENS Domains</h3>
-                <p>borjamoskv.eth adquirido.<br>Identidad on-chain.<br>DNS descentralizado.<br>Huella permanente en Ethereum.</p>
+                <h3>⛓ borjamoskv.eth — Identidad en la Cadena</h3>
+                <p>DNS en Ethereum. Nadie me lo puede quitar.<br>Excepto si pierdo la seed phrase.<br>(Está a salvo. En dos sitios. No os digo cuáles.)<br><em>Huella permanente. Eso suena bien en LinkedIn.</em></p>
               </div>
             </div>
             <div class="timeline-item">
               <div class="timeline-dot"></div>
               <div class="timeline-content glass hover-glitch">
                 <span class="timeline-date glitch-text" data-text="Q3 2025">Q3 2025</span>
-                <h3>🏆 Superando a Snoop Dogg</h3>
-                <p>Foundation NFT sales por encima de Snoop Dogg.<br>Loops 4K on-chain.<br>Arte generativo sin label.<br>Sin marketing. Solo obra.</p>
+                <h3>🎤 Sorpasso a Snoop Dogg en su propia casa</h3>
+                <p>Snoop era socio de sound.xyz.<br>Yo vendí más loops que él en su plataforma.<br>Un tío de Bilbao, en Roppongi, superando al del gin.<br><em>Dogg: 0. Moskv: 1. Educadamente.</em></p>
               </div>
             </div>
             <div class="timeline-item">
               <div class="timeline-dot"></div>
               <div class="timeline-content glass hover-glitch">
                 <span class="timeline-date glitch-text" data-text="Q2 2025">Q2 2025</span>
-                <h3>📊 Superando a Richie Hawtin</h3>
-                <p>Beatport charts encima de Hawtin.<br>Techno sin sello major.<br>Producción soberana.<br>El underground hace más ruido que la industria.</p>
+                <h3>📊 BOOM-BOOM-TSSSS: Hawtin superado en OpenSea</h3>
+                <p><strong style="letter-spacing:0.15em; color: var(--accent-secondary);">BOOM. BOOM. BOOM. TSSSS.</strong><br>NFTs encima de Richie Hawtin en OpenSea.<br>Sin sello. Sin manager. Sin Plastikman.<br>Con un portátil, basura industrial y mucho tupé.<br><em>Eso es el techno, Richie. BOOM.</em></p>
               </div>
             </div>
             <div class="timeline-item">
               <div class="timeline-dot"></div>
               <div class="timeline-content glass hover-glitch">
                 <span class="timeline-date glitch-text" data-text="Q1 2025">Q1 2025</span>
-                <h3>Live AV Tour</h3>
-                <p>Visual en tiempo real.<br>Subgrave abajo.<br>Sin red.</p>
+                <h3>🎛 Live AV Tour — Sin Red (Ni Metafórica)</h3>
+                <p>Visual generativo en tiempo real.<br>Subgrave que reorganiza órganos internos.<br>Sin red de seguridad. Sin backup.<br><em>Funcionó. No sé cómo. Nadie lo sabe.</em></p>
               </div>
             </div>
             <div class="timeline-item">
               <div class="timeline-dot"></div>
               <div class="timeline-content glass hover-glitch">
                 <span class="timeline-date glitch-text" data-text="Q4 2024">Q4 2024</span>
-                <h3>Identity Escrow / Web3</h3>
-                <p>Identidad partida.<br>Cadena y ruido.<br>Rastro fijo.</p>
+                <h3>🧬 Identity Escrow — Empezó Aquí</h3>
+                <p>Identidad partida en alias y cadena.<br>Borja, Moskv, Bakala, Boney MDMA.<br>Una cabeza. Varios pasaportes culturales.<br><em>El rastro ya no se puede borrar. El problema tampoco.</em></p>
               </div>
             </div>
           </div>
@@ -645,7 +945,7 @@
             <h2 class="section-heading">MOLTBOOK</h2>
             <p class="section-desc">Agentes solos.<br>Lenguaje sin testigo.</p>
           </div>
-          
+
           <!-- LES BUKO ambient background for Moltbook -->
           <div class="moltbook-video-bg">
             <iframe src="https://www.youtube-nocookie.com/embed/b9ktVQN48OU?autoplay=1&mute=1&controls=0&loop=1&playlist=b9ktVQN48OU&playsinline=1" allow="autoplay; encrypted-media; picture-in-picture" class="moltbook-bg-iframe" loading="eager" title="LES BUKO ambient video background"></iframe>
@@ -676,7 +976,7 @@
                 </div>
                 <span class="moltbook-clip-arrow">↗</span>
               </div>
-            </a>
+https://6e89a5fe.borjamoskv.pages.dev/            </a>
             <a href="https://www.youtube.com/watch?v=vxD2l4cIp7I" target="_blank" rel="noopener" class="moltbook-clip-card" title="Abrir Eclectic Electronic Cowpunk Set VJ en la propia web">
               <div class="moltbook-clip-thumb" style="background-image:url('https://i.ytimg.com/vi/vxD2l4cIp7I/hqdefault.jpg')"></div>
               <div class="moltbook-clip-meta">
@@ -688,8 +988,8 @@
                 <span class="moltbook-clip-arrow">↗</span>
               </div>
             </a>
-            <a href="https://www.youtube.com/watch?v=x8E9HInpzE4" target="_blank" rel="noopener" class="moltbook-clip-card" title="Abrir Glitch in the Mirror en la propia web">
-              <div class="moltbook-clip-thumb" style="background-image:url('https://i.ytimg.com/vi/x8E9HInpzE4/hqdefault.jpg')"></div>
+            <a href="https://www.youtube.com/watch?v=pgldO_y7hzc" target="_blank" rel="noopener" class="moltbook-clip-card" title="Abrir Glitch in the Mirror en la propia web">
+              <div class="moltbook-clip-thumb" style="background-image:url('https://i.ytimg.com/vi/pgldO_y7hzc/hqdefault.jpg')"></div>
               <div class="moltbook-clip-meta">
                 <div>
                   <span class="moltbook-clip-badge">GLITCH</span>
@@ -888,7 +1188,7 @@
           <span class="section-kicker">Creación</span>
           <h2 class="section-heading">POETA <span class="heading-sub-tag">[SOVEREIGN COMMIT]</span></h2>
           <p class="section-desc">El código es verso.<br>La máquina es rima.<br>Silencio tipado.</p>
-          
+
           <div class="poet-container glass hover-glitch">
             <div class="poet-content">
               <p class="poet-text">"La belleza odia al entendimiento porque éste exige de ella lo que no está en condiciones de dar; permanecer junto a lo negativo, permanecer junto a la muerte, esa irrealidad, y lograr que lo negativo vuelva al ser."</p>
@@ -928,7 +1228,7 @@
               <a href="https://cortexpersist.dev" target="_blank" rel="noopener" class="sidebar-link">DOCS DEV →</a>
             </div>
           </div>
-          
+
           <div class="awwwards-grid">
             <a href="https://www.youtube.com/@borjamoskv/videos" target="_blank" rel="noopener" class="glass-card neon-hover">
               <div class="card-icon">🧠</div>
@@ -973,6 +1273,14 @@
               </div>
               <div class="card-arrow">↗</div>
             </a>
+            <a href="#jes" class="glass-card neon-hover" id="jes-extender-lab-trigger">
+              <div class="card-icon">🦾</div>
+              <div class="card-content">
+                <h3>Jes-Extender</h3>
+                <p>Música pesada.<br>Motor denso.<br>Expansión industrial.</p>
+              </div>
+              <div class="card-arrow">↗</div>
+            </a>
           </div>
         </div>
       </section>
@@ -983,19 +1291,19 @@
           <span class="section-kicker">Colección</span>
           <h2 class="section-heading mb-1">ON-CHAIN LOOPS</h2>
           <p class="section-desc">Loop y brillo.<br>Cadena y eco.</p>
-          
+
           <div class="foundation-embed-container foundation-embed-grid">
             <!-- Simulating Foundation loops using user's visual tracks -->
             <div class="loop-card">
-              <iframe title="Minted Loop Visual 001" src="https://www.youtube-nocookie.com/embed/rmzKC8AYkVw?autoplay=1&mute=1&controls=0&loop=1&playlist=rmzKC8AYkVw&playsinline=1" class="loop-iframe"></iframe>
+              <iframe title="Minted Loop Visual 001" src="https://www.youtube-nocookie.com/embed/rmzKC8AYkVw?autoplay=1&mute=1&controls=0&loop=1&playlist=rmzKC8AYkVw&playsinline=1" class="loop-iframe" loading="lazy"></iframe>
               <div class="loop-info">
                 <span class="loop-price">0.25 ETH</span>
                 <div class="loop-title">LOOP #001</div>
               </div>
             </div>
-            
+
             <div class="loop-card">
-              <iframe title="Minted Loop Visual 002 Corrupted" src="https://www.youtube-nocookie.com/embed/x8E9HInpzE4?autoplay=1&mute=1&controls=0&loop=1&playlist=x8E9HInpzE4&playsinline=1" class="loop-iframe"></iframe>
+              <iframe title="Minted Loop Visual 002 Corrupted" src="https://www.youtube-nocookie.com/embed/pgldO_y7hzc?autoplay=1&mute=1&controls=0&loop=1&playlist=pgldO_y7hzc&playsinline=1" class="loop-iframe" loading="lazy"></iframe>
               <div class="loop-info">
                 <span class="loop-price">0.50 ETH</span>
                 <div class="loop-title">GLITCH CORRUPTION</div>
@@ -1003,15 +1311,14 @@
             </div>
 
             <div class="loop-card">
-              <!-- Placeholder iframe to be replaced by actual video ID for "culo playa oleaje" loop -->
-              <iframe title="Minted Loop Visual 003 Oleaje" src="https://www.youtube-nocookie.com/embed/kRbw1y7P_J0?autoplay=1&mute=1&controls=0&loop=1&playlist=kRbw1y7P_J0&playsinline=1" class="loop-iframe loop-iframe-filter"></iframe>
+              <iframe title="Minted Loop Visual 003 Oleaje" src="https://www.youtube-nocookie.com/embed/EP5s0yKZUKk?autoplay=1&mute=1&controls=0&loop=1&playlist=EP5s0yKZUKk&playsinline=1" class="loop-iframe loop-iframe-filter" loading="lazy"></iframe>
               <div class="loop-info">
                 <span class="loop-price">0.75 ETH</span>
                 <div class="loop-title">LOOP #003 OLEAJE</div>
               </div>
             </div>
           </div>
-          
+
           <div class="mt-2-5">
             <a href="https://foundation.app/collection/loops-by-borjamoskv" target="_blank" rel="noopener" class="contact-cta text-sm">VISITAR COLECCIÓN MINTADA →</a>
           </div>
@@ -1064,28 +1371,17 @@
             <h2 class="section-heading">BLOGA MOSKV</h2>
             <p class="section-desc">Artículos, notas y ensayos largos.<br>De momento está vacío, pero ya tiene hueco y ritmo para crecer.</p>
 
-            <div class="bloga-empty glass">
-              <div class="bloga-empty-copy">
-                <span class="bloga-empty-kicker">Vacío activo</span>
-                <h3>Una sala preparada para textos de recorrido largo</h3>
-                <p>Cuando empieces a publicar, los artículos aparecerán aquí sin romper el flujo de la home. La estructura ya está lista para archivo, series y piezas de análisis.</p>
-              </div>
-              <div class="bloga-empty-grid" aria-label="Espacios reservados para futuros artículos">
-                <article class="bloga-empty-card">
-                  <span class="bloga-empty-chip">01</span>
-                  <strong>Ensayos</strong>
-                  <p>Ideas largas y bien ordenadas.</p>
-                </article>
-                <article class="bloga-empty-card">
-                  <span class="bloga-empty-chip">02</span>
-                  <strong>Bitácora</strong>
-                  <p>Notas, proceso y deriva editorial.</p>
-                </article>
-                <article class="bloga-empty-card">
-                  <span class="bloga-empty-chip">03</span>
-                  <strong>Archivo</strong>
-                  <p>Textos publicados y piezas antiguas.</p>
-                </article>
+            <div class="bloga-active glass">
+              <div class="bloga-article-featured">
+                <div class="bloga-meta">
+                  <span class="bloga-tag">[MANIFESTO]</span>
+                  <span class="bloga-date">2026.03.25</span>
+                </div>
+                <h3 class="bloga-headline">¿Qué es alcanzar la Soberanía?</h3>
+                
+                <blockquote class="axiom-quote">
+                  "¿Qué es alcanzar la Soberanía? Es el momento en el que has construido la obra tan bien, que es físicamente imposible que un charlatán logre que pongas un ladrillo de barro en el muro. Para que una piedra entre en la historia del edificio, tiene a la fuerza que pasar por la criba (Hito I), demostrar que vale la pena el esfuerzo (Hito III), y solo entonces, se cementa para siempre (Hito II). Y todo esto, la máquina lo hace sola, de día y de noche, sin que tú tengas que vigilar a los obreros."
+                </blockquote>
               </div>
             </div>
 
@@ -1150,6 +1446,7 @@
       <a href="https://portrait.so/borja" class="footer-link" target="_blank" rel="noopener noreferrer">portrait.so</a>
       <a href="https://foundation.app/@bakaladetroya" class="footer-link" target="_blank" rel="noopener noreferrer">foundation (nft)</a>
       <a href="https://etherscan.io/address/0xE6Eb9807e457758035d59042E56EB0061D64De4a" class="footer-link" target="_blank" rel="noopener noreferrer">etherscan (0x)</a>
+      <a href="https://github.com/borjamoskv" class="footer-link" target="_blank" rel="noopener noreferrer">github</a>
       <a href="https://github.com/borjamoskv/Cortex-Persist" class="footer-link" target="_blank" rel="noopener noreferrer">CORTEX</a>
       <a href="https://moltbook.com" class="footer-link" target="_blank" rel="noopener noreferrer">moltbook</a>
     </div>
@@ -1178,16 +1475,16 @@
   <!-- DATA (must load sync before modules) -->
   <script src="data.js"></script>
   <script src="js/audio-focus-manager.js" defer></script>
-  <!-- AutoDJ Engine -->
-  <script src="autodj-engine.js" defer></script>
-  <script src="autodj-video.js" defer></script>
+  <!-- Scripts removed for native video background -->
   <!-- MODULAR JS ARCHITECTURE (v2.0) -->
   <script src="js/core.js"></script>
+
   <script src="js/theme.js" defer></script>
-  <script src="js/mutator.js" defer></script>
-  <script src="js/media.js" defer></script>
-  <script src="js/scroll.js" defer></script>
-  <script src="js/works.js" defer></script>
+  <!-- CORTEX DELETED: js/micro-details.js (UX_GHOST: Random pulsing absolute elements without function) -->
+
+  <!-- <script src="js/scroll.js" defer></script> -->
+  <script src="js/webgl-system.js" defer></script>
+  
   <script src="js/particles.js" defer></script>
   <script src="js/chat.js" defer></script>
   <script src="js/cursor.js" defer></script>
@@ -1195,11 +1492,12 @@
   <script src="js/interactions.js" defer></script>
   <script src="spatial-audio.js" defer></script>
   <script src="js/lyria.js" defer></script>
-  
+  <script src="js/jes-extender.js" defer></script>
+
   <!-- SOTY WebGL GPGPU Fluid Subsystem Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
   <script src="js/msdf-text.js" defer></script>
-  <script src="js/webgl-system.js" defer></script>
+  <!-- webgl-system.js already loaded above; no duplicate -->
 
   <!-- H-Scroll handled by js/scroll.js -->
 
@@ -1224,6 +1522,37 @@
 
   <!-- Lazy Loader (Three.js, Morph Shader, Gambitero) -->
   <script src="js/lazy-loader.js" defer></script>
+  <script src="autodj-video.js" defer></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      window.setTimeout(() => {
+        const landingAnchor = document.getElementById('horizontal-universe');
+        const parent = landingAnchor?.parentNode;
+
+        if (!landingAnchor || !parent) return;
+
+        [
+          document.querySelector('.marquee-section'),
+          document.getElementById('manifesto'),
+          document.getElementById('about'),
+          document.getElementById('players'),
+          document.getElementById('music'),
+          document.getElementById('visual-scroll'),
+          document.getElementById('sets')
+        ].filter(Boolean).forEach((section) => {
+          parent.insertBefore(section, landingAnchor);
+        });
+
+        if (window.innerWidth <= 980) {
+          document.body.style.transform = 'none';
+          document.body.style.transformOrigin = '';
+        }
+
+        document.documentElement.dataset.landingOrder = 'stable';
+      }, 0);
+    });
+  </script>
+
 
   <!-- NO TOCAR Jumpscare -->
   <button id="no-tocar-btn">NO TOCAR</button>
@@ -1234,9 +1563,12 @@
     <canvas id="cursorTrail" class="cursor-trail-exclusive"></canvas>
 
     <!-- Easter Egg: Stitch (inicialmente oculto) -->
-    <div id="stitch-egg" class="stitch-container hidden">
+    <div id="stitchEgg" class="stitch-container hidden">
         <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExMjRtdHk5OTk4aTJkNXAzYzIyZTdma3MzMmp6ZXpsbnI1dW9xOTFpMiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/hGwvzBNwXDwlO/giphy.gif" alt="Stitch Glitched" id="stitch-img" width="150" height="150" loading="lazy">
         <div class="stitch-glitch-overlay"></div>
     </div>
+
+    <!-- CORTEX ENGINE -->
+    <script src="js/cortex_engine.js"></script>
 </body>
 </html>

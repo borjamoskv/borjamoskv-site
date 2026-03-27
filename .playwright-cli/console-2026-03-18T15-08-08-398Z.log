@@ -1,0 +1,18 @@
+[    2043ms] [ERROR] Permissions policy violation: encrypted-media is not allowed in this document. @ https://player-widget.mixcloud.com/assets/index-qdIOgoop.js:704
+[    2044ms] [WARNING] Encrypted Media access has been blocked because of a Feature Policy applied to the current document. See https://crbug.com/414348233 for more details. @ https://player-widget.mixcloud.com/assets/index-qdIOgoop.js:704
+[    2044ms] [ERROR] Permissions policy violation: encrypted-media is not allowed in this document. @ https://player-widget.mixcloud.com/assets/index-qdIOgoop.js:704
+[    2044ms] [WARNING] Encrypted Media access has been blocked because of a Feature Policy applied to the current document. See https://crbug.com/414348233 for more details. @ https://player-widget.mixcloud.com/assets/index-qdIOgoop.js:704
+[    2044ms] [ERROR] Permissions policy violation: encrypted-media is not allowed in this document. @ https://player-widget.mixcloud.com/assets/index-qdIOgoop.js:704
+[    2044ms] [WARNING] Encrypted Media access has been blocked because of a Feature Policy applied to the current document. See https://crbug.com/414348233 for more details. @ https://player-widget.mixcloud.com/assets/index-qdIOgoop.js:704
+[    2064ms] [ERROR] Permissions policy violation: encrypted-media is not allowed in this document. @ https://player-widget.mixcloud.com/assets/index-qdIOgoop.js:704
+[    2064ms] [WARNING] Encrypted Media access has been blocked because of a Feature Policy applied to the current document. See https://crbug.com/414348233 for more details. @ https://player-widget.mixcloud.com/assets/index-qdIOgoop.js:704
+[    2065ms] [ERROR] Permissions policy violation: encrypted-media is not allowed in this document. @ https://player-widget.mixcloud.com/assets/index-qdIOgoop.js:704
+[    2065ms] [WARNING] Encrypted Media access has been blocked because of a Feature Policy applied to the current document. See https://crbug.com/414348233 for more details. @ https://player-widget.mixcloud.com/assets/index-qdIOgoop.js:704
+[    2065ms] [ERROR] Permissions policy violation: encrypted-media is not allowed in this document. @ https://player-widget.mixcloud.com/assets/index-qdIOgoop.js:704
+[    2065ms] [WARNING] Encrypted Media access has been blocked because of a Feature Policy applied to the current document. See https://crbug.com/414348233 for more details. @ https://player-widget.mixcloud.com/assets/index-qdIOgoop.js:704
+[    2672ms] [ERROR] Failed to load resource: the server responded with a status of 403 (Forbidden) @ https://api-widget.soundcloud.com/users/321869759/tracks?limit=20&offset=0&linked_partitioning=1&format=json&client_id=nIjtjiYnjkOhMyh5xrbqEW12DxeJVnic&app_version=1773658227:0
+[    2879ms] [ERROR] Permissions policy violation: compute-pressure is not allowed in this document. @ https://www.youtube-nocookie.com/s/player/21cd2156/player_ias.vflset/es_ES/base.js:5627
+[    2879ms] [ERROR] Permissions policy violation: compute-pressure is not allowed in this document. @ https://www.youtube-nocookie.com/s/player/21cd2156/player_ias.vflset/es_ES/base.js:5627
+[    2879ms] [ERROR] Permissions policy violation: compute-pressure is not allowed in this document. @ https://www.youtube-nocookie.com/s/player/21cd2156/player_ias.vflset/es_ES/base.js:5627
+[    2879ms] [ERROR] Permissions policy violation: compute-pressure is not allowed in this document. @ https://www.youtube-nocookie.com/s/player/21cd2156/player_ias.vflset/es_ES/base.js:5627
+[    2879ms] [ERROR] Permissions policy violation: compute-pressure is not allowed in this document. @ https://www.youtube-nocookie.com/s/player/21cd2156/player_ias.vflset/es_ES/base.js:5627

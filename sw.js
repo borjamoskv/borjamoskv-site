@@ -1,4 +1,4 @@
-const CACHE_NAME = 'moskv-cache-v3';
+const CACHE_NAME = 'moskv-cache-v4';
 
 // Priority assets for offline shell
 const urlsToCache = [
@@ -7,6 +7,11 @@ const urlsToCache = [
   '/style.css',
   '/data.js',
   '/autodj-video.js',
+  '/site.webmanifest',
+  '/img/icon-192.png',
+  '/img/icon-512.png',
+  '/img/apple-touch-icon.png',
+  '/img/favicon.ico',
   '/js/core.js',
   '/js/mutator.js',
   '/js/media.js',

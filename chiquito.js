@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .chiquito-text {
             font-family: 'Courier New', Courier, monospace;
             font-size: 4rem;
-            color: #fff;
+            color: #D4D4D4;
             text-shadow: 0 0 20px #ccff00, 5px 5px 0px #000;
             text-transform: uppercase;
             font-weight: 900;
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
         @keyframes strobe {
             0% { background: rgba(204, 0, 0, 0.9); }
             50% { background: rgba(0, 0, 0, 0.9); }
-            100% { background: rgba(255, 255, 255, 0.9); }
+            100% { background: rgba(212, 212, 212, 0.9); }
         }
     `;
     

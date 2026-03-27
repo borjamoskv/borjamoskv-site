@@ -87,7 +87,7 @@
             padding: 2.5rem;
             border: 1px dashed var(--border);
             position: relative;
-            background: rgba(255,255,255,0.01);
+            background: rgba(212, 212, 212,0.01);
             transition: border-color 0.3s ease;
         }
 
@@ -144,7 +144,7 @@
             padding-left: 2rem;
             margin: 2rem 0;
             line-height: 1.4;
-            color: #fff;
+            color: #D4D4D4;
             text-shadow: 0 0 10px rgba(204, 255, 0, 0.1);
         }
 
@@ -186,8 +186,8 @@
         }
 
         .joke-container .highlight {
-            color: #fff;
-            background: rgba(255, 255, 255, 0.1);
+            color: #D4D4D4;
+            background: rgba(212, 212, 212, 0.1);
             padding: 0.2rem 0.4rem;
         }
 
@@ -325,7 +325,7 @@
             font-size: 1.5rem;
             font-weight: 900;
             letter-spacing: 5px;
-            color: #fff;
+            color: #D4D4D4;
             margin-bottom: 1rem;
         }
 
@@ -335,6 +335,7 @@
             100% { opacity: 1; }
         }
     </style>
+  <link href="cortex-terminal.css" rel="stylesheet">
 </head>
 <body>
     <div class="container">
@@ -531,5 +532,6 @@
             });
         }, Math.random() * 5000 + 3000);
     </script>
+  <script src="cortex-terminal.js" defer></script>
 </body>
 </html>

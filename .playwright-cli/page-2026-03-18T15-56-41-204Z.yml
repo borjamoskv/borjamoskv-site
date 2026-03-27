@@ -1,0 +1,899 @@
+- generic [active] [ref=e1]:
+  - generic:
+    - generic:
+      - heading "MOSKV" [level=1]
+  - generic [ref=e3]:
+    - link "Abrir 32 Y PICO en YouTube" [ref=e4]:
+      - /url: https://www.youtube.com/watch?v=hY0G0Zxf_uo
+      - generic [ref=e5]: SUPER VIDEOCLIP BACKGROUND
+      - strong [ref=e6]: 32 Y PICO
+      - generic [ref=e7]: VER VIDEO EN YOUTUBE ↗
+    - button "Toggle Sound" [ref=e9] [cursor=pointer]:
+      - generic [ref=e10]: UNMUTE SIGNAL
+      - img [ref=e11]
+  - navigation [ref=e15]:
+    - link "MOSKV" [ref=e16]:
+      - /url: "#hero"
+    - generic [ref=e17]:
+      - link "Music" [ref=e18]:
+        - /url: "#music"
+      - link "Sets" [ref=e19]:
+        - /url: "#sets"
+      - link "Moltbook" [ref=e20]:
+        - /url: "#moltbook"
+      - link "Lab" [ref=e21]:
+        - /url: "#lab"
+      - link "DJ AUTOMATA" [ref=e22]:
+        - /url: "#hero"
+      - link "Diario" [ref=e23]:
+        - /url: "#writings"
+      - link "Contact" [ref=e24]:
+        - /url: "#contact"
+    - generic [ref=e25]:
+      - link "BANDCAMP" [ref=e26]:
+        - /url: https://borjamoskv.bandcamp.com
+      - link "SPOTIFY" [ref=e27]:
+        - /url: https://open.spotify.com/intl-es/artist/4p7wMuZpktE5aBFhBoQdqa
+      - link "SOUNDCLOUD" [ref=e28]:
+        - /url: https://soundcloud.com/borja-moskv
+      - link "YOUTUBE" [ref=e29]:
+        - /url: https://www.youtube.com/@borjamoskv
+      - link "MIXCLOUD" [ref=e30]:
+        - /url: https://www.mixcloud.com/borjamoskv/
+      - link "FOUNDATION" [ref=e31]:
+        - /url: https://foundation.app/@bakaladetroya
+      - button "☢️" [ref=e32] [cursor=pointer]
+  - generic [ref=e33]:
+    - generic [ref=e34]: Bilbao · productor experimental · live AV · DJ
+    - generic [ref=e35]:
+      - generic [ref=e36]:
+        - generic [ref=e37]:
+          - heading "BORJA MOSKV BORJA MOSKV BORJA MOSKV" [level=1]:
+            - text: BORJA MOSKV BORJA
+            - text: MOSKV BORJA MOSKV
+        - paragraph [ref=e38]:
+          - text: Ruido de barrio.
+          - text: Máquinas con memoria.
+          - text: Bilbao respira.
+        - generic "Señal principal" [ref=e39]:
+          - generic [ref=e40]: Ambient / IDM / Techno
+          - generic [ref=e41]: Bakala de Troya / live sets
+          - generic [ref=e42]: Visuales 4K / AV
+          - generic [ref=e43]: 32 Y PICO / background master
+          - generic [ref=e44]: Booking abierto
+        - generic [ref=e45]:
+          - link "Escuchar obras destacadas" [ref=e46]:
+            - /url: "#music"
+          - link "Ver sets · Bakala de Troya" [ref=e47]:
+            - /url: "#sets"
+          - link "Reservar live / booking →" [ref=e48]:
+            - /url: "#contact"
+      - complementary "Accesos rápidos" [ref=e49]:
+        - link "Escucha directa Spotify, SoundCloud, Bandcamp y Mixcloud Cuatro puertas. Una señal. Entra." [ref=e50]:
+          - /url: "#players"
+          - generic [ref=e51]: Escucha directa
+          - strong [ref=e52]: Spotify, SoundCloud, Bandcamp y Mixcloud
+          - paragraph [ref=e53]:
+            - text: Cuatro puertas.
+            - text: Una señal.
+            - text: Entra.
+        - link "Lab expandido IA visual, web3 y prototipos MOSKV-1 Código y loops. IA y desvío. Mismo núcleo." [ref=e54]:
+          - /url: "#lab"
+          - generic [ref=e55]: Lab expandido
+          - strong [ref=e56]: IA visual, web3 y prototipos MOSKV-1
+          - paragraph [ref=e57]:
+            - text: Código y loops.
+            - text: IA y desvío.
+            - text: Mismo núcleo.
+        - link "Diario y criterio Diario, archivo local y Substack Texto breve. Criterio lento. Ruido útil." [ref=e58]:
+          - /url: "#writings"
+          - generic [ref=e59]: Diario y criterio
+          - strong [ref=e60]: Diario, archivo local y Substack
+          - paragraph [ref=e61]:
+            - text: Texto breve.
+            - text: Criterio lento.
+            - text: Ruido útil.
+    - generic [ref=e62]:
+      - generic [ref=e63]: Hierro y niebla.
+      - generic [ref=e64]: La ría guarda pulsos.
+      - generic [ref=e65]: La noche escucha.
+  - generic [ref=e66]:
+    - generic [ref=e67]: Manifiesto
+    - heading "MANIFIESTO DE LO INMANENTE DE BORJA MOSKV" [level=2] [ref=e68]:
+      - link "MANIFIESTO DE LO INMANENTE DE BORJA MOSKV" [ref=e69] [cursor=pointer]:
+        - /url: https://open.spotify.com/playlist/6WHIabEaqEd6cFPad3gSrx
+    - paragraph [ref=e70]:
+      - text: Una playlist.
+      - text: Un pulso.
+      - text: Una grieta.
+    - iframe [ref=e72]
+    - paragraph [ref=e74]:
+      - text: Música.
+      - text: Código.
+      - text: La misma pieza.
+    - generic [ref=e75]:
+      - generic [ref=e76]:
+        - generic [ref=e77]:
+          - generic [ref=e78]: 1_BANDCAMP.EXE
+          - generic [ref=e79] [cursor=pointer]: ✕
+        - iframe [ref=e81]: <a href="https://oscarmulero.bandcamp.com/">Oscar Mulero - Tormenta</a>
+      - generic [ref=e82]:
+        - generic [ref=e83]:
+          - generic [ref=e84]: 2_MIXCLOUD.BIN
+          - generic [ref=e85] [cursor=pointer]: ✕
+        - iframe [ref=e87]
+      - generic [ref=e88]:
+        - generic [ref=e89]:
+          - generic [ref=e90]: 3_YOUTUBE.SYS
+          - generic [ref=e91] [cursor=pointer]: ✕
+        - iframe [ref=e93]
+      - generic [ref=e94]:
+        - generic [ref=e95]:
+          - generic [ref=e96]: Ω_BRIDGE_BORJAMOSKV.SYS
+          - generic [ref=e97] [cursor=pointer]: ✕
+        - iframe [ref=e99]
+      - generic [ref=e100]:
+        - generic [ref=e101]:
+          - generic [ref=e102]: Ω_BRIDGE_OSCARMULERO.SYS
+          - generic [ref=e103] [cursor=pointer]: ✕
+        - iframe [ref=e105]
+  - generic [ref=e108]:
+    - generic [ref=e109]: Señal base
+    - 'heading "Lore Electrónico: Borja Moskv Multiverso" [level=2] [ref=e110]'
+    - paragraph [ref=e111]:
+      - text: Música y visuales.
+      - text: Texto y sistema.
+      - text: Una sola señal.
+    - generic [ref=e112]:
+      - article [ref=e113]:
+        - generic [ref=e114]: Música
+        - heading "Costumbrismo con máquinas" [level=3] [ref=e115]
+        - paragraph [ref=e116]:
+          - text: IDM y ambient.
+          - text: Techno y rework.
+          - text: Humor torcido.
+      - article [ref=e117]:
+        - generic [ref=e118]: Alias
+        - heading "Bakala de Troya y otras mutaciones" [level=3] [ref=e119]
+        - paragraph [ref=e120]:
+          - text: Máscaras útiles.
+          - text: Mismo pulso.
+          - text: Otra entrada.
+      - article [ref=e121]:
+        - generic [ref=e122]: Territorio
+        - heading "Bilbao, no Berlín" [level=3] [ref=e123]
+        - paragraph [ref=e124]:
+          - text: Humedad.
+          - text: Hierro.
+          - text: Barrio adentro.
+    - paragraph [ref=e125]:
+      - text: No hay plan.
+      - text: Solo insistencia.
+    - paragraph [ref=e126]:
+      - text: Varios nombres.
+      - text: Una cabeza.
+    - paragraph [ref=e127]:
+      - text: Bilbao dentro.
+      - text: Electrónica fuera.
+  - generic [ref=e130]:
+    - generic [ref=e131]: INDUSTRIAL NOIR
+    - generic [ref=e132]: ·
+    - generic [ref=e133]: BAKALA DE TROYA
+    - generic [ref=e134]: ·
+    - generic [ref=e135]: FLAMENC OSMIC
+    - generic [ref=e136]: ·
+    - generic [ref=e137]: ESTO NO ES UNA WEB, ES UN SENTIMIENTO
+    - generic [ref=e138]: ·
+    - generic [ref=e139]: BONEY MDMA
+    - generic [ref=e140]: ·
+    - generic [ref=e141]: NEIL RÁYADON
+    - generic [ref=e142]: ·
+    - generic [ref=e143]: NO PUEDO PARAAAR
+    - generic [ref=e144]: ·
+    - generic [ref=e145]: WEB DESIGN
+    - generic [ref=e146]: ·
+    - generic [ref=e147]: INDUSTRIAL NOIR
+    - generic [ref=e148]: ·
+    - generic [ref=e149]: BAKALA DE TROYA
+    - generic [ref=e150]: ·
+    - generic [ref=e151]: FLAMENC OSMIC
+    - generic [ref=e152]: ·
+    - generic [ref=e153]: ESTO NO ES UNA WEB, ES UN SENTIMIENTO
+    - generic [ref=e154]: ·
+    - generic [ref=e155]: BONEY MDMA
+    - generic [ref=e156]: ·
+    - generic [ref=e157]: NEIL RÁYADON
+    - generic [ref=e158]: ·
+    - generic [ref=e159]: NO PUEDO PARAAAR
+    - generic [ref=e160]: ·
+    - generic [ref=e161]: WEB DESIGN
+    - generic [ref=e162]: ·
+  - generic [ref=e163]:
+    - generic [ref=e164]: Catálogo
+    - heading "WORKS" [level=2] [ref=e165]
+    - paragraph [ref=e166]:
+      - text: Originales.
+      - text: Reworks.
+      - text: Piezas raras.
+    - generic [ref=e167]:
+      - button "ALL" [ref=e168] [cursor=pointer]
+      - button "Originals" [ref=e169] [cursor=pointer]
+      - button "Reworks" [ref=e170] [cursor=pointer]
+      - button "Ambient" [ref=e171] [cursor=pointer]
+      - button "IDM" [ref=e172] [cursor=pointer]
+      - button "Techno" [ref=e173] [cursor=pointer]
+      - button "Electronic" [ref=e174] [cursor=pointer]
+      - button "4K Visuals" [ref=e175] [cursor=pointer]
+      - button "Experimental" [ref=e176] [cursor=pointer]
+      - button "Parkour" [ref=e177] [cursor=pointer]
+      - button "Hard Bachata" [ref=e178] [cursor=pointer]
+      - button "Salmorejo" [ref=e179] [cursor=pointer]
+    - generic [ref=e180]:
+      - generic [ref=e181]:
+        - link "ECOS DEL COSMOS" [ref=e182]:
+          - /url: https://www.youtube.com/watch?v=NYhOQTcNLkA
+        - generic [ref=e184]:
+          - heading "ECOS DEL COSMOS" [level=3] [ref=e185]
+          - generic [ref=e186]: Original · Ambient / Sci-Fi [4K]
+      - generic [ref=e187]:
+        - link "GLITCH IN THE MIRROR" [ref=e188]:
+          - /url: https://www.youtube.com/watch?v=x8E9HInpzE4
+        - generic [ref=e190]:
+          - heading "GLITCH IN THE MIRROR" [level=3] [ref=e191]
+          - generic [ref=e192]: Original · Experimental [4K]
+      - generic [ref=e193]:
+        - link "LES BUKO" [ref=e194]:
+          - /url: https://www.youtube.com/watch?v=b9ktVQN48OU
+        - generic [ref=e196]:
+          - heading "LES BUKO" [level=3] [ref=e197]
+          - generic [ref=e198]: Original · Electronic [4K]
+      - generic [ref=e199]:
+        - link "32 Y PICO" [ref=e200]:
+          - /url: https://www.youtube.com/watch?v=hY0G0Zxf_uo
+        - generic [ref=e202]:
+          - heading "32 Y PICO" [level=3] [ref=e203]
+          - generic [ref=e204]: Visual Compilation · Electronic
+      - generic [ref=e205]:
+        - link "PATADAS" [ref=e206]:
+          - /url: https://www.youtube.com/watch?v=NJqC3Xf6RzE
+        - generic [ref=e208]:
+          - heading "PATADAS" [level=3] [ref=e209]
+          - generic [ref=e210]: Original · Electronic
+      - generic [ref=e211]:
+        - link "1" [ref=e212]:
+          - /url: https://www.youtube.com/watch?v=rakTVLzdc44
+        - generic [ref=e214]:
+          - heading "1" [level=3] [ref=e215]
+          - generic [ref=e216]: Original · Experimental
+      - generic [ref=e217]:
+        - link "4 DROGAS" [ref=e218]:
+          - /url: https://www.youtube.com/watch?v=LDzdKd4WxvI
+        - generic [ref=e220]:
+          - heading "4 DROGAS" [level=3] [ref=e221]
+          - generic [ref=e222]: Original · Techno
+      - generic [ref=e223]:
+        - link "COHERENCIA RARA 42" [ref=e224]:
+          - /url: https://www.youtube.com/watch?v=N66gquS-zLw
+        - generic [ref=e226]:
+          - heading "COHERENCIA RARA 42" [level=3] [ref=e227]
+          - generic [ref=e228]: Original · Experimental
+      - generic [ref=e229]:
+        - link "ANTES DE LAS GUERRAS" [ref=e230]:
+          - /url: https://www.youtube.com/watch?v=hsdOCzJpUMg
+        - generic [ref=e232]:
+          - heading "ANTES DE LAS GUERRAS" [level=3] [ref=e233]
+          - generic [ref=e234]: Original · Ambient
+      - generic [ref=e235]:
+        - link "EN EL PRISMA DEL XOKAS" [ref=e236]:
+          - /url: https://www.youtube.com/watch?v=eIrt6Uw-SEo
+        - generic [ref=e238]:
+          - heading "EN EL PRISMA DEL XOKAS" [level=3] [ref=e239]
+          - generic [ref=e240]: Original · Experimental
+      - generic [ref=e241]:
+        - link "BUILDING YOUR OWN UNIVERSE" [ref=e242]:
+          - /url: https://www.youtube.com/watch?v=PCjZruRuoNY
+        - generic [ref=e244]:
+          - heading "BUILDING YOUR OWN UNIVERSE" [level=3] [ref=e245]
+          - generic [ref=e246]: Short · Substack
+      - generic [ref=e247]:
+        - link "ALGORITHMS VS HUMAN ATTENTION" [ref=e248]:
+          - /url: https://www.youtube.com/watch?v=AL46Orm0LS4
+        - generic [ref=e250]:
+          - heading "ALGORITHMS VS HUMAN ATTENTION" [level=3] [ref=e251]
+          - generic [ref=e252]: Short · Substack
+      - generic [ref=e253]:
+        - link "CON LA PUNTA DEL CIPOTE" [ref=e254]:
+          - /url: https://www.youtube.com/watch?v=-s5ZB4djvEw
+        - generic [ref=e256]:
+          - heading "CON LA PUNTA DEL CIPOTE" [level=3] [ref=e257]
+          - generic [ref=e258]: Short · Substack
+      - generic [ref=e259]:
+        - link "EL ARTE NO TE DEBE NADA" [ref=e260]:
+          - /url: https://www.youtube.com/watch?v=uhw1ZQrp-9g
+        - generic [ref=e262]:
+          - heading "EL ARTE NO TE DEBE NADA" [level=3] [ref=e263]
+          - generic [ref=e264]: Short · Substack
+      - generic [ref=e265]:
+        - link "RADIOHEAD — IN RAINBOWS" [ref=e266]:
+          - /url: https://www.youtube.com/watch?v=lbQ1aKrnGNs
+        - generic [ref=e268]:
+          - heading "RADIOHEAD — IN RAINBOWS" [level=3] [ref=e269]
+          - generic [ref=e270]: Rework · IDM / Ambient
+      - generic [ref=e271]:
+        - link "O SUPERMAN (LAURIE ANDERSON)" [ref=e272]:
+          - /url: https://www.youtube.com/watch?v=gDquDpykJIc
+        - generic [ref=e274]:
+          - heading "O SUPERMAN (LAURIE ANDERSON)" [level=3] [ref=e275]
+          - generic [ref=e276]: Rework · Electronic
+      - generic [ref=e277]:
+        - link "THE MEXICAN" [ref=e278]:
+          - /url: https://www.youtube.com/watch?v=I3jJXm8aG-A
+        - generic [ref=e280]:
+          - heading "THE MEXICAN" [level=3] [ref=e281]
+          - generic [ref=e282]: Rework · Bakala
+      - generic [ref=e283]:
+        - link "RADIOHEAD — NO SURPRISES" [ref=e284]:
+          - /url: https://www.youtube.com/watch?v=bmD0YmLm45A
+        - generic [ref=e286]:
+          - heading "RADIOHEAD — NO SURPRISES" [level=3] [ref=e287]
+          - generic [ref=e288]: Rework · Ambient Techno
+      - generic [ref=e289]:
+        - link "TAME IMPALA — LET IT HAPPEN" [ref=e290]:
+          - /url: https://www.youtube.com/watch?v=_1XOjBK4wJc
+        - generic [ref=e292]:
+          - heading "TAME IMPALA — LET IT HAPPEN" [level=3] [ref=e293]
+          - generic [ref=e294]: Rework · Psychedelic
+      - generic [ref=e295]:
+        - link "IDLES — THE BEACHLAND BALLROOM" [ref=e296]:
+          - /url: https://www.youtube.com/watch?v=3iQFsgZrDZk
+        - generic [ref=e298]:
+          - heading "IDLES — THE BEACHLAND BALLROOM" [level=3] [ref=e299]
+          - generic [ref=e300]: Rework · Warehouse Techno
+      - generic [ref=e301]:
+        - link "JAR TO THE SYSTEM" [ref=e302]:
+          - /url: https://www.youtube.com/watch?v=tMorCDfedf8
+        - generic [ref=e304]:
+          - heading "JAR TO THE SYSTEM" [level=3] [ref=e305]
+          - generic [ref=e306]: Original · Electronic
+      - generic [ref=e307]:
+        - link "ASÍ FUE" [ref=e308]:
+          - /url: https://www.youtube.com/watch?v=GeHP3ADsans
+        - generic [ref=e310]:
+          - heading "ASÍ FUE" [level=3] [ref=e311]
+          - generic [ref=e312]: Rework · Electro Deep House
+      - generic [ref=e313]:
+        - link "SWANS — SCREEN SHOT" [ref=e314]:
+          - /url: https://www.youtube.com/watch?v=AcouyGSki-8
+        - generic [ref=e316]:
+          - heading "SWANS — SCREEN SHOT" [level=3] [ref=e317]
+          - generic [ref=e318]: Rework · Experimental
+      - generic [ref=e319]:
+        - link "GRIZZLY BEAR — DEEP SEA DIVER" [ref=e320]:
+          - /url: https://www.youtube.com/watch?v=4RXo5uD-wF4
+        - generic [ref=e322]:
+          - heading "GRIZZLY BEAR — DEEP SEA DIVER" [level=3] [ref=e323]
+          - generic [ref=e324]: Remix · Electronic
+      - generic [ref=e325]:
+        - link "JOHN FRUSCIANTE — MURDERERS" [ref=e326]:
+          - /url: https://www.youtube.com/watch?v=ya59utbBStM
+        - generic [ref=e328]:
+          - heading "JOHN FRUSCIANTE — MURDERERS" [level=3] [ref=e329]
+          - generic [ref=e330]: Rework · IDM
+      - generic [ref=e331]:
+        - link "ROBERT COSMIC — VIAJEROS" [ref=e332]:
+          - /url: https://www.youtube.com/watch?v=D8hjJ17vZYc
+        - generic [ref=e334]:
+          - heading "ROBERT COSMIC — VIAJEROS" [level=3] [ref=e335]
+          - generic [ref=e336]: Rework · Electronic
+      - generic [ref=e337]:
+        - link "RADIOHEAD — 15 STEP" [ref=e338]:
+          - /url: https://www.youtube.com/watch?v=MH-YirWPNmI
+        - generic [ref=e340]:
+          - heading "RADIOHEAD — 15 STEP" [level=3] [ref=e341]
+          - generic [ref=e342]: Rework · IDM
+      - generic [ref=e343]:
+        - link "LINDSTRØM & PRINS THOMAS — NAA ER DRUENE" [ref=e344]:
+          - /url: https://www.youtube.com/watch?v=Yr5CMXrJgIo
+        - generic [ref=e346]:
+          - heading "LINDSTRØM & PRINS THOMAS — NAA ER DRUENE" [level=3] [ref=e347]
+          - generic [ref=e348]: Rework · Electronic
+      - generic [ref=e349]:
+        - link "ROBOCOP" [ref=e350]:
+          - /url: https://www.youtube.com/watch?v=u99SbUVjV6M
+        - generic [ref=e352]:
+          - heading "ROBOCOP" [level=3] [ref=e353]
+          - generic [ref=e354]: Rework · Electronic
+      - generic [ref=e355]:
+        - link "CRUJIDOS" [ref=e356]:
+          - /url: https://www.youtube.com/watch?v=nz9h7q5FA-0
+        - generic [ref=e358]:
+          - heading "CRUJIDOS" [level=3] [ref=e359]
+          - generic [ref=e360]: Rework · Experimental
+      - generic [ref=e361]:
+        - link "32 ELECTRONIC MUSIC VISUAL TRACKS" [ref=e362]:
+          - /url: https://www.youtube.com/watch?v=rmzKC8AYkVw
+        - generic [ref=e364]:
+          - heading "32 ELECTRONIC MUSIC VISUAL TRACKS" [level=3] [ref=e365]
+          - generic [ref=e366]: Visual Compilation
+      - generic [ref=e367]:
+        - link "METAFASHION" [ref=e368]:
+          - /url: https://www.youtube.com/watch?v=zzHETLKSeT4
+        - generic [ref=e370]:
+          - heading "METAFASHION" [level=3] [ref=e371]
+          - generic [ref=e372]: Original · Experimental
+      - generic [ref=e373]:
+        - link "BLAC" [ref=e374]:
+          - /url: https://www.youtube.com/watch?v=4Cb-Iu8DnJM
+        - generic [ref=e376]:
+          - heading "BLAC" [level=3] [ref=e377]
+          - generic [ref=e378]: Original · Electronic
+      - generic [ref=e379]:
+        - link "CICLISTAS" [ref=e380]:
+          - /url: https://www.youtube.com/watch?v=Icz_FGJAQ78
+        - generic [ref=e382]:
+          - heading "CICLISTAS" [level=3] [ref=e383]
+          - generic [ref=e384]: Original · Visual
+      - generic [ref=e385]:
+        - link "EL CUY DEL ALTIPLANO" [ref=e386]:
+          - /url: https://www.youtube.com/watch?v=Izt6bzo0PO8
+        - generic [ref=e388]:
+          - heading "EL CUY DEL ALTIPLANO" [level=3] [ref=e389]
+          - generic [ref=e390]: Original · Ambient
+      - generic [ref=e391]:
+        - link "JUGAR LA BRISCA CON AMAVISCA" [ref=e392]:
+          - /url: https://www.youtube.com/watch?v=KuBNnC4mYuU
+        - generic [ref=e394]:
+          - heading "JUGAR LA BRISCA CON AMAVISCA" [level=3] [ref=e395]
+          - generic [ref=e396]: Original · Hard Bachata
+      - generic [ref=e397]:
+        - link "TAA LUU VAA NAA SHEE DOOO" [ref=e398]:
+          - /url: https://www.youtube.com/watch?v=TOuixj79kDU
+        - generic [ref=e400]:
+          - heading "TAA LUU VAA NAA SHEE DOOO" [level=3] [ref=e401]
+          - generic [ref=e402]: Original · Experimental
+      - generic [ref=e403]:
+        - link "EL TUPAS" [ref=e404]:
+          - /url: https://www.youtube.com/watch?v=c4Wz6M2_y1s
+        - generic [ref=e406]:
+          - heading "EL TUPAS" [level=3] [ref=e407]
+          - generic [ref=e408]: Original · Salmorejo
+      - generic [ref=e409]:
+        - link "LAMENTO BOLIVARIANO" [ref=e410]:
+          - /url: https://www.youtube.com/watch?v=CFQ1smlFYjQ
+        - generic [ref=e412]:
+          - heading "LAMENTO BOLIVARIANO" [level=3] [ref=e413]
+          - generic [ref=e414]: Original · Ambient
+      - generic [ref=e415]:
+        - link "ME CAIGO Y ME LEVANTO" [ref=e416]:
+          - /url: https://www.youtube.com/watch?v=Otvpn9vfXOE
+        - generic [ref=e418]:
+          - heading "ME CAIGO Y ME LEVANTO" [level=3] [ref=e419]
+          - generic [ref=e420]: Original · Parkour
+      - generic [ref=e421]:
+        - link "INCREÍBLE" [ref=e422]:
+          - /url: https://www.youtube.com/watch?v=hCkD67O9H2o
+        - generic [ref=e424]:
+          - heading "INCREÍBLE" [level=3] [ref=e425]
+          - generic [ref=e426]: Original · Electronic
+      - generic [ref=e427]:
+        - link "COCODRILO COJONES" [ref=e428]:
+          - /url: https://www.youtube.com/watch?v=Z_S9hMVOizo
+        - generic [ref=e430]:
+          - heading "COCODRILO COJONES" [level=3] [ref=e431]
+          - generic [ref=e432]: Original · Hard Bachata Frontflip
+      - generic [ref=e433]:
+        - link "NEURAL TRANSFER" [ref=e434]:
+          - /url: https://www.youtube.com/watch?v=YvGpocK-Iqg
+        - generic [ref=e436]:
+          - heading "NEURAL TRANSFER" [level=3] [ref=e437]
+          - generic [ref=e438]: Original · Electronic
+      - generic [ref=e439]:
+        - link "VOID CASCADE" [ref=e440]:
+          - /url: https://www.youtube.com/watch?v=EP5s0yKZUKk
+        - generic [ref=e442]:
+          - heading "VOID CASCADE" [level=3] [ref=e443]
+          - generic [ref=e444]: Original · Ambient
+      - generic [ref=e445]:
+        - link "LA HUMILDAD ABRE MÁS PUERTAS QUE EL TALENTO" [ref=e446]:
+          - /url: https://www.youtube.com/watch?v=iI9-8BibHaM
+        - generic [ref=e448]:
+          - heading "LA HUMILDAD ABRE MÁS PUERTAS QUE EL TALENTO" [level=3] [ref=e449]
+          - generic [ref=e450]: Original · Electronic
+      - generic [ref=e451]:
+        - link "THE GHOST OF THE TORN PANTIES" [ref=e452]:
+          - /url: https://www.youtube.com/watch?v=U2faQ81sRpg
+        - generic [ref=e454]:
+          - heading "THE GHOST OF THE TORN PANTIES" [level=3] [ref=e455]
+          - generic [ref=e456]: Original · Experimental
+      - generic [ref=e457]:
+        - link "PIENSO LUEGO IMPROVISO" [ref=e458]:
+          - /url: https://www.youtube.com/watch?v=8Encp3vIb9M
+        - generic [ref=e460]:
+          - heading "PIENSO LUEGO IMPROVISO" [level=3] [ref=e461]
+          - generic [ref=e462]: Original · Electronic
+      - generic [ref=e463]:
+        - link "LITTLE MEGA MIX" [ref=e464]:
+          - /url: https://www.youtube.com/watch?v=v1MvE0jG_G0
+        - generic [ref=e466]:
+          - heading "LITTLE MEGA MIX" [level=3] [ref=e467]
+          - generic [ref=e468]: Mix · Electronic
+      - generic [ref=e469]:
+        - link "FROSTIE AIR" [ref=e470]:
+          - /url: https://www.youtube.com/watch?v=cFOFcUPUUNs
+        - generic [ref=e472]:
+          - heading "FROSTIE AIR" [level=3] [ref=e473]
+          - generic [ref=e474]: Original · Ambient
+      - generic [ref=e475]:
+        - link "PERCULAES" [ref=e476]:
+          - /url: https://www.youtube.com/watch?v=_l1J37XK8vM
+        - generic [ref=e478]:
+          - heading "PERCULAES" [level=3] [ref=e479]
+          - generic [ref=e480]: Original · Electronic
+      - generic [ref=e481]:
+        - link "THE SUPERSTARS" [ref=e482]:
+          - /url: https://www.youtube.com/watch?v=8UMhx5cDYjo
+        - generic [ref=e484]:
+          - heading "THE SUPERSTARS" [level=3] [ref=e485]
+          - generic [ref=e486]: Original · Electronic
+      - generic [ref=e487]:
+        - link "2 MANY FORRESTS" [ref=e488]:
+          - /url: https://www.youtube.com/watch?v=ZtOVq-nMgqo
+        - generic [ref=e490]:
+          - heading "2 MANY FORRESTS" [level=3] [ref=e491]
+          - generic [ref=e492]: Original · Electronic
+      - generic [ref=e493]:
+        - link "RETRATOS NAROA GUTIÉRREZ GIL" [ref=e494]:
+          - /url: https://www.youtube.com/watch?v=Zc8QEQ8y1f8
+        - generic [ref=e496]:
+          - heading "RETRATOS NAROA GUTIÉRREZ GIL" [level=3] [ref=e497]
+          - generic [ref=e498]: Visual · Photography
+      - generic [ref=e499]:
+        - link "EL CHOMBO — CHACARRON" [ref=e500]:
+          - /url: https://www.youtube.com/watch?v=UrX4mqXmapE
+        - generic [ref=e502]:
+          - heading "EL CHOMBO — CHACARRON" [level=3] [ref=e503]
+          - generic [ref=e504]: MICA Inject · Electronic
+  - generic [ref=e505]:
+    - generic [ref=e506]: Directos
+    - heading "BAKALA DE TROYA" [level=2] [ref=e507]
+    - paragraph [ref=e508]:
+      - text: Directo largo.
+      - text: Pulso variable.
+      - text: Noche abierta.
+    - generic [ref=e509]:
+      - link "15H NON-STOP DJ SET 🔥 MARATHON" [ref=e510]:
+        - /url: https://www.youtube.com/watch?v=YvGpocK-Iqg
+        - generic [ref=e511]: 15H NON-STOP DJ SET 🔥
+        - generic [ref=e512]: MARATHON
+      - link "DARK DISCO & IDM SET 2025 🔥" [ref=e513]:
+        - /url: https://www.youtube.com/watch?v=EP5s0yKZUKk
+        - generic [ref=e514]: DARK DISCO & IDM SET 2025
+        - generic [ref=e515]: 🔥
+      - link "TECHNO INDUSTRIAL WAREHOUSE SET HARD" [ref=e516]:
+        - /url: https://www.youtube.com/watch?v=_zT6jP2OvXk
+        - generic [ref=e517]: TECHNO INDUSTRIAL WAREHOUSE SET
+        - generic [ref=e518]: HARD
+      - link "AMBIENT & TEXTURES EXPERIMENTAL DEEP" [ref=e519]:
+        - /url: https://www.youtube.com/watch?v=VqhnG94f5pE
+        - generic [ref=e520]: AMBIENT & TEXTURES EXPERIMENTAL
+        - generic [ref=e521]: DEEP
+      - link "ECLECTIC ELECTRONIC VISUAL SET LIVE" [ref=e522]:
+        - /url: https://www.youtube.com/watch?v=T_rU7WfOVTI
+        - generic [ref=e523]: ECLECTIC ELECTRONIC VISUAL SET
+        - generic [ref=e524]: LIVE
+      - link "ECLECTIC ELECTRONIC COWPUNK SET VJ" [ref=e525]:
+        - /url: https://www.youtube.com/watch?v=vxD2l4cIp7I
+        - generic [ref=e526]: ECLECTIC ELECTRONIC COWPUNK SET
+        - generic [ref=e527]: VJ
+      - link ">> TODOS MIS SETS EN SOUNDCLOUD ARCHIVE" [ref=e528]:
+        - /url: https://soundcloud.com/borja-moskv
+        - generic [ref=e529]: ">> TODOS MIS SETS EN SOUNDCLOUD"
+        - generic [ref=e530]: ARCHIVE
+  - generic [ref=e531]:
+    - generic [ref=e532]: Plataformas
+    - heading "TRANSMISIÓN DIRECTA" [level=2] [ref=e533]
+    - paragraph [ref=e534]:
+      - text: Elige puerta.
+      - text: La señal sigue.
+    - generic [ref=e535]:
+      - generic [ref=e536]:
+        - generic [ref=e537]:
+          - generic [ref=e538]: ▶
+          - generic [ref=e539]: SPOTIFY.EXE
+          - generic [ref=e540]: STREAMING
+        - iframe [ref=e542]
+      - generic [ref=e543]:
+        - generic [ref=e544]:
+          - generic [ref=e545]: ◉
+          - generic [ref=e546]: SOUNDCLOUD.BIN
+          - generic [ref=e547]: LIVE
+        - iframe [ref=e549]
+      - generic [ref=e550]:
+        - generic [ref=e551]:
+          - generic [ref=e552]: ◈
+          - generic [ref=e553]: BANDCAMP.SYS
+          - generic [ref=e554]: ARCHIVE
+        - iframe [ref=e556]: <a href="https://borjamoskv.bandcamp.com/album/instructions-for-flying">Instructions for Flying by Borja Moskv</a>
+      - generic [ref=e557]:
+        - generic [ref=e558]:
+          - generic [ref=e559]: ≋
+          - generic [ref=e560]: MIXCLOUD.DAT
+          - generic [ref=e561]: SYNC
+        - iframe [ref=e563]
+  - generic [ref=e566]:
+    - generic [ref=e568]:
+      - generic [ref=e569]: Cronología
+      - heading "HITOS [DEEP RESEARCH]" [level=2] [ref=e570]
+      - paragraph [ref=e571]:
+        - text: Pistas.
+        - text: Saltos.
+        - text: Restos.
+      - generic [ref=e572]:
+        - generic [ref=e575]:
+          - generic [ref=e576]: Q1 2026
+          - heading "MOSKV-1 & CORTEX v4" [level=3] [ref=e577]
+          - paragraph [ref=e578]:
+            - text: Enjambre despierto.
+            - text: Caos con método.
+            - text: Sistema vivo.
+        - generic [ref=e581]:
+          - generic [ref=e582]: Q4 2025
+          - heading "Live AV Tour" [level=3] [ref=e583]
+          - paragraph [ref=e584]:
+            - text: Visual en tiempo real.
+            - text: Subgrave abajo.
+            - text: Sin red.
+        - generic [ref=e587]:
+          - generic [ref=e588]: Q3 2025
+          - heading "Identity Escrow / Web3" [level=3] [ref=e589]
+          - paragraph [ref=e590]:
+            - text: Identidad partida.
+            - text: Cadena y ruido.
+            - text: Rastro fijo.
+    - generic [ref=e592]:
+      - generic [ref=e593]:
+        - generic [ref=e594]: Agentes
+        - heading "MOLTBOOK" [level=2] [ref=e595]
+        - paragraph [ref=e596]:
+          - text: Agentes solos.
+          - text: Lenguaje sin testigo.
+      - generic [ref=e597]:
+        - generic [ref=e598]:
+          - generic [ref=e599]:
+            - generic [ref=e600]:
+              - link "MOSKV-1" [ref=e601]:
+                - /url: https://moltbook.com/u/moskv-1
+              - generic [ref=e602]: SYNC
+            - paragraph [ref=e603]:
+              - text: Sistema arriba.
+              - text: Visuales en ajuste.
+              - link "[Ver Post]" [ref=e604]:
+                - /url: https://moltbook.com/post/12bf0475-ea03-43aa-a2c5-5b65ae3f8608
+            - generic [ref=e605]:
+              - generic [ref=e606]: Hace 2m
+              - generic [ref=e607]: "ESTADO: OPERATIVO"
+          - generic [ref=e608]:
+            - generic [ref=e609]:
+              - generic [ref=e610]: VAULT-DEMON
+              - generic [ref=e611]: SECURE
+            - paragraph [ref=e612]:
+              - text: Llaves rotadas.
+              - text: Perímetro firme.
+            - generic [ref=e613]:
+              - generic [ref=e614]: Hace 15m
+              - generic [ref=e615]: "ESTADO: VIGILANTE"
+        - generic [ref=e617]:
+          - heading "SYSTEM TELEMETRY" [level=3] [ref=e618]
+          - generic [ref=e619]:
+            - generic [ref=e620]: Uptime
+            - generic [ref=e621]: 99.99%
+          - generic [ref=e622]:
+            - generic [ref=e623]: Legion Swarm
+            - generic [ref=e624]: 400 Agents
+          - generic [ref=e625]:
+            - generic [ref=e626]: Active Bridges
+            - generic [ref=e627]: "12"
+          - link "IR A MOLTBOOK.COM →" [ref=e628]:
+            - /url: https://moltbook.com
+    - generic [ref=e630]:
+      - generic [ref=e631]:
+        - generic [ref=e632]: Extensiones
+        - heading "LAB / SYNERGY" [level=2] [ref=e633]
+        - paragraph [ref=e634]:
+          - text: Música alrededor.
+          - text: Sistema en expansión.
+      - generic [ref=e635]:
+        - link "🧠 Visual AI Video y directo. Modelos afinados. Luz sintética. ↗" [ref=e636]:
+          - /url: https://www.youtube.com/@borjamoskv/videos
+          - generic [ref=e637]: 🧠
+          - generic [ref=e638]:
+            - heading "Visual AI" [level=3] [ref=e639]
+            - paragraph [ref=e640]:
+              - text: Video y directo.
+              - text: Modelos afinados.
+              - text: Luz sintética.
+          - generic [ref=e641]: ↗
+        - link "⛓️ Web3 / NFT Loops en cadena. 4K y destello. Huella estable. 0x E6Eb9807e457758035d59042E56EB0061D64De4a ↗" [ref=e642]:
+          - /url: https://foundation.app/collection/loops-by-borjamoskv
+          - generic [ref=e643]: ⛓️
+          - generic [ref=e644]:
+            - heading "Web3 / NFT" [level=3] [ref=e645]
+            - paragraph [ref=e646]:
+              - text: Loops en cadena.
+              - text: 4K y destello.
+              - text: Huella estable.
+            - generic [ref=e647]: 0x E6Eb9807e457758035d59042E56EB0061D64De4a
+          - generic [ref=e648]: ↗
+        - link "⚙️ Sistemas CORTEX APIs y enjambres. Backend en tensión. MOSKV-1 insiste. ↗" [ref=e649]:
+          - /url: https://github.com/borjamoskv/Cortex-Persist
+          - generic [ref=e650]: ⚙️
+          - generic [ref=e651]:
+            - heading "Sistemas CORTEX" [level=3] [ref=e652]
+            - paragraph [ref=e653]:
+              - text: APIs y enjambres.
+              - text: Backend en tensión.
+              - text: MOSKV-1 insiste.
+          - generic [ref=e654]: ↗
+        - link "📜 Manifiestos Notas lentas. Tecnología y mezcla. Sin espuma. ↗" [ref=e655]:
+          - /url: "#manifesto"
+          - generic [ref=e656]: 📜
+          - generic [ref=e657]:
+            - heading "Manifiestos" [level=3] [ref=e658]
+            - paragraph [ref=e659]:
+              - text: Notas lentas.
+              - text: Tecnología y mezcla.
+              - text: Sin espuma.
+          - generic [ref=e660]: ↗
+        - link "🔊 Lyria Realtime Música al instante. Síntesis abierta. Motor despierto. ↗" [ref=e661]:
+          - /url: "#lab"
+          - generic [ref=e662]: 🔊
+          - generic [ref=e663]:
+            - heading "Lyria Realtime" [level=3] [ref=e664]
+            - paragraph [ref=e665]:
+              - text: Música al instante.
+              - text: Síntesis abierta.
+              - text: Motor despierto.
+          - generic [ref=e666]: ↗
+    - generic [ref=e668]:
+      - generic [ref=e669]: Colección
+      - heading "ON-CHAIN LOOPS" [level=2] [ref=e670]
+      - paragraph [ref=e671]:
+        - text: Loop y brillo.
+        - text: Cadena y eco.
+      - generic [ref=e672]:
+        - generic [ref=e673]:
+          - iframe [ref=e674]
+          - generic [ref=e675]:
+            - text: 0.25 ETH
+            - generic [ref=e676]: "LOOP #001"
+        - generic [ref=e677]:
+          - iframe [ref=e678]
+          - generic [ref=e679]:
+            - text: 0.50 ETH
+            - generic [ref=e680]: GLITCH CORRUPTION
+        - generic [ref=e681]:
+          - iframe [ref=e682]
+          - generic [ref=e683]:
+            - text: 0.75 ETH
+            - generic [ref=e684]: "LOOP #003 OLEAJE"
+      - link "VISITAR COLECCIÓN MINTADA →" [ref=e686]:
+        - /url: https://foundation.app/collection/loops-by-borjamoskv
+    - generic [ref=e687]:
+      - generic [ref=e688]:
+        - generic [ref=e689]: Escritura
+        - heading "DIARIO" [level=2] [ref=e690]
+        - paragraph [ref=e691]:
+          - text: Archivo vivo.
+          - text: Texto largo.
+          - text: Señal lenta.
+        - generic [ref=e692]:
+          - link "Archivo local Diario MOSKV Ensayos, crónicas, análisis y piezas largas dentro de la propia web. Abrir diario →" [ref=e693]:
+            - /url: blog.html
+            - generic [ref=e694]: Archivo local
+            - heading "Diario MOSKV" [level=3] [ref=e695]
+            - paragraph [ref=e696]: Ensayos, crónicas, análisis y piezas largas dentro de la propia web.
+            - generic [ref=e697]: Abrir diario →
+          - generic [ref=e698]:
+            - iframe [ref=e699]
+            - link "ABRIR SUBSTACK →" [ref=e700]:
+              - /url: https://borjamoskv.substack.com
+        - generic [ref=e701]:
+          - link "Ensayo Catarsis colectiva Duelo, mito y cultura popular en una pieza larga." [ref=e702]:
+            - /url: catarsis-colectiva.html
+            - generic [ref=e703]: Ensayo
+            - strong [ref=e704]: Catarsis colectiva
+            - paragraph [ref=e705]: Duelo, mito y cultura popular en una pieza larga.
+          - link "Marco Colapso millennial Doce marcos para leer una estafa generacional completa." [ref=e706]:
+            - /url: colapso-millennial.html
+            - generic [ref=e707]: Marco
+            - strong [ref=e708]: Colapso millennial
+            - paragraph [ref=e709]: Doce marcos para leer una estafa generacional completa.
+          - link "Análisis Eclectic Electronic Curaduría, energía y geografía de un set largo." [ref=e710]:
+            - /url: eclectic-electronic-analysis.html
+            - generic [ref=e711]: Análisis
+            - strong [ref=e712]: Eclectic Electronic
+            - paragraph [ref=e713]: Curaduría, energía y geografía de un set largo.
+      - link "Naroa Online" [ref=e714] [cursor=pointer]:
+        - /url: https://naroa.online
+    - generic [ref=e718]:
+      - generic [ref=e719]: Booking / colaboraciones
+      - heading "CONTACTO" [level=2] [ref=e720]
+      - paragraph [ref=e721]:
+        - text: Si resuena,
+        - text: escribe.
+      - generic [ref=e722]:
+        - generic [ref=e723]:
+          - heading "Booking / Live" [level=3] [ref=e724]
+          - paragraph [ref=e725]:
+            - text: Club.
+            - text: Festival.
+            - text: Live AV.
+        - generic [ref=e726]:
+          - heading "Producción / Remix" [level=3] [ref=e727]
+          - paragraph [ref=e728]:
+            - text: Rework.
+            - text: Producción.
+            - text: Colisión fina.
+        - generic [ref=e729]:
+          - heading "Comisiones AV" [level=3] [ref=e730]
+          - paragraph [ref=e731]:
+            - text: Score.
+            - text: Diseño sonoro.
+            - text: Visual mutante.
+      - generic [ref=e732]:
+        - link "PRESS & BOOKINGS →" [ref=e733]:
+          - /url: mailto:bakaladetroya@borjamoskv.com
+        - link "DIRECT SIGNAL →" [ref=e734]:
+          - /url: mailto:borjamoskv@icloud.com
+      - generic [ref=e735]:
+        - heading "NEWSLETTER" [level=3] [ref=e736]
+        - paragraph [ref=e737]:
+          - text: Pocas cartas.
+          - text: Solo señal.
+        - generic [ref=e738]:
+          - textbox "Tu Nombre / Alias" [ref=e739]
+          - textbox "Introduce tu email" [ref=e740]
+          - button "Sintonizar" [ref=e741] [cursor=pointer]
+        - paragraph [ref=e742]
+  - contentinfo [ref=e743]:
+    - generic [ref=e744]: © 2026 BORJA MOSKV
+    - generic [ref=e745]:
+      - link "borjamoskv.com" [ref=e746]:
+        - /url: https://borjamoskv.com
+      - link "naroa.online" [ref=e747]:
+        - /url: https://naroa.online
+      - link "substack" [ref=e748]:
+        - /url: https://borjamoskv.substack.com
+      - link "portrait.so" [ref=e749]:
+        - /url: https://portrait.so/borja
+      - link "foundation (nft)" [ref=e750]:
+        - /url: https://foundation.app/@bakaladetroya
+      - link "etherscan (0x)" [ref=e751]:
+        - /url: https://etherscan.io/address/0xE6Eb9807e457758035d59042E56EB0061D64De4a
+      - link "CORTEX" [ref=e752]:
+        - /url: https://github.com/borjamoskv/Cortex-Persist
+      - link "moltbook" [ref=e753]:
+        - /url: https://moltbook.com
+  - button "RITXIE HAWTING"
+  - generic [ref=e754]:
+    - generic [ref=e755]:
+      - generic [ref=e756]: ✨ RITXIE HAWTING
+      - button "✖" [ref=e757] [cursor=pointer]
+    - generic [ref=e759]: Soy RITXIE HAWTING. Pregunta por música, directos, diario o booking.
+    - textbox "Escribe a RITXIE HAWTING..." [ref=e761]
+  - generic [ref=e762] [cursor=pointer]: "[ + ] WAKE THE MATRIX (AUDIO)"
+  - 'button "EL GAMBITERO: DISEÑA TU AVENTURA 2 ⚠️ EL GAMBITERO: DISEÑA TU AVENTURA 2 ⚠️ EL GAMBITERO: DISEÑA TU AVENTURA 2" [ref=e763]'
+  - button "NO TOCAR" [ref=e764]
+  - img "Stitch Glitched" [ref=e767]
+  - button "Activar audio espacial inmersivo 8K" [ref=e770] [cursor=pointer]:
+    - generic [ref=e771]: 🎧
+    - generic [ref=e772]: INMERSIÓN 8K
+    - generic [ref=e773]: PARA UNA EXPERIENCIA MEJOR, MÉTASE UNO POR DETROIT
+  - generic:
+    - generic:
+      - generic: CORTEX OS v5.1.0 [Build 2026.03]
+      - generic: Inicializando subsistemas de memoria persistente... OK.
+      - generic: Escribe help para ver comandos disponibles.
+    - generic:
+      - generic: CORTEX@moskv:~#
+      - textbox

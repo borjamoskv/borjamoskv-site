@@ -57,7 +57,7 @@
   padding: 20px;
   position: relative;
   font-family: 'M PLUS Rounded 1c', sans-serif;
-  color: #fff;
+  color: #D4D4D4;
 }
 
 /* ── Scene Layout ── */
@@ -82,7 +82,7 @@
   padding: 10px 15px;
   background: #FF5E00;
   border-radius: 12px;
-  border: 4px solid #fff;
+  border: 4px solid #D4D4D4;
   margin-bottom: 20px;
   font-family: 'Bangers', cursive;
   font-size: 1.8rem;
@@ -97,15 +97,15 @@
 }
 
 .gamb-hud-scene {
-  color: #fff;
+  color: #D4D4D4;
   text-shadow: 2px 2px 0px #000;
 }
 
 .gamb-exit-btn {
   background: #FF00A0;
-  border: 3px solid #fff;
+  border: 3px solid #D4D4D4;
   border-radius: 50%;
-  color: #fff;
+  color: #D4D4D4;
   width: 40px;
   height: 40px;
   display: flex;
@@ -119,7 +119,7 @@
 }
 
 .gamb-exit-btn:hover {
-  background: #fff;
+  background: #D4D4D4;
   color: #FF00A0;
   transform: scale(1.2) rotate(15deg);
 }
@@ -156,7 +156,7 @@
 .gamb-text {
   font-size: 1.2rem;
   line-height: 1.6;
-  color: #fff;
+  color: #D4D4D4;
   margin-bottom: 24px;
   background: rgba(255, 0, 160, 0.2);
   padding: 15px;
@@ -224,9 +224,9 @@
 
 .gamb-choice {
   background: #FF00A0;
-  border: 5px solid #fff;
+  border: 5px solid #D4D4D4;
   border-radius: 15px;
-  color: #fff;
+  color: #D4D4D4;
   padding: 16px 24px;
   font-family: 'M PLUS Rounded 1c', sans-serif;
   font-weight: 800;
@@ -338,7 +338,7 @@
   background: #000;
   text-align: center;
   transform: rotate(-2deg);
-  box-shadow: 5px 5px 0px rgba(255, 255, 255, 0.2);
+  box-shadow: 5px 5px 0px rgba(212, 212, 212, 0.2);
 }
 
 .gamb-ending-1 {
@@ -373,7 +373,7 @@
 .gamb-initials p {
   font-family: 'Bangers', cursive;
   font-size: 1.8rem;
-  color: #fff;
+  color: #D4D4D4;
   margin-bottom: 20px;
   text-shadow: 2px 2px 0px #000;
 }
@@ -401,7 +401,7 @@
 }
 
 .gamb-letter:focus {
-  background: #fff;
+  background: #D4D4D4;
   transform: translateY(-5px);
   box-shadow: 5px 10px 0px #000;
   outline: none;
@@ -415,7 +415,7 @@
   width: 100%;
 }
 .gamb-save-btn:hover {
-  background: #fff !important;
+  background: #D4D4D4 !important;
   color: #FF00A0 !important;
 }
 
@@ -437,7 +437,7 @@
   font-size: 1.2rem;
   font-weight: 800;
   color: #000;
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(212, 212, 212, 0.4);
   margin-bottom: 8px;
   border-radius: 10px;
   border: 2px solid #000;
@@ -504,8 +504,8 @@
 }
 
 .gamb-panel {
-  background: rgba(255, 255, 255, 0.08);
-  border: 4px solid #fff;
+  background: rgba(212, 212, 212, 0.08);
+  border: 4px solid #D4D4D4;
   border-radius: 18px;
   padding: 16px;
   box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.72);
@@ -533,8 +533,8 @@
   padding: 8px 12px;
   border-radius: 999px;
   background: #FF00A0;
-  border: 3px solid #fff;
-  color: #fff;
+  border: 3px solid #D4D4D4;
+  color: #D4D4D4;
   font-size: 0.92rem;
   font-weight: 800;
   text-transform: uppercase;
@@ -542,7 +542,7 @@
 }
 
 .gamb-empty-state {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(212, 212, 212, 0.7);
   font-size: 0.96rem;
   font-style: italic;
 }
@@ -561,8 +561,8 @@
   gap: 12px;
   padding: 10px 12px;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 2px solid rgba(255, 255, 255, 0.16);
+  background: rgba(212, 212, 212, 0.08);
+  border: 2px solid rgba(212, 212, 212, 0.16);
   font-size: 0.98rem;
 }
 
@@ -600,9 +600,9 @@
   margin-top: 6px;
   height: 14px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(212, 212, 212, 0.12);
   overflow: hidden;
-  border: 2px solid rgba(255, 255, 255, 0.22);
+  border: 2px solid rgba(212, 212, 212, 0.22);
 }
 
 .gamb-stat-fill {
@@ -613,13 +613,13 @@
 }
 
 .gamb-stat-fill.pink { background: linear-gradient(90deg, #FF00A0, #FFF000); }
-.gamb-stat-fill.cyan { background: linear-gradient(90deg, #00F0FF, #ffffff); }
+.gamb-stat-fill.cyan { background: linear-gradient(90deg, #00F0FF, #D4D4D4); }
 .gamb-stat-fill.lime { background: linear-gradient(90deg, #00FF33, #FFF000); }
 
 .gamb-controls-help {
   margin-top: 12px;
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.74);
+  color: rgba(212, 212, 212, 0.74);
 }
 
 .gamb-controls-help kbd {
@@ -630,7 +630,7 @@
   margin: 0 3px;
   padding: 3px 6px;
   border-radius: 6px;
-  border: 2px solid #fff;
+  border: 2px solid #D4D4D4;
   background: rgba(0, 0, 0, 0.5);
   font-family: 'Press Start 2P', monospace;
   font-size: 0.62rem;
@@ -667,7 +667,7 @@
   font-family: 'Bangers', cursive;
   font-size: clamp(2.3rem, 5vw, 4.6rem);
   letter-spacing: 2px;
-  color: #fff;
+  color: #D4D4D4;
   text-shadow: 4px 4px 0px #000, 0 0 15px rgba(0, 240, 255, 0.35);
 }
 
@@ -697,7 +697,7 @@
   justify-content: space-between;
   gap: 14px;
   padding: 10px 0;
-  border-bottom: 2px dashed rgba(255, 255, 255, 0.18);
+  border-bottom: 2px dashed rgba(212, 212, 212, 0.18);
   font-size: 1rem;
   font-weight: 800;
 }
@@ -753,7 +753,7 @@
   border: 5px solid #00FF33;
   border-radius: 18px;
   background:
-    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.12), transparent 38%),
+    radial-gradient(circle at 20% 20%, rgba(212, 212, 212, 0.12), transparent 38%),
     radial-gradient(circle at 80% 0%, rgba(0, 240, 255, 0.22), transparent 28%),
     radial-gradient(circle at 50% 100%, rgba(255, 0, 160, 0.16), transparent 35%),
     linear-gradient(135deg, rgba(0, 0, 0, 0.96), rgba(17, 17, 17, 0.94));
@@ -764,7 +764,7 @@
   content: '';
   position: absolute;
   inset: -30% -20%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.12), transparent 35%);
+  background: radial-gradient(circle, rgba(212, 212, 212, 0.12), transparent 35%);
   opacity: 0.7;
   animation: chipGlow 10s linear infinite;
   pointer-events: none;
@@ -802,7 +802,7 @@
   font-family: 'Bangers', cursive;
   font-size: 1.95rem;
   letter-spacing: 2px;
-  color: #fff;
+  color: #D4D4D4;
   text-shadow: 2px 2px 0 #000, 0 0 12px rgba(0, 255, 51, 0.35);
 }
 
@@ -859,10 +859,10 @@
 
 .gamb-chip-toggle {
   padding: 8px 14px;
-  border: 3px solid #fff;
+  border: 3px solid #D4D4D4;
   border-radius: 999px;
   background: #FF00A0;
-  color: #fff;
+  color: #D4D4D4;
   font-family: 'Bangers', cursive;
   font-size: 1.2rem;
   letter-spacing: 1px;
@@ -963,7 +963,7 @@
   transform: scale(0.8) rotate(-20deg);
   box-shadow: 0px 0px 0px #000;
   background: #FF00A0;
-  color: #FFF;
+  color: #D4D4D4;
 }
 
 /* ── Mobile ── */
@@ -1024,7 +1024,7 @@
 .gamb-slot-reel {
   width: 110px;
   height: 160px;
-  background: #fff;
+  background: #D4D4D4;
   border: 6px solid #000;
   border-radius: 15px;
   overflow: hidden;
@@ -1102,8 +1102,8 @@
 
 .gamb-spin-action:hover:not(:disabled) {
   background: #FF5E00 !important;
-  color: #fff !important;
-  border-color: #fff !important;
+  color: #D4D4D4 !important;
+  border-color: #D4D4D4 !important;
   animation: none;
   transform: scale(1.1) rotate(-3deg);
   box-shadow: 15px 15px 0px #000;
@@ -1127,7 +1127,7 @@
   background: #000;
   border-radius: 15px;
   border: 4px solid #00FF33;
-  color: #fff;
+  color: #D4D4D4;
   font-size: 1.4rem;
   font-weight: 800;
   box-shadow: inset 0 0 15px rgba(0, 255, 51, 0.5);
@@ -1144,7 +1144,7 @@
 }
 @keyframes win-flash {
   0% { color: #FFF000; text-shadow: 0 0 10px #FF00A0; }
-  100% { color: #00F0FF; text-shadow: 0 0 20px #fff; }
+  100% { color: #00F0FF; text-shadow: 0 0 20px #D4D4D4; }
 }
 .gamb-slot-win strong { font-family: 'Bangers', cursive; font-size: 2.5rem; letter-spacing: 2px; display: block; margin: 5px 0;}
 
@@ -1167,7 +1167,7 @@
   display: inline-block !important;
   margin-top: 15px;
   background: #00FF33 !important;
-  border: 4px solid #fff !important;
+  border: 4px solid #D4D4D4 !important;
   color: #000 !important;
   text-decoration: none;
   text-align: center !important;
@@ -1180,7 +1180,7 @@
 }
 
 .gamb-reward-link:hover {
-  background: #fff !important;
+  background: #D4D4D4 !important;
   color: #FF00A0 !important;
   border-color: #FF00A0 !important;
   transform: scale(1.1) rotate(5deg) !important;
@@ -1298,7 +1298,7 @@
 .gamb-scroll-item p {
   font-family: 'Bangers', cursive;
   font-size: 1.5rem;
-  color: #FFF;
+  color: #D4D4D4;
   margin: 0;
   letter-spacing: 1px;
 }
@@ -1315,4 +1315,87 @@
   border-color: #00FF33;
   box-shadow: 5px 5px 0px #FFF000;
   animation: gamb-shake-active 1s infinite alternate;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   INDEXICAL STORYTELLING: ESTADOS FÍSICOS Y MENTALES
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* CUERPO: Agotamiento */
+.gamb-state-tired .gamb-scene {
+  filter: saturate(0.8) contrast(1.1);
+  animation: gamb-shake-tired 4s ease-in-out infinite;
+}
+
+@keyframes gamb-shake-tired {
+  0%, 100% { transform: rotate(-1deg) translate(0, 0); }
+  50% { transform: rotate(0deg) translate(1px, 2px); }
+  75% { transform: rotate(-1.5deg) translate(-1px, 1px); }
+}
+
+.gamb-state-exhausted .gamb-scene {
+  filter: grayscale(0.8) contrast(1.2) brightness(0.9);
+  animation: gamb-shake-exhausted 2s infinite alternate;
+}
+
+.gamb-state-exhausted .gamb-scene:hover {
+  transform: scale(1.0);
+}
+
+@keyframes gamb-shake-exhausted {
+  0% { transform: rotate(-1deg) translate(2px, 1px); }
+  25% { transform: rotate(-2deg) translate(-2px, -1px); }
+  50% { transform: rotate(0deg) translate(2px, 2px); }
+  75% { transform: rotate(1deg) translate(-2px, -2px); }
+  100% { transform: rotate(-1deg) translate(1px, 1px); }
+}
+
+/* LUCIDEZ: Confusión y Delirio */
+.gamb-state-confused .gamb-text,
+.gamb-state-confused .gamb-choice {
+  text-shadow: 2px 0 0 #FF00A0, -2px 0 0 #00F0FF;
+  transform: skewX(-2deg);
+}
+
+.gamb-state-confused .gamb-scene {
+  border-color: #FF00A0;
+  box-shadow: 15px 15px 0px #00F0FF, -10px -10px 0px #FFF000;
+}
+
+.gamb-state-delirious .gamb-scene {
+  filter: invert(0.8) hue-rotate(90deg);
+  border-color: #FF00A0;
+}
+
+.gamb-state-delirious .gamb-text,
+.gamb-state-delirious .gamb-choice {
+  animation: gamb-glitch-text 0.3s linear infinite;
+}
+
+@keyframes gamb-glitch-text {
+  0% { transform: translate(0) skew(0deg); text-shadow: 4px 0 0 #00FF33, -4px 0 0 #FF00A0; }
+  20% { transform: translate(-2px, 1px) skew(2deg); }
+  40% { transform: translate(2px, -1px) skew(-2deg); text-shadow: none; }
+  60% { transform: translate(-1px, 2px) skew(1deg); text-shadow: 5px 0 0 #FFF000, -5px 0 0 #00F0FF; }
+  80% { transform: translate(1px, -2px) skew(-1deg); }
+  100% { transform: translate(0) skew(0deg); }
+}
+
+/* DESTINO: Fatalidad */
+.gamb-state-doomed .gamb-choice {
+  position: relative;
+}
+
+.gamb-state-doomed .gamb-choice:hover {
+  animation: gamb-shake-active 0.2s infinite;
+  background: #000;
+  color: #FF00A0;
+  border-color: #FF00A0;
+}
+
+.gamb-state-doomed .gamb-hud {
+  animation: gamb-shake-exhausted 3s infinite;
+  background: #000;
+  color: #FF00A0;
+  border-color: #FF00A0;
 }

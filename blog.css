@@ -1,7 +1,7 @@
 /* Blog page specific styles – glassmorphism premium */
 :root {
-  --post-bg: rgba(255, 255, 255, 0.04);
-  --post-border: rgba(255, 255, 255, 0.1);
+  --post-bg: rgba(212, 212, 212, 0.04);
+  --post-border: rgba(212, 212, 212, 0.1);
   --post-radius: 12px;
 }
 
@@ -64,7 +64,7 @@
   color: inherit;
   overflow: hidden;
   border-radius: var(--post-radius);
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(212, 212, 212, 0.03);
 }
 
 .player-wrapper-link img {
@@ -171,11 +171,11 @@
 
 .featured-article .post-tag--highlight {
   background: var(--accent-primary);
-  color: #fff;
+  color: #D4D4D4;
 }
 
 .featured-article .featured-excerpt {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(212, 212, 212, 0.6);
   font-family: var(--font-body);
   font-size: 0.95rem;
   line-height: 1.6;

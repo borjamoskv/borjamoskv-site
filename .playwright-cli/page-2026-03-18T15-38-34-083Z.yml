@@ -1,0 +1,107 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]: Sincronizando Diario...
+  - navigation [ref=e4]:
+    - link "MOSKV" [ref=e5]:
+      - /url: /
+    - generic [ref=e6]:
+      - link "Music" [ref=e7]:
+        - /url: /#music
+      - link "Sets" [ref=e8]:
+        - /url: /#sets
+      - link "Lab" [ref=e9]:
+        - /url: /#lab
+      - link "Diario" [ref=e10]:
+        - /url: blog.html
+      - link "Contact" [ref=e11]:
+        - /url: /#contact
+    - generic [ref=e12]:
+      - link "BC" [ref=e13]:
+        - /url: https://borjamoskv.bandcamp.com
+      - link "SP" [ref=e14]:
+        - /url: https://open.spotify.com/intl-es/artist/4p7wMuZpktE5aBFhBoQdqa
+      - link "SC" [ref=e15]:
+        - /url: https://soundcloud.com/borja-moskv
+      - link "YT" [ref=e16]:
+        - /url: https://www.youtube.com/@borjamoskv
+      - button "☢️" [ref=e17]
+  - banner [ref=e18]:
+    - generic [ref=e19]:
+      - heading "DIARIO" [level=1] [ref=e20]
+      - paragraph [ref=e21]: Textos, analisis, set lore y archivo editorial de Borja Moskv.
+  - main [ref=e22]:
+    - 'link "2026‑02‑12 ARTÍCULO Catarsis Colectiva: Los 20 Pilares del Duelo Por qué la muerte de Robe Iniesta ha sido, con diferencia brutal, la que más ha conmovido al pueblo español — y qué dice esto de nosotros como sociedad. LEER ARTÍCULO →" [ref=e23]':
+      - /url: catarsis-colectiva.html
+      - generic [ref=e24]: 2026‑02‑12 ARTÍCULO
+      - 'heading "Catarsis Colectiva: Los 20 Pilares del Duelo" [level=2] [ref=e25]'
+      - paragraph [ref=e26]: Por qué la muerte de Robe Iniesta ha sido, con diferencia brutal, la que más ha conmovido al pueblo español — y qué dice esto de nosotros como sociedad.
+      - text: LEER ARTÍCULO →
+    - generic [ref=e28]: Fetching latest transmits from paragraph.xyz...
+    - article [ref=e29]:
+      - heading "15H NON‑STOP DJ SET 🔥 (Marathon)" [level=2] [ref=e30]
+      - generic [ref=e31]: "2025‑12‑31 BPM: 120-145 MARATHON"
+      - link "Abrir 15H Marathon DJ Set en YouTube" [ref=e33]:
+        - /url: https://www.youtube.com/watch?v=YvGpocK-Iqg
+        - img "15H Marathon DJ Set" [ref=e34]
+        - text: Ver set en YouTube →
+      - generic [ref=e35]:
+        - heading "IA Analysis" [level=3] [ref=e36]
+        - paragraph [ref=e37]: "Sesión épica de 15 horas que atraviesa múltiples géneros: desde ambient introductorio hasta techno industrial en el pico. Curva de energía ascendente con mesetas estratégicas. Tonalidades predominantes: Am, Dm, Gm. Motivos recurrentes: texturas granulares, kicks comprimidos, pads etéreos."
+    - article [ref=e39]:
+      - heading "DARK DISCO & IDM SET 2025" [level=2] [ref=e40]
+      - generic [ref=e41]: "2025‑11‑15 BPM: 115-128 IDM"
+      - link "Abrir Dark Disco IDM Set en YouTube" [ref=e43]:
+        - /url: https://www.youtube.com/watch?v=EP5s0yKZUKk
+        - img "Dark Disco IDM Set" [ref=e44]
+        - text: Ver set en YouTube →
+      - generic [ref=e45]:
+        - heading "IA Analysis" [level=3] [ref=e46]
+        - paragraph [ref=e47]: "Fusión oscura entre disco deconstruido e IDM glitchy. Ritmos sincopados sobre bajos profundos. Predominan escalas menores con modulaciones inesperadas. Influencias detectadas: Aphex Twin, Burial, Depeche Mode."
+    - article [ref=e49]:
+      - heading "ECLECTIC ELECTRONIC VISUAL SET" [level=2] [ref=e50]
+      - generic [ref=e51]: "2025‑10‑20 BPM: 100-140 LIVE"
+      - link "Abrir Eclectic Electronic Visual Set en YouTube" [ref=e53]:
+        - /url: https://www.youtube.com/watch?v=T_rU7WfOVTI
+        - img "Eclectic Electronic Visual Set" [ref=e54]
+        - text: Ver set en YouTube →
+      - generic [ref=e55]:
+        - heading "IA Analysis" [level=3] [ref=e56]
+        - paragraph [ref=e57]: Set audiovisual con transiciones fluidas entre electro, breakbeat y ambient. Sincronización perfecta entre visuales generativos y dinámicas sonoras. Arquitectura sonora en capas con elementos orgánicos.
+    - article [ref=e59]:
+      - heading "ECLECTIC ELECTRONIC COWPUNK SET" [level=2] [ref=e60]
+      - generic [ref=e61]: "2025‑09‑05 BPM: 110-135 VJ"
+      - link "Abrir Eclectic Electronic Cowpunk Set en YouTube" [ref=e63]:
+        - /url: https://www.youtube.com/watch?v=vxD2l4cIp7I
+        - img "Eclectic Electronic Cowpunk Set" [ref=e64]
+        - text: Ver set en YouTube →
+      - generic [ref=e65]:
+        - heading "IA Analysis" [level=3] [ref=e66]
+        - paragraph [ref=e67]: Experimento híbrido que fusiona electrónica con elementos country deconstructivos. Guitarras distorsionadas sobre 808s. Estética visual western-futurista. Tonalidades mayores con resoluciones inesperadas.
+    - article [ref=e69]:
+      - heading "📡 TODOS MIS SETS EN SOUNDCLOUD" [level=2] [ref=e70]
+      - generic [ref=e71]: Colección completa ARCHIVE
+      - iframe [ref=e73]:
+        - link "SoundCloud privacy policy" [ref=f1e3] [cursor=pointer]:
+          - /url: https://soundcloud.com/pages/privacy
+          - generic [ref=f1e4]: SoundCloud privacy policy
+          - text: Privacy policy
+      - generic [ref=e74]:
+        - heading "IA Analysis" [level=3] [ref=e75]
+        - paragraph [ref=e76]: "Archivo completo de sets en SoundCloud. Incluye sesiones exclusivas, reworks y material inédito. Exploración continua de géneros: IDM, techno, ambient, electro experimental."
+  - contentinfo [ref=e77]:
+    - generic [ref=e78]: © 2026 BORJA MOSKV · INDUSTRIAL NOIR SYSTEM
+    - generic [ref=e79]:
+      - link "borjamoskv.com" [ref=e80]:
+        - /url: https://borjamoskv.com
+      - link "portrait.so/borja" [ref=e81]:
+        - /url: https://portrait.so/borja
+      - link "demo-padres" [ref=e82]:
+        - /url: https://borjamoskv.github.io/Cortex-Persist/demo-padres/
+  - button "RITXIE HAWTING" [ref=e83] [cursor=pointer]
+  - generic:
+    - generic:
+      - generic: ✨ RITXIE HAWTING
+      - button "✖"
+    - generic:
+      - generic: Soy RITXIE HAWTING. Si quieres, te oriento entre textos, sets y archivo.
+    - generic:
+      - textbox "Escribe a RITXIE HAWTING..."

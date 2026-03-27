@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>M E G A  D I N Á M I C A | CORTEX VISUALIZER</title>
+  <meta name="theme-color" content="#050505">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@400;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <style>
+    :root {
+      --bg: #050505;
+      --accent: #CCFF00;
+      --alert: #FF003C;
+      --mono: 'IBM Plex Mono', monospace;
+      --sans: 'Inter', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      background: var(--bg);
+      color: var(--accent);
+      font-family: var(--sans);
+      overflow-x: hidden;
+      cursor: crosshair;
+    }
+
+    /* WebGL Canvas Background */
+    #canvas-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    /* CRT Overlay Effect */
+    .crt-overlay {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+      background-size: 100% 2px, 3px 100%;
+      z-index: 50;
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+
+    /* Main Content Wrapper */
+    .content {
+      position: relative;
+      z-index: 10;
+      padding: 5vh 5vw;
+      min-height: 200vh;
+    }
+
+    .kicker {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      opacity: 0.7;
+    }
+
+    h1.mega-title {
+      font-size: clamp(4rem, 12vw, 15rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 0.8;
+      margin-top: 2rem;
+      mix-blend-mode: difference;
+      color: #fff;
+    }
+
+    .glitch-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .dynamic-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 5rem;
+    }
+
+    .dynamic-card {
+      background: rgba(10, 10, 10, 0.8);
+      border: 1px solid rgba(204, 255, 0, 0.2);
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dynamic-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 10px 40px rgba(204, 255, 0, 0.1);
+    }
+
+    .dynamic-card h3 {
+      font-family: var(--mono);
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .dynamic-card p {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: #a0a0a0;
+    }
+
+    .metric {
+      font-family: var(--mono);
+      font-size: 2rem;
+      color: var(--alert);
+      font-weight: bold;
+      margin-top: 1rem;
+      display: block;
+    }
+
+    /* Visualizer Bar */
+    .analyzer-bar {
+      display: flex;
+      align-items: flex-end;
+      height: 60px;
+      gap: 4px;
+      margin-top: 1.5rem;
+    }
+
+    .bar {
+      flex: 1;
+      background: var(--accent);
+      height: 10%;
+      transition: height 0.1s ease;
+    }
+
+    /* Fixed Terminal Info */
+    .hud {
+      position: fixed;
+      bottom: 2rem;
+      left: 2rem;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      line-height: 1.4;
+      z-index: 100;
+      pointer-events: none;
+      text-shadow: 0 0 5px rgba(204, 255, 0, 0.5);
+    }
+
+  </style>
+  <link href="cortex-terminal.css" rel="stylesheet">
+</head>
+<body>
+
+  <div class="crt-overlay"></div>
+  <div id="canvas-container"></div>
+
+  <div class="hud">
+    > SIGNAL DETECTED: MEG_DYN_0X<br>
+    > ENTROPY REDUCING...<br>
+    > HIGH EXERGY YIELD<br>
+    > SCROLL FOR PHASE ALIGNMENT
+  </div>
+
+  <div class="content">
+    <div class="kicker">SYSTEM TUNING // CORTEX OMEGA MODULE</div>
+    <h1 class="mega-title" id="mTitle">MEGA<br>DINÁMICA</h1>
+
+    <div class="dynamic-grid">
+      <!-- Card 1 -->
+      <div class="dynamic-card card-anim">
+        <h3>01_PHASE_ALIGNMENT</h3>
+        <p>Interacción espectral y coherencia de fase en sistemas multivía (SMAART V9).</p>
+        <span class="metric" id="metric1">100.00ms</span>
+        <div class="analyzer-bar" id="freq1"></div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="dynamic-card card-anim">
+        <h3>02_TENSION_ACOUSTIC</h3>
+        <p>Ajuste determinista de subwoofers en arreglos End-Fire y Cardioide.</p>
+        <span class="metric" id="metric2">-4.2dB</span>
+        <div class="analyzer-bar" id="freq2"></div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="dynamic-card card-anim">
+        <h3>03_CORTEX_EXERGY</h3>
+        <p>Flujo de señal purificado. Supresión de anomalías análogas de baja exergía.</p>
+        <span class="metric" id="metric3">99.9%</span>
+        <div class="analyzer-bar" id="freq3"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 1. Fake FFT Analyzer Bars Generator
+    const createBars = (containerId, count) => {
+      const parent = document.getElementById(containerId);
+      for(let i=0; i<count; i++) {
+        let b = document.createElement('div');
+        b.className = 'bar';
+        parent.appendChild(b);
+      }
+    };
+
+    createBars('freq1', 12);
+    createBars('freq2', 12);
+    createBars('freq3', 12);
+
+    // Randomize bars for dynamic effect
+    setInterval(() => {
+      document.querySelectorAll('.bar').forEach(b => {
+        b.style.height = Math.random() * 100 + '%';
+        if(Math.random() > 0.8) b.style.backgroundColor = 'var(--alert)';
+        else b.style.backgroundColor = 'var(--accent)';
+      });
+      // Update metrics
+      document.getElementById('metric1').innerText = (Math.random() * 20 + 90).toFixed(2) + 'ms';
+      document.getElementById('metric2').innerText = '-' + (Math.random() * 12).toFixed(1) + 'dB';
+    }, 150);
+
+    // 2. Three.js Background (Mega Dynamic Particles)
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+    const geometry = new THREE.BufferGeometry();
+    const vertices = [];
+    const size = 2000;
+
+    for ( let i = 0; i < 5000; i ++ ) {
+      const x = (Math.random() - 0.5) * size;
+      const y = (Math.random() - 0.5) * size;
+      const z = (Math.random() - 0.5) * size;
+      vertices.push(x, y, z);
+    }
+
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+    
+    // Shader material for audio-vibe particles
+    const material = new THREE.PointsMaterial({ 
+      color: 0xccff00, 
+      size: 2,
+      transparent: true,
+      opacity: 0.8
+    });
+    
+    const particles = new THREE.Points(geometry, material);
+    scene.add(particles);
+
+    camera.position.z = 400;
+
+    // Mouse interaction
+    let mouseX = 0;
+    let mouseY = 0;
+    document.addEventListener('mousemove', (e) => {
+      mouseX = (e.clientX - window.innerWidth / 2) * 2;
+      mouseY = (e.clientY - window.innerHeight / 2) * 2;
+    });
+
+    // 3. GSAP Animations
+    gsap.from(".card-anim", {
+      y: 100,
+      opacity: 0,
+      duration: 1,
+      stagger: 0.2,
+      ease: "power4.out",
+      delay: 0.5
+    });
+
+    gsap.to("#mTitle", {
+      scale: 1.05,
+      yoyo: true,
+      repeat: -1,
+      duration: 2,
+      ease: "sine.inOut"
+    });
+
+    // Main render loop
+    const animate = function () {
+      requestAnimationFrame(animate);
+      
+      // Dynamic rotation based on 'Mega Dinamica' concept and mouse position
+      particles.rotation.x += 0.001;
+      particles.rotation.y += 0.002;
+      
+      // Reactive camera
+      camera.position.x += (mouseX - camera.position.x) * 0.05;
+      camera.position.y += (-mouseY - camera.position.y) * 0.05;
+      camera.lookAt(scene.position);
+
+      renderer.render(scene, camera);
+    };
+
+    animate();
+
+    // Window resize
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+  <script src="cortex-terminal.js" defer></script>
+</body>
+</html>

@@ -150,12 +150,17 @@ MOSKV.scroll = (() => {
         });
     };
 
-    const initInfiniteRail = (rail, { speed = 0.18, wheelFactor = 0.9 } = {}) => {
+    const initInfiniteRail = (rail, {
+        speed = 0.18,
+        wheelFactor = 0.9,
+        direction = 1
+    } = {}) => {
         if (!rail || rail.dataset.infiniteRail === 'true') return;
         const originals = Array.from(rail.children);
         if (originals.length === 0) return;
 
         rail.dataset.infiniteRail = 'true';
+        rail.style.setProperty('--rail-direction', String(direction));
 
         const clones = originals.map((child) => {
             const clone = child.cloneNode(true);
@@ -167,13 +172,21 @@ MOSKV.scroll = (() => {
 
         let cycleWidth = 0;
         let paused = false;
+        let visible = true;
         let frameId = 0;
+        let momentum = 0;
+        let velocity = speed * direction;
+        let pausedUntil = 0;
+        let lastScrollLeft = 0;
+
+        const cards = () => Array.from(rail.querySelectorAll('.mid-scroll-card, .moltbook-clip-card'));
 
         const measure = () => {
             cycleWidth = rail.scrollWidth / 2;
             if (cycleWidth > 0 && rail.scrollLeft === 0) {
                 rail.scrollLeft = cycleWidth * 0.02;
             }
+            updateCardDepth();
         };
 
         const wrap = () => {
@@ -185,28 +198,82 @@ MOSKV.scroll = (() => {
             }
         };
 
+        const updateCardDepth = () => {
+            const viewportCenter = rail.scrollLeft + (rail.clientWidth / 2);
+            const cardList = cards();
+            if (cardList.length === 0) return;
+
+            cardList.forEach((card) => {
+                const cardCenter = card.offsetLeft + (card.offsetWidth / 2);
+                const distance = (cardCenter - viewportCenter) / Math.max(rail.clientWidth, 1);
+                const clamped = Math.max(-1.15, Math.min(1.15, distance));
+                const focus = 1 - Math.min(1, Math.abs(clamped));
+                card.style.setProperty('--rail-offset', clamped.toFixed(3));
+                card.style.setProperty('--rail-focus', focus.toFixed(3));
+                card.style.setProperty('--thumb-pan', `${Math.round(clamped * 28)}px`);
+                card.style.setProperty('--thumb-rise', `${Math.round((focus - 0.5) * -8)}px`);
+            });
+        };
+
         const onWheel = (event) => {
             const dominantDelta = Math.abs(event.deltaY) >= Math.abs(event.deltaX) ? event.deltaY : event.deltaX;
             rail.scrollLeft += dominantDelta * wheelFactor;
+            momentum += dominantDelta * 0.0035;
+            momentum = Math.max(-3.4, Math.min(3.4, momentum));
+            pausedUntil = performance.now() + 1450;
             wrap();
+            updateCardDepth();
             event.preventDefault();
         };
 
         const tick = () => {
-            if (!paused && cycleWidth > 0) {
-                rail.scrollLeft += speed;
+            const now = performance.now();
+            const autoVelocity = speed * direction;
+
+            if (!paused && visible && cycleWidth > 0) {
+                const targetVelocity = now < pausedUntil ? momentum * 0.16 : autoVelocity + momentum;
+                velocity += (targetVelocity - velocity) * 0.065;
+                rail.scrollLeft += velocity;
                 wrap();
+                if (Math.abs(rail.scrollLeft - lastScrollLeft) > 0.1) {
+                    updateCardDepth();
+                    lastScrollLeft = rail.scrollLeft;
+                }
             }
+
+            momentum *= 0.94;
+            if (Math.abs(momentum) < 0.001) momentum = 0;
             frameId = globalThis.requestAnimationFrame(tick);
         };
 
+        const observer = new IntersectionObserver((entries) => {
+            visible = entries.some((entry) => entry.isIntersecting);
+        }, {
+            threshold: 0.35
+        });
+
+        observer.observe(rail);
         rail.addEventListener('wheel', onWheel, { passive: false });
         rail.addEventListener('mouseenter', () => { paused = true; });
         rail.addEventListener('focusin', () => { paused = true; });
         rail.addEventListener('pointerdown', () => { paused = true; });
-        rail.addEventListener('mouseleave', () => { paused = false; });
-        rail.addEventListener('focusout', () => { paused = false; });
-        rail.addEventListener('scroll', wrap, { passive: true });
+        rail.addEventListener('touchstart', () => { paused = true; }, { passive: true });
+        rail.addEventListener('mouseleave', () => {
+            paused = false;
+            pausedUntil = performance.now() + 520;
+        });
+        rail.addEventListener('focusout', () => {
+            paused = false;
+            pausedUntil = performance.now() + 520;
+        });
+        rail.addEventListener('scroll', () => {
+            wrap();
+            updateCardDepth();
+        }, { passive: true });
+        globalThis.addEventListener('pointerup', () => {
+            paused = false;
+            pausedUntil = performance.now() + 720;
+        }, { passive: true });
         globalThis.addEventListener('resize', measure, { passive: true });
 
         measure();
@@ -215,6 +282,7 @@ MOSKV.scroll = (() => {
         rail._moskvInfiniteRail = {
             destroy() {
                 globalThis.cancelAnimationFrame(frameId);
+                observer.disconnect();
             }
         };
     };
@@ -226,8 +294,9 @@ MOSKV.scroll = (() => {
         const midRails = document.querySelectorAll('.mid-scroll-track, .moltbook-clip-rail');
         midRails.forEach((rail, index) => {
             initInfiniteRail(rail, {
-                speed: index === 0 ? 0.24 : 0.18,
-                wheelFactor: index === 0 ? 0.85 : 0.9
+                speed: index === 0 ? 0.22 : 0.16,
+                wheelFactor: index === 0 ? 0.82 : 0.88,
+                direction: index === 0 ? 1 : -1
             });
         });
     };

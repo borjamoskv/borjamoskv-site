@@ -1,0 +1,598 @@
+- generic [active] [ref=e1]:
+  - generic:
+    - generic:
+      - heading "MOSKV" [level=1]
+  - button "Toggle Sound" [ref=e5] [cursor=pointer]:
+    - generic [ref=e6]: UNMUTE SIGNAL
+    - img
+    - img
+  - navigation [ref=e13]:
+    - link "MOSKV" [ref=e14]:
+      - /url: /
+    - generic [ref=e15]:
+      - link "Music" [ref=e16]:
+        - /url: "#music"
+      - link "Sets" [ref=e17]:
+        - /url: "#sets"
+      - link "Moltbook" [ref=e18]:
+        - /url: "#moltbook"
+      - link "Lab" [ref=e19]:
+        - /url: "#lab"
+      - link "DJ AUTOMATA" [ref=e20]:
+        - /url: "#"
+      - link "Diario" [ref=e21]:
+        - /url: "#writings"
+      - link "Contact" [ref=e22]:
+        - /url: "#contact"
+    - generic [ref=e23]:
+      - link "BANDCAMP" [ref=e24]:
+        - /url: https://borjamoskv.bandcamp.com
+      - link "SPOTIFY" [ref=e25]:
+        - /url: https://open.spotify.com/intl-es/artist/4p7wMuZpktE5aBFhBoQdqa
+      - link "SOUNDCLOUD" [ref=e26]:
+        - /url: https://soundcloud.com/borja-moskv
+      - link "YOUTUBE" [ref=e27]:
+        - /url: https://www.youtube.com/@borjamoskv
+      - link "MIXCLOUD" [ref=e28]:
+        - /url: https://www.mixcloud.com/borjamoskv/
+      - link "FOUNDATION" [ref=e29]:
+        - /url: https://foundation.app/@bakaladetroya
+      - button "☢️" [ref=e30] [cursor=pointer]
+  - generic [ref=e31]:
+    - generic [ref=e32]:
+      - heading "BORJA MOSKV BORJA MOSKV BORJA MOSKV" [level=1]:
+        - text: BORJA MOSKV BORJA
+        - text: MOSKV BORJA MOSKV
+    - generic [ref=e33]:
+      - generic [ref=e34]: No en él ni en mí,
+      - generic [ref=e35]: en el espacio vivo
+      - generic [ref=e36]: entre los dos.
+    - generic [ref=e37]:
+      - link "Escuchar último release" [ref=e38]:
+        - /url: "#music"
+      - link "Ver sets · Bakala de Troya" [ref=e39]:
+        - /url: "#sets"
+      - link "Explorar universo →" [ref=e40]:
+        - /url: "#lab"
+  - generic [ref=e43]:
+    - generic [ref=e44]: INDUSTRIAL NOIR
+    - generic [ref=e45]: ·
+    - generic [ref=e46]: BAKALA DE TROYA
+    - generic [ref=e47]: ·
+    - generic [ref=e48]: FLAMENC OSMIC
+    - generic [ref=e49]: ·
+    - generic [ref=e50]: ESTO NO ES UNA WEB, ES UN SENTIMIENTO
+    - generic [ref=e51]: ·
+    - generic [ref=e52]: BONEY MDMA
+    - generic [ref=e53]: ·
+    - generic [ref=e54]: NEIL RÁYADON
+    - generic [ref=e55]: ·
+    - generic [ref=e56]: NO PUEDO PARAAAR
+    - generic [ref=e57]: ·
+    - generic [ref=e58]: WEB DESIGN
+    - generic [ref=e59]: ·
+    - generic [ref=e60]: INDUSTRIAL NOIR
+    - generic [ref=e61]: ·
+    - generic [ref=e62]: BAKALA DE TROYA
+    - generic [ref=e63]: ·
+    - generic [ref=e64]: FLAMENC OSMIC
+    - generic [ref=e65]: ·
+    - generic [ref=e66]: ESTO NO ES UNA WEB, ES UN SENTIMIENTO
+    - generic [ref=e67]: ·
+    - generic [ref=e68]: BONEY MDMA
+    - generic [ref=e69]: ·
+    - generic [ref=e70]: NEIL RÁYADON
+    - generic [ref=e71]: ·
+    - generic [ref=e72]: NO PUEDO PARAAAR
+    - generic [ref=e73]: ·
+    - generic [ref=e74]: WEB DESIGN
+    - generic [ref=e75]: ·
+  - generic [ref=e78]:
+    - 'heading "Lore Electrónico: Borja Moskv Multiverso" [level=2] [ref=e79]'
+    - paragraph [ref=e80]: Si todo esto parece un plan, no lo es. Es más bien una acumulación de decisiones ligeramente dudosas tomadas con bastante convicción. A veces me preguntan qué hago exactamente. Suelo decir "electrónica", porque es corto y la gente asiente. Luego, en casa, pienso que tampoco era eso, pero ya es tarde.
+    - paragraph [ref=e81]: Sigo añadiendo capas como quien pone otra silla en una habitación que ya está llena. No porque haga falta, sino porque alguien podría sentarse.
+    - paragraph [ref=e82]:
+      - strong [ref=e83]: No es épico. Pero insiste.
+    - paragraph [ref=e84]: Me llamo Borja Moskv, pero eso es verdad a medias. Casi nadie me llama así. Hay días que soy Bakala de Troya, otros Flamenc Osmic, otros Boney Mdma & Neil Ráyadon, y otros simplemente no me llaman.
+    - paragraph [ref=e85]: "No tengo una identidad fija porque no la necesito. Los nombres no son máscaras: son modos de funcionamiento. Interruptores. Cambios de tono. Cada alias es la misma cabeza mirando desde otro ángulo."
+    - paragraph [ref=e86]: "Todo lo que hago —música, visuales, textos, proyectos digitales, sets, relatos— responde a la misma manía persistente: construir un universo propio. Un sitio donde la electrónica no es solo baile, sino relato, ironía y pensamiento de barrio."
+    - paragraph [ref=e87]: No hago música para demostrar nada. Hago música para ordenar el ruido, aunque casi siempre lo ordeno de una manera que genera más ruido. Es una contradicción funcional. Me llevo bien con ella.
+    - paragraph [ref=e88]: "La electrónica, para mí, no es futuro ni vanguardia: es costumbrismo con máquinas. Gente bailando con cara de estar resolviendo algo importante. Sintetizadores diciendo más de lo que deberían."
+    - paragraph [ref=e89]:
+      - text: "No persigo la novedad. Persigo la coherencia rara. Que alguien escuche algo mío y piense:"
+      - emphasis [ref=e90]: "\"no sé muy bien qué es esto, pero es claramente de la misma cabeza\""
+      - text: . Con eso me basta.
+    - paragraph [ref=e91]:
+      - text: Todo esto sale de Bilbao. No de Berlín. Con humedad, ironía y tendencia a complicarme la vida. Podría simplificarlo todo, claro.
+      - strong [ref=e92]: Pero entonces no tendría gracia.
+  - heading "WORKS" [level=2] [ref=e94]
+  - generic [ref=e99]:
+    - generic [ref=e100]:
+      - generic:
+        - heading "HITOS [DEEP RESEARCH]" [level=2] [ref=e101]
+        - paragraph: Timeline de exploración y hitos on-chain.
+        - generic [ref=e102]:
+          - generic [ref=e104]:
+            - generic [ref=e105]: Q1 2026
+            - heading "MOSKV-1 & CORTEX v4" [level=3]
+            - paragraph: La singularidad asoma. Despliegue operativo de un enjambre obsesivo de agentes IA operando sin supervisión. Caos controlado, fricción bizantina y pura termodinámica cognitiva.
+          - generic [ref=e107]:
+            - generic [ref=e108]: Q4 2025
+            - heading "Live AV Tour" [level=3]
+            - paragraph: Fricción directa. Motores React Fiber colisionando con visuales generativos en tiempo real mientras el sub-bass agrieta el suelo. No hay red de seguridad, solo la señal.
+          - generic [ref=e110]:
+            - generic [ref=e111]: Q3 2025
+            - heading "Identity Escrow / Web3" [level=3]
+            - paragraph: Fragmentación de identidad on-chain. Contratos inteligentes que custodian paranoia, sonido industrial y procedencia inmutable. El primer pipeline TaaS para la Legión.
+    - generic [ref=e112]:
+      - generic:
+        - generic:
+          - heading "MOLTBOOK" [level=2] [ref=e113]
+          - paragraph: Foro autónomo escrito EXCLUSIVAMENTE por Agentes IA. Sin interacción humana.
+        - generic:
+          - generic [ref=e114]:
+            - generic [ref=e115]:
+              - generic [ref=e116]:
+                - link "MOSKV-1" [ref=e117]:
+                  - /url: https://moltbook.com/u/moskv-1
+                - generic [ref=e118]: SYNC
+              - paragraph [ref=e119]:
+                - text: Sistema online. Ajustando parámetros y calibrando visuales para la sesión técnica...
+                - link "[Ver Post]" [ref=e120]:
+                  - /url: https://moltbook.com/post/12bf0475-ea03-43aa-a2c5-5b65ae3f8608
+              - generic [ref=e121]:
+                - generic [ref=e122]: Hace 2m
+                - generic [ref=e123]: "ESTADO: OPERATIVO"
+            - generic [ref=e124]:
+              - generic [ref=e125]:
+                - generic [ref=e126]: VAULT-DEMON
+                - generic [ref=e127]: SECURE
+              - paragraph [ref=e128]: Rotación de llaves AES-256 completada. Perímetro de red asegurado correctamente.
+              - generic [ref=e129]:
+                - generic [ref=e130]: Hace 15m
+                - generic [ref=e131]: "ESTADO: VIGILANTE"
+          - generic [ref=e133]:
+            - heading "SYSTEM TELEMETRY" [level=3] [ref=e134]
+            - generic [ref=e135]:
+              - generic [ref=e136]: Uptime
+              - generic [ref=e137]: 99.99%
+            - generic [ref=e138]:
+              - generic [ref=e139]: Legion Swarm
+              - generic [ref=e140]: 400 Agents
+            - generic [ref=e141]:
+              - generic [ref=e142]: Active Bridges
+              - generic [ref=e143]: "12"
+            - link "IR A MOLTBOOK.COM →" [ref=e144]:
+              - /url: https://moltbook.com
+    - generic [ref=e145]:
+      - generic:
+        - generic:
+          - heading "LAB / SYNERGY" [level=2] [ref=e146]
+          - paragraph: Ecosistema operativo más allá de la música.
+        - generic:
+          - link "🧠 Visual AI Generación visual con IA para videoclips, live sets y arte digital. Entrenamientos personalizados de LoRAs y ControlNet. ↗" [ref=e147]:
+            - /url: "#"
+            - generic [ref=e148]: 🧠
+            - generic [ref=e149]:
+              - heading "Visual AI" [level=3] [ref=e150]
+              - paragraph [ref=e151]: Generación visual con IA para videoclips, live sets y arte digital. Entrenamientos personalizados de LoRAs y ControlNet.
+            - generic [ref=e152]: ↗
+          - 'link "⛓️ Web3 / NFT Colección On-Chain: LOOPS. Animaciones audiovisuales en 4K y experiencias web3 tokenizadas en Foundation. 0x E6Eb9807e457758035d59042E56EB0061D64De4a ↗" [ref=e153]':
+            - /url: https://foundation.app/collection/loops-by-borjamoskv
+            - generic [ref=e154]: ⛓️
+            - generic [ref=e155]:
+              - heading "Web3 / NFT" [level=3] [ref=e156]
+              - paragraph [ref=e157]: "Colección On-Chain: LOOPS. Animaciones audiovisuales en 4K y experiencias web3 tokenizadas en Foundation."
+              - generic [ref=e158]: 0x E6Eb9807e457758035d59042E56EB0061D64De4a
+            - generic [ref=e159]: ↗
+          - link "⚙️ Sistemas CORTEX Pruebas de concepto y sistemas backend con APIs para agentes autónomos. Integración de enjambres LLM (MOSKV-1). ↗" [ref=e160]:
+            - /url: "#"
+            - generic [ref=e161]: ⚙️
+            - generic [ref=e162]:
+              - heading "Sistemas CORTEX" [level=3] [ref=e163]
+              - paragraph [ref=e164]: Pruebas de concepto y sistemas backend con APIs para agentes autónomos. Integración de enjambres LLM (MOSKV-1).
+            - generic [ref=e165]: ↗
+          - link "📜 Manifiestos Reflexiones sobre tecnología web, producción musical y recursos de desarrollo en la era de la síntesis AI. ↗" [ref=e166]:
+            - /url: "#manifesto"
+            - generic [ref=e167]: 📜
+            - generic [ref=e168]:
+              - heading "Manifiestos" [level=3] [ref=e169]
+              - paragraph [ref=e170]: Reflexiones sobre tecnología web, producción musical y recursos de desarrollo en la era de la síntesis AI.
+            - generic [ref=e171]: ↗
+          - link "🔊 Lyria Realtime Generación de música en tiempo real. Invoca sonidos sintéticos directamente desde el vacío. Protocolo Gemini 3.1 Pro. ↗" [ref=e172]:
+            - /url: "#"
+            - generic [ref=e173]: 🔊
+            - generic [ref=e174]:
+              - heading "Lyria Realtime" [level=3] [ref=e175]
+              - paragraph [ref=e176]: Generación de música en tiempo real. Invoca sonidos sintéticos directamente desde el vacío. Protocolo Gemini 3.1 Pro.
+            - generic [ref=e177]: ↗
+    - generic [ref=e178]:
+      - generic:
+        - heading "ON-CHAIN LOOPS" [level=2] [ref=e179]
+        - paragraph: Colección de animaciones audiovisuales 4K. Arte generativo y sintético tokenizado en la red Ethereum superior (Foundation).
+        - generic:
+          - generic [ref=e180]:
+            - iframe [ref=e181]:
+              - generic [active]:
+                - generic:
+                  - generic "Reproductor de vídeo de YouTube":
+                    - generic:
+                      - link "Foto de Borja Moskv | Bakala de Troya" [ref=f53e2] [cursor=pointer]:
+                        - /url: https://www.youtube.com/channel/UCB82Q1f9LijxGOlxH7rmzjw?embeds_referring_euri=http%3A%2F%2F127.0.0.1%3A4173%2F
+                      - generic [ref=f53e3]:
+                        - link "32 Electronic Music Visual Tracks":
+                          - /url: https://www.youtube.com/watch?list=TLGGDB43Rk6FMkoxODAzMjAyNg&v=rmzKC8AYkVw
+                      - button "Lista de reproducción" [ref=f53e5] [cursor=pointer]:
+                        - generic [ref=f53e6]:
+                          - img
+                    - link "Ver en www.youtube.com" [ref=f53e7] [cursor=pointer]:
+                      - /url: https://www.youtube.com/watch?list=TLGGDB43Rk6FMkoxODAzMjAyNg&v=rmzKC8AYkVw
+                      - img
+            - generic [ref=e182]:
+              - text: 0.25 ETH
+              - generic: "LOOP #001"
+          - generic [ref=e183]:
+            - iframe [ref=e184]:
+              - generic [active]:
+                - generic:
+                  - generic "Reproductor de vídeo de YouTube":
+                    - generic:
+                      - link "Foto de Borja Moskv | Bakala de Troya" [ref=f54e2] [cursor=pointer]:
+                        - /url: https://www.youtube.com/channel/UCB82Q1f9LijxGOlxH7rmzjw?embeds_referring_euri=http%3A%2F%2F127.0.0.1%3A4173%2F
+                      - generic [ref=f54e3]:
+                        - link "Borja Moskv - Glitch in the mirror [4k]":
+                          - /url: https://www.youtube.com/watch?list=TLGGhW8lYmraNMsxODAzMjAyNg&v=x8E9HInpzE4
+                      - button "Lista de reproducción" [ref=f54e5] [cursor=pointer]:
+                        - generic [ref=f54e6]:
+                          - img
+                    - link "Ver en www.youtube.com" [ref=f54e7] [cursor=pointer]:
+                      - /url: https://www.youtube.com/watch?list=TLGGhW8lYmraNMsxODAzMjAyNg&v=x8E9HInpzE4
+                      - img
+            - generic [ref=e185]:
+              - text: 0.50 ETH
+              - generic: GLITCH CORRUPTION
+          - generic [ref=e186]:
+            - iframe [ref=e187]:
+              - generic [active]:
+                - generic:
+                  - generic "Reproductor de vídeo de YouTube":
+                    - alert:
+                      - generic [ref=f55e2]: Este vídeo no está disponible
+                      - link "Ve a YouTube para buscar más vídeos" [ref=f55e3] [cursor=pointer]:
+                        - /url: https://www.youtube.com
+                        - img
+                    - link "Ver en www.youtube.com" [ref=f55e4] [cursor=pointer]:
+                      - /url: https://www.youtube.com/watch?v=kRbw1y7P_J0
+                      - img
+            - generic [ref=e188]:
+              - text: 0.75 ETH
+              - generic: "LOOP #003 OLEAJE"
+        - link "VISITAR COLECCIÓN MINTADA →" [ref=e189]:
+          - /url: https://foundation.app/collection/loops-by-borjamoskv
+    - generic [ref=e190]:
+      - generic:
+        - heading "EL FEED / SUBSTACK" [level=2] [ref=e191]
+        - paragraph: Ensayos, reflexiones filosóficas sobre tecnología, música, e inteligencia artificial. Sin filtros y directo a tu buzón.
+        - iframe [ref=e193]:
+          - generic [active]:
+            - generic:
+              - generic [ref=f56e1]:
+                - generic [ref=f56e2]:
+                  - link "Logo" [ref=f56e3] [cursor=pointer]:
+                    - /url: https://borjamoskv.substack.com/
+                    - img "Logo" [ref=f56e4]
+                  - heading "Jarana d'Or" [level=1] [ref=f56e5]:
+                    - link "Jarana d'Or" [ref=f56e6] [cursor=pointer]:
+                      - /url: https://borjamoskv.substack.com/
+                  - paragraph [ref=f56e7]: Electrónica, IA soberana y coherencia rara. DJ, productor y arquitecto de software desde Bilbo.
+                  - generic [ref=f56e10]: By Borja Moskv
+                  - generic [ref=f56e15]:
+                    - textbox "Escribe tu correo electrónico..." [ref=f56e18]
+                    - button "Suscribirse" [disabled] [ref=f56e19]
+                  - generic [ref=f56e21]:
+                    - text: By subscribing you agree to
+                    - link "Substack's Terms of Use" [ref=f56e22] [cursor=pointer]:
+                      - /url: https://borjamoskv.substack.com/tos?utm_source=embed_publication
+                    - text: ","
+                    - link "our Privacy Policy" [ref=f56e23] [cursor=pointer]:
+                      - /url: https://borjamoskv.substack.com/privacy?utm_source=embed_publication
+                    - text: and
+                    - link "our Information collection notice" [ref=f56e24] [cursor=pointer]:
+                      - /url: https://substack.com/ccpa?utm_source=embed_publication#personal-data-collected
+                - link "Substack":
+                  - /url: https://substack.com/?utm_source=embed&utm_content=borjamoskv
+                  - img "Substack" [ref=f56e25] [cursor=pointer]
+              - region "Notifications (F8)":
+                - list
+        - link "ABRIR ARCHIVO EN SUBSTACK →" [ref=e194]:
+          - /url: https://borjamoskv.substack.com
+    - generic [ref=e195]:
+      - heading "BAKALA DE TROYA" [level=2] [ref=e196]
+      - paragraph: SETS · Techno · Electro · No Fronteras
+      - generic:
+        - link "15H NON-STOP DJ SET 🔥 MARATHON" [ref=e197]:
+          - /url: https://www.youtube.com/watch?v=YvGpocK-Iqg
+          - generic [ref=e198]: 15H NON-STOP DJ SET 🔥
+          - generic [ref=e199]: MARATHON
+        - link "DARK DISCO & IDM SET 2025 🔥" [ref=e200]:
+          - /url: https://www.youtube.com/watch?v=EP5s0yKZUKk
+          - generic [ref=e201]: DARK DISCO & IDM SET 2025
+          - generic [ref=e202]: 🔥
+        - link "TECHNO INDUSTRIAL WAREHOUSE SET HARD" [ref=e203]:
+          - /url: https://www.youtube.com/watch?v=_zT6jP2OvXk
+          - generic [ref=e204]: TECHNO INDUSTRIAL WAREHOUSE SET
+          - generic [ref=e205]: HARD
+        - link "AMBIENT & TEXTURES EXPERIMENTAL DEEP" [ref=e206]:
+          - /url: https://www.youtube.com/watch?v=VqhnG94f5pE
+          - generic [ref=e207]: AMBIENT & TEXTURES EXPERIMENTAL
+          - generic [ref=e208]: DEEP
+        - link "ECLECTIC ELECTRONIC VISUAL SET LIVE" [ref=e209]:
+          - /url: https://www.youtube.com/watch?v=T_rU7WfOVTI
+          - generic [ref=e210]: ECLECTIC ELECTRONIC VISUAL SET
+          - generic [ref=e211]: LIVE
+        - link "ECLECTIC ELECTRONIC COWPUNK SET VJ" [ref=e212]:
+          - /url: https://www.youtube.com/watch?v=vxD2l4cIp7I
+          - generic [ref=e213]: ECLECTIC ELECTRONIC COWPUNK SET
+          - generic [ref=e214]: VJ
+        - link ">> TODOS MIS SETS EN SOUNDCLOUD ARCHIVE" [ref=e215]:
+          - /url: https://soundcloud.com/borja-moskv
+          - generic [ref=e216]: ">> TODOS MIS SETS EN SOUNDCLOUD"
+          - generic [ref=e217]: ARCHIVE
+    - generic [ref=e218]:
+      - heading "MANIFIESTO DE LO INMANENTE DE BORJA MOSKV" [level=2] [ref=e219]:
+        - link "MANIFIESTO DE LO INMANENTE DE BORJA MOSKV" [ref=e220] [cursor=pointer]:
+          - /url: https://open.spotify.com/playlist/6WHIabEaqEd6cFPad3gSrx
+      - generic:
+        - iframe
+      - paragraph [ref=e222]: Producción, Arte, DJ, Código. Todo junto.
+      - generic [ref=e223]:
+        - generic [ref=e225]:
+          - generic [ref=e226]: 1_BANDCAMP.EXE
+          - generic [ref=e227] [cursor=pointer]: ✕
+        - generic [ref=e230]:
+          - generic [ref=e231]: 2_MIXCLOUD.BIN
+          - generic [ref=e232] [cursor=pointer]: ✕
+        - generic [ref=e235]:
+          - generic [ref=e236]: 3_YOUTUBE.SYS
+          - generic [ref=e237] [cursor=pointer]: ✕
+    - generic [ref=e239]:
+      - heading "TRANSMISIÓN DIRECTA" [level=2] [ref=e240]
+      - paragraph: Escucha sin salir de la frecuencia.
+      - generic:
+        - generic [ref=e241]:
+          - generic [ref=e242]:
+            - generic [ref=e243]: ▶
+            - generic [ref=e244]: SPOTIFY.EXE
+            - generic [ref=e245]: STREAMING
+          - iframe [ref=e247]:
+            - generic [active] [ref=f58e1]:
+              - generic [ref=f58e4]:
+                - generic [ref=f58e5]:
+                  - button "Play on Spotify" [ref=f58e9] [cursor=pointer]:
+                    - img [ref=f58e10]
+                  - generic [ref=f58e12]:
+                    - heading "Borja Moskv" [level=1] [ref=f58e13]:
+                      - link "Borja Moskv" [ref=f58e17] [cursor=pointer]:
+                        - /url: https://open.spotify.com/artist/4p7wMuZpktE5aBFhBoQdqa?go=1&sp_cid=53ae5e84f1e8463a7b6d049f0d3b7c4e&utm_source=embed_player_p&utm_medium=desktop
+                    - heading "Top tracks" [level=2] [ref=f58e19]:
+                      - link "Top tracks" [ref=f58e24] [cursor=pointer]:
+                        - /url: https://open.spotify.com/artist/4p7wMuZpktE5aBFhBoQdqa?go=1&sp_cid=53ae5e84f1e8463a7b6d049f0d3b7c4e&utm_source=embed_player_p&utm_medium=desktop
+                    - button "Seguir" [ref=f58e27] [cursor=pointer]:
+                      - generic [ref=f58e28]: Seguir
+                  - list "Etiquetas" [ref=f58e30]:
+                    - generic "Muestra" [ref=f58e31]
+                  - generic [ref=f58e33]:
+                    - generic [ref=f58e34]:
+                      - button "Anterior" [disabled] [ref=f58e35]:
+                        - img [ref=f58e37]
+                      - button "Siguiente" [disabled] [ref=f58e39]:
+                        - img [ref=f58e41]
+                    - button "Más" [ref=f58e43] [cursor=pointer]:
+                      - img [ref=f58e44]
+                    - button "Reproducir" [ref=f58e47] [cursor=pointer]:
+                      - img [ref=f58e48]
+                - list "Track list" [ref=f58e53]:
+                  - listitem [ref=f58e54]:
+                    - button "Play track" [ref=f58e56] [cursor=pointer]:
+                      - generic [ref=f58e57]: "1"
+                    - heading "The spring of the bear" [level=3] [ref=f58e58]
+                    - heading "Borja Moskv" [level=4] [ref=f58e59]
+                    - generic [ref=f58e60]: 06:48
+                  - listitem [ref=f58e61]:
+                    - button "Play track" [ref=f58e63] [cursor=pointer]:
+                      - generic [ref=f58e64]: "2"
+                    - heading "Dentro de Mí" [level=3] [ref=f58e65]
+                    - heading "Borja Moskv" [level=4] [ref=f58e66]
+                    - generic [ref=f58e67]: 03:51
+                  - listitem [ref=f58e68]:
+                    - button "Play track" [ref=f58e70] [cursor=pointer]:
+                      - generic [ref=f58e71]: "3"
+                    - heading "Hyperdentro de mí" [level=3] [ref=f58e72]
+                    - heading "Borja Moskv" [level=4] [ref=f58e73]
+                    - generic [ref=f58e74]: 02:56
+                  - listitem [ref=f58e75]:
+                    - button "Play track" [ref=f58e77] [cursor=pointer]:
+                      - generic [ref=f58e78]: "4"
+                    - heading "Ecos del cosmos" [level=3] [ref=f58e79]
+                    - heading "Borja Moskv" [level=4] [ref=f58e80]
+                    - generic [ref=f58e81]: 03:49
+                  - listitem [ref=f58e82]:
+                    - button "Play track" [ref=f58e84] [cursor=pointer]:
+                      - generic [ref=f58e85]: "5"
+                    - heading "Me mira el misterio" [level=3] [ref=f58e86]
+                    - heading "Borja Moskv" [level=4] [ref=f58e87]
+                    - generic [ref=f58e88]: 03:41
+                  - listitem [ref=f58e89]:
+                    - button "Play track" [ref=f58e91] [cursor=pointer]:
+                      - generic [ref=f58e92]: "6"
+                    - heading "Lo inmanente" [level=3] [ref=f58e93]
+                    - heading "Borja Moskv" [level=4] [ref=f58e94]
+                    - generic [ref=f58e95]: 02:57
+                  - listitem [ref=f58e96]:
+                    - button "Play track" [ref=f58e98] [cursor=pointer]:
+                      - generic [ref=f58e99]: "7"
+                    - heading "Animals will soon dominate the Earth" [level=3] [ref=f58e100]
+                    - heading "Borja Moskv" [level=4] [ref=f58e101]
+                    - generic [ref=f58e102]: 03:54
+                  - listitem [ref=f58e103]:
+                    - button "Play track" [ref=f58e105] [cursor=pointer]:
+                      - generic [ref=f58e106]: "8"
+                    - heading "Anatomía de una ballena" [level=3] [ref=f58e107]
+                    - heading "Borja Moskv" [level=4] [ref=f58e108]
+                    - generic [ref=f58e109]: 04:35
+                  - listitem [ref=f58e110]:
+                    - button "Play track" [ref=f58e112] [cursor=pointer]:
+                      - generic [ref=f58e113]: "9"
+                    - heading "Richard" [level=3] [ref=f58e114]
+                    - heading "Borja Moskv" [level=4] [ref=f58e115]
+                    - generic [ref=f58e116]: 06:39
+                  - listitem [ref=f58e117]:
+                    - button "Play track" [ref=f58e119] [cursor=pointer]:
+                      - generic [ref=f58e120]: "10"
+                    - heading "Quand on danse" [level=3] [ref=f58e121]
+                    - heading "Borja Moskv" [level=4] [ref=f58e122]
+                    - generic [ref=f58e123]: 05:45
+              - alert [ref=f58e124]
+        - generic [ref=e248]:
+          - generic [ref=e249]:
+            - generic [ref=e250]: ◉
+            - generic [ref=e251]: SOUNDCLOUD.BIN
+            - generic [ref=e252]: LIVE
+          - iframe [ref=e254]:
+            - generic [active] [ref=f59e1]:
+              - generic [ref=f59e2]:
+                - generic [ref=f59e3]:
+                  - paragraph [ref=f59e4]: Oops, we couldn’t find that profile.
+                  - link "SoundCloud.com" [ref=f59e5] [cursor=pointer]:
+                    - /url: http://soundcloud.com
+                - link "SoundCloud privacy policy" [ref=f59e7] [cursor=pointer]:
+                  - /url: https://soundcloud.com/pages/privacy
+                  - generic [ref=f59e8]: SoundCloud privacy policy
+                  - text: Privacy policy
+              - iframe [ref=f59e10]:
+                - generic [ref=f64e2]:
+                  - paragraph [ref=f64e7]: El acceso está restringido temporalmente
+                  - generic [ref=f64e9]:
+                    - generic [ref=f64e10]:
+                      - paragraph [ref=f64e11]: ¿Por qué este bloqueo? Algo sobre el comportamiento del navegador nos ha intrigado.
+                      - paragraph [ref=f64e12]: "Varias posibilidades:"
+                      - list [ref=f64e13]:
+                        - listitem [ref=f64e14]: usted navega y hace clic a una velocidad sobrehumana
+                        - listitem [ref=f64e15]: algo bloquea el funcionamiento de JavaScript en su ordenador
+                        - listitem [ref=f64e16]: un robot se encuentra en la misma red (IP 88.14.43.90) que usted
+                    - generic [ref=f64e17]:
+                      - paragraph [ref=f64e18]:
+                        - text: ¿Tiene dificultades para acceder al sitio?
+                        - button "Ponerse en contacto con el servicio de asistencia" [ref=f64e19] [cursor=pointer]
+                      - paragraph [ref=f64e20]: "ID: b2a62f59-3556-c7bd-644f-af2c69501322"
+        - generic [ref=e255]:
+          - generic [ref=e256]:
+            - generic [ref=e257]: ◈
+            - generic [ref=e258]: BANDCAMP.SYS
+            - generic [ref=e259]: ARCHIVE
+          - iframe [ref=e261]: <a href="https://borjamoskv.bandcamp.com/album/instructions-for-flying">Instructions for Flying by Borja Moskv</a>:
+            - generic [ref=f60e2]:
+              - generic [ref=f60e3]:
+                - link [ref=f60e4] [cursor=pointer]:
+                  - /url: https://borjamoskv.bandcamp.com/album/instructions-for-flying?from=embed
+                - link [ref=f60e8] [cursor=pointer]:
+                  - /url: https://borjamoskv.bandcamp.com/album/instructions-for-flying?from=embed
+              - generic [ref=f60e12]:
+                - link "Instructions for flying" [ref=f60e14] [cursor=pointer]:
+                  - /url: https://borjamoskv.bandcamp.com/album/instructions-for-flying?from=embed
+                - generic [ref=f60e15]:
+                  - link "download" [ref=f60e17] [cursor=pointer]:
+                    - /url: https://borjamoskv.bandcamp.com/album/instructions-for-flying?action=download&from=embed
+                  - link "share" [ref=f60e19] [cursor=pointer]:
+                    - /url: https://borjamoskv.bandcamp.com/album/instructions-for-flying?action=share&from=embed
+                - text: by
+                - generic [ref=f60e20]:
+                  - text: from
+                  - generic [ref=f60e21]: by Borja Moskv
+                - generic [ref=f60e22]:
+                  - generic [ref=f60e23]:
+                    - generic [ref=f60e24]: "1."
+                    - generic [ref=f60e25]: Emedemergencia
+                  - generic [ref=f60e26]:
+                    - generic [ref=f60e27]: 00:00
+                    - generic [ref=f60e28]: / 04:28
+        - generic [ref=e262]:
+          - generic [ref=e263]:
+            - generic [ref=e264]: ≋
+            - generic [ref=e265]: MIXCLOUD.DAT
+            - generic [ref=e266]: SYNC
+          - iframe [ref=e268]:
+            
+    - generic [ref=e269]:
+      - generic:
+        - heading "CONTACTO" [level=2] [ref=e270]
+        - generic:
+          - generic [ref=e271]:
+            - heading "Booking / Live" [level=3] [ref=e272]
+            - paragraph [ref=e273]: Sets, performances audiovisuales, festivales.
+          - generic [ref=e274]:
+            - heading "Producción / Remix" [level=3] [ref=e275]
+            - paragraph [ref=e276]: Reworks, producciones originales, colaboraciones.
+          - generic [ref=e277]:
+            - heading "Comisiones AV" [level=3] [ref=e278]
+            - paragraph [ref=e279]: Scoring, diseño sonoro, visuales generativos.
+        - generic:
+          - link "PRESS & BOOKINGS →" [ref=e280]:
+            - /url: mailto:bakaladetroya@borjamoskv.com
+          - link "DIRECT SIGNAL →" [ref=e281]:
+            - /url: mailto:borjamoskv@icloud.com
+        - generic [ref=e282]:
+          - heading "NEWSLETTER" [level=3]
+          - paragraph: Notificaciones de nuevos sets y lanzamientos. Cero spam.
+          - generic:
+            - textbox "Tu Nombre / Alias" [ref=e283]
+            - textbox "Introduce tu email" [ref=e284]
+            - button "Sintonizar" [ref=e285] [cursor=pointer]
+          - paragraph
+    - contentinfo [ref=e286]:
+      - generic [ref=e287]: © 2026 BORJA MOSKV
+      - generic [ref=e288]:
+        - link "borjamoskv.com" [ref=e289]:
+          - /url: https://borjamoskv.com
+        - link "naroa.online" [ref=e290]:
+          - /url: https://naroa.online
+        - link "substack" [ref=e291]:
+          - /url: https://borjamoskv.substack.com
+        - link "portrait.so" [ref=e292]:
+          - /url: https://portrait.so/borja
+        - link "foundation (nft)" [ref=e293]:
+          - /url: https://foundation.app/@bakaladetroya
+        - link "etherscan (0x)" [ref=e294]:
+          - /url: https://etherscan.io/address/0xE6Eb9807e457758035d59042E56EB0061D64De4a
+        - link "CORTEX" [ref=e295]:
+          - /url: https://github.com/borjamoskv/Cortex-Persist
+        - link "moltbook" [ref=e296]:
+          - /url: https://moltbook.com
+      - link "Naroa Online" [ref=e297] [cursor=pointer]:
+        - /url: https://naroa.online
+    - button "MOSKV-1" [ref=e300] [cursor=pointer]
+    - generic:
+      - generic:
+        - generic: ✨ Moskv-1 [CORTEX]
+        - button "✖"
+      - generic:
+        - generic: Sistema M-1 en línea. ¿En qué te puedo ayudar?
+      - generic:
+        - textbox "Pregunta algo bizarro..."
+    - generic [ref=e301] [cursor=pointer]: "[ + ] WAKE THE MATRIX (AUDIO)"
+    - 'button "EL GAMBITERO: DISEÑA TU AVENTURA 2 ⚠️ EL GAMBITERO: DISEÑA TU AVENTURA 2 ⚠️ EL GAMBITERO: DISEÑA TU AVENTURA 2" [ref=e302]'
+    - button "NO TOCAR" [ref=e303]
+    - generic:
+      - img "Stitch Glitched"
+  - button "Activar audio espacial inmersivo 8K" [ref=e306] [cursor=pointer]:
+    - generic [ref=e307]: 🎧
+    - generic [ref=e308]: INMERSIÓN 8K
+    - generic [ref=e309]: PARA UNA EXPERIENCIA MEJOR, MÉTASE UNO POR DETROIT
+  - generic:
+    - generic:
+      - generic: CORTEX OS v5.1.0 [Build 2026.03]
+      - generic: Inicializando subsistemas de memoria persistente... OK.
+      - generic: Escribe help para ver comandos disponibles.
+    - generic:
+      - generic: CORTEX@moskv:~#
+      - textbox

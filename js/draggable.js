@@ -12,6 +12,36 @@ MOSKV.draggable = (() => {
         el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
     };
 
+    const triggerCompaction = () => {
+        const visibleWindows = Array.from(document.querySelectorAll('.drag-window')).filter(w => w.style.display !== 'none');
+        const cols = Math.ceil(Math.sqrt(visibleWindows.length));
+        const padding = 20;
+        const topOffset = 80; // Safe area for header
+        
+        // Calculate grid cell dimensions
+        const cellWidth = (window.innerWidth - padding * 2) / cols;
+        const cellHeight = (window.innerHeight - topOffset - padding * 2) / Math.ceil(visibleWindows.length / cols);
+
+        visibleWindows.forEach((w, index) => {
+            const col = index % cols;
+            const row = Math.floor(index / cols);
+            
+            // Apply kinetic override
+            w.style.transition = 'all 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
+            w.style.left = `${padding + col * cellWidth}px`;
+            w.style.top = `${topOffset + padding + row * cellHeight}px`;
+            w.style.transform = 'translate3d(0px, 0px, 0px)';
+            w.style.zIndex = 10 + index;
+            
+            // Remove transition after it's done so dragging doesn't lag
+            setTimeout(() => {
+                w.style.transition = '';
+            }, 550);
+        });
+        
+        console.log("> CORTEX COMPACTION ROUTINE EXECUTED: ENTROPY MINIMIZED.");
+    };
+
     const initDraggableWindows = () => {
         const windows = document.querySelectorAll('.drag-window');
         
@@ -32,6 +62,7 @@ MOSKV.draggable = (() => {
 
             if (header) {
                 header.addEventListener('mousedown', dragStart);
+                header.addEventListener('dblclick', triggerCompaction);
                 document.addEventListener('mouseup', dragEnd);
                 document.addEventListener('mousemove', drag);
             }

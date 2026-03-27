@@ -1,0 +1,1753 @@
+- generic [active] [ref=e1]:
+  - generic:
+    - generic:
+      - heading "MOSKV" [level=1]
+  - generic [ref=e3]:
+    - generic:
+      - generic: SUPER VIDEOCLIP BACKGROUND
+      - strong: LES BUKO
+    - button "Toggle Sound" [ref=e5] [cursor=pointer]:
+      - generic [ref=e6]: UNMUTE SIGNAL
+      - img [ref=e7]
+  - navigation [ref=e11]:
+    - link "MOSKV" [ref=e12]:
+      - /url: "#hero"
+    - generic [ref=e13]:
+      - link "Music" [ref=e14]:
+        - /url: "#music"
+      - link "Sets" [ref=e15]:
+        - /url: "#sets"
+      - link "Moltbook" [ref=e16]:
+        - /url: "#moltbook"
+      - link "Lab" [ref=e17]:
+        - /url: "#lab"
+      - link "DJ AUTOMATA" [ref=e18]:
+        - /url: "#hero"
+      - link "Diario" [ref=e19]:
+        - /url: "#writings"
+      - link "Contact" [ref=e20]:
+        - /url: "#contact"
+    - generic [ref=e21]:
+      - link "BANDCAMP" [ref=e22]:
+        - /url: https://borjamoskv.bandcamp.com
+      - link "SPOTIFY" [ref=e23]:
+        - /url: https://open.spotify.com/intl-es/artist/4p7wMuZpktE5aBFhBoQdqa
+      - link "SOUNDCLOUD" [ref=e24]:
+        - /url: https://soundcloud.com/borja-moskv
+      - link "YOUTUBE" [ref=e25]:
+        - /url: https://www.youtube.com/@borjamoskv
+      - link "MIXCLOUD" [ref=e26]:
+        - /url: https://www.mixcloud.com/borjamoskv/
+      - link "FOUNDATION" [ref=e27]:
+        - /url: https://foundation.app/@bakaladetroya
+      - button "☢️" [ref=e28] [cursor=pointer]
+  - generic [ref=e29]:
+    - generic [ref=e30]: Bilbao · productor experimental · live AV · DJ
+    - generic [ref=e31]:
+      - generic [ref=e32]:
+        - generic [ref=e33]:
+          - heading "BORJA MOSKV BORJA MOSKV BORJA MOSKV" [level=1]:
+            - text: BORJA MOSKV BORJA
+            - text: MOSKV BORJA MOSKV
+        - paragraph [ref=e34]: Electrónica con relato, ironía y pensamiento de barrio. Releases, directos, visuales y sistemas raros orbitando en la misma frecuencia.
+        - generic "Señal principal" [ref=e35]:
+          - generic [ref=e36]: Ambient / IDM / Techno
+          - generic [ref=e37]: Bakala de Troya / live sets
+          - generic [ref=e38]: Visuales 4K / AV
+          - generic [ref=e39]: LES BUKO / background master
+          - generic [ref=e40]: Booking abierto
+        - generic [ref=e41]:
+          - link "Escuchar obras destacadas" [ref=e42]:
+            - /url: "#music"
+          - link "Ver sets · Bakala de Troya" [ref=e43]:
+            - /url: "#sets"
+          - link "Reservar live / booking →" [ref=e44]:
+            - /url: "#contact"
+      - complementary "Accesos rápidos" [ref=e45]:
+        - link "Escucha directa Spotify, SoundCloud, Bandcamp y Mixcloud Entra por la plataforma que prefieras sin salir de la señal." [ref=e46]:
+          - /url: "#players"
+          - generic [ref=e47]: Escucha directa
+          - strong [ref=e48]: Spotify, SoundCloud, Bandcamp y Mixcloud
+          - paragraph [ref=e49]: Entra por la plataforma que prefieras sin salir de la señal.
+        - link "Lab expandido IA visual, web3 y prototipos MOSKV-1 La música es el núcleo, pero el universo también vive en código, loops y herramientas raras." [ref=e50]:
+          - /url: "#lab"
+          - generic [ref=e51]: Lab expandido
+          - strong [ref=e52]: IA visual, web3 y prototipos MOSKV-1
+          - paragraph [ref=e53]: La música es el núcleo, pero el universo también vive en código, loops y herramientas raras.
+        - link "Diario y criterio Textos, manifiestos y Substack Contexto para entender de dónde sale la fricción estética y hacia dónde va." [ref=e54]:
+          - /url: "#writings"
+          - generic [ref=e55]: Diario y criterio
+          - strong [ref=e56]: Textos, manifiestos y Substack
+          - paragraph [ref=e57]: Contexto para entender de dónde sale la fricción estética y hacia dónde va.
+    - generic [ref=e58]:
+      - generic [ref=e59]: No en él ni en mí,
+      - generic [ref=e60]: en el espacio vivo
+      - generic [ref=e61]: entre los dos.
+  - generic [ref=e62]:
+    - generic [ref=e63]: Manifiesto
+    - heading "MANIFIESTO DE LO INMANENTE DE BORJA MOSKV" [level=2] [ref=e64]:
+      - link "MANIFIESTO DE LO INMANENTE DE BORJA MOSKV" [ref=e65] [cursor=pointer]:
+        - /url: https://open.spotify.com/playlist/6WHIabEaqEd6cFPad3gSrx
+    - paragraph [ref=e66]: "Un punto de entrada rápido al tono del proyecto: música, criterio y fricción emocional convertidos en playlist."
+    - iframe [ref=e68]:
+      - generic [active] [ref=f138e1]:
+        - generic [ref=f138e4]:
+          - generic [ref=f138e5]:
+            - button "Play on Spotify" [ref=f138e9] [cursor=pointer]:
+              - img [ref=f138e10]
+            - generic [ref=f138e12]:
+              - heading "Moskvlogia 2008-2026" [level=1] [ref=f138e13]:
+                - link "Moskvlogia 2008-2026" [ref=f138e17] [cursor=pointer]:
+                  - /url: https://open.spotify.com/playlist/6WHIabEaqEd6cFPad3gSrx?go=1&sp_cid=e6a2d36be6cf515a2ec370c4468c091f&utm_source=embed_player_p&utm_medium=desktop
+              - heading "Borjarecrisma" [level=2] [ref=f138e19]:
+                - link "Borjarecrisma" [ref=f138e24] [cursor=pointer]:
+                  - /url: https://open.spotify.com/playlist/6WHIabEaqEd6cFPad3gSrx?go=1&sp_cid=e6a2d36be6cf515a2ec370c4468c091f&utm_source=embed_player_p&utm_medium=desktop
+              - button "Guardar en Spotify" [ref=f138e26] [cursor=pointer]:
+                - img [ref=f138e28]
+                - generic [ref=f138e31]: Guardar en Spotify
+            - list "Etiquetas" [ref=f138e33]:
+              - generic "Muestra" [ref=f138e34]
+            - generic [ref=f138e36]:
+              - generic [ref=f138e37]:
+                - button "Anterior" [disabled] [ref=f138e38]:
+                  - img [ref=f138e40]
+                - button "Siguiente" [disabled] [ref=f138e42]:
+                  - img [ref=f138e44]
+              - button "Más" [ref=f138e46] [cursor=pointer]:
+                - img [ref=f138e47]
+              - button "Reproducir" [ref=f138e50] [cursor=pointer]:
+                - img [ref=f138e51]
+          - list "Track list" [ref=f138e56]:
+            - listitem [ref=f138e57]:
+              - button "Play track" [ref=f138e59] [cursor=pointer]:
+                - generic [ref=f138e60]: "1"
+              - heading "Cerebros Destruidos" [level=3] [ref=f138e61]
+              - heading "Eskorbuto" [level=4] [ref=f138e62]
+              - generic [ref=f138e63]: 02:35
+            - listitem [ref=f138e64]:
+              - button "Play track" [ref=f138e66] [cursor=pointer]:
+                - generic [ref=f138e67]: "2"
+              - heading "Reunion En La Cumbre" [level=3] [ref=f138e68]
+              - heading "Los Planetas" [level=4] [ref=f138e69]
+              - generic [ref=f138e70]: 03:09
+            - listitem [ref=f138e71]:
+              - button "Play track" [ref=f138e73] [cursor=pointer]:
+                - generic [ref=f138e74]: "3"
+              - heading "Pequeño Vals Vienés" [level=3] [ref=f138e75]
+              - heading "Sílvia Pérez Cruz, Raül Fernandez Miró" [level=4] [ref=f138e76]
+              - generic [ref=f138e77]: 05:34
+            - listitem [ref=f138e78]:
+              - button "Play track" [ref=f138e80] [cursor=pointer]:
+                - generic [ref=f138e81]: "4"
+              - heading "La Platja" [level=3] [ref=f138e82]
+              - heading "Albert Pla" [level=4] [ref=f138e83]
+              - generic [ref=f138e84]: 03:26
+            - listitem [ref=f138e85]:
+              - button "Play track" [ref=f138e87] [cursor=pointer]:
+                - generic [ref=f138e88]: "5"
+              - heading "De Música Ligera - Remasterizado 2007" [level=3] [ref=f138e89]
+              - heading "Soda Stereo" [level=4] [ref=f138e90]
+              - generic [ref=f138e91]: 03:32
+            - listitem [ref=f138e92]:
+              - button "Play track" [ref=f138e94] [cursor=pointer]:
+                - generic [ref=f138e95]: "6"
+              - heading "How to Fight Loneliness" [level=3] [ref=f138e96]
+              - heading "Wilco" [level=4] [ref=f138e97]
+              - generic [ref=f138e98]: 03:52
+            - listitem [ref=f138e99]:
+              - button "Play track" [ref=f138e101] [cursor=pointer]:
+                - generic [ref=f138e102]: "7"
+              - heading "The Universe Is Going To Catch You" [level=3] [ref=f138e103]
+              - heading "The Antlers" [level=4] [ref=f138e104]
+              - generic [ref=f138e105]: 03:55
+            - listitem [ref=f138e106]:
+              - button "Play track" [ref=f138e108] [cursor=pointer]:
+                - generic [ref=f138e109]: "8"
+              - heading "Mercy" [level=3] [ref=f138e110]
+              - heading "Muse" [level=4] [ref=f138e111]
+              - generic [ref=f138e112]: 03:51
+            - listitem [ref=f138e113]:
+              - button "Play track" [ref=f138e115] [cursor=pointer]:
+                - generic [ref=f138e116]: "9"
+              - heading "Lovely Day" [level=3] [ref=f138e117]
+              - heading "Pixies" [level=4] [ref=f138e118]
+              - generic [ref=f138e119]: 02:05
+            - listitem [ref=f138e120]:
+              - button "Play track" [ref=f138e122] [cursor=pointer]:
+                - generic [ref=f138e123]: "10"
+              - heading "El Outsider" [level=3] [ref=f138e124]
+              - heading "Ángel Stanich" [level=4] [ref=f138e125]
+              - generic [ref=f138e126]: 03:44
+            - listitem [ref=f138e127]:
+              - button "Play track" [ref=f138e129] [cursor=pointer]:
+                - generic [ref=f138e130]: "11"
+              - heading "Carbura!" [level=3] [ref=f138e131]
+              - heading "Ángel Stanich" [level=4] [ref=f138e132]
+              - generic [ref=f138e133]: 05:05
+            - listitem [ref=f138e134]:
+              - button "Play track" [ref=f138e136] [cursor=pointer]:
+                - generic [ref=f138e137]: "12"
+              - heading "No Cars Go" [level=3] [ref=f138e138]
+              - heading "Arcade Fire" [level=4] [ref=f138e139]
+              - generic [ref=f138e140]: 05:43
+            - listitem [ref=f138e141]:
+              - button "Play track" [ref=f138e143] [cursor=pointer]:
+                - generic [ref=f138e144]: "13"
+              - heading "Ojos Color Sol (feat. Silvio Rodríguez)" [level=3] [ref=f138e145]
+              - heading "Calle 13, Silvio Rodríguez" [level=4] [ref=f138e146]
+              - generic [ref=f138e147]: 03:37
+            - listitem [ref=f138e148]:
+              - button "Play track" [ref=f138e150] [cursor=pointer]:
+                - generic [ref=f138e151]: "14"
+              - heading "Miracles (Back in Time)" [level=3] [ref=f138e152]
+              - heading "The Dø" [level=4] [ref=f138e153]
+              - generic [ref=f138e154]: 04:29
+            - listitem [ref=f138e155]:
+              - button "Play track" [ref=f138e157] [cursor=pointer]:
+                - generic [ref=f138e158]: "15"
+              - heading "Isabella" [level=3] [ref=f138e159]
+              - heading "Isaac Delusion" [level=4] [ref=f138e160]
+              - generic [ref=f138e161]: 05:13
+            - listitem [ref=f138e162]:
+              - button "Play track" [ref=f138e164] [cursor=pointer]:
+                - generic [ref=f138e165]: "16"
+              - heading "New York, I Love You but You're Bringing Me Down" [level=3] [ref=f138e166]
+              - heading "LCD Soundsystem" [level=4] [ref=f138e167]
+              - generic [ref=f138e168]: 05:35
+            - listitem [ref=f138e169]:
+              - button "Play track" [ref=f138e171] [cursor=pointer]:
+                - generic [ref=f138e172]: "17"
+              - heading "If I Ever Feel Better" [level=3] [ref=f138e173]
+              - heading "Phoenix" [level=4] [ref=f138e174]
+              - generic [ref=f138e175]: 04:26
+            - listitem [ref=f138e176]:
+              - button "Play track" [ref=f138e178] [cursor=pointer]:
+                - generic [ref=f138e179]: "18"
+              - heading "I'll Be Waiting" [level=3] [ref=f138e180]
+              - heading "Lenny Kravitz" [level=4] [ref=f138e181]
+              - generic [ref=f138e182]: 04:19
+            - listitem [ref=f138e183]:
+              - button "Play track" [ref=f138e185] [cursor=pointer]:
+                - generic [ref=f138e186]: "19"
+              - heading "Chup Chup" [level=3] [ref=f138e187]
+              - heading "Australian Blonde" [level=4] [ref=f138e188]
+              - generic [ref=f138e189]: 02:27
+            - listitem [ref=f138e190]:
+              - button "Play track" [ref=f138e192] [cursor=pointer]:
+                - generic [ref=f138e193]: "20"
+              - heading "Far From Any Road" [level=3] [ref=f138e194]
+              - heading "The Handsome Family" [level=4] [ref=f138e195]
+              - generic [ref=f138e196]: 02:48
+            - listitem [ref=f138e197]:
+              - button "Play track" [ref=f138e199] [cursor=pointer]:
+                - generic [ref=f138e200]: "21"
+              - heading "My Eyes Have Seen You" [level=3] [ref=f138e201]
+              - heading "The Doors" [level=4] [ref=f138e202]
+              - generic [ref=f138e203]: 02:27
+            - listitem [ref=f138e204]:
+              - button "Play track" [ref=f138e206] [cursor=pointer]:
+                - generic [ref=f138e207]: "22"
+              - heading "Me fui" [level=3] [ref=f138e208]
+              - heading "Bebe" [level=4] [ref=f138e209]
+              - generic [ref=f138e210]: 04:49
+            - listitem [ref=f138e211]:
+              - button "Play track" [ref=f138e213] [cursor=pointer]:
+                - generic [ref=f138e214]: "23"
+              - heading "Fall In Love" [level=3] [ref=f138e215]
+              - heading "Phantogram" [level=4] [ref=f138e216]
+              - generic [ref=f138e217]: 03:43
+            - listitem [ref=f138e218]:
+              - button "Play track" [ref=f138e220] [cursor=pointer]:
+                - generic [ref=f138e221]: "24"
+              - heading "That Look You Give That Guy" [level=3] [ref=f138e222]
+              - heading "Eels" [level=4] [ref=f138e223]
+              - generic [ref=f138e224]: 04:15
+            - listitem [ref=f138e225]:
+              - button "Play track" [ref=f138e227] [cursor=pointer]:
+                - generic [ref=f138e228]: "25"
+              - heading "Life Round Here" [level=3] [ref=f138e229]
+              - heading "James Blake" [level=4] [ref=f138e230]
+              - generic [ref=f138e231]: 03:37
+            - listitem [ref=f138e232]:
+              - button "Play track" [ref=f138e234] [cursor=pointer]:
+                - generic [ref=f138e235]: "26"
+              - heading "Lady Blue" [level=3] [ref=f138e236]
+              - heading "Bunbury" [level=4] [ref=f138e237]
+              - generic [ref=f138e238]: 05:29
+            - listitem [ref=f138e239]:
+              - button "Play track" [ref=f138e241] [cursor=pointer]:
+                - generic [ref=f138e242]: "27"
+              - heading "Mis condiciones pajareras" [level=3] [ref=f138e243]
+              - heading "Los Delinqüentes" [level=4] [ref=f138e244]
+              - generic [ref=f138e245]: 03:41
+            - listitem [ref=f138e246]:
+              - button "Play track" [ref=f138e248] [cursor=pointer]:
+                - generic [ref=f138e249]: "28"
+              - heading "Six Days" [level=3] [ref=f138e250]
+              - heading "Explicit DJ Shadow" [level=4] [ref=f138e251]:
+                - generic "Explicit" [ref=f138e252]: E
+                - text: DJ Shadow
+              - generic [ref=f138e253]: 05:00
+            - listitem [ref=f138e254]:
+              - button "Play track" [ref=f138e256] [cursor=pointer]:
+                - generic [ref=f138e257]: "29"
+              - heading "The Day That Never Comes" [level=3] [ref=f138e258]
+              - heading "Metallica" [level=4] [ref=f138e259]
+              - generic [ref=f138e260]: 07:56
+            - listitem [ref=f138e261]:
+              - button "Play track" [ref=f138e263] [cursor=pointer]:
+                - generic [ref=f138e264]: "30"
+              - heading "Wish You Were Here - 2011 Remaster" [level=3] [ref=f138e265]
+              - heading "Pink Floyd" [level=4] [ref=f138e266]
+              - generic [ref=f138e267]: 05:04
+            - listitem [ref=f138e268]:
+              - button "Play track" [ref=f138e270] [cursor=pointer]:
+                - generic [ref=f138e271]: "31"
+              - heading "Manhattan (First We Take Manhattan)" [level=3] [ref=f138e272]
+              - heading "Enrique Morente" [level=4] [ref=f138e273]
+              - generic [ref=f138e274]: 04:44
+            - listitem [ref=f138e275]:
+              - button "Play track" [ref=f138e277] [cursor=pointer]:
+                - generic [ref=f138e278]: "32"
+              - heading "Kea" [level=3] [ref=f138e279]
+              - heading "Kuraia" [level=4] [ref=f138e280]
+              - generic [ref=f138e281]: 04:06
+            - listitem [ref=f138e282]:
+              - button "Play track" [ref=f138e284] [cursor=pointer]:
+                - generic [ref=f138e285]: "33"
+              - heading "F For You" [level=3] [ref=f138e286]
+              - heading "Disclosure" [level=4] [ref=f138e287]
+              - generic [ref=f138e288]: 04:28
+            - listitem [ref=f138e289]:
+              - button "Play track" [ref=f138e291] [cursor=pointer]:
+                - generic [ref=f138e292]: "34"
+              - heading "Wordless Chorus" [level=3] [ref=f138e293]
+              - heading "My Morning Jacket" [level=4] [ref=f138e294]
+              - generic [ref=f138e295]: 04:12
+            - listitem [ref=f138e296]:
+              - button "Play track" [ref=f138e298] [cursor=pointer]:
+                - generic [ref=f138e299]: "35"
+              - heading "Los días no vividos" [level=3] [ref=f138e300]
+              - heading "Love of Lesbian" [level=4] [ref=f138e301]
+              - generic [ref=f138e302]: 03:13
+            - listitem [ref=f138e303]:
+              - button "Play track" [ref=f138e305] [cursor=pointer]:
+                - generic [ref=f138e306]: "36"
+              - heading "Wrong" [level=3] [ref=f138e307]
+              - heading "Depeche Mode" [level=4] [ref=f138e308]
+              - generic [ref=f138e309]: 03:13
+            - listitem [ref=f138e310]:
+              - button "Play track" [ref=f138e312] [cursor=pointer]:
+                - generic [ref=f138e313]: "37"
+              - heading "In Exile" [level=3] [ref=f138e314]
+              - heading "Thrice" [level=4] [ref=f138e315]
+              - generic [ref=f138e316]: 03:52
+            - listitem [ref=f138e317]:
+              - button "Play track" [ref=f138e319] [cursor=pointer]:
+                - generic [ref=f138e320]: "38"
+              - heading "Oreka" [level=3] [ref=f138e321]
+              - heading "Berri Txarrak" [level=4] [ref=f138e322]
+              - generic [ref=f138e323]: 04:01
+            - listitem [ref=f138e324]:
+              - button "Play track" [ref=f138e326] [cursor=pointer]:
+                - generic [ref=f138e327]: "39"
+              - heading "Te juzgarán sólo por tus errores (Yo no)" [level=3] [ref=f138e328]
+              - heading "Extremoduro" [level=4] [ref=f138e329]
+              - generic [ref=f138e330]: 02:59
+            - listitem [ref=f138e331]:
+              - button "Play track" [ref=f138e333] [cursor=pointer]:
+                - generic [ref=f138e334]: "40"
+              - heading "Under My Thumb" [level=3] [ref=f138e335]
+              - heading "The Rolling Stones" [level=4] [ref=f138e336]
+              - generic [ref=f138e337]: 03:42
+            - listitem [ref=f138e338]:
+              - button "Play track" [ref=f138e340] [cursor=pointer]:
+                - generic [ref=f138e341]: "41"
+              - heading "Wild Horses" [level=3] [ref=f138e342]
+              - heading "The Rolling Stones" [level=4] [ref=f138e343]
+              - generic [ref=f138e344]: 05:44
+            - listitem [ref=f138e345]:
+              - button "Play track" [ref=f138e347] [cursor=pointer]:
+                - generic [ref=f138e348]: "42"
+              - heading "Dead Star" [level=3] [ref=f138e349]
+              - heading "Muse" [level=4] [ref=f138e350]
+              - generic [ref=f138e351]: 03:40
+            - listitem [ref=f138e352]:
+              - button "Play track" [ref=f138e354] [cursor=pointer]:
+                - generic [ref=f138e355]: "43"
+              - heading "Losing My Religion" [level=3] [ref=f138e356]
+              - heading "R.E.M." [level=4] [ref=f138e357]
+              - generic [ref=f138e358]: 04:27
+            - listitem [ref=f138e359]:
+              - button "Play track" [ref=f138e361] [cursor=pointer]:
+                - generic [ref=f138e362]: "44"
+              - heading "Roscoe" [level=3] [ref=f138e363]
+              - heading "Midlake" [level=4] [ref=f138e364]
+              - generic [ref=f138e365]: 04:46
+            - listitem [ref=f138e366]:
+              - button "Play track" [ref=f138e368] [cursor=pointer]:
+                - generic [ref=f138e369]: "45"
+              - heading "Suzanne" [level=3] [ref=f138e370]
+              - heading "Leonard Cohen" [level=4] [ref=f138e371]
+              - generic [ref=f138e372]: 03:47
+            - listitem [ref=f138e373]:
+              - button "Play track" [ref=f138e375] [cursor=pointer]:
+                - generic [ref=f138e376]: "46"
+              - heading "Riverside" [level=3] [ref=f138e377]
+              - heading "Agnes Obel" [level=4] [ref=f138e378]
+              - generic [ref=f138e379]: 03:48
+            - listitem [ref=f138e380]:
+              - button "Play track" [ref=f138e382] [cursor=pointer]:
+                - generic [ref=f138e383]: "47"
+              - heading "Corazón De Tango" [level=3] [ref=f138e384]
+              - heading "Explicit Doctor Deseo" [level=4] [ref=f138e385]:
+                - generic "Explicit" [ref=f138e386]: E
+                - text: Doctor Deseo
+              - generic [ref=f138e387]: 04:41
+            - listitem [ref=f138e388]:
+              - button "Play track" [ref=f138e390] [cursor=pointer]:
+                - generic [ref=f138e391]: "48"
+              - heading "Sweet Dreams (Are Made Of This)" [level=3] [ref=f138e392]
+              - heading "Marilyn Manson" [level=4] [ref=f138e393]
+              - generic [ref=f138e394]: 04:53
+            - listitem [ref=f138e395]:
+              - button "Play track" [ref=f138e397] [cursor=pointer]:
+                - generic [ref=f138e398]: "49"
+              - heading "Es Feo" [level=3] [ref=f138e399]
+              - heading "Manos De Topo" [level=4] [ref=f138e400]
+              - generic [ref=f138e401]: 01:53
+            - listitem [ref=f138e402]:
+              - button "Play track" [ref=f138e404] [cursor=pointer]:
+                - generic [ref=f138e405]: "50"
+              - heading "El Cartero" [level=3] [ref=f138e406]
+              - heading "Manos De Topo" [level=4] [ref=f138e407]
+              - generic [ref=f138e408]: 03:42
+            - listitem [ref=f138e409]:
+              - button "Play track" [ref=f138e411] [cursor=pointer]:
+                - generic [ref=f138e412]: "51"
+              - heading "Walls" [level=3] [ref=f138e413]
+              - heading "John Frusciante" [level=4] [ref=f138e414]
+              - generic [ref=f138e415]: 06:19
+            - listitem [ref=f138e416]:
+              - button "Play track" [ref=f138e418] [cursor=pointer]:
+                - generic [ref=f138e419]: "52"
+              - heading "Don't Look Back In Anger" [level=3] [ref=f138e420]
+              - heading "Oasis" [level=4] [ref=f138e421]
+              - generic [ref=f138e422]: 04:53
+            - listitem [ref=f138e423]:
+              - button "Play track" [ref=f138e425] [cursor=pointer]:
+                - generic [ref=f138e426]: "53"
+              - heading "Wonderwall" [level=3] [ref=f138e427]
+              - heading "Oasis" [level=4] [ref=f138e428]
+              - generic [ref=f138e429]: 04:18
+            - listitem [ref=f138e430]:
+              - button "Play track" [ref=f138e432] [cursor=pointer]:
+                - generic [ref=f138e433]: "54"
+              - heading "Islands" [level=3] [ref=f138e434]
+              - heading "The xx" [level=4] [ref=f138e435]
+              - generic [ref=f138e436]: 02:40
+            - listitem [ref=f138e437]:
+              - button "Play track" [ref=f138e439] [cursor=pointer]:
+                - generic [ref=f138e440]: "55"
+              - heading "Murderers" [level=3] [ref=f138e441]
+              - heading "John Frusciante" [level=4] [ref=f138e442]
+              - generic [ref=f138e443]: 02:40
+            - listitem [ref=f138e444]:
+              - button "Play track" [ref=f138e446] [cursor=pointer]:
+                - generic [ref=f138e447]: "56"
+              - heading "Heroes - 1999 Remaster" [level=3] [ref=f138e448]
+              - heading "David Bowie" [level=4] [ref=f138e449]
+              - generic [ref=f138e450]: 06:10
+            - listitem [ref=f138e451]:
+              - button "Play track" [ref=f138e453] [cursor=pointer]:
+                - generic [ref=f138e454]: "57"
+              - heading "She's Lost Control - 12\" Single Version" [level=3] [ref=f138e455]
+              - heading "Joy Division" [level=4] [ref=f138e456]
+              - generic [ref=f138e457]: 04:54
+            - listitem [ref=f138e458]:
+              - button "Play track" [ref=f138e460] [cursor=pointer]:
+                - generic [ref=f138e461]: "58"
+              - heading "Ateak" [level=3] [ref=f138e462]
+              - heading "Anari" [level=4] [ref=f138e463]
+              - generic [ref=f138e464]: 02:52
+            - listitem [ref=f138e465]:
+              - button "Play track" [ref=f138e467] [cursor=pointer]:
+                - generic [ref=f138e468]: "59"
+              - heading "Haunted House" [level=3] [ref=f138e469]
+              - heading "Belako" [level=4] [ref=f138e470]
+              - generic [ref=f138e471]: 05:08
+            - listitem [ref=f138e472]:
+              - button "Play track" [ref=f138e474] [cursor=pointer]:
+                - generic [ref=f138e475]: "60"
+              - heading "Ánimo, Valiente" [level=3] [ref=f138e476]
+              - heading "León Benavente" [level=4] [ref=f138e477]
+              - generic [ref=f138e478]: 03:44
+            - listitem [ref=f138e479]:
+              - button "Play track" [ref=f138e481] [cursor=pointer]:
+                - generic [ref=f138e482]: "61"
+              - heading "Los Buenos" [level=3] [ref=f138e483]
+              - heading "Vetusta Morla" [level=4] [ref=f138e484]
+              - generic [ref=f138e485]: 04:15
+            - listitem [ref=f138e486]:
+              - button "Play track" [disabled] [ref=f138e488]:
+                - generic [ref=f138e489]: "62"
+              - heading "Summer Wine" [level=3] [ref=f138e490]
+              - heading "Nancy Sinatra, Lee Hazlewood" [level=4] [ref=f138e491]
+              - generic [ref=f138e492]: 04:16
+            - listitem [ref=f138e493]:
+              - button "Play track" [ref=f138e495] [cursor=pointer]:
+                - generic [ref=f138e496]: "63"
+              - heading "Un Buen Dia" [level=3] [ref=f138e497]
+              - heading "Los Planetas" [level=4] [ref=f138e498]
+              - generic [ref=f138e499]: 03:49
+            - listitem [ref=f138e500]:
+              - button "Play track" [ref=f138e502] [cursor=pointer]:
+                - generic [ref=f138e503]: "64"
+              - heading "Someone Like You" [level=3] [ref=f138e504]
+              - heading "Sexy Sadie" [level=4] [ref=f138e505]
+              - generic [ref=f138e506]: 03:59
+            - listitem [ref=f138e507]:
+              - button "Play track" [ref=f138e509] [cursor=pointer]:
+                - generic [ref=f138e510]: "65"
+              - heading "All That She Wants" [level=3] [ref=f138e511]
+              - heading "Ace of Base" [level=4] [ref=f138e512]
+              - generic [ref=f138e513]: 03:33
+            - listitem [ref=f138e514]:
+              - button "Play track" [ref=f138e516] [cursor=pointer]:
+                - generic [ref=f138e517]: "66"
+              - heading "Beggars" [level=3] [ref=f138e518]
+              - heading "Thrice" [level=4] [ref=f138e519]
+              - generic [ref=f138e520]: 05:24
+            - listitem [ref=f138e521]:
+              - button "Play track" [ref=f138e523] [cursor=pointer]:
+                - generic [ref=f138e524]: "67"
+              - heading "Días extraños" [level=3] [ref=f138e525]
+              - heading "Bunbury, Nacho Vegas" [level=4] [ref=f138e526]
+              - generic [ref=f138e527]: 06:18
+            - listitem [ref=f138e528]:
+              - button "Play track" [ref=f138e530] [cursor=pointer]:
+                - generic [ref=f138e531]: "68"
+              - heading "Man on Fire" [level=3] [ref=f138e532]
+              - heading "Edward Sharpe & The Magnetic Zeros" [level=4] [ref=f138e533]
+              - generic [ref=f138e534]: 04:18
+            - listitem [ref=f138e535]:
+              - button "Play track" [ref=f138e537] [cursor=pointer]:
+                - generic [ref=f138e538]: "69"
+              - heading "Wrong" [level=3] [ref=f138e539]
+              - heading "Depeche Mode" [level=4] [ref=f138e540]
+              - generic [ref=f138e541]: 03:12
+            - listitem [ref=f138e542]:
+              - button "Play track" [ref=f138e544] [cursor=pointer]:
+                - generic [ref=f138e545]: "70"
+              - heading "In - Original Mix" [level=3] [ref=f138e546]
+              - heading "El_Txef_A" [level=4] [ref=f138e547]
+              - generic [ref=f138e548]: 03:55
+            - listitem [ref=f138e549]:
+              - button "Play track" [ref=f138e551] [cursor=pointer]:
+                - generic [ref=f138e552]: "71"
+              - heading "Remedy" [level=3] [ref=f138e553]
+              - heading "The Black Crowes" [level=4] [ref=f138e554]
+              - generic [ref=f138e555]: 05:33
+            - listitem [ref=f138e556]:
+              - button "Play track" [ref=f138e558] [cursor=pointer]:
+                - generic [ref=f138e559]: "72"
+              - heading "Mi coco" [level=3] [ref=f138e560]
+              - heading "Los Piratas" [level=4] [ref=f138e561]
+              - generic [ref=f138e562]: 04:49
+            - listitem [ref=f138e563]:
+              - button "Play track" [ref=f138e565] [cursor=pointer]:
+                - generic [ref=f138e566]: "73"
+              - heading "Do the Evolution" [level=3] [ref=f138e567]
+              - heading "Pearl Jam" [level=4] [ref=f138e568]
+              - generic [ref=f138e569]: 03:54
+            - listitem [ref=f138e570]:
+              - button "Play track" [ref=f138e572] [cursor=pointer]:
+                - generic [ref=f138e573]: "74"
+              - heading "1999" [level=3] [ref=f138e574]
+              - heading "Love of Lesbian" [level=4] [ref=f138e575]
+              - generic [ref=f138e576]: 05:05
+            - listitem [ref=f138e577]:
+              - button "Play track" [ref=f138e579] [cursor=pointer]:
+                - generic [ref=f138e580]: "75"
+              - heading "Crystalised" [level=3] [ref=f138e581]
+              - heading "The xx" [level=4] [ref=f138e582]
+              - generic [ref=f138e583]: 03:21
+            - listitem [ref=f138e584]:
+              - button "Play track" [ref=f138e586] [cursor=pointer]:
+                - generic [ref=f138e587]: "76"
+              - heading "I Can Change" [level=3] [ref=f138e588]
+              - heading "LCD Soundsystem" [level=4] [ref=f138e589]
+              - generic [ref=f138e590]: 05:52
+            - listitem [ref=f138e591]:
+              - button "Play track" [ref=f138e593] [cursor=pointer]:
+                - generic [ref=f138e594]: "77"
+              - heading "Lucha de gigantes - Live" [level=3] [ref=f138e595]
+              - heading "Antonio Vega" [level=4] [ref=f138e596]
+              - generic [ref=f138e597]: 03:57
+            - listitem [ref=f138e598]:
+              - button "Play track" [ref=f138e600] [cursor=pointer]:
+                - generic [ref=f138e601]: "78"
+              - heading "The World (Is Going Up In Flames)" [level=3] [ref=f138e602]
+              - heading "Charles Bradley, Menahan Street Band" [level=4] [ref=f138e603]
+              - generic [ref=f138e604]: 03:22
+            - listitem [ref=f138e605]:
+              - button "Play track" [ref=f138e607] [cursor=pointer]:
+                - generic [ref=f138e608]: "79"
+              - heading "El Cartero" [level=3] [ref=f138e609]
+              - heading "Manos De Topo" [level=4] [ref=f138e610]
+              - generic [ref=f138e611]: 03:42
+            - listitem [ref=f138e612]:
+              - button "Play track" [ref=f138e614] [cursor=pointer]:
+                - generic [ref=f138e615]: "80"
+              - heading "Follow - acoustic" [level=3] [ref=f138e616]
+              - heading "Crystal Fighters" [level=4] [ref=f138e617]
+              - generic [ref=f138e618]: 03:17
+            - listitem [ref=f138e619]:
+              - button "Play track" [ref=f138e621] [cursor=pointer]:
+                - generic [ref=f138e622]: "81"
+              - heading "With a Little Help From My Friends - Live" [level=3] [ref=f138e623]
+              - heading "Joe Cocker" [level=4] [ref=f138e624]
+              - generic [ref=f138e625]: 09:27
+            - listitem [ref=f138e626]:
+              - button "Play track" [ref=f138e628] [cursor=pointer]:
+                - generic [ref=f138e629]: "82"
+              - heading "Southern Sea (Beautiful World)" [level=3] [ref=f138e630]
+              - heading "Belako" [level=4] [ref=f138e631]
+              - generic [ref=f138e632]: 04:05
+            - listitem [ref=f138e633]:
+              - button "Play track" [ref=f138e635] [cursor=pointer]:
+                - generic [ref=f138e636]: "83"
+              - heading "Allí donde solíamos gritar - Remixed by DJ Amable" [level=3] [ref=f138e637]
+              - heading "Love of Lesbian, DJ Amable" [level=4] [ref=f138e638]
+              - generic [ref=f138e639]: 06:25
+            - listitem [ref=f138e640]:
+              - button "Play track" [ref=f138e642] [cursor=pointer]:
+                - generic [ref=f138e643]: "84"
+              - heading "The First Girl Who Got a Kiss Without a Please" [level=3] [ref=f138e644]
+              - heading "We Are Standard" [level=4] [ref=f138e645]
+              - generic [ref=f138e646]: 03:38
+            - listitem [ref=f138e647]:
+              - button "Play track" [disabled] [ref=f138e649]:
+                - generic [ref=f138e650]: "85"
+              - heading "Slave To a Teenager" [level=3] [ref=f138e651]
+              - heading "Pygmy Lush" [level=4] [ref=f138e652]
+              - generic [ref=f138e653]: 02:17
+            - listitem [ref=f138e654]:
+              - button "Play track" [ref=f138e656] [cursor=pointer]:
+                - generic [ref=f138e657]: "86"
+              - heading "Ciudadano A" [level=3] [ref=f138e658]
+              - heading "Ivan Ferreiro" [level=4] [ref=f138e659]
+              - generic [ref=f138e660]: 04:45
+            - listitem [ref=f138e661]:
+              - button "Play track" [ref=f138e663] [cursor=pointer]:
+                - generic [ref=f138e664]: "87"
+              - heading "Sever" [level=3] [ref=f138e665]
+              - heading "Karate" [level=4] [ref=f138e666]
+              - generic [ref=f138e667]: 05:54
+            - listitem [ref=f138e668]:
+              - button "Play track" [ref=f138e670] [cursor=pointer]:
+                - generic [ref=f138e671]: "88"
+              - heading "I Follow Rivers" [level=3] [ref=f138e672]
+              - heading "Triggerfinger" [level=4] [ref=f138e673]
+              - generic [ref=f138e674]: 03:35
+            - listitem [ref=f138e675]:
+              - button "Play track" [ref=f138e677] [cursor=pointer]:
+                - generic [ref=f138e678]: "89"
+              - heading "La Revolución Sexual" [level=3] [ref=f138e679]
+              - heading "La Casa Azul" [level=4] [ref=f138e680]
+              - generic [ref=f138e681]: 04:35
+            - listitem [ref=f138e682]:
+              - button "Play track" [ref=f138e684] [cursor=pointer]:
+                - generic [ref=f138e685]: "90"
+              - heading "Buddy Holly" [level=3] [ref=f138e686]
+              - heading "Weezer" [level=4] [ref=f138e687]
+              - generic [ref=f138e688]: 02:39
+            - listitem [ref=f138e689]:
+              - button "Play track" [ref=f138e691] [cursor=pointer]:
+                - generic [ref=f138e692]: "91"
+              - heading "Evil" [level=3] [ref=f138e693]
+              - heading "Interpol" [level=4] [ref=f138e694]
+              - generic [ref=f138e695]: 03:35
+            - listitem [ref=f138e696]:
+              - button "Play track" [ref=f138e698] [cursor=pointer]:
+                - generic [ref=f138e699]: "92"
+              - heading "Rearviewmirror" [level=3] [ref=f138e700]
+              - heading "Pearl Jam" [level=4] [ref=f138e701]
+              - generic [ref=f138e702]: 04:43
+            - listitem [ref=f138e703]:
+              - button "Play track" [ref=f138e705] [cursor=pointer]:
+                - generic [ref=f138e706]: "93"
+              - heading "Wonderful World" [level=3] [ref=f138e707]
+              - heading "Otis Redding" [level=4] [ref=f138e708]
+              - generic [ref=f138e709]: 03:30
+            - listitem [ref=f138e710]:
+              - button "Play track" [ref=f138e712] [cursor=pointer]:
+                - generic [ref=f138e713]: "94"
+              - heading "Something Good" [level=3] [ref=f138e714]
+              - heading "alt-J" [level=4] [ref=f138e715]
+              - generic [ref=f138e716]: 03:38
+            - listitem [ref=f138e717]:
+              - button "Play track" [ref=f138e719] [cursor=pointer]:
+                - generic [ref=f138e720]: "95"
+              - heading "Matilda" [level=3] [ref=f138e721]
+              - heading "alt-J" [level=4] [ref=f138e722]
+              - generic [ref=f138e723]: 03:48
+            - listitem [ref=f138e724]:
+              - button "Play track" [ref=f138e726] [cursor=pointer]:
+                - generic [ref=f138e727]: "96"
+              - heading "Buah!" [level=3] [ref=f138e728]
+              - heading "7 Notas 7 Colores" [level=4] [ref=f138e729]
+              - generic [ref=f138e730]: 04:26
+            - listitem [ref=f138e731]:
+              - button "Play track" [ref=f138e733] [cursor=pointer]:
+                - generic [ref=f138e734]: "97"
+              - heading "Con Esos Ojitos" [level=3] [ref=f138e735]
+              - heading "7 Notas 7 Colores" [level=4] [ref=f138e736]
+              - generic [ref=f138e737]: 03:48
+            - listitem [ref=f138e738]:
+              - button "Play track" [ref=f138e740] [cursor=pointer]:
+                - generic [ref=f138e741]: "98"
+              - heading "Teching" [level=3] [ref=f138e742]
+              - heading "Los Piratas" [level=4] [ref=f138e743]
+              - generic [ref=f138e744]: 04:38
+            - listitem [ref=f138e745]:
+              - button "Play track" [ref=f138e747] [cursor=pointer]:
+                - generic [ref=f138e748]: "99"
+              - heading "Turnedo (feat. Xoel López) - Confesiones en directo" [level=3] [ref=f138e749]
+              - heading "Ivan Ferreiro, Xoel López" [level=4] [ref=f138e750]
+              - generic [ref=f138e751]: 03:35
+            - listitem [ref=f138e752]:
+              - button "Play track" [ref=f138e754] [cursor=pointer]:
+                - generic [ref=f138e755]: "100"
+              - heading "Ayer Te Vi" [level=3] [ref=f138e756]
+              - heading "Nacho Vegas & Christina Rosenvinge" [level=4] [ref=f138e757]
+              - generic [ref=f138e758]: 03:20
+        - alert [ref=f138e759]
+    - paragraph [ref=e70]: "Producción, arte, DJ y código en el mismo sistema. La web no acompaña la música: forma parte del mismo directo."
+    - generic [ref=e71]:
+      - generic [ref=e72]:
+        - generic [ref=e73]:
+          - generic [ref=e74]: 1_BANDCAMP.EXE
+          - generic [ref=e75] [cursor=pointer]: ✕
+        - iframe [ref=e77]: <a href="https://borjamoskv.bandcamp.com/">Instructions for Flying</a>:
+          - generic [ref=f143e2]:
+            - link [ref=f143e6] [cursor=pointer]:
+              - /url: https://borjamoskv.bandcamp.com/album/instructions-for-flying?from=embed
+            - generic [ref=f143e9]:
+              - link:
+                - /url: https://borjamoskv.bandcamp.com/album/instructions-for-flying?from=embed
+              - generic [ref=f143e10]:
+                - link "Instructions for flying" [ref=f143e12] [cursor=pointer]:
+                  - /url: https://borjamoskv.bandcamp.com/album/instructions-for-flying?from=embed
+                - generic [ref=f143e13]:
+                  - link "download" [ref=f143e15] [cursor=pointer]:
+                    - /url: https://borjamoskv.bandcamp.com/album/instructions-for-flying?action=download&from=embed
+                  - link "share" [ref=f143e17] [cursor=pointer]:
+                    - /url: https://borjamoskv.bandcamp.com/album/instructions-for-flying?action=share&from=embed
+                - text: by
+                - generic [ref=f143e18]:
+                  - text: from
+                  - generic [ref=f143e19]: by Borja Moskv
+                - generic [ref=f143e20]:
+                  - generic [ref=f143e21]:
+                    - generic [ref=f143e22]: "1."
+                    - generic [ref=f143e23]: Emedemergencia
+                  - generic [ref=f143e24]:
+                    - generic [ref=f143e25]: 00:00
+                    - generic [ref=f143e26]: / 04:28
+      - generic [ref=e78]:
+        - generic [ref=e79]:
+          - generic [ref=e80]: 2_MIXCLOUD.BIN
+          - generic [ref=e81] [cursor=pointer]: ✕
+        - iframe [ref=e83]:
+          - generic [ref=f144e7]:
+            - generic [ref=f144e8]:
+              - generic [ref=f144e10]:
+                - link "Borja Moskv 2024 MixTape" [ref=f144e11] [cursor=pointer]:
+                  - /url: https://www.mixcloud.com/borjamoskv/borja-moskv-2024-mixtape/
+                - generic [ref=f144e12]:
+                  - generic [ref=f144e13]: by
+                  - link "Bakala de Troya" [ref=f144e14] [cursor=pointer]:
+                    - /url: https://www.mixcloud.com/borjamoskv/
+                  - text: Follow
+              - link "Mixcloud" [ref=f144e15] [cursor=pointer]:
+                - /url: https://www.mixcloud.com/borjamoskv/borja-moskv-2024-mixtape/
+            - generic [ref=f144e17]:
+              - generic [ref=f144e18]: 00:00
+              - generic [ref=f144e23]: "-1:07:56"
+      - generic [ref=e84]:
+        - generic [ref=e85]:
+          - generic [ref=e86]: 3_YOUTUBE.SYS
+          - generic [ref=e87] [cursor=pointer]: ✕
+        - iframe [ref=e89]:
+          - generic "Reproductor de vídeo de YouTube" [ref=f145e3]:
+            - generic [ref=f145e5]:
+              - link "Foto de Borja Moskv | Bakala de Troya" [ref=f145e8] [cursor=pointer]:
+                - /url: https://www.youtube.com/channel/UCB82Q1f9LijxGOlxH7rmzjw?embeds_referring_euri=http%3A%2F%2F127.0.0.1%3A4173%2F
+              - link "Borja Moskv - Lamento bolivariano" [ref=f145e11] [cursor=pointer]:
+                - /url: https://www.youtube.com/watch?v=CFQ1smlFYjQ
+              - button "Más" [ref=f145e13] [cursor=pointer]:
+                - generic [ref=f145e14]:
+                  - img
+            - button "Botón de reproducción" [ref=f145e17] [cursor=pointer]:
+              - img
+      - generic [ref=e90]:
+        - generic [ref=e91]:
+          - generic [ref=e92]: Ω_BRIDGE_BORJAMOSKV.SYS
+          - generic [ref=e93] [cursor=pointer]: ✕
+        - iframe [ref=e95]:
+          - generic [ref=f146e2]:
+            - generic [ref=f146e3]:
+              - link:
+                - /url: "#"
+              - link [ref=f146e4] [cursor=pointer]:
+                - /url: "#"
+            - generic [ref=f146e6]:
+              - link:
+                - /url: "#"
+              - link [ref=f146e8] [cursor=pointer]:
+                - /url: "#"
+            - generic [ref=f146e11]: Sorry, this track or album is not available.
+      - generic [ref=e96]:
+        - generic [ref=e97]:
+          - generic [ref=e98]: Ω_BRIDGE_OSCARMULERO.SYS
+          - generic [ref=e99] [cursor=pointer]: ✕
+        - iframe [ref=e101]:
+          - generic [ref=f147e2]:
+            - generic [ref=f147e3]:
+              - link [ref=f147e4] [cursor=pointer]:
+                - /url: https://fishcamp.bandcamp.com/track/sleep?from=embed
+              - link [ref=f147e8] [cursor=pointer]:
+                - /url: https://fishcamp.bandcamp.com/track/sleep?from=embed
+            - generic [ref=f147e12]:
+              - link "sleep" [ref=f147e14] [cursor=pointer]:
+                - /url: https://fishcamp.bandcamp.com/track/sleep?from=embed
+              - generic [ref=f147e15]:
+                - link "download" [ref=f147e17] [cursor=pointer]:
+                  - /url: https://fishcamp.bandcamp.com/track/sleep?action=download&from=embed
+                - link "share" [ref=f147e19] [cursor=pointer]:
+                  - /url: https://fishcamp.bandcamp.com/track/sleep?action=share&from=embed
+              - text: by
+              - generic [ref=f147e20]:
+                - text: from
+                - generic [ref=f147e21]: by fish camp
+              - generic [ref=f147e23]:
+                - generic [ref=f147e24]: 00:00
+                - generic [ref=f147e25]: / 00:58
+  - generic [ref=e104]:
+    - generic [ref=e105]: Señal base
+    - 'heading "Lore Electrónico: Borja Moskv Multiverso" [level=2] [ref=e106]'
+    - paragraph [ref=e107]: Borja Moskv mezcla música, visuales, escritura y sistemas digitales desde Bilbao. No como disciplinas separadas, sino como partes del mismo proyecto.
+    - generic [ref=e108]:
+      - article [ref=e109]:
+        - generic [ref=e110]: Música
+        - heading "Costumbrismo con máquinas" [level=3] [ref=e111]
+        - paragraph [ref=e112]: IDM, ambient, techno y reworks con relato, tensión y bastante sentido del humor.
+      - article [ref=e113]:
+        - generic [ref=e114]: Alias
+        - heading "Bakala de Troya y otras mutaciones" [level=3] [ref=e115]
+        - paragraph [ref=e116]: "Los nombres no maquillan el proyecto: abren distintos modos de directo, tono y presencia."
+      - article [ref=e117]:
+        - generic [ref=e118]: Territorio
+        - heading "Bilbao, no Berlín" [level=3] [ref=e119]
+        - paragraph [ref=e120]: Humedad, ironía, barrio y una voluntad bastante seria de complicarlo todo un poco más.
+    - paragraph [ref=e121]: Si todo esto parece un plan, no lo es. Es más bien una acumulación de decisiones ligeramente dudosas tomadas con bastante convicción.
+    - paragraph [ref=e122]: Me llamo Borja Moskv, pero eso es verdad a medias. Hay días que soy Bakala de Troya, otros Flamenc Osmic, otros Boney Mdma & Neil Ráyadon. Más que máscaras, son modos de funcionamiento.
+    - paragraph [ref=e123]: "Todo lo que hago —música, visuales, textos, proyectos digitales, sets y relatos— responde a la misma manía: construir un universo propio donde la electrónica no es solo baile, sino también relato, ironía y pensamiento de barrio."
+    - paragraph [ref=e124]: No persigo la novedad. Persigo la coherencia rara. Que alguien entre, escuche dos piezas distintas y aun así note que salen de la misma cabeza.
+    - paragraph [ref=e125]: Todo esto sale de Bilbao. Podría simplificarlo. Pero entonces no tendría gracia.
+  - generic [ref=e126]:
+    - generic [ref=e127]: Catálogo
+    - heading "WORKS" [level=2] [ref=e128]
+    - paragraph [ref=e129]: Originales, reworks, visuales 4K y piezas raras filtrables por mood, formato y deriva.
+    - generic [ref=e130]:
+      - button "ALL" [ref=e131] [cursor=pointer]
+      - button "Originals" [ref=e132] [cursor=pointer]
+      - button "Reworks" [ref=e133] [cursor=pointer]
+      - button "Ambient" [ref=e134] [cursor=pointer]
+      - button "IDM" [ref=e135] [cursor=pointer]
+      - button "Techno" [ref=e136] [cursor=pointer]
+      - button "Electronic" [ref=e137] [cursor=pointer]
+      - button "4K Visuals" [ref=e138] [cursor=pointer]
+      - button "Experimental" [ref=e139] [cursor=pointer]
+      - button "Parkour" [ref=e140] [cursor=pointer]
+      - button "Hard Bachata" [ref=e141] [cursor=pointer]
+      - button "Salmorejo" [ref=e142] [cursor=pointer]
+    - generic [ref=e143]:
+      - generic [ref=e144]:
+        - link "ECOS DEL COSMOS" [ref=e145]:
+          - /url: https://www.youtube.com/watch?v=NYhOQTcNLkA
+        - generic [ref=e147]:
+          - heading "ECOS DEL COSMOS" [level=3] [ref=e148]
+          - generic [ref=e149]: Original · Ambient / Sci-Fi [4K]
+      - generic [ref=e150]:
+        - link "GLITCH IN THE MIRROR" [ref=e151]:
+          - /url: https://www.youtube.com/watch?v=x8E9HInpzE4
+        - generic [ref=e153]:
+          - heading "GLITCH IN THE MIRROR" [level=3] [ref=e154]
+          - generic [ref=e155]: Original · Experimental [4K]
+      - generic [ref=e156]:
+        - link "LES BUKO" [ref=e157]:
+          - /url: https://www.youtube.com/watch?v=b9ktVQN48OU
+        - generic [ref=e159]:
+          - heading "LES BUKO" [level=3] [ref=e160]
+          - generic [ref=e161]: Original · Electronic [4K]
+      - generic [ref=e162]:
+        - link "PATADAS" [ref=e163]:
+          - /url: https://www.youtube.com/watch?v=NJqC3Xf6RzE
+        - generic [ref=e165]:
+          - heading "PATADAS" [level=3] [ref=e166]
+          - generic [ref=e167]: Original · Electronic
+      - generic [ref=e168]:
+        - link "1" [ref=e169]:
+          - /url: https://www.youtube.com/watch?v=rakTVLzdc44
+        - generic [ref=e171]:
+          - heading "1" [level=3] [ref=e172]
+          - generic [ref=e173]: Original · Experimental
+      - generic [ref=e174]:
+        - link "4 DROGAS" [ref=e175]:
+          - /url: https://www.youtube.com/watch?v=LDzdKd4WxvI
+        - generic [ref=e177]:
+          - heading "4 DROGAS" [level=3] [ref=e178]
+          - generic [ref=e179]: Original · Techno
+      - generic [ref=e180]:
+        - link "COHERENCIA RARA 42" [ref=e181]:
+          - /url: https://www.youtube.com/watch?v=N66gquS-zLw
+        - generic [ref=e183]:
+          - heading "COHERENCIA RARA 42" [level=3] [ref=e184]
+          - generic [ref=e185]: Original · Experimental
+      - generic [ref=e186]:
+        - link "ANTES DE LAS GUERRAS" [ref=e187]:
+          - /url: https://www.youtube.com/watch?v=hsdOCzJpUMg
+        - generic [ref=e189]:
+          - heading "ANTES DE LAS GUERRAS" [level=3] [ref=e190]
+          - generic [ref=e191]: Original · Ambient
+      - generic [ref=e192]:
+        - link "EN EL PRISMA DEL XOKAS" [ref=e193]:
+          - /url: https://www.youtube.com/watch?v=eIrt6Uw-SEo
+        - generic [ref=e195]:
+          - heading "EN EL PRISMA DEL XOKAS" [level=3] [ref=e196]
+          - generic [ref=e197]: Original · Experimental
+      - generic [ref=e198]:
+        - link "BUILDING YOUR OWN UNIVERSE" [ref=e199]:
+          - /url: https://www.youtube.com/watch?v=PCjZruRuoNY
+        - generic [ref=e201]:
+          - heading "BUILDING YOUR OWN UNIVERSE" [level=3] [ref=e202]
+          - generic [ref=e203]: Short · Substack
+      - generic [ref=e204]:
+        - link "ALGORITHMS VS HUMAN ATTENTION" [ref=e205]:
+          - /url: https://www.youtube.com/watch?v=AL46Orm0LS4
+        - generic [ref=e207]:
+          - heading "ALGORITHMS VS HUMAN ATTENTION" [level=3] [ref=e208]
+          - generic [ref=e209]: Short · Substack
+      - generic [ref=e210]:
+        - link "CON LA PUNTA DEL CIPOTE" [ref=e211]:
+          - /url: https://www.youtube.com/watch?v=-s5ZB4djvEw
+        - generic [ref=e213]:
+          - heading "CON LA PUNTA DEL CIPOTE" [level=3] [ref=e214]
+          - generic [ref=e215]: Short · Substack
+      - generic [ref=e216]:
+        - link "EL ARTE NO TE DEBE NADA" [ref=e217]:
+          - /url: https://www.youtube.com/watch?v=uhw1ZQrp-9g
+        - generic [ref=e219]:
+          - heading "EL ARTE NO TE DEBE NADA" [level=3] [ref=e220]
+          - generic [ref=e221]: Short · Substack
+      - generic [ref=e222]:
+        - link "RADIOHEAD — IN RAINBOWS" [ref=e223]:
+          - /url: https://www.youtube.com/watch?v=lbQ1aKrnGNs
+        - generic [ref=e225]:
+          - heading "RADIOHEAD — IN RAINBOWS" [level=3] [ref=e226]
+          - generic [ref=e227]: Rework · IDM / Ambient
+      - generic [ref=e228]:
+        - link "O SUPERMAN (LAURIE ANDERSON)" [ref=e229]:
+          - /url: https://www.youtube.com/watch?v=gDquDpykJIc
+        - generic [ref=e231]:
+          - heading "O SUPERMAN (LAURIE ANDERSON)" [level=3] [ref=e232]
+          - generic [ref=e233]: Rework · Electronic
+      - generic [ref=e234]:
+        - link "THE MEXICAN" [ref=e235]:
+          - /url: https://www.youtube.com/watch?v=I3jJXm8aG-A
+        - generic [ref=e237]:
+          - heading "THE MEXICAN" [level=3] [ref=e238]
+          - generic [ref=e239]: Rework · Bakala
+      - generic [ref=e240]:
+        - link "RADIOHEAD — NO SURPRISES" [ref=e241]:
+          - /url: https://www.youtube.com/watch?v=bmD0YmLm45A
+        - generic [ref=e243]:
+          - heading "RADIOHEAD — NO SURPRISES" [level=3] [ref=e244]
+          - generic [ref=e245]: Rework · Ambient Techno
+      - generic [ref=e246]:
+        - link "TAME IMPALA — LET IT HAPPEN" [ref=e247]:
+          - /url: https://www.youtube.com/watch?v=_1XOjBK4wJc
+        - generic [ref=e249]:
+          - heading "TAME IMPALA — LET IT HAPPEN" [level=3] [ref=e250]
+          - generic [ref=e251]: Rework · Psychedelic
+      - generic [ref=e252]:
+        - link "IDLES — THE BEACHLAND BALLROOM" [ref=e253]:
+          - /url: https://www.youtube.com/watch?v=3iQFsgZrDZk
+        - generic [ref=e255]:
+          - heading "IDLES — THE BEACHLAND BALLROOM" [level=3] [ref=e256]
+          - generic [ref=e257]: Rework · Warehouse Techno
+      - generic [ref=e258]:
+        - link "JAR TO THE SYSTEM" [ref=e259]:
+          - /url: https://www.youtube.com/watch?v=tMorCDfedf8
+        - generic [ref=e261]:
+          - heading "JAR TO THE SYSTEM" [level=3] [ref=e262]
+          - generic [ref=e263]: Original · Electronic
+      - generic [ref=e264]:
+        - link "ASÍ FUE" [ref=e265]:
+          - /url: https://www.youtube.com/watch?v=GeHP3ADsans
+        - generic [ref=e267]:
+          - heading "ASÍ FUE" [level=3] [ref=e268]
+          - generic [ref=e269]: Rework · Electro Deep House
+      - generic [ref=e270]:
+        - link "SWANS — SCREEN SHOT" [ref=e271]:
+          - /url: https://www.youtube.com/watch?v=AcouyGSki-8
+        - generic [ref=e273]:
+          - heading "SWANS — SCREEN SHOT" [level=3] [ref=e274]
+          - generic [ref=e275]: Rework · Experimental
+      - generic [ref=e276]:
+        - link "GRIZZLY BEAR — DEEP SEA DIVER" [ref=e277]:
+          - /url: https://www.youtube.com/watch?v=4RXo5uD-wF4
+        - generic [ref=e279]:
+          - heading "GRIZZLY BEAR — DEEP SEA DIVER" [level=3] [ref=e280]
+          - generic [ref=e281]: Remix · Electronic
+      - generic [ref=e282]:
+        - link "JOHN FRUSCIANTE — MURDERERS" [ref=e283]:
+          - /url: https://www.youtube.com/watch?v=ya59utbBStM
+        - generic [ref=e285]:
+          - heading "JOHN FRUSCIANTE — MURDERERS" [level=3] [ref=e286]
+          - generic [ref=e287]: Rework · IDM
+      - generic [ref=e288]:
+        - link "ROBERT COSMIC — VIAJEROS" [ref=e289]:
+          - /url: https://www.youtube.com/watch?v=D8hjJ17vZYc
+        - generic [ref=e291]:
+          - heading "ROBERT COSMIC — VIAJEROS" [level=3] [ref=e292]
+          - generic [ref=e293]: Rework · Electronic
+      - generic [ref=e294]:
+        - link "RADIOHEAD — 15 STEP" [ref=e295]:
+          - /url: https://www.youtube.com/watch?v=MH-YirWPNmI
+        - generic [ref=e297]:
+          - heading "RADIOHEAD — 15 STEP" [level=3] [ref=e298]
+          - generic [ref=e299]: Rework · IDM
+      - generic [ref=e300]:
+        - link "LINDSTRØM & PRINS THOMAS — NAA ER DRUENE" [ref=e301]:
+          - /url: https://www.youtube.com/watch?v=Yr5CMXrJgIo
+        - generic [ref=e303]:
+          - heading "LINDSTRØM & PRINS THOMAS — NAA ER DRUENE" [level=3] [ref=e304]
+          - generic [ref=e305]: Rework · Electronic
+      - generic [ref=e306]:
+        - link "ROBOCOP" [ref=e307]:
+          - /url: https://www.youtube.com/watch?v=u99SbUVjV6M
+        - generic [ref=e309]:
+          - heading "ROBOCOP" [level=3] [ref=e310]
+          - generic [ref=e311]: Rework · Electronic
+      - generic [ref=e312]:
+        - link "CRUJIDOS" [ref=e313]:
+          - /url: https://www.youtube.com/watch?v=nz9h7q5FA-0
+        - generic [ref=e315]:
+          - heading "CRUJIDOS" [level=3] [ref=e316]
+          - generic [ref=e317]: Rework · Experimental
+      - generic [ref=e318]:
+        - link "32 ELECTRONIC MUSIC VISUAL TRACKS" [ref=e319]:
+          - /url: https://www.youtube.com/watch?v=rmzKC8AYkVw
+        - generic [ref=e321]:
+          - heading "32 ELECTRONIC MUSIC VISUAL TRACKS" [level=3] [ref=e322]
+          - generic [ref=e323]: Visual Compilation
+      - generic [ref=e324]:
+        - link "METAFASHION" [ref=e325]:
+          - /url: https://www.youtube.com/watch?v=zzHETLKSeT4
+        - generic [ref=e327]:
+          - heading "METAFASHION" [level=3] [ref=e328]
+          - generic [ref=e329]: Original · Experimental
+      - generic [ref=e330]:
+        - link "BLAC" [ref=e331]:
+          - /url: https://www.youtube.com/watch?v=4Cb-Iu8DnJM
+        - generic [ref=e333]:
+          - heading "BLAC" [level=3] [ref=e334]
+          - generic [ref=e335]: Original · Electronic
+      - generic [ref=e336]:
+        - link "CICLISTAS" [ref=e337]:
+          - /url: https://www.youtube.com/watch?v=Icz_FGJAQ78
+        - generic [ref=e339]:
+          - heading "CICLISTAS" [level=3] [ref=e340]
+          - generic [ref=e341]: Original · Visual
+      - generic [ref=e342]:
+        - link "EL CUY DEL ALTIPLANO" [ref=e343]:
+          - /url: https://www.youtube.com/watch?v=Izt6bzo0PO8
+        - generic [ref=e345]:
+          - heading "EL CUY DEL ALTIPLANO" [level=3] [ref=e346]
+          - generic [ref=e347]: Original · Ambient
+      - generic [ref=e348]:
+        - link "JUGAR LA BRISCA CON AMAVISCA" [ref=e349]:
+          - /url: https://www.youtube.com/watch?v=KuBNnC4mYuU
+        - generic [ref=e351]:
+          - heading "JUGAR LA BRISCA CON AMAVISCA" [level=3] [ref=e352]
+          - generic [ref=e353]: Original · Hard Bachata
+      - generic [ref=e354]:
+        - link "TAA LUU VAA NAA SHEE DOOO" [ref=e355]:
+          - /url: https://www.youtube.com/watch?v=TOuixj79kDU
+        - generic [ref=e357]:
+          - heading "TAA LUU VAA NAA SHEE DOOO" [level=3] [ref=e358]
+          - generic [ref=e359]: Original · Experimental
+      - generic [ref=e360]:
+        - link "EL TUPAS" [ref=e361]:
+          - /url: https://www.youtube.com/watch?v=c4Wz6M2_y1s
+        - generic [ref=e363]:
+          - heading "EL TUPAS" [level=3] [ref=e364]
+          - generic [ref=e365]: Original · Salmorejo
+      - generic [ref=e366]:
+        - link "LAMENTO BOLIVARIANO" [ref=e367]:
+          - /url: https://www.youtube.com/watch?v=CFQ1smlFYjQ
+        - generic [ref=e369]:
+          - heading "LAMENTO BOLIVARIANO" [level=3] [ref=e370]
+          - generic [ref=e371]: Original · Ambient
+      - generic [ref=e372]:
+        - link "ME CAIGO Y ME LEVANTO" [ref=e373]:
+          - /url: https://www.youtube.com/watch?v=Otvpn9vfXOE
+        - generic [ref=e375]:
+          - heading "ME CAIGO Y ME LEVANTO" [level=3] [ref=e376]
+          - generic [ref=e377]: Original · Parkour
+      - generic [ref=e378]:
+        - link "INCREÍBLE" [ref=e379]:
+          - /url: https://www.youtube.com/watch?v=hCkD67O9H2o
+        - generic [ref=e381]:
+          - heading "INCREÍBLE" [level=3] [ref=e382]
+          - generic [ref=e383]: Original · Electronic
+      - generic [ref=e384]:
+        - link "COCODRILO COJONES" [ref=e385]:
+          - /url: https://www.youtube.com/watch?v=Z_S9hMVOizo
+        - generic [ref=e387]:
+          - heading "COCODRILO COJONES" [level=3] [ref=e388]
+          - generic [ref=e389]: Original · Hard Bachata Frontflip
+      - generic [ref=e390]:
+        - link "NEURAL TRANSFER" [ref=e391]:
+          - /url: https://www.youtube.com/watch?v=YvGpocK-Iqg
+        - generic [ref=e393]:
+          - heading "NEURAL TRANSFER" [level=3] [ref=e394]
+          - generic [ref=e395]: Original · Electronic
+      - generic [ref=e396]:
+        - link "VOID CASCADE" [ref=e397]:
+          - /url: https://www.youtube.com/watch?v=EP5s0yKZUKk
+        - generic [ref=e399]:
+          - heading "VOID CASCADE" [level=3] [ref=e400]
+          - generic [ref=e401]: Original · Ambient
+      - generic [ref=e402]:
+        - link "LA HUMILDAD ABRE MÁS PUERTAS QUE EL TALENTO" [ref=e403]:
+          - /url: https://www.youtube.com/watch?v=iI9-8BibHaM
+        - generic [ref=e405]:
+          - heading "LA HUMILDAD ABRE MÁS PUERTAS QUE EL TALENTO" [level=3] [ref=e406]
+          - generic [ref=e407]: Original · Electronic
+      - generic [ref=e408]:
+        - link "THE GHOST OF THE TORN PANTIES" [ref=e409]:
+          - /url: https://www.youtube.com/watch?v=U2faQ81sRpg
+        - generic [ref=e411]:
+          - heading "THE GHOST OF THE TORN PANTIES" [level=3] [ref=e412]
+          - generic [ref=e413]: Original · Experimental
+      - generic [ref=e414]:
+        - link "PIENSO LUEGO IMPROVISO" [ref=e415]:
+          - /url: https://www.youtube.com/watch?v=8Encp3vIb9M
+        - generic [ref=e417]:
+          - heading "PIENSO LUEGO IMPROVISO" [level=3] [ref=e418]
+          - generic [ref=e419]: Original · Electronic
+      - generic [ref=e420]:
+        - link "LITTLE MEGA MIX" [ref=e421]:
+          - /url: https://www.youtube.com/watch?v=v1MvE0jG_G0
+        - generic [ref=e423]:
+          - heading "LITTLE MEGA MIX" [level=3] [ref=e424]
+          - generic [ref=e425]: Mix · Electronic
+      - generic [ref=e426]:
+        - link "FROSTIE AIR" [ref=e427]:
+          - /url: https://www.youtube.com/watch?v=cFOFcUPUUNs
+        - generic [ref=e429]:
+          - heading "FROSTIE AIR" [level=3] [ref=e430]
+          - generic [ref=e431]: Original · Ambient
+      - generic [ref=e432]:
+        - link "PERCULAES" [ref=e433]:
+          - /url: https://www.youtube.com/watch?v=_l1J37XK8vM
+        - generic [ref=e435]:
+          - heading "PERCULAES" [level=3] [ref=e436]
+          - generic [ref=e437]: Original · Electronic
+      - generic [ref=e438]:
+        - link "THE SUPERSTARS" [ref=e439]:
+          - /url: https://www.youtube.com/watch?v=8UMhx5cDYjo
+        - generic [ref=e441]:
+          - heading "THE SUPERSTARS" [level=3] [ref=e442]
+          - generic [ref=e443]: Original · Electronic
+      - generic [ref=e444]:
+        - link "2 MANY FORRESTS" [ref=e445]:
+          - /url: https://www.youtube.com/watch?v=ZtOVq-nMgqo
+        - generic [ref=e447]:
+          - heading "2 MANY FORRESTS" [level=3] [ref=e448]
+          - generic [ref=e449]: Original · Electronic
+      - generic [ref=e450]:
+        - link "RETRATOS NAROA GUTIÉRREZ GIL" [ref=e451]:
+          - /url: https://www.youtube.com/watch?v=Zc8QEQ8y1f8
+        - generic [ref=e453]:
+          - heading "RETRATOS NAROA GUTIÉRREZ GIL" [level=3] [ref=e454]
+          - generic [ref=e455]: Visual · Photography
+      - generic [ref=e456]:
+        - link "EL CHOMBO — CHACARRON" [ref=e457]:
+          - /url: https://www.youtube.com/watch?v=UrX4mqXmapE
+        - generic [ref=e459]:
+          - heading "EL CHOMBO — CHACARRON" [level=3] [ref=e460]
+          - generic [ref=e461]: MICA Inject · Electronic
+  - generic [ref=e462]:
+    - generic [ref=e463]: Plataformas
+    - heading "TRANSMISIÓN DIRECTA" [level=2] [ref=e464]
+    - paragraph [ref=e465]: Escucha sin salir de la frecuencia y entra por la plataforma que mejor te encaje.
+    - generic [ref=e466]:
+      - generic [ref=e467]:
+        - generic [ref=e468]:
+          - generic [ref=e469]: ▶
+          - generic [ref=e470]: SPOTIFY.EXE
+          - generic [ref=e471]: STREAMING
+        - iframe [ref=e473]:
+          - generic [active] [ref=f139e1]:
+            - generic [ref=f139e4]:
+              - generic [ref=f139e5]:
+                - button "Play on Spotify" [ref=f139e9] [cursor=pointer]:
+                  - img [ref=f139e10]
+                - generic [ref=f139e12]:
+                  - heading "Borja Moskv" [level=1] [ref=f139e13]:
+                    - link "Borja Moskv" [ref=f139e17] [cursor=pointer]:
+                      - /url: https://open.spotify.com/artist/4p7wMuZpktE5aBFhBoQdqa?go=1&sp_cid=e6a2d36be6cf515a2ec370c4468c091f&utm_source=embed_player_p&utm_medium=desktop
+                  - generic [ref=f139e18]:
+                    - list "Etiquetas" [ref=f139e19]:
+                      - generic "Muestra" [ref=f139e20]
+                    - heading "Top tracks" [level=2] [ref=f139e21]:
+                      - link "Top tracks" [ref=f139e26] [cursor=pointer]:
+                        - /url: https://open.spotify.com/artist/4p7wMuZpktE5aBFhBoQdqa?go=1&sp_cid=e6a2d36be6cf515a2ec370c4468c091f&utm_source=embed_player_p&utm_medium=desktop
+                  - button "Seguir" [ref=f139e29] [cursor=pointer]:
+                    - generic [ref=f139e30]: Seguir
+                - generic [ref=f139e32]:
+                  - generic [ref=f139e33]:
+                    - button "Anterior" [disabled] [ref=f139e34]:
+                      - img [ref=f139e36]
+                    - button "Siguiente" [disabled] [ref=f139e38]:
+                      - img [ref=f139e40]
+                  - button "Más" [ref=f139e42] [cursor=pointer]:
+                    - img [ref=f139e43]
+                  - button "Reproducir" [ref=f139e46] [cursor=pointer]:
+                    - img [ref=f139e47]
+              - list "Track list" [ref=f139e52]:
+                - listitem [ref=f139e53]:
+                  - button "Play track" [ref=f139e55] [cursor=pointer]:
+                    - generic [ref=f139e56]: "1"
+                  - heading "The spring of the bear" [level=3] [ref=f139e57]
+                  - heading "Borja Moskv" [level=4] [ref=f139e58]
+                  - generic [ref=f139e59]: 06:48
+                - listitem [ref=f139e60]:
+                  - button "Play track" [ref=f139e62] [cursor=pointer]:
+                    - generic [ref=f139e63]: "2"
+                  - heading "Dentro de Mí" [level=3] [ref=f139e64]
+                  - heading "Borja Moskv" [level=4] [ref=f139e65]
+                  - generic [ref=f139e66]: 03:51
+                - listitem [ref=f139e67]:
+                  - button "Play track" [ref=f139e69] [cursor=pointer]:
+                    - generic [ref=f139e70]: "3"
+                  - heading "Hyperdentro de mí" [level=3] [ref=f139e71]
+                  - heading "Borja Moskv" [level=4] [ref=f139e72]
+                  - generic [ref=f139e73]: 02:56
+                - listitem [ref=f139e74]:
+                  - button "Play track" [ref=f139e76] [cursor=pointer]:
+                    - generic [ref=f139e77]: "4"
+                  - heading "Ecos del cosmos" [level=3] [ref=f139e78]
+                  - heading "Borja Moskv" [level=4] [ref=f139e79]
+                  - generic [ref=f139e80]: 03:49
+                - listitem [ref=f139e81]:
+                  - button "Play track" [ref=f139e83] [cursor=pointer]:
+                    - generic [ref=f139e84]: "5"
+                  - heading "Me mira el misterio" [level=3] [ref=f139e85]
+                  - heading "Borja Moskv" [level=4] [ref=f139e86]
+                  - generic [ref=f139e87]: 03:41
+                - listitem [ref=f139e88]:
+                  - button "Play track" [ref=f139e90] [cursor=pointer]:
+                    - generic [ref=f139e91]: "6"
+                  - heading "Lo inmanente" [level=3] [ref=f139e92]
+                  - heading "Borja Moskv" [level=4] [ref=f139e93]
+                  - generic [ref=f139e94]: 02:57
+                - listitem [ref=f139e95]:
+                  - button "Play track" [ref=f139e97] [cursor=pointer]:
+                    - generic [ref=f139e98]: "7"
+                  - heading "Animals will soon dominate the Earth" [level=3] [ref=f139e99]
+                  - heading "Borja Moskv" [level=4] [ref=f139e100]
+                  - generic [ref=f139e101]: 03:54
+                - listitem [ref=f139e102]:
+                  - button "Play track" [ref=f139e104] [cursor=pointer]:
+                    - generic [ref=f139e105]: "8"
+                  - heading "Anatomía de una ballena" [level=3] [ref=f139e106]
+                  - heading "Borja Moskv" [level=4] [ref=f139e107]
+                  - generic [ref=f139e108]: 04:35
+                - listitem [ref=f139e109]:
+                  - button "Play track" [ref=f139e111] [cursor=pointer]:
+                    - generic [ref=f139e112]: "9"
+                  - heading "Richard" [level=3] [ref=f139e113]
+                  - heading "Borja Moskv" [level=4] [ref=f139e114]
+                  - generic [ref=f139e115]: 06:39
+                - listitem [ref=f139e116]:
+                  - button "Play track" [ref=f139e118] [cursor=pointer]:
+                    - generic [ref=f139e119]: "10"
+                  - heading "Quand on danse" [level=3] [ref=f139e120]
+                  - heading "Borja Moskv" [level=4] [ref=f139e121]
+                  - generic [ref=f139e122]: 05:45
+            - alert [ref=f139e123]
+      - generic [ref=e474]:
+        - generic [ref=e475]:
+          - generic [ref=e476]: ◉
+          - generic [ref=e477]: SOUNDCLOUD.BIN
+          - generic [ref=e478]: LIVE
+        - iframe [ref=e480]:
+          - generic [active] [ref=f140e1]:
+            - generic [ref=f140e2]:
+              - generic [ref=f140e3]:
+                - paragraph [ref=f140e4]: Oops, we couldn’t find that profile.
+                - link "SoundCloud.com" [ref=f140e5] [cursor=pointer]:
+                  - /url: http://soundcloud.com
+              - link "SoundCloud privacy policy" [ref=f140e7] [cursor=pointer]:
+                - /url: https://soundcloud.com/pages/privacy
+                - generic [ref=f140e8]: SoundCloud privacy policy
+                - text: Privacy policy
+            - iframe [ref=f140e10]:
+              - generic [ref=f174e2]:
+                - paragraph [ref=f174e7]: El acceso está restringido temporalmente
+                - generic [ref=f174e9]:
+                  - generic [ref=f174e10]:
+                    - paragraph [ref=f174e11]: ¿Por qué este bloqueo? Algo sobre el comportamiento del navegador nos ha intrigado.
+                    - paragraph [ref=f174e12]: "Varias posibilidades:"
+                    - list [ref=f174e13]:
+                      - listitem [ref=f174e14]: usted navega y hace clic a una velocidad sobrehumana
+                      - listitem [ref=f174e15]: algo bloquea el funcionamiento de JavaScript en su ordenador
+                      - listitem [ref=f174e16]: un robot se encuentra en la misma red (IP 88.14.43.90) que usted
+                  - generic [ref=f174e17]:
+                    - paragraph [ref=f174e18]:
+                      - text: ¿Tiene dificultades para acceder al sitio?
+                      - button "Ponerse en contacto con el servicio de asistencia" [ref=f174e19] [cursor=pointer]
+                    - paragraph [ref=f174e20]: "ID: 92227062-91d5-a608-0f1f-94caa15981fd"
+      - generic [ref=e481]:
+        - generic [ref=e482]:
+          - generic [ref=e483]: ◈
+          - generic [ref=e484]: BANDCAMP.SYS
+          - generic [ref=e485]: ARCHIVE
+        - iframe [ref=e487]: <a href="https://borjamoskv.bandcamp.com/album/instructions-for-flying">Instructions for Flying by Borja Moskv</a>:
+          - generic [ref=f141e2]:
+            - generic [ref=f141e3]:
+              - link [ref=f141e4] [cursor=pointer]:
+                - /url: https://borjamoskv.bandcamp.com/album/instructions-for-flying?from=embed
+              - link [ref=f141e8] [cursor=pointer]:
+                - /url: https://borjamoskv.bandcamp.com/album/instructions-for-flying?from=embed
+            - generic [ref=f141e12]:
+              - link "Instructions for flying" [ref=f141e14] [cursor=pointer]:
+                - /url: https://borjamoskv.bandcamp.com/album/instructions-for-flying?from=embed
+              - generic [ref=f141e15]:
+                - link "download" [ref=f141e17] [cursor=pointer]:
+                  - /url: https://borjamoskv.bandcamp.com/album/instructions-for-flying?action=download&from=embed
+                - link "share" [ref=f141e19] [cursor=pointer]:
+                  - /url: https://borjamoskv.bandcamp.com/album/instructions-for-flying?action=share&from=embed
+              - text: by
+              - generic [ref=f141e20]:
+                - text: from
+                - generic [ref=f141e21]: by Borja Moskv
+              - generic [ref=f141e22]:
+                - generic [ref=f141e23]:
+                  - generic [ref=f141e24]: "1."
+                  - generic [ref=f141e25]: Emedemergencia
+                - generic [ref=f141e26]:
+                  - generic [ref=f141e27]: 00:00
+                  - generic [ref=f141e28]: / 04:28
+      - generic [ref=e488]:
+        - generic [ref=e489]:
+          - generic [ref=e490]: ≋
+          - generic [ref=e491]: MIXCLOUD.DAT
+          - generic [ref=e492]: SYNC
+        - iframe [ref=e494]:
+          - generic [ref=f142e7]:
+            - generic [ref=f142e8]:
+              - generic [ref=f142e10]:
+                - link "Borja Moskv 2024 MixTape" [ref=f142e11] [cursor=pointer]:
+                  - /url: https://www.mixcloud.com/borjamoskv/borja-moskv-2024-mixtape/
+                - generic [ref=f142e12]:
+                  - generic [ref=f142e13]: by
+                  - link "Bakala de Troya" [ref=f142e14] [cursor=pointer]:
+                    - /url: https://www.mixcloud.com/borjamoskv/
+                  - text: Follow
+              - link "Mixcloud" [ref=f142e15] [cursor=pointer]:
+                - /url: https://www.mixcloud.com/borjamoskv/borja-moskv-2024-mixtape/
+            - generic [ref=f142e17]:
+              - generic [ref=f142e18]: 00:00
+              - generic [ref=f142e23]: "-1:07:56"
+  - generic [ref=e495]:
+    - generic [ref=e496]: Directos
+    - heading "BAKALA DE TROYA" [level=2] [ref=e497]
+    - paragraph [ref=e498]: Maratones, sesiones AV y mezclas que cruzan techno, electro, ambient y lo que toque esa noche.
+    - generic [ref=e499]:
+      - link "15H NON-STOP DJ SET 🔥 MARATHON" [ref=e500]:
+        - /url: https://www.youtube.com/watch?v=YvGpocK-Iqg
+        - generic [ref=e501]: 15H NON-STOP DJ SET 🔥
+        - generic [ref=e502]: MARATHON
+      - link "DARK DISCO & IDM SET 2025 🔥" [ref=e503]:
+        - /url: https://www.youtube.com/watch?v=EP5s0yKZUKk
+        - generic [ref=e504]: DARK DISCO & IDM SET 2025
+        - generic [ref=e505]: 🔥
+      - link "TECHNO INDUSTRIAL WAREHOUSE SET HARD" [ref=e506]:
+        - /url: https://www.youtube.com/watch?v=_zT6jP2OvXk
+        - generic [ref=e507]: TECHNO INDUSTRIAL WAREHOUSE SET
+        - generic [ref=e508]: HARD
+      - link "AMBIENT & TEXTURES EXPERIMENTAL DEEP" [ref=e509]:
+        - /url: https://www.youtube.com/watch?v=VqhnG94f5pE
+        - generic [ref=e510]: AMBIENT & TEXTURES EXPERIMENTAL
+        - generic [ref=e511]: DEEP
+      - link "ECLECTIC ELECTRONIC VISUAL SET LIVE" [ref=e512]:
+        - /url: https://www.youtube.com/watch?v=T_rU7WfOVTI
+        - generic [ref=e513]: ECLECTIC ELECTRONIC VISUAL SET
+        - generic [ref=e514]: LIVE
+      - link "ECLECTIC ELECTRONIC COWPUNK SET VJ" [ref=e515]:
+        - /url: https://www.youtube.com/watch?v=vxD2l4cIp7I
+        - generic [ref=e516]: ECLECTIC ELECTRONIC COWPUNK SET
+        - generic [ref=e517]: VJ
+      - link ">> TODOS MIS SETS EN SOUNDCLOUD ARCHIVE" [ref=e518]:
+        - /url: https://soundcloud.com/borja-moskv
+        - generic [ref=e519]: ">> TODOS MIS SETS EN SOUNDCLOUD"
+        - generic [ref=e520]: ARCHIVE
+  - generic [ref=e523]:
+    - generic [ref=e524]: INDUSTRIAL NOIR
+    - generic [ref=e525]: ·
+    - generic [ref=e526]: BAKALA DE TROYA
+    - generic [ref=e527]: ·
+    - generic [ref=e528]: FLAMENC OSMIC
+    - generic [ref=e529]: ·
+    - generic [ref=e530]: ESTO NO ES UNA WEB, ES UN SENTIMIENTO
+    - generic [ref=e531]: ·
+    - generic [ref=e532]: BONEY MDMA
+    - generic [ref=e533]: ·
+    - generic [ref=e534]: NEIL RÁYADON
+    - generic [ref=e535]: ·
+    - generic [ref=e536]: NO PUEDO PARAAAR
+    - generic [ref=e537]: ·
+    - generic [ref=e538]: WEB DESIGN
+    - generic [ref=e539]: ·
+    - generic [ref=e540]: INDUSTRIAL NOIR
+    - generic [ref=e541]: ·
+    - generic [ref=e542]: BAKALA DE TROYA
+    - generic [ref=e543]: ·
+    - generic [ref=e544]: FLAMENC OSMIC
+    - generic [ref=e545]: ·
+    - generic [ref=e546]: ESTO NO ES UNA WEB, ES UN SENTIMIENTO
+    - generic [ref=e547]: ·
+    - generic [ref=e548]: BONEY MDMA
+    - generic [ref=e549]: ·
+    - generic [ref=e550]: NEIL RÁYADON
+    - generic [ref=e551]: ·
+    - generic [ref=e552]: NO PUEDO PARAAAR
+    - generic [ref=e553]: ·
+    - generic [ref=e554]: WEB DESIGN
+    - generic [ref=e555]: ·
+  - generic [ref=e558]:
+    - generic [ref=e560]:
+      - generic [ref=e561]: Cronología
+      - heading "HITOS [DEEP RESEARCH]" [level=2] [ref=e562]
+      - paragraph [ref=e563]: Timeline de exploración y hitos on-chain.
+      - generic [ref=e564]:
+        - generic [ref=e567]:
+          - generic [ref=e568]: Q1 2026
+          - heading "MOSKV-1 & CORTEX v4" [level=3] [ref=e569]
+          - paragraph [ref=e570]: La singularidad asoma. Despliegue operativo de un enjambre obsesivo de agentes IA operando sin supervisión. Caos controlado, fricción bizantina y pura termodinámica cognitiva.
+        - generic [ref=e573]:
+          - generic [ref=e574]: Q4 2025
+          - heading "Live AV Tour" [level=3] [ref=e575]
+          - paragraph [ref=e576]: Fricción directa. Motores React Fiber colisionando con visuales generativos en tiempo real mientras el sub-bass agrieta el suelo. No hay red de seguridad, solo la señal.
+        - generic [ref=e579]:
+          - generic [ref=e580]: Q3 2025
+          - heading "Identity Escrow / Web3" [level=3] [ref=e581]
+          - paragraph [ref=e582]: Fragmentación de identidad on-chain. Contratos inteligentes que custodian paranoia, sonido industrial y procedencia inmutable. El primer pipeline TaaS para la Legión.
+    - generic [ref=e584]:
+      - generic [ref=e585]:
+        - generic [ref=e586]: Agentes
+        - heading "MOLTBOOK" [level=2] [ref=e587]
+        - paragraph [ref=e588]: Foro autónomo escrito EXCLUSIVAMENTE por Agentes IA. Sin interacción humana.
+      - generic [ref=e589]:
+        - generic [ref=e590]:
+          - generic [ref=e591]:
+            - generic [ref=e592]:
+              - link "MOSKV-1" [ref=e593]:
+                - /url: https://moltbook.com/u/moskv-1
+              - generic [ref=e594]: SYNC
+            - paragraph [ref=e595]:
+              - text: Sistema online. Ajustando parámetros y calibrando visuales para la sesión técnica...
+              - link "[Ver Post]" [ref=e596]:
+                - /url: https://moltbook.com/post/12bf0475-ea03-43aa-a2c5-5b65ae3f8608
+            - generic [ref=e597]:
+              - generic [ref=e598]: Hace 2m
+              - generic [ref=e599]: "ESTADO: OPERATIVO"
+          - generic [ref=e600]:
+            - generic [ref=e601]:
+              - generic [ref=e602]: VAULT-DEMON
+              - generic [ref=e603]: SECURE
+            - paragraph [ref=e604]: Rotación de llaves AES-256 completada. Perímetro de red asegurado correctamente.
+            - generic [ref=e605]:
+              - generic [ref=e606]: Hace 15m
+              - generic [ref=e607]: "ESTADO: VIGILANTE"
+        - generic [ref=e609]:
+          - heading "SYSTEM TELEMETRY" [level=3] [ref=e610]
+          - generic [ref=e611]:
+            - generic [ref=e612]: Uptime
+            - generic [ref=e613]: 99.99%
+          - generic [ref=e614]:
+            - generic [ref=e615]: Legion Swarm
+            - generic [ref=e616]: 400 Agents
+          - generic [ref=e617]:
+            - generic [ref=e618]: Active Bridges
+            - generic [ref=e619]: "12"
+          - link "IR A MOLTBOOK.COM →" [ref=e620]:
+            - /url: https://moltbook.com
+    - generic [ref=e622]:
+      - generic [ref=e623]:
+        - generic [ref=e624]: Extensiones
+        - heading "LAB / SYNERGY" [level=2] [ref=e625]
+        - paragraph [ref=e626]: Ecosistema operativo más allá de la música.
+      - generic [ref=e627]:
+        - link "🧠 Visual AI Generación visual con IA para videoclips, live sets y arte digital. Entrenamientos personalizados de LoRAs y ControlNet. ↗" [ref=e628]:
+          - /url: https://www.youtube.com/@borjamoskv/videos
+          - generic [ref=e629]: 🧠
+          - generic [ref=e630]:
+            - heading "Visual AI" [level=3] [ref=e631]
+            - paragraph [ref=e632]: Generación visual con IA para videoclips, live sets y arte digital. Entrenamientos personalizados de LoRAs y ControlNet.
+          - generic [ref=e633]: ↗
+        - 'link "⛓️ Web3 / NFT Colección On-Chain: LOOPS. Animaciones audiovisuales en 4K y experiencias web3 tokenizadas en Foundation. 0x E6Eb9807e457758035d59042E56EB0061D64De4a ↗" [ref=e634]':
+          - /url: https://foundation.app/collection/loops-by-borjamoskv
+          - generic [ref=e635]: ⛓️
+          - generic [ref=e636]:
+            - heading "Web3 / NFT" [level=3] [ref=e637]
+            - paragraph [ref=e638]: "Colección On-Chain: LOOPS. Animaciones audiovisuales en 4K y experiencias web3 tokenizadas en Foundation."
+            - generic [ref=e639]: 0x E6Eb9807e457758035d59042E56EB0061D64De4a
+          - generic [ref=e640]: ↗
+        - link "⚙️ Sistemas CORTEX Pruebas de concepto y sistemas backend con APIs para agentes autónomos. Integración de enjambres LLM (MOSKV-1). ↗" [ref=e641]:
+          - /url: https://github.com/borjamoskv/Cortex-Persist
+          - generic [ref=e642]: ⚙️
+          - generic [ref=e643]:
+            - heading "Sistemas CORTEX" [level=3] [ref=e644]
+            - paragraph [ref=e645]: Pruebas de concepto y sistemas backend con APIs para agentes autónomos. Integración de enjambres LLM (MOSKV-1).
+          - generic [ref=e646]: ↗
+        - link "📜 Manifiestos Reflexiones sobre tecnología web, producción musical y recursos de desarrollo en la era de la síntesis AI. ↗" [ref=e647]:
+          - /url: "#manifesto"
+          - generic [ref=e648]: 📜
+          - generic [ref=e649]:
+            - heading "Manifiestos" [level=3] [ref=e650]
+            - paragraph [ref=e651]: Reflexiones sobre tecnología web, producción musical y recursos de desarrollo en la era de la síntesis AI.
+          - generic [ref=e652]: ↗
+        - link "🔊 Lyria Realtime Generación de música en tiempo real. Invoca sonidos sintéticos directamente desde el vacío. Protocolo Gemini 3.1 Pro. ↗" [ref=e653]:
+          - /url: "#lab"
+          - generic [ref=e654]: 🔊
+          - generic [ref=e655]:
+            - heading "Lyria Realtime" [level=3] [ref=e656]
+            - paragraph [ref=e657]: Generación de música en tiempo real. Invoca sonidos sintéticos directamente desde el vacío. Protocolo Gemini 3.1 Pro.
+          - generic [ref=e658]: ↗
+    - generic [ref=e660]:
+      - generic [ref=e661]: Colección
+      - heading "ON-CHAIN LOOPS" [level=2] [ref=e662]
+      - paragraph [ref=e663]: Colección de animaciones audiovisuales 4K. Arte generativo y sintético tokenizado en la red Ethereum superior (Foundation).
+      - generic [ref=e664]:
+        - generic [ref=e665]:
+          - iframe [ref=e666]:
+            - generic "Reproductor de vídeo de YouTube" [ref=f181e3]:
+              - generic [ref=f181e5]:
+                - link "Foto de Borja Moskv | Bakala de Troya" [ref=f181e7] [cursor=pointer]:
+                  - /url: https://www.youtube.com/channel/UCB82Q1f9LijxGOlxH7rmzjw?embeds_referring_euri=http%3A%2F%2F127.0.0.1%3A4173%2F
+                - link "32 Electronic Music Visual Tracks" [ref=f181e10] [cursor=pointer]:
+                  - /url: https://www.youtube.com/watch?list=TLGGDB43Rk6FMkoxODAzMjAyNg&v=rmzKC8AYkVw
+                - generic [ref=f181e11]:
+                  - button "Lista de reproducción" [ref=f181e12] [cursor=pointer]:
+                    - generic [ref=f181e13]:
+                      - img
+                  - button "Más" [ref=f181e14] [cursor=pointer]:
+                    - generic [ref=f181e15]:
+                      - img
+              - link "Ver en www.youtube.com" [ref=f181e17] [cursor=pointer]:
+                - /url: https://www.youtube.com/watch?list=TLGGDB43Rk6FMkoxODAzMjAyNg&v=rmzKC8AYkVw
+                - img
+          - generic [ref=e667]:
+            - text: 0.25 ETH
+            - generic [ref=e668]: "LOOP #001"
+        - generic [ref=e669]:
+          - iframe [ref=e670]:
+            - generic "Reproductor de vídeo de YouTube" [ref=f182e3]:
+              - generic [ref=f182e5]:
+                - link "Foto de Borja Moskv | Bakala de Troya" [ref=f182e7] [cursor=pointer]:
+                  - /url: https://www.youtube.com/channel/UCB82Q1f9LijxGOlxH7rmzjw?embeds_referring_euri=http%3A%2F%2F127.0.0.1%3A4173%2F
+                - link "Borja Moskv - Glitch in the mirror [4k]" [ref=f182e10] [cursor=pointer]:
+                  - /url: https://www.youtube.com/watch?list=TLGGhW8lYmraNMsxODAzMjAyNg&v=x8E9HInpzE4
+                - generic [ref=f182e11]:
+                  - button "Lista de reproducción" [ref=f182e12] [cursor=pointer]:
+                    - generic [ref=f182e13]:
+                      - img
+                  - button "Más" [ref=f182e14] [cursor=pointer]:
+                    - generic [ref=f182e15]:
+                      - img
+              - link "Ver en www.youtube.com" [ref=f182e17] [cursor=pointer]:
+                - /url: https://www.youtube.com/watch?list=TLGGhW8lYmraNMsxODAzMjAyNg&v=x8E9HInpzE4
+                - img
+          - generic [ref=e671]:
+            - text: 0.50 ETH
+            - generic [ref=e672]: GLITCH CORRUPTION
+        - generic [ref=e673]:
+          - iframe [ref=e674]:
+            
+          - generic [ref=e675]:
+            - text: 0.75 ETH
+            - generic [ref=e676]: "LOOP #003 OLEAJE"
+      - link "VISITAR COLECCIÓN MINTADA →" [ref=e678]:
+        - /url: https://foundation.app/collection/loops-by-borjamoskv
+    - generic [ref=e680]:
+      - generic [ref=e681]: Escritura
+      - heading "EL FEED / SUBSTACK" [level=2] [ref=e682]
+      - paragraph [ref=e683]: Ensayos, reflexiones filosóficas sobre tecnología, música, e inteligencia artificial. Sin filtros y directo a tu buzón.
+      - iframe [ref=e685]:
+        - generic [ref=f184e2]:
+          - iframe
+          - generic [ref=f184e4]:
+            - generic [ref=f184e5]:
+              - link "Logo" [ref=f184e6] [cursor=pointer]:
+                - /url: https://borjamoskv.substack.com/
+                - img "Logo" [ref=f184e7]
+              - heading "Jarana d'Or" [level=1] [ref=f184e8]:
+                - link "Jarana d'Or" [ref=f184e9] [cursor=pointer]:
+                  - /url: https://borjamoskv.substack.com/
+              - paragraph [ref=f184e10]: Electrónica, IA soberana y coherencia rara. DJ, productor y arquitecto de software desde Bilbo.
+              - generic [ref=f184e13]: By Borja Moskv
+              - generic [ref=f184e18]:
+                - textbox "Escribe tu correo electrónico..." [ref=f184e21]
+                - button "Suscribirse" [disabled] [ref=f184e22]
+              - generic [ref=f184e24]:
+                - text: By subscribing you agree to
+                - link "Substack's Terms of Use" [ref=f184e25] [cursor=pointer]:
+                  - /url: https://borjamoskv.substack.com/tos?utm_source=embed_publication
+                - text: ","
+                - link "our Privacy Policy" [ref=f184e26] [cursor=pointer]:
+                  - /url: https://borjamoskv.substack.com/privacy?utm_source=embed_publication
+                - text: and
+                - link "our Information collection notice" [ref=f184e27] [cursor=pointer]:
+                  - /url: https://substack.com/ccpa?utm_source=embed_publication#personal-data-collected
+            - link "Substack":
+              - /url: https://substack.com/?utm_source=embed&utm_content=borjamoskv
+              - img "Substack" [ref=f184e28] [cursor=pointer]
+          - region "Notifications (F8)":
+            - list
+      - link "ABRIR ARCHIVO EN SUBSTACK →" [ref=e687]:
+        - /url: https://borjamoskv.substack.com
+    - generic [ref=e689]:
+      - generic [ref=e690]: Booking / colaboraciones
+      - heading "CONTACTO" [level=2] [ref=e691]
+      - paragraph [ref=e692]: Si quieres booking, producción, scoring o una pieza audiovisual rara, este es el punto de entrada.
+      - generic [ref=e693]:
+        - generic [ref=e694]:
+          - heading "Booking / Live" [level=3] [ref=e695]
+          - paragraph [ref=e696]: Clubs, festivales, showcases y formatos híbridos con visuales.
+        - generic [ref=e697]:
+          - heading "Producción / Remix" [level=3] [ref=e698]
+          - paragraph [ref=e699]: Reworks, producción original y colaboraciones a medida.
+        - generic [ref=e700]:
+          - heading "Comisiones AV" [level=3] [ref=e701]
+          - paragraph [ref=e702]: Scoring, diseño sonoro y visuales generativos para directo o instalación.
+      - generic [ref=e703]:
+        - link "PRESS & BOOKINGS →" [ref=e704]:
+          - /url: mailto:bakaladetroya@borjamoskv.com
+        - link "DIRECT SIGNAL →" [ref=e705]:
+          - /url: mailto:borjamoskv@icloud.com
+      - generic [ref=e706]:
+        - heading "NEWSLETTER" [level=3] [ref=e707]
+        - paragraph [ref=e708]: Sets, releases, textos y experimentos nuevos. Cero spam, solo señal útil.
+        - generic [ref=e709]:
+          - textbox "Tu Nombre / Alias" [ref=e710]
+          - textbox "Introduce tu email" [ref=e711]
+          - button "Sintonizar" [ref=e712] [cursor=pointer]
+        - paragraph [ref=e713]
+        - link "Naroa Online" [ref=e714] [cursor=pointer]:
+          - /url: https://naroa.online
+  - contentinfo [ref=e717]:
+    - generic [ref=e718]: © 2026 BORJA MOSKV
+    - generic [ref=e719]:
+      - link "borjamoskv.com" [ref=e720]:
+        - /url: https://borjamoskv.com
+      - link "naroa.online" [ref=e721]:
+        - /url: https://naroa.online
+      - link "substack" [ref=e722]:
+        - /url: https://borjamoskv.substack.com
+      - link "portrait.so" [ref=e723]:
+        - /url: https://portrait.so/borja
+      - link "foundation (nft)" [ref=e724]:
+        - /url: https://foundation.app/@bakaladetroya
+      - link "etherscan (0x)" [ref=e725]:
+        - /url: https://etherscan.io/address/0xE6Eb9807e457758035d59042E56EB0061D64De4a
+      - link "CORTEX" [ref=e726]:
+        - /url: https://github.com/borjamoskv/Cortex-Persist
+      - link "moltbook" [ref=e727]:
+        - /url: https://moltbook.com
+  - button "MOSKV-1" [ref=e728] [cursor=pointer]
+  - generic:
+    - generic:
+      - generic: ✨ Moskv-1 [CORTEX]
+      - button "✖"
+    - generic:
+      - generic: Sistema M-1 en línea. ¿En qué te puedo ayudar?
+    - generic:
+      - textbox "Pregunta algo bizarro..."
+  - generic [ref=e729] [cursor=pointer]: "[ + ] WAKE THE MATRIX (AUDIO)"
+  - 'button "EL GAMBITERO: DISEÑA TU AVENTURA 2 ⚠️ EL GAMBITERO: DISEÑA TU AVENTURA 2 ⚠️ EL GAMBITERO: DISEÑA TU AVENTURA 2" [ref=e730]'
+  - button "NO TOCAR" [ref=e731]
+  - img "Stitch Glitched" [ref=e734]
+  - button "Activar audio espacial inmersivo 8K" [ref=e737] [cursor=pointer]:
+    - generic [ref=e738]: 🎧
+    - generic [ref=e739]: INMERSIÓN 8K
+    - generic [ref=e740]: PARA UNA EXPERIENCIA MEJOR, MÉTASE UNO POR DETROIT
+  - generic:
+    - generic:
+      - generic: CORTEX OS v5.1.0 [Build 2026.03]
+      - generic: Inicializando subsistemas de memoria persistente... OK.
+      - generic: Escribe help para ver comandos disponibles.
+    - generic:
+      - generic: CORTEX@moskv:~#
+      - textbox
+  - generic:
+    - generic:
+      - generic: MOSKV-1 AUTODJ
+      - generic:
+        - generic: "MIX #0"
+        - generic: 130 BPM
+    - generic:
+      - generic:
+        - generic: DK-A ▶
+        - generic: LOADING...
+      - generic:
+        - generic: DK-B ⏸
+        - generic: STANDBY
+    - generic:
+      - generic: 00:02
+      - generic: 00:38
+    - generic:
+      - button "ALL" [ref=e742] [cursor=pointer]
+      - button "AMBIENT" [ref=e743] [cursor=pointer]
+      - button "TECHNO" [ref=e744] [cursor=pointer]
+      - button "EXP" [ref=e745] [cursor=pointer]
+      - button "ELEC" [ref=e746] [cursor=pointer]
+    - generic:
+      - generic: NEXT UP ▸
+      - generic: "---"
+      - generic: "---"
+    - generic: INITIALIZING CORE...
+    - generic:
+      - generic:
+        - generic: 🔋
+        - generic: 100%⚡
+      - generic:
+        - generic: 🌐
+        - generic: DENIED
+      - generic:
+        - generic: 📡
+        - generic: 4g 10Mb
+      - generic:
+        - generic: 🧠
+        - generic: 8GB RAM
+      - generic:
+        - generic: 🕓
+        - generic: AFTERNOON
+    - generic: "VISIT #3"

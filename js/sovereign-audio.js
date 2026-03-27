@@ -218,13 +218,15 @@
     }, 3000);
 
     // ═══ 3. SCROLL-REACTIVE MODULATION ═══
-    let targetVolume = 0.35;
-    const BASE_VOL = 0.15;
-    const MAX_VOL = 0.6;
+    let isKilled = false;
+    let targetVolume = 0.05;
+    const BASE_VOL = 0.02;
+    const MAX_VOL = 0.10;
     const BASE_FILTER = 80;
     const MAX_FILTER = 200;
 
     function onScrollModulate() {
+      if (isKilled) return;
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
       const scrollPct = maxScroll > 0 ? window.scrollY / maxScroll : 0;
 
@@ -299,6 +301,22 @@
       masterGain.gain.linearRampToValueAtTime(targetVolume, ctx.currentTime + 1.8);
     };
     duckForWake();
+
+    // ═══ 5. AUTO-KILL AFTER 30 SECONDS ═══
+    window.setTimeout(() => {
+      isKilled = true;
+      targetVolume = 0;
+      masterGain.gain.setTargetAtTime(0, ctx.currentTime, 2);
+      window.clearInterval(coordinationTimer);
+      window.clearInterval(noiseTimer);
+      window.removeEventListener('scroll', onScrollModulate);
+      window.setTimeout(() => {
+        try { subOsc.stop(); } catch(e) {}
+        try { subOsc2.stop(); } catch(e) {}
+        try { subLfo.stop(); } catch(e) {}
+        masterGain.disconnect();
+      }, 2500);
+    }, 30000);
 
     // ═══ EXPOSE GLOBAL HANDLE ═══
     globalThis.dubDrone = {

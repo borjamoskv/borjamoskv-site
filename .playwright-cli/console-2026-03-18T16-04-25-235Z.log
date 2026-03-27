@@ -1,0 +1,4 @@
+[  532755ms] [ERROR] WebSocket connection to 'ws://127.0.0.1:53271/' failed:  @ :0
+[  532755ms] [ERROR] WebSocket connection to 'ws://127.0.0.1:53271/' failed:  @ :0
+[  532758ms] [ERROR] WebSocket connection to 'ws://127.0.0.1:3000/?token=DieYTi8DGyoL' failed:  @ http://127.0.0.1:3000/@vite/client:535
+[  532772ms] [WARNING] WebGL: CONTEXT_LOST_WEBGL: loseContext: context lost @ http://127.0.0.1:3000/:0

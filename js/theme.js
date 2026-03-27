@@ -27,7 +27,7 @@ MOSKV.theme = (() => {
             meta.setAttribute('content', theme === 'day' ? '#F5F3EE' : '#2E5090');
         }
         console.log(`%c THEME: ${theme.toUpperCase()} MODE `, 
-            `background:${theme === 'day' ? '#2E5090' : '#CCFF00'}; color:${theme === 'day' ? '#FFF' : '#000'}; font-weight:bold;`);
+            `background:${theme === 'day' ? '#2E5090' : '#CCFF00'}; color:${theme === 'day' ? '#D4D4D4' : '#000'}; font-weight:bold;`);
     };
 
     const init = () => {
