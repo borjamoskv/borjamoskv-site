@@ -7,6 +7,7 @@
 
 class AutoDJAesthetic {
   constructor() {
+    this._ensureHTML();
     this.deckA = null;
     this.deckB = null;
     this.nativeDeckA = document.getElementById('bg-native-a');
@@ -417,7 +418,8 @@ class AutoDJAesthetic {
     if (typeof event.target.setPlaybackQuality === 'function') {
       event.target.setPlaybackQuality('highres');
       setTimeout(() => event.target.setPlaybackQuality('highres'), 800);
-      setTimeout(() => event.target.setPlaybackQuality('hd1080'), 1600);
+      setTimeout(() => event.target.setPlaybackQuality('highres'), 1600);
+      setTimeout(() => event.target.setPlaybackQuality('highres'), 5000);
     }
 
     const deckVisual = this.deckVisuals[deckId];
@@ -2170,6 +2172,46 @@ class AutoDJAesthetic {
         document.querySelector('.video-container')?.classList.remove('is-transitioning');
       }
     }, 820);
+  }
+
+  _ensureHTML() {
+    // Check if system already exists in DOM
+    if (document.getElementById('av-trigger')) return;
+
+    console.log('[CORTEX] Injecting Video Background System HTML');
+    const div = document.createElement('div');
+    div.className = 'video-background-system';
+    div.id = 'av-trigger';
+    div.innerHTML = `
+      <div class="video-deck-wrap" id="video-deck-a">
+        <div id="bg-video-a"></div>
+        <div class="video-poster" id="video-poster-a"></div>
+        <div class="deck-ui" id="dj-deck-a-ui">
+            <span>DK-A ⏸</span>
+            <span>INITIALIZING...</span>
+        </div>
+      </div>
+      <div class="video-deck-wrap" id="video-deck-b">
+        <div id="bg-video-b"></div>
+        <div class="video-poster" id="video-poster-b"></div>
+        <div class="deck-ui" id="dj-deck-b-ui">
+            <span>DK-B ⏸</span>
+            <span>STANDBY</span>
+        </div>
+      </div>
+      <div class="video-overlay"></div>
+      <div class="video-identity-wrap" id="videoIdentity">
+          <span class="video-identity-label" id="videoIdentityLabel">BACKGROUND REEL</span>
+          <strong class="video-identity-title" id="videoIdentityTitle">BORJA MOSKV — SIGNAL</strong>
+      </div>
+    `;
+    
+    // Attempt to prepend to body
+    if (document.body) {
+      document.body.prepend(div);
+    } else {
+      document.addEventListener('DOMContentLoaded', () => document.body.prepend(div));
+    }
   }
 }
 

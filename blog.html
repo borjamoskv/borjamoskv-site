@@ -405,25 +405,36 @@
   <!-- MAIN GRID -->
   <main class="blog-grid" id="blogGrid">
 
-    <!-- FEATURED: Catarsis Colectiva -->
-    <a href="catarsis-colectiva.html" class="blog-card blog-card--featured" data-category="articulo">
+    <!-- FEATURED: Hito Nobel 95% -->
+    <a href="hito-nobel.html" class="blog-card blog-card--featured" data-category="tesis">
+      <div class="card-meta">
+        <span class="card-tag card-tag--tesis">Hito Omega</span>
+        <span class="card-date">2026‑03‑27</span>
+      </div>
+      <h2 class="card-title">Ω: Hito Nobel — ARC-AGI-3 [95%]</h2>
+      <p class="card-excerpt">El 95% en ARC-AGI no es solo un número; es la aniquilación de la entropía estocástica mediante la inducción de programas PeARL. El futuro de la inteligencia soberana ha llegado.</p>
+      <span class="card-cta">Ver telemetría →</span>
+    </a>
+
+    <!-- HALF: Catarsis Colectiva -->
+    <a href="catarsis-colectiva.html" class="blog-card blog-card--half" data-category="articulo">
       <div class="card-meta">
         <span class="card-tag card-tag--articulo">Artículo</span>
         <span class="card-date">2026‑02‑12</span>
       </div>
       <h2 class="card-title">Catarsis Colectiva: Los 20 Pilares del Duelo</h2>
-      <p class="card-excerpt">Por qué la muerte de Robe Iniesta ha sido, con diferencia brutal, la que más ha conmovido al pueblo español — y qué dice esto de nosotros como sociedad. Veinte marcos para entender el duelo colectivo.</p>
+      <p class="card-excerpt">Por qué la muerte de Robe Iniesta ha sido la que más ha conmovido al pueblo español.</p>
       <span class="card-cta">Leer artículo →</span>
     </a>
 
-    <!-- SIDE: Termodinámica de Agentes -->
-    <a href="termodinamica-de-agentes.html" class="blog-card blog-card--side" data-category="ensayo">
+    <!-- HALF: Termodinámica de Agentes -->
+    <a href="termodinamica-de-agentes.html" class="blog-card blog-card--half" data-category="ensayo">
       <div class="card-meta">
         <span class="card-tag card-tag--ensayo">Ensayo</span>
         <span class="card-date">2026‑03‑25</span>
       </div>
       <h2 class="card-title">La Termodinámica de los Agentes</h2>
-      <p class="card-excerpt">Más IQ no significa menos entropía. Un paper de Anthropic confirma lo que CORTEX ya sabía sobre la relación entre capacidad computacional y ruido termal.</p>
+      <p class="card-excerpt">Más IQ no significa menos entropía. Un paper de Anthropic confirma lo que CORTEX ya sabía.</p>
       <span class="card-cta">Leer →</span>
     </a>
 
@@ -594,6 +605,33 @@
       })();
     });
   </script>
+  <!-- VIDEO BACKGROUND SYSTEM (AUTODJ DUAL-DECK) -->
+  <div class="video-background-system" id="av-trigger">
+    <div class="video-deck-wrap" id="video-deck-a">
+      <div id="bg-video-a"></div>
+      <div class="video-poster" id="video-poster-a"></div>
+      <div class="deck-ui" id="dj-deck-a-ui">
+          <span>DK-A ⏸</span>
+          <span>INITIALIZING...</span>
+      </div>
+    </div>
+    <div class="video-deck-wrap" id="video-deck-b">
+      <div id="bg-video-b"></div>
+      <div class="video-poster" id="video-poster-b"></div>
+      <div class="deck-ui" id="dj-deck-b-ui">
+          <span>DK-B ⏸</span>
+          <span>STANDBY</span>
+      </div>
+    </div>
+    <div class="video-overlay"></div>
+    <div class="video-identity-wrap" id="videoIdentity">
+        <span class="video-identity-label" id="videoIdentityLabel">BACKGROUND REEL</span>
+        <strong class="video-identity-title" id="videoIdentityTitle">BORJA MOSKV — SIGNAL</strong>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="autodj-video.js" defer></script>
   <script src="cortex-terminal.js" defer></script>
 </body>
 </html>

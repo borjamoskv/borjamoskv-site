@@ -12,6 +12,12 @@
   initial-value: #2E5090;
 }
 
+html,
+body {
+  background-color: #020202;
+  color: #E0E0E0;
+}
+
 :root {
   /* Industrial Noir Palette (CORTEX v5) */
   --bg-color: #020202;

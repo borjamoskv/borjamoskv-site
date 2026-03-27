@@ -5,6 +5,7 @@
   --cterm-blue: #2B3BE5;   /* Trust Blue */
   --cterm-green: #00FF9D;
   --cterm-red: #FF1A1A;
+  --cterm-exergy: #00FF9D;
   --cterm-gold-glow: 0 0 15px rgba(229, 168, 43, 0.8), 0 0 30px rgba(229, 168, 43, 0.4);
   --cterm-blue-glow: 0 0 15px rgba(43, 59, 229, 0.8), 0 0 30px rgba(43, 59, 229, 0.4);
 }
@@ -32,6 +33,8 @@
   transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   text-shadow: 0 0 8px rgba(43, 59, 229, 0.4);
   overflow: hidden;
+  will-change: opacity, transform, filter;
+  contain: strict;
 }
 
 #cortex-terminal-overlay.active {
@@ -94,6 +97,8 @@
   scrollbar-width: none;
   mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
+  will-change: scroll-position;
+  contain: content;
 }
 #cortex-terminal-output::-webkit-scrollbar {
   display: none;
@@ -136,104 +141,67 @@
   word-break: break-all;
 }
 
-/* Severe Glitch Class for Deep Think / Ultrathink execution */
-.cterm-glitch-severe {
-  animation: severe-glitch 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite both;
-  filter: contrast(2) brightness(1.5) saturate(2);
+/* ═══════════════════════════════════════════════════════════════════
+   UNIFIED CORTEX GLITCH SYSTEM (SHANNON v6.0)
+   ═══════════════════════════════════════════════════════════════════ */
+
+@keyframes cterm-glitch-low {
+  0% { transform: translate(0) skew(0deg); }
+  25% { transform: translate(-2px, 1px) skew(-1deg); }
+  75% { transform: translate(2px, -1px) skew(1deg); }
+  100% { transform: translate(0) skew(0deg); }
 }
 
-@keyframes severe-glitch {
+@keyframes cterm-glitch-mid {
+  0% { transform: translate(0); filter: hue-rotate(0deg); }
+  20% { transform: translate(-5px, 2px); filter: hue-rotate(5deg) brightness(1.2); }
+  40% { transform: translate(5px, -2px); filter: hue-rotate(-5deg) contrast(1.2); }
+  100% { transform: translate(0); filter: hue-rotate(0deg); }
+}
+
+@keyframes cterm-glitch-high {
   0% { transform: translate(0) scale(1); clip-path: inset(0 0 0 0); }
-  20% { transform: translate(-10px, 5px) scale(1.05); clip-path: inset(20% 0 10% 0); filter: hue-rotate(90deg) invert(0.2); }
-  40% { transform: translate(10px, -5px) scale(0.95); clip-path: inset(60% 0 0 0); }
-  60% { transform: translate(-5px, 10px) scale(1.1); clip-path: inset(0 0 50% 0); filter: invert(0.8) hue-rotate(-90deg); }
-  80% { transform: translate(5px, -10px) scale(0.9); clip-path: inset(40% 0 40% 0); }
+  20% { transform: translate(-10px, 5px) scale(1.02); clip-path: inset(20% 0 10% 0); filter: invert(0.1) brightness(1.5); }
+  40% { transform: translate(10px, -5px) scale(0.98); clip-path: inset(60% 0 0 0); }
+  60% { transform: translate(-5px, 10px) scale(1.05); clip-path: inset(0 0 50% 0); filter: invert(0.8) hue-rotate(180deg); }
   100% { transform: translate(0) scale(1); clip-path: inset(0 0 0 0); }
+}
+
+.cterm-glitch-severe {
+  animation: cterm-glitch-high 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite both;
+  filter: contrast(2) brightness(1.5);
 }
 
 /* Deep Think Execution */
 .cterm-deep-think {
   animation: 
     deep-think-pulse 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite both,
-    deep-think-glitch 0.2s infinite alternate;
-  text-shadow: 0 0 20px rgba(43, 59, 229, 1), 0 0 40px rgba(0, 255, 157, 1), 0 0 60px rgba(255, 255, 255, 0.6);
+    cterm-glitch-low 0.2s infinite alternate;
+  text-shadow: 0 0 20px var(--cterm-blue), 0 0 40px var(--cterm-exergy);
   font-weight: 900;
   letter-spacing: 2px;
   color: #FFFFFF;
 }
 
-@keyframes deep-think-pulse {
-  0%, 100% { filter: brightness(1.2) saturate(1.5); text-shadow: 0 0 20px rgba(43, 59, 229, 1); }
-  50% { filter: brightness(2) saturate(3) hue-rotate(-20deg); text-shadow: 0 0 60px rgba(0, 255, 157, 1); }
-}
-
-@keyframes deep-think-glitch {
-  0% { transform: skewX(0deg); }
-  25% { transform: skewX(-8deg) translate(-4px, 2px); }
-  75% { transform: skewX(8deg) translate(4px, -2px); }
-  100% { transform: skewX(0deg); }
-}
-
-/* Deep Research Execution */
-.cterm-deep-research {
-  animation: 
-    deep-research-scan 1s linear infinite,
-    deep-research-jitter 0.05s infinite,
-    cterm-shake 0.1s infinite;
-  color: #00FF9D;
-  text-shadow: 0 0 15px rgba(0, 255, 157, 1), 0 0 30px rgba(0, 255, 157, 0.6), 0 0 45px rgba(255, 255, 255, 0.4);
-  font-weight: 900;
-  letter-spacing: 1.5px;
-}
-
-@keyframes deep-research-scan {
-  0% { clip-path: inset(0 0 100% 0); filter: hue-rotate(0deg) brightness(1); }
-  25% { clip-path: inset(0 0 50% 0); filter: hue-rotate(90deg) brightness(2); }
-  50% { clip-path: inset(0 0 0 0); filter: hue-rotate(180deg) brightness(3); }
-  75% { clip-path: inset(50% 0 0 0); filter: hue-rotate(270deg) brightness(2); }
-  100% { clip-path: inset(100% 0 0 0); filter: hue-rotate(360deg) brightness(1); }
-}
-
-@keyframes deep-research-jitter {
-  0% { transform: translateX(0) translateY(0); }
-  25% { transform: translateX(-3px) translateY(2px); }
-  50% { transform: translateX(3px) translateY(-2px); }
-  75% { transform: translateX(-2px) translateY(-3px); }
-  100% { transform: translateX(0) translateY(0); }
-}
-
 /* Apex Glitch Class for Final Ultrathink execution */
 .cterm-ultrathink {
   animation: 
-    ultrathink-glitch 0.03s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite both,
+    cterm-glitch-high 0.05s infinite both,
     ultrathink-color-shift 0.5s infinite alternate,
     cterm-shake 0.02s infinite;
   text-shadow: 
-    0 0 40px rgba(255, 0, 128, 1), 
-    0 0 80px rgba(0, 255, 255, 1), 
-    0 0 120px rgba(255, 255, 255, 1),
+    0 0 40px var(--cterm-blue), 
+    0 0 80px var(--cterm-exergy), 
     -5px 5px 0px rgba(43, 59, 229, 0.8);
   font-weight: 900;
   letter-spacing: 4px;
-  filter: contrast(3) saturate(4);
-}
-
-@keyframes ultrathink-glitch {
-  0% { transform: translate(0) scale(1); clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
-  15% { transform: translate(-8px, 4px) scale(1.04); clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%); filter: drop-shadow(6px 0px 0px rgba(255, 0, 128, 0.9)); }
-  30% { transform: translate(8px, -4px) scale(0.96); clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%); filter: drop-shadow(-6px 0px 0px rgba(0, 255, 255, 0.9)); }
-  45% { transform: translate(-4px, 6px) scale(1.02); clip-path: polygon(0 10%, 100% 10%, 100% 50%, 0 50%); filter: invert(1) hue-rotate(180deg) brightness(2); }
-  60% { transform: translate(4px, -6px) scale(0.98); clip-path: polygon(0 70%, 100% 70%, 100% 100%, 0 100%); }
-  75% { transform: translate(0, 0) scale(1.08); filter: brightness(3) contrast(2); clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
-  100% { transform: translate(0) scale(1); clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+  filter: contrast(3);
 }
 
 @keyframes ultrathink-color-shift {
   0% { color: #FFFFFF; }
-  25% { color: #FF0080; } /* Neon Pink */
-  50% { color: #00FFFF; } /* Cyan */
-  75% { color: #00FF9D; } /* Exergy Green */
-  100% { color: #2B3BE5; } /* BlueYlb */
+  50% { color: var(--cterm-blue); }
+  100% { color: var(--cterm-exergy); }
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -397,6 +365,7 @@
   box-shadow: 10px 0 30px -10px var(--cterm-blue);
   padding-right: 15px;
   animation: mcp-trust-pulse 2s infinite alternate;
+  will-change: box-shadow, border-color;
 }
 
 @keyframes mcp-trust-pulse {
@@ -421,6 +390,8 @@
 .cterm-shake {
   animation: cterm-shake 0.08s infinite;
   filter: contrast(1.5) saturate(2);
+  will-change: transform, filter;
+  transform: translateZ(0);
 }
 
 @keyframes cterm-shake-x100 {
@@ -439,18 +410,11 @@
 
 .cterm-shake-x100 {
   animation: cterm-shake-x100 0.04s infinite;
+  will-change: transform, filter;
+  transform: translateZ(0);
 }
 
-:root {
-  --cterm-bg: #0A0A0A;
-  --cterm-text: #2B3BE5;
-  --cterm-accent: #E5A82B; /* Capital Gold */
-  --cterm-blue: #2B3BE5;   /* Trust Blue */
-  --cterm-green: #00FF9D;
-  --cterm-red: #FF1A1A;
-  --cterm-gold-glow: 0 0 15px rgba(229, 168, 43, 0.8), 0 0 30px rgba(229, 168, 43, 0.4);
-  --cterm-blue-glow: 0 0 15px rgba(43, 59, 229, 0.8), 0 0 30px rgba(43, 59, 229, 0.4);
-}
+/* Redundant :root removed for Shannon Compaction */
 .cortex-terminal-input-line {
   display: flex;
   align-items: center;
@@ -799,4 +763,540 @@ html[data-cortex-state="singularity"] #cortex-terminal-overlay {
   0% { transform: translate(0); filter: invert(0); }
   25% { transform: translate(-15px, 15px); filter: invert(1); }
   100% { transform: translate(0); filter: invert(0); }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   LEVIATHAN v6.0 — SHARDED LEDGER & SEMANTIC AUDIT
+   ═══════════════════════════════════════════════════════════════════ */
+
+.cterm-shard-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 15px;
+  margin: 20px 0;
+  perspective: 1000px;
+}
+
+.cterm-shard-box {
+  background: rgba(43, 59, 229, 0.1);
+  border: 1px solid rgba(43, 59, 229, 0.4);
+  padding: 10px;
+  text-align: center;
+  font-size: 0.75rem;
+  transition: all 0.3s ease;
+  transform-style: preserve-3d;
+}
+
+.cterm-shard-box.active {
+  background: rgba(0, 255, 157, 0.15);
+  border-color: var(--cterm-green);
+  box-shadow: 0 0 15px rgba(0, 255, 157, 0.3);
+  transform: translateZ(10px);
+}
+
+.cterm-shard-id {
+  display: block;
+  font-weight: 900;
+  margin-bottom: 5px;
+}
+
+.cterm-shard-merkle {
+  font-family: monospace;
+  font-size: 0.6rem;
+  opacity: 0.6;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cterm-audit-trace {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 15px 0;
+  border-left: 2px solid var(--cterm-exergy);
+  padding-left: 20px;
+}
+
+.cterm-audit-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.cterm-audit-label {
+  color: #FFFFFF;
+}
+
+.cterm-audit-score {
+  color: var(--cterm-exergy);
+  font-weight: 800;
+}
+
+.cterm-leviathan-badge {
+  background: #FFFFFF;
+  color: #000000;
+  padding: 2px 8px;
+  font-weight: 950;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   MEMORY ENGINE (CORTEX PERSIST)
+   ═══════════════════════════════════════════════════════════════════ */
+.cterm-memory-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 15px 0;
+  border-left: 2px solid var(--cterm-blue);
+  padding-left: 15px;
+}
+.cterm-memory-block {
+  background: rgba(43, 59, 229, 0.05);
+  border: 1px solid rgba(43, 59, 229, 0.2);
+  padding: 10px;
+  font-family: inherit;
+  transition: all 0.3s ease;
+}
+.cterm-memory-block:hover {
+  background: rgba(0, 255, 157, 0.1);
+  border-color: var(--cterm-green);
+  box-shadow: 0 0 15px rgba(0, 255, 157, 0.2);
+  transform: translateX(5px);
+}
+.cterm-memory-hash {
+  color: var(--cterm-accent);
+  text-shadow: var(--cterm-gold-glow);
+  font-size: 0.8rem;
+  opacity: 0.9;
+  font-weight: 800;
+}
+.cterm-memory-content {
+  color: #FFFFFF;
+  margin: 5px 0 0 0;
+  font-size: 0.85rem;
+}
+.cterm-memory-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   CORTEX-SWARM-100 — MASSIVE PARALLEL EXECUTION PROTOCOL (ENHANCED)
+   ═══════════════════════════════════════════════════════════════════ */
+.cterm-swarm-100-active {
+  border: 1px solid var(--cterm-exergy) !important;
+  box-shadow: 0 0 60px rgba(0, 255, 157, 0.3), inset 0 0 40px rgba(0, 255, 157, 0.15) !important;
+  animation: swarm-active-pulse 2s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+  will-change: box-shadow, border-color;
+}
+
+.cterm-swarm-3d-wrapper {
+  perspective: 2000px;
+  perspective-origin: center center;
+  margin: 30px 0;
+  width: 100%;
+  height: 500px;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 50%, rgba(10, 10, 10, 0.95) 0%, #000 100%);
+  border: 1px solid rgba(43, 59, 229, 0.2);
+  box-shadow: inset 0 0 80px rgba(43, 59, 229, 0.05);
+  transform-style: preserve-3d;
+  transition: border-color 0.8s ease, box-shadow 0.8s ease;
+}
+
+.cterm-swarm-3d-wrapper.void-state-active {
+  border-color: rgba(43, 59, 229, 0.8);
+  box-shadow: 0 0 40px rgba(43, 59, 229, 0.3);
+}
+
+/* Niebla perimetral para profundidad temporal cinemática */
+.cterm-swarm-3d-wrapper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, transparent 35%, rgba(0,0,0,0.95) 90%);
+  z-index: 21;
+}
+
+/* Capa de Lente Hemisférica - Distorsión de Perspectiva Final */
+.cterm-swarm-3d-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, rgba(43, 59, 229, 0.03) 0%, transparent 60%);
+  z-index: 22;
+  box-shadow: inset 0 0 100px #000;
+}
+
+/* CRT Overlay / Scanlines / Chromatic Aberration (Void-State) */
+.cterm-swarm-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 40;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%), 
+              linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+  background-size: 100% 3px, 3px 100%;
+  opacity: 0.6;
+}
+
+/* Void-State Distortion (Triggered via JS) */
+.cterm-swarm-3d-wrapper.void-state-active .cterm-swarm-overlay {
+  animation: void-jitter 0.1s infinite;
+  opacity: 0.9;
+  mix-blend-mode: color-dodge;
+}
+
+@keyframes void-jitter {
+  0% { transform: translate(1px, 1px); filter: contrast(120%) brightness(120%) hue-rotate(5deg); }
+  50% { transform: translate(-1px, -1px); filter: contrast(150%) brightness(150%) hue-rotate(-5deg); }
+  100% { transform: translate(1px, -1px); filter: contrast(120%) brightness(120%) hue-rotate(5deg); }
+}
+
+.cterm-swarm-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 4px;
+  width: 160%;
+  height: 160%;
+  position: absolute;
+  top: -30%; 
+  left: -30%;
+  transform: rotateX(55deg) rotateZ(20deg) translate3d(0, -20px, -50px);
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 0.15s linear; /* Smoothing handled in JS, but CSS helps for base states */
+}
+
+.cterm-swarm-agent {
+  aspect-ratio: 1;
+  background: rgba(43, 59, 229, 0.08);
+  border: 1px solid rgba(0, 255, 157, 0.15);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0;
+  opacity: 0.5;
+  cursor: crosshair !important;
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+              opacity 0.3s ease, 
+              background-color 0.3s ease,
+              border-color 0.3s ease;
+  will-change: transform, opacity, background-color;
+}
+
+/* Ledger Pulse - Visual Verification Trail */
+.cterm-ledger-pulse {
+  background: #ffffff !important;
+  box-shadow: 0 0 30px #ffffff, 0 0 60px var(--cterm-exergy) !important;
+  border-color: #ffffff !important;
+  opacity: 1 !important;
+  z-index: 50;
+  transform: translate3d(0, 0, 120px) scale(2) !important;
+  transition: all 0.1s ease-out !important;
+}
+
+/* Capa Base / Bloom Extractor */
+.cterm-swarm-agent::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  box-shadow: 0 0 15px transparent;
+  transition: box-shadow 0.3s ease;
+}
+
+.cterm-swarm-agent:hover,
+.cterm-swarm-wave-center {
+  background: rgba(0, 255, 157, 0.8) !important;
+  border-color: #fff !important;
+  opacity: 1;
+  z-index: 10;
+  transform: translate3d(0, 0, 50px) scale(1.3) !important;
+}
+
+.cterm-swarm-agent:hover::after,
+.cterm-swarm-wave-center::after {
+  box-shadow: 0 0 30px var(--cterm-exergy), inset 0 0 20px #fff;
+}
+
+.cterm-swarm-wave-1 {
+  background: rgba(0, 255, 157, 0.5) !important;
+  opacity: 0.8;
+  z-index: 8;
+  border-color: rgba(255, 255, 255, 0.6) !important;
+  transform: translate3d(0, 0, 30px) scale(1.15) !important;
+}
+.cterm-swarm-wave-1::after { box-shadow: 0 0 20px rgba(0, 255, 157, 0.5); }
+
+.cterm-swarm-wave-2 {
+  background: rgba(43, 59, 229, 0.4) !important;
+  opacity: 0.6;
+  z-index: 5;
+  border-color: rgba(43, 59, 229, 0.6) !important;
+  transform: translate3d(0, 0, 15px) scale(1.05) !important;
+}
+
+/* Módulo NULO - Anomalía de Ruptura (Corrupción de Estado) */
+.cterm-swarm-agent[data-state="NULL"] { 
+  background: rgba(255, 0, 85, 0.15); 
+  border-color: rgba(255, 0, 85, 0.3); 
+}
+.cterm-swarm-agent[data-state="NULL"]:nth-child(odd) { animation: cterm-hard-glitch 4s steps(2, end) infinite; }
+.cterm-swarm-agent[data-state="NULL"]:nth-child(even) { animation: cterm-hard-glitch 5.5s steps(2, end) infinite 1.2s; }
+
+/* Glitch Cinematográfico Físico — Desgarro de Trama (clip-path / transformaciones agudas) */
+@keyframes cterm-hard-glitch {
+  0%, 94% { transform: translate3d(0,0,0); opacity: 0.5; filter: none; clip-path: inset(0 0 0 0); }
+  95% { transform: translate3d(-4px, 2px, 15px) skewX(10deg); filter: contrast(200%) hue-rotate(-50deg); opacity: 1; background: #f0f; border-color: #fff; clip-path: inset(20% 0 30% 0); }
+  96% { transform: translate3d(4px, -2px, -5px) skewX(-10deg); opacity: 0.2; background: #0ff; clip-path: inset(60% 0 10% 0); }
+  97%, 100% { transform: translate3d(0,0,0); opacity: 0.5; filter: none; clip-path: inset(0 0 0 0); }
+}
+
+.cterm-swarm-agent[data-state="ACTV"] { background: rgba(0, 255, 157, 0.25); border-color: rgba(0, 255, 157, 0.4); }
+.cterm-swarm-agent[data-state="SYNC"] { background: rgba(245, 222, 179, 0.15); border-color: rgba(245, 222, 179, 0.3); }
+
+/* Pulso Táctico */
+@keyframes swarm-fire {
+  0% { opacity: 0.3; transform: scale(0.9) translate3d(0,0,0); border-color: transparent; }
+  50% { opacity: 1; transform: scale(1.1) translate3d(0,0,10px); border-color: var(--cterm-exergy); box-shadow: 0 0 15px var(--cterm-exergy); }
+  100% { opacity: 0.3; transform: scale(0.9) translate3d(0,0,0); border-color: transparent; }
+}
+
+.cterm-swarm-agent.cterm-glitching {
+  animation: swarm-fire 0.15s infinite; /* Combustión algorítmica veloz */
+}
+
+@keyframes swarm-active-pulse {
+  from { border-color: rgba(43, 59, 229, 0.5); box-shadow: 0 0 20px rgba(43, 59, 229, 0.3), inset 0 0 15px transparent; }
+  to { border-color: var(--cterm-exergy); box-shadow: 0 0 50px rgba(0, 255, 157, 0.5), inset 0 0 25px rgba(0, 255, 157, 0.2); }
+}
+
+/* Interfaz Central - Resiliencia Glassmorphism Oscuro (Industrial Noir) */
+.cterm-swarm-status {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(5, 5, 5, 0.6);
+  border: 1px solid rgba(0, 255, 157, 0.6);
+  color: #fff;
+  padding: 12px 30px;
+  font-weight: 900;
+  letter-spacing: 5px;
+  font-size: 1.1rem;
+  -webkit-backdrop-filter: blur(12px) contrast(120%);
+  backdrop-filter: blur(12px) contrast(120%);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9), inset 0 0 15px rgba(0, 255, 157, 0.15);
+  text-shadow: 0 0 10px var(--cterm-exergy);
+  pointer-events: none;
+  z-index: 30;
+  animation: status-breathe 3s ease-in-out infinite alternate;
+}
+
+@keyframes status-breathe {
+  0% { transform: translate(-50%, -50%) scale(1); border-color: rgba(0, 255, 157, 0.4); text-shadow: 0 0 10px var(--cterm-exergy); }
+  100% { transform: translate(-50%, -50%) scale(1.02); border-color: rgba(0, 255, 157, 0.8); text-shadow: 0 0 20px var(--cterm-exergy), 0 0 40px #fff; box-shadow: 0 15px 40px rgba(0,0,0,1), inset 0 0 25px rgba(0, 255, 157, 0.3); }
+}
+
+/* --- SINGULARITY x100 (Annihilation) --- */
+
+.cterm-frontera-x100 {
+  filter: saturate(300%) contrast(150%) brightness(1.2) hue-rotate(-10deg);
+  transition: filter 5s cubic-bezier(0.9, 0, 0.1, 1);
+}
+
+.singularity-active-x100 .cterm-swarm-container {
+  animation: singularity-radial-pull 8s cubic-bezier(0.9, 0, 0.1, 1) forwards;
+}
+
+@keyframes singularity-radial-pull {
+  0% { transform: rotateX(55deg) rotateZ(20deg) scale(1); filter: blur(0); }
+  60% { transform: rotateX(720deg) rotateZ(360deg) scale(0.1); filter: blur(10px); }
+  100% { transform: rotateX(1080deg) rotateZ(540deg) scale(0); filter: blur(100px); opacity: 0; }
+}
+
+.cterm-singularity-collapse {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: inherit;
+  font-weight: 900;
+  font-size: 4rem;
+  letter-spacing: 20px;
+  color: #fff;
+  text-shadow: 0 0 50px #2B3BE5, 0 0 100px #2B3BE5;
+  mix-blend-mode: overlay;
+  z-index: 1000;
+  pointer-events: none;
+  animation: text-hyper-blink 0.1s infinite;
+}
+
+@keyframes text-hyper-blink {
+  0%, 100% { opacity: 1; transform: translate(-50%, -50%) skewX(0deg); }
+  50% { opacity: 0.5; transform: translate(-50%, -50%) skewX(10deg); }
+}
+
+.cterm-singularity-reveal {
+  padding: 40px;
+  background: rgba(5, 5, 5, 0.95);
+  border: 1px solid #2B3BE5;
+  box-shadow: 0 0 100px rgba(43, 59, 229, 0.5);
+  animation: reveal-fade-in 2s ease-out;
+}
+
+@keyframes reveal-fade-in {
+  from { opacity: 0; transform: translateY(50px) scale(0.9); filter: blur(20px); }
+  to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+
+/* FRONTERA x100 / SINGULARITY OVERRIDES */
+.cterm-frontera-x100 {
+  --cterm-exergy: #2B3BE5; /* BlueYlb */
+  filter: contrast(300%) saturate(150%) hue-rotate(180deg) !important;
+  box-shadow: inset 0 0 100px #2B3BE5, 0 0 50px rgba(43, 59, 229, 0.4);
+}
+
+.singularity-active-x100 {
+  animation: singularity-distortion 0.5s infinite alternate !important;
+}
+
+@keyframes singularity-distortion {
+  0% { filter: blur(0px) contrast(1); transform: scale(1); }
+  100% { filter: blur(2px) contrast(1.5); transform: scale(1.005); }
+}
+
+.x100-mode .cterm-swarm-agent {
+  width: 4px;
+  height: 4px;
+  font-size: 0; /* Hide text for density */
+}
+
+.cterm-singularity-collapse {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 4rem;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: 20px;
+  animation: collapse-zoom 3s cubic-bezier(0.95, 0.05, 0.795, 0.035) forwards;
+  z-index: 9999;
+  mix-blend-mode: difference;
+}
+
+@keyframes collapse-zoom {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 0; filter: blur(20px); }
+  20% { opacity: 1; filter: blur(0); }
+  100% { transform: translate(-50%, -50%) scale(0.01); opacity: 0; filter: blur(50px); }
+}
+
+.cterm-singularity-reveal {
+  animation: reveal-fade 2s ease-out;
+  text-align: center;
+  max-width: 600px;
+  margin: 50px auto;
+}
+
+@keyframes reveal-fade {
+  from { opacity: 0; transform: translateY(20px); filter: blur(10px); }
+  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+.cterm-swarm-grid {
+  transition: transform 0.1s linear;
+}
+
+/* --- SINGULARITY v6.0 (x100) --- */
+.cterm-singularity-v6 {
+    animation: cterm-singularity-pulse 0.4s cubic-bezier(0.19, 1, 0.22, 1) infinite both;
+    box-shadow: 0 0 20px rgba(43, 59, 229, 0.4);
+    border: 1px solid #2B3BE5;
+}
+
+@keyframes cterm-singularity-pulse {
+    0% { transform: scale(1); opacity: 1; filter: brightness(1); }
+    50% { transform: scale(1.02); opacity: 0.9; filter: brightness(1.5); }
+    100% { transform: scale(1); opacity: 1; filter: brightness(1); }
+}
+
+/* ==========================================================================
+   FRONTERA x100 — SINGULARITY COLLAPSE
+   ========================================================================== */
+
+.cterm-frontera-x100 {
+  filter: contrast(180%) brightness(1.2) saturate(1.5) !important;
+  box-shadow: inset 0 0 100px rgba(43, 59, 229, 0.5), 0 0 200px rgba(43, 59, 229, 0.2);
+}
+
+.singularity-active-x100 {
+  animation: singularity-glitch 0.2s infinite;
+  background: radial-gradient(circle at center, rgba(43, 59, 229, 0.4) 0%, transparent 70%);
+}
+
+@keyframes singularity-glitch {
+  0% { transform: scale(1.002) translate(1px, -1px); filter: hue-rotate(0deg) blur(0px); }
+  50% { transform: scale(0.998) translate(-1px, 1px); filter: hue-rotate(15deg) blur(1px); }
+  100% { transform: scale(1) translate(0, 0); filter: hue-rotate(0deg) blur(2px); }
+}
+
+.cterm-singularity-collapse {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--cterm-exergy);
+  font-family: var(--cterm-font);
+  font-weight: 900;
+  font-size: 3rem;
+  letter-spacing: 20px;
+  animation: collapse-text-zoom 4s cubic-bezier(0.9, 0, 0.1, 1) forwards;
+  z-index: 100;
+  text-shadow: 0 0 20px var(--cterm-exergy);
+}
+
+@keyframes collapse-text-zoom {
+  0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; letter-spacing: 50px; filter: blur(20px); }
+  20% { opacity: 1; filter: blur(0px); }
+  80% { transform: translate(-50%, -50%) scale(1.5); opacity: 1; filter: blur(2px); letter-spacing: 5px; }
+  100% { transform: translate(-50%, -50%) scale(10); opacity: 0; filter: blur(40px); }
+}
+
+/* O(1) Tensor Collapse for the Grid */
+.x10Mode.singularity-active-x100 .cterm-swarm-grid {
+  animation: grid-collapse 4s cubic-bezier(0.9, 0, 0.1, 1) forwards;
+}
+
+@keyframes grid-collapse {
+  0% { transform: rotateX(55deg) rotateZ(20deg) scale(1); filter: blur(0px); opacity: 1; }
+  50% { transform: rotateX(80deg) rotateZ(180deg) scale(0.5); filter: blur(5px); opacity: 0.8; }
+  100% { transform: rotateY(0deg) rotateZ(720deg) scale(0); filter: blur(30px); opacity: 0; }
+}
+
+.cterm-singularity-reveal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  animation: reveal-fade-in 2s ease-out forwards;
+}
+
+@keyframes reveal-fade-in {
+  from { opacity: 0; transform: scale(0.95); filter: blur(10px); }
+  to { opacity: 1; transform: scale(1); filter: blur(0px); }
 }
