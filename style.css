@@ -9009,3 +9009,95 @@ body.cooldown-active .arcade-bezel .bezel-bottom span {
   .lyzer-panel { width: 180px; font-size: 0.6rem; }
   .hud-top-bar { font-size: 0.7rem; padding: 0.5rem; }
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   ACHIEVEMENT TOAST + WELCOME BACK + CURSOR DEFORMATION
+   ═══════════════════════════════════════════════════════════════════ */
+
+.achievement-toast {
+  position: fixed;
+  top: 80px;
+  right: 2rem;
+  z-index: 99998;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(10, 10, 10, 0.92);
+  border: 1px solid #2B3BE5;
+  border-left: 4px solid #D4620A;
+  padding: 1rem 1.5rem;
+  max-width: 360px;
+  box-shadow: 0 0 40px rgba(43, 59, 229, 0.4), inset 0 0 30px rgba(0,0,0,0.5);
+  backdrop-filter: blur(8px);
+}
+.ach-icon {
+  font-size: 2rem;
+  min-width: 3rem;
+  text-align: center;
+}
+.ach-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 3px;
+  color: #D4620A;
+  margin-bottom: 0.25rem;
+}
+.ach-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 1px;
+}
+.ach-desc {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  color: #7EB8DA;
+  margin-top: 0.2rem;
+}
+
+/* Welcome Back */
+.welcome-back-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 99997;
+  display: flex;
+  justify-content: center;
+  padding-top: 60px;
+  pointer-events: auto;
+  cursor: none;
+}
+.wb-content {
+  background: rgba(10, 10, 10, 0.9);
+  border: 1px solid rgba(43, 59, 229, 0.3);
+  border-bottom: 2px solid #2B3BE5;
+  padding: 1.5rem 3rem;
+  text-align: center;
+  max-width: 500px;
+  box-shadow: 0 10px 50px rgba(0,0,0,0.8);
+}
+.wb-greeting {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  color: #2B3BE5;
+  margin-bottom: 0.5rem;
+}
+.wb-msg {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem;
+  color: #D4D4D4;
+  line-height: 1.6;
+}
+.wb-fav {
+  color: #D4620A;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.8rem;
+}
+.wb-achievements {
+  margin-top: 0.75rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  color: rgba(126, 184, 218, 0.6);
+  letter-spacing: 2px;
+}

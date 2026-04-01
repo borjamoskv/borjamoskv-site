@@ -215,6 +215,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             bootComplete = true;
+
+            // Init achievement & narrative engine
+            if (window.MOSKV_ARCADE) window.MOSKV_ARCADE.init();
         });
     }
 
@@ -250,6 +253,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     _spawnParticleBurst(window.innerWidth / 2, window.innerHeight / 2, 30);
                 }
                 document.body.classList.remove('vault-open');
+                // Achievement hooks
+                if (window.MOSKV_ARCADE) {
+                    window.MOSKV_ARCADE.onTrackPlayed(work.id);
+                    window.MOSKV_ARCADE.onTransition();
+                }
             });
             vaultContainer.appendChild(el);
         });
@@ -363,7 +371,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     haptic([30]);
                 } break;
             case 'v': case 'arrowup': case 'w':
-                document.body.classList.toggle('vault-open'); haptic([15]); break;
+                document.body.classList.toggle('vault-open'); haptic([15]);
+                if (window.MOSKV_ARCADE) window.MOSKV_ARCADE.onVaultOpened();
+                break;
             case 'escape':
                 document.body.classList.remove('vault-open'); break;
             case 'f':
@@ -371,7 +381,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 VIS_MODES.forEach(m => document.body.classList.remove(m.id));
                 if (VIS_MODES[currentVisMode].id !== 'none') document.body.classList.add(VIS_MODES[currentVisMode].id);
                 visCtrl.querySelectorAll('.vis-ctrl-btn').forEach((b, i) => b.classList.toggle('active', i === currentVisMode));
-                haptic([15, 30]); break;
+                haptic([15, 30]);
+                if (window.MOSKV_ARCADE) window.MOSKV_ARCADE.onFilterUsed();
+                break;
         }
     });
 
@@ -401,6 +413,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     const sn = $q('#styleyzer .lyzer-data span:last-child');
                     if (sn) sn.innerText = `ENTROPY: ${(Math.random() * 0.4 + 0.1).toFixed(3)} nats`;
                     _showTrackTitle(work.title, (work.categories||[]).slice(0, 2).join(' · ').toUpperCase());
+                    // Achievement: track played
+                    if (window.MOSKV_ARCADE) window.MOSKV_ARCADE.onTrackPlayed(currentTrack);
                 }
             }
             drawWaveform();
