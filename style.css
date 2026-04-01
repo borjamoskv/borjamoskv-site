@@ -1341,25 +1341,39 @@ html.inpage-video-open body {
    ═══════════════════════════════════════════════════════════════════ */
 .main-nav {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: var(--nav-height);
+  top: 1.5rem;
+  left: 2.5%;
+  width: 95%;
+  height: auto;
+  min-height: var(--nav-height);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 4%;
+  padding: 0.5rem 2%;
   z-index: 1000;
-  transition: background-color 0.4s var(--spring-liquid), backdrop-filter 0.4s, -webkit-backdrop-filter 0.4s;
-  border-bottom: 1px solid transparent;
-  transform: translateZ(0); /* GPU Compositing */
-  will-change: background-color, backdrop-filter, -webkit-backdrop-filter;
+  background: rgba(10, 10, 10, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 2px solid #00FFFF; /* Cubism neon border */
+  border-right: 2px solid #FF003C;  /* Cubism neon border */
+  border-radius: 4px;
+  transform: translateZ(0) skew(-1deg);
+  will-change: transform, background-color, backdrop-filter;
+  transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.8); /* Brutalism */
+  mix-blend-mode: normal; /* Safe for top layer */
+}
+
+.main-nav:hover {
+  transform: translateZ(10px) skew(-2deg) rotate(-0.5deg);
 }
 
 .main-nav.scrolled {
-  background-color: var(--glass-bg);
+  background-color: rgba(2, 2, 2, 0.85);
   -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 2px solid #E6FB04;
+  border-right: 2px solid #00FFFF;
+  transform: translateZ(0) skew(1deg);
 }
 
 .nav-logo {
@@ -8361,4 +8375,338 @@ a:focus-visible {
   padding: 1rem;
   border: 1px solid rgba(255, 255, 255, 0.06);
   pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   MOBILE PERFORMANCE & DENSITY REDUCTION (Grok Audit Fix)
+   Targets: text density, heavy effects, video overhead
+   ═══════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px), (pointer: coarse) {
+  /* 1. Kill horizontal scroll hijacking on mobile — native vertical only */
+  #moltbook {
+    overflow: visible !important;
+    height: auto !important;
+  }
+  #moltbook .horizontal-track {
+    display: flex;
+    flex-direction: column;
+    transform: none !important;
+    width: 100% !important;
+  }
+
+  /* 2. Reduce video background weight — static poster fallback */
+  .video-background video {
+    display: none !important;
+  }
+  .video-background {
+    background-size: cover;
+    background-position: center;
+  }
+
+  /* 3. Disable GSAP/kinetic cursor effects — zero overhead */
+  .cursor-dot,
+  .cursor-trail,
+  .cursor-follower,
+  .particle-canvas,
+  #cortex-particles {
+    display: none !important;
+  }
+
+  /* 4. Text density reduction — breathing room */
+  .section-grid {
+    gap: 1.5rem !important;
+  }
+  .section-title {
+    font-size: clamp(1.8rem, 7vw, 2.8rem) !important;
+    line-height: 1.15 !important;
+  }
+  .section-description,
+  .card-body p {
+    font-size: 0.95rem !important;
+    line-height: 1.6 !important;
+  }
+
+  /* 5. Simplify glassmorphism — reduce GPU paint */
+  .glass-card,
+  .glass-panel {
+    -webkit-backdrop-filter: blur(8px) !important;
+    backdrop-filter: blur(8px) !important;
+  }
+
+  /* 6. Reduce animation complexity */
+  .frontier-terminal,
+  .chatquito-expanded {
+    -webkit-backdrop-filter: blur(12px) !important;
+    backdrop-filter: blur(12px) !important;
+  }
+
+  /* 7. Disable parallax — scroll jank prevention */
+  [data-depth] {
+    transform: none !important;
+  }
+
+  /* 8. Video iframes — reduce height for better scroll flow */
+  iframe[src*="youtube"],
+  iframe[src*="vimeo"],
+  iframe[src*="soundcloud"] {
+    max-height: 220px !important;
+  }
+}
+
+/* Reduced motion — universal safety net */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   CORTEX VIDEO GAME HUD (ULTRA THINK ENFORCED)
+   ═══════════════════════════════════════════════════════════════════ */
+
+body.game-mode-active {
+  overflow: hidden !important;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-color: #0A0A0A;
+}
+
+.cortex-game-hud {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2rem;
+  opacity: 1;
+  transition: opacity 1s ease;
+}
+
+.cortex-game-hud.hidden-boot {
+  opacity: 0;
+}
+
+/* CRT Scanlines / Glitch Override */
+.cortex-game-hud::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  z-index: 2;
+  background-size: 100% 2px, 3px 100%;
+  pointer-events: none;
+}
+
+.hud-top-bar {
+  display: flex;
+  justify-content: space-between;
+  pointer-events: auto;
+  font-family: 'Space Grotesk', monospace;
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #D4D4D4;
+  border-bottom: 1px solid rgba(43, 59, 229, 0.3);
+  padding-bottom: 1rem;
+  background: rgba(10, 10, 10, 0.8);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+}
+
+.hud-bottom-bar {
+  display: flex;
+  justify-content: space-between;
+  pointer-events: auto;
+}
+
+.arcade-btn {
+  background: rgba(10, 10, 10, 0.8);
+  border: 1px solid #2B3BE5;
+  color: #2B3BE5;
+  padding: 1rem 2rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1.2rem;
+  letter-spacing: 4px;
+  cursor: none; /* Sovereign cursor */
+  transition: all 0.1s;
+  box-shadow: inset 0 0 10px rgba(43, 59, 229, 0.1);
+}
+
+.arcade-btn:hover {
+  background: #2B3BE5;
+  color: #0A0A0A;
+  box-shadow: 0 0 20px rgba(43, 59, 229, 0.6);
+  transform: scale(1.02);
+}
+
+.neon-blue {
+  color: #2B3BE5;
+  text-shadow: 0 0 8px rgba(43, 59, 229, 0.8);
+}
+
+.ml-3 {
+  margin-left: 2rem;
+}
+
+.sys-status, .dj-telemetry, .vu-meter {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Vault Modal */
+.vault-modal {
+  position: fixed;
+  top: 10%;
+  left: 10%;
+  right: 10%;
+  bottom: 10%;
+  background: rgba(10, 10, 10, 0.95);
+  border: 2px solid #2B3BE5;
+  z-index: 10000;
+  display: none;
+  flex-direction: column;
+  box-shadow: 0 0 50px rgba(43, 59, 229, 0.4);
+  pointer-events: auto;
+}
+
+body.vault-open .vault-modal {
+  display: flex;
+}
+
+.vault-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(43, 59, 229, 0.3);
+}
+
+.vault-header h2 {
+  color: #2B3BE5;
+  margin: 0;
+}
+
+.vault-grid {
+  flex: 1;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.vault-item {
+  border: 1px solid rgba(212, 212, 212, 0.2);
+  background: #000;
+  height: 150px;
+  position: relative;
+  cursor: none;
+  transition: border-color 0.2s;
+  background-size: cover;
+  background-position: center;
+}
+
+.vault-item:hover {
+  border-color: #2B3BE5;
+  box-shadow: 0 0 15px rgba(43, 59, 229, 0.5);
+}
+
+.vault-item-title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 0.5rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  color: #2B3BE5;
+}
+
+/* Press Start Blink */
+.press-start-blink {
+  margin-top: 3rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 2rem;
+  color: #ef4444; /* Blood red for contrast */
+  text-shadow: 0 0 10px rgba(239, 68, 68, 0.8);
+  animation: blink 1s step-end infinite;
+  cursor: none;
+  z-index: 10;
+}
+
+.press-start-blink:hover {
+  color: #fff;
+}
+
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Side Panels */
+.hud-side-panels {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: space-between;
+  padding: 0 2rem;
+  pointer-events: none;
+}
+
+.lyzer-panel {
+  background: rgba(10, 10, 10, 0.7);
+  border-left: 2px solid #2B3BE5;
+  padding: 1rem;
+  width: 250px;
+  font-family: 'IBM Plex Mono', monospace;
+  color: #D4D4D4;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8), inset 5px 0 15px rgba(43, 59, 229, 0.1);
+}
+
+#playlyzer {
+  border-left: none;
+  border-right: 2px solid #D4620A;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8), inset -5px 0 15px rgba(212, 98, 10, 0.1);
+  text-align: right;
+}
+
+.lyzer-header {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #2B3BE5;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(43, 59, 229, 0.3);
+  padding-bottom: 0.5rem;
+}
+
+#playlyzer .lyzer-header {
+  color: #D4620A;
+  border-bottom: 1px solid rgba(212, 98, 10, 0.3);
+}
+
+.lyzer-data {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.7rem;
+  letter-spacing: 1px;
 }

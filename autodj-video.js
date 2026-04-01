@@ -2016,6 +2016,15 @@ class AutoDJAesthetic {
         }
     }, 500);
 
+    // Wash Out Effect (Termodinamica / Agent DJ Mixing)
+    if (this.echoFilter) {
+        // Highpass sweep on current deck
+        const now = this.audioContext.currentTime;
+        this.echoFilter.frequency.setValueAtTime(0, now);
+        this.echoFilter.frequency.exponentialRampToValueAtTime(12000, now + (this.fadeDurationMs / 1000) * 0.8);
+        this.echoFilter.Q.value = 1.2;
+    }
+
     if (typeof gsap !== 'undefined') {
       setTimeout(() => {
         // Remotion-Inspired Visual Transitions

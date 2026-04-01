@@ -124,7 +124,6 @@ const DATA = {
 
     // Works — enriched with categories for filtering
     works: [
-        { id: "7AO4w4Y_L24", title: "NVIDIA JUST OPEN-SOURCED", desc: "Added by User · AI", categories: ["experimental", "4k"], featured: true },
         { id: "NYhOQTcNLkA", title: "ECOS DEL COSMOS", desc: "Original · Ambient / Sci-Fi [4K]", categories: ["original", "ambient", "4k"], featured: true },
         { id: "x8E9HInpzE4", title: "GLITCH IN THE MIRROR", desc: "Original · Experimental [4K]", categories: ["original", "experimental", "4k"], featured: true },
         { id: "b9ktVQN48OU", title: "LES BUKO", desc: "Original · Electronic [8K]", categories: ["original", "electronic", "4k", "8k"], featured: true },
@@ -139,22 +138,7 @@ const DATA = {
         { id: "AL46Orm0LS4", title: "ALGORITHMS VS HUMAN ATTENTION", desc: "Short · Substack", categories: ["original", "experimental"] },
         { id: "-s5ZB4djvEw", title: "CON LA PUNTA DEL CIPOTE", desc: "Short · Substack", categories: ["original", "experimental"] },
         { id: "uhw1ZQrp-9g", title: "EL ARTE NO TE DEBE NADA", desc: "Short · Substack", categories: ["original", "experimental"] },
-        { id: "lbQ1aKrnGNs", title: "RADIOHEAD — IN RAINBOWS", desc: "Rework · IDM / Ambient", categories: ["rework", "idm", "ambient"] },
-        { id: "gDquDpykJIc", title: "O SUPERMAN (LAURIE ANDERSON)", desc: "Rework · Electronic", categories: ["rework", "electronic"] },
-        { id: "I3jJXm8aG-A", title: "THE MEXICAN", desc: "Rework · Bakala", categories: ["rework", "techno"] },
-        { id: "bmD0YmLm45A", title: "RADIOHEAD — NO SURPRISES", desc: "Rework · Ambient Techno", categories: ["rework", "ambient", "techno"] },
-        { id: "_1XOjBK4wJc", title: "TAME IMPALA — LET IT HAPPEN", desc: "Rework · Psychedelic", categories: ["rework", "experimental"] },
-        { id: "3iQFsgZrDZk", title: "IDLES — THE BEACHLAND BALLROOM", desc: "Rework · Warehouse Techno", categories: ["rework", "techno"] },
         { id: "tMorCDfedf8", title: "JAR TO THE SYSTEM", desc: "Original · Electronic", categories: ["original", "electronic"] },
-        { id: "GeHP3ADsans", title: "ASÍ FUE", desc: "Rework · Electro Deep House", categories: ["rework", "electronic"] },
-        { id: "AcouyGSki-8", title: "SWANS — SCREEN SHOT", desc: "Rework · Experimental", categories: ["rework", "experimental"] },
-        { id: "4RXo5uD-wF4", title: "GRIZZLY BEAR — DEEP SEA DIVER", desc: "Remix · Electronic", categories: ["rework", "electronic"] },
-        { id: "ya59utbBStM", title: "JOHN FRUSCIANTE — MURDERERS", desc: "Rework · IDM", categories: ["rework", "idm"] },
-        { id: "D8hjJ17vZYc", title: "ROBERT COSMIC — VIAJEROS", desc: "Rework · Electronic", categories: ["rework", "electronic"] },
-        { id: "MH-YirWPNmI", title: "RADIOHEAD — 15 STEP", desc: "Rework · IDM", categories: ["rework", "idm"] },
-        { id: "Yr5CMXrJgIo", title: "LINDSTRØM & PRINS THOMAS — NAA ER DRUENE", desc: "Rework · Electronic", categories: ["rework", "electronic"] },
-        { id: "u99SbUVjV6M", title: "ROBOCOP", desc: "Rework · Electronic", categories: ["rework", "electronic"] },
-        { id: "nz9h7q5FA-0", title: "CRUJIDOS", desc: "Rework · Experimental", categories: ["rework", "experimental"] },
         { id: "rmzKC8AYkVw", title: "32 ELECTRONIC MUSIC VISUAL TRACKS", desc: "Visual Compilation", categories: ["original", "electronic", "4k"] },
         { id: "zzHETLKSeT4", title: "METAFASHION", desc: "Original · Experimental", categories: ["original", "experimental"] },
         { id: "4Cb-Iu8DnJM", title: "BLAC", desc: "Original · Electronic", categories: ["original", "electronic"] },
@@ -179,7 +163,6 @@ const DATA = {
         { id: "8UMhx5cDYjo", title: "THE SUPERSTARS", desc: "Original · Electronic", categories: ["original", "electronic"] },
         { id: "ZtOVq-nMgqo", title: "2 MANY FORRESTS", desc: "Original · Electronic", categories: ["original", "electronic"] },
         { id: "Zc8QEQ8y1f8", title: "RETRATOS NAROA GUTIÉRREZ GIL", desc: "Visual · Photography", categories: ["original", "4k"] },
-        { id: "UrX4mqXmapE", title: "EL CHOMBO — CHACARRON", desc: "MICA Inject · Electronic", categories: ["original", "electronic"] },
     ],
 };
 

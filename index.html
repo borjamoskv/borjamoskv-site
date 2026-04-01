@@ -101,10 +101,78 @@
   <!-- PUNTERO SOBERANO (CORTEX INERTIAL KINEMATICS) -->
   <div class="cortex-cursor-dot"></div>
   <div class="cortex-cursor-halo"></div>
-  <!-- LOADER -->
-  <div id="loader" class="loader-overlay">
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       CORTEX VIDEO GAME HUD (ULTRA THINK ENFORCED)
+       ═══════════════════════════════════════════════════════════════════ -->
+  <div id="game-hud" class="cortex-game-hud hidden-boot">
+    <div class="hud-top-bar">
+      <div class="hud-element sys-status">
+        <span class="hud-label">CORTEX v7.0</span>
+        <span class="hud-value neon-blue">ON_LINE</span>
+      </div>
+      <div class="hud-element dj-telemetry">
+        <span class="hud-label">BPM</span>
+        <span class="hud-value" id="hud-bpm">125.0</span>
+        <span class="hud-label ml-3">EXERGY</span>
+        <span class="hud-value neon-blue">100T</span>
+        <span class="hud-label ml-3">PHASE</span>
+        <span class="hud-value" id="hud-phase">WARMUP</span>
+      </div>
+      <div class="hud-element vu-meter">
+        <canvas id="hud-vu-meter" width="100" height="20"></canvas>
+      </div>
+    </div>
+
+    <!-- Arcade Level Select / Vault -->
+    <div class="hud-bottom-bar">
+      <button class="arcade-btn" onclick="document.body.classList.toggle('vault-open')">
+        [ OPEN_VAULT ]
+      </button>
+      <button class="arcade-btn" id="hud-global-mute">
+        [ AUDIO_SYSTEM ]
+      </button>
+    </div>
+
+    <!-- Side Panels: Analyzers -->
+    <div class="hud-side-panels">
+      <div class="lyzer-panel" id="styleyzer">
+        <div class="lyzer-header">>> STYLEYZER_Ω</div>
+        <div class="lyzer-data">
+          <span>AESTHETIC: NOIR_GLITCH</span>
+          <span>DOMINANCE: #0A0A0A</span>
+          <span>NOISE: 14%</span>
+        </div>
+      </div>
+      <div class="lyzer-panel" id="playlyzer">
+        <div class="lyzer-header">>> PLAYLYZER_Ω</div>
+        <div class="lyzer-data">
+          <span id="play-genre">GENRE: EXPERIMENTAL</span>
+          <span id="play-density">DENSITY: O(1)</span>
+          <span id="play-vibe">VIBE: CORTEX EXCLUSIVE</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vault Overlay (Level Select) -->
+    <div class="vault-modal">
+        <div class="vault-header">
+            <h2>> SELECT SEQUENCE</h2>
+            <button class="arcade-btn vault-close" onclick="document.body.classList.remove('vault-open')">[ X ]</button>
+        </div>
+        <div class="vault-grid" id="vault-grid-container">
+            <!-- Dynamically populated by JS -->
+        </div>
+    </div>
+  </div>
+
+  <!-- LOADER / PRESS START SCREEN -->
+  <div id="loader" class="loader-overlay arcade-boot">
     <div class="loader-content">
-      <h1 class="loader-logo">MOSKV</h1>
+      <h1 class="loader-logo glitch-mega" data-text="MOSKV">MOSKV</h1>
+      <div class="press-start-blink" id="press-start-btn">
+        > PRESS START <
+      </div>
       <div class="loader-bar">
         <div class="loader-progress"></div>
       </div>
@@ -140,7 +208,7 @@
   <!-- ═══════════════════════════════════════════════════════════════════
        NAVIGATION
        ═══════════════════════════════════════════════════════════════════ -->
-  <nav class="main-nav" id="mainNav">
+  <nav class="main-nav" id="mainNav" style="display: none;">
     <a href="#hero" class="nav-logo">MOSKV</a>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-controls="navLinks" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -170,9 +238,9 @@
     </div>
   </nav>
   <!-- ═══════════════════════════════════════════════════════════════════
-       HERO
+       HERO (HIDDEN IN GAME MODE)
        ═══════════════════════════════════════════════════════════════════ -->
-  <section class="hero-section" id="hero">
+  <section class="hero-section" id="hero" style="display: none;">
     <span class="section-kicker hero-kicker">Artista frontera · club / visual / sistema</span>
     <div class="hero-shell">
       <div class="hero-main">
@@ -260,7 +328,7 @@
     </div>
   </section>
 
-  <section class="frontier-band" id="frontier-band">
+  <section class="frontier-band" id="frontier-band" style="display: none;">
     <div class="frontier-band-shell">
       <div class="frontier-band-copy">
         <span class="section-kicker frontier-band-kicker">Frontera operativa</span>
@@ -287,7 +355,7 @@
     </div>
   </section>
 
-  <section class="signal-map-section" id="signal-map">
+  <section class="signal-map-section" id="signal-map" style="display: none;">
     <div class="signal-map-shell">
       <div class="signal-map-copy">
         <span class="section-kicker">Mapa rapido</span>
@@ -322,7 +390,7 @@
   <!-- ═══════════════════════════════════════════════════════════════════
        INFINITE VIDEO SCROLL "A FULL" (Awwwards Grade)
        ═══════════════════════════════════════════════════════════════════ -->
-  <section class="infinite-video-cosmos" id="video-cosmos">
+  <section class="infinite-video-cosmos" id="video-cosmos" style="display: none;">
     <div class="infinite-video-track">
       <!-- Original Set -->
       <article class="video-monolith">
@@ -364,7 +432,7 @@
   <!-- ═══════════════════════════════════════════════════════════════════
        INFINITE MARQUEE (Awwwards Grade)
        ═══════════════════════════════════════════════════════════════════ -->
-  <div class="marquee-section">
+  <div class="marquee-section" style="display: none;">
     <div class="marquee">
       <div class="marquee__inner">
         <span>INDUSTRIAL NOIR</span>
@@ -406,7 +474,7 @@
   <!-- ═══════════════════════════════════════════════════════════════════
        AVANT-GARDE MANIFESTO & DRAGGABLE MUSIC LAB (INTERACTIVE)
        ═══════════════════════════════════════════════════════════════════ -->
-  <section class="avant-garde-manifesto mica-noir-section" id="manifesto">
+  <section class="avant-garde-manifesto mica-noir-section" id="manifesto" style="display: none;">
     <div class="mica-grain-overlay"></div>
     <span class="mica-accent">Manifiestos Operacionales</span>
     <h2 class="mica-title">Criterio Inmanente</h2>
@@ -786,7 +854,7 @@
   <!-- ═══════════════════════════════════════════════════════════════════
        ABOUT THE SIGNAL
        ═══════════════════════════════════════════════════════════════════ -->
-  <section class="about-signal" id="about">
+  <section class="about-signal" id="about" style="display: none;">
     <div class="about-container">
       <div class="signal-content flex-1-full">
         <span class="section-kicker">Señal base</span>
@@ -1822,11 +1890,18 @@ https://6e89a5fe.borjamoskv.pages.dev/            </a>
   <!-- Cortex Terminal -->
   <script src="cortex-terminal.js" defer></script>
 
+  <!-- Awwwards-Picasso-Ω GSAP Kinematics -->
+  <script src="js/awwwards-picasso.js" defer></script>
+
   <!-- Chiquito Easter Egg -->
   <script src="chiquito.js" defer></script>
 
   <!-- Lazy Loader (Three.js, Morph Shader, Gambitero) -->
   <script src="js/lazy-loader.js" defer></script>
+  
+  <!-- Video Game HUD -->
+  <script src="game-hud.js" defer></script>
+  
   <script src="autodj-video.js" defer></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {

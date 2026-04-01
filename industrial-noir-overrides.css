@@ -12,14 +12,16 @@ body, html {
   background-color: var(--bg-color) !important;
 }
 
-/* 1. KINETIC REPLACEMENT FOR STANDARD HOVERS */
-/* Suppress basic color shifts and inject 120Hz physics */
+/* 1. KINETIC REPLACEMENT FOR STANDARD HOVERS (AWWWARDS-PICASSO-Ω) */
+/* Suppress basic color shifts and inject 120Hz physics + Chromatic Dissonance */
 a:hover, .cta-primary:hover, .cta-secondary:hover, .hero-operating-card:hover, .hero-signal-card:hover, .glass-card:hover {
   background-color: transparent !important;
-  color: inherit;
-  transform: perspective(1000px) translateZ(20px) scale(1.02) skewX(-1deg) !important;
-  transition: transform 0.2s var(--spring-120hz) !important;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.1) !important;
+  color: #E6FB04 !important; /* Acid Yellow */
+  text-shadow: 0 0 10px #FF003C, -2px 2px 0px #00FFFF; /* Blood Red Glow + Cyan shift */
+  transform: perspective(1000px) translateZ(20px) scale(1.02) skewX(-3deg) rotateY(2deg) !important;
+  transition: all 0.15s cubic-bezier(0.19, 1, 0.22, 1) !important; /* Violent Expo Out */
+  box-shadow: 0 10px 30px rgba(255, 0, 60, 0.3), 0 0 0 2px #E6FB04 !important;
+  mix-blend-mode: difference;
 }
 
 /* 2. AUDIO-REACTIVE HOOKS (Triggered via spatial-audio.js variables) */

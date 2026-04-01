@@ -1,21 +1,25 @@
 /**
- * KINETIC-PHYSICS-Ω
- * 120Hz Spring & Magnetic Kinematics for CORTEX/Aesthetic-Foundry-Omega.
- * Replaces standard CSS hover/transitions with immediate physical mass and magnetic pull.
+ * KINETIC-PHYSICS-Ω v2.1
+ * 120Hz Spring & Magnetic Kinematics — DESKTOP ONLY.
+ * Mobile devices get zero kinetic overhead (pointer: coarse bailout).
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  // P0: Bail on mobile/touch — zero overhead
+  if (matchMedia('(pointer: coarse)').matches) {
+    console.log('[KINETIC] Touch device detected. Physics disabled for performance.');
+    return;
+  }
+
   if (typeof gsap === 'undefined') {
     console.warn('GSAP is missing. Kinetic Physics halted.');
     return;
   }
 
-  // Updated selectors to include the new Frontier UI and general links
   const thermalSelector = '.kinetic-surface, [data-kinetic="true"], button, a.cta-primary, a.cta-secondary, .nav-toggle, .frontier-open-btn, .frontier-close, .gambitero-trigger-btn, .footer-link';
   const kineticSurfaces = document.querySelectorAll(thermalSelector);
 
   kineticSurfaces.forEach(el => {
-    // Suppress default focus/select behaviors
     el.style.userSelect = 'none';
     el.style.WebkitTapHighlightColor = 'transparent';
     el.style.outline = 'none';
@@ -25,13 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const rect = el.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
-      
-      // Calculate distance from center (magnetic pull intensity)
       const moveX = (e.clientX - centerX);
       const moveY = (e.clientY - centerY);
       
       gsap.to(el, {
-        x: moveX * 0.3, // 30% pull towards cursor
+        x: moveX * 0.3,
         y: moveY * 0.3,
         scale: 1.05,
         duration: 0.4,
@@ -39,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
         overwrite: 'auto'
       });
 
-      // Inner parallax for child elements (e.g., text, icons)
       if (el.children.length > 0) {
         gsap.to(el.children, {
           x: moveX * 0.15,
@@ -51,30 +52,22 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Add physics mass on PRESS (Tensión Térmica)
+    // Press physics
     const pressDown = () => {
-      gsap.to(el, {
-        scale: 0.92,
-        duration: 0.1,
-        ease: 'power3.out',
-        overwrite: 'auto'
-      });
+      gsap.to(el, { scale: 0.92, duration: 0.1, ease: 'power3.out', overwrite: 'auto' });
       if (el.children.length > 0) {
         gsap.to(el.children, { scale: 0.95, duration: 0.1, ease: 'power3.out' });
       }
     };
     el.addEventListener('mousedown', pressDown);
-    el.addEventListener('touchstart', pressDown);
 
-    // Release kinetic energy (Rebote físico + Reset Mágnetico)
+    // Release kinetic energy
     const releasePhysics = () => {
       gsap.to(el, {
-        x: 0,
-        y: 0,
-        scale: 1,
+        x: 0, y: 0, scale: 1,
         duration: 0.9,
         ease: 'elastic.out(1.1, 0.4)',
-        clearProps: "x,y", // Clean up after spring to prevent layout shifts
+        clearProps: "x,y",
         overwrite: 'auto'
       });
       if (el.children.length > 0) {
@@ -89,7 +82,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     el.addEventListener('mouseup', releasePhysics);
     el.addEventListener('mouseleave', releasePhysics);
-    el.addEventListener('touchend', releasePhysics);
   });
 
   console.log(`[AESTHETIC-FOUNDRY] 120Hz Magnetic Kinematics injected on ${kineticSurfaces.length} surfaces.`);
