@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Keyboard Hints
     const kbHints = document.createElement('div');
     kbHints.className = 'kb-hints';
-    kbHints.textContent = '[SPACE] MUTE · [N] NEXT · [V] VAULT · [F] FILTER · [A] AGENTS';
+    kbHints.textContent = '[SPACE] MUTE · [N] NEXT · [V] VAULT · [F] FILTER · [A] AGENTS · [D] DJ';
     kbHints.style.display = 'none';
     document.body.appendChild(kbHints);
 
@@ -398,6 +398,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 break;
             case 'a':
                 if (window.CORTEX_SWARM_UI) window.CORTEX_SWARM_UI.toggle();
+                haptic([20, 40, 20]); break;
+            case 'd':
+                if (window.DJS) window.DJS.toggle();
                 haptic([20, 40, 20]); break;
         }
     });

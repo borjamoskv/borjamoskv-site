@@ -9296,3 +9296,257 @@ body.game-mode-active::after {
   .swarm-stats { gap: 1rem; }
   .ss-val { font-size: 1rem; }
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   MOSKV-1 DJ STUDIO — TRUE DJ MODE
+   ═══════════════════════════════════════════════════════════════════ */
+.dj-studio {
+  position: fixed;
+  inset: 0;
+  z-index: 99991;
+  background: rgba(6, 6, 8, 0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.dj-studio.djs-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+.djs-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 1.5rem;
+  border-bottom: 1px solid rgba(43, 59, 229, 0.3);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+}
+.djs-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #2B3BE5;
+  letter-spacing: 4px;
+}
+.djs-status { color: #D4620A; }
+.djs-close { color: rgba(255,255,255,0.25); }
+.djs-body {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 200px 1fr;
+  gap: 0;
+  overflow: hidden;
+}
+.djs-deck {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  border-right: 1px solid rgba(43,59,229,0.1);
+}
+.djs-deck:last-child { border-right: none; border-left: 1px solid rgba(43,59,229,0.1); }
+.djs-deck-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 2px;
+}
+.djs-deck-label { color: #2B3BE5; font-weight: 700; }
+.djs-deck-track {
+  color: #fff;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.djs-deck-status { font-size: 1.2rem; }
+.djs-waveform {
+  width: 100%;
+  height: 80px;
+  background: rgba(10, 10, 14, 0.8);
+  border: 1px solid rgba(43, 59, 229, 0.15);
+}
+.djs-eq {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.5rem;
+  color: #7EB8DA;
+  letter-spacing: 1px;
+}
+.djs-eq label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.djs-knob {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  background: rgba(43, 59, 229, 0.2);
+  outline: none;
+  border-radius: 2px;
+}
+.djs-knob::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px; height: 12px;
+  background: #2B3BE5;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.djs-controls {
+  display: flex;
+  gap: 6px;
+}
+.djs-btn {
+  flex: 1;
+  background: rgba(43, 59, 229, 0.1);
+  border: 1px solid rgba(43, 59, 229, 0.25);
+  color: #7EB8DA;
+  padding: 0.5rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.djs-btn:hover {
+  background: rgba(43, 59, 229, 0.25);
+  color: #fff;
+  box-shadow: 0 0 15px rgba(43, 59, 229, 0.3);
+}
+.djs-btn-active {
+  background: rgba(43, 59, 229, 0.4) !important;
+  color: #fff !important;
+  border-color: #2B3BE5 !important;
+}
+.djs-btn-master {
+  background: linear-gradient(135deg, rgba(43,59,229,0.3), rgba(212,98,10,0.3));
+  border-color: #D4620A;
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+.djs-btn-master:hover {
+  box-shadow: 0 0 25px rgba(212, 98, 10, 0.5);
+}
+.djs-btn-kill {
+  border-color: rgba(239, 68, 68, 0.4);
+  color: rgba(239, 68, 68, 0.7);
+}
+.djs-btn-kill:hover {
+  background: rgba(239, 68, 68, 0.2);
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+}
+
+/* Mixer center */
+.djs-mixer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 0.5rem;
+  border-left: 1px solid rgba(43,59,229,0.1);
+  border-right: 1px solid rgba(43,59,229,0.1);
+}
+.djs-camelot { text-align: center; }
+.djs-camelot-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.5rem;
+  letter-spacing: 3px;
+  color: rgba(126,184,218,0.4);
+  display: block;
+}
+.djs-camelot-val {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #2B3BE5;
+}
+.djs-master-vu canvas {
+  border: 1px solid rgba(43,59,229,0.15);
+  background: rgba(10,10,14,0.8);
+}
+.djs-xfader-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  color: #7EB8DA;
+  width: 100%;
+}
+.djs-xfader {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 1;
+  height: 6px;
+  background: linear-gradient(90deg, #2B3BE5, #D4620A);
+  outline: none;
+  border-radius: 3px;
+}
+.djs-xfader::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px;
+  background: #fff;
+  border-radius: 50%;
+  border: 2px solid #2B3BE5;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(43,59,229,0.5);
+}
+.djs-bpm-display {
+  text-align: center;
+  margin-top: 0.5rem;
+}
+.djs-bpm-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.5rem;
+  letter-spacing: 3px;
+  color: rgba(126,184,218,0.4);
+  display: block;
+}
+.djs-bpm-val {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #D4620A;
+}
+.djs-phase-display {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 3px;
+  color: #7EB8DA;
+}
+.djs-footer {
+  padding: 0.5rem;
+  text-align: center;
+  border-top: 1px solid rgba(43,59,229,0.15);
+}
+.djs-slogan {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 6px;
+  color: rgba(212, 98, 10, 0.4);
+}
+
+@media (max-width: 768px) {
+  .djs-body { grid-template-columns: 1fr; grid-template-rows: auto; }
+  .djs-mixer { flex-direction: row; flex-wrap: wrap; justify-content: center; }
+  .djs-deck { border: none; border-bottom: 1px solid rgba(43,59,229,0.1); }
+}
