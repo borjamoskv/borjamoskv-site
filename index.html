@@ -1874,28 +1874,6 @@ https://6e89a5fe.borjamoskv.pages.dev/            </a>
         }
       }
     });
-
-    // MOSKV-1 FRONTIER TERMINAL BINDINGS
-    setTimeout(() => {
-      const openBtn = document.getElementById('chatquitoOpen');
-      const closeBtn = document.getElementById('chatquitoClose');
-      const terminalOverlay = document.getElementById('frontierTerminal');
-      
-      if(openBtn && closeBtn && terminalOverlay) {
-        openBtn.addEventListener('click', () => {
-          terminalOverlay.classList.add('active');
-          openBtn.style.display = 'none';
-          document.getElementById('chatquitoInput').focus();
-          document.body.style.overflow = "hidden"; // Prevent scroll when terminal is active
-        });
-        
-        closeBtn.addEventListener('click', () => {
-          terminalOverlay.classList.remove('active');
-          openBtn.style.display = 'flex';
-          document.body.style.overflow = "";
-        });
-      }
-    }, 1000);
   </script>
 </body>
 </html>

@@ -22,7 +22,7 @@ MOSKV.chat = (() => {
     ];
 
     const init = () => {
-        const chatquito = document.getElementById('chatquito');
+        const chatquito = document.getElementById('frontierTerminal'); // Updated to Frontier
         const closeBtn = document.getElementById('chatquitoClose');
         const openBtn = document.getElementById('chatquitoOpen');
         const input = document.getElementById('chatquitoInput');
@@ -34,19 +34,24 @@ MOSKV.chat = (() => {
         setTimeout(() => {
             if (!chatquito.classList.contains('active')) {
                 chatquito.classList.add('active');
-                if (openBtn) openBtn.style.transform = 'scale(0)';
+                document.body.style.overflow = "hidden"; // Lock scroll for Frontier
+                if (openBtn) openBtn.style.display = 'none';
+                if (input) input.focus();
             }
         }, 5000);
 
         closeBtn.addEventListener('click', () => {
             chatquito.classList.remove('active');
-            if (openBtn) openBtn.style.transform = 'scale(1)';
+            document.body.style.overflow = ""; // Unlock scroll
+            if (openBtn) openBtn.style.display = 'flex';
         });
 
         if (openBtn) {
             openBtn.addEventListener('click', () => {
                 chatquito.classList.add('active');
-                openBtn.style.transform = 'scale(0)';
+                document.body.style.overflow = "hidden"; // Lock scroll
+                openBtn.style.display = 'none';
+                if (input) input.focus();
             });
         }
 
