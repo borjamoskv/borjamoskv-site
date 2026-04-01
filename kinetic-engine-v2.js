@@ -104,15 +104,50 @@ function initScrollSkew() {
             }
         });
         
+        
         requestAnimationFrame(renderSkew);
     }
     
     requestAnimationFrame(renderSkew);
 }
 
+// ═══ 3. CRESCENDO WALL (140% Infinite Scroll Zoom) ═══
+function initCrescendoWall() {
+    const wall = document.getElementById('crescendo-wall');
+    if (!wall) return;
+    
+    // Zoom in crescendo base logic
+    // Max scale 2.0, min 1.0. Starts at 1.0 (100%), scales as you scroll down.
+    function renderCrescendo() {
+        const scrollY = window.scrollY;
+        const maxScroll = document.body.scrollHeight - window.innerHeight;
+        
+        if (maxScroll > 0) {
+            // Calculate a ratio from 0 to 1 based on how far we scrolled
+            const scrollRatio = Math.min(1, Math.max(0, scrollY / maxScroll));
+            
+            // Base scale is 1.0, increases up to 1.4 (and slightly beyond with overscroll)
+            // It goes in crescendo
+            const targetScale = 1.0 + (scrollRatio * 0.4); 
+            
+            // Apply scale and the -4deg rotation
+            wall.style.transform = `rotate(-4deg) scale(${targetScale})`;
+        }
+        
+        requestAnimationFrame(renderCrescendo);
+    }
+    
+    // Initial static style for hardware acceleration
+    wall.style.willChange = 'transform';
+    wall.style.transformOrigin = 'center center';
+    
+    requestAnimationFrame(renderCrescendo);
+}
+
 function init() {
     initMagneticElements();
     initScrollSkew();
+    initCrescendoWall();
 }
 
 if (document.readyState === 'loading') {
