@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Keyboard Hints
     const kbHints = document.createElement('div');
     kbHints.className = 'kb-hints';
-    kbHints.textContent = '[SPACE] MUTE · [N] NEXT · [V] VAULT · [F] FILTER · [A] AGENTS · [D] DJ · [G] FACE';
+    kbHints.textContent = '[SPACE] MUTE · [N] NEXT · [V] VAULT · [F] FILTER · [A] AGENTS · [D] DJ · [G] FACE · [M] MODE';
     kbHints.style.display = 'none';
     document.body.appendChild(kbHints);
 
