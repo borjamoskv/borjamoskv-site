@@ -9103,8 +9103,38 @@ body.cooldown-active .arcade-bezel .bezel-bottom span {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   100% IMMERSIVE MODE: ELIMINATE ALL NOISE TEXT
+   100% IMMERSIVE MODE: 95% VIDEO — ELIMINATE ALL NOISE
    ═══════════════════════════════════════════════════════════════════ */
+
+/* Force video background to cover entire viewport */
+body.game-mode-active .video-background-system {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 1 !important;
+  overflow: hidden !important;
+}
+body.game-mode-active .video-background-system .video-deck-wrap {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+body.game-mode-active .video-background-system .video-deck-wrap iframe,
+body.game-mode-active .video-background-system .video-deck-wrap video {
+  width: 100vw !important;
+  height: 100vh !important;
+  object-fit: cover !important;
+}
+body.game-mode-active .video-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  background: rgba(0,0,0,0.15) !important;
+  z-index: 2 !important;
+}
+
+/* Hide ALL text/content sections — only HUD + Video remain */
 body.game-mode-active #manifesto,
 body.game-mode-active #about,
 body.game-mode-active #music,
@@ -9114,14 +9144,38 @@ body.game-mode-active .newsletter-section,
 body.game-mode-active .site-footer,
 body.game-mode-active #players,
 body.game-mode-active #news-scroller,
-body.game-mode-active #cortex-term-container {
+body.game-mode-active #cortex-term-container,
+body.game-mode-active #sets,
+body.game-mode-active #visual-scroll,
+body.game-mode-active #moltbook,
+body.game-mode-active #lab,
+body.game-mode-active #bloga,
+body.game-mode-active .main-nav,
+body.game-mode-active .video-identity-wrap,
+body.game-mode-active .deck-ui,
+body.game-mode-active .dynamic-background,
+body.game-mode-active .sovereign-audio-init,
+body.game-mode-active .gambitero-trigger-btn,
+body.game-mode-active #no-tocar-btn {
   display: none !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
   visibility: hidden !important;
   height: 0 !important;
   margin: 0 !important;
   padding: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Remove scroll — pure viewport lock */
+body.game-mode-active {
+  overflow: hidden !important;
+  height: 100vh !important;
+}
+body.game-mode-active > *:not(.video-background-system):not(.arcade-bezel):not(.game-hud):not(.kb-hints):not(#taberna-fractal-bg):not(canvas):not(.swarm-dashboard):not(.dj-studio):not(.achievement-toast):not(.welcome-back-overlay):not(script):not(style):not(link) {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  height: 0 !important;
+  overflow: hidden !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
