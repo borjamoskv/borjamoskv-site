@@ -6,10 +6,11 @@ class AutoDJEngine {
     constructor() {
         this.audioContext = null;
         this.decks = {
-            A: { gain: null, analyser: null, source: null, bpm: 128, playing: false },
-            B: { gain: null, analyser: null, source: null, bpm: 128, playing: false }
+            A: { gain: null, filter: null, analyser: null, source: null, bpm: 128, playing: false },
+            B: { gain: null, filter: null, analyser: null, source: null, bpm: 128, playing: false }
         };
         this.activeDeck = 'A';
+        this.energy = 0.0;
         this.crossfadeTime = 4; // segundos para transición suave
         this.isTransitioning = false;
         
@@ -29,17 +30,33 @@ class AutoDJEngine {
         this.decks.A.gain = this.audioContext.createGain();
         this.decks.B.gain = this.audioContext.createGain();
         
-        // Analizadores para visualización/VU meters (opcional)
+        // Crear filtros Isolator (HPF)
+        this.decks.A.filter = this.audioContext.createBiquadFilter();
+        this.decks.A.filter.type = 'highpass';
+        this.decks.A.filter.frequency.value = 20; // Plano inicial
+        this.decks.B.filter = this.audioContext.createBiquadFilter();
+        this.decks.B.filter.type = 'highpass';
+        this.decks.B.filter.frequency.value = 20;
+        
+        // Analizadores para visualización RMS
         this.decks.A.analyser = this.audioContext.createAnalyser();
         this.decks.B.analyser = this.audioContext.createAnalyser();
+        this.decks.A.analyser.fftSize = 256;
+        this.decks.B.analyser.fftSize = 256;
         
-        // Conectar: Gain -> Analyser -> Destination (altavoces)
+        // Cadena: Filter -> Gain -> Analyser -> Destination
+        this.decks.A.filter.connect(this.decks.A.gain);
+        this.decks.B.filter.connect(this.decks.B.gain);
+        
         this.decks.A.gain.connect(this.decks.A.analyser).connect(this.audioContext.destination);
         this.decks.B.gain.connect(this.decks.B.analyser).connect(this.audioContext.destination);
         
         // Inicialmente Deck A al 100%, Deck B al 0%
         this.decks.A.gain.gain.value = 1;
         this.decks.B.gain.gain.value = 0;
+        
+        // Arrancar Reactor de Energía
+        this._startEnergyLoop();
         
         console.log('AutoDJ Engine inicializado');
     }
@@ -60,8 +77,8 @@ class AutoDJEngine {
             source.buffer = audioBuffer;
             source.loop = true; // Loop para transiciones continuas
             
-            // Conectar al gain del deck
-            source.connect(this.decks[deck].gain);
+            // Conectar al filter del deck
+            source.connect(this.decks[deck].filter);
             this.decks[deck].source = source;
             this.decks[deck].buffer = audioBuffer;
             
@@ -120,6 +137,18 @@ class AutoDJEngine {
         this.decks[currentDeck].gain.gain.setValueCurveAtTime(curveA, now, fadeTime);
         this.decks[nextDeck].gain.gain.setValueCurveAtTime(curveB, now, fadeTime);
         
+        // [ISOLATOR EQ]: Matar graves (Low Kill) del track saliente (20Hz -> 2000Hz)
+        try {
+            this.decks[currentDeck].filter.frequency.setValueAtTime(20, now);
+            this.decks[currentDeck].filter.frequency.exponentialRampToValueAtTime(2000, now + fadeTime);
+        } catch(e) { /* fallback if already scheduled */ }
+        
+        // Asegurarnos que el incoming track entra plano (full graves)
+        try {
+            this.decks[nextDeck].filter.frequency.cancelScheduledValues(now);
+            this.decks[nextDeck].filter.frequency.setValueAtTime(20, now);
+        } catch (e) {}
+        
         // Actualizar deck activo después de la transición
         setTimeout(() => {
             this.activeDeck = nextDeck;
@@ -131,6 +160,10 @@ class AutoDJEngine {
                     this.decks[currentDeck].source.stop();
                     this.decks[currentDeck].playing = false;
                 }
+                // Resetear el filtro para la próxima vez que se use este deck
+                try {
+                    this.decks[currentDeck].filter.frequency.setValueAtTime(20, this.audioContext.currentTime);
+                } catch(e) {}
             }, 1000);
             
         }, fadeTime * 1000);
@@ -156,7 +189,66 @@ class AutoDJEngine {
     getVolume(deck) {
         return this.decks[deck].gain.gain.value;
     }
+    
+    // ═══ EFECTOS KINÉTICOS Y DJ ═══
+    
+    /** Vinyl Tape Stop dramático (bomba de vacío) */
+    tapeStop(deck) {
+        const d = deck || this.activeDeck;
+        if (!this.decks[d].source || !this.decks[d].playing) return;
+        
+        const now = this.audioContext.currentTime;
+        const param = this.decks[d].source.playbackRate;
+        try {
+            param.setValueAtTime(param.value, now);
+            // Caída exponencial de velocidad (pitch) simulando frenada de disco
+            param.exponentialRampToValueAtTime(0.01, now + 0.6); 
+            setTimeout(() => {
+                this.decks[d].source.stop();
+                this.decks[d].playing = false;
+            }, 600);
+        } catch (e) { console.error("Vinyl stop failed", e); }
+    }
+    
+    /** Reactor de Energía Constante (O(1) RMS loop) */
+    _startEnergyLoop() {
+        const loop = () => {
+            if (!this.audioContext || this.audioContext.state === 'suspended') {
+                requestAnimationFrame(loop);
+                return;
+            }
+            
+            // Array prealocado para performance (fftSize 256 = 128 bins de salida)
+            if (!this._dataArray) this._dataArray = new Uint8Array(128); 
+            
+            const analyser = this.decks[this.activeDeck].analyser;
+            if (analyser && this.decks[this.activeDeck].playing) {
+                analyser.getByteFrequencyData(this._dataArray);
+                
+                // Calcular RMS de las frecuencias graves (bins 0 a 10) para extraer el bombo/bassline
+                let sum = 0;
+                const NUM_BASS_BINS = 10;
+                for (let i = 0; i < NUM_BASS_BINS; i++) {
+                    // Normalize to 0.0-1.0 and square
+                    const val = this._dataArray[i] / 255.0; 
+                    sum += val * val;
+                }
+                const rms = Math.sqrt(sum / NUM_BASS_BINS);
+                
+                // Suavizar la energía (decay factor para no tironear)
+                this.energy = (this.energy * 0.7) + (rms * 0.3);
+            } else {
+                this.energy = this.energy * 0.9; // decay a 0
+            }
+            // Evitar oscilaciones ínfimas
+            if (this.energy < 0.01) this.energy = 0;
+            
+            requestAnimationFrame(loop);
+        };
+        requestAnimationFrame(loop);
+    }
 }
 
 // Exportar para uso global
 window.AutoDJEngine = AutoDJEngine;
+window.audioDJCore = new AutoDJEngine(); // Singleton para el Muro Cinético

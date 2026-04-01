@@ -128,7 +128,20 @@ function initCrescendoWall() {
             
             // Base scale is 1.0, increases up to 1.4 (and slightly beyond with overscroll)
             // It goes in crescendo
-            const targetScale = 1.0 + (scrollRatio * 0.4); 
+            let targetScale = 1.0 + (scrollRatio * 0.4); 
+            
+            // [ULTRATHINK] Sincronización Estética con AutoDJ
+            // Reclamamos el pulso (RMS Energy) del engine de DJ
+            let energy = 0;
+            if (window.audioDJCore && window.audioDJCore.energy !== undefined) {
+                energy = window.audioDJCore.energy; // 0.0 to 1.0
+            } else if (window.autoDJAesthetic && typeof window.autoDJAesthetic.getLowFrequencyData === 'function') {
+                energy = window.autoDJAesthetic.getLowFrequencyData();
+            }
+            
+            // Inyectamos un latido dinámico: The "Pulse Skew"
+            // Escala base + rebote (kick bounce)
+            targetScale += (energy * 0.05); // Hasta un 5% de zoom reactivo al bombo
             
             // Apply scale and the -4deg rotation
             wall.style.transform = `rotate(-4deg) scale(${targetScale})`;
