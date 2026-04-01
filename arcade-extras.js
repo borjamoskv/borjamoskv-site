@@ -27,22 +27,32 @@ function konamiUnlock() {
     const columns = canvas.width / fontSize;
     const drops = Array(Math.floor(columns)).fill(1);
     
-    function draw() {
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = '#FF003C'; // CORTEX Red
-        ctx.font = fontSize + 'px monospace';
-        for (let i = 0; i < drops.length; i++) {
-            const text = letters[Math.floor(Math.random() * letters.length)];
-            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-            drops[i]++;
+    let lastDrawTime = 0;
+    let matrixRaf;
+    function draw(timestamp) {
+        if (!lastDrawTime) lastDrawTime = timestamp;
+        const delta = timestamp - lastDrawTime;
+        
+        // Cap at ~30fps equivalent for the classic matrix feel, but synced to paint
+        if (delta > 33) {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#FF003C'; // CORTEX Red
+            ctx.font = fontSize + 'px monospace';
+            for (let i = 0; i < drops.length; i++) {
+                const text = letters[Math.floor(Math.random() * letters.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            }
+            lastDrawTime = timestamp;
         }
+        matrixRaf = requestAnimationFrame(draw);
     }
-    const matrixInterval = setInterval(draw, 33);
+    matrixRaf = requestAnimationFrame(draw);
     
     setTimeout(() => {
-        clearInterval(matrixInterval);
+        cancelAnimationFrame(matrixRaf);
         canvas.style.transition = 'opacity 2s';
         canvas.style.opacity = '0';
         setTimeout(() => canvas.remove(), 2000);
@@ -60,7 +70,6 @@ function konamiUnlock() {
         badge.textContent = '🎮 KONAMI UNLOCKED';
         document.body.appendChild(badge);
         setTimeout(() => badge.style.opacity = '0.3', 3000);
-    }, 3000);
 
     // Trigger chiquito if available
     if (window.triggerChiquito) window.triggerChiquito();

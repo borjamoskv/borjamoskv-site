@@ -3366,6 +3366,7 @@ body.is-dragging-window iframe {
   z-index: 10;
   mix-blend-mode: exclusion;
   transition: transform 0.1s;
+  will-change: transform;
 }
 
 .shock-wrapper:hover .glitch-mega {

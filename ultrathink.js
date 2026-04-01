@@ -91,20 +91,32 @@ function triggerUltrathink() {
     const s2 = document.getElementById('ut-stream-2');
     const core = document.getElementById('ut-core');
     
-    let streamInterval = setInterval(() => {
-        // Generate hex junk
-        const junk1 = Array.from({length: 10}, () => Math.random().toString(16).substr(2, 8).toUpperCase()).join(' ');
-        const junk2 = Array.from({length: 10}, () => Math.random().toString(16).substr(2, 8).toUpperCase()).join(' ');
+    let lastStreamTime = 0;
+    let streamRaf;
+
+    function renderStream(timestamp) {
+        if (!lastStreamTime) lastStreamTime = timestamp;
+        const delta = timestamp - lastStreamTime;
         
-        const line1 = document.createElement('div'); line1.textContent = junk1;
-        const line2 = document.createElement('div'); line2.textContent = junk2;
-        
-        s1.appendChild(line1);
-        s2.appendChild(line2);
-        
-        if (s1.childNodes.length > 50) s1.firstChild.remove();
-        if (s2.childNodes.length > 50) s2.firstChild.remove();
-    }, 20);
+        if (delta > 20) {
+            // Generate hex junk
+            const junk1 = Array.from({length: 10}, () => Math.random().toString(16).substr(2, 8).toUpperCase()).join(' ');
+            const junk2 = Array.from({length: 10}, () => Math.random().toString(16).substr(2, 8).toUpperCase()).join(' ');
+            
+            const line1 = document.createElement('div'); line1.textContent = junk1;
+            const line2 = document.createElement('div'); line2.textContent = junk2;
+            
+            s1.appendChild(line1);
+            s2.appendChild(line2);
+            
+            if (s1.childNodes.length > 50) s1.firstChild.remove();
+            if (s2.childNodes.length > 50) s2.firstChild.remove();
+            
+            lastStreamTime = timestamp;
+        }
+        streamRaf = requestAnimationFrame(renderStream);
+    }
+    streamRaf = requestAnimationFrame(renderStream);
     
     // Core thoughts
     let coreIdx = 0;
@@ -129,7 +141,7 @@ function triggerUltrathink() {
 
     // End Protocol after 10 seconds
     setTimeout(() => {
-        clearInterval(streamInterval);
+        cancelAnimationFrame(streamRaf);
         clearInterval(coreInterval);
         if (overdriveTasks) {
             clearInterval(overdriveTasks);
