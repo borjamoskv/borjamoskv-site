@@ -16,6 +16,7 @@ html,
 body {
   background-color: #020202;
   color: #E0E0E0;
+  cursor: url('chiquito-cursor.png') 16 16, auto;
 }
 
 :root {
