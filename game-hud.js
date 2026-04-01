@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Keyboard Hints
     const kbHints = document.createElement('div');
     kbHints.className = 'kb-hints';
-    kbHints.textContent = '[SPACE] MUTE · [N] NEXT · [V] VAULT · [F] FILTER · [A] AGENTS · [D] DJ';
+    kbHints.textContent = '[SPACE] MUTE · [N] NEXT · [V] VAULT · [F] FILTER · [A] AGENTS · [D] DJ · [G] FACE';
     kbHints.style.display = 'none';
     document.body.appendChild(kbHints);
 
@@ -490,6 +490,9 @@ document.addEventListener('DOMContentLoaded', () => {
             case 'd':
                 if (window.DJS) window.DJS.toggle();
                 haptic([20, 40, 20]); break;
+            case 'g':
+                if (window.FACE_PARALLAX) window.FACE_PARALLAX.toggle();
+                haptic([10, 20, 10]); break;
         }
     });
 
