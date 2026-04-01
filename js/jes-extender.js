@@ -20,6 +20,9 @@ MOSKV.jesExtender = (() => {
     let nextStartTime = 0;
     let isPlaying = false;
     let scheduledNodes = [];
+    let currentStatus = 'STANDBY';
+    let statusTone = 'idle';
+    let pendingAutoStart = false;
     
     // Nodes for effects
     let mainGain = null;
@@ -38,6 +41,31 @@ MOSKV.jesExtender = (() => {
         statusText: null,
         visualizer: null,
         logContainer: null
+    };
+
+    const emitState = () => {
+        document.dispatchEvent(new CustomEvent('jes-extender:state', {
+            detail: {
+                status: currentStatus,
+                tone: statusTone,
+                isPlaying,
+                socketReadyState: socket ? socket.readyState : WebSocket.CLOSED,
+                wsUrl: WS_URL
+            }
+        }));
+    };
+
+    const setStatus = (nextStatus, { color = '', shadow = '', tone = 'idle' } = {}) => {
+        currentStatus = nextStatus;
+        statusTone = tone;
+
+        if (ui.statusText) {
+            ui.statusText.textContent = `STATUS: ${nextStatus}`;
+            ui.statusText.style.color = color;
+            ui.statusText.style.textShadow = shadow;
+        }
+
+        emitState();
     };
 
     const log = (msg, type = 'info') => {
@@ -124,17 +152,32 @@ MOSKV.jesExtender = (() => {
     };
 
     const connect = () => {
-        if (socket) socket.close();
+        if (socket?.readyState === WebSocket.OPEN || socket?.readyState === WebSocket.CONNECTING) {
+            return;
+        }
         if (!ui.statusText) return;
+
+        setStatus('CONNECTING', {
+            color: 'rgba(255, 196, 85, 0.92)',
+            shadow: '0 0 10px rgba(255, 196, 85, 0.45)',
+            tone: 'connecting'
+        });
         
         socket = new WebSocket(WS_URL);
         socket.binaryType = 'arraybuffer';
 
         socket.onopen = () => {
             log('Connected to Jes-Extender Engine', 'success');
-            ui.statusText.textContent = 'STATUS: CONNECTED';
-            ui.statusText.style.color = 'var(--accent-red)';
-            ui.statusText.style.textShadow = '0 0 10px var(--accent-red)';
+            setStatus('CONNECTED', {
+                color: 'var(--accent-red)',
+                shadow: '0 0 10px var(--accent-red)',
+                tone: 'connected'
+            });
+
+            if (pendingAutoStart) {
+                pendingAutoStart = false;
+                startGeneration();
+            }
         };
 
         socket.onmessage = (event) => {
@@ -152,31 +195,47 @@ MOSKV.jesExtender = (() => {
 
         socket.onclose = () => {
             log('Disconnected from Jes-Extender', 'warn');
-            ui.statusText.textContent = 'STATUS: DISCONNECTED';
-            ui.statusText.style.color = '';
-            ui.statusText.style.textShadow = '';
-            stopGeneration();
+            const wasPlaying = isPlaying;
+            const nextStatus = currentStatus === 'ENGINE OFFLINE'
+                ? 'ENGINE OFFLINE'
+                : (wasPlaying ? 'ENGINE OFFLINE' : 'DISCONNECTED');
+            socket = null;
+            pendingAutoStart = false;
+            stopGeneration({
+                nextStatus,
+                releaseFocus: wasPlaying
+            });
         };
 
         socket.onerror = (err) => {
             log('Connection Error', 'error');
+            setStatus('ENGINE OFFLINE', {
+                color: '#ff8f73',
+                shadow: '0 0 12px rgba(255, 143, 115, 0.42)',
+                tone: 'offline'
+            });
             console.error(err);
         };
     };
 
     const startGeneration = () => {
         if (!socket || socket.readyState !== WebSocket.OPEN) {
+            pendingAutoStart = true;
             connect();
-            setTimeout(startGeneration, 500);
             return;
         }
 
         initAudio();
         isPlaying = true;
+        pendingAutoStart = false;
         nextStartTime = audioCtx.currentTime;
         if (ui.stopBtn) ui.stopBtn.disabled = false;
         if (ui.summonBtn) ui.summonBtn.disabled = true;
-        if (ui.statusText) ui.statusText.textContent = 'STATUS: EXTRACTING';
+        setStatus('EXTRACTING', {
+            color: 'var(--accent-red)',
+            shadow: '0 0 10px var(--accent-red)',
+            tone: 'active'
+        });
         
         const payload = {
             prompt: ui.promptPrimary.value || 'industrial techno heavy',
@@ -194,7 +253,7 @@ MOSKV.jesExtender = (() => {
         });
     };
 
-    const stopGeneration = ({ releaseFocus = true } = {}) => {
+    const stopGeneration = ({ releaseFocus = true, nextStatus = 'STANDBY' } = {}) => {
         isPlaying = false;
         if (socket && socket.readyState === WebSocket.OPEN) {
             socket.send(JSON.stringify({ type: 'stop' }));
@@ -208,10 +267,24 @@ MOSKV.jesExtender = (() => {
         log('Extraction halted.', 'info');
         if (ui.stopBtn) ui.stopBtn.disabled = true;
         if (ui.summonBtn) ui.summonBtn.disabled = false;
-        if (ui.statusText) {
-            ui.statusText.textContent = 'STATUS: STANDBY';
-            ui.statusText.style.color = '';
-            ui.statusText.style.textShadow = '';
+        if (nextStatus === 'ENGINE OFFLINE') {
+            setStatus(nextStatus, {
+                color: '#ff8f73',
+                shadow: '0 0 12px rgba(255, 143, 115, 0.42)',
+                tone: 'offline'
+            });
+        } else if (nextStatus === 'DISCONNECTED') {
+            setStatus(nextStatus, {
+                color: 'rgba(255, 196, 85, 0.92)',
+                shadow: '0 0 10px rgba(255, 196, 85, 0.35)',
+                tone: 'disconnected'
+            });
+        } else {
+            setStatus(nextStatus, {
+                color: '',
+                shadow: '',
+                tone: 'idle'
+            });
         }
         
         globalThis.jesActive = false;
@@ -237,6 +310,8 @@ MOSKV.jesExtender = (() => {
         if (!ui.promptPrimary || !ui.promptSecondary || !ui.morphSlider || !ui.summonBtn || !ui.stopBtn || !ui.statusText) {
             return;
         }
+
+        setStatus(currentStatus, { tone: statusTone });
 
         ui.summonBtn.addEventListener('click', startGeneration);
         ui.stopBtn.addEventListener('click', stopGeneration);
@@ -276,7 +351,19 @@ MOSKV.jesExtender = (() => {
         restorable: false
     });
 
-    return { init, stop: stopGeneration };
+    return {
+        init,
+        start: startGeneration,
+        stop: stopGeneration,
+        connect,
+        getState: () => ({
+            status: currentStatus,
+            tone: statusTone,
+            isPlaying,
+            socketReadyState: socket ? socket.readyState : WebSocket.CLOSED
+        }),
+        getWsUrl: () => WS_URL
+    };
 })();
 
 // Auto-init on load

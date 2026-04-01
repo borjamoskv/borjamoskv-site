@@ -1,0 +1,84 @@
+[    8929ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://i.ytimg.com/vi/LDzdKd4WxvI/maxresdefault.jpg:0
+[    8991ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://i.ytimg.com/vi_webp/LDzdKd4WxvI/maxresdefault.webp:0
+[    9068ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[    9071ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[    9208ms] [WARNING] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio @ http://127.0.0.1:4174/autodj-video.js:746
+[    9218ms] [WARNING] NotAllowedError: play() failed because the user didn't interact with the document first. https://goo.gl/xX8pDD @ http://127.0.0.1:4174/autodj-video.js:750
+[    9546ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[    9546ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[    9684ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[    9685ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[    9734ms] [WARNING] Exception: %s Script error. @ https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:54
+[    9734ms] [WARNING] constructor @ https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:54
+[   10099ms] Uncaught InvalidStateError: Failed to execute 'createPattern' on 'CanvasRenderingContext2D': The image argument is a canvas element with a width or height of 0.
+    at f (https://widget.sndcdn.com/widget-0-6003628abbe9.js:0:101288)
+    at draw (https://widget.sndcdn.com/widget-0-6003628abbe9.js:0:100222)
+    at n (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:52:50452)
+    at e.each.t.<computed> (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:52:51646)
+    at update (https://widget.sndcdn.com/widget-0-6003628abbe9.js:0:80003)
+    at update (https://widget.sndcdn.com/widget-0-6003628abbe9.js:0:79309)
+[    9818ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[    9821ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[    9852ms] [ERROR] Permissions policy violation: encrypted-media is not allowed in this document. @ https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:54
+[    9852ms] [WARNING] Encrypted Media access has been blocked because of a Feature Policy applied to the current document. See https://crbug.com/414348233 for more details. @ https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:54
+[    9852ms] [ERROR] Permissions policy violation: encrypted-media is not allowed in this document. @ https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:54
+[    9852ms] [WARNING] Encrypted Media access has been blocked because of a Feature Policy applied to the current document. See https://crbug.com/414348233 for more details. @ https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:54
+[    9853ms] [ERROR] Permissions policy violation: encrypted-media is not allowed in this document. @ https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:54
+[    9853ms] [WARNING] Encrypted Media access has been blocked because of a Feature Policy applied to the current document. See https://crbug.com/414348233 for more details. @ https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:54
+[    9875ms] [ERROR] Permissions policy violation: encrypted-media is not allowed in this document. @ https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:54
+[    9875ms] [WARNING] Encrypted Media access has been blocked because of a Feature Policy applied to the current document. See https://crbug.com/414348233 for more details. @ https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:54
+[    9875ms] [ERROR] Permissions policy violation: encrypted-media is not allowed in this document. @ https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:54
+[    9875ms] [WARNING] Encrypted Media access has been blocked because of a Feature Policy applied to the current document. See https://crbug.com/414348233 for more details. @ https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:54
+[    9875ms] [ERROR] Permissions policy violation: encrypted-media is not allowed in this document. @ https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:54
+[    9875ms] [WARNING] Encrypted Media access has been blocked because of a Feature Policy applied to the current document. See https://crbug.com/414348233 for more details. @ https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:54
+[   10067ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[   10071ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[   10317ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[   10320ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[   10529ms] [ERROR] Permissions policy violation: encrypted-media is not allowed in this document. @ https://player-widget.mixcloud.com/assets/mix-CfXtH87l.js:1
+[   10529ms] [WARNING] Encrypted Media access has been blocked because of a Feature Policy applied to the current document. See https://crbug.com/414348233 for more details. @ https://player-widget.mixcloud.com/assets/mix-CfXtH87l.js:1
+[   10529ms] [ERROR] Permissions policy violation: encrypted-media is not allowed in this document. @ https://player-widget.mixcloud.com/assets/mix-CfXtH87l.js:1
+[   10529ms] [WARNING] Encrypted Media access has been blocked because of a Feature Policy applied to the current document. See https://crbug.com/414348233 for more details. @ https://player-widget.mixcloud.com/assets/mix-CfXtH87l.js:1
+[   10529ms] [ERROR] Permissions policy violation: encrypted-media is not allowed in this document. @ https://player-widget.mixcloud.com/assets/mix-CfXtH87l.js:1
+[   10529ms] [WARNING] Encrypted Media access has been blocked because of a Feature Policy applied to the current document. See https://crbug.com/414348233 for more details. @ https://player-widget.mixcloud.com/assets/mix-CfXtH87l.js:1
+[   10568ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[   10570ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[   10819ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[   10820ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[   11068ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[   11071ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[   11318ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[   11320ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[   11568ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[   11571ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[   11818ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[   11820ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[   12068ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[   12070ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[   12161ms] [ERROR] Failed to load resource: the server responded with a status of 403 (Forbidden) @ https://api-widget.soundcloud.com/users/321869759/tracks?limit=20&offset=0&linked_partitioning=1&format=json&client_id=nIjtjiYnjkOhMyh5xrbqEW12DxeJVnic&app_version=1774517556:0
+[   12252ms] [WARNING] Exception: %s Script error. @ https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:54
+[   12253ms] [WARNING] constructor @ https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:54
+[   12588ms] Uncaught IndexSizeError: Failed to execute 'getImageData' on 'CanvasRenderingContext2D': The source width is 0.
+    at getImageData (https://widget.sndcdn.com/widget-0-6003628abbe9.js:0:116519)
+    at <anonymous> (https://widget.sndcdn.com/widget-0-6003628abbe9.js:0:18613)
+    at l (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:24:24449)
+    at fireWith (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:24:25197)
+    at Deferred.S.each.o.<computed> (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:24:27107)
+    at <anonymous> (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:24:25873)
+    at l (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:24:24449)
+    at fireWith (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:24:25197)
+    at <anonymous> (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:24:25987)
+    at l (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:24:24449)
+    at fireWith (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:24:25197)
+    at Deferred.S.each.o.<computed> (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:24:27107)
+    at <anonymous> (https://widget.sndcdn.com/widget-0-6003628abbe9.js:0:4408)
+    at dispatch (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:24:39203)
+    at m.handle (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:24:37198)
+[   12317ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[   12321ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[   16419ms] [WARNING] The resource https://player-widget.mixcloud.com/assets/mix-RbQjuyZ0-dm-sans-latin-wght-normal.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ https://player-widget.mixcloud.com/?hide_cover=1&light=0&feed=%2Fborja-moskv%2F:0
+[   16419ms] [WARNING] The resource https://player-widget.mixcloud.com/assets/mix-BQjZ2nPP-open-sans-latin-wght-normal.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ https://player-widget.mixcloud.com/?hide_cover=1&light=0&feed=%2Fborja-moskv%2F:0
+[   33401ms] [WARNING] WARNING: Too many active WebGL contexts. Oldest context will be lost. @ :0
+[   35188ms] [WARNING] WARNING: Too many active WebGL contexts. Oldest context will be lost. @ :0
+[  208366ms] [WARNING] WebGL: CONTEXT_LOST_WEBGL: loseContext: context lost @ http://127.0.0.1:4174/index.html?fresh=20260328-0452:0
+[  208366ms] [WARNING] WebGL: CONTEXT_LOST_WEBGL: loseContext: context lost @ http://127.0.0.1:4174/index.html?fresh=20260328-0452:0

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jes-Extender | Extendeds de electronica</title>
+  <meta name="description" content="Jes-Extender es la app de BORJA MOSKV para construir extendeds de temas de electronica: intros largas, breakdowns respirados, tool edits y cierres de club con prompts dobles y morph weight.">
+  <meta name="theme-color" content="#15060c">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="192x192" href="/img/icon-192.png">
+  <link rel="shortcut icon" href="/img/icon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
+  <link rel="canonical" href="https://borjamoskv.com/jes-extender.html">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <meta property="og:title" content="Jes-Extender | Extendeds de electronica | BORJA MOSKV">
+  <meta property="og:description" content="App especializada en hacer extendeds de temas de electronica: intros, breakdowns, puentes y cierres mas utiles para club.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://borjamoskv.com/jes-extender.html">
+  <meta property="og:image" content="https://borjamoskv.com/img/og-cover.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Jes-Extender | Extendeds de electronica | BORJA MOSKV">
+  <meta name="twitter:description" content="App especializada en hacer extendeds de temas de electronica: intros, breakdowns, puentes y cierres mas utiles para club.">
+  <meta name="twitter:image" content="https://borjamoskv.com/img/og-cover.jpg">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Jes-Extender",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "Web",
+    "url": "https://borjamoskv.com/jes-extender.html",
+    "author": {
+      "@type": "Person",
+      "name": "Borja Moskv"
+    },
+    "description": "Interfaz web para construir extendeds de temas de electronica con prompts dobles, morph weight y salida WebSocket."
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=Sora:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <script>
+    (function() {
+      document.documentElement.dataset.theme = 'night';
+    })();
+  </script>
+
+  <link href="style.css" rel="stylesheet">
+</head>
+<body class="jes-app-body">
+  <main class="jes-app-page">
+    <header class="jes-app-topbar">
+      <a href="index.html" class="jes-app-brand">BORJA MOSKV</a>
+      <nav class="jes-app-nav" aria-label="Navegacion Jes-Extender">
+        <a href="index.html#lab">Lab</a>
+        <a href="blog.html">Diario</a>
+        <a href="https://github.com/borjamoskv/Cortex-Persist" target="_blank" rel="noopener">CORTEX</a>
+      </nav>
+    </header>
+
+    <section class="jes-app-hero">
+      <div class="jes-app-hero-copy">
+        <span class="section-kicker">App / extendeds de electronica</span>
+        <h1 class="jes-app-title">Jes-Extender</h1>
+        <p class="jes-app-lead">App especializada en hacer extendeds de temas de electronica. Abre intros, estira breakdowns, reconstruye puentes y saca tool versions de club con dos ejes de prompt y morph continuo.</p>
+        <div class="jes-app-meta" aria-label="Capacidades de Jes-Extender">
+          <span>Extended edits</span>
+          <span>Intros / breakdowns</span>
+          <span>Tool versions</span>
+          <span>WebSocket engine</span>
+        </div>
+      </div>
+
+      <aside class="jes-app-runtime glass">
+        <span class="jes-runtime-label">Runtime</span>
+        <strong>Necesita engine activo en <code>ws://localhost:8001/ws/generate</code></strong>
+        <p>La UI ya queda lista para coger un tema, abrirle aire y sacar una version mas larga, mas util y mas club si el backend esta encendido.</p>
+        <div class="jes-runtime-grid" aria-label="Estado de Jes-Extender">
+          <article class="jes-runtime-card">
+            <span class="jes-runtime-card-label">Engine</span>
+            <strong id="jes-engine-state">LOCAL ONLY</strong>
+            <p id="jes-engine-detail">Se comprobara al extraer o al pulsar CHECK ENGINE.</p>
+          </article>
+          <article class="jes-runtime-card">
+            <span class="jes-runtime-card-label">Preset activo</span>
+            <strong id="jes-current-preset">FORGE</strong>
+            <p id="jes-current-preset-detail">Estira la intro con kick industrial, metal caliente y distorsion seca.</p>
+          </article>
+          <article class="jes-runtime-card">
+            <span class="jes-runtime-card-label">Atajos</span>
+            <strong>Cmd/Ctrl + Enter</strong>
+            <p><code>Esc</code> detiene la extraccion y <code>Reset</code> restaura el estado base.</p>
+          </article>
+        </div>
+        <div class="jes-runtime-actions">
+          <a href="#app" class="contact-cta">ABRIR CONSOLA</a>
+          <button type="button" class="cta-ghost diario-inline-link jes-runtime-button" id="jes-check-engine">CHECK ENGINE</button>
+          <button type="button" class="cta-ghost diario-inline-link jes-runtime-button" id="jes-copy-link">COPIAR LINK</button>
+          <button type="button" class="cta-ghost diario-inline-link jes-runtime-button" id="jes-reset-ui">RESET</button>
+          <a href="index.html" class="cta-ghost diario-inline-link">VOLVER A LA HOME</a>
+        </div>
+      </aside>
+    </section>
+
+    <section class="jes-app-presets-block">
+      <div class="jes-app-presets-head">
+        <span class="section-kicker">Presets</span>
+        <h2 class="section-heading">Arranques de extended</h2>
+        <p class="section-desc">Cuatro modos para no arrancar desde cero. Cada preset rellena prompts y peso de morph segun el tipo de extended que quieras abrir.</p>
+      </div>
+      <div class="jes-preset-grid" aria-label="Presets de Jes-Extender">
+        <button type="button" class="jes-preset-card" data-jes-preset="forge">
+          <span class="jes-preset-tag">FORGE</span>
+          <strong>Intro de presion</strong>
+          <p>Estira la entrada del tema con kick industrial, metal caliente y distorsion seca.</p>
+        </button>
+        <button type="button" class="jes-preset-card" data-jes-preset="ritual">
+          <span class="jes-preset-tag">RITUAL</span>
+          <strong>Breakdown cavernoso</strong>
+          <p>Abre un valle ritual con percusion tribal, humo de fabrica y drone oscuro.</p>
+        </button>
+        <button type="button" class="jes-preset-card" data-jes-preset="collapse">
+          <span class="jes-preset-tag">COLLAPSE</span>
+          <strong>Tool dub de club</strong>
+          <p>Convierte el tema en una version roja para sesion con alarmas, low end roto y friccion.</p>
+        </button>
+        <button type="button" class="jes-preset-card" data-jes-preset="ash">
+          <span class="jes-preset-tag">ASH</span>
+          <strong>Cierre con niebla</strong>
+          <p>Alarga la salida con doom techno, decay largo y niebla de hierro.</p>
+        </button>
+      </div>
+      <p class="jes-preset-footnote">Cada preset actualiza la URL con <code>?preset=...</code> para compartir una entrada concreta segun el tipo de extended que quieres abrir.</p>
+    </section>
+
+    <section class="jes-app-console-section" id="app">
+      <div class="jes-app-console-shell">
+        <div class="jes-app-console-copy">
+          <span class="section-kicker">Consola</span>
+          <h2 class="section-heading">Motor de extended</h2>
+          <p class="section-desc">Piensa en secciones: intro, breakdown, puente o cierre. Escribe el cuerpo del tema, anade una desviacion y usa el morph para abrir una version mas larga, mas util y mas club.</p>
+          <div class="jes-console-notes">
+            <article class="jes-console-note glass">
+              <span class="jes-console-note-label">Primary axis</span>
+              <p>Define el cuerpo del tema: groove, kick, bassline, dureza o tempo.</p>
+            </article>
+            <article class="jes-console-note glass">
+              <span class="jes-console-note-label">Secondary axis</span>
+              <p>Inyecta la maniobra del extended: alarma, ritual, drone, friccion o subida.</p>
+            </article>
+            <article class="jes-console-note glass">
+              <span class="jes-console-note-label">Morph weight</span>
+              <p><span id="jes-app-mode-name">Forge</span> ahora domina la mezcla. Mueve el peso para decidir cuanto se despega el extended del tema base.</p>
+            </article>
+          </div>
+        </div>
+
+        <section class="jes-app-surface" id="jes-extender-window" aria-label="Interfaz Jes-Extender">
+          <div class="jes-app-surface-head">
+            <span class="jes-surface-label">JES_EXTENDER</span>
+            <span class="jes-surface-status" id="jes-surface-status-label">HEAVY_PROTOCOL</span>
+          </div>
+
+          <div class="jes-app-surface-grid">
+            <div class="jes-app-visual-shell" aria-hidden="true">
+              <canvas id="jes-extender-canvas"></canvas>
+              <div class="jes-app-visual-overlay">
+                <span>pressure</span>
+                <strong>dense / red / metallic</strong>
+              </div>
+            </div>
+
+            <div class="jes-app-controls">
+              <div class="input-block">
+                <label for="jes-extender-prompt">Primary axis</label>
+                <input type="text" id="jes-extender-prompt" class="jes-extender-input" placeholder="driving techno groove, kick pressure" value="driving techno groove, kick pressure">
+              </div>
+
+              <div class="input-block">
+                <label for="jes-extender-prompt-secondary">Secondary axis</label>
+                <input type="text" id="jes-extender-prompt-secondary" class="jes-extender-input" placeholder="alarm sweep, metallic riser, club tension" value="alarm sweep, metallic riser, club tension">
+              </div>
+
+              <div class="input-block">
+                <div class="label-row">
+                  <label for="jes-extender-weight">Morph weight</label>
+                  <span id="jes-extender-weight-val">24%</span>
+                </div>
+                <input type="range" id="jes-extender-weight" class="jes-extender-slider" min="0" max="100" value="24">
+              </div>
+
+              <div class="button-row jes-app-button-row">
+                <button type="button" id="jes-extender-summon" class="jes-extender-button red-hover">EXTRACT</button>
+                <button type="button" id="jes-extender-stop" class="jes-extender-button warn-hover" disabled>HALT</button>
+              </div>
+
+              <div id="jes-extender-status" class="jes-app-status">STATUS: STANDBY</div>
+
+              <div class="jes-log" aria-live="polite">
+                <div class="log-entry">[boot] surface mounted.</div>
+                <div class="log-entry">[boot] waiting for engine.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="jes-app-manual">
+      <article class="jes-manual-card glass">
+        <span class="jes-manual-label">Como usarlo</span>
+        <p>1. Elige el tipo de extended. 2. Define cuerpo y desviacion. 3. Ajusta el morph. 4. Pulsa <strong>EXTRACT</strong> y corta con <strong>HALT</strong> cuando la seccion ya te sirva.</p>
+      </article>
+      <article class="jes-manual-card glass">
+        <span class="jes-manual-label">Que resuelve mejor</span>
+        <p>Extendeds de temas de electronica: intros mas largas, breakdowns respirados, puentes tensos, cierres utiles y tool edits para sesion.</p>
+      </article>
+      <article class="jes-manual-card glass">
+        <span class="jes-manual-label">Salida esperada</span>
+        <p>No busca pulcritud pop. Busca utilidad de club: friccion, peso, aire para mezclar y una version mas funcional que decorativa.</p>
+      </article>
+    </section>
+  </main>
+
+  <script src="js/audio-focus-manager.js" defer></script>
+  <script src="js/jes-extender.js" defer></script>
+  <script src="js/jes-extender-app.js" defer></script>
+</body>
+</html>

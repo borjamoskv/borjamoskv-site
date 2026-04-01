@@ -1,0 +1,29 @@
+Total messages: 62 (Errors: 11, Warnings: 28)
+Returning 11 messages for level "error"
+
+[ERROR] Failed to load resource: the server responded with a status of 403 (Forbidden) @ https://api-widget.soundcloud.com/users/321869759/tracks?limit=20&offset=0&linked_partitioning=1&format=json&client_id=nIjtjiYnjkOhMyh5xrbqEW12DxeJVnic&app_version=1774517556:0
+[ERROR] Permissions policy violation: encrypted-media is not allowed in this document. @ https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:54
+[ERROR] Permissions policy violation: encrypted-media is not allowed in this document. @ https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:54
+[ERROR] Permissions policy violation: encrypted-media is not allowed in this document. @ https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:54
+[ERROR] Permissions policy violation: encrypted-media is not allowed in this document. @ https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:54
+[ERROR] Permissions policy violation: encrypted-media is not allowed in this document. @ https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:54
+[ERROR] Permissions policy violation: encrypted-media is not allowed in this document. @ https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:54
+[ERROR] Permissions policy violation: encrypted-media is not allowed in this document. @ https://player-widget.mixcloud.com/assets/mix-CfXtH87l.js:1
+[ERROR] Permissions policy violation: encrypted-media is not allowed in this document. @ https://player-widget.mixcloud.com/assets/mix-CfXtH87l.js:1
+[ERROR] Permissions policy violation: encrypted-media is not allowed in this document. @ https://player-widget.mixcloud.com/assets/mix-CfXtH87l.js:1
+Uncaught IndexSizeError: Failed to execute 'getImageData' on 'CanvasRenderingContext2D': The source width is 0.
+    at getImageData (https://widget.sndcdn.com/widget-0-6003628abbe9.js:0:116519)
+    at <anonymous> (https://widget.sndcdn.com/widget-0-6003628abbe9.js:0:18613)
+    at l (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:24:24449)
+    at fireWith (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:24:25197)
+    at Deferred.S.each.o.<computed> (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:24:27107)
+    at <anonymous> (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:24:25873)
+    at l (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:24:24449)
+    at fireWith (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:24:25197)
+    at <anonymous> (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:24:25987)
+    at l (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:24:24449)
+    at fireWith (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:24:25197)
+    at Deferred.S.each.o.<computed> (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:24:27107)
+    at <anonymous> (https://widget.sndcdn.com/widget-0-6003628abbe9.js:0:4408)
+    at dispatch (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:24:39203)
+    at m.handle (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:24:37198)

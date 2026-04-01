@@ -1,4 +1,4 @@
-const CACHE_NAME = 'moskv-cache-v4';
+const CACHE_NAME = 'moskv-cache-v6';
 
 // Priority assets for offline shell
 const urlsToCache = [
@@ -31,6 +31,7 @@ self.addEventListener('install', event => {
         return cache.addAll(urlsToCache);
       })
   );
+  self.skipWaiting();
 });
 
 self.addEventListener('fetch', event => {
@@ -89,6 +90,6 @@ self.addEventListener('activate', event => {
           }
         })
       );
-    })
+    }).then(() => self.clients.claim())
   );
 });

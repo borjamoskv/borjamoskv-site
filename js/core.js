@@ -53,22 +53,42 @@ MOSKV.core = (() => {
         const nav = document.getElementById('mainNav');
         const toggle = document.getElementById('navToggle');
         if (!nav) return;
+
+        const setMenuState = (isOpen) => {
+            nav.classList.toggle('menu-open', isOpen);
+            if (toggle) {
+                toggle.setAttribute('aria-expanded', String(isOpen));
+            }
+        };
         
         if (toggle) {
-            toggle.addEventListener('click', () => {
-                nav.classList.toggle('menu-open');
+            toggle.addEventListener('click', (event) => {
+                event.stopPropagation();
+                setMenuState(!nav.classList.contains('menu-open'));
             });
         }
 
         nav.addEventListener('click', (event) => {
             if (event.target.closest('a')) {
-                nav.classList.remove('menu-open');
+                setMenuState(false);
+            }
+        });
+
+        document.addEventListener('click', (event) => {
+            if (nav.classList.contains('menu-open') && !nav.contains(event.target)) {
+                setMenuState(false);
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                setMenuState(false);
             }
         });
 
         globalThis.addEventListener('resize', () => {
-            if (globalThis.innerWidth > 980) {
-                nav.classList.remove('menu-open');
+            if (globalThis.innerWidth > 992) {
+                setMenuState(false);
             }
         });
     };

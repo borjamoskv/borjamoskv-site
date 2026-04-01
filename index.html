@@ -4,10 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BORJA MOSKV | Productor Experimental · Arquitecto Digital</title>
+  <title>BORJA MOSKV | Artista Frontera · Sonido, Visuales y Sistemas</title>
   <meta name="description"
-    content="Borja Moskv — Ruido de barrio. Máquinas con memoria. Bilbao respira. Música, visuales y sistema.">
-  <meta name="theme-color" content="#050505">
+    content="Electrónica, IA soberana y coherencia rara. DJ, productor y arquitecto de software desde Bilbo. Ensayos, audio y artefactos sobre música, IA y sistemas soberanos.">
+  <meta name="theme-color" content="#041427">
   <link rel="manifest" href="/site.webmanifest">
   <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="192x192" href="/img/icon-192.png">
@@ -17,16 +17,16 @@
   <meta name="referrer" content="strict-origin-when-cross-origin">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="BORJA MOSKV | Productor Experimental · Arquitecto Digital">
+  <meta property="og:title" content="BORJA MOSKV | Artista Frontera · Sonido, Visuales y Sistemas">
   <meta property="og:description"
-    content="Ruido de barrio. Máquinas con memoria. Bilbao respira. Música, visuales y sistema.">
+    content="Electrónica, IA soberana y coherencia rara. DJ, productor y arquitecto de software desde Bilbo. Ensayos, audio y artefactos sobre música, IA y sistemas soberanos.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://borjamoskv.com">
   <meta property="og:image" content="https://borjamoskv.com/img/og-cover.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="BORJA MOSKV | Productor Experimental">
+  <meta name="twitter:title" content="BORJA MOSKV | Artista Frontera">
   <meta name="twitter:image" content="https://borjamoskv.com/img/og-cover.jpg">
 
   <!-- SEO & GEO -->
@@ -55,7 +55,7 @@
       "https://www.mixcloud.com/borja-moskv/",
       "https://foundation.app/@bakaladetroya"
     ],
-    "description": "Ruido de barrio. Máquinas con memoria. Bilbao respira. Música, visuales y sistema."
+    "description": "Electrónica, IA soberana y coherencia rara. DJ, productor y arquitecto de software desde Bilbo. Ensayos, audio y artefactos sobre música, IA y sistemas soberanos."
   }
   </script>
 
@@ -65,7 +65,7 @@
   <link rel="preconnect" href="https://www.youtube.com">
   <link rel="preconnect" href="https://img.youtube.com">
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Space+Grotesk:wght@300..700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=Sora:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap"
     rel="stylesheet">
 
   <!-- No-FOUC: Apply time-based theme before paint -->
@@ -77,6 +77,7 @@
   </script>
 
   <link href="style.css" rel="stylesheet">
+  <link href="industrial-noir-overrides.css" rel="stylesheet">
   <link href="cortex-terminal.css" rel="stylesheet">
 
   <!-- Awwwards Sovereign Dependencies (Lenis, GSAP, Draggable) -->
@@ -128,9 +129,9 @@
       </div>
     </div>
     <div class="video-overlay"></div>
-    <div class="video-identity-wrap" id="videoIdentity">
-        <span class="video-identity-label" id="videoIdentityLabel">BACKGROUND REEL</span>
-        <strong class="video-identity-title" id="videoIdentityTitle">BORJA MOSKV — SIGNAL</strong>
+    <div class="video-identity-wrap" id="videoIdentity" data-kinetic="true" style="cursor:none;">
+        <span class="video-identity-label" id="videoIdentityLabel" style="color:var(--accent-primary); font-weight:700;">[ VEO_3.1 ENGINE_ACTIVE ]</span>
+        <strong class="video-identity-title" id="videoIdentityTitle" style="color:#d1d5db;">K2.5 VISUAL_VALIDATED O(1)</strong>
     </div>
   </div>
   <div id="dynamic-bg" class="dynamic-background"></div>
@@ -140,7 +141,7 @@
        ═══════════════════════════════════════════════════════════════════ -->
   <nav class="main-nav" id="mainNav">
     <a href="#hero" class="nav-logo">MOSKV</a>
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-controls="navLinks" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
     <div class="nav-links" id="navLinks">
@@ -150,8 +151,8 @@
       <a href="#lab">Lab</a>
       <a href="#hero" id="btn-dj-automata" class="glitch-text nav-dj-automata" data-text="DJ AUTOMATA">DJ AUTOMATA</a>
       <a href="#writings" class="active">Diario</a>
-      <a href="#bloga-moskv">Bloga</a>
-      <a href="#contact">Contact</a>
+      <a href="#bloga-moskv">Archivo</a>
+      <a href="#contact">Contacto</a>
       <button class="terminal-trigger-btn" id="terminal-trigger-nav" aria-label="Open Terminal">[ _TERMINAL ]</button>
     </div>
     <div class="nav-platforms">
@@ -171,60 +172,81 @@
        HERO
        ═══════════════════════════════════════════════════════════════════ -->
   <section class="hero-section" id="hero">
-    <span class="section-kicker hero-kicker">Bilbao · productor experimental · live AV · DJ</span>
+    <span class="section-kicker hero-kicker">Artista frontera · club / visual / sistema</span>
     <div class="hero-shell">
       <div class="hero-main">
         <div class="shock-wrapper">
           <h1 class="hero-title glitch-mega" data-text="BORJA MOSKV" style="opacity: 0; pointer-events: none;">BORJA<br>MOSKV</h1>
         </div>
-        <p class="hero-axiom">Ruido de barrio.<br>Máquinas con memoria.<br>Bilbao respira.</p>
-        <p class="hero-lead">Electrónica experimental, live AV y sistemas creativos desde Bilbao. Música, visuales y software soberano dentro de una misma señal.</p>
+        <p class="hero-axiom">Sonido que abre grietas.<br>Visuales con pulso.<br>Sistemas con firma.</p>
+        <p class="hero-lead">DJ, productor, live AV y arquitecto de software desde Bilbo. Una misma obra desplegada entre pista, pantalla y máquina.</p>
+        <p class="hero-positioning">No es un portfolio cerrado: es una señal viva donde conviven sets largos, piezas visuales, manifiestos, herramientas y diarios con criterio.</p>
         <div class="hero-facts" aria-label="Señal principal">
-          <span>Ambient / IDM / Techno</span>
-          <span>Bakala de Troya / live sets</span>
-          <span>Visuales 4K / AV</span>
-          <span>YouTube 4K reel / auto mix</span>
-          <span>Booking abierto</span>
+          <span>DJ set / live AV / score</span>
+          <span>Ambient / IDM / Techno / spoken</span>
+          <span>SEÑAL / CORTEX / JARANA / ULTRA THINK</span>
+          <span>CORTEX / tools / open source</span>
+          <span>Bilbo → clubs → red → instalaciones</span>
+        </div>
+        <div class="hero-proof-strip" aria-label="Pruebas rápidas">
+          <article class="hero-proof-chip">
+            <span class="hero-proof-label">Formato</span>
+            <strong>Sets, live AV y piezas por encargo</strong>
+          </article>
+          <article class="hero-proof-chip">
+            <span class="hero-proof-label">Archivo</span>
+            <strong>Diario, series y manifiestos en curso</strong>
+          </article>
+          <article class="hero-proof-chip">
+            <span class="hero-proof-label">Sistema</span>
+            <strong>GitHub, CORTEX y laboratorio soberano</strong>
+          </article>
+          <article class="hero-proof-chip">
+            <span class="hero-proof-label">Territorio</span>
+            <strong>Bilbo como base, internet como pista</strong>
+          </article>
         </div>
         <div class="hero-ctas">
-          <a href="#music" class="cta-primary">Escuchar obras destacadas</a>
-          <a href="#sets" class="cta-secondary">Ver sets · Bakala de Troya</a>
-          <a href="#contact" class="cta-ghost">Reservar live / booking →</a>
+          <a href="#players" class="cta-primary">Entrar por sonido</a>
+          <a href="#welcome-map" class="cta-secondary">Leer archivo vivo</a>
+          <button id="btn-claim-wav" class="cta-primary neon-hover" style="background: rgba(46, 80, 144, 0.4); border-color: rgba(242, 221, 51, 0.8);">⬇️ DL MASTER MÁXIMO [OWN NFT]</button>
+          <a href="https://borjamoskv.substack.com" target="_blank" rel="noopener" class="cta-ghost">Recibir señal nueva →</a>
         </div>
+        <p class="hero-microproof">La rareza atrae, pero aquí también hay mapa: frontera sonora, frontera visual y frontera de sistemas. Si algo te engancha, ya tiene continuación dentro del archivo.</p>
         <div class="hero-operating-grid" aria-label="Puertas rápidas">
           <a href="https://www.youtube.com/watch?v=b9ktVQN48OU" target="_blank" rel="noopener" class="hero-operating-card">
-            <span class="hero-operating-label">Reel 8K</span>
-            <strong>LES BUKO</strong>
-            <p>Visual principal y puerta directa al universo MOSKV.</p>
+            <span class="hero-operating-label">Entrada inmediata</span>
+            <strong>LES BUKO · descarga frontal del sistema</strong>
+            <p>Primer impacto: visual 8K, energía nocturna y firma MOSKV sin explicación previa.</p>
           </a>
-          <a href="#contact" class="hero-operating-card">
-            <span class="hero-operating-label">Formatos</span>
-            <strong>DJ set · live AV · comisiones</strong>
-            <p>Club, festival, instalación o pieza a medida con sonido y visuales.</p>
+          <a href="#welcome-map" class="hero-operating-card">
+            <span class="hero-operating-label">Archivo vivo</span>
+            <strong>Series, diario y manifiestos operativos</strong>
+            <p>JARANA, CORTEX, SEÑAL y ULTRA THINK puestos en sistema para que la rareza no se disuelva.</p>
           </a>
-          <a href="#lab" class="hero-operating-card">
-            <span class="hero-operating-label">Sistema</span>
-            <strong>CORTEX, Moltbook y archivo vivo</strong>
-            <p>Música, agentes y software dentro de un mismo proyecto.</p>
+          <a href="https://github.com/borjamoskv" target="_blank" rel="noopener" class="hero-operating-card">
+            <span class="hero-operating-label">Laboratorio</span>
+            <strong>GitHub, CORTEX y artefactos soberanos</strong>
+            <p>La trastienda técnica no va aparte: agents, código y proceso forman parte de la misma obra.</p>
           </a>
         </div>
       </div>
 
       <aside class="hero-signal-grid" aria-label="Accesos rápidos">
         <a href="#players" class="hero-signal-card">
-          <span class="hero-signal-label">Escucha directa</span>
-          <strong>Spotify, SoundCloud, Bandcamp y Mixcloud</strong>
-          <p>Cuatro puertas.<br>Una señal.<br>Entra.</p>
+          <span class="hero-signal-label">Frontera sonora</span>
+          <strong>Sets largos, spoken, ambient e industrial mutante</strong>
+          <p>Club, escucha y deriva emocional.<br>No playlist plana.<br>Dirección real.</p>
         </a>
-        <a href="#lab" class="hero-signal-card">
-          <span class="hero-signal-label">Lab expandido</span>
-          <strong>IA visual, web3 y prototipos MOSKV-1</strong>
-          <p>Código y loops.<br>IA y desvío.<br>Mismo núcleo.</p>
+        <a href="#manifesto" class="hero-signal-card">
+          <span class="hero-signal-label">Frontera visual</span>
+          <strong>Live AV, loops, reels 4K/8K y piezas que mandan</strong>
+          <p>La imagen no adorna.<br>Empuja, discute y sostiene.<br>También compone.</p>
         </a>
-        <a href="#writings" class="hero-signal-card">
-          <span class="hero-signal-label">Diario y criterio</span>
-          <strong>Diario, archivo local y Substack</strong>
-          <p>Texto breve.<br>Criterio lento.<br>Ruido útil.</p>
+        <a href="#welcome-map" class="hero-signal-card">
+          <span class="hero-signal-label">Frontera de sistemas</span>
+          <strong>Archivo editorial, software y criterio bajo una misma firma</strong>
+          <p>Substack, blog, CORTEX y tools.<br>La máquina también escribe obra.</p>
         </a>
       </aside>
     </div>
@@ -232,8 +254,109 @@
     <!-- HAIKU: Central Design Element -->
     <div class="hero-haiku" id="heroHaiku">
       <span class="haiku-line" data-line="go">Hierro y niebla.</span>
-      <span class="haiku-line" data-line="shichi">La ría guarda pulsos.</span>
-      <span class="haiku-line" data-line="go">La noche escucha.</span>
+      <span class="haiku-line" data-line="shichi">La pista piensa.</span>
+      <span class="haiku-line" data-line="go">La frontera escucha.</span>
+    </div>
+  </section>
+
+  <section class="frontier-band" id="frontier-band">
+    <div class="frontier-band-shell">
+      <div class="frontier-band-copy">
+        <span class="section-kicker frontier-band-kicker">Frontera operativa</span>
+        <h2 class="frontier-band-title">Club, archivo y máquina no compiten: aquí forman una sola obra.</h2>
+        <p class="frontier-band-desc">Borja Moskv cruza la lógica del DJ, la dirección visual y la arquitectura de software sin convertirlo en collage. Cada formato empuja al otro y devuelve una firma reconocible.</p>
+      </div>
+      <div class="frontier-band-grid" aria-label="Tres fronteras de la obra">
+        <article class="frontier-band-card">
+          <span class="frontier-band-code">SONIDO</span>
+          <strong>Sets que funcionan como narrativa, no como playlist plana.</strong>
+          <p>Ambient, IDM, techno sentimental, spoken y ritmos rotos con tensión de directo.</p>
+        </article>
+        <article class="frontier-band-card">
+          <span class="frontier-band-code">VISUAL</span>
+          <strong>Loops, live AV y piezas 4K/8K que no ilustran: mandan.</strong>
+          <p>La imagen no acompaña a la música. La amplifica, la contradice o le construye atmósfera.</p>
+        </article>
+        <article class="frontier-band-card">
+          <span class="frontier-band-code">SISTEMA</span>
+          <strong>CORTEX, diario y artefactos open source como parte de la firma artística.</strong>
+          <p>La trastienda no se esconde: agents, código, proceso y criterio también forman la obra.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="signal-map-section" id="signal-map">
+    <div class="signal-map-shell">
+      <div class="signal-map-copy">
+        <span class="section-kicker">Mapa rapido</span>
+        <h2 class="signal-map-title">Si vienes por una puerta concreta, aqui entras sin perderte.</h2>
+        <p class="signal-map-desc">La parte visual, musical y el AutoDJ siguen vivos mas abajo. Este bloque solo ordena el resto del sistema: trabajo, archivo y laboratorio.</p>
+      </div>
+      <div class="signal-map-grid" aria-label="Puertas de entrada">
+        <a href="#contact" class="signal-map-card">
+          <span class="signal-map-label">Trabajo</span>
+          <strong>Booking, live AV, produccion y colisiones por encargo</strong>
+          <p>Si vienes por una fecha o una pieza, te llevo directo al mail correcto.</p>
+        </a>
+        <a href="#writings" class="signal-map-card">
+          <span class="signal-map-label">Archivo</span>
+          <strong>Series, notes y piezas largas con mapa</strong>
+          <p>Si vienes por ideas, criterio o Substack, aqui entras por la puerta buena.</p>
+        </a>
+        <a href="#lab" class="signal-map-card">
+          <span class="signal-map-label">Lab</span>
+          <strong>Herramientas, prototipos y software como parte de la obra</strong>
+          <p>Si te interesa el sistema, el laboratorio esta visible y no va aparte.</p>
+        </a>
+        <a href="https://github.com/borjamoskv" target="_blank" rel="noopener" class="signal-map-card">
+          <span class="signal-map-label">GitHub</span>
+          <strong>CORTEX, open source y trastienda tecnica soberana</strong>
+          <p>Si quieres codigo y proceso real, aqui esta la salida limpia al repositorio.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       INFINITE VIDEO SCROLL "A FULL" (Awwwards Grade)
+       ═══════════════════════════════════════════════════════════════════ -->
+  <section class="infinite-video-cosmos" id="video-cosmos">
+    <div class="infinite-video-track">
+      <!-- Original Set -->
+      <article class="video-monolith">
+        <iframe src="https://www.youtube.com/embed/b9ktVQN48OU?controls=0&mute=1&autoplay=1&loop=1&playlist=b9ktVQN48OU" frameborder="0" allow="autoplay; encrypted-media" aria-hidden="true" tabindex="-1"></iframe>
+        <span class="video-monolith-label">SEÑAL: LES BUKO</span>
+      </article>
+      <article class="video-monolith">
+        <iframe src="https://www.youtube.com/embed/pgldO_y7hzc?controls=0&mute=1&autoplay=1&loop=1&playlist=pgldO_y7hzc" frameborder="0" allow="autoplay; encrypted-media" aria-hidden="true" tabindex="-1"></iframe>
+        <span class="video-monolith-label">SEÑAL: GLITCH_TENSOR</span>
+      </article>
+      <article class="video-monolith">
+        <iframe src="https://www.youtube.com/embed/NYhOQTcNLkA?controls=0&mute=1&autoplay=1&loop=1&playlist=NYhOQTcNLkA" frameborder="0" allow="autoplay; encrypted-media" aria-hidden="true" tabindex="-1"></iframe>
+        <span class="video-monolith-label">SEÑAL: NOISE_PUMP</span>
+      </article>
+      <article class="video-monolith">
+        <iframe src="https://www.youtube.com/embed/hY0G0Zxf_uo?controls=0&mute=1&autoplay=1&loop=1&playlist=hY0G0Zxf_uo" frameborder="0" allow="autoplay; encrypted-media" aria-hidden="true" tabindex="-1"></iframe>
+        <span class="video-monolith-label">SEÑAL: VOID_ECHO</span>
+      </article>
+      <!-- Duplicate Set for Seamless Loop -->
+      <article class="video-monolith">
+        <iframe src="https://www.youtube.com/embed/b9ktVQN48OU?controls=0&mute=1&autoplay=1&loop=1&playlist=b9ktVQN48OU" frameborder="0" allow="autoplay; encrypted-media" aria-hidden="true" tabindex="-1"></iframe>
+        <span class="video-monolith-label">SEÑAL: LES BUKO</span>
+      </article>
+      <article class="video-monolith">
+        <iframe src="https://www.youtube.com/embed/pgldO_y7hzc?controls=0&mute=1&autoplay=1&loop=1&playlist=pgldO_y7hzc" frameborder="0" allow="autoplay; encrypted-media" aria-hidden="true" tabindex="-1"></iframe>
+        <span class="video-monolith-label">SEÑAL: GLITCH_TENSOR</span>
+      </article>
+      <article class="video-monolith">
+        <iframe src="https://www.youtube.com/embed/NYhOQTcNLkA?controls=0&mute=1&autoplay=1&loop=1&playlist=NYhOQTcNLkA" frameborder="0" allow="autoplay; encrypted-media" aria-hidden="true" tabindex="-1"></iframe>
+        <span class="video-monolith-label">SEÑAL: NOISE_PUMP</span>
+      </article>
+      <article class="video-monolith">
+        <iframe src="https://www.youtube.com/embed/hY0G0Zxf_uo?controls=0&mute=1&autoplay=1&loop=1&playlist=hY0G0Zxf_uo" frameborder="0" allow="autoplay; encrypted-media" aria-hidden="true" tabindex="-1"></iframe>
+        <span class="video-monolith-label">SEÑAL: VOID_ECHO</span>
+      </article>
     </div>
   </section>
 
@@ -283,17 +406,17 @@
        AVANT-GARDE MANIFESTO & DRAGGABLE MUSIC LAB (INTERACTIVE)
        ═══════════════════════════════════════════════════════════════════ -->
   <section class="avant-garde-manifesto" id="manifesto">
-    <span class="section-kicker">Manifiesto</span>
+    <span class="section-kicker">Playlist madre</span>
     <h2 class="section-heading text-center mb-2">
       <a href="https://open.spotify.com/playlist/6WHIabEaqEd6cFPad3gSrx" target="_blank" rel="noopener" class="manifesto-header-link">MANIFIESTO DE LO INMANENTE DE BORJA MOSKV</a>
     </h2>
-    <p class="section-desc manifesto-section-desc">Una playlist.<br>Un pulso.<br>Una grieta.</p>
+    <p class="section-desc manifesto-section-desc">Escucha primero. Entiende después.<br>Esta playlist es la puerta lateral al universo MOSKV.</p>
     <div class="manifesto-iframe-wrapper gpu-accelerated">
       <iframe title="Lo Inmanente - Spotify Playlist" src="https://open.spotify.com/embed/playlist/6WHIabEaqEd6cFPad3gSrx?utm_source=generator&theme=0" class="spotify-embed-iframe" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </div>
     <div class="manifesto-content" id="manifestoContent">
       <p class="manifesto-paragraph">
-        Música.<br>Código.<br>La misma pieza.
+        Club.<br>Archivo.<br>La misma frontera.
       </p>
     </div>
 
@@ -389,7 +512,7 @@
           <span class="drag-close">✕</span>
         </div>
         <div class="drag-body drag-body-paddingless">
-           <iframe title="Soundcloud Player" class="player-iframe-short" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/boney-mdma/licenciado-ferna-ndez&color=%23b4ff00&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false"></iframe>
+           <iframe title="Soundcloud Player" class="player-iframe-short" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/boney-mdma/licenciado-ferna-ndez&color=%231fc7b3&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false"></iframe>
         </div>
       </div>
 
@@ -408,7 +531,7 @@
           <span class="drag-title">11_CORTEX_SYNC.BIN</span>
           <span class="drag-close">✕</span>
         </div>
-        <div class="drag-body" style="padding: 1rem; color: #ccff00; font-family: monospace; font-size: 0.8rem; background: #0a0a0a;">
+        <div class="drag-body" style="padding: 1rem; color: #74c7ff; font-family: monospace; font-size: 0.8rem; background: #0a0a0a;">
            SYNC VECTOR: ESTABLISHED<br>ENTROPY: 0.04%<br>EXERGY: MAXIMAL
         </div>
       </div>
@@ -605,7 +728,7 @@
       <!-- Jes-Extender Realtime Window -->
       <div class="drag-window drag-pos-jes" id="jes-extender-window" style="display: none;">
         <div class="drag-header">
-          <span class="drag-title">JES_EXTENDER —— HEAVY_PROTOCOL</span>
+          <span class="drag-title">JES_EXTENDER —— EXTENDED_PROTOCOL</span>
           <span class="drag-close">✕</span>
         </div>
         <div class="drag-body">
@@ -616,11 +739,11 @@
             <div class="jes-controls">
               <div class="input-block">
                 <label>PRIMARY AXIS</label>
-                <input type="text" id="jes-extender-prompt" placeholder="Heavy industrial beats..." value="industrial techno">
+                <input type="text" id="jes-extender-prompt" placeholder="Main groove, kick pressure..." value="driving techno groove">
               </div>
               <div class="input-block">
                 <label>SECONDARY AXIS</label>
-                <input type="text" id="jes-extender-prompt-secondary" placeholder="Distorted synthlines...">
+                <input type="text" id="jes-extender-prompt-secondary" placeholder="Breakdown haze, alarm sweep, tension rise...">
               </div>
               <div class="input-block">
                 <div class="label-row">
@@ -699,7 +822,7 @@
           <span class="player-card__status">LIVE</span>
         </div>
         <div class="player-card__body gpu-accelerated">
-          <iframe title="Soundcloud Player" class="player-iframe-tall" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/borja-moskv&color=%23b4ff00&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true" loading="lazy"></iframe>
+          <iframe title="Soundcloud Player" class="player-iframe-tall" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/borja-moskv&color=%231fc7b3&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true" loading="lazy"></iframe>
         </div>
       </div>
       <div class="player-card">
@@ -709,7 +832,7 @@
           <span class="player-card__status">LIVE</span>
         </div>
         <div class="player-card__body gpu-accelerated">
-          <iframe title="Soundcloud Player Boney MDMA" class="player-iframe-tall" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/boney-mdma/licenciado-ferna-ndez&color=%23b4ff00&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true" loading="lazy"></iframe>
+          <iframe title="Soundcloud Player Boney MDMA" class="player-iframe-tall" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/boney-mdma/licenciado-ferna-ndez&color=%231fc7b3&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true" loading="lazy"></iframe>
         </div>
       </div>
       <div class="player-card flying-card-wrapper">
@@ -722,7 +845,7 @@
           <div class="flying-character-box">
             <img src="img/nano_in_rainbows.png" alt="Flying Character" class="flying-character fc-img">
           </div>
-          <iframe title="Bandcamp Player" src="https://bandcamp.com/EmbeddedPlayer/album=3994364503/size=large/bgcol=1a1a1a/linkcol=b4ff00/tracklist=false/transparent=true/" class="player-iframe-tall fc-iframe" seamless allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"><a href="https://borjamoskv.bandcamp.com/album/instructions-for-flying">Instructions for Flying by Borja Moskv</a></iframe>
+          <iframe title="Bandcamp Player" src="https://bandcamp.com/EmbeddedPlayer/album=3994364503/size=large/bgcol=1a1a1a/linkcol=74c7ff/tracklist=false/transparent=true/" class="player-iframe-tall fc-iframe" seamless allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"><a href="https://borjamoskv.bandcamp.com/album/instructions-for-flying">Instructions for Flying by Borja Moskv</a></iframe>
         </div>
       </div>
       <div class="player-card">
@@ -829,8 +952,8 @@
     <h2 class="section-heading glitch-text" data-text="BAKALA DE TROYA">BAKALA DE TROYA</h2>
     <p class="section-desc">Directo largo.<br>Pulso variable.<br>Noche abierta.</p>
     
-    <div class="featured-set-embed" style="margin: 3rem auto; width: 100%; max-width: 1200px; box-shadow: 0 0 40px rgba(180, 255, 0, 0.1);">
-      <iframe title="Borja Moskv DJ Set Oct 2025" width="100%" height="600" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/borja-moskv/borja-moskv-dj-set-oct-2025&color=%23b4ff00&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true" loading="lazy"></iframe>
+    <div class="featured-set-embed" style="margin: 3rem auto; width: 100%; max-width: 1200px; box-shadow: 0 0 40px rgba(116, 199, 255, 0.12);">
+      <iframe title="Borja Moskv DJ Set Oct 2025" width="100%" height="600" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/borja-moskv/borja-moskv-dj-set-oct-2025&color=%231fc7b3&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true" loading="lazy"></iframe>
     </div>
 
     <div class="sets-list">
@@ -1275,11 +1398,11 @@ https://6e89a5fe.borjamoskv.pages.dev/            </a>
               </div>
               <div class="card-arrow">↗</div>
             </a>
-            <a href="#jes" class="glass-card neon-hover" id="jes-extender-lab-trigger">
+            <a href="jes-extender.html?preset=forge" class="glass-card neon-hover">
               <div class="card-icon">🦾</div>
               <div class="card-content">
                 <h3>Jes-Extender</h3>
-                <p>Música pesada.<br>Motor denso.<br>Expansión industrial.</p>
+                <p>Extendeds de electronica.<br>Intros, puentes y cierres.<br>App propia.</p>
               </div>
               <div class="card-arrow">↗</div>
             </a>
@@ -1332,33 +1455,95 @@ https://6e89a5fe.borjamoskv.pages.dev/            </a>
         <div class="h-panel-content">
           <span class="section-kicker">Escritura</span>
           <h2 class="section-heading mb-1">DIARIO</h2>
-          <p class="section-desc">Archivo vivo.<br>Texto largo.<br>Señal lenta.</p>
+          <p class="section-desc">Series, notes y piezas largas con una funcion clara:<br>dar mapa, fijar criterio y convertir curiosidad en seguimiento real.</p>
+          <div class="diario-welcome glass hover-glitch" id="welcome-map">
+            <div class="diario-welcome-head">
+              <span class="diario-tag">Post anclado</span>
+              <span class="diario-status">Empieza aquí</span>
+            </div>
+            <h3>JARANA D'OR, formatos y razón para suscribirte ahora</h3>
+            <p class="diario-welcome-lead">La voz y la estética ya están. Lo que se aclara aquí es por qué merece la pena suscribirse: para seguir las series cuando nacen, no cuando ya van tarde.</p>
+            <div class="diario-welcome-grid">
+              <article class="diario-welcome-item">
+                <span class="diario-mini-tag">Qué es JARANA D'OR</span>
+                <p>La línea donde salen audio, piezas musicales, spoken y artefactos sonoros con firma MOSKV.</p>
+              </article>
+              <article class="diario-welcome-item">
+                <span class="diario-mini-tag">Qué formatos salen aquí</span>
+                <p><strong>SEÑAL/</strong> para piezas cortas, <strong>CORTEX/</strong> para IA y sistemas, <strong>JARANA/</strong> para audio y <strong>ULTRA THINK/</strong> para ensayos mayores.</p>
+              </article>
+              <article class="diario-welcome-item">
+                <span class="diario-mini-tag">Por qué suscribirse ahora</span>
+                <p>Porque te pone primero en la línea de nuevas series, manifiestos, notes con dirección y piezas largas antes de que se fragmenten por la red.</p>
+              </article>
+            </div>
+            <div class="diario-welcome-actions">
+              <a href="https://borjamoskv.substack.com" target="_blank" rel="noopener" class="contact-cta text-sm">SUSCRIBIRME AHORA →</a>
+              <a href="blog.html" class="cta-ghost diario-inline-link">VER ARCHIVO LOCAL →</a>
+            </div>
+          </div>
+          <div class="diario-series-grid" aria-label="Sistema de series">
+            <article class="diario-series-card glass">
+              <span class="diario-series-code">SEÑAL/</span>
+              <strong>Piezas cortas meméticas</strong>
+              <p>Golpes rápidos para abrir una idea, una imagen o una fricción con intención.</p>
+              <span class="diario-series-example">Ej. SEÑAL/ 4 drogas</span>
+            </article>
+            <article class="diario-series-card glass">
+              <span class="diario-series-code">CORTEX/</span>
+              <strong>IA y sistemas soberanos</strong>
+              <p>Infraestructura, agentes, software y decisiones técnicas con mapa.</p>
+              <span class="diario-series-example">Ej. CORTEX/ IA en la blockchain</span>
+            </article>
+            <article class="diario-series-card glass">
+              <span class="diario-series-code">JARANA/</span>
+              <strong>Audio, música y spoken</strong>
+              <p>Set lore, piezas sonoras, discos raros y artefactos de escucha.</p>
+              <span class="diario-series-example">Ej. JARANA/ Anatomía de una ballena</span>
+            </article>
+            <article class="diario-series-card glass">
+              <span class="diario-series-code">ULTRA THINK/</span>
+              <strong>Ensayos mayores</strong>
+              <p>Textos largos para cuando la idea necesita espacio, no solo voltaje.</p>
+              <span class="diario-series-example">Ej. ULTRA THINK/ Coherencia rara 42</span>
+            </article>
+          </div>
           <div class="diario-grid">
             <a href="blog.html" class="diario-feature glass hover-glitch">
               <span class="diario-tag">Archivo local</span>
-              <h3>Diario MOSKV</h3>
-              <p>Ensayos, crónicas, análisis y piezas largas dentro de la propia web.</p>
+              <h3>ULTRA THINK/ Diario MOSKV</h3>
+              <p>Ensayos, crónicas, análisis y piezas largas dentro de la propia web, ya ordenadas por series y ritmo.</p>
               <span class="diario-cta">Abrir diario →</span>
             </a>
             <div class="substack-embed-container substack-embed-box gpu-accelerated diario-substack-box">
+              <div class="diario-notes-callout glass">
+                <span class="diario-tag">Notes</span>
+                <strong>Notes con función de adquisición</strong>
+                <p>Aquí las notes no derraman ocurrencias: empujan tráfico hacia series, manifiestos y piezas largas.</p>
+              </div>
               <iframe title="Substack Feed" src="https://borjamoskv.substack.com/embed" class="substack-iframe" loading="lazy"></iframe>
-              <a href="https://borjamoskv.substack.com" target="_blank" rel="noopener" class="contact-cta text-sm">ABRIR SUBSTACK →</a>
+              <a href="https://borjamoskv.substack.com" target="_blank" rel="noopener" class="contact-cta text-sm">ABRIR SUBSTACK / NOTES →</a>
             </div>
           </div>
           <div class="diario-link-grid">
+            <a href="como-suena-jarana-dor.html" class="diario-link-card glass hover-glitch">
+              <span class="diario-tag">JARANA/</span>
+              <strong>JARANA/ Cómo suena Jarana d'Or</strong>
+              <p>Seis leitmotivs en formato párrafo, track y mood, con salida a Substack, manifiesto y pieza sonora.</p>
+            </a>
             <a href="catarsis-colectiva.html" class="diario-link-card glass hover-glitch">
-              <span class="diario-tag">Ensayo</span>
-              <strong>Catarsis colectiva</strong>
+              <span class="diario-tag">ULTRA THINK/</span>
+              <strong>ULTRA THINK/ Catarsis colectiva</strong>
               <p>Duelo, mito y cultura popular en una pieza larga.</p>
             </a>
             <a href="colapso-millennial.html" class="diario-link-card glass hover-glitch">
-              <span class="diario-tag">Marco</span>
-              <strong>Colapso millennial</strong>
+              <span class="diario-tag">ULTRA THINK/</span>
+              <strong>ULTRA THINK/ Colapso millennial</strong>
               <p>Doce marcos para leer una estafa generacional completa.</p>
             </a>
             <a href="eclectic-electronic-analysis.html" class="diario-link-card glass hover-glitch">
-              <span class="diario-tag">Análisis</span>
-              <strong>Eclectic Electronic</strong>
+              <span class="diario-tag">JARANA/</span>
+              <strong>JARANA/ Eclectic Electronic</strong>
               <p>Curaduría, energía y geografía de un set largo.</p>
             </a>
           </div>
@@ -1371,15 +1556,30 @@ https://6e89a5fe.borjamoskv.pages.dev/            </a>
           <div class="bloga-shell">
             <span class="section-kicker">Archivo editorial</span>
             <h2 class="section-heading">BLOGA MOSKV</h2>
-            <p class="section-desc">Artículos, notas y ensayos largos.<br>De momento está vacío, pero ya tiene hueco y ritmo para crecer.</p>
+            <p class="section-desc">La parte lenta del sistema:<br>ensayos, manifiestos y piezas que fijan marco para todo lo demas.</p>
+
+            <div class="bloga-context-grid" aria-label="Funcion del archivo editorial">
+              <article class="bloga-context-card glass">
+                <span class="diario-mini-tag">Marco</span>
+                <p>Aqui se fija lenguaje, criterio y direccion para que la rareza no dependa solo de atmosfera.</p>
+              </article>
+              <article class="bloga-context-card glass">
+                <span class="diario-mini-tag">Ritmo</span>
+                <p>No todo sale como note o set: algunas ideas necesitan espacio, friccion y texto largo.</p>
+              </article>
+              <article class="bloga-context-card glass">
+                <span class="diario-mini-tag">Salida</span>
+                <p>Sirve como puerta de entrada al blog local y como archivo de piezas que siguen creciendo.</p>
+              </article>
+            </div>
 
             <div class="bloga-active glass">
               <div class="bloga-article-featured">
                 <div class="bloga-meta">
-                  <span class="bloga-tag">[MANIFESTO]</span>
+                  <span class="bloga-tag">[CORTEX/]</span>
                   <span class="bloga-date">2026.03.25</span>
                 </div>
-                <h3 class="bloga-headline">¿Qué es alcanzar la Soberanía?</h3>
+                <h3 class="bloga-headline">CORTEX/ ¿Qué es alcanzar la soberanía?</h3>
                 
                 <blockquote class="axiom-quote">
                   "¿Qué es alcanzar la Soberanía? Es el momento en el que has construido la obra tan bien, que es físicamente imposible que un charlatán logre que pongas un ladrillo de barro en el muro. Para que una piedra entre en la historia del edificio, tiene a la fuerza que pasar por la criba (Hito I), demostrar que vale la pena el esfuerzo (Hito III), y solo entonces, se cementa para siempre (Hito II). Y todo esto, la máquina lo hace sola, de día y de noche, sin que tú tengas que vigilar a los obreros."
@@ -1402,36 +1602,87 @@ https://6e89a5fe.borjamoskv.pages.dev/            </a>
         <div class="h-panel-content">
           <span class="section-kicker">Booking / colaboraciones</span>
           <h2 class="section-heading">CONTACTO</h2>
-          <p class="section-desc contact-section-desc">Si resuena,<br>escribe.</p>
-          <div class="contact-grid">
-            <div class="contact-item">
-              <h3>Booking / Live</h3>
-              <p>Club.<br>Festival.<br>Live AV.</p>
-            </div>
-            <div class="contact-item">
-              <h3>Producción / Remix</h3>
-              <p>Rework.<br>Producción.<br>Colisión fina.</p>
-            </div>
-            <div class="contact-item">
-              <h3>Comisiones AV</h3>
-              <p>Score.<br>Diseño sonoro.<br>Visual mutante.</p>
-            </div>
-          </div>
-          <div class="contact-emails">
-            <a href="mailto:bakaladetroya@borjamoskv.com" class="contact-cta">PRESS & BOOKINGS →</a>
-            <a href="mailto:borjamoskv@icloud.com" class="contact-cta">DIRECT SIGNAL →</a>
-          </div>
+          <p class="section-desc contact-section-desc">Si vienes por booking, live AV, produccion o una colision rara,<br>entra con una senal limpia.</p>
 
-          <div class="newsletter-subscription" id="newsletter">
-            <h3 class="newsletter-title">NEWSLETTER</h3>
-            <p>Pocas cartas.<br>Solo señal.</p>
-            <form class="newsletter-form" id="newsletterForm">
-              <input type="text" id="nlName" placeholder="Tu Nombre / Alias" required class="newsletter-input nl-input-half">
-              <input type="email" id="nlEmail" placeholder="Introduce tu email" required class="newsletter-input">
-              <button type="submit" class="newsletter-submit" id="nlSubmit">Sintonizar</button>
-            </form>
-            <p id="nlStatus" class="nl-status-msg"></p>
-            <script src="js/newsletter.js" defer></script>
+          <div class="contact-shell">
+            <div class="contact-main-column">
+              <div class="contact-primer glass">
+                <div class="contact-primer-copy">
+                  <span class="diario-tag">Entrada limpia</span>
+                  <h3>Con cuatro datos ya puedo contestarte rapido.</h3>
+                  <p>Fecha o ventana, ciudad, formato y links de referencia bastan para saber por donde va el proyecto sin hacer teatro de inbox.</p>
+                </div>
+                <div class="contact-primer-grid" aria-label="Que mandar en el primer mail">
+                  <article class="contact-primer-item">
+                    <span class="contact-primer-label">Fecha</span>
+                    <p>Dia cerrado o ventana aproximada.</p>
+                  </article>
+                  <article class="contact-primer-item">
+                    <span class="contact-primer-label">Contexto</span>
+                    <p>Club, festival, instalacion, visual o encargo.</p>
+                  </article>
+                  <article class="contact-primer-item">
+                    <span class="contact-primer-label">Formato</span>
+                    <p>DJ set, live AV, score, remix o pieza propia.</p>
+                  </article>
+                  <article class="contact-primer-item">
+                    <span class="contact-primer-label">Referencia</span>
+                    <p>Links, mood o direccion de la colision.</p>
+                  </article>
+                </div>
+              </div>
+
+              <div class="contact-grid">
+                <div class="contact-item">
+                  <h3>Booking / Live</h3>
+                  <p>Club.<br>Festival.<br>Live AV.</p>
+                </div>
+                <div class="contact-item">
+                  <h3>Producción / Remix</h3>
+                  <p>Rework.<br>Producción.<br>Colisión fina.</p>
+                </div>
+                <div class="contact-item">
+                  <h3>Comisiones AV</h3>
+                  <p>Score.<br>Diseño sonoro.<br>Visual mutante.</p>
+                </div>
+              </div>
+              <div class="contact-emails">
+                <a href="mailto:bakaladetroya@borjamoskv.com" class="contact-cta">PRESS & BOOKINGS →</a>
+                <a href="mailto:borjamoskv@icloud.com" class="contact-cta">DIRECT SIGNAL →</a>
+              </div>
+            </div>
+
+            <aside class="newsletter-subscription" id="newsletter">
+              <span class="diario-tag">Archivo vivo</span>
+              <h3 class="newsletter-title">SEÑAL DIRECTA</h3>
+              <p class="newsletter-intro">Series nuevas cuando nacen.<br>Proceso cuando toca.<br>Criterio sin relleno.</p>
+              <p class="newsletter-promise">Si algo te interesa aqui, esta lista es la forma limpia de seguirlo: notes con direccion, piezas largas y futuras aperturas paid solo cuando haya suficiente densidad para merecerlo.</p>
+              <div class="newsletter-value-grid" aria-label="Escalera de valor">
+                <article class="newsletter-value-card">
+                  <span class="newsletter-tier">FREE</span>
+                  <strong>Series nuevas en cuanto salen</strong>
+                  <p>SEÑAL/, JARANA/, CORTEX/ y ULTRA THINK/ sin esperar a que el algoritmo las rompa o las entierre.</p>
+                </article>
+                <article class="newsletter-value-card">
+                  <span class="newsletter-tier">PAID</span>
+                  <strong>Proceso, cuadernos y piezas extendidas</strong>
+                  <p>Cuando abra pago, aqui entraran borradores, making-of, materiales largos y acceso mas cerca de la mesa de trabajo.</p>
+                </article>
+                <article class="newsletter-value-card">
+                  <span class="newsletter-tier">PERTENENCIA</span>
+                  <strong>Seguir la linea desde dentro</strong>
+                  <p>No es una lista ornamental: es entrar en el archivo mientras se esta construyendo, no solo contemplarlo despues.</p>
+                </article>
+              </div>
+              <form class="newsletter-form" id="newsletterForm">
+                <input type="text" id="nlName" placeholder="Tu Nombre / Alias" required class="newsletter-input nl-input-half">
+                <input type="email" id="nlEmail" placeholder="Introduce tu email" required class="newsletter-input">
+                <button type="submit" class="newsletter-submit" id="nlSubmit">Entrar en la señal</button>
+              </form>
+              <p class="newsletter-footnote">Sin spam. Sin algoritmo. Con continuidad real.</p>
+              <p id="nlStatus" class="nl-status-msg"></p>
+              <script src="js/newsletter.js" defer></script>
+            </aside>
           </div>
         </div>
   </section>
@@ -1459,18 +1710,24 @@ https://6e89a5fe.borjamoskv.pages.dev/            </a>
     </a>
   </footer>
 
-  <!-- CHATBOT -->
-  <button id="chatquitoOpen" class="chatquito-open-btn">RITXIE HAWTING</button>
-  <div id="chatquito" class="chatquito">
-    <div class="chatquito-header">
-      <span class="chatquito-title">RITXIE HAWTING</span>
-      <button class="chatquito-close" id="chatquitoClose">✖</button>
-    </div>
-    <div class="chatquito-body" id="chatquitoBody">
-      <div class="chat-msg bot">Soy RITXIE HAWTING. Pregunta por música, directos, diario o booking.</div>
-    </div>
-    <div class="chatquito-input">
-      <input type="text" id="chatquitoInput" placeholder="Escribe a RITXIE HAWTING..." autocomplete="off">
+  <!-- MOSKV-1 FRONTIER TERMINAL -->
+  <button id="chatquitoOpen" class="frontier-open-btn">
+    <div class="frontier-icon"></div>
+    <span>MOSKV-1 FRONTIER</span>
+  </button>
+  <div id="frontierTerminal" class="frontier-terminal-overlay">
+    <div class="frontier-terminal-glass">
+      <div class="frontier-terminal-header">
+        <span class="frontier-title">MOSKV-1 // COGNITIVE AGENT</span>
+        <button class="frontier-close" id="chatquitoClose">✖ [ TERMINATE ]</button>
+      </div>
+      <div class="frontier-terminal-body" id="chatquitoBody">
+        <div class="chat-msg bot">SOY MOSKV-1. SISTEMA SOBERANO DE BORJA MOSKV.<br>ESTADO: ONLINE.<br>ESCUCHANDO...</div>
+      </div>
+      <div class="frontier-terminal-input">
+        <span class="frontier-prompt">> </span>
+        <input type="text" id="chatquitoInput" placeholder="INJECT QUERY..." autocomplete="off">
+      </div>
     </div>
   </div>
 
@@ -1570,7 +1827,75 @@ https://6e89a5fe.borjamoskv.pages.dev/            </a>
         <div class="stitch-glitch-overlay"></div>
     </div>
 
+    <!-- CORTEX TERMINAL -->
+    <div id="cortex-terminal" class="cortex-terminal">
+        <div class="cterm-header">
+            <span class="cterm-title">CORTEX_SYSTEM_SHELL [AX-100]</span>
+            <button id="cortex-terminal-close" class="cterm-close">✕</button>
+        </div>
+        <div id="cortex-terminal-output" class="cterm-output"></div>
+        <div class="cterm-input-line">
+            <span class="cterm-prompt">> </span>
+            <input type="text" id="cortex-terminal-input" class="cterm-input" spellcheck="false" autocomplete="off">
+        </div>
+        <div id="cterm-visualizer" class="cterm-visualizer"></div>
+    </div>
+
     <!-- CORTEX ENGINE -->
     <script src="js/cortex_engine.js"></script>
+
+    <!-- WEB3 / TOKEN GATE (ETERHS.JS) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
+    <script src="js/token-gate.js" defer></script>
+  <script src="js/kinetic-physics.js"></script>
+  
+  <script>
+    // GSAP HORIZONTAL SCROLL FOR MOLTBOOK (SURPRISING SCROLL)
+    document.addEventListener("DOMContentLoaded", () => {
+      if(typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        gsap.registerPlugin(ScrollTrigger);
+        
+        const moltbookSec = document.querySelector("#moltbook");
+        const moltbookRail = document.querySelector(".moltbook-clip-rail");
+        
+        if(moltbookSec && moltbookRail) {
+          gsap.to(moltbookRail, {
+            x: () => -(moltbookRail.scrollWidth - window.innerWidth + 100) + "px",
+            ease: "none",
+            scrollTrigger: {
+              trigger: moltbookSec,
+              pin: true,
+              scrub: 1,
+              end: () => "+=" + (moltbookRail.scrollWidth),
+              invalidateOnRefresh: true,
+              anticipatePin: 1
+            }
+          });
+        }
+      }
+    });
+
+    // MOSKV-1 FRONTIER TERMINAL BINDINGS
+    setTimeout(() => {
+      const openBtn = document.getElementById('chatquitoOpen');
+      const closeBtn = document.getElementById('chatquitoClose');
+      const terminalOverlay = document.getElementById('frontierTerminal');
+      
+      if(openBtn && closeBtn && terminalOverlay) {
+        openBtn.addEventListener('click', () => {
+          terminalOverlay.classList.add('active');
+          openBtn.style.display = 'none';
+          document.getElementById('chatquitoInput').focus();
+          document.body.style.overflow = "hidden"; // Prevent scroll when terminal is active
+        });
+        
+        closeBtn.addEventListener('click', () => {
+          terminalOverlay.classList.remove('active');
+          openBtn.style.display = 'flex';
+          document.body.style.overflow = "";
+        });
+      }
+    }, 1000);
+  </script>
 </body>
 </html>

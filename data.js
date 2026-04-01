@@ -3,27 +3,23 @@
 // ═══════════════════════════════════════════════════════════════════════════
 
 const HQ_BACKGROUND_VISUALS = [
-    '7AO4w4Y_L24', // Nvidia Just Open-Sourced
     'b9ktVQN48OU', // LES BUKO [8K]
     'x8E9HInpzE4', // Glitch in the mirror [4K]
     'NYhOQTcNLkA', // Ecos del cosmos [4K]
-    'Otvpn9vfXOE', // Me caigo y me levanto
     'hY0G0Zxf_uo', // 32 Y PICO [4K]
+    'rmzKC8AYkVw', // 32 ELECTRONIC MUSIC VISUAL TRACKS [4K]
     'T_rU7WfOVTI', // Eclectic Electronic Visual Set Live [4K]
+    'Otvpn9vfXOE', // Me caigo y me levanto [4K]
     'vxD2l4cIp7I', // Eclectic Electronic Cowpunk Set VJ [4K]
     'EP5s0yKZUKk', // Void Cascade [4K]
-    'hsdOCzJpUMg', // Antes de las guerras
-    'CFQ1smlFYjQ', // Lamento Bolivariano
-    'Izt6bzo0PO8', // El Cuy del Altiplano
-    'zzHETLKSeT4', // Metafashion
     '4Cb-Iu8DnJM', // BLAC [4K]
     'YvGpocK-Iqg', // Neural Transfer [4K]
-    'NJqC3Xf6RzE', // Patadas
-    'LDzdKd4WxvI', // 4 Drogas
-    'eIrt6Uw-SEo', // Prisma del Xokas
+    'Zc8QEQ8y1f8', // RETRATOS NAROA GUTIÉRREZ GIL [4K]
+    '7AO4w4Y_L24', // Nvidia Just Open-Sourced
+    'hsdOCzJpUMg', // Antes de las guerras
+    'zzHETLKSeT4', // Metafashion
     'PCjZruRuoNY', // Building Your Own Universe
-    'AL46Orm0LS4', // Algorithms vs Human Attention
-    'U2faQ81sRpg'  // The Ghost of the Torn Panties
+    'AL46Orm0LS4'  // Algorithms vs Human Attention
 ];
 
 const HERO_BACKGROUND = {

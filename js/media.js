@@ -31,7 +31,7 @@ MOSKV.media = (() => {
             const bcContainer = document.getElementById('embed-container-1');
             if (bcContainer && typeof DATA !== 'undefined' && DATA.bandcampPlayers) {
                 const bcItem = DATA.bandcampPlayers[Math.floor(Math.random() * DATA.bandcampPlayers.length)];
-                bcContainer.innerHTML = `<iframe style="border-radius:0; border:0; width: 350px; height: 120px;" src="https://bandcamp.com/EmbeddedPlayer/album=${bcItem.id}/size=large/bgcol=333333/linkcol=ccff00/tracklist=false/artwork=small/transparent=true/" seamless><a href="https://${bcItem.slug}.bandcamp.com/">${bcItem.title}</a></iframe>`;
+                bcContainer.innerHTML = `<iframe style="border-radius:0; border:0; width: 350px; height: 120px;" src="https://bandcamp.com/EmbeddedPlayer/album=${bcItem.id}/size=large/bgcol=333333/linkcol=74c7ff/tracklist=false/artwork=small/transparent=true/" seamless><a href="https://${bcItem.slug}.bandcamp.com/">${bcItem.title}</a></iframe>`;
             }
 
             // MIXCLOUD

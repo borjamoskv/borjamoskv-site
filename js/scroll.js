@@ -40,7 +40,11 @@ MOSKV.scroll = (() => {
             const snapStep = horizontalPanels.length > 1 ? (triggerEnd - triggerStart) / (horizontalPanels.length - 1) : 0;
             const targetY = triggerStart + (snapStep * panelIndex);
 
-            globalThis.scrollTo({ top: targetY, behavior: 'smooth' });
+            if (lenisInstance) {
+                lenisInstance.scrollTo(targetY, { duration: 1.1 });
+            } else {
+                globalThis.scrollTo({ top: targetY, behavior: 'smooth' });
+            }
         } else {
             const targetY = target.getBoundingClientRect().top + globalThis.scrollY - getNavOffset();
             if (lenisInstance) {

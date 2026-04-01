@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cómo suena Jarana d'Or — borjamoskv</title>
+  <meta name="description" content="Seis leitmotivs, seis tracks y seis moods para leer Jarana d'Or como gramática sonora. Un mapa útil para Substack, manifiesto y pieza sonora.">
+  <meta name="theme-color" content="#041427">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="192x192" href="/img/icon-192.png">
+  <link rel="shortcut icon" href="/img/icon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
+  <link rel="canonical" href="https://borjamoskv.com/como-suena-jarana-dor.html">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta property="og:title" content="Cómo suena Jarana d'Or">
+  <meta property="og:description" content="Seis leitmotivs para convertir Jarana d'Or en una gramática sonora clara: párrafo, track y mood.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://borjamoskv.com/como-suena-jarana-dor.html">
+  <meta property="og:image" content="https://borjamoskv.com/img/og-cover.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Cómo suena Jarana d'Or">
+  <meta name="twitter:description" content="Seis leitmotivs, seis tracks y seis moods para leer Jarana d'Or como gramática sonora.">
+  <meta name="twitter:image" content="https://borjamoskv.com/img/og-cover.jpg">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Cómo suena Jarana d'Or",
+    "author": {"@type": "Person", "name": "Borja Moskv"},
+    "datePublished": "2026-03-27",
+    "publisher": {"@type": "Organization", "name": "Borja Moskv"},
+    "description": "Seis leitmotivs, seis tracks y seis moods para leer Jarana d'Or como gramática sonora.",
+    "keywords": ["Jarana d'Or", "Borja Moskv", "JARANA", "track mood", "editorial music", "Substack", "manifiesto sonoro"]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="article.css">
+  <link href="cortex-terminal.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --accent-gradient: linear-gradient(135deg, var(--accent-primary), #1fc7b3);
+      --radius-full: 9999px;
+    }
+
+    .motif-grid,
+    .usage-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0 2rem;
+    }
+
+    .motif-card,
+    .usage-card,
+    .sound-card {
+      border: 1px solid rgba(116, 199, 255, 0.14);
+      background: linear-gradient(180deg, rgba(9, 18, 34, 0.92), rgba(7, 14, 26, 0.72));
+      border-radius: 14px;
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.18);
+    }
+
+    .motif-card,
+    .usage-card {
+      padding: 1.15rem;
+    }
+
+    .motif-kicker,
+    .sound-label,
+    .usage-kicker {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      padding: 0.28rem 0.58rem;
+      border-radius: 999px;
+      border: 1px solid rgba(31, 199, 179, 0.18);
+      color: #7ee7d8;
+      font-family: var(--font-display);
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .motif-name,
+    .usage-card h3 {
+      margin: 0.85rem 0 0.6rem;
+      font-size: 1.05rem;
+      line-height: 1.3;
+      color: var(--text-primary);
+    }
+
+    .motif-copy,
+    .usage-card p,
+    .sound-copy,
+    .sound-value {
+      margin: 0;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .sound-card {
+      margin-top: 1.4rem;
+      overflow: hidden;
+    }
+
+    .sound-card-top {
+      padding: 1.2rem 1.25rem 1rem;
+      border-bottom: 1px solid rgba(116, 199, 255, 0.12);
+    }
+
+    .sound-copy {
+      margin-top: 0.8rem;
+      font-size: 0.98rem;
+    }
+
+    .sound-card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .sound-row {
+      padding: 1rem 1.25rem 1.1rem;
+    }
+
+    .sound-row + .sound-row {
+      border-left: 1px solid rgba(116, 199, 255, 0.12);
+    }
+
+    .sound-row-title {
+      display: block;
+      margin-bottom: 0.35rem;
+      color: rgba(126, 231, 216, 0.82);
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .sound-value {
+      font-size: 1rem;
+      color: #e8efff;
+    }
+
+    .signal-callout {
+      margin-top: 1.5rem;
+      padding: 1.25rem 1.35rem;
+      border-left: 3px solid #1fc7b3;
+      border-radius: 0 12px 12px 0;
+      background: rgba(31, 199, 179, 0.06);
+    }
+
+    .signal-callout p {
+      margin: 0;
+    }
+
+    .nexo-link {
+      color: #7ee7d8;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(126, 231, 216, 0.35);
+    }
+
+    .nexo-link:hover {
+      color: #c5fff6;
+      border-bottom-color: rgba(197, 255, 246, 0.55);
+    }
+
+    @media (max-width: 960px) {
+      .motif-grid,
+      .usage-grid,
+      .sound-card-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .sound-row + .sound-row {
+        border-left: 0;
+        border-top: 1px solid rgba(116, 199, 255, 0.12);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="readingProgress" class="reading-progress" aria-hidden="true"></div>
+
+  <a href="blog.html" class="article-back" aria-label="Volver al blog">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 12H5m0 0l7 7m-7-7l7-7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Blog
+  </a>
+
+  <header class="article-hero">
+    <span class="hero-label">JARANA/ · 6 leitmotivs · párrafo / track / mood</span>
+    <h1 class="hero-title">
+      <span class="title-accent">Cómo suena Jarana d'Or</span><br>
+      Seis puertas para una gramática sonora
+    </h1>
+    <p class="hero-subtitle">Una versión limpia del sistema: seis bloques, seis tracks y seis moods para que Jarana d'Or pueda vivir como Substack, manifiesto o pieza sonora sin perder identidad.</p>
+    <div class="hero-meta">
+      <span class="hero-author">Borja Moskv</span>
+      <span class="hero-divider"></span>
+      <span class="hero-date">27 de marzo de 2026</span>
+      <span class="hero-divider"></span>
+      <span class="hero-reading-time" id="readingTime">— min de lectura</span>
+    </div>
+    <div class="hero-scroll-hint">
+      Scroll
+      <span class="scroll-arrow"></span>
+    </div>
+  </header>
+
+  <div class="article-layout">
+
+    <div class="article-epigraph">
+      <p>Jarana d'Or no es un género. Tampoco un sello cerrado. Es un oído: una manera de unir barrio, ironía, duelo, brillo sintético y tensión operativa sin pedir permiso.</p>
+      <p>Para que eso no se quede en niebla, hacía falta una versión legible del sistema. No un manifiesto abstracto, sino una gramática práctica.</p>
+      <p>Por eso esta pieza se organiza así: <strong>párrafo / bloque → track → mood</strong>. Si mañana esto sale como note, como manifiesto o como pieza hablada, debería reconocerse desde aquí.</p>
+    </div>
+
+    <hr class="section-divider">
+
+    <main class="article-body">
+
+      <section id="compacto" class="article-section">
+        <div class="section-number">Compacto</div>
+        <h2 class="section-title">Seis leitmotivs</h2>
+        <p>La versión corta del sistema cabe en seis impulsos. No son géneros. Son vectores de lectura.</p>
+        <div class="motif-grid">
+          <article class="motif-card">
+            <span class="motif-kicker">01</span>
+            <h3 class="motif-name">Brillo de asfalto</h3>
+            <p class="motif-copy">Apertura nocturna, precisión física y sensación de ciudad viva.</p>
+          </article>
+          <article class="motif-card">
+            <span class="motif-kicker">02</span>
+            <h3 class="motif-name">Glitch sentimental</h3>
+            <p class="motif-copy">El fallo no como error, sino como textura emocional y espejo roto.</p>
+          </article>
+          <article class="motif-card">
+            <span class="motif-kicker">03</span>
+            <h3 class="motif-name">Ironía con veneno</h3>
+            <p class="motif-copy">Meme, torsión y humor sucio, pero con un cuchillo debajo.</p>
+          </article>
+          <article class="motif-card">
+            <span class="motif-kicker">04</span>
+            <h3 class="motif-name">Duelo caliente</h3>
+            <p class="motif-copy">Melancolía con cuerpo, historia rota y emoción sin solemnidad vacía.</p>
+          </article>
+          <article class="motif-card">
+            <span class="motif-kicker">05</span>
+            <h3 class="motif-name">Preguerra interior</h3>
+            <p class="motif-copy">Suspensión moral, respiración lenta y memoria antes del choque.</p>
+          </article>
+          <article class="motif-card">
+            <span class="motif-kicker">06</span>
+            <h3 class="motif-name">After suspendido</h3>
+            <p class="motif-copy">Cuando la fiesta ya pasó, pero el fantasma acústico sigue ahí.</p>
+          </article>
+        </div>
+      </section>
+
+      <hr class="section-divider">
+
+      <section id="leitmotiv-1" class="article-section">
+        <div class="section-number">Leitmotiv I</div>
+        <h2 class="section-title">Brillo de asfalto</h2>
+        <p>Jarana d'Or abre mejor cuando el cuerpo entiende antes que la cabeza. No entra explicando; entra marcando suelo. Hace falta que el oyente note presencia, velocidad contenida y una cierta elegancia de arranque.</p>
+        <div class="sound-card">
+          <div class="sound-card-top">
+            <span class="sound-label">Párrafo / bloque</span>
+            <p class="sound-copy">La entrada buena no pide permiso: ilumina el borde de la pista, deja claro que aquí hay diseño de tensión y convierte el movimiento en criterio.</p>
+          </div>
+          <div class="sound-card-grid">
+            <div class="sound-row">
+              <span class="sound-row-title">Track</span>
+              <p class="sound-value">LES BUKO</p>
+            </div>
+            <div class="sound-row">
+              <span class="sound-row-title">Mood</span>
+              <p class="sound-value">Asfalto mojado · precisión nocturna · apertura oblicua</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="section-divider">
+
+      <section id="leitmotiv-2" class="article-section">
+        <div class="section-number">Leitmotiv II</div>
+        <h2 class="section-title">Glitch sentimental</h2>
+        <p>La rareza de Jarana d'Or no está en ser críptica. Está en dejar que el fallo hable. Cuando la textura se rompe, aparece una capa más íntima: la emoción fría, el espejo que no devuelve una cara estable, el temblor que todavía tiene forma.</p>
+        <div class="sound-card">
+          <div class="sound-card-top">
+            <span class="sound-label">Párrafo / bloque</span>
+            <p class="sound-copy">Aquí el error no es accidente; es método. La imagen vibra, el cuerpo duda un segundo, y justo en esa duda aparece algo más humano que la limpieza perfecta.</p>
+          </div>
+          <div class="sound-card-grid">
+            <div class="sound-row">
+              <span class="sound-row-title">Track</span>
+              <p class="sound-value">GLITCH IN THE MIRROR</p>
+            </div>
+            <div class="sound-row">
+              <span class="sound-row-title">Mood</span>
+              <p class="sound-value">Reflejo roto · ansiedad bonita · luz fría</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="section-divider">
+
+      <section id="leitmotiv-3" class="article-section">
+        <div class="section-number">Leitmotiv III</div>
+        <h2 class="section-title">Ironía con veneno</h2>
+        <p>Jarana d'Or necesita una veta memética, pero no como decoración ligera. El humor aquí entra para torcer la línea recta, contaminar la solemnidad y recordar que el delirio también puede ser un método de clasificación del mundo.</p>
+        <div class="sound-card">
+          <div class="sound-card-top">
+            <span class="sound-label">Párrafo / bloque</span>
+            <p class="sound-copy">No todo tiene que sonar noble. A veces la pieza pide una risa torcida, una frase maldita y una energía que parezca broma hasta que muerde.</p>
+          </div>
+          <div class="sound-card-grid">
+            <div class="sound-row">
+              <span class="sound-row-title">Track</span>
+              <p class="sound-value">4 DROGAS</p>
+            </div>
+            <div class="sound-row">
+              <span class="sound-row-title">Mood</span>
+              <p class="sound-value">Meme tóxico · rave torcida · calor sucio</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="section-divider">
+
+      <section id="leitmotiv-4" class="article-section">
+        <div class="section-number">Leitmotiv IV</div>
+        <h2 class="section-title">Duelo caliente</h2>
+        <p>Cuando Jarana d'Or se acerca al dolor, no lo hace desde la pureza. Lo hace desde la fricción histórica, el temblor político y una emoción que todavía conserva cuerpo. El duelo aquí no es museo: es temperatura.</p>
+        <div class="sound-card">
+          <div class="sound-card-top">
+            <span class="sound-label">Párrafo / bloque</span>
+            <p class="sound-copy">Hay piezas que no piden distancia crítica, sino una forma de elegía viva: emoción cargada, memoria rota y una dignidad que no necesita ponerse de pie para imponerse.</p>
+          </div>
+          <div class="sound-card-grid">
+            <div class="sound-row">
+              <span class="sound-row-title">Track</span>
+              <p class="sound-value">LAMENTO BOLIVARIANO</p>
+            </div>
+            <div class="sound-row">
+              <span class="sound-row-title">Mood</span>
+              <p class="sound-value">Elegía caliente · geopolítica sentimental · respiración grave</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="section-divider">
+
+      <section id="leitmotiv-5" class="article-section">
+        <div class="section-number">Leitmotiv V</div>
+        <h2 class="section-title">Preguerra interior</h2>
+        <p>No todo en Jarana d'Or debe resolver. También hace falta un espacio previo al choque: una zona donde la pieza flota, presiente conflicto y organiza silencio operativo. Esa tensión suspendida es parte del carácter.</p>
+        <div class="sound-card">
+          <div class="sound-card-top">
+            <span class="sound-label">Párrafo / bloque</span>
+            <p class="sound-copy">Antes del golpe hay una habitación moral. No se llena con ruido: se llena con respiración, con memoria tensa y con la sensación de que algo está a punto de doblarse.</p>
+          </div>
+          <div class="sound-card-grid">
+            <div class="sound-row">
+              <span class="sound-row-title">Track</span>
+              <p class="sound-value">ANTES DE LAS GUERRAS</p>
+            </div>
+            <div class="sound-row">
+              <span class="sound-row-title">Mood</span>
+              <p class="sound-value">Suspensión moral · niebla lenta · borde histórico</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="section-divider">
+
+      <section id="leitmotiv-6" class="article-section">
+        <div class="section-number">Leitmotiv VI</div>
+        <h2 class="section-title">After suspendido</h2>
+        <p>El cierre Jarana d'Or no suele clausurar; deja un residuo. Una cola fantasma. Algo que sigue sonando cuando ya no hay tema. Ese resto es valioso porque convierte la pieza en recuerdo operativo y no sólo en consumo rápido.</p>
+        <div class="sound-card">
+          <div class="sound-card-top">
+            <span class="sound-label">Párrafo / bloque</span>
+            <p class="sound-copy">Cuando todo parece haber terminado, queda una reverberación rara: ni euforia ni ruina total, sino el tipo de resaca que hace que una obra siga dentro del cuerpo unas horas más.</p>
+          </div>
+          <div class="sound-card-grid">
+            <div class="sound-row">
+              <span class="sound-row-title">Track</span>
+              <p class="sound-value">VOID CASCADE</p>
+            </div>
+            <div class="sound-row">
+              <span class="sound-row-title">Mood</span>
+              <p class="sound-value">After cósmico · descenso flotante · fantasma útil</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="section-divider">
+
+      <section id="usos" class="article-section">
+        <div class="section-number">Aplicación</div>
+        <h2 class="section-title">Uso sugerido</h2>
+        <p>Esta tabla deja de ser sólo referencia cuando se convierte en herramienta editorial. Tres salidas naturales:</p>
+        <div class="usage-grid">
+          <article class="usage-card">
+            <span class="usage-kicker">Substack</span>
+            <h3>Notes y posts con esqueleto claro</h3>
+            <p>Cada entrada puede abrir con un bloque, anclarse en un track y cerrar con un mood. Así la rareza no se dispersa y la serie se reconoce al instante.</p>
+          </article>
+          <article class="usage-card">
+            <span class="usage-kicker">Manifiesto</span>
+            <h3>Del track a la tesis</h3>
+            <p>El track funciona como prueba sensible, el párrafo como idea y el mood como postura. Menos declaración abstracta, más doctrina con materia.</p>
+          </article>
+          <article class="usage-card">
+            <span class="usage-kicker">Pieza sonora</span>
+            <h3>Guion para spoken e interludios</h3>
+            <p>La secuencia párrafo, track y mood ya viene preparada para voz, intro de set o cápsula sonora breve sin perder identidad editorial.</p>
+          </article>
+        </div>
+        <div class="signal-callout">
+          <p><strong>La utilidad real:</strong> si alguien entra por una pista, puede reconocer un mood; si entra por un texto, puede oír un track; y si entra por la estética, por fin puede quedarse por una gramática.</p>
+        </div>
+      </section>
+
+      <hr class="section-divider">
+
+      <section id="firma" class="article-epilogue">
+        <h2 class="epilogue-title">La firma</h2>
+        <div class="epilogue-text">
+          <p>Jarana d'Or sube de verdad cuando deja de ser intuición privada y se vuelve sistema reconocible. No hace falta domesticar la rareza; hace falta darle una firma legible.</p>
+          <p>Esta pieza es esa firma en modo operativo. Un mapa para que el archivo, el diario y el sonido compartan el mismo esqueleto.</p>
+          <p>Si quieres ver cómo esta gramática se despliega en serie, la continuación natural está en el <a href="blog.html" class="nexo-link"><strong>Diario</strong></a> y en el flujo de <a href="https://borjamoskv.substack.com" target="_blank" rel="noopener" class="nexo-link"><strong>Substack</strong></a>.</p>
+        </div>
+      </section>
+
+      <hr class="section-divider">
+
+      <footer class="article-footer">
+        <div class="article-tags">
+          <span class="article-tag">#JaranaDor</span>
+          <span class="article-tag">#JARANA</span>
+          <span class="article-tag">#TrackMood</span>
+          <span class="article-tag">#Substack</span>
+          <span class="article-tag">#PiezaSonora</span>
+          <span class="article-tag">#BorjaMoskv</span>
+        </div>
+        <p class="article-copyright">© 2026 borjamoskv. Todos los derechos reservados.</p>
+      </footer>
+
+    </main>
+
+    <aside class="article-toc" aria-label="Tabla de contenidos">
+      <h3 class="toc-title">Índice</h3>
+      <ol class="toc-list">
+        <li><a href="#compacto" class="toc-link">Seis leitmotivs</a></li>
+        <li><a href="#leitmotiv-1" class="toc-link">I. Brillo de asfalto</a></li>
+        <li><a href="#leitmotiv-2" class="toc-link">II. Glitch sentimental</a></li>
+        <li><a href="#leitmotiv-3" class="toc-link">III. Ironía con veneno</a></li>
+        <li><a href="#leitmotiv-4" class="toc-link">IV. Duelo caliente</a></li>
+        <li><a href="#leitmotiv-5" class="toc-link">V. Preguerra interior</a></li>
+        <li><a href="#leitmotiv-6" class="toc-link">VI. After suspendido</a></li>
+        <li><a href="#usos" class="toc-link">Uso sugerido</a></li>
+        <li><a href="#firma" class="toc-link">La firma</a></li>
+      </ol>
+    </aside>
+
+  </div>
+
+  <script src="article.js"></script>
+  <script src="cortex-terminal.js" defer></script>
+</body>
+</html>

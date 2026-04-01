@@ -1,5 +1,5 @@
 {
-  "name": "BORJA MOSKV | Productor Experimental",
+  "name": "BORJA MOSKV | Artista Frontera",
   "short_name": "BORJA MOSKV",
   "icons": [
     {
@@ -18,10 +18,10 @@
       "type": "image/png"
     }
   ],
-  "theme_color": "#2E5090",
-  "background_color": "#0A0A0A",
+  "theme_color": "#041427",
+  "background_color": "#041427",
   "display": "standalone",
   "start_url": "/",
-  "description": "Música, glitch y sistemas para abrir grietas en la realidad. IDM, Techno, Ambient, AI Visuals y Web3.",
+  "description": "Artista frontera entre club, visual y sistema. Electrónica, live AV, archivo editorial y software soberano.",
   "orientation": "portrait-primary"
 }

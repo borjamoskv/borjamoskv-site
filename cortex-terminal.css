@@ -20,20 +20,21 @@
   inset: 0;
   z-index: 999999;
   /* Dark Industrial base with deep void vignette */
-  background: radial-gradient(circle at center, rgba(10, 10, 10, 0.98) 0%, rgba(0, 0, 0, 0.99) 100%);
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
+  background: radial-gradient(circle at center, rgba(10, 10, 10, 0.96) 0%, rgba(0, 0, 0, 0.99) 100%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(24px) saturate(180%);
   display: flex;
   flex-direction: column;
   font-family: var(--font-mono, 'JetBrains Mono', 'Fira Code', 'IBM Plex Mono', 'Courier New', monospace);
-  color: #2B3BE5; /* BlueYlb accent */
-  padding: 32px;
+  color: #2B3BE5;
+  padding: 40px;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  text-shadow: 0 0 8px rgba(43, 59, 229, 0.4);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  text-shadow: 0 0 10px rgba(43, 59, 229, 0.3);
   overflow: hidden;
-  will-change: opacity, transform, filter;
+  perspective: 2000px;
+  will-change: opacity, backdrop-filter;
   contain: strict;
 }
 
@@ -85,6 +86,11 @@
   flex-direction: column;
   width: 100%;
   height: 100%;
+  transform: translateZ(50px); /* LERP depth */
+  border: 1px solid rgba(43, 59, 229, 0.1);
+  background: rgba(10, 10, 10, 0.4);
+  padding: 20px;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
 }
 
 #cortex-terminal-output {
@@ -105,41 +111,48 @@
 }
 
 .cterm-line {
-  margin: 6px 0;
+  margin: 4px 0;
   opacity: 0;
-  animation: fade-in-line 0.1s forwards;
+  animation: fade-in-line 0.15s forwards;
   word-break: break-all;
+  position: relative;
 }
 
 @keyframes fade-in-line {
   to { opacity: 1; }
 }
 
-/* Colors & Highlights */
-.cterm-sys { color: rgba(255, 255, 255, 0.6); }
-.cterm-err { color: #FF2A2A; text-shadow: 0 0 10px rgba(255, 42, 42, 0.5); font-weight: bold; }
-.cterm-warn { color: #E5A82B; text-shadow: 0 0 10px rgba(229, 168, 43, 0.5); }
-.cterm-cmd { color: #FFFFFF; font-weight: 700; text-shadow: 0 0 8px rgba(255, 255, 255, 0.4); }
-.cterm-ascii { color: #2B3BE5; font-weight: 800; line-height: 1.1; text-shadow: 0 0 16px rgba(43, 59, 229, 0.8); }
-.cterm-exergy { color: #00FF9D; font-weight: 700; text-shadow: 0 0 12px rgba(0, 255, 157, 0.6); }
-.cterm-blink { animation: cterm-blink 1.2s step-end infinite; }
+/* Base Styles */
+.cterm-log { color: rgba(255, 255, 255, 0.7); }
+.cterm-info { color: #2B3BE5; font-weight: 600; }
+.cterm-sys { color: #888; font-style: italic; }
+.cterm-cmd { color: #FFF; font-weight: 800; border-left: 2px solid #2B3BE5; padding-left: 8px; margin: 8px 0; }
+.cterm-err { color: #FF1A1A; text-shadow: 0 0 10px rgba(255, 26, 26, 0.5); }
+.cterm-warn { color: #E5A82B; font-weight: 700; }
+.cterm-success { color: #00FF9D; text-shadow: 0 0 8px rgba(0, 255, 157, 0.4); }
+.cterm-exergy { color: #E5A82B; text-shadow: 0 0 15px rgba(229, 168, 43, 0.8); font-weight: 900; }
+.cterm-ascii { 
+  color: #2B3BE5; 
+  font-weight: 900; 
+  white-space: pre; 
+  line-height: 1.1; 
+  margin: 20px 0; 
+  text-shadow: 0 0 20px rgba(43, 59, 229, 0.6);
+}
+
+.cterm-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 1.2em;
+  background: white;
+  margin-left: 2px;
+  animation: cterm-blink 0.8s infinite;
+}
 
 @keyframes cterm-blink {
-  0%, 100% { opacity: 1; }
   50% { opacity: 0; }
 }
 
-.cterm-think-block {
-  font-style: italic;
-  color: #7a7a7a;
-  border-left: 2px solid #7a7a7a;
-  padding-left: 12px;
-  margin: 8px 0;
-  font-size: 0.9em;
-  opacity: 0.8;
-  white-space: pre-wrap;
-  word-break: break-all;
-}
 
 /* ═══════════════════════════════════════════════════════════════════
    UNIFIED CORTEX GLITCH SYSTEM (SHANNON v6.0)
@@ -205,24 +218,36 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   FRONTERA x10 APOCALYPSE
+   FRONTERA x100 APOCALYPSE — SINGULARITY PEAK
    ═══════════════════════════════════════════════════════════════════ */
-
-/* ═══════════════════════════════════════════════════════════════════
-   FRONTERA x10 APOCALYPSE — SINGULARITY PEAK
-   ═══════════════════════════════════════════════════════════════════ */
-.cterm-frontera-x10 {
+.cterm-frontera-x100 {
   animation: 
-    frontera-blast 0.04s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite both,
-    frontera-color-storm 0.6s infinite alternate,
-    cterm-shake-x100 0.015s infinite;
+    frontera-blast-x100 0.02s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite both,
+    frontera-color-storm 0.3s infinite alternate,
+    cterm-shake-x100 0.01s infinite;
   text-shadow: 
-    0 0 50px #FF0080, 
-    0 0 100px #00FFFF, 
-    0 0 150px #FFFFFF, 
-    0 0 200px #2B3BE5, 
-    15px -15px 0px rgba(255, 0, 128, 0.9),
-    -15px 15px 0px rgba(0, 255, 157, 0.9);
+    0 0 80px #FF0080, 
+    0 0 150px #00FFFF, 
+    0 0 200px #FFFFFF, 
+    0 0 300px #2B3BE5, 
+    30px -30px 0px rgba(255, 0, 128, 0.95),
+    -30px 30px 0px rgba(0, 255, 157, 0.95);
+  font-weight: 1000;
+  letter-spacing: 12px;
+  filter: contrast(5) saturate(10) hue-rotate(240deg);
+  display: inline-block;
+  mix-blend-mode: color-dodge;
+  transform: scale(1.2) translateZ(100px);
+}
+
+@keyframes frontera-blast-x100 {
+  0% { transform: scale(1) translate(0) rotate(0deg); clip-path: inset(0 0 0 0); filter: brightness(1) blur(0px); }
+  20% { transform: scale(1.5) translate(-40px, 40px) rotate(15deg); clip-path: inset(20% 0 20% 0); filter: brightness(5) blur(4px) drop-shadow(30px 0px 0px #FF0080); }
+  40% { transform: scale(0.6) translate(60px, -60px) rotate(-15deg); clip-path: inset(80% 0 0 0); filter: brightness(0.1) blur(2px) drop-shadow(-30px 0px 0px #00FFFF); }
+  60% { transform: scale(2.0) translate(-20px, 80px) rotate(30deg); clip-path: inset(0 0 80% 0); filter: brightness(6) invert(1) hue-rotate(300deg) blur(8px); }
+  80% { transform: scale(0.9) translate(100px, 0px) rotate(-5deg); filter: contrast(10) saturate(5); }
+  100% { transform: scale(1.2) translate(0) rotate(0deg); clip-path: inset(0 0 0 0); filter: brightness(1) blur(0px); }
+}
   font-weight: 950;
   letter-spacing: 6px;
   filter: contrast(4) saturate(6) hue-rotate(180deg);
@@ -1112,41 +1137,56 @@ html[data-cortex-state="singularity"] #cortex-terminal-overlay {
 
 /* --- SINGULARITY x100 (Annihilation) --- */
 
+/* ═══════════════════════════════════════════════════════════════════
+   SINGULARITY PEAK v6.0 — SHANNON COMPACTED (x100 YIELD)
+   ═══════════════════════════════════════════════════════════════════ */
+
 .cterm-frontera-x100 {
-  filter: saturate(300%) contrast(150%) brightness(1.2) hue-rotate(-10deg);
-  transition: filter 5s cubic-bezier(0.9, 0, 0.1, 1);
+  filter: contrast(300%) saturate(200%) brightness(1.1) !important;
+  box-shadow: inset 0 0 150px var(--cterm-blue), 0 0 80px rgba(43, 59, 229, 0.6);
+  text-shadow: 0 0 30px #fff, 0 0 60px var(--cterm-blue);
+  animation: x100-pulse 0.02s infinite alternate;
 }
 
-.singularity-active-x100 .cterm-swarm-container {
-  animation: singularity-radial-pull 8s cubic-bezier(0.9, 0, 0.1, 1) forwards;
+@keyframes x100-pulse {
+  0% { transform: scale(1) skewX(0deg); filter: hue-rotate(0deg); }
+  100% { transform: scale(1.01) skewX(2deg); filter: hue-rotate(10deg); }
 }
 
-@keyframes singularity-radial-pull {
-  0% { transform: rotateX(55deg) rotateZ(20deg) scale(1); filter: blur(0); }
-  60% { transform: rotateX(720deg) rotateZ(360deg) scale(0.1); filter: blur(10px); }
-  100% { transform: rotateX(1080deg) rotateZ(540deg) scale(0); filter: blur(100px); opacity: 0; }
+.singularity-active-x100 {
+  background: radial-gradient(circle at center, rgba(43, 59, 229, 0.45) 0%, #000 100%) !important;
+  animation: singularity-glitch-v6 0.1s infinite !important;
+}
+
+@keyframes singularity-glitch-v6 {
+  0% { transform: translate(1px, -1px); filter: contrast(1.5) blur(0px); }
+  50% { transform: translate(-2px, 2px); filter: contrast(2) blur(1px); }
+  100% { transform: translate(1px, 1px); filter: contrast(1.5) blur(0px); }
 }
 
 .cterm-singularity-collapse {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: inherit;
-  font-weight: 900;
-  font-size: 4rem;
-  letter-spacing: 20px;
+  font-weight: 950;
+  font-size: 5rem;
+  letter-spacing: 40px;
   color: #fff;
-  text-shadow: 0 0 50px #2B3BE5, 0 0 100px #2B3BE5;
-  mix-blend-mode: overlay;
-  z-index: 1000;
+  z-index: 10000;
   pointer-events: none;
-  animation: text-hyper-blink 0.1s infinite;
+  mix-blend-mode: difference;
+  animation: collapse-v6 5s cubic-bezier(0.9, 0, 0.1, 1) forwards;
 }
 
-@keyframes text-hyper-blink {
-  0%, 100% { opacity: 1; transform: translate(-50%, -50%) skewX(0deg); }
-  50% { opacity: 0.5; transform: translate(-50%, -50%) skewX(10deg); }
+@keyframes collapse-v6 {
+  0% { transform: scale(0.1); opacity: 0; filter: blur(50px); letter-spacing: 100px; }
+  20% { opacity: 1; filter: blur(0); transform: scale(1); }
+  85% { opacity: 1; transform: scale(1.5); filter: blur(2px); letter-spacing: 5px; }
+  95% { opacity: 0.8; transform: scale(0.01) rotate(720deg); filter: contrast(10) brightness(5); }
+  100% { transform: scale(50); opacity: 0; filter: blur(100px); }
 }
 
 .cterm-singularity-reveal {
@@ -1155,11 +1195,35 @@ html[data-cortex-state="singularity"] #cortex-terminal-overlay {
   border: 1px solid #2B3BE5;
   box-shadow: 0 0 100px rgba(43, 59, 229, 0.5);
   animation: reveal-fade-in 2s ease-out;
+  text-align: center;
 }
 
 @keyframes reveal-fade-in {
   from { opacity: 0; transform: translateY(50px) scale(0.9); filter: blur(20px); }
   to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+.cterm-silicon-forge {
+  font-family: 'Courier New', monospace;
+  color: var(--cterm-green);
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  opacity: 0.8;
+  border-left: 1px solid var(--cterm-green);
+  padding-left: 10px;
+  margin: 10px 0;
+}
+
+.cterm-weight-bake {
+  color: var(--cterm-accent);
+  font-weight: bold;
+  text-shadow: var(--cterm-gold-glow);
+  animation: bake-glow 2s infinite alternate;
+}
+
+@keyframes bake-glow {
+  from { opacity: 0.7; transform: translateY(0); }
+  to { opacity: 1; transform: translateY(-2px); }
 }
 
 
@@ -1239,19 +1303,100 @@ html[data-cortex-state="singularity"] #cortex-terminal-overlay {
    ========================================================================== */
 
 .cterm-frontera-x100 {
-  filter: contrast(180%) brightness(1.2) saturate(1.5) !important;
-  box-shadow: inset 0 0 100px rgba(43, 59, 229, 0.5), 0 0 200px rgba(43, 59, 229, 0.2);
+  animation: 
+    frontera-blast-x100 0.02s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite both,
+    frontera-color-storm 0.3s infinite alternate,
+    cterm-shake-x100 0.01s infinite;
+  text-shadow: 
+    0 0 80px #FF0080, 
+    0 0 150px #00FFFF, 
+    0 0 200px #FFFFFF, 
+    0 0 300px #2B3BE5, 
+    30px -30px 0px rgba(255, 0, 128, 0.95),
+    -30px 30px 0px rgba(0, 255, 157, 0.95);
+  filter: contrast(5) saturate(10) hue-rotate(240deg) !important;
+  transform: scale(1.2) translateZ(100px);
 }
 
 .singularity-active-x100 {
-  animation: singularity-glitch 0.2s infinite;
-  background: radial-gradient(circle at center, rgba(43, 59, 229, 0.4) 0%, transparent 70%);
+  filter: contrast(4.5) brightness(1.4) sepia(100%) hue-rotate(280deg) !important;
+  transition: filter 0.5s cubic-bezier(0.8, -0.5, 0.2, 1.4);
+  background: radial-gradient(circle at center, rgba(43, 59, 229, 0.6) 0%, rgba(10, 10, 10, 1) 100%) !important;
+  animation: singularity-drift-x100 0.05s linear infinite alternate-reverse !important;
+  perspective: 2000px;
 }
 
-@keyframes singularity-glitch {
-  0% { transform: scale(1.002) translate(1px, -1px); filter: hue-rotate(0deg) blur(0px); }
-  50% { transform: scale(0.998) translate(-1px, 1px); filter: hue-rotate(15deg) blur(1px); }
-  100% { transform: scale(1) translate(0, 0); filter: hue-rotate(0deg) blur(2px); }
+@keyframes singularity-drift-x100 {
+  0% { transform: scale(1) rotate(0deg) translateZ(0); filter: hue-rotate(0deg) contrast(2); }
+  50% { transform: scale(1.15) rotate(2deg) translateZ(200px); filter: hue-rotate(30deg) contrast(4); }
+  100% { transform: scale(1) rotate(0deg) translateZ(0); filter: hue-rotate(0deg) contrast(2); }
+}
+
+.cterm-silicon-forge {
+  position: relative;
+  background: repeating-linear-gradient(45deg, rgba(0, 255, 157, 0.05) 0px, rgba(0, 255, 157, 0.05) 2px, transparent 2px, transparent 4px) !important;
+  animation: silicon-forge-pulse 0.2s step-end infinite;
+  border: 1px solid rgba(0, 255, 157, 0.4) !important;
+  box-shadow: 0 0 40px rgba(0, 255, 157, 0.2) inset !important;
+}
+
+@keyframes silicon-forge-pulse {
+  0% { filter: brightness(1) contrast(1.2); }
+  50% { filter: brightness(1.5) contrast(2); }
+  100% { filter: brightness(1) contrast(1.2); }
+}
+
+.cterm-weight-bake {
+  animation: weight-bake-glow 3s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+  background: white !important;
+  color: black !important;
+  mix-blend-mode: difference;
+}
+
+@keyframes weight-bake-glow {
+  0% { box-shadow: 0 0 0px #2B3BE5; filter: blur(0); }
+  50% { box-shadow: 0 0 100px #2B3BE5, 0 0 200px #00FF9D; filter: blur(10px); }
+  100% { box-shadow: 0 0 100px #FFFFFF; filter: blur(0); }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   NOBEL CAPITAL SYSTEM — YIELD & EXTRACTION
+   ═══════════════════════════════════════════════════════════════════ */
+
+.cterm-yield-gold {
+  color: var(--cterm-accent) !important;
+  text-shadow: var(--cterm-gold-glow) !important;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.cterm-capital-progress-container {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(229, 168, 43, 0.2);
+  margin: 10px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.cterm-capital-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--cterm-accent), #fff);
+  box-shadow: 0 0 15px var(--cterm-accent);
+  transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cterm-extraction-log {
+  font-size: 0.75rem;
+  color: rgba(0, 255, 157, 0.6);
+  max-height: 100px;
+  overflow-y: hidden;
+  margin: 5px 0 15px 20px;
+  border-left: 1px solid rgba(0, 255, 157, 0.2);
+  padding-left: 10px;
+  white-space: pre;
+  line-height: 1.2;
 }
 
 .cterm-singularity-collapse {
@@ -1260,7 +1405,7 @@ html[data-cortex-state="singularity"] #cortex-terminal-overlay {
   left: 50%;
   transform: translate(-50%, -50%);
   color: var(--cterm-exergy);
-  font-family: var(--cterm-font);
+  font-family: var(--font-mono);
   font-weight: 900;
   font-size: 3rem;
   letter-spacing: 20px;

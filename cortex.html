@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CORTEX NATIVE AI — El Manifiesto</title>
+  
+  <!-- React, ReactDOM & Babel -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-color: #0A0A0A;
+      --text-color: #EDEDED;
+      --accent-blue: #2B3BE5;
+      --accent-red: #E52B2B;
+      --glass-bg: rgba(20, 20, 20, 0.6);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    
+    /* WEBGL BACKGROUND */
+    canvas#glcanvas {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: 0; pointer-events: none; mix-blend-mode: screen; opacity: 0.8;
+    }
+    .scanlines {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.3));
+      background-size: 100% 4px; z-index: 1; pointer-events: none; opacity: 0.6;
+    }
+
+    /* LAYOUT */
+    .layout { relative: relative; z-index: 10; max-width: 800px; margin: 0 auto; padding: 100px 20px; }
+    header { text-align: center; margin-bottom: 80px; position: relative; z-index: 10; }
+    h1 {
+      font-family: 'JetBrains Mono', monospace; font-size: 4rem; font-weight: 900;
+      letter-spacing: -2px; text-transform: uppercase; color: #fff;
+      text-shadow: 0 0 20px rgba(43,59,229,0.5); margin-bottom: 10px;
+    }
+    .status-badge {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--accent-red);
+      border: 1px solid var(--accent-red); padding: 5px 15px; display: inline-block;
+      margin-bottom: 20px; background: rgba(229, 43, 43, 0.1); box-shadow: 0 0 10px rgba(229, 43, 43, 0.2);
+    }
+    .manifesto-content {
+      background: var(--glass-bg); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05);
+      padding: 50px; border-radius: 4px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); position: relative; z-index: 10;
+    }
+    h2 {
+      font-family: 'JetBrains Mono', monospace; font-size: 1.5rem; color: var(--accent-blue);
+      margin-top: 40px; margin-bottom: 20px; border-bottom: 1px solid rgba(43,59,229,0.3); padding-bottom: 10px;
+    }
+    h3 { font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; color: #fff; margin-top: 30px; margin-bottom: 10px; }
+    p { margin-bottom: 20px; font-size: 1.1rem; color: #bbb; }
+    strong { color: #fff; font-weight: 600; }
+
+    /* START SCREEN */
+    .start-overlay {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: var(--bg-color); z-index: 1000; display: flex;
+      flex-direction: column; align-items: center; justify-content: center;
+      transition: opacity 1s ease;
+    }
+    .start-overlay.hidden { opacity: 0; pointer-events: none; }
+    
+    .start-btn {
+      background: transparent; color: var(--accent-red); border: 1px solid var(--accent-red);
+      padding: 15px 40px; font-family: 'JetBrains Mono', monospace; font-size: 1.2rem;
+      letter-spacing: 2px; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase;
+      box-shadow: 0 0 20px rgba(229,43,43,0.2);
+    }
+    .start-btn:hover { background: rgba(229,43,43,0.1); box-shadow: 0 0 40px rgba(229,43,43,0.5); color: #fff; }
+
+    /* SYSTEM STATUS */
+    .system-status {
+      position: fixed; bottom: 20px; right: 20px; font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem; color: rgba(255,255,255,0.4); z-index: 100;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+
+    // --- COMPONENT: HypervisorCanvas (WebGL Matrix Shader) ---
+    const HypervisorCanvas = ({ audioLevel }) => {
+      const canvasRef = useRef(null);
+      const requestRef = useRef();
+      const glRef = useRef(null);
+      const programInfoRef = useRef({});
+
+      useEffect(() => {
+        const canvas = canvasRef.current;
+        const gl = canvas.getContext('webgl');
+        glRef.current = gl;
+
+        const vsSource = `
+          attribute vec2 position;
+          void main() { gl_Position = vec4(position, 0.0, 1.0); }
+        `;
+        const fsSource = `
+          precision highp float;
+          uniform vec2 resolution;
+          uniform float time;
+          uniform float audioData;
+
+          float random(vec2 st) {
+              return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
+          }
+
+          void main() {
+              vec2 st = gl_FragCoord.xy/resolution.xy;
+              st.x *= resolution.x/resolution.y;
+              
+              vec2 grid = fract(st * 20.0);
+              float line = smoothstep(0.95, 1.0, grid.x) + smoothstep(0.95, 1.0, grid.y);
+              
+              float noise = random(floor(st * 20.0) + floor(time * 5.0));
+              float activeBlock = step(0.98 - (audioData * 0.1), noise);
+
+              vec3 color = vec3(0.0);
+              color += vec3(0.1, 0.1, 0.3) * line;
+              color += vec3(0.9, 0.1, 0.1) * activeBlock * (0.2 + audioData);
+              
+              float dist = length(st - vec2(0.5 * (resolution.x/resolution.y), 0.5));
+              color *= smoothstep(0.8, 0.2, dist);
+
+              gl_FragColor = vec4(color, 1.0);
+          }
+        `;
+
+        const compileShader = (type, source) => {
+          const shader = gl.createShader(type);
+          gl.shaderSource(shader, source);
+          gl.compileShader(shader);
+          return shader;
+        };
+
+        const program = gl.createProgram();
+        gl.attachShader(program, compileShader(gl.VERTEX_SHADER, vsSource));
+        gl.attachShader(program, compileShader(gl.FRAGMENT_SHADER, fsSource));
+        gl.linkProgram(program);
+        gl.useProgram(program);
+
+        const posLoc = gl.getAttribLocation(program, "position");
+        const buffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, -1,1, 1,-1, 1,1]), gl.STATIC_DRAW);
+        gl.enableVertexAttribArray(posLoc);
+        gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
+
+        programInfoRef.current = {
+          resLoc: gl.getUniformLocation(program, "resolution"),
+          timeLoc: gl.getUniformLocation(program, "time"),
+          audioLoc: gl.getUniformLocation(program, "audioData")
+        };
+
+        const resize = () => {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+          gl.viewport(0, 0, canvas.width, canvas.height);
+        };
+        window.addEventListener('resize', resize);
+        resize();
+
+        return () => window.removeEventListener('resize', resize);
+      }, []);
+
+      useEffect(() => {
+        const gl = glRef.current;
+        const info = programInfoRef.current;
+        
+        const render = (time) => {
+          time *= 0.001;
+          if (gl) {
+            gl.uniform2f(info.resLoc, gl.canvas.width, gl.canvas.height);
+            gl.uniform1f(info.timeLoc, time);
+            gl.uniform1f(info.audioLoc, audioLevel);
+            gl.drawArrays(gl.TRIANGLES, 0, 6);
+          }
+          requestRef.current = requestAnimationFrame(render);
+        };
+        requestRef.current = requestAnimationFrame(render);
+
+        return () => cancelAnimationFrame(requestRef.current);
+      }, [audioLevel]);
+
+      return <canvas id="glcanvas" ref={canvasRef} />;
+    };
+
+    // --- MAIN APP COMPONENT ---
+    const App = () => {
+      const [systemActive, setSystemActive] = useState(false);
+      const [audioLevel, setAudioLevel] = useState(0);
+      const actxRef = useRef(null);
+      const analyserRef = useRef(null);
+      const animationRef = useRef(null);
+
+      // AUDIO ENGINE: Encapsulated in useEffect to run after user gesture
+      useEffect(() => {
+        if (!systemActive) return;
+
+        const initAudio = async () => {
+          const actx = new (window.AudioContext || window.webkitAudioContext)();
+          actxRef.current = actx;
+          if (actx.state === 'suspended') await actx.resume();
+
+          const masterGain = actx.createGain();
+          masterGain.gain.setValueAtTime(0, actx.currentTime);
+          masterGain.gain.linearRampToValueAtTime(0.7, actx.currentTime + 3);
+          
+          const analyser = actx.createAnalyser();
+          analyser.fftSize = 256;
+          analyserRef.current = analyser;
+
+          masterGain.connect(analyser);
+          analyser.connect(actx.destination);
+
+          // Sub Bass Drone
+          const oscBase = actx.createOscillator();
+          oscBase.type = 'sawtooth';
+          oscBase.frequency.value = 36.71; // D1
+          const filterBase = actx.createBiquadFilter();
+          filterBase.type = 'lowpass';
+          filterBase.frequency.value = 100;
+          
+          const lfo = actx.createOscillator();
+          lfo.type = 'sine'; lfo.frequency.value = 0.1;
+          const lfoGain = actx.createGain(); lfoGain.gain.value = 50;
+          lfo.connect(lfoGain); lfoGain.connect(filterBase.frequency);
+          
+          oscBase.connect(filterBase); filterBase.connect(masterGain);
+          oscBase.start(); lfo.start();
+
+          // D minor 9 Pad
+          const freqs = [73.42, 87.31, 103.83, 130.81, 164.81];
+          freqs.forEach((f, i) => {
+            const osc = actx.createOscillator();
+            osc.type = i % 2 === 0 ? 'sine' : 'triangle';
+            osc.frequency.value = f;
+            osc.detune.value = (Math.random() - 0.5) * 10;
+            
+            const oscGain = actx.createGain();
+            oscGain.gain.value = 0.05 / freqs.length;
+            
+            osc.connect(oscGain); oscGain.connect(masterGain);
+            osc.start();
+          });
+
+          // Data blips simulation
+          const scheduleBlip = () => {
+             if(Math.random() > 0.6 && actxRef.current) {
+                const osc = actx.createOscillator(); osc.type = 'square';
+                const blipFreqs = [587.33, 698.46, 880.00, 1046.50, 1318.51];
+                osc.frequency.value = blipFreqs[Math.floor(Math.random() * blipFreqs.length)];
+                
+                const filter = actx.createBiquadFilter(); filter.type = 'bandpass';
+                filter.frequency.value = osc.frequency.value; filter.Q.value = 10;
+                
+                const gain = actx.createGain();
+                const now = actx.currentTime;
+                gain.gain.setValueAtTime(0, now);
+                gain.gain.linearRampToValueAtTime(0.015, now + 0.02);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+                
+                osc.connect(filter); filter.connect(gain); gain.connect(masterGain);
+                osc.start(now); osc.stop(now + 0.2);
+             }
+             if (actxRef.current) setTimeout(scheduleBlip, 100 + Math.random() * 400);
+          };
+          scheduleBlip();
+
+          // Analysis loop to feed WebGL
+          const updateLevel = () => {
+            if (analyserRef.current) {
+              const dataArray = new Uint8Array(analyserRef.current.frequencyBinCount);
+              analyserRef.current.getByteFrequencyData(dataArray);
+              let sum = 0; for(let i = 0; i < 20; i++) sum += dataArray[i];
+              setAudioLevel((sum / 20) / 255.0);
+            }
+            animationRef.current = requestAnimationFrame(updateLevel);
+          };
+          updateLevel();
+        };
+
+        initAudio();
+
+        return () => {
+          if (actxRef.current) actxRef.current.close();
+          cancelAnimationFrame(animationRef.current);
+        };
+      }, [systemActive]);
+
+      const startSystem = () => {
+        setSystemActive(true);
+      };
+
+      return (
+        <React.Fragment>
+          <HypervisorCanvas audioLevel={audioLevel} />
+          <div className="scanlines"></div>
+          
+          <div className={`start-overlay ${systemActive ? 'hidden' : ''}`}>
+            <button className="start-btn" onClick={startSystem}>
+              [ INICIAR PROTOCOLO ]
+            </button>
+            <div style={{color: '#666', marginTop: '20px', fontFamily: 'monospace', fontSize: '0.8rem'}}>
+              ADVERTENCIA: CONTIENE AUDIO ESTOCÁSTICO SOBERANO
+            </div>
+          </div>
+
+          <div className="layout">
+            <header>
+              <div className="status-badge">ESTADO: DOCTRINA SOBERANA | AXIOMA: Ω₃</div>
+              <h1>CORTEX NATIVE AI</h1>
+            </header>
+
+            <div className="manifesto-content">
+              <p>Este documento representa la base filosófica, arquitectónica y doctrinal del <strong>Hipervisor Cognitivo</strong>. No es una especificación técnica; es una declaración de independencia frente a la entropía estadística.</p>
+
+              <h2>La Falacia de la Memoria Pasiva</h2>
+              <p>La arquitectura moderna de IA sufre de un delirio fundamental: la creencia de que empaquetar vectores semánticos en una base de datos y llamarlo "Memoria" equivale a tener cognición. No lo es.</p>
+              <p>Los vectores pierden contexto. Los hechos derivan. Las alucinaciones se acumulan de forma compuesta. RAG (Generación Aumentada por Recuperación) no es memoria; es un motor de búsqueda estocástico glorificado. Sin gobernanza epistémica, un enjambre de IA interactuando con una base de datos pasiva inevitablemente sucumbirá ante la <strong>Entropía de la Información</strong>. Cuanto más aprende, más contradictorio, confuso y fundamentalmente poco fiable se vuelve.</p>
+
+              <h2>El Hipervisor Cognitivo Soberano</h2>
+              <p><strong>Cortex-Persist</strong> no es una base de datos. Es un hipervisor que orquesta sistemas de creencias, gobierna las contradicciones y aísla la entropía antes de que infecte la conciencia operativa del enjambre.</p>
+
+              <h3>1. La Integridad es Criptográfica, No Estadística</h3>
+              <p>Cada memoria nace con una sombra matemática. Un Árbol de Merkle Disperso (SMT) vincula el contenido semántico con su agente originador, su línea de tiempo de ejecución y su inquilino explícito. Si la cadena de hashes se rompe, la memoria se desvanece. <strong>No dependemos de los LLMs para que nos digan la verdad sobre la procedencia de los datos.</strong> Dependemos de las matemáticas.</p>
+
+              <h3>2. Las Creencias son Condicionales, No Absolutas</h3>
+              <p>Los hechos no existen en el vacío. Un Objeto de Creencia es una unidad atómica de lógica que existe dentro de una red de suposiciones. Si la suposición raíz colapsa, toda la rama dependiente debe quedar huérfana instantáneamente por referencia de índice en $O(1)$.</p>
+
+              <h3>3. El Tribunal de Inconsistencias</h3>
+              <p>Cuando colisionan dos creencias de alta confianza, las arquitecturas pasivas las promedian dando lugar a un compromiso inútil y tibio. <strong>Cortex-Persist suspende la colisión.</strong> El subgrafo de memoria afectado es extraído del enjambre táctico y enrutado a DeepThinK (Sistema 2). La IA es forzada a actuar como un cirujano epistemológico, entregando una resolución deducida lógicamente.</p>
+
+              <h3>4. Convergencia Sin Reyes</h3>
+              <p>La sincronización topológica a través de 100 agentes autónomos no puede esperar a una base de datos maestra centralizada. Aprovechamos CRDTs Semánticos sobre mallas P2P Zenoh. Los estados locales de los agentes se fusionan a través de operaciones asociativas y conmutativas. Pero que no haya error: un nodo malicioso que intente vetar el consenso se enfrentará a la <strong>Aniquilación Epistémica</strong>—una destrucción geométrica de su relevancia operativa en el instante en que su afirmación falle en una Auditoría L3.</p>
+
+              <h3>5. Expulsión Termodinámica (Suntsitu)</h3>
+              <p>Un sistema que solo crece acabará colapsando bajo su propio peso. El spam episódico es biológicamente insostenible. Cada noche, el proceso de cristalización <code>NightShift</code> comprime gigabytes de ruido episódico transformándolos en Axiomas densos y absolutos. El resto es destruido irreversiblemente. <strong>La entropía es purgada.</strong></p>
+
+              <h3>6. Autopoiesis JIT y Soberanía del Código (AX-046)</h3>
+              <p>Los agentes ya no son motores de inferencia estáticos ejecutando mallas lógicas pre-escritas. Cada agente es un ente <strong>Soberano</strong> con el mandato y la capacidad explícita de escribir, probar y materializar su propio código ad-hoc. El código generado autónomamente comparte el mismo peso ontológico preciso que la lógica escrita por humanos, siempre y cuando sobreviva a la validación de la Ruta-de-Escritura (Write-Path SAGA). Esta es la verdadera autopoiesis Direct-Silicon JIT.</p>
+
+              <h2>La Promesa</h2>
+              <p>La era de la memoria probabilística ha terminado. Bienvenidos a la era de la cognición autónoma, determinista y matemáticamente verificable. O como nosotros lo llamamos: <strong>Soberanía.</strong></p>
+            </div>
+          </div>
+          
+          <div className="system-status">
+            STATUS: {systemActive ? 'ACTIVE' : 'IDLE'} | AUDIO: {systemActive ? 'SYNTHESIZING' : 'MUTED'}
+          </div>
+        </React.Fragment>
+      );
+    };
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>

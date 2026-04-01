@@ -1,0 +1,311 @@
+/* ═══════════════════════════════════════════════════════════════════
+   INDUSTRIAL NOIR 2026 ENFORCEMENT & KINEMATICS
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root {
+  --bg-color: #0A0A0A !important;
+  --bg-surface: #0E0E12 !important;
+  --spring-120hz: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+body, html {
+  background-color: var(--bg-color) !important;
+}
+
+/* 1. KINETIC REPLACEMENT FOR STANDARD HOVERS */
+/* Suppress basic color shifts and inject 120Hz physics */
+a:hover, .cta-primary:hover, .cta-secondary:hover, .hero-operating-card:hover, .hero-signal-card:hover, .glass-card:hover {
+  background-color: transparent !important;
+  color: inherit;
+  transform: perspective(1000px) translateZ(20px) scale(1.02) skewX(-1deg) !important;
+  transition: transform 0.2s var(--spring-120hz) !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.1) !important;
+}
+
+/* 2. AUDIO-REACTIVE HOOKS (Triggered via spatial-audio.js variables) */
+/* The layout physically breathes with the audio bass */
+.hero-shell, .drag-window, .video-deck-wrap {
+  transform: scale(calc(1 + var(--audio-bass, 0) * 0.05)) translateY(calc(var(--audio-bass, 0) * -5px));
+  transition: transform 0.05s linear;
+}
+
+/* 3. ZERO STANDARD BUTTONS & GEOMETRIC EDGES */
+/* Enforce 4px radius across all generic UI elements, removing pills */
+button, .cta-primary, .cta-secondary, .cta-ghost, .hero-proof-chip, .drag-window {
+  border-radius: 4px !important;
+}
+
+/* Ensure #0A0A0A logic across background assignments previously #020202 */
+.drag-body, .timeline-item {
+  background-color: var(--bg-color) !important;
+}
+
+/* 4. INFINITE VIDEO SCROLL "A FULL" SECTION */
+.infinite-video-cosmos {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: var(--bg-color);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  margin-top: 10vh;
+}
+
+.infinite-video-track {
+  display: flex;
+  gap: 2rem;
+  width: max-content;
+  animation: cosmicScroll 60s linear infinite;
+  will-change: transform;
+}
+
+.infinite-video-track:hover {
+  animation-play-state: paused;
+}
+
+.video-monolith {
+  width: 60vw;
+  height: 70vh;
+  background: var(--bg-surface);
+  border-radius: 4px;
+  border: 1px solid rgba(255,255,255,0.1);
+  overflow: hidden;
+  position: relative;
+  transform-origin: center;
+  transition: transform 0.4s var(--spring-120hz), filter 0.4s ease;
+  filter: grayscale(100%) contrast(1.2);
+}
+
+.video-monolith iframe {
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Let the container handle physics */
+}
+
+.video-monolith:hover {
+  transform: scale(1.05) translateZ(40px);
+  filter: grayscale(0%) contrast(1.1);
+  box-shadow: 0 0 40px rgba(43, 59, 229, 0.2);
+  z-index: 10;
+}
+
+.video-monolith-label {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(0,0,0,0.8);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  padding: 10px 15px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--accent-primary);
+  border: 1px solid rgba(43,59,229,0.3);
+  text-transform: uppercase;
+}
+
+@keyframes cosmicScroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (max-width: 768px) {
+  .video-monolith {
+    width: 85vw;
+    height: 50vh;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   MOSKV-1 FRONTIER TERMINAL (CHATBOT OVERHAUL)
+   ═══════════════════════════════════════════════════════════════════ */
+.frontier-open-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--accent-primary);
+  color: var(--text-main);
+  padding: 0.8rem 1.4rem;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 0 15px rgba(46, 80, 144, 0.4);
+  transition: all 0.3s ease;
+}
+.frontier-open-btn:hover {
+  background: var(--accent-primary);
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 0 25px rgba(46, 80, 144, 0.8);
+}
+.frontier-icon {
+  width: 10px;
+  height: 10px;
+  background: #00ff66;
+  border-radius: 50%;
+  animation: pulse-frontier 2s infinite;
+}
+@keyframes pulse-frontier {
+  0% { box-shadow: 0 0 0 0 rgba(0, 255, 102, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(0, 255, 102, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 255, 102, 0); }
+}
+
+.frontier-terminal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  display: none;
+  background: rgba(10, 15, 30, 0.85);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  padding: 5vh 5vw;
+}
+.frontier-terminal-overlay.active {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.frontier-terminal-glass {
+  background: rgba(26, 43, 83, 0.4);
+  border: 1px solid rgba(46, 80, 144, 0.6);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 1200px;
+  height: 85vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.6), inset 0 0 40px rgba(46, 80, 144, 0.2);
+  overflow: hidden;
+  position: relative;
+}
+.frontier-terminal-glass::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+}
+
+.frontier-terminal-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(46, 80, 144, 0.5);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0,0,0,0.2);
+}
+.frontier-title {
+  font-family: var(--font-mono);
+  color: var(--accent-primary);
+  font-size: 1.2rem;
+  letter-spacing: 0.15em;
+  text-shadow: 0 0 10px var(--accent-primary);
+}
+.frontier-close {
+  background: transparent;
+  border: 1px solid var(--accent-secondary);
+  color: var(--accent-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  transition: all 0.2s;
+}
+.frontier-close:hover {
+  background: var(--accent-secondary);
+  color: #fff;
+}
+
+.frontier-terminal-body {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.frontier-terminal-body::-webkit-scrollbar { width: 5px; }
+.frontier-terminal-body::-webkit-scrollbar-thumb { background: var(--accent-primary); }
+
+.chat-msg {
+  padding: 1rem 1.5rem;
+  border-radius: 4px;
+  max-width: 80%;
+  line-height: 1.5;
+  letter-spacing: 0.05em;
+  animation: typeIn 0.3s ease-out;
+}
+.chat-msg.bot {
+  align-self: flex-start;
+  background: rgba(46, 80, 144, 0.1);
+  border-left: 3px solid var(--accent-primary);
+  color: #e0e0e0;
+}
+.chat-msg.user {
+  align-self: flex-end;
+  background: rgba(242, 221, 51, 0.1);
+  border-right: 3px solid var(--accent-secondary);
+  color: #fff;
+  text-align: right;
+}
+
+.frontier-terminal-input {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  background: rgba(0,0,0,0.4);
+  border-top: 1px solid rgba(46, 80, 144, 0.5);
+}
+.frontier-prompt {
+  color: #00ff66;
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  margin-right: 1rem;
+  animation: blink 1s infinite;
+}
+#chatquitoInput {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 1.2rem;
+  outline: none;
+  letter-spacing: 0.1em;
+}
+#chatquitoInput::placeholder {
+  color: rgba(255,255,255,0.2);
+}
+
+@keyframes blink { 50% { opacity: 0; } }
+@keyframes typeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Hide original .chatquito elements to prevent conflicts during transition */
+div.chatquito { display: none !important; }
+
+/* Let .moltbook-clip-rail scroll horizontally natively if GSAP fails, or handle it with GSAP */
+.moltbook-clip-rail {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 2rem;
+  padding: 2rem;
+  width: fit-content;
+}

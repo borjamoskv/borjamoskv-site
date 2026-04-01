@@ -1,0 +1,54 @@
+[    1885ms] [WARNING] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio @ http://127.0.0.1:4174/autodj-video.js:746
+[    1896ms] [WARNING] NotAllowedError: play() failed because the user didn't interact with the document first. https://goo.gl/xX8pDD @ http://127.0.0.1:4174/autodj-video.js:750
+[    2616ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[    2620ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[    2866ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[    2869ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[    3005ms] [ERROR] Permissions policy violation: encrypted-media is not allowed in this document. @ https://player-widget.mixcloud.com/assets/mix-CfXtH87l.js:1
+[    3005ms] [WARNING] Encrypted Media access has been blocked because of a Feature Policy applied to the current document. See https://crbug.com/414348233 for more details. @ https://player-widget.mixcloud.com/assets/mix-CfXtH87l.js:1
+[    3005ms] [ERROR] Permissions policy violation: encrypted-media is not allowed in this document. @ https://player-widget.mixcloud.com/assets/mix-CfXtH87l.js:1
+[    3005ms] [WARNING] Encrypted Media access has been blocked because of a Feature Policy applied to the current document. See https://crbug.com/414348233 for more details. @ https://player-widget.mixcloud.com/assets/mix-CfXtH87l.js:1
+[    3005ms] [ERROR] Permissions policy violation: encrypted-media is not allowed in this document. @ https://player-widget.mixcloud.com/assets/mix-CfXtH87l.js:1
+[    3005ms] [WARNING] Encrypted Media access has been blocked because of a Feature Policy applied to the current document. See https://crbug.com/414348233 for more details. @ https://player-widget.mixcloud.com/assets/mix-CfXtH87l.js:1
+[    3117ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[    3120ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[    3367ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[    3370ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[    3616ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[    3619ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[    3870ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('http://127.0.0.1:4174'). @ https://www.youtube.com/s/player/8e54e4ea/www-widgetapi.vflset/www-widgetapi.js:209
+[    4954ms] [ERROR] Permissions policy violation: encrypted-media is not allowed in this document. @ https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:54
+[    4954ms] [WARNING] Encrypted Media access has been blocked because of a Feature Policy applied to the current document. See https://crbug.com/414348233 for more details. @ https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:54
+[    4954ms] [ERROR] Permissions policy violation: encrypted-media is not allowed in this document. @ https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:54
+[    4954ms] [WARNING] Encrypted Media access has been blocked because of a Feature Policy applied to the current document. See https://crbug.com/414348233 for more details. @ https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:54
+[    4954ms] [ERROR] Permissions policy violation: encrypted-media is not allowed in this document. @ https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:54
+[    4954ms] [WARNING] Encrypted Media access has been blocked because of a Feature Policy applied to the current document. See https://crbug.com/414348233 for more details. @ https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:54
+[    4959ms] [ERROR] Failed to load resource: the server responded with a status of 403 (Forbidden) @ https://api-widget.soundcloud.com/users/321869759/tracks?limit=20&offset=0&linked_partitioning=1&format=json&client_id=nIjtjiYnjkOhMyh5xrbqEW12DxeJVnic&app_version=1774517556:0
+[    4978ms] [ERROR] Permissions policy violation: encrypted-media is not allowed in this document. @ https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:54
+[    4979ms] [WARNING] Encrypted Media access has been blocked because of a Feature Policy applied to the current document. See https://crbug.com/414348233 for more details. @ https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:54
+[    4979ms] [ERROR] Permissions policy violation: encrypted-media is not allowed in this document. @ https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:54
+[    4979ms] [WARNING] Encrypted Media access has been blocked because of a Feature Policy applied to the current document. See https://crbug.com/414348233 for more details. @ https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:54
+[    4979ms] [ERROR] Permissions policy violation: encrypted-media is not allowed in this document. @ https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:54
+[    4979ms] [WARNING] Encrypted Media access has been blocked because of a Feature Policy applied to the current document. See https://crbug.com/414348233 for more details. @ https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:54
+[    5078ms] [WARNING] Exception: %s Script error. @ https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:54
+[    5078ms] [WARNING] constructor @ https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:54
+[    5085ms] Uncaught IndexSizeError: Failed to execute 'getImageData' on 'CanvasRenderingContext2D': The source width is 0.
+    at getImageData (https://widget.sndcdn.com/widget-0-6003628abbe9.js:0:116519)
+    at <anonymous> (https://widget.sndcdn.com/widget-0-6003628abbe9.js:0:18613)
+    at l (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:24:24449)
+    at fireWith (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:24:25197)
+    at Deferred.S.each.o.<computed> (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:24:27107)
+    at <anonymous> (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:24:25873)
+    at l (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:24:24449)
+    at fireWith (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:24:25197)
+    at <anonymous> (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:24:25987)
+    at l (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:24:24449)
+    at fireWith (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:24:25197)
+    at Deferred.S.each.o.<computed> (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:24:27107)
+    at <anonymous> (https://widget.sndcdn.com/widget-0-6003628abbe9.js:0:4408)
+    at dispatch (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:24:39203)
+    at m.handle (https://widget.sndcdn.com/widget-9-52e4c81ec4a3.js:24:37198)
+[    9266ms] [WARNING] The resource https://player-widget.mixcloud.com/assets/mix-RbQjuyZ0-dm-sans-latin-wght-normal.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ https://player-widget.mixcloud.com/?hide_cover=1&light=0&feed=%2Fborja-moskv%2F:0
+[    9267ms] [WARNING] The resource https://player-widget.mixcloud.com/assets/mix-BQjZ2nPP-open-sans-latin-wght-normal.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ https://player-widget.mixcloud.com/?hide_cover=1&light=0&feed=%2Fborja-moskv%2F:0
+[  314314ms] [WARNING] WebGL: CONTEXT_LOST_WEBGL: loseContext: context lost @ http://127.0.0.1:4174/index.html:0
+[  314314ms] [WARNING] WebGL: CONTEXT_LOST_WEBGL: loseContext: context lost @ http://127.0.0.1:4174/index.html:0

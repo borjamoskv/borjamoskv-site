@@ -217,7 +217,7 @@ class ElGambitero {
      ║  "Sólo los que controlan el      ║
      ║   deseo puro, verán agosto."     ║
      ╚══════════════════════════════════╝`,
-        text: "Sobrevives al ataque lusitano. Al final del sendero, el legendario Patrón de Alonsotegi te bloquea el paso hacia el refugio divino. <em>'Mortal. Has andado 10 horas y tres cuartos. ¿Has sucumbido a la tentación?'</em>",
+        text: "Sobrevives al ataque lusitano. Al final del sendero, el legendario Patrón de Alonsotegi te bloquea el paso junto a una garita que parece mitad santuario, mitad oficina de Hacienda rural. Lleva una linterna, una carpeta con gomas y una autoridad absurda. <em>'Mortal. Has andado 10 horas y tres cuartos. Presenta justificante de pureza espiritual o vuelve a Bilbao por ventanilla B.'</em>",
         choices: [
           { text: "💎 Mostrarle que NO FUMASTE el Cañón Perfecto", requiresItem: "Porro_Intacto", next: 15, score: 100, item: "El_Costo_de_Agosto" },
           { text: "🤥 Mentorar sobre tu historial intachable", next: 14, score: -10, item: null }
@@ -242,7 +242,7 @@ class ElGambitero {
         art: `<div style="text-align: center; margin: 10px 0;" class="gamb-glitch-img">
           <img src="img/nano_bilbao_greenhair.png" style="max-width:100%; border: 3px dashed #00FF33; border-radius: 10px; max-height:250px;" alt="El Costo de Agosto en Alonsotegi">
         </div>`,
-        text: "<em>'Amaste más la belleza formal del porro que la vulgaridad de quemarlo impulsivamente... Has trascendido.'</em> El Patrón te entrega un lingote que zumba radiactivo en la noche fotográfica. <strong>EL COSTO DE AGOSTO.</strong>",
+        text: "<em>'Amaste más la belleza formal del porro que la vulgaridad de quemarlo impulsivamente... Has trascendido.'</em> El Patrón abre una nevera industrial enterrada en la roca. Dentro, flotando en luz verde y burocracia sagrada, reposa un lingote vegetal que zumba como si lo hubieran masterizado los dioses. <strong>EL COSTO DE AGOSTO.</strong> La montaña se inclina. La noche te reconoce.",
         choices: [
           { text: "🥺 Abrazar el bloque con lágrimas de polvo Tanga", next: 23, score: 30, item: null },
           { text: "🎰 Celebrarlo con una partida al pachinko montañés", next: 20, score: 0, item: null }
@@ -257,7 +257,7 @@ class ElGambitero {
      ║  RADIOHEAD ESPERA...             ║
      ║                                  ║
      ╚══════════════════════════════════╝`,
-        text: "Exactamente a las 23:00 llegas a tu batcueva en Bilbao. Después de 11 horas horripilantes, asaltos gitanos, rastrojos, sed ácida y lluvia, el legendario Bloque reposa en tu mesa. Entregas tu alma al ritual.",
+        text: "Exactamente a las 23:00 llegas a tu batcueva en Bilbao. Después de 11 horas horripilantes, asaltos gitanos, rastrojos, sed ácida y lluvia, el legendario Bloque reposa en tu mesa como si fuera un Emmy vegetal. Todo conduce a un último gesto. Si lo haces bien, la cuenta se cerrará en una cifra limpia y mesiánica: <strong>50</strong>.",
         choices: [
           { text: "📺 Preparar el Aliño Sagrado y conectar a Yorke", next: 17, score: 50, item: null }
         ]
@@ -268,9 +268,9 @@ class ElGambitero {
 <div style="text-align: center; margin: 10px 0;" class="gamb-glitch-img">
           <img src="img/nano_in_rainbows.png" style="max-width:100%; border: 3px dashed #FFF000; border-radius: 10px; max-height:250px;" alt="In Rainbows From The Basement">
         </div>`,
-        text: "Te enciendes el cañón divino. Entras en YouTube y pones <em>In Rainbows: From the Basement</em>. A los primeros acordes de guitarra en el Sótano, asciendes hacia otra dimensión, sanando cada dolor de las últimas 11 horas.",
+        text: "Te enciendes el cañón divino. Entras en YouTube y pones <em>In Rainbows: From the Basement</em>. A los primeros acordes de guitarra en el Sótano, Bilbao deja de ser una ciudad y pasa a ser un decorado cósmico. Se te recolocan los órganos, la lluvia pide perdón y cada minuto miserable del día se recompone como si un comité celestial de montaje hubiera decidido salvarte a última hora.",
         choices: [
-          { text: "🎉 GRABAR TU GLORIA EN EL SALÓN ARCADE (FINAL 1: TRASCENDENCIA)", next: -1, score: 0, item: null }
+          { text: "🎉 CERRAR LA CUENTA A 50 Y GRABAR TU GLORIA (FINAL 1: TRASCENDENCIA)", next: -1, score: 50, item: null }
         ]
       },
       {
@@ -291,10 +291,10 @@ class ElGambitero {
       {
         id: 20, title: "🔥 SUPER MÁQUINA DE KANJIS 🔥",
         art: `<div id="gamb-slot-machine-mount"></div>`,
-        text: "En medio de las náuseas, un neón parpadea: un Pachinko clandestino. Jugar calma la ansiedad pero te roba energía vital (10 Puntos de Score). ¡Si sale pleno, resucitas!",
+        text: "En medio de las náuseas, un neón parpadea: un Pachinko clandestino homologado por el Ministerio de la Mala Idea. La máquina promete regular tu destino mediante símbolos, ruido y deuda emocional. Jugar calma la ansiedad durante seis segundos pero te roba dignidad de carrera. Si sale pleno, igual no te salva la vida, pero al menos te da material para un spin-off.",
         choices: [
-          { text: "🏃 CONTINUAR PATÉANDOTE BILBAO", next: 4, score: 0, item: null },
-          { text: "🏁 RENDIRSE FRENTE A LA MÁQUINA", next: -1, score: 0, item: null }
+          { text: "🏃 VOLVER AL DRAMA PRINCIPAL COMO SI FUESE TU TRABAJO", next: 4, score: 0, item: null },
+          { text: "🏁 ENTREGAR TU ALMA AL PACHINKO Y A LA DERIVA", next: -1, score: 0, item: null }
         ]
       },
       // === NANO SCRATCHING PEPON NIETO ===
@@ -303,7 +303,7 @@ class ElGambitero {
         art: `<div style="text-align: center; margin: 10px 0;" class="gamb-glitch-img">
           <img src="img/nano_bilbao_greenhair.png" style="max-width:100%; border: 5px dashed #00F0FF; border-radius: 10px; max-height:250px; animation: gamberro-shake 0.2s infinite;" alt="Nano Scratching">
         </div>`,
-        text: "Llegas a un descampado a las 21:00. De repente, Nano (El Niño del Colacao) aparece levitando, haciendo un scratching frenético sobre unos CDJs invisibles. De los altavoces imaginarios retumba la voz distorsionada de <strong>PEPÓN NIETO</strong> soltando anécdotas costumbristas a 160 BPM. Tu cerebro empieza a derretirse por la presión estética.",
+        text: "Llegas a un descampado a las 21:00. De repente, Nano (El Niño del Colacao) aparece levitando, haciendo scratching frenético sobre unos CDJs invisibles. De los altavoces imaginarios retumba la voz distorsionada de <strong>PEPÓN NIETO</strong> leyendo actas de comunidad, pequeñas humillaciones de oficina y frases de cuñado existencial a 160 BPM. Es una rave administrativa. Es un milagro cutre. Tu cerebro empieza a derretirse por la presión estética y funcionarial.",
         choices: [
           { text: "🎧 Bailar frenéticamente para invocar el Costo", next: 11, score: 50, item: "Locura_Audiovisual" },
           { text: "🏃‍♂️ Huir tapándote los oídos por el exceso de BPMs", next: 11, score: -10, item: null }
@@ -317,7 +317,7 @@ class ElGambitero {
               FRAN PEREA<br>EL QUE LO LEA
             </div>
         </div>`,
-        text: "Son las 23:00 exactas. Te das la vuelta con el sagrado bloque de Costo en las manos. En un muro desconchado, iluminado por una farola parpadeante, lees una pintada en spray rosa neón. En ese instante, la barrera invisible entre la ficción y el espectador colapsa. <strong>El juego acaba de romper la cuarta pared.</strong> Una voz gutural te susurra al oído desde los auriculares de tu Mac: <em>'Tú eres Fran Perea... siempre lo fuiste'.</em>",
+        text: "Son las 23:00 exactas. Te das la vuelta con el sagrado bloque de Costo en las manos. En un muro desconchado, iluminado por una farola parpadeante, lees una pintada en spray rosa neón. En ese instante, la barrera invisible entre la ficción y el espectador colapsa como una persiana municipal. <strong>El juego acaba de romper la cuarta pared y pedirte el DNI.</strong> Una voz gutural te susurra al oído desde los auriculares de tu Mac: <em>'Tú eres Fran Perea... siempre lo fuiste'.</em> Las gaviotas aplauden. Una concejala imaginaria toma notas. El universo espera tu respuesta.",
         choices: [
           { text: "😳 Aceptar que eres Fran Perea y cantar 1+1 SON 7", next: 24, score: 100, item: "Identidad_Perea" },
           { text: "😱 ¡CERRAR LOS OJOS! Y volver al Plan Original", next: 16, score: -15, item: null }
@@ -335,9 +335,9 @@ class ElGambitero {
      ║   🎮 DISEÑA TU AVENTURA 2        ║
      ║       D E S T R U I D A          ║
      ╚══════════════════════════════════╝`,
-        text: "¡Abres los ojos en Bilbao de golpe! Todo ha sido un sueño hiperrealista. Te habías fumado un 'mañanero' monumental y te quedaste K.O. tras llevar solo 20 minutos despierto. Miras a la mesa... ¡ESTÁ A REBOSAR! Tienes mogollón de porros. No hay que ir a Alonsotegi. Tu sufrimiento no fue real. ERES FRAN PEREA Y ERES PROFUNDAMENTE FELIZ.",
+        text: "¡Abres los ojos en Bilbao de golpe! Todo ha sido un sueño hiperrealista. Te habías fumado un mañanero monumental y te quedaste K.O. tras llevar solo 20 minutos despierto. Miras a la mesa... ¡ESTÁ A REBOSAR! Hay porros, snacks, agua fría y una serenidad de sitcom imposible. No había que ir a Alonsotegi. Tu sufrimiento ha sido un piloto carísimo. ERES FRAN PEREA. ERES EL PROTAGONISTA. Y LA TEMPORADA CIERRA EN ALTO.",
         choices: [
-          { text: "🎸 CANTAR 1+1 SON 7 Y FUMAR OTRO (FINAL 3: FELICIDAD ABSOLUTA)", next: -1, score: 999, item: null }
+          { text: "🎸 CANTAR 1+1 SON 7 Y CERRAR LA CUENTA A 50 (FINAL 3: FELICIDAD ABSOLUTA)", next: -1, score: 50, item: null }
         ]
       },
       // === GITANO ROBA BUEN HUMOR ===
@@ -477,6 +477,56 @@ class ElGambitero {
     return labels[key] || key;
   }
 
+  _getSceneFrame(id) {
+    const sceneIndex = this.scenes.findIndex((scene) => scene.id === id);
+    const episode = `EP ${String(Math.max(sceneIndex + 1, 1)).padStart(2, '0')}/20`;
+
+    if ([0, 1, 2, 3, 4, 5].includes(id)) {
+      return {
+        kicker: 'ACTO I · BILBAO SECO',
+        episode,
+        tone: 'Costumbrismo ansioso',
+        objective: 'Encontrar una senal util antes de que la ciudad te convierta en serrin emocional.'
+      };
+    }
+
+    if ([6, 7, 8, 9, 10, 20, 21, 22, 25].includes(id)) {
+      return {
+        kicker: 'ACTO II · DERIVA Y VISIONES',
+        episode,
+        tone: 'Blackout castizo',
+        objective: 'Cruzar la ciudad sin romperte, elegir bien tus reliquias y sobrevivir al absurdo.'
+      };
+    }
+
+    return {
+      kicker: 'ACTO III · ALONSOTEGI O COLAPSO',
+      episode,
+      tone: 'Epica burocratica',
+      objective: 'Llegar al umbral, pasar la prueba del Patron y cerrar la noche con una cifra memorable.'
+    };
+  }
+
+  _getEndingSeal() {
+    if (this.currentScene === 17) {
+      return 'CUENTA CERRADA · 50/50 · ALONSOTEGI CERTIFICA LA TRASCENDENCIA';
+    }
+    if (this.currentScene === 24) {
+      return 'CUENTA CERRADA · 50/50 · LA SITCOM COSMICA QUEDA APROBADA';
+    }
+    return 'CUENTA ABIERTA · 0/50 · EL COSTO SE QUEDA MIRANDOTE DESDE LA NIEBLA';
+  }
+
+  _getEndingEpilogue() {
+    if (this.currentScene === 17) {
+      return 'La odisea deja de ser mono y se convierte en leyenda local. No era solo humo: era montaje, fe y resistencia de barrio con final de culto.';
+    }
+    if (this.currentScene === 24) {
+      return 'El relato se pliega sobre si mismo y remata en comedia metafisica. Lo que parecia miseria deviene canon absurdo, pop y profundamente televisivo.';
+    }
+    return 'La noche no te concede redencion ni spin-off. Solo una lluvia hostil, una leccion amarga y la certeza de que Bilbao sabe humillar con metodo.';
+  }
+
   _createChipPatterns() {
     return {
       lead: [1, 3, 5, 6, 5, 3, 1, 3, 5, 6, 8, 6, 5, 3, 1, 8],
@@ -497,8 +547,51 @@ class ElGambitero {
     this.chipMasterGain = this.chipAudioContext.createGain();
     this.chipMasterGain.gain.value = 0.07;
 
+    // Swarm Worklet & Analysers
+    this.masterAnalyser = this.chipAudioContext.createAnalyser(); 
+    this.masterAnalyser.fftSize = 1024;
+    this.bassAnalyser = this.chipAudioContext.createAnalyser(); 
+    this.bassAnalyser.fftSize = 64;
+    
     filter.connect(this.chipMasterGain);
-    this.chipMasterGain.connect(this.chipAudioContext.destination);
+    this.chipMasterGain.connect(this.masterAnalyser);
+    this.chipMasterGain.connect(this.bassAnalyser);
+    
+    // Attempt to load Worklet
+    const swarmWorkletCode = `
+    class SwarmProcessor extends AudioWorkletProcessor {
+      constructor() { super(); this.p = new Float32Array(100); }
+      process(inputs, outputs) {
+        if (!inputs[0] || !outputs[0] || !inputs[0].length) return true;
+        for (let ch = 0; ch < outputs[0].length; ++ch) {
+          const out = outputs[0][ch];
+          const inp = inputs[0][ch] || new Float32Array(128);
+          for (let i = 0; i < out.length; ++i) {
+            let swarmVal = 0;
+            for(let g=0; g<5; g++) {
+              this.p[g] = (this.p[g] + 0.005*g) % 1;
+              swarmVal += Math.sin(this.p[g] * Math.PI * 2) * 0.05;
+            }
+            out[i] = Math.tanh((inp[i] + swarmVal) * 2.5);
+          }
+        }
+        return true;
+      }
+    }
+    registerProcessor('swarm-processor', SwarmProcessor);`;
+    
+    const blob = new Blob([swarmWorkletCode], {type: 'application/javascript'});
+    this.chipAudioContext.audioWorklet.addModule(URL.createObjectURL(blob)).then(() => {
+      this.swarmNode = new AudioWorkletNode(this.chipAudioContext, 'swarm-processor');
+      this.chipMasterGain.disconnect();
+      this.chipMasterGain.connect(this.swarmNode);
+      this.swarmNode.connect(this.masterAnalyser);
+      this.swarmNode.connect(this.bassAnalyser);
+      this.swarmNode.connect(this.chipAudioContext.destination);
+    }).catch(e => {
+      this.chipMasterGain.connect(this.chipAudioContext.destination);
+    });
+
     this.chipFilter = filter;
   }
 
@@ -764,7 +857,7 @@ class ElGambitero {
         <div class="gamb-menu-hero">
           <div class="gamb-menu-kicker">GAMBITER</div>
           <h2 class="gamb-menu-title">BILBAO ODYSSEY DELUXE</h2>
-          <p class="gamb-menu-text">La aventura ahora guarda partida, recuerda reliquias, muestra tu ruta y convierte cada run en historia acumulada.</p>
+          <p class="gamb-menu-text">Tres actos, veinte pantallas, tres finales y una sola mision ridicula: sobrevivir a Bilbao, llegar a Alonsotegi y salir del delirio con gloria o con verguenza historica.</p>
         </div>
         <div class="gamb-menu-actions">
           <button class="gamb-choice" data-menu-action="new">1. NUEVA ODISEA</button>
@@ -820,7 +913,7 @@ class ElGambitero {
         <div class="gamb-menu-hero">
           <div class="gamb-menu-kicker">ARCHIVO</div>
           <h2 class="gamb-menu-title">MEMORIA DEL GAMBITER</h2>
-          <p class="gamb-menu-text">Aquí vive todo lo que ya te ha pasado: finales, reliquias, premios de la máquina y mejor score.</p>
+          <p class="gamb-menu-text">Aqui vive la biblia de tus runs: finales abiertos, reliquias absurdas, premios de la maquina y las marcas que han sobrevivido al monazo narrativo.</p>
         </div>
         <div class="gamb-menu-grid">
           <section class="gamb-panel">
@@ -1016,9 +1109,12 @@ class ElGambitero {
 
     this.overlay = document.createElement('div');
     this.overlay.id = 'gambitero-overlay';
-    this.overlay.innerHTML = '<div class="gambitero-container"><div class="gamb-crt"></div><div id="gamb-stage"></div></div>';
+    this.overlay.innerHTML = '<canvas id="gamb-viz" style="position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:-1; pointer-events:none; mix-blend-mode:screen;"></canvas><div class="gambitero-container"><div class="gamb-crt"></div><div id="gamb-stage"></div></div>';
     document.body.appendChild(this.overlay);
-    requestAnimationFrame(() => this.overlay.classList.add('active'));
+    requestAnimationFrame(() => {
+      this.overlay.classList.add('active');
+      this._initSwarmVisuals();
+    });
 
     document.addEventListener('keydown', this.boundKeyHandler);
     globalThis.MOSKV?.audioFocus?.claim?.('gambitero', {
@@ -1088,15 +1184,15 @@ class ElGambitero {
       'gamb-state-doomed'
     );
 
-    if (this.stats.locura >= 8) {
+    if (this.stats.destino >= 78 && this.stats.lucidez >= 68) {
       container.classList.add('gamb-state-delirious');
-    } else if (this.stats.locura >= 6) {
+    } else if (this.stats.lucidez <= 34) {
       container.classList.add('gamb-state-confused');
-    } else if (this.stats.reputacion <= 2) {
+    } else if (this.stats.destino >= 64) {
       container.classList.add('gamb-state-doomed');
-    } else if (this.stats.energia <= 2) {
+    } else if (this.stats.cuerpo <= 24) {
       container.classList.add('gamb-state-exhausted');
-    } else if (this.stats.energia <= 4) {
+    } else if (this.stats.cuerpo <= 45) {
       container.classList.add('gamb-state-tired');
     }
   }
@@ -1110,6 +1206,7 @@ class ElGambitero {
 
     const scene = this._getScene(id);
     if (!scene) { this.endGame(); return; }
+    const frame = this._getSceneFrame(id);
 
     this.currentScene = id;
     this.uiMode = 'run';
@@ -1142,7 +1239,12 @@ class ElGambitero {
           <button class="gamb-exit-btn" id="gamb-exit-btn">✕</button>
         </div>
         <div class="gamb-main-column">
-          <div class="gamb-scene-kicker">NO HAY PLAN. SOLO INSISTENCIA.</div>
+          <div class="gamb-scene-kicker">${frame.kicker}</div>
+          <div class="gamb-scene-structure">
+            <span class="gamb-scene-chip">${frame.episode}</span>
+            <span class="gamb-scene-chip">${frame.tone}</span>
+          </div>
+          <div class="gamb-scene-objective"><strong>Objetivo:</strong> ${frame.objective}</div>
           <div class="gamb-art">${scene.art}</div>
           <div class="gamb-text">${scene.text}</div>
           <div class="gamb-choices">${choicesHTML}</div>
@@ -1206,6 +1308,8 @@ class ElGambitero {
     const title = this._getRankTitle();
     const endingKey = this._getEndingKey();
     const endingLabel = this._getEndingLabel(endingKey);
+    const endingSeal = this._getEndingSeal();
+    const endingEpilogue = this._getEndingEpilogue();
     let endingHTML = '';
     if (this.currentScene === 17) {
       endingHTML = '<div class="gamb-ending-text gamb-ending-1">★ FINAL 1: TRASCENDENCIA ★</div>';
@@ -1242,12 +1346,14 @@ class ElGambitero {
         <div class="gamb-end-title">🏆 ${title} 🏆</div>
         <div class="gamb-subtitle">DISEÑA TU AVENTURA 2</div>
         ${endingHTML}
+        <div class="gamb-end-seal">${endingSeal}</div>
         <div class="gamb-end-score">${this.score} PUNTOS</div>
         <div class="gamb-end-meta">
           <div class="gamb-meta-line"><span>Ruta</span><strong>${visitedScenes} escenas</strong></div>
           <div class="gamb-meta-line"><span>Archivo</span><strong>${this.meta.totalRuns} runs</strong></div>
           <div class="gamb-meta-line"><span>Mejor marca</span><strong>${this.meta.bestScore}</strong></div>
         </div>
+        <p class="gamb-ending-epilogue">${endingEpilogue}</p>
         <div class="gamb-end-items gamb-panel-tags">${relics}</div>
         <div class="gamb-initials">
           <p>TUS INICIALES (3 LETRAS):</p>
@@ -1319,6 +1425,9 @@ class ElGambitero {
     globalThis.MOSKV?.audioFocus?.release?.('gambitero', { reason: 'gambitero-close' });
     this._stopMusic();
     document.getElementById('gambitero-music')?.remove();
+    if (this._resizeSwarm) window.removeEventListener('resize', this._resizeSwarm);
+    if (this.swarmFrameIdx) cancelAnimationFrame(this.swarmFrameIdx);
+    
     if (this.overlay) {
       this.overlay.classList.remove('active');
       setTimeout(() => this.overlay?.remove(), 400);
@@ -1562,6 +1671,81 @@ class ElGambitero {
         osc.stop(ctx.currentTime + i * 0.15 + 0.3);
       });
     } catch(e) { /* silent */ }
+  }
+
+  // ─── LEGION-10K WEBGL VISUALS ──────────────────────────────
+  _initSwarmVisuals() {
+    const canvas = document.getElementById('gamb-viz');
+    if (!canvas) return;
+    const gl = canvas.getContext('webgl', { alpha: false, antialias: false });
+    if (!gl) return;
+    this.gl = gl;
+
+    const vsSource = `attribute vec2 a_position; void main() { gl_Position = vec4(a_position, 0.0, 1.0); }`;
+    const fsSource = `
+      precision mediump float;
+      uniform float u_time; uniform float u_bass; uniform float u_hf; uniform vec2 u_resolution;
+      float hash(vec2 p) { return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
+      void main() {
+        vec2 p = (gl_FragCoord.xy / u_resolution.xy) * 2.0 - 1.0;
+        p.x *= u_resolution.x / u_resolution.y;
+        float l = length(p);
+        float ang = atan(p.y, p.x) + u_time * 0.5 + (u_bass * 2.0 / (l + 0.1));
+        vec2 pos = vec2(cos(ang)*l, sin(ang)*l);
+        float n = hash(floor(pos * 50.0 + u_time * 10.0));
+        float spark = smoothstep(0.9, 1.0, n + u_hf * 0.5);
+        float voidMask = smoothstep(0.2 + u_bass*0.3, 0.25 + u_bass*0.3, l);
+        vec3 col = vec3(0.0);
+        float disk = smoothstep(0.3, 0.25, l) * voidMask;
+        col += vec3(0.1, 0.1, 0.8) * disk * u_bass * 5.0; // Blue core
+        col += vec3(0.9, 0.1, 0.1) * spark * voidMask * (1.0 + u_hf * 5.0); // Red swarm
+        gl_FragColor = vec4(col, 1.0);
+      }
+    `;
+
+    const compile = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; };
+    const prog = gl.createProgram();
+    gl.attachShader(prog, compile(gl.VERTEX_SHADER, vsSource));
+    gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, fsSource));
+    gl.linkProgram(prog); gl.useProgram(prog);
+
+    const posLoc = gl.getAttribLocation(prog, "a_position");
+    const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, -1,1, 1,-1, 1,1]), gl.STATIC_DRAW);
+    gl.enableVertexAttribArray(posLoc); gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
+
+    this.uTime = gl.getUniformLocation(prog, "u_time");
+    this.uBass = gl.getUniformLocation(prog, "u_bass");
+    this.uHf = gl.getUniformLocation(prog, "u_hf");
+    this.uRes = gl.getUniformLocation(prog, "u_resolution");
+
+    this._resizeSwarm = () => {
+      canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      gl.uniform2f(this.uRes, canvas.width, canvas.height);
+    };
+    window.addEventListener('resize', this._resizeSwarm);
+    this._resizeSwarm();
+
+    this.swarmStartTime = performance.now();
+    this._renderSwarmFrame();
+  }
+
+  _renderSwarmFrame() {
+    if (!this.isActive) return;
+    let bass = 0, hf = 0;
+    if (this.masterAnalyser && this.bassAnalyser) {
+      const fData = new Uint8Array(this.masterAnalyser.frequencyBinCount); this.masterAnalyser.getByteFrequencyData(fData);
+      const bData = new Uint8Array(this.bassAnalyser.frequencyBinCount); this.bassAnalyser.getByteFrequencyData(bData);
+      for(let i=0; i<4; i++) bass += bData[i]; bass /= (4*255);
+      for(let i=100; i<200; i++) hf += fData[i]; hf /= (100*255);
+    }
+    const t = (performance.now() - this.swarmStartTime) / 1000;
+    this.gl.uniform1f(this.uTime, t);
+    this.gl.uniform1f(this.uBass, bass);
+    this.gl.uniform1f(this.uHf, hf);
+    this.gl.drawArrays(this.gl.TRIANGLES, 0, 6);
+    this.swarmFrameIdx = requestAnimationFrame(() => this._renderSwarmFrame());
   }
 }
 

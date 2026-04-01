@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Diario — Borja Moskv</title>
   <meta name="description" content="Textos, análisis, set lore y archivo editorial de Borja Moskv. Ensayo, técnica, crítica cultural.">
+  <meta name="theme-color" content="#041427">
+  <link rel="manifest" href="/site.webmanifest">
   <meta property="og:title" content="Diario — Borja Moskv">
   <meta property="og:description" content="Textos, análisis, set lore y archivo editorial.">
   <meta property="og:type" content="website">
@@ -12,6 +14,8 @@
   <link rel="icon" type="image/png" sizes="192x192" href="/img/icon-192.png">
   <link rel="shortcut icon" href="/img/icon-192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
+  <link rel="canonical" href="https://borjamoskv.com/blog.html">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;900&family=Inter:wght@300;400;500;600&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
@@ -365,7 +369,7 @@
   <!-- NAVIGATION -->
   <nav class="main-nav" id="mainNav">
     <a href="/" class="nav-logo">MOSKV</a>
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-controls="navLinks" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
     <div class="nav-links" id="navLinks">
@@ -414,6 +418,17 @@
       <h2 class="card-title">Ω: Hito Nobel — ARC-AGI-3 [95%]</h2>
       <p class="card-excerpt">El 95% en ARC-AGI no es solo un número; es la aniquilación de la entropía estocástica mediante la inducción de programas PeARL. El futuro de la inteligencia soberana ha llegado.</p>
       <span class="card-cta">Ver telemetría →</span>
+    </a>
+
+    <!-- SIDE: Cómo suena Jarana d'Or -->
+    <a href="como-suena-jarana-dor.html" class="blog-card blog-card--side" data-category="analisis">
+      <div class="card-meta">
+        <span class="card-tag card-tag--analisis">JARANA/</span>
+        <span class="card-date">2026‑03‑27</span>
+      </div>
+      <h2 class="card-title">Cómo suena Jarana d'Or</h2>
+      <p class="card-excerpt">Seis leitmotivs, seis tracks y seis moods para convertir Jarana d'Or en gramática sonora usable.</p>
+      <span class="card-cta">Abrir pieza →</span>
     </a>
 
     <!-- HALF: Catarsis Colectiva -->
@@ -548,10 +563,41 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // ── Nav toggle ──────────────────────────────────
+      const mainNav   = document.getElementById('mainNav');
       const navToggle = document.getElementById('navToggle');
       const navLinks  = document.getElementById('navLinks');
-      navToggle?.addEventListener('click', () => navLinks?.classList.toggle('active'));
-      navLinks?.querySelectorAll('a').forEach(l => l.addEventListener('click', () => navLinks.classList.remove('active')));
+      const setMenuState = (isOpen) => {
+        if (!mainNav) return;
+        mainNav.classList.toggle('menu-open', isOpen);
+        navToggle?.setAttribute('aria-expanded', String(isOpen));
+      };
+
+      navToggle?.addEventListener('click', (event) => {
+        event.stopPropagation();
+        setMenuState(!mainNav?.classList.contains('menu-open'));
+      });
+
+      navLinks?.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => setMenuState(false));
+      });
+
+      document.addEventListener('click', (event) => {
+        if (mainNav?.classList.contains('menu-open') && !mainNav.contains(event.target)) {
+          setMenuState(false);
+        }
+      });
+
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 992) {
+          setMenuState(false);
+        }
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          setMenuState(false);
+        }
+      });
 
       if (window.MOSKV?.chat?.init) window.MOSKV.chat.init();
 
@@ -560,9 +606,11 @@
       const cards      = document.querySelectorAll('.blog-card[data-category]');
 
       filterBtns.forEach(btn => {
+        btn.setAttribute('aria-pressed', btn.classList.contains('active') ? 'true' : 'false');
         btn.addEventListener('click', () => {
           filterBtns.forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
+          filterBtns.forEach(b => b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'));
           const filter = btn.dataset.filter;
           cards.forEach(card => {
             const match = filter === 'all' || card.dataset.category === filter;
@@ -630,7 +678,6 @@
     </div>
   </div>
 
-  <script src="data.js"></script>
   <script src="autodj-video.js" defer></script>
   <script src="cortex-terminal.js" defer></script>
 </body>

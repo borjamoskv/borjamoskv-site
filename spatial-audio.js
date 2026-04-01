@@ -57,12 +57,14 @@ const SpatialAudio = (() => {
       // Ultra-high shimmer (rain-like)
       { freq: 6000, Q: 1.2,  gain: 0.003, x:  0, y:  5, z: -8 },
       // Sub-rumble (earth)
-      { freq: 30,   Q: 0.1,  gain: 0.012, x:  0, y: -4, z: -1 },
+      { freq: 24,   Q: 0.15, gain: 0.025, x:  0, y: -4, z: -1 },
+      // Industrial Void Saturation
+      { freq: 45,   Q: 0.6,  gain: 0.018, x:  0, y: -2, z: -3 },
     ],
     lfoRates: [0.017, 0.023, 0.03, 0.05, 0.07, 0.11, 0.13, 0.037, 0.019, 0.041, 0.029, 0.053],
     detuneDepth: [3, 3, 5, 5, 8, 6, 10, 12, 7, 7, 15, 20],
-    reverbDecay: 7.0,
-    reverbWet: 0.40,
+    reverbDecay: 5.5,
+    reverbWet: 0.35,
     filterBase: 500,
     // Evolution: harmonic series changes over time
     evolutionCycleMs: 45000,  // Full cycle every 45 seconds
@@ -201,21 +203,21 @@ const SpatialAudio = (() => {
     analyser.smoothingTimeConstant = 0.82;
     freqData = new Uint8Array(analyser.frequencyBinCount);
 
-    // Compressor
+    // Compressor (Adversarial Mastering: heavier glue)
     const compressor = ctx.createDynamicsCompressor();
-    compressor.threshold.value = -18;
-    compressor.knee.value = 10;
-    compressor.ratio.value = 5;
-    compressor.attack.value = 0.003;
-    compressor.release.value = 0.12;
+    compressor.threshold.value = -14;
+    compressor.knee.value = 5;
+    compressor.ratio.value = 8;
+    compressor.attack.value = 0.001;
+    compressor.release.value = 0.25;
 
-    // Limiter
+    // Limiter (Aggressive wall)
     const limiter = ctx.createDynamicsCompressor();
-    limiter.threshold.value = -2;
+    limiter.threshold.value = -1;
     limiter.knee.value = 0;
     limiter.ratio.value = 20;
-    limiter.attack.value = 0.001;
-    limiter.release.value = 0.01;
+    limiter.attack.value = 0.0005;
+    limiter.release.value = 0.05;
 
     // Reverb
     const reverb = createReverb();

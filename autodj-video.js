@@ -36,6 +36,7 @@ class AutoDJAesthetic {
     // Curated initial sequence, narrowed to tracks with real local audio when available.
     this.mixSequence = this._buildMixSequence();
     this.mixIntervalMs = 40000; // Default fallback (dynamic phrases used instead)
+    this.nextMixDueAt = null;
 
     // Real BPM mapping for known tracks to perfectly beatmatch
     this.bpmCache = {
@@ -91,7 +92,10 @@ class AutoDJAesthetic {
     };
 
     // 🎤 Spotify-style DJ Voice & Mood System
-    this.currentMood = localStorage.getItem('moskv_dj_mood') || 'original';
+    const storedMood = localStorage.getItem('moskv_dj_mood');
+    const allowedMoods = new Set(['all', 'ambient', 'techno', 'experimental', 'electronic']);
+    this.currentMood = allowedMoods.has(storedMood) ? storedMood : 'all';
+    this.moodManuallyChosen = allowedMoods.has(storedMood);
     this.playedTracks = JSON.parse(localStorage.getItem('moskv_dj_history')) || [];
     this.keyCache = {
       ...this.keyCache,
@@ -157,6 +161,8 @@ class AutoDJAesthetic {
 
     // 📦 TikTok Prefetch Queue (next 2 tracks pre-selected)
     this.prefetchQueue = [];
+    this.prefetchDepth = 2;
+    this.recentTrackWindow = 4;
 
     // Inject YouTube API
     const tag = document.createElement('script');
@@ -282,18 +288,140 @@ class AutoDJAesthetic {
     return Number(visual.cuePoint ?? this.cueCache[visual.id] ?? this.cueCache[visual.videoId] ?? 0) || 0;
   }
 
+  _getRecentTrackIds(limit = this.recentTrackWindow || 4) {
+    if (!Array.isArray(this.playedTracks) || this.playedTracks.length === 0) return [];
+    return this.playedTracks.slice(-limit);
+  }
+
   _buildMixSequence() {
     const mixableIds = this._getMixableTrackIds();
     if (mixableIds.length === 0) {
       return [...(globalThis.DATA?.backgroundVisuals || ['x8E9HInpzE4', 'b9ktVQN48OU', 'hsdOCzJpUMg'])];
     }
 
-    const sequence = [...mixableIds];
-    const heroIndex = sequence.indexOf(this.heroVisualId);
-    if (heroIndex > 0) {
-      sequence.unshift(sequence.splice(heroIndex, 1)[0]);
+    const sequence = mixableIds.filter((id) => id !== this.heroVisualId);
+    return sequence.length > 0 ? sequence : [...mixableIds];
+  }
+
+  _consumeSeedTrack() {
+    while (this.mixSequence.length > 0) {
+      const candidate = this.mixSequence.shift();
+      if (!candidate || candidate === this.currentVideoId) continue;
+      if (!this._hasTrackAudio(candidate)) continue;
+      if (this._getRecentTrackIds(2).includes(candidate)) continue;
+      return candidate;
     }
-    return sequence;
+
+    return null;
+  }
+
+  _isMoodMatch(trackId) {
+    if (this.currentMood === 'all') return true;
+    const work = globalThis.DATA?.works?.find((entry) => entry.id === trackId);
+    return Boolean(work?.categories?.includes(this.currentMood));
+  }
+
+  _scoreTrackCandidate(trackId) {
+    if (!trackId || trackId === this.currentVideoId) return Number.NEGATIVE_INFINITY;
+
+    const recentTracks = this._getRecentTrackIds();
+    const currentKey = this.keyCache[this.currentVideoId];
+    const trackKey = this.keyCache[trackId];
+    const trackBpm = this.getTrackBPM(trackId);
+    const bpmDelta = Math.abs(this.masterBPM - trackBpm);
+
+    let score = Math.random() * 4;
+
+    if (this._isMoodMatch(trackId)) score += 18;
+    else if (this.currentMood !== 'all') score -= 12;
+
+    if (!this.playedTracks.includes(trackId)) score += 8;
+
+    const recentIndex = recentTracks.indexOf(trackId);
+    if (recentIndex !== -1) {
+      score -= (recentTracks.length - recentIndex) * 18;
+    }
+
+    score += Math.max(0, 20 - bpmDelta * 2);
+
+    if (currentKey && trackKey) {
+      const compatibleKeys = this._getCompatibleKeys(currentKey);
+      if (compatibleKeys.includes(trackKey)) score += 14;
+      else score -= 14;
+    }
+
+    if (this.energyPhase === 'buildup') {
+      score += trackBpm >= this.masterBPM ? 10 : -4;
+    } else if (this.energyPhase === 'peak') {
+      score += trackBpm >= this.masterBPM ? 14 : -10;
+    } else if (this.energyPhase === 'cooldown') {
+      score += trackBpm <= this.masterBPM ? 10 : -8;
+    } else {
+      score += bpmDelta <= 6 ? 8 : 0;
+    }
+
+    if (trackId === this.heroVisualId && this.mixCount > 0) {
+      score -= 8;
+    }
+
+    return score;
+  }
+
+  _selectNextTrack({ blockedIds = [] } = {}) {
+    const blocked = new Set([this.currentVideoId, ...blockedIds.filter(Boolean)]);
+    const moodPool = this._getTracksForMood().filter((id) => !blocked.has(id));
+    const harmonicPool = this._getHarmonicTracks(moodPool).filter((id) => !blocked.has(id));
+    const fallbackPool = this._getMixableTrackIds().filter((id) => !blocked.has(id));
+    const pool = (harmonicPool.length > 0 ? harmonicPool : moodPool.length > 0 ? moodPool : fallbackPool)
+      .filter(Boolean);
+
+    if (pool.length === 0) {
+      return null;
+    }
+
+    const ranked = pool
+      .map((id) => ({ id, score: this._scoreTrackCandidate(id) }))
+      .sort((a, b) => b.score - a.score);
+
+    const finalists = ranked.slice(0, Math.min(3, ranked.length));
+    const floor = finalists[finalists.length - 1]?.score ?? 0;
+    const weighted = finalists.map((candidate, index) => ({
+      ...candidate,
+      weight: Math.max(1, candidate.score - floor + 1) * (finalists.length - index)
+    }));
+
+    let roll = Math.random() * weighted.reduce((total, candidate) => total + candidate.weight, 0);
+    for (const candidate of weighted) {
+      roll -= candidate.weight;
+      if (roll <= 0) {
+        return candidate.id;
+      }
+    }
+
+    return weighted[0]?.id || null;
+  }
+
+  _getEnergyPhaseLabel(phase = this.energyPhase) {
+    return String(phase || 'warmup').toUpperCase();
+  }
+
+  _syncEnergyPhaseUI() {
+    const phaseEl = document.getElementById('dj-energy-phase');
+    if (phaseEl) {
+      phaseEl.innerText = this._getEnergyPhaseLabel();
+    }
+
+    const prefetchLabel = document.querySelector('.dj-prefetch-label');
+    if (prefetchLabel) {
+      prefetchLabel.innerText = `NEXT UP ▸ ${this._getEnergyPhaseLabel()}`;
+    }
+  }
+
+  _formatClock(totalSeconds) {
+    const safeSeconds = Math.max(0, Math.floor(totalSeconds));
+    const mins = String(Math.floor(safeSeconds / 60)).padStart(2, '0');
+    const secs = String(safeSeconds % 60).padStart(2, '0');
+    return `${mins}:${secs}`;
   }
 
   _hasTrackAudio(trackRef) {
@@ -364,6 +492,7 @@ class AutoDJAesthetic {
     const startCueA = this._getCuePoint(startVisualA.id);
     const startCueB = this._getCuePoint(startVisualB.id);
     this.currentVideoId = startVisualA.id;
+    this._recordTrack(startVisualA.id);
     this.deckVisuals.a = startVisualA;
     this.deckVisuals.b = startVisualB;
     this._updateVideoIdentity(startVisualA.id, true);
@@ -814,6 +943,7 @@ class AutoDJAesthetic {
             <div><span class="dj-live-dot"></span> MOSKV-1 AUTODJ</div>
             <div class="dj-header-right">
                 <span id="dj-mix-count" class="dj-mix-count">MIX #0</span>
+                <span id="dj-energy-phase" class="dj-phase-chip">WARMUP</span>
                 <span id="dj-bpm-master">130 BPM</span>
             </div>
         </div>
@@ -861,6 +991,7 @@ class AutoDJAesthetic {
         <div class="dj-visits" id="dj-visits">VISIT #${this.userProfile.visits}</div>
     `;
     document.body.appendChild(this.agentUI);
+    this._syncEnergyPhaseUI();
 
     this.glitchOverlay = document.createElement('div');
     this.glitchOverlay.className = 'dj-glitch-overlay';
@@ -902,6 +1033,7 @@ class AutoDJAesthetic {
         
         btn.addEventListener('click', (e) => {
             this.currentMood = e.target.dataset.mood;
+            this.moodManuallyChosen = true;
             localStorage.setItem('moskv_dj_mood', this.currentMood);
             this.agentUI.querySelectorAll('.dj-mood-btn').forEach(b => b.classList.remove('active'));
             e.target.classList.add('active');
@@ -937,6 +1069,7 @@ class AutoDJAesthetic {
                         this.agentUI?.querySelectorAll('.dj-mood-btn').forEach(b => {
                             b.classList.toggle('active', b.dataset.mood === 'ambient');
                         });
+                        this._prefetchNext();
                     }
                 }
             };
@@ -1014,11 +1147,12 @@ class AutoDJAesthetic {
     if (tmEl) tmEl.innerText = timeLabel;
 
     // Auto-set mood based on time if user hasn't manually chosen
-    if (!localStorage.getItem('moskv_dj_mood')) {
+    if (!this.moodManuallyChosen) {
         this.currentMood = globalThis.DATA?.heroBackground?.mood || timeMood;
         this.agentUI?.querySelectorAll('.dj-mood-btn').forEach(b => {
             b.classList.toggle('active', b.dataset.mood === this.currentMood);
         });
+        this._prefetchNext();
     }
 
     // 📱 DEVICE ORIENTATION (Waveform tilt effect on mobile)
@@ -1037,20 +1171,33 @@ class AutoDJAesthetic {
 
   // 📦 TIKTOK PREFETCH: Pre-select next 2 tracks
   _prefetchNext() {
-    const pool = this._getTracksForMood();
-    this.prefetchQueue = [];
-    const shuffled = [...pool].sort(() => Math.random() - 0.5);
-    for (let i = 0; i < Math.min(2, shuffled.length); i++) {
-        this.prefetchQueue.push(shuffled[i]);
+    const queue = [];
+    const blockedIds = [this.currentVideoId];
+
+    while (queue.length < this.prefetchDepth) {
+      let candidate = null;
+      if (queue.length === 0 && this.energyPhase === 'warmup' && this.mixCount < 2) {
+        candidate = this._consumeSeedTrack();
+      }
+
+      candidate = candidate || this._selectNextTrack({ blockedIds: [...blockedIds, ...queue] });
+      if (!candidate || queue.includes(candidate)) break;
+      queue.push(candidate);
     }
+
+    this.prefetchQueue = queue;
+
     // Update UI
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < this.prefetchDepth; i++) {
         const el = document.getElementById(`dj-prefetch-${i+1}`);
         if (el && this.prefetchQueue[i]) {
-            const title = this._getTrackTitle(this.prefetchQueue[i]);
-            el.innerText = title.substring(0, 12);
+            const meta = this._getTrackMeta(this.prefetchQueue[i]);
+            const shortTitle = meta.title.length > 10 ? `${meta.title.substring(0, 10)}…` : meta.title;
+            el.innerText = `${meta.badge}:${shortTitle}`;
+            el.title = meta.title;
         } else if (el) {
             el.innerText = '---';
+            el.removeAttribute('title');
         }
     }
     // Pre-cue first prefetch on standby deck
@@ -1239,22 +1386,22 @@ class AutoDJAesthetic {
 
   _updateElapsed() {
     const elapsed = Math.floor((Date.now() - this.trackStartTime) / 1000);
-    const mins = String(Math.floor(elapsed / 60)).padStart(2, '0');
-    const secs = String(elapsed % 60).padStart(2, '0');
     const el = document.getElementById('dj-elapsed');
-    if (el) el.innerText = `${mins}:${secs}`;
+    if (el) el.innerText = this._formatClock(elapsed);
 
-    // Progress bar (based on 40s mix interval)
-    const progress = Math.min(100, (elapsed / (this.mixIntervalMs / 1000)) * 100);
+    const remaining = this.nextMixDueAt
+      ? Math.max(0, Math.floor((this.nextMixDueAt - Date.now()) / 1000))
+      : Math.max(0, Math.floor(this.mixIntervalMs / 1000) - elapsed);
+    const targetDurationSec = this.nextMixDueAt
+      ? Math.max(1, Math.floor((this.nextMixDueAt - this.trackStartTime) / 1000))
+      : Math.max(1, Math.floor(this.mixIntervalMs / 1000));
+
+    const progress = Math.min(100, ((targetDurationSec - remaining) / targetDurationSec) * 100);
     const fill = document.getElementById('dj-progress-fill');
     if (fill) fill.style.width = `${progress}%`;
 
-    // Next In countdown
-    const remaining = Math.max(0, Math.floor(this.mixIntervalMs / 1000) - elapsed);
-    const rMins = String(Math.floor(remaining / 60)).padStart(2, '0');
-    const rSecs = String(remaining % 60).padStart(2, '0');
     const nextEl = document.getElementById('dj-next-in');
-    if (nextEl) nextEl.innerText = `${rMins}:${rSecs}`;
+    if (nextEl) nextEl.innerText = this._formatClock(remaining);
   }
 
   // 🎤 MICA STITCH AI VOICE (Agéntica - EUSKERA)
@@ -1387,52 +1534,36 @@ class AutoDJAesthetic {
   // 🎵 MOOD FILTER — Get tracks matching current mood
   _getTracksForMood() {
     const backgroundIds = this._getMixableTrackIds();
-    if (!globalThis.DATA?.works) return backgroundIds;
+    if (!globalThis.DATA?.works) {
+      return backgroundIds.filter((id) => id !== this.currentVideoId);
+    }
 
-    let pool = globalThis.DATA.works.filter(work => backgroundIds.includes(work.id));
-    if (pool.length === 0) {
-        pool = globalThis.DATA.works;
-    }
+    const workMap = new Map(globalThis.DATA.works.map((work) => [work.id, work]));
+    let ids = [...backgroundIds];
+
     if (this.currentMood !== 'all') {
-        pool = pool.filter(w => w.categories && w.categories.includes(this.currentMood));
-        
-        // Keep the curated background deck available even when the mood filter is narrow.
-        backgroundIds.forEach(priorityId => {
-            const track = globalThis.DATA.works.find(w => w.id === priorityId);
-            if (track && !pool.some(w => w.id === priorityId)) {
-                pool.push(track);
-            }
-        });
+      const moodIds = backgroundIds.filter((id) => workMap.get(id)?.categories?.includes(this.currentMood));
+      if (moodIds.length > 0) {
+        const fallbackIds = backgroundIds.filter((id) => !moodIds.includes(id)).slice(0, 2);
+        ids = [...moodIds, ...fallbackIds];
+      }
     }
-    // Filter out recently played (avoid repeats)
-    const ids = pool.map(w => w.id).filter(id => !this.playedTracks.includes(id));
-    backgroundIds.forEach((id) => {
-        if (!ids.includes(id) && !this.playedTracks.includes(id)) {
-            ids.push(id);
-        }
-    });
-    const heroIndex = ids.indexOf(this.heroVisualId);
-    if (heroIndex > 0) {
-        ids.unshift(ids.splice(heroIndex, 1)[0]);
-    }
-    
-    // If all played, reset history
-    if (ids.length === 0) {
-        this.playedTracks = [];
-        localStorage.setItem('moskv_dj_history', '[]');
-        return backgroundIds;
-    }
-    return ids;
+
+    return [...new Set(ids)].filter((id) => id !== this.currentVideoId);
   }
 
   // 📊 Record played track
   _recordTrack(trackId) {
-    if (!this.playedTracks.includes(trackId)) {
-        this.playedTracks.push(trackId);
-        // Keep last 20 max
-        if (this.playedTracks.length > 20) this.playedTracks.shift();
-        localStorage.setItem('moskv_dj_history', JSON.stringify(this.playedTracks));
+    if (!trackId) return;
+
+    const nextHistory = this.playedTracks.filter((id) => id !== trackId);
+    nextHistory.push(trackId);
+    if (nextHistory.length > 20) {
+      nextHistory.splice(0, nextHistory.length - 20);
     }
+
+    this.playedTracks = nextHistory;
+    localStorage.setItem('moskv_dj_history', JSON.stringify(this.playedTracks));
   }
 
   // ═══════════════════════════════════════════
@@ -1506,6 +1637,7 @@ class AutoDJAesthetic {
       }
 
       this.energyPhase = newPhase;
+      this._syncEnergyPhaseUI();
       return this.energyPhase;
   }
 
@@ -1679,6 +1811,7 @@ class AutoDJAesthetic {
 
   scheduleNextMix() {
     if (this.autoMixTimer) clearTimeout(this.autoMixTimer);
+    this._updateEnergyPhase();
     
     // [EXPERT DJ] Dynamic phrase-based interval calculation
     const msPerBeat = (60 / this.masterBPM) * 1000;
@@ -1686,6 +1819,8 @@ class AutoDJAesthetic {
     // Decide to mix between 4 and 8 phrases (typically 1 to 2.5 minutes depending on BPM)
     const phrasesToWait = Math.floor(Math.random() * 5) + 4;
     const dynamicIntervalMs = msPerPhrase * phrasesToWait;
+    this.mixIntervalMs = dynamicIntervalMs;
+    this.nextMixDueAt = Date.now() + dynamicIntervalMs;
     
     console.log(`[🎧 EXPERTO DJ] Decidí mantener la tensión durante ${phrasesToWait} frases musicales (${Math.round(dynamicIntervalMs/1000)}s)...`);
 
@@ -1697,11 +1832,7 @@ class AutoDJAesthetic {
         }
         
         console.log("[CORTEX AutoDJ] Automated Phrase Interval Reached. Initiating transition.");
-        let nextTrack = null;
-        if (this.mixSequence.length > 0) {
-            nextTrack = this.mixSequence.shift();
-        }
-        this.triggerCrossfade(nextTrack);
+        this.triggerCrossfade();
     }, dynamicIntervalMs);
   }
 
@@ -1714,6 +1845,7 @@ class AutoDJAesthetic {
     }
 
     if (this.autoMixTimer) clearTimeout(this.autoMixTimer);
+    this.nextMixDueAt = null;
     document.querySelector('.video-container')?.classList.add('is-transitioning');
     
     // Trigger Awwwards morph shader overlay
@@ -1762,30 +1894,13 @@ class AutoDJAesthetic {
   }
 
   _executeCrossfade(forcedNextTrack) {
+    this._updateEnergyPhase();
 
     const fromDeckId = this.activeDeck;
     const toDeckId = this.activeDeck === 'a' ? 'b' : 'a';
 
     const fromEl = document.getElementById(`video-deck-${fromDeckId}`);
     const toEl = document.getElementById(`video-deck-${toDeckId}`);
-
-    const availableTracks = this._getMixableTrackIds();
-    const moodPool = this._getTracksForMood();
-    // ═══ HARMONIC FILTERING (Camelot Wheel) ═══
-    const harmonicPool = this._getHarmonicTracks(moodPool);
-    
-    // ═══ INTELLIGENT ENERGY ARC (BPM Matching) ═══
-    let intelligentPool = [...harmonicPool];
-    if (intelligentPool.length > 2) {
-        intelligentPool.sort((a, b) => this.getTrackBPM(a) - this.getTrackBPM(b));
-        if (this.energyPhase === 'buildup') {
-            intelligentPool = intelligentPool.slice(Math.floor(intelligentPool.length / 2));
-        } else if (this.energyPhase === 'cooldown') {
-            intelligentPool = intelligentPool.slice(0, Math.ceil(intelligentPool.length / 2));
-        } else if (this.energyPhase === 'peak') {
-            intelligentPool = intelligentPool.slice(Math.max(0, intelligentPool.length - 3));
-        }
-    }
 
     // Use prefetch queue if available (TikTok-style)
     let nextTrack;
@@ -1794,7 +1909,7 @@ class AutoDJAesthetic {
     } else if (this.prefetchQueue.length > 0) {
         nextTrack = this.prefetchQueue.shift();
     } else {
-        nextTrack = intelligentPool[Math.floor(Math.random() * intelligentPool.length)] || availableTracks[Math.floor(Math.random() * availableTracks.length)];
+        nextTrack = this._selectNextTrack({ blockedIds: this.prefetchQueue });
     }
     const nextVisual = this._getVisualEntry(nextTrack);
     if (!nextVisual) {
@@ -1985,10 +2100,13 @@ class AutoDJAesthetic {
             this._pauseDeckVisual(fromDeckId);
             fromAudio.pause();
             this.activeDeck = toDeckId;
+            this.masterBPM = nextBPM;
             this.isCrossfading = false;
             document.querySelector('.video-container')?.classList.remove('is-transitioning');
             // Record new track start time NOW (when the drop hit) to align the new phrase
             this.trackStartTime = Date.now();
+            const bpmUi = document.getElementById('dj-bpm-master');
+            if (bpmUi) bpmUi.innerText = `${this.masterBPM} BPM`;
             
             if (this.agentUI) {
                 this.agentUI.classList.remove('syncing');
@@ -2217,4 +2335,5 @@ class AutoDJAesthetic {
 
 document.addEventListener("DOMContentLoaded", () => {
   globalThis.autoDJAesthetic = new AutoDJAesthetic();
+  globalThis.AutoDJ = globalThis.autoDJAesthetic;
 });
