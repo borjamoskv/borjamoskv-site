@@ -39,10 +39,10 @@ const LOG_TEMPLATES = [
 ];
 
 const ACTIONS = [
-    { label: 'SOUL MIRROR', desc: 'Analizar psique del track activo', icon: '🪞' },
-    { label: 'DECONSTRUIR', desc: 'Separar capas sónicas', icon: '🔬' },
-    { label: 'ARBITRAJE',   desc: 'Escanear spreads cripto en vivo', icon: '💎' },
-    { label: 'ARQUEOLOGÍA',  desc: 'Excavar historial creativo', icon: '🏛️' },
+    { label: 'SOUL MIRROR', desc: 'Analizar psique del track', icon: '🪞', url: 'https://borjamoskv.com/#manifesto' },
+    { label: 'CORTEX', desc: 'Repositorio soberano', icon: '🧠', url: 'https://github.com/borjamoskv/Cortex-Persist' },
+    { label: 'SUBSTACK', desc: 'Señal editorial', icon: '📡', url: 'https://borjamoskv.substack.com' },
+    { label: 'SPOTIFY', desc: 'Lo Inmanente', icon: '🎧', url: 'https://open.spotify.com/playlist/6WHIabEaqEd6cFPad3gSrx' },
 ];
 
 let visible = false;
@@ -119,6 +119,7 @@ function createOverlay() {
             if ('vibrate' in navigator) navigator.vibrate([30, 50, 30]);
             triggerConvergence();
             spawnActionLog(action);
+            if (action.url) window.open(action.url, '_blank');
         });
         actContainer.appendChild(btn);
     });

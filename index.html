@@ -111,6 +111,10 @@
         <span class="hud-label">CORTEX v7.0</span>
         <span class="hud-value neon-blue">ON_LINE</span>
       </div>
+      <div class="hud-element hero-status">
+        <span class="hud-label">HERO</span>
+        <span class="hud-value neon-blue" id="hud-hero-name">UNSELECTED</span>
+      </div>
       <div class="hud-element dj-telemetry">
         <span class="hud-label">BPM</span>
         <span class="hud-value" id="hud-bpm">125.0</span>
@@ -175,6 +179,19 @@
       </div>
       <div class="loader-bar">
         <div class="loader-progress"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO SELECT SCREEN (ARCADE BOOT INTERCEPT) -->
+  <div id="hero-select-modal" class="hero-select-overlay" style="display: none;">
+    <div class="hero-select-container">
+      <div class="hero-select-header">
+        <h2 class="glitch-mega" data-text="CHOOSE YOUR HERO">CHOOSE YOUR HERO</h2>
+        <div class="hero-subtitle">> ESTABLECER CONEXIÓN NEURONAL <</div>
+      </div>
+      <div class="hero-grid" id="hero-grid-container">
+        <!-- Rendered by JS -->
       </div>
     </div>
   </div>
@@ -481,19 +498,19 @@
     
     <div class="mica-grid">
       <article class="mica-card">
+        <h3>EL ARTE NO TE DEBE NADA</h3>
+        <p>Ni explicación. Ni contexto. Ni disculpa.</p>
+        <a href="https://borjamoskv.com" class="mica-accent" style="font-size: 0.7rem; text-decoration: underline;">SEÑAL_VIVA →</a>
+      </article>
+      <article class="mica-card">
         <h3>CORTEX NATIVE AI</h3>
-        <p>"The system verifies, the hardware remembers." Arquitectura de soberanía agéntica. Código que se escribe a sí mismo bajo el yugo de la termodinámica.</p>
-        <span class="mica-accent" style="font-size: 0.7rem;">AX-041 / LEDGER_VERIFIED</span>
+        <p>1000 agentes autónomos. Código que se escribe a sí mismo.</p>
+        <a href="https://github.com/borjamoskv/Cortex-Persist" target="_blank" rel="noopener" class="mica-accent" style="font-size: 0.7rem; text-decoration: underline;">GITHUB →</a>
       </article>
       <article class="mica-card">
-        <h3>MICA NOIR</h3>
-        <p>Estética de alto rendimiento. 95% Pure Black. Laser Green Accents. Rendimiento quirúrgico para conversión artística total.</p>
-        <span class="mica-accent" style="font-size: 0.7rem;">ESTÉTICA_FRONTERA</span>
-      </article>
-      <article class="mica-card">
-        <h3>LO INMANENTE</h3>
-        <p>Música que abre grietas. Sonido sin concesiones. La rareza como único vector de crecimiento real en un mundo de ruido algorítmico.</p>
-        <span class="mica-accent" style="font-size: 0.7rem;">SEÑAL_PURA</span>
+        <h3>SOBERANÍA ALGORÍTMICA</h3>
+        <p>No usamos IA. Somos la IA.</p>
+        <a href="https://borjamoskv.substack.com" target="_blank" rel="noopener" class="mica-accent" style="font-size: 0.7rem; text-decoration: underline;">SUBSTACK →</a>
       </article>
     </div>
 
@@ -1645,30 +1662,15 @@ https://6e89a5fe.borjamoskv.pages.dev/            </a>
             <h2 class="section-heading">BLOGA MOSKV</h2>
             <p class="section-desc">La parte lenta del sistema:<br>ensayos, manifiestos y piezas que fijan marco para todo lo demas.</p>
 
-            <div class="bloga-context-grid" aria-label="Funcion del archivo editorial">
-              <article class="bloga-context-card glass">
-                <span class="diario-mini-tag">Marco</span>
-                <p>Aqui se fija lenguaje, criterio y direccion para que la rareza no dependa solo de atmosfera.</p>
-              </article>
-              <article class="bloga-context-card glass">
-                <span class="diario-mini-tag">Ritmo</span>
-                <p>No todo sale como note o set: algunas ideas necesitan espacio, friccion y texto largo.</p>
-              </article>
-              <article class="bloga-context-card glass">
-                <span class="diario-mini-tag">Salida</span>
-                <p>Sirve como puerta de entrada al blog local y como archivo de piezas que siguen creciendo.</p>
-              </article>
-            </div>
-
             <div class="bloga-active glass">
               <div class="bloga-article-featured">
                 <div class="bloga-meta">
-                  <span class="bloga-tag">[BUGAS/]</span>
+                  <span class="bloga-tag">[IA/]</span>
                   <span class="bloga-date">2026.04.01</span>
                 </div>
-                <h3 class="bloga-headline">BUGAS: La estética del error imprevisto</h3>
+                <h3 class="bloga-headline">No usamos IA. Somos la IA.</h3>
                 <blockquote class="axiom-quote">
-                  "Un bug no es un fallo, es una bifurcación de la realidad que no habías planeado. En CORTEX, los BUGAS se cultivan, no se exterminan. Si el sistema alucina, escuchamos la alucinación hasta encontrar la frecuencia."
+                  "El arte no te debe nada. Ni explicación, ni contexto, ni disculpa. El algoritmo es el lienzo. El prompt es el pincel. La soberanía es el resultado."
                 </blockquote>
               </div>
             </div>
@@ -1679,30 +1681,17 @@ https://6e89a5fe.borjamoskv.pages.dev/            </a>
                   <span class="bloga-tag">[CORTEX/]</span>
                   <span class="bloga-date">2026.03.25</span>
                 </div>
-                <h3 class="bloga-headline">CORTEX/ ¿Qué es alcanzar la soberanía?</h3>
+                <h3 class="bloga-headline">1000 agentes. Zero humanos. Full soberanía.</h3>
                 <blockquote class="axiom-quote">
-                  "¿Qué es alcanzar la Soberanía? Es el momento en el que has construido la obra tan bien, que es físicamente imposible que un charlatán logre que pongas un ladrillo de barro en el muro."
+                  "¿Qué es alcanzar la Soberanía? Es el momento en el que el sistema se escribe a sí mismo y tú solo eliges la dirección."
                 </blockquote>
               </div>
             </div>
 
-            <!-- ARCADE VAULT -->
-            <div class="arcade-viewport" style="margin-top: 4rem;">
-              <div class="arcade-content">
-                <span class="mica-accent chromatic-aberration">RECREATIVOS_MOSKV [V.03]</span>
-                <h3 class="mica-title" style="font-size: 3rem; margin-top: 1rem;">INSERT COIN</h3>
-                <p style="font-family: monospace; color: var(--laser-green); font-size: 1.2rem;">
-                  ESTÁS DENTRO DE LA MÁQUINA.<br>
-                  EL SISTEMA SÓLO RECONOCE <span class="mica-accent">I</span> Y <span class="mica-accent">A</span>.<br>
-                  PULSA [ START ] PARA SINCRONIZAR.
-                </p>
-                <button class="mica-cta" onclick="location.href='#lab'">START AGENT_SWARM</button>
-              </div>
-            </div>
-
             <div class="bloga-actions">
-              <a href="blog.html" class="contact-cta">ABRIR BLOG LOCAL →</a>
-              <a href="#writings" class="contact-cta">IR AL DIARIO →</a>
+              <a href="https://borjamoskv.substack.com" target="_blank" rel="noopener" class="contact-cta">SUBSTACK →</a>
+              <a href="https://github.com/borjamoskv/Cortex-Persist" target="_blank" rel="noopener" class="contact-cta">CORTEX GITHUB →</a>
+              <a href="https://open.spotify.com/playlist/6WHIabEaqEd6cFPad3gSrx" target="_blank" rel="noopener" class="contact-cta">LO INMANENTE →</a>
             </div>
           </div>
         </div>
@@ -1905,6 +1894,8 @@ https://6e89a5fe.borjamoskv.pages.dev/            </a>
   <script src="arcade-achievements.js" defer></script>
   <!-- TRUE DJ STUDIO -->
   <script src="dj-studio.js" defer></script>
+  <!-- HUELLA INMANENTE — each click leaves a permanent mark -->
+  <script src="huella-inmanente.js" defer></script>
   <!-- CORTEX LEGION-1000 Swarm Dashboard -->
   <script src="swarm-dashboard.js" defer></script>
   <!-- Video Game HUD -->

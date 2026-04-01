@@ -170,8 +170,8 @@ button, .cta-primary, .cta-secondary, .cta-ghost, .hero-proof-chip, .drag-window
   z-index: 100000;
   display: none;
   background: rgba(10, 15, 30, 0.85);
-  backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
+  backdrop-filter: blur(25px);
   padding: 5vh 5vw;
 }
 .frontier-terminal-overlay.active {
@@ -304,10 +304,153 @@ button, .cta-primary, .cta-secondary, .cta-ghost, .hero-proof-chip, .drag-window
 div.chatquito { display: none !important; }
 
 /* Let .moltbook-clip-rail scroll horizontally natively if GSAP fails, or handle it with GSAP */
-.moltbook-clip-rail {
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   HERO SELECT SCREEN (FIGHTER SELECT)
+   ═══════════════════════════════════════════════════════════════════ */
+.hero-select-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100001; /* Above loader but behind critical alerts */
+  background: rgba(10, 10, 10, 0.95);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
   display: flex;
-  flex-wrap: nowrap;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-family: var(--font-mono);
+}
+
+.hero-select-container {
+  width: 90vw;
+  max-width: 1200px;
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
   gap: 2rem;
-  padding: 2rem;
-  width: fit-content;
+}
+
+.hero-select-header {
+  text-align: center;
+  border-bottom: 2px solid var(--accent-primary);
+  padding-bottom: 1rem;
+  position: relative;
+}
+
+.hero-subtitle {
+  color: var(--accent-secondary);
+  font-size: 1rem;
+  letter-spacing: 0.2em;
+  animation: pulse-frontier 2s infinite;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.hero-card {
+  background: rgba(20, 20, 25, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  padding: 1rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.2s cubic-bezier(0.19, 1, 0.22, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: -100%;
+  width: 50%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+  transform: skewX(-20deg);
+  transition: 0.5s;
+}
+
+.hero-card:hover::before {
+  left: 150%;
+}
+
+.hero-card:hover, .hero-card:focus {
+  border-color: var(--accent-primary);
+  background: rgba(43, 59, 229, 0.2); /* YInMn Blue tint */
+  transform: scale(1.05) translateZ(10px);
+  box-shadow: 0 0 20px rgba(43, 59, 229, 0.4), inset 0 0 10px rgba(43, 59, 229, 0.2);
+  z-index: 10;
+}
+
+.hero-name {
+  font-size: 1.1rem;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  color: #fff;
+  text-shadow: 2px 2px 0 #000;
+  margin-bottom: 0.5rem;
+}
+
+.hero-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.75rem;
+  color: #a0a0a0;
+}
+
+.hero-stat-line {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dashed rgba(255,255,255,0.1);
+  padding-bottom: 2px;
+}
+
+.hero-card.locked {
+  opacity: 0.4;
+  cursor: not-allowed;
+  filter: grayscale(100%);
+}
+.hero-card.locked:hover {
+  transform: none;
+  border-color: rgba(255,0,0,0.5);
+  box-shadow: inset 0 0 10px rgba(255,0,0,0.2);
+  background: rgba(20,0,0,0.8);
+}
+.hero-card.locked .hero-name {
+  color: #555;
+  text-decoration: line-through;
+}
+
+/* Selected Animation */
+.hero-card.selected {
+  animation: hero-glitch-select 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  border-color: var(--accent-secondary) !important;
+  background: rgba(242, 221, 51, 0.3) !important;
+}
+
+@keyframes hero-glitch-select {
+  0% { transform: scale(1); filter: invert(0); }
+  20% { transform: scale(1.1) skewX(10deg); filter: invert(1); }
+  40% { transform: scale(0.9) skewX(-10deg); filter: drop-shadow(0 0 10px red); }
+  60% { transform: scale(1.2) translate(10px, -10px); }
+  80% { transform: scale(1) translate(-10px, 10px); filter: invert(1); }
+  100% { transform: scale(1.1); filter: invert(0); box-shadow: 0 0 30px var(--accent-secondary); }
+}
+
+@media (max-width: 900px) {
+  .hero-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 500px) {
+  .hero-grid { grid-template-columns: 1fr; }
 }

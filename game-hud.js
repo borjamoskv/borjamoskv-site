@@ -192,12 +192,100 @@ document.addEventListener('DOMContentLoaded', () => {
                 gsap.to(loader, {
                     opacity: 0, scale: 1.1, filter: 'blur(20px)',
                     duration: 1.2, ease: 'power3.in',
-                    onComplete: () => loader.style.display = 'none'
+                    onComplete: () => {
+                        loader.style.display = 'none';
+                        initHeroSelection();
+                    }
                 });
             } else if (loader) {
                 loader.style.opacity = '0';
-                setTimeout(() => loader.style.display = 'none', 1000);
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                    initHeroSelection();
+                }, 1000);
             }
+        });
+
+        const HEROES = [
+            { name: 'LINDSTROM', s1: 'BPM', v1: '110-125', s2: 'VIBE', v2: 'COSMIC' },
+            { name: 'APHEX TWIN', s1: 'CAOS', v1: '99', s2: 'ACID', v2: 'THREAT' },
+            { name: 'ROYKSOPP', s1: 'MELANCOLIA', v1: 'NÓRDICA', s2: 'SINTE', v2: 'CÁLIDO' },
+            { name: 'ROBE INIESTA', s1: 'POESÍA', v1: '100', s2: 'CALICHE', v2: 'MAX' },
+            { name: 'JOHN FRUSCIANTE', s1: 'D4', v1: 'ACTIVA', s2: 'RUIDO', v2: 'SAGRADO' },
+            { name: 'RADIOHEAD', s1: 'ANGUSTIA', v1: 'DÓCIL', s2: 'GLITCH', v2: 'EXISTEN.' },
+            { name: 'COIL', s1: 'ENTROPÍA', v1: 'MÁXIMA', s2: 'MAGIA', v2: 'NEGRA' },
+            { name: 'QUEENS OF THE S.A.', s1: 'RIIFF', v1: 'DESÉRTICO', s2: 'DRIVE', v2: 'C5' },
+            { name: 'NIN', s1: 'INDUSTRIAL', v1: 'NOIR', s2: 'ESTRUCT.', v2: 'QUEBRADA' },
+            { name: 'VETUSTA MORLA', s1: 'TENSIÓN', v1: 'LENTA', s2: 'ÉPICA', v2: 'OCULTA' },
+            { name: 'MANOS DE TOPO', s1: 'LLANTO', v1: 'TÁCTICO', s2: 'DESAMOR', v2: 'CRÍTICO' },
+            { name: 'UNKNOWN_X', locked: true, s1: 'DATA', v1: 'CORRUPT', s2: 'ACCESS', v2: 'DENIED' },
+            { name: 'UNKNOWN_Y', locked: true, s1: 'DATA', v1: 'CORRUPT', s2: 'ACCESS', v2: 'DENIED' },
+            { name: 'UNKNOWN_Z', locked: true, s1: 'DATA', v1: 'CORRUPT', s2: 'ACCESS', v2: 'DENIED' },
+            { name: 'UNKNOWN_Ω', locked: true, s1: 'DATA', v1: 'CORRUPT', s2: 'ACCESS', v2: 'DENIED' },
+            { name: 'UNKNOWN_Σ', locked: true, s1: 'DATA', v1: 'CORRUPT', s2: 'ACCESS', v2: 'DENIED' }
+        ];
+
+        function initHeroSelection() {
+            const modal = $('hero-select-modal');
+            const grid = $('hero-grid-container');
+            if (!modal || !grid) {
+                // Fallback
+                bootGame("CORTEX_DEFAULT");
+                return;
+            }
+            modal.style.display = 'flex';
+            if (typeof gsap !== 'undefined') {
+                gsap.fromTo(modal, { opacity: 0 }, { opacity: 1, duration: 0.5 });
+            }
+
+            // Populate Grid
+            grid.innerHTML = '';
+            HEROES.forEach((hero, idx) => {
+                const card = document.createElement('div');
+                card.className = `hero-card ${hero.locked ? 'locked' : ''}`;
+                card.innerHTML = `
+                    <div class="hero-name">${hero.name}</div>
+                    <div class="hero-stats">
+                        <div class="hero-stat-line"><span>${hero.s1}</span><span style="color:var(--accent-primary)">${hero.v1}</span></div>
+                        <div class="hero-stat-line"><span>${hero.s2}</span><span style="color:var(--accent-secondary)">${hero.v2}</span></div>
+                    </div>
+                `;
+                if (!hero.locked) {
+                    card.addEventListener('click', () => {
+                        haptic([50, 50, 50]);
+                        card.classList.add('selected');
+                        setTimeout(() => {
+                            if (typeof gsap !== 'undefined') {
+                                gsap.to(modal, { opacity: 0, scale: 1.05, duration: 0.8, ease: 'power3.in', onComplete: () => {
+                                    modal.style.display = 'none';
+                                    bootGame(hero.name);
+                                }});
+                            } else {
+                                modal.style.display = 'none';
+                                bootGame(hero.name);
+                            }
+                        }, 600);
+                    });
+                } else {
+                    card.addEventListener('click', () => {
+                        haptic([20, 20]);
+                        // Denied effect
+                        if (typeof gsap !== 'undefined') {
+                           gsap.to(card, { x: 5, duration: 0.05, yoyo: true, repeat: 5 });
+                        }
+                    });
+                }
+                grid.appendChild(card);
+            });
+            
+            if (typeof gsap !== 'undefined') {
+                gsap.from('.hero-card', { opacity: 0, scale: 0.8, y: 20, stagger: 0.05, duration: 0.4, ease: 'back.out(1.5)', delay: 0.2 });
+            }
+        }
+
+        function bootGame(selectedHero) {
+            const heroHud = $('hud-hero-name');
+            if (heroHud) heroHud.innerText = selectedHero;
 
             document.body.classList.add('game-mode-active');
 
@@ -230,7 +318,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Init achievement & narrative engine
             if (window.MOSKV_ARCADE) window.MOSKV_ARCADE.init();
-        });
+        }
     }
 
     // ═══ VAULT — 3D Tilt + Haptic ═══
