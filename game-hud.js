@@ -174,6 +174,9 @@ document.addEventListener('DOMContentLoaded', () => {
         pressStartBtn.addEventListener('click', () => {
             haptic([50, 100, 50, 100, 50]);
 
+            // Memory shortcut (CORTEX-Persist)
+            const savedHero = localStorage.getItem('cortex_hero');
+
             // 100% IMMERSIVE MODE (Fullscreen)
             try {
                 if (!document.fullscreenElement) {
@@ -188,21 +191,24 @@ document.addEventListener('DOMContentLoaded', () => {
             const loader = $('loader');
             _spawnParticleBurst(window.innerWidth / 2, window.innerHeight / 2, 60);
 
+            const launchFn = () => {
+                loader.style.display = 'none';
+                if (savedHero) {
+                    bootGame(savedHero);
+                } else {
+                    initHeroSelection();
+                }
+            };
+
             if (typeof gsap !== 'undefined' && loader) {
                 gsap.to(loader, {
                     opacity: 0, scale: 1.1, filter: 'blur(20px)',
                     duration: 1.2, ease: 'power3.in',
-                    onComplete: () => {
-                        loader.style.display = 'none';
-                        initHeroSelection();
-                    }
+                    onComplete: launchFn
                 });
             } else if (loader) {
                 loader.style.opacity = '0';
-                setTimeout(() => {
-                    loader.style.display = 'none';
-                    initHeroSelection();
-                }, 1000);
+                setTimeout(launchFn, 1000);
             }
         });
 
@@ -284,6 +290,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function bootGame(selectedHero) {
+            localStorage.setItem('cortex_hero', selectedHero);
+
             const heroHud = $('hud-hero-name');
             if (heroHud) heroHud.innerText = selectedHero;
 
@@ -315,6 +323,24 @@ document.addEventListener('DOMContentLoaded', () => {
             if (window.djAesthetic) {
                 window.djAesthetic.toggleGlobalMute();
                 window.djAesthetic._crossfadeNow && window.djAesthetic._crossfadeNow();
+
+                // Sonic Neuro-Acoplamiento base
+                if (window.djAesthetic.audioA && window.djAesthetic.audioB) {
+                    if (selectedHero === 'LAURA PAUSINI') {
+                        window.djAesthetic.audioA.playbackRate = 0.96;
+                        window.djAesthetic.audioB.playbackRate = 0.96;
+                    } else if (selectedHero === 'APHEX TWIN') {
+                        window.djAesthetic.audioA.playbackRate = 1.05;
+                        window.djAesthetic.audioB.playbackRate = 1.05;
+                    } else if (selectedHero === 'NIN') {
+                        // Industrial drop
+                        window.djAesthetic.audioA.playbackRate = 0.98;
+                        window.djAesthetic.audioB.playbackRate = 0.98;
+                    } else {
+                        window.djAesthetic.audioA.playbackRate = 1.0;
+                        window.djAesthetic.audioB.playbackRate = 1.0;
+                    }
+                }
             }
 
             bootComplete = true;
@@ -348,6 +374,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             el.addEventListener('click', () => {
                 haptic([30, 50, 30]);
+                if (work.url) {
+                    window.location.href = work.url;
+                    return;
+                }
                 if (window.djAesthetic) {
                     window.djAesthetic.mixSequence.unshift(work.id);
                     window.djAesthetic._crossfadeNow && window.djAesthetic._crossfadeNow();

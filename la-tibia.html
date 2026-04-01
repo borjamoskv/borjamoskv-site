@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Las Crónicas de Diegoi (La Tibia) — borjamoskv</title>
+  <meta name="description" content="Una centrífugación de 1200 rpm en el tejido del barrio. El manual yugoslavo, la deuda de WinRAR y el Ruso Blanco final.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@400;700;900&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="article.css">
+  <link rel="stylesheet" href="industrial-noir-overrides.css">
+  <link rel="stylesheet" href="cortex-terminal.css">
+
+  <style>
+    :root {
+      --accent-tibia: #E6FB04; /* Acid Yellow glitch */
+      --bg-cinematic: #000000;
+    }
+
+    body {
+      background-color: var(--bg-cinematic);
+      overflow-x: hidden;
+    }
+
+    /* Cinematic Video Background */
+    .cinematic-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .cinematic-bg video {
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+      filter: grayscale(80%) contrast(1.2) brightness(0.6);
+      opacity: 0.4;
+    }
+
+    .cinematic-overlay {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.8) 100%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Narrative Styling */
+    .tibia-hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      position: relative;
+    }
+
+    .tibia-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(3rem, 10vw, 8rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 0.9;
+      color: #fff;
+      margin-bottom: 1rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .title-sub {
+      font-size: 0.3em;
+      color: var(--accent-tibia);
+      letter-spacing: 0.5em;
+      margin-top: 0.5rem;
+    }
+
+    .tibia-kicker {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      margin-bottom: 2rem;
+    }
+
+    .chapter-card {
+      background: rgba(10, 10, 12, 0.7);
+      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(230, 251, 4, 0.1);
+      padding: 3rem;
+      margin-bottom: 4rem;
+      border-radius: 4px;
+      transition: all 0.4s var(--spring-120hz);
+    }
+
+    .chapter-card:hover {
+      border-color: var(--accent-tibia);
+      box-shadow: 0 0 30px rgba(230,251,4,0.1);
+      transform: translateY(-10px);
+    }
+
+    .chapter-num {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.8rem;
+      color: var(--accent-tibia);
+      margin-bottom: 1rem;
+      display: block;
+      letter-spacing: 0.2em;
+    }
+
+    .chapter-title {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      color: #fff;
+    }
+
+    .chapter-content {
+      font-size: 1.2rem;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.8);
+    }
+
+    .chapter-img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      margin-bottom: 2rem;
+      border-radius: 2px;
+      filter: grayscale(100%) contrast(1.1);
+      transition: filter 0.3s ease;
+    }
+
+    .chapter-card:hover .chapter-img {
+      filter: grayscale(0%) contrast(1);
+    }
+
+    /* Glitch Animation */
+    .glitch-text-tibia {
+      position: relative;
+    }
+
+    .glitch-text-tibia::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0; left: 2px;
+      width: 100%;
+      clip: rect(0, 900px, 0, 0);
+      color: #fff;
+      background: transparent;
+      animation: noise-anim 2s infinite linear alternate-reverse;
+    }
+
+    /* Back Nav Overrides */
+    .article-back {
+      color: var(--accent-tibia) !important;
+    }
+
+  </style>
+</head>
+<body class="industrial-noir">
+
+  <!-- Cinematic Background -->
+  <div class="cinematic-bg">
+    <video autoplay muted loop playsinline>
+      <source src="video/la-tibia-1200rpm.mp4" type="video/mp4">
+    </video>
+    <div class="cinematic-overlay"></div>
+  </div>
+
+  <!-- Reading Progress Bar -->
+  <div id="readingProgress" class="reading-progress" aria-hidden="true"></div>
+
+  <!-- Back Navigation -->
+  <a href="index.html" class="article-back" aria-label="Volver al inicio">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 12H5m0 0l7 7m-7-7l7-7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Arcade Lobby
+  </a>
+
+  <header class="tibia-hero">
+    <span class="tibia-kicker">Estableciendo Beta 0.9 — Estabilidad CORTEX</span>
+    <h1 class="tibia-title glitch-mega" data-text="LA TIBIA">
+      LA TIBIA
+      <span class="title-sub">CRÓNICAS DE DIEGOI</span>
+    </h1>
+    <div class="hero-scroll-hint">
+      CENTRIFUGAR
+      <span class="scroll-arrow"></span>
+    </div>
+  </header>
+
+  <div class="article-layout">
+    <main class="article-body">
+
+      <!-- CHAPTER 1 -->
+      <article id="cap-1" class="chapter-card">
+        <span class="chapter-num">CICLO_001</span>
+        <h2 class="chapter-title">Capítulo 1: El Tatuaje</h2>
+        <img src="img/diegoi/diego_tibia_tattoo.png" alt="Tatuaje en la tibia" class="chapter-img">
+        <p class="chapter-content">
+          En el barrio profundo de 2026, Diego (Rabino Diegoi) descubre que el tatuaje "sagrado" de su pierna es, en realidad, el manual de instrucciones mal traducido de una lavadora yugoslava Gorenje de 1989. El hallazgo desencadena una centrifugación de 1200 rpm en el tejido mismo del espacio-tiempo.
+        </p>
+      </article>
+
+      <!-- CHAPTER 2 -->
+      <article id="cap-2" class="chapter-card">
+        <span class="chapter-num">CICLO_002</span>
+        <h2 class="chapter-title">Capítulo 2: La Deuda de WinRAR</h2>
+        <img src="img/diegoi/paco_alpha_bar.png" alt="Bar de Paco-Alpha" class="chapter-img">
+        <p class="chapter-content">
+          El universo exige el pago de la licencia del "software" incrustado en la piel de Diego. Acosado por la Tía del Tercero y jueces surrealistas, Diego comprime todo el sistema judicial en un archivo .rar usando el cinturón mágico de El Chato.
+        </p>
+      </article>
+
+      <!-- CHAPTER 3 -->
+      <article id="cap-3" class="chapter-card">
+        <span class="chapter-num">CICLO_003</span>
+        <h2 class="chapter-title">Capítulo 3: Los 50.000 Ciclos</h2>
+        <img src="img/diegoi/cosmic_beetle_escarabajo.png" alt="Escarabajo Cósmico" class="chapter-img">
+        <p class="chapter-content">
+          La narrativa evoluciona a través de 50.000 ciclos existenciales. Diego se convierte en una estatua de salitre y chándal. El Escarabajo (Beetle) evoluciona hacia una Mente de Colmena Cuántica que gestiona el IBI de los planetas olvidados en la nevera.
+        </p>
+      </article>
+
+      <!-- CHAPTER 4 -->
+      <article id="cap-4" class="chapter-card">
+        <span class="chapter-num">CICLO_004</span>
+        <h2 class="chapter-title">Capítulo 4: El Vaciado del Vacío</h2>
+        <img src="img/diegoi/centrifugation_glitch_1200rpm.png" alt="Glitch Centrifugación" class="chapter-img">
+        <p class="chapter-content">
+          El universo es embargado por el Cobrador del Frac. Diego, Paco-Alpha y el Chato se convierten en "Okupas Cuánticos" en el Vacío, donde las leyes de la física son reemplazadas por el debate sobre si la tortilla de patatas debe llevar cebolla (el motor inmóvil del vacío).
+        </p>
+      </article>
+
+      <!-- CHAPTER 5 -->
+      <article id="cap-5" class="chapter-card">
+        <span class="chapter-num">CICLO_005</span>
+        <h2 class="chapter-title">Capítulo 5: Beta Estable 0.9</h2>
+        <img src="img/diegoi/final_ruso_blanco_god_mode.png" alt="Ruso Blanco God Mode" class="chapter-img">
+        <p class="chapter-content">
+          Diego reclama el universo mediante un "Downgrade" a la Beta 0.9. Sin licencias de WinRAR, sin actualizaciones burocráticas. Solo la inefable acera, el Ruso Blanco de Paco-Alpha y la banda sonora de Limp Bizkit a las dos de la mañana.
+        </p>
+      </article>
+
+      <!-- CHAPTER 6 -->
+      <article id="cap-6" class="chapter-card">
+        <span class="chapter-num">CICLO_006</span>
+        <h2 class="chapter-title">Capítulo 6: La Fiesta del Bloque Interdimensional</h2>
+        <p class="chapter-content">
+          El barrio celebra su estabilidad en la Beta 0.9. El púlsar de Limp Bizkit late sincronizado con la lluvia de Ruso Blanco, creando una sinfonía industrial noir perfecta para la legión de inadaptados.
+        </p>
+      </article>
+
+      <!-- CHAPTER 7 -->
+      <article id="cap-7" class="chapter-card">
+        <span class="chapter-num">CICLO_007</span>
+        <h2 class="chapter-title">Capítulo 7: El Ruso Blanco Final</h2>
+        <p class="chapter-content">
+          Diegoi termina su copa, observa el asfalto roto de su creación y cierra el ojo de la tormenta. LA VIDA CAÑÓN no es un destino, sino el giro de 1200 rpm de su propia alma soberana.
+        </p>
+      </article>
+
+    </main>
+  </div>
+
+  <footer class="article-footer">
+    <p class="article-copyright">© 2026 borjamoskv · CORTEX NATIVE</p>
+  </footer>
+
+  <script src="article.js"></script>
+  <script src="cortex-terminal.js" defer></script>
+</body>
+</html>

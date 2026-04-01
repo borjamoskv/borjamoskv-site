@@ -124,6 +124,7 @@ const DATA = {
 
     // Works — enriched with categories for filtering
     works: [
+        { id: "LA_TIBIA", title: "LA TIBIA", desc: "The Chronicles of Diegoi · Cinematic Narrative", categories: ["original", "experimental", "narrative", "4k"], featured: true, url: "la-tibia.html", thumbnail: "img/diegoi/centrifugation_glitch_1200rpm.png" },
         { id: "NYhOQTcNLkA", title: "ECOS DEL COSMOS", desc: "Original · Ambient / Sci-Fi [4K]", categories: ["original", "ambient", "4k"], featured: true },
         { id: "x8E9HInpzE4", title: "GLITCH IN THE MIRROR", desc: "Original · Experimental [4K]", categories: ["original", "experimental", "4k"], featured: true },
         { id: "b9ktVQN48OU", title: "LES BUKO", desc: "Original · Electronic [8K]", categories: ["original", "electronic", "4k", "8k"], featured: true },

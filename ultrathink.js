@@ -158,6 +158,14 @@ function triggerUltrathink() {
         }, 50);
     }
 
+    // Sonic Destruction (Demonic Pitch)
+    if (window.djAesthetic && window.djAesthetic.audioA && window.djAesthetic.audioB) {
+        try {
+            window.djAesthetic.audioA.playbackRate = 0.5;
+            window.djAesthetic.audioB.playbackRate = 0.5;
+        } catch(e) {}
+    }
+
     // End Protocol after 10 seconds
     setTimeout(() => {
         cancelAnimationFrame(streamRaf);
@@ -177,6 +185,20 @@ function triggerUltrathink() {
         setTimeout(() => {
             overlay.remove();
             style.remove();
+            
+            // Restore Sonic Profile
+            if (window.djAesthetic && window.djAesthetic.audioA && window.djAesthetic.audioB) {
+                try {
+                    let pbRate = 1.0;
+                    const hName = window.cortexTerminal?.heroContext;
+                    if (hName === 'LAURA PAUSINI') pbRate = 0.96;
+                    else if (hName === 'APHEX TWIN') pbRate = 1.05;
+                    else if (hName === 'NIN') pbRate = 0.98;
+
+                    window.djAesthetic.audioA.playbackRate = pbRate;
+                    window.djAesthetic.audioB.playbackRate = pbRate;
+                } catch(e) {}
+            }
         }, 1000);
         
     }, 10000);
