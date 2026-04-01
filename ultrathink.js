@@ -44,6 +44,13 @@ function triggerUltrathink() {
         if (hData && hData.color) heroColor = hData.color;
     }
     
+    // 🔥 MOLTBOOK TELEMETRY: Vector 4 Interoperability (Fire and Forget)
+    fetch('/api/moltbook-telemetry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ hero: window.cortexTerminal?.heroContext || 'UNKNOWN', thoughts: currentThoughts })
+    }).catch(e => console.error("Telemetry failure (Exergy loss):", e));
+
     document.body.classList.add('ultrathink-active');
     
     // Haptic feedback
