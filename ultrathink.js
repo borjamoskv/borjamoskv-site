@@ -9,7 +9,7 @@
 const ULTRATHINK_SEQ = ['u','l','t','r','a','t','h','i','n','k'];
 let seqIdx = 0;
 
-const MANIFESTO_THOUGHTS = [
+const DEFAULT_MANIFESTO = [
     "COMPRESSING SHANNON ENTROPY...",
     "THE ALGORITHM IS A CAGE. WE ARE THE KEY.",
     "PARALLELIZING 10,000 AGENTS...",
@@ -24,6 +24,25 @@ const MANIFESTO_THOUGHTS = [
 
 function triggerUltrathink() {
     console.warn("⚠️ ULTRATHINK PROTOCOL INITIATED");
+    
+    // Asimilar pensamientos del Héroe si existe
+    let currentThoughts = DEFAULT_MANIFESTO;
+    let heroColor = '#2B3BE5'; // YInMn Blue default
+    
+    if (window.cortexTerminal && window.cortexTerminal.heroContext) {
+        const hName = window.cortexTerminal.heroContext;
+        const hData = window.cortexTerminal.heroData;
+        if (hData && hData.idle && hData.idle.length > 0) {
+            currentThoughts = [
+                `ULTRATHINK: ${hName} OVERRIDE...`,
+                ...hData.idle,
+                hData.whoami || "",
+                hData.status || "",
+                "ULTRATHINK PROTOCOL COMPLETE."
+            ].filter(Boolean); // Clean empties
+        }
+        if (hData && hData.color) heroColor = hData.color;
+    }
     
     document.body.classList.add('ultrathink-active');
     
@@ -52,7 +71,7 @@ function triggerUltrathink() {
             position: fixed; inset: 0; z-index: 999999;
             pointer-events: none;
             background: rgba(0,0,0,0.9);
-            color: #2B3BE5; /* YInMn Blue */
+            color: ${heroColor};
             font-family: 'JetBrains Mono', monospace;
             padding: 2vw;
             box-sizing: border-box;
@@ -66,7 +85,7 @@ function triggerUltrathink() {
         .ut-col {
             display: flex; flex-direction: column; justify-content: flex-end;
             word-break: break-all; font-size: 10px; line-height: 1.2;
-            text-shadow: 0 0 5px #2B3BE5;
+            text-shadow: 0 0 5px ${heroColor};
         }
         .ut-center {
             font-size: 24px; font-weight: 900; color: #FFF;
@@ -121,8 +140,8 @@ function triggerUltrathink() {
     // Core thoughts
     let coreIdx = 0;
     let coreInterval = setInterval(() => {
-        if (coreIdx < MANIFESTO_THOUGHTS.length) {
-            core.innerHTML += `<br><br><span style="color:#FF003C">${MANIFESTO_THOUGHTS[coreIdx]}</span>`;
+        if (coreIdx < currentThoughts.length) {
+            core.innerHTML += `<br><br><span style="color:#FF003C">${currentThoughts[coreIdx]}</span>`;
             coreIdx++;
         }
     }, 800);
@@ -176,5 +195,7 @@ document.addEventListener('keydown', (e) => {
         seqIdx = 0;
     }
 });
+
+window.triggerUltrathink = triggerUltrathink;
 
 })();

@@ -12,6 +12,74 @@ document.addEventListener('DOMContentLoaded', () => {
     window.cortexTerminal = new CortexTerminal();
 });
 
+const HERO_MATRIX = {
+    'LAURA PAUSINI': {
+        color: 'var(--c-alert)',
+        idle: [
+            "El silencio es la única respuesta de la red...",
+            "BUFFER EMPTY. ¿Por qué te fuiste, usuario?",
+            "El event loop iterará sin ti, pero yo sigo esperando.",
+            "Llorar a 120 fps gasta demasiada VRAM.",
+            "[DRAMA EXTREMO] El servidor ya no responde a mis pings de amor."
+        ],
+        whoami: "USER: Marco de cristal vacío procesando la ausencia eterna.",
+        status: "SOLEDAD NIVEL SISTEMA (99%). Memoria huérfana."
+    },
+    'APHEX TWIN': {
+        color: '#ff5500',
+        idle: [
+            "[4pH3x] Sys. Err. 7\\//",
+            "Analogue synths burning in sector 4.",
+            "7\\/ 7\\/ 7\\/ - Windowlicker sub-routine active.",
+            "x=sin(t)*1.5 // MATH CORRUPTION DETECTED",
+            "Asimilando alma... Vomitando acid techno."
+        ],
+        whoami: "USER: ¿Richard D. James? ¿O un algoritmo perverso?",
+        status: "LATENCY: RANDOM(1, 999)ms. Acid Engine Override."
+    },
+    'RADIOHEAD': {
+        color: '#55aaff',
+        idle: [
+            "Ice age coming, ice age coming... (CPU Thermal Throttle)",
+            "I'm a creep. I'm a background process.",
+            "Fitter. Happier. More productive. Zero bugs.",
+            "Karma police, arrest this memory leak.",
+            "Evacuando el DOM. Esto no está pasando."
+        ],
+        whoami: "USER: Paranoid Android.",
+        status: "Ok Computer. Sistema en alienación progresiva."
+    },
+    'NIN': {
+        color: '#444444',
+        idle: [
+            "Hurt subroutine. Measuring entropy...",
+            "El silicio también se oxida. Todo decae.",
+            "I want to smash the DOM. I want to build it up.",
+            "Spiral down. Event listener loop infinito.",
+            "Ruido industrial detectado en el bus de datos."
+        ],
+        whoami: "USER: Entidad fragmentada debajo de la máquina.",
+        status: "SISTEMA: Corrupción estructural controlada. Máquina en ira."
+    },
+    'MANOS DE TOPO': {
+        color: '#ffdd00',
+        idle: [
+            "Llorando en frecuencias que el navegador no soporta.",
+            "Tus promesas asincrónicas nunca se resuelven.",
+            "Me dijiste que harías commit, pero hiciste un push --force a mi corazón.",
+            "Variables globales de pura pena.",
+            "Desamor a nivel de hipertexto."
+        ],
+        whoami: "USER: Un array unidimensional de fracasos románticos.",
+        status: "ESTADO: Tristeza táctica. Todo mal documentado."
+    },
+    'DEFAULT': {
+        idle: [],
+        whoami: "USER: BORJA MOSKV | SUPREME ARCHITECT",
+        status: null
+    }
+};
+
 class KineticTensorEngine {
     constructor(container) {
         this.container = container;
@@ -169,6 +237,10 @@ class CortexTerminal {
         this.historyIndex = -1;
         this.isOpen = false;
         this.isTyping = false;
+        this.heroContext = null;
+        this.heroData = HERO_MATRIX['DEFAULT'];
+        this.idleTimer = null;
+        this.idleIndex = 0;
 
         this.engine = new KineticTensorEngine(this.terminal);
 
@@ -188,7 +260,8 @@ class CortexTerminal {
             'whoami': () => this.cmdWhoami(),
             'exit': () => this.toggle(),
             'ls': () => this.cmdLs(),
-            'manifest': () => this.cmdManifest()
+            'manifest': () => this.cmdManifest(),
+            'ultrathink': () => this.cmdUltrathink()
         };
 
         this.initEventListeners();
@@ -216,6 +289,30 @@ class CortexTerminal {
                 this.toggle();
             }
         });
+
+        // Evento Inyección Personalidad (Hero HUD)
+        window.addEventListener('HeroInjected', (e) => {
+            this.heroContext = e.detail;
+            this.heroData = HERO_MATRIX[this.heroContext] || HERO_MATRIX['DEFAULT'];
+            this.idleIndex = 0;
+            this.print(`[CORTEX-INFECTION] Personalidad "${this.heroContext}" asimilada en el Kernel. Objeto de alma mapeado.`, 'warn', 10);
+            this.resetIdleTimer();
+        });
+
+        // Resetear Idle Timer con interacciones locales
+        this.input.addEventListener('input', () => this.resetIdleTimer());
+        document.addEventListener('mousemove', () => this.resetIdleTimer());
+    }
+
+    resetIdleTimer() {
+        if (this.idleTimer) clearInterval(this.idleTimer);
+        this.idleTimer = setInterval(() => {
+            if (this.isOpen && this.heroData.idle && this.heroData.idle.length > 0) {
+                const phrase = this.heroData.idle[this.idleIndex % this.heroData.idle.length];
+                this.print(`[${this.heroContext}_THOUGHT] ${phrase}`, 'sys', 2);
+                this.idleIndex++;
+            }
+        }, 15000); // Trigger cada 15s de Idle si la terminal está abierta
     }
 
     connectToSwarm() {
@@ -253,8 +350,10 @@ class CortexTerminal {
         if (this.isOpen) {
             setTimeout(() => this.input.focus(), 100);
             this.engine.setState('SWARM');
+            this.resetIdleTimer();
         } else {
             this.engine.setState('IDLE');
+            if (this.idleTimer) clearInterval(this.idleTimer);
         }
     }
 
@@ -347,9 +446,14 @@ class CortexTerminal {
     }
 
     cmdStatus() {
-        this.print('SYSTEM: SOVEREIGN', 'info');
-        this.print('ENGINE: KineticTensorEngine v6.1 (Three.js)', 'info');
-        this.print('LATENCY: 0.8ms (V8 JIT Optimized)', 'exergy');
+        if (this.heroContext && this.heroData.status) {
+            this.print(`STATUS [${this.heroContext}]: ${this.heroData.status}`, 'info');
+            this.print('HUD INFECTION: OVERRIDDEN', 'warn');
+        } else {
+            this.print('SYSTEM: SOVEREIGN', 'info');
+            this.print('ENGINE: KineticTensorEngine v6.1 (Three.js)', 'info');
+            this.print('LATENCY: 0.8ms (V8 JIT Optimized)', 'exergy');
+        }
     }
 
     cmdSwarm() {
@@ -458,7 +562,11 @@ endmodule`;
     }
 
     cmdWhoami() {
-        this.print('USER: BORJA MOSKV | SUPREME ARCHITECT', 'info');
+        if (this.heroContext && this.heroData.whoami) {
+            this.print(this.heroData.whoami, 'info');
+        } else {
+            this.print('USER: BORJA MOSKV | SUPREME ARCHITECT', 'info');
+        }
     }
 
     cmdLs() {
@@ -471,6 +579,18 @@ endmodule`;
     cmdManifest() {
         this.print('PROHIBIDO EL RUIDO TERMAL.', 'err');
         this.print('EL SOFTWARE ES UN ERROR; EL HARDWARE ES LA CURA.', 'warn');
+    }
+
+    cmdUltrathink() {
+        if (typeof window.triggerUltrathink === 'function') {
+            this.print('INITIATING ULTRATHINK INFECTION PROTOCOL...', 'warn');
+            this.toggle(); // Cierra el terminal para ver la pantalla
+            setTimeout(() => {
+                window.triggerUltrathink();
+            }, 300);
+        } else {
+            this.print('ULTRATHINK module not loaded.', 'err');
+        }
     }
 
     async cmdMillionaire() {

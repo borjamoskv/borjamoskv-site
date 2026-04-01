@@ -287,6 +287,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const heroHud = $('hud-hero-name');
             if (heroHud) heroHud.innerText = selectedHero;
 
+            // Inyectar Personalidad en el CORTEX (Terminal & Parallax)
+            window.dispatchEvent(new CustomEvent('HeroInjected', { detail: selectedHero }));
+
             document.body.classList.add('game-mode-active');
 
             // Arcade bezel text update
