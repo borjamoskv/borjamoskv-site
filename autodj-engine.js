@@ -103,14 +103,22 @@ class AutoDJEngine {
         const now = this.audioContext.currentTime;
         const fadeTime = this.crossfadeTime;
         
-        // Animación de crossfade usando Web Audio API (precisión de sample)
-        // Deck actual: 1 -> 0
-        this.decks[currentDeck].gain.gain.setValueAtTime(1, now);
-        this.decks[currentDeck].gain.gain.exponentialRampToValueAtTime(0.01, now + fadeTime);
+        // Equal Power Crossfade Curve (Trigonometric DJ standard)
+        // No loss of volume in the middle of the transition
+        const curveLength = 4096;
+        const curveA = new Float32Array(curveLength);
+        const curveB = new Float32Array(curveLength);
         
-        // Deck siguiente: 0 -> 1
-        this.decks[nextDeck].gain.gain.setValueAtTime(0.01, now);
-        this.decks[nextDeck].gain.gain.exponentialRampToValueAtTime(1, now + fadeTime);
+        for (let i = 0; i < curveLength; i++) {
+            const t = i / (curveLength - 1);
+            // Deck A fades out using cos(t * pi/2)
+            curveA[i] = Math.cos(t * 0.5 * Math.PI);
+            // Deck B fades in using cos((1-t) * pi/2)
+            curveB[i] = Math.cos((1.0 - t) * 0.5 * Math.PI);
+        }
+        
+        this.decks[currentDeck].gain.gain.setValueCurveAtTime(curveA, now, fadeTime);
+        this.decks[nextDeck].gain.gain.setValueCurveAtTime(curveB, now, fadeTime);
         
         // Actualizar deck activo después de la transición
         setTimeout(() => {
