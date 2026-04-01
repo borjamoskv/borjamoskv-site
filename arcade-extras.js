@@ -14,11 +14,41 @@ function konamiUnlock() {
     document.body.classList.add('konami-unlocked');
     if (window.GLITCH) window.GLITCH.trigger();
     
-    // Invert colors for 3 seconds
-    document.body.style.filter = 'invert(1) hue-rotate(180deg)';
+    // Matrix Rain Overlay
+    const canvas = document.createElement('canvas');
+    canvas.style.cssText = 'position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:99998;pointer-events:none;opacity:0.85;mix-blend-mode:color-dodge;';
+    document.body.appendChild(canvas);
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%""\'#&_(),.;:?!\\|{}<>[]^~'.split('');
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+    const drops = Array(Math.floor(columns)).fill(1);
+    
+    function draw() {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#FF003C'; // CORTEX Red
+        ctx.font = fontSize + 'px monospace';
+        for (let i = 0; i < drops.length; i++) {
+            const text = letters[Math.floor(Math.random() * letters.length)];
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+            drops[i]++;
+        }
+    }
+    const matrixInterval = setInterval(draw, 33);
+    
     setTimeout(() => {
-        document.body.style.filter = '';
-        // Leave a permanent secret badge
+        clearInterval(matrixInterval);
+        canvas.style.transition = 'opacity 2s';
+        canvas.style.opacity = '0';
+        setTimeout(() => canvas.remove(), 2000);
+    }, 8000);
+
+    // Leave a permanent secret badge
         const badge = document.createElement('div');
         badge.style.cssText = `
             position:fixed; top:8px; right:8px; z-index:99999;
@@ -97,6 +127,14 @@ function initScrollCounter() {
         scrollSpeed = delta;
         lastScroll = window.scrollY;
         localStorage.setItem('moskv-scroll-km', totalScrolled.toFixed(1));
+
+        // Earthquake Mode on high velocity
+        if (delta > 150 && !document.body.classList.contains('mode-zen')) {
+            const intensity = Math.min((delta - 150) / 10, 15);
+            document.body.style.transform = `translate(${Math.random()*intensity - intensity/2}px, ${Math.random()*intensity - intensity/2}px)`;
+            if(window.shakeTimeout) clearTimeout(window.shakeTimeout);
+            window.shakeTimeout = setTimeout(() => { document.body.style.transform = ''; }, 50);
+        }
     }, { passive: true });
 
     function updateMeter() {
@@ -187,6 +225,39 @@ function initGravitationalText() {
 
     headings.forEach(h => observer.observe(h));
 }
+
+// ═══ 6. MORSE CODE SOS ═══
+// S-O-S keys
+const MORSE_SOS = ['s', 'o', 's'];
+let morseIdx = 0;
+let morseTimer = null;
+
+document.addEventListener('keydown', (e) => {
+    if (e.target.closest('input, textarea')) return;
+    
+    if (e.key.toLowerCase() === MORSE_SOS[morseIdx]) {
+        morseIdx++;
+        clearTimeout(morseTimer);
+        
+        if (morseIdx === MORSE_SOS.length) {
+            morseIdx = 0;
+            // Trigger distress signal
+            if (window.GLITCH) {
+                window.GLITCH.trigger();
+                setTimeout(() => window.GLITCH.trigger(), 200);
+                setTimeout(() => window.GLITCH.trigger(), 400);
+            }
+            document.body.style.filter = 'sepia(1) hue-rotate(-50deg) saturate(3)';
+            setTimeout(() => document.body.style.filter = '', 1000);
+            if ('vibrate' in navigator) navigator.vibrate([200, 100, 200, 100, 200]);
+            console.warn("CORTEX EMERGENCY OVERRIDE INITIATED (SOS RECEIVED)");
+        } else {
+            morseTimer = setTimeout(() => { morseIdx = 0; }, 1000);
+        }
+    } else {
+        morseIdx = 0;
+    }
+});
 
 // ═══ INIT ═══
 function init() {

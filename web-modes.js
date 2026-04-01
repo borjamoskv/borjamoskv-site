@@ -203,9 +203,13 @@ function showRickRubin() {
         /* Zen mode overrides */
         body.mode-zen .section-heading { letter-spacing: 0.3em !important; }
         body.mode-zen iframe, body.mode-zen video { filter: grayscale(1) !important; }
-        /* Cena mode overrides */
+        /* Cena mode overrides (Rick Rubin Subtractor) */
         body.mode-cena { filter: sepia(0.15) hue-rotate(var(--mode-hue)); }
         body.mode-cena iframe, body.mode-cena video { filter: sepia(0.3) brightness(0.8) !important; }
+        /* Rick Rubin removes the non-essential */
+        body.mode-cena .ab-agents, body.mode-cena .ab-task, body.mode-cena #scroll-speedometer, body.mode-cena .hud-container { opacity: 0 !important; pointer-events: none !important; }
+        body.mode-cena .mica-grid .mica-card p { opacity: 0.2; }
+        body.mode-cena .marquee { opacity: 0.1; }
     `;
     document.head.appendChild(style);
 
