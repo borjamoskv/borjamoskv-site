@@ -8710,3 +8710,302 @@ body.vault-open .vault-modal {
   font-size: 0.7rem;
   letter-spacing: 1px;
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   AWWWARDS-PICASSO 10 CYCLES — FRONTIER CSS
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* C1: BOOT LOG */
+.boot-log {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  color: #2B3BE5;
+  text-align: left;
+  max-width: 500px;
+  margin: 2rem auto 0;
+  line-height: 1.8;
+  letter-spacing: 1px;
+  text-shadow: 0 0 6px rgba(43, 59, 229, 0.4);
+}
+
+/* C3: MAGNETIC CURSOR MOMENTUM */
+.cortex-cursor-dot {
+  transition: transform 0.08s linear !important;
+}
+.cortex-cursor-halo {
+  transition: transform 0.15s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+/* C4: VAULT 3D TILT */
+.vault-item {
+  transition: transform 0.2s ease, border-color 0.2s, box-shadow 0.2s;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.vault-item-cat {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  color: #D4620A;
+  background: rgba(0,0,0,0.7);
+  padding: 0.15rem 0.4rem;
+  letter-spacing: 1px;
+}
+
+/* C6: COOLDOWN PHASE */
+body.cooldown-active .video-background-system {
+  filter: saturate(0.2) brightness(0.5);
+  transition: filter 2s ease;
+}
+body.cooldown-active .cortex-game-hud::before {
+  background: linear-gradient(rgba(239, 68, 68, 0) 50%, rgba(239, 68, 68, 0.08) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 0, 0, 0.02), rgba(255, 0, 0, 0.04));
+}
+body.cooldown-active .lyzer-panel {
+  border-color: #ef4444 !important;
+}
+body.cooldown-active .lyzer-header {
+  color: #ef4444 !important;
+}
+
+/* C8: CINEMATIC TRACK TITLE */
+.track-title-overlay {
+  position: fixed;
+  bottom: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9500;
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+}
+.track-title-main {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  text-shadow: 0 0 40px rgba(43, 59, 229, 0.8), 0 0 80px rgba(43, 59, 229, 0.3);
+  margin: 0;
+  line-height: 1.1;
+}
+.track-title-sub {
+  display: block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.85rem;
+  color: #D4620A;
+  letter-spacing: 3px;
+  margin-top: 0.5rem;
+}
+
+/* FEATURED VIDEOCLIPS STRIP */
+.featured-strip {
+  position: fixed;
+  bottom: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 1rem;
+  z-index: 9100;
+  pointer-events: auto;
+  opacity: 0.85;
+  transition: opacity 0.3s;
+}
+.featured-strip:hover { opacity: 1; }
+.featured-chip {
+  background: rgba(10, 10, 10, 0.85);
+  border: 1px solid rgba(43, 59, 229, 0.4);
+  padding: 0.5rem 1.2rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  color: #2B3BE5;
+  letter-spacing: 2px;
+  cursor: none;
+  transition: all 0.15s;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.featured-chip:hover {
+  background: #2B3BE5;
+  color: #0A0A0A;
+  box-shadow: 0 0 25px rgba(43, 59, 229, 0.6);
+  transform: translateY(-2px);
+}
+.featured-chip.active-chip {
+  border-color: #D4620A;
+  color: #D4620A;
+}
+
+/* VISUAL CONTROLS PANEL */
+.visual-controls {
+  position: fixed;
+  top: 50%;
+  right: 2rem;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 9200;
+  pointer-events: auto;
+}
+.vis-ctrl-btn {
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(43, 59, 229, 0.4);
+  background: rgba(10, 10, 10, 0.8);
+  color: #2B3BE5;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: none;
+  transition: all 0.15s;
+  font-family: 'IBM Plex Mono', monospace;
+}
+.vis-ctrl-btn:hover {
+  background: #2B3BE5;
+  color: #000;
+  box-shadow: 0 0 15px rgba(43, 59, 229, 0.5);
+}
+.vis-ctrl-btn.active {
+  background: #2B3BE5;
+  color: #000;
+}
+
+/* VOWEL ROTATION DISPLAY */
+.vowel-display {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(15rem, 30vw, 40rem);
+  font-weight: 800;
+  color: rgba(43, 59, 229, 0.04);
+  z-index: 1;
+  pointer-events: none;
+  line-height: 1;
+  user-select: none;
+  transition: opacity 1.5s ease, color 1.5s ease;
+}
+.vowel-display.vowel-flash {
+  color: rgba(43, 59, 229, 0.12);
+}
+
+/* VISUAL MODES */
+body.vis-invert .video-background-system { filter: invert(1) hue-rotate(180deg); }
+body.vis-halftone .video-background-system { filter: contrast(2) grayscale(0.8); }
+body.vis-thermal .video-background-system { filter: hue-rotate(180deg) saturate(3) brightness(1.2); }
+body.vis-noir .video-background-system { filter: grayscale(1) contrast(1.4) brightness(0.8); }
+
+/* HUD VU CANVAS UPGRADE */
+#hud-vu-meter {
+  width: 200px;
+  height: 40px;
+  border: 1px solid rgba(43, 59, 229, 0.2);
+  background: rgba(0,0,0,0.5);
+}
+
+/* KEYBOARD HINTS */
+.kb-hints {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  color: rgba(212, 212, 212, 0.3);
+  letter-spacing: 2px;
+  z-index: 9050;
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   ARCADE CABINET BEZEL (Video Game Frame)
+   ═══════════════════════════════════════════════════════════════════ */
+.arcade-bezel {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+}
+.bezel-top, .bezel-bottom {
+  position: absolute;
+  left: 0; right: 0;
+  height: 28px;
+  background: linear-gradient(180deg, #0A0A0A 0%, rgba(10,10,10,0.9) 70%, transparent 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 4px;
+  color: rgba(43, 59, 229, 0.5);
+  text-transform: uppercase;
+}
+.bezel-top { top: 0; border-bottom: 1px solid rgba(43, 59, 229, 0.15); }
+.bezel-bottom {
+  bottom: 0; top: auto;
+  background: linear-gradient(0deg, #0A0A0A 0%, rgba(10,10,10,0.9) 70%, transparent 100%);
+  border-top: 1px solid rgba(43, 59, 229, 0.15);
+  color: rgba(212, 98, 10, 0.4);
+}
+.bezel-left, .bezel-right {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 12px;
+}
+.bezel-left {
+  left: 0;
+  background: linear-gradient(90deg, #0A0A0A 0%, transparent 100%);
+  border-right: 1px solid rgba(43, 59, 229, 0.08);
+}
+.bezel-right {
+  right: 0;
+  background: linear-gradient(270deg, #0A0A0A 0%, transparent 100%);
+  border-left: 1px solid rgba(43, 59, 229, 0.08);
+}
+
+/* Industrial Pastel Palette Overrides */
+body.game-mode-active {
+  --accent-pastel-blue: #7EB8DA;
+  --accent-pastel-rose: #E8B4B8;
+  --accent-pastel-mint: #A8D5BA;
+  --accent-pastel-lavender: #B8A9C9;
+  --accent-pastel-peach: #F5CBA7;
+}
+
+/* Ambient / Cooldown Visual Enhancement */
+body.cooldown-active .video-background-system {
+  filter: saturate(0.15) brightness(0.4) blur(2px);
+  transition: filter 3s ease;
+}
+body.cooldown-active .vowel-display {
+  color: rgba(232, 180, 184, 0.08);
+}
+body.cooldown-active .arcade-bezel .bezel-top span,
+body.cooldown-active .arcade-bezel .bezel-bottom span {
+  color: rgba(239, 68, 68, 0.4);
+}
+
+/* Arcade Boot Loader Enhancement */
+.loader-overlay.arcade-boot {
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loader-overlay.arcade-boot .loader-content {
+  text-align: center;
+}
+
+/* Mobile touch enhancements */
+@media (hover: none) and (pointer: coarse) {
+  .featured-chip { padding: 0.75rem 1rem; font-size: 0.65rem; }
+  .vis-ctrl-btn { width: 48px; height: 48px; font-size: 1.4rem; }
+  .vault-item { height: 120px; }
+  .lyzer-panel { width: 180px; font-size: 0.6rem; }
+  .hud-top-bar { font-size: 0.7rem; padding: 0.5rem; }
+}
