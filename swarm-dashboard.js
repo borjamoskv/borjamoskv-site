@@ -1,13 +1,13 @@
 /**
- * CORTEX LEGION-1000 SWARM DASHBOARD
- * 1000 autonomous agents rendered in real-time Canvas2D
+ * CORTEX LEGION-10K SWARM DASHBOARD
+ * 10,000 autonomous agents — Float32Array GPU-optimized rendering
  * Toggle: [A] key
  * ═══════════════════════════════════════════════════════════
  */
 (function() {
 'use strict';
 
-const AGENT_COUNT = 1000;
+const AGENT_COUNT = 10000;
 const SKILLS = [
     'Aesthetic-Foundry-Ω', 'Sonic-Foundry-Ω', 'Capital-Extractor-Ω',
     'Silicon-Overlord-Ω', 'Devin-Apex', 'CORTEX-Swarm-Prime',
@@ -50,30 +50,30 @@ let overlay = null;
 let canvas = null;
 let ctx = null;
 let logContainer = null;
-let agents = [];
 let animFrame = null;
-let convergenceTarget = null;
 let convergenceTime = 0;
 
-// Generate agents
+// ═══ Float32Array AGENT STATE (O(1) per-frame) ═══
+// Layout: [x, y, vx, vy, baseAngle, baseRadius, orbitSpeed, size, brightness, phase]
+const STRIDE = 10;
+let agentData = null;
+
 function initAgents() {
-    agents = [];
+    agentData = new Float32Array(AGENT_COUNT * STRIDE);
     for (let i = 0; i < AGENT_COUNT; i++) {
+        const off = i * STRIDE;
         const angle = Math.random() * Math.PI * 2;
-        const radius = 80 + Math.random() * 200;
-        agents.push({
-            x: Math.cos(angle) * radius,
-            y: Math.sin(angle) * radius,
-            vx: (Math.random() - 0.5) * 0.8,
-            vy: (Math.random() - 0.5) * 0.8,
-            baseAngle: angle,
-            baseRadius: radius,
-            orbitSpeed: 0.002 + Math.random() * 0.008,
-            size: 1 + Math.random() * 2,
-            brightness: 0.4 + Math.random() * 0.6,
-            skill: SKILLS[Math.floor(Math.random() * SKILLS.length)],
-            phase: Math.random() * Math.PI * 2,
-        });
+        const radius = 30 + Math.random() * 280;
+        agentData[off + 0] = Math.cos(angle) * radius; // x
+        agentData[off + 1] = Math.sin(angle) * radius; // y
+        agentData[off + 2] = 0; // vx
+        agentData[off + 3] = 0; // vy
+        agentData[off + 4] = angle; // baseAngle
+        agentData[off + 5] = radius; // baseRadius
+        agentData[off + 6] = 0.001 + Math.random() * 0.006; // orbitSpeed
+        agentData[off + 7] = 0.5 + Math.random() * 1.5; // size
+        agentData[off + 8] = 0.3 + Math.random() * 0.7; // brightness
+        agentData[off + 9] = Math.random() * Math.PI * 2; // phase
     }
 }
 
@@ -83,15 +83,15 @@ function createOverlay() {
     overlay.className = 'swarm-dashboard';
     overlay.innerHTML = `
         <div class="swarm-header">
-            <span class="swarm-title">CORTEX LEGION-1000</span>
-            <span class="swarm-count">${AGENT_COUNT} AGENTS ONLINE</span>
+            <span class="swarm-title">CORTEX LEGION-10K</span>
+            <span class="swarm-count">${AGENT_COUNT.toLocaleString()} AGENTS ONLINE</span>
             <span class="swarm-close">[ESC] / [A]</span>
         </div>
         <div class="swarm-body">
             <div class="swarm-canvas-wrap">
                 <canvas id="swarm-canvas"></canvas>
                 <div class="swarm-stats">
-                    <div class="ss-item"><span class="ss-label">ACTIVE</span><span class="ss-val" id="ss-active">1000</span></div>
+                    <div class="ss-item"><span class="ss-label">ACTIVE</span><span class="ss-val" id="ss-active">10000</span></div>
                     <div class="ss-item"><span class="ss-label">EXERGY</span><span class="ss-val" id="ss-exergy">99.7T</span></div>
                     <div class="ss-item"><span class="ss-label">YIELD</span><span class="ss-val" id="ss-yield">x142</span></div>
                     <div class="ss-item"><span class="ss-label">LATENCY</span><span class="ss-val" id="ss-latency">0.3ms</span></div>
@@ -133,7 +133,6 @@ function spawnLog() {
     const skill = SKILLS[Math.floor(Math.random() * SKILLS.length)];
     const track = window.DATA?.works?.[Math.floor(Math.random() * (window.DATA?.works?.length || 1))]?.title || 'VOID_CASCADE';
     const hash = Math.random().toString(16).substring(2, 10);
-    const n = Math.floor(Math.random() * 999) + 1;
 
     let msg = template.replace('{skill}', skill).replace('{track}', track).replace('{hash}', hash);
     while (msg.includes('{n}')) msg = msg.replace('{n}', String(Math.floor(Math.random() * 999) + 1));
@@ -142,9 +141,7 @@ function spawnLog() {
     line.className = 'swarm-log-line';
     line.textContent = msg;
     logContainer.appendChild(line);
-
-    // Keep max 30 lines
-    while (logContainer.children.length > 30) logContainer.removeChild(logContainer.firstChild);
+    while (logContainer.children.length > 40) logContainer.removeChild(logContainer.firstChild);
     logContainer.scrollTop = logContainer.scrollHeight;
 }
 
@@ -153,117 +150,115 @@ function spawnActionLog(action) {
         setTimeout(() => {
             const line = document.createElement('div');
             line.className = 'swarm-log-line swarm-log-highlight';
-            line.textContent = `[DISPATCH] ${AGENT_COUNT} agentes → ${action.label}: ${action.desc}`;
+            line.textContent = `[DISPATCH] ${AGENT_COUNT.toLocaleString()} agentes → ${action.label}: ${action.desc}`;
             logContainer.appendChild(line);
-            while (logContainer.children.length > 30) logContainer.removeChild(logContainer.firstChild);
+            while (logContainer.children.length > 40) logContainer.removeChild(logContainer.firstChild);
             logContainer.scrollTop = logContainer.scrollHeight;
-        }, i * 300);
+        }, i * 200);
     }
 }
 
 function triggerConvergence() {
-    convergenceTarget = { x: 0, y: 0 };
     convergenceTime = Date.now();
 }
 
 function resizeCanvas() {
     if (!canvas) return;
     const wrap = canvas.parentElement;
-    canvas.width = wrap.clientWidth * window.devicePixelRatio;
-    canvas.height = wrap.clientHeight * window.devicePixelRatio;
-    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = wrap.clientWidth * dpr;
+    canvas.height = wrap.clientHeight * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 }
 
 function renderAgents() {
-    if (!visible || !ctx || !canvas) return;
+    if (!visible || !ctx || !canvas || !agentData) return;
 
-    const W = canvas.width / window.devicePixelRatio;
-    const H = canvas.height / window.devicePixelRatio;
+    const W = canvas.width / (window.devicePixelRatio || 1);
+    const H = canvas.height / (window.devicePixelRatio || 1);
     const cx = W / 2;
     const cy = H / 2;
     const now = Date.now();
     const t = now / 1000;
+    const converging = (now - convergenceTime) < 2000;
+    const convF = converging ? Math.min(1, (now - convergenceTime) / 500) : 0;
 
     ctx.clearRect(0, 0, W, H);
 
-    // Draw connections (only between nearby agents, cap at 200 connections)
-    ctx.strokeStyle = 'rgba(43, 59, 229, 0.08)';
-    ctx.lineWidth = 0.5;
-    let connCount = 0;
-    for (let i = 0; i < agents.length && connCount < 200; i += 10) {
-        for (let j = i + 10; j < agents.length && connCount < 200; j += 10) {
-            const dx = agents[i].x - agents[j].x;
-            const dy = agents[i].y - agents[j].y;
-            const dist = dx * dx + dy * dy;
-            if (dist < 2500) { // ~50px
-                ctx.beginPath();
-                ctx.moveTo(cx + agents[i].x, cy + agents[i].y);
-                ctx.lineTo(cx + agents[j].x, cy + agents[j].y);
-                ctx.stroke();
-                connCount++;
+    // ═══ BATCH RENDER 10K AGENTS ═══
+    // Use ImageData for maximum throughput on 10K particles
+    const imgData = ctx.createImageData(Math.ceil(W), Math.ceil(H));
+    const pixels = imgData.data;
+    const imgW = imgData.width;
+
+    for (let i = 0; i < AGENT_COUNT; i++) {
+        const off = i * STRIDE;
+
+        if (converging) {
+            agentData[off + 0] += (0 - agentData[off + 0]) * 0.04 * convF;
+            agentData[off + 1] += (0 - agentData[off + 1]) * 0.04 * convF;
+        } else {
+            agentData[off + 4] += agentData[off + 6]; // baseAngle += orbitSpeed
+            const tgtX = Math.cos(agentData[off + 4]) * agentData[off + 5];
+            const tgtY = Math.sin(agentData[off + 4]) * agentData[off + 5];
+            agentData[off + 0] += (tgtX - agentData[off + 0]) * 0.015;
+            agentData[off + 1] += (tgtY - agentData[off + 1]) * 0.015;
+        }
+
+        // Jitter
+        agentData[off + 0] += (Math.random() - 0.5) * 0.2;
+        agentData[off + 1] += (Math.random() - 0.5) * 0.2;
+
+        const px = Math.round(cx + agentData[off + 0]);
+        const py = Math.round(cy + agentData[off + 1]);
+
+        if (px >= 0 && px < imgW && py >= 0 && py < Math.ceil(H)) {
+            const pulse = Math.sin(t * 3 + agentData[off + 9]) * 0.3 + 0.7;
+            const alpha = Math.floor(agentData[off + 8] * pulse * 200);
+            const idx = (py * imgW + px) * 4;
+
+            // YInMn Blue (43, 59, 229)
+            pixels[idx + 0] = Math.min(255, pixels[idx + 0] + 43);
+            pixels[idx + 1] = Math.min(255, pixels[idx + 1] + 59);
+            pixels[idx + 2] = Math.min(255, pixels[idx + 2] + 229);
+            pixels[idx + 3] = Math.min(255, pixels[idx + 3] + alpha);
+
+            // Size > 1: draw neighbors
+            if (agentData[off + 7] > 1) {
+                for (let dx = -1; dx <= 1; dx++) {
+                    for (let dy = -1; dy <= 1; dy++) {
+                        const nx = px + dx, ny = py + dy;
+                        if (nx >= 0 && nx < imgW && ny >= 0 && ny < Math.ceil(H)) {
+                            const ni = (ny * imgW + nx) * 4;
+                            pixels[ni + 0] = Math.min(255, pixels[ni + 0] + 30);
+                            pixels[ni + 1] = Math.min(255, pixels[ni + 1] + 40);
+                            pixels[ni + 2] = Math.min(255, pixels[ni + 2] + 180);
+                            pixels[ni + 3] = Math.min(255, pixels[ni + 3] + Math.floor(alpha * 0.5));
+                        }
+                    }
+                }
             }
         }
     }
 
-    // Update & draw agents
-    const converging = convergenceTarget && (now - convergenceTime) < 2000;
-    const convergeFactor = converging ? Math.min(1, (now - convergenceTime) / 500) : 0;
-    const disperseFactor = converging ? 0 : Math.min(1, (now - convergenceTime - 2000) / 1000);
+    ctx.putImageData(imgData, 0, 0);
 
-    for (let i = 0; i < agents.length; i++) {
-        const a = agents[i];
-
-        if (converging) {
-            // Pull toward center
-            a.x += (convergenceTarget.x - a.x) * 0.05 * convergeFactor;
-            a.y += (convergenceTarget.y - a.y) * 0.05 * convergeFactor;
-        } else {
-            // Orbit
-            a.baseAngle += a.orbitSpeed;
-            const targetX = Math.cos(a.baseAngle) * a.baseRadius;
-            const targetY = Math.sin(a.baseAngle) * a.baseRadius;
-            a.x += (targetX - a.x) * 0.02;
-            a.y += (targetY - a.y) * 0.02;
-        }
-
-        // Jitter
-        a.x += (Math.random() - 0.5) * 0.3;
-        a.y += (Math.random() - 0.5) * 0.3;
-
-        // Draw
-        const pulse = Math.sin(t * 3 + a.phase) * 0.3 + 0.7;
-        const alpha = a.brightness * pulse;
-        const size = a.size * (converging ? 1.5 : 1);
-
-        ctx.beginPath();
-        ctx.arc(cx + a.x, cy + a.y, size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(43, 59, 229, ${alpha.toFixed(2)})`;
-        ctx.fill();
-
-        // Glow for every 50th agent
-        if (i % 50 === 0) {
-            ctx.beginPath();
-            ctx.arc(cx + a.x, cy + a.y, size * 3, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(126, 184, 218, ${(alpha * 0.2).toFixed(2)})`;
-            ctx.fill();
-        }
-    }
-
-    // Center core glow
-    const coreGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, converging ? 40 : 15);
-    coreGlow.addColorStop(0, converging ? 'rgba(212, 98, 10, 0.6)' : 'rgba(43, 59, 229, 0.4)');
+    // Center core glow (drawn on top)
+    const coreSize = converging ? 60 : 20;
+    const coreGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, coreSize);
+    coreGlow.addColorStop(0, converging ? 'rgba(212, 98, 10, 0.7)' : 'rgba(43, 59, 229, 0.5)');
     coreGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
     ctx.beginPath();
-    ctx.arc(cx, cy, converging ? 40 : 15, 0, Math.PI * 2);
+    ctx.arc(cx, cy, coreSize, 0, Math.PI * 2);
     ctx.fillStyle = coreGlow;
     ctx.fill();
 
-    // Update stats
+    // Stats
     const ssActive = document.getElementById('ss-active');
     const ssExergy = document.getElementById('ss-exergy');
     const ssYield = document.getElementById('ss-yield');
     const ssLatency = document.getElementById('ss-latency');
-    if (ssActive) ssActive.textContent = converging ? Math.floor(AGENT_COUNT * (1 - convergeFactor * 0.3)) : AGENT_COUNT;
+    if (ssActive) ssActive.textContent = converging ? Math.floor(AGENT_COUNT * (1 - convF * 0.3)).toLocaleString() : AGENT_COUNT.toLocaleString();
     if (ssExergy) ssExergy.textContent = (99.7 - Math.sin(t) * 2).toFixed(1) + 'T';
     if (ssYield) ssYield.textContent = 'x' + Math.floor(142 + Math.sin(t * 0.5) * 20);
     if (ssLatency) ssLatency.textContent = (0.1 + Math.random() * 0.4).toFixed(1) + 'ms';
@@ -279,9 +274,8 @@ function show() {
     overlay.classList.add('swarm-visible');
     resizeCanvas();
     renderAgents();
-    logInterval = setInterval(spawnLog, 400);
-    // Initial burst of logs
-    for (let i = 0; i < 8; i++) setTimeout(spawnLog, i * 80);
+    logInterval = setInterval(spawnLog, 300);
+    for (let i = 0; i < 10; i++) setTimeout(spawnLog, i * 60);
 }
 
 function hide() {
@@ -291,11 +285,8 @@ function hide() {
     if (logInterval) clearInterval(logInterval);
 }
 
-function toggle() {
-    visible ? hide() : show();
-}
+function toggle() { visible ? hide() : show(); }
 
-// Expose
 window.CORTEX_SWARM_UI = { show, hide, toggle };
 
 })();

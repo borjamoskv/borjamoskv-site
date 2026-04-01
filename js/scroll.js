@@ -298,8 +298,8 @@ MOSKV.scroll = (() => {
         const midRails = document.querySelectorAll('.mid-scroll-track, .moltbook-clip-rail');
         midRails.forEach((rail, index) => {
             initInfiniteRail(rail, {
-                speed: index === 0 ? 0.22 : 0.16,
-                wheelFactor: index === 0 ? 0.82 : 0.88,
+                speed: index === 0 ? 0.45 : 0.32,
+                wheelFactor: index === 0 ? 1.2 : 1.0,
                 direction: index === 0 ? 1 : -1
             });
         });
@@ -431,7 +431,7 @@ MOSKV.scroll = (() => {
             // Velocity Skew
             let proxy = { skew: 0 };
             const skewSetter = gsap.quickSetter(hPanels, "skewX", "deg");
-            const clampSkew = gsap.utils.clamp(-12, 12); 
+            const clampSkew = gsap.utils.clamp(-18, 18); 
 
             ScrollTrigger.create({
                 onUpdate: (self) => {
@@ -455,9 +455,9 @@ MOSKV.scroll = (() => {
                 if (i === 0) return;
 
                 gsap.fromTo(panel, 
-                    { opacity: 0.3, scale: 0.92, filter: 'blur(8px)' },
+                    { opacity: 0, scale: 0.88, filter: 'blur(12px)', rotateY: -6 },
                     { 
-                        opacity: 1, scale: 1, filter: 'blur(0px)',
+                        opacity: 1, scale: 1, filter: 'blur(0px)', rotateY: 0,
                         ease: "power2.out",
                         scrollTrigger: {
                             trigger: panel,

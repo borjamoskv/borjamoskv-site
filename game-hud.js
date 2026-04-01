@@ -218,7 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
             { name: 'NIN', s1: 'INDUSTRIAL', v1: 'NOIR', s2: 'ESTRUCT.', v2: 'QUEBRADA' },
             { name: 'VETUSTA MORLA', s1: 'TENSIÓN', v1: 'LENTA', s2: 'ÉPICA', v2: 'OCULTA' },
             { name: 'MANOS DE TOPO', s1: 'LLANTO', v1: 'TÁCTICO', s2: 'DESAMOR', v2: 'CRÍTICO' },
-            { name: 'UNKNOWN_X', locked: true, s1: 'DATA', v1: 'CORRUPT', s2: 'ACCESS', v2: 'DENIED' },
+            { name: 'LAURA PAUSINI', s1: 'DRAMA', v1: 'ITALIANO', s2: 'SOLEDAD', v2: 'EXTREMA' },
             { name: 'UNKNOWN_Y', locked: true, s1: 'DATA', v1: 'CORRUPT', s2: 'ACCESS', v2: 'DENIED' },
             { name: 'UNKNOWN_Z', locked: true, s1: 'DATA', v1: 'CORRUPT', s2: 'ACCESS', v2: 'DENIED' },
             { name: 'UNKNOWN_Ω', locked: true, s1: 'DATA', v1: 'CORRUPT', s2: 'ACCESS', v2: 'DENIED' },
