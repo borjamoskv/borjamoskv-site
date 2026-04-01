@@ -1352,8 +1352,8 @@ html.inpage-video-open body {
   padding: 0.5rem 2%;
   z-index: 1000;
   background: rgba(10, 10, 10, 0.4);
-  backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
   border-bottom: 2px solid #00FFFF; /* Cubism neon border */
   border-right: 2px solid #FF003C;  /* Cubism neon border */
   border-radius: 4px;
@@ -9186,8 +9186,8 @@ body.game-mode-active > *:not(.video-background-system):not(.arcade-bezel):not(.
   inset: 0;
   z-index: 99990;
   background: rgba(10, 10, 10, 0.94);
-  backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   display: flex;
   flex-direction: column;
   opacity: 0;
