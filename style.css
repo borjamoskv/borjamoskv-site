@@ -9101,3 +9101,25 @@ body.cooldown-active .arcade-bezel .bezel-bottom span {
   color: rgba(126, 184, 218, 0.6);
   letter-spacing: 2px;
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   100% IMMERSIVE MODE: ELIMINATE ALL NOISE TEXT
+   ═══════════════════════════════════════════════════════════════════ */
+body.game-mode-active #manifesto,
+body.game-mode-active #about,
+body.game-mode-active #music,
+body.game-mode-active #horizontal-universe,
+body.game-mode-active .marquee-section,
+body.game-mode-active .newsletter-section,
+body.game-mode-active .site-footer,
+body.game-mode-active #players,
+body.game-mode-active #news-scroller,
+body.game-mode-active #cortex-term-container {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}

@@ -173,6 +173,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         pressStartBtn.addEventListener('click', () => {
             haptic([50, 100, 50, 100, 50]);
+
+            // 100% IMMERSIVE MODE (Fullscreen)
+            try {
+                if (!document.fullscreenElement) {
+                    if (document.documentElement.requestFullscreen) {
+                        document.documentElement.requestFullscreen().catch(err => console.log('Fullscreen denied:', err));
+                    } else if (document.documentElement.webkitRequestFullscreen) {
+                        document.documentElement.webkitRequestFullscreen();
+                    }
+                }
+            } catch(e) {}
+
             const loader = $('loader');
             _spawnParticleBurst(window.innerWidth / 2, window.innerHeight / 2, 60);
 
