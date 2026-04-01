@@ -375,8 +375,6 @@ window.MOSKV_ARCADE = {
         startListenTimer();
         // First blood on boot
         checkAchievements();
-        // Start ambient
-        if (window.CORTEX_AMBIENT) window.CORTEX_AMBIENT.start();
     }
 };
 
