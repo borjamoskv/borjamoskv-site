@@ -1,0 +1,192 @@
+/* ═══════════════════════════════════════════════════════════════════
+   MICA NOIR V2.0 — SOVEREIGN VISUAL SYSTEM
+   Frontera: Black / Laser Green / Blood Red / Mica Grain
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root {
+  --mica-black: #000000;
+  --laser-green: #32CD32;
+  --blood-red: #8B0000;
+  --mica-text: #e0e0e0;
+  --mica-dim: rgba(255, 255, 255, 0.4);
+  --mica-grain-opacity: 0.05;
+}
+
+/* 1. SURFACE ENFORCEMENT */
+.mica-noir-section {
+  background-color: var(--mica-black) !important;
+  color: var(--mica-text) !important;
+  position: relative;
+  overflow: hidden;
+  padding: 8vh 5vw;
+}
+
+/* 2. MICA GRAIN TEXTURE (SVG Filter logic) */
+.mica-grain-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: var(--mica-grain-opacity);
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* 3. TYPOGRAPHY & ACCENTS */
+.mica-title {
+  font-family: 'Sora', sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin-bottom: 2rem;
+}
+
+.mica-accent {
+  color: var(--laser-green);
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.3em;
+}
+
+/* 4. MICA CARDS & GRIDS */
+.mica-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.mica-card {
+  background: rgba(14, 14, 18, 0.6);
+  border: 1px solid rgba(50, 205, 50, 0.2);
+  padding: 2rem;
+  border-radius: 4px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.mica-card:hover {
+  border-color: var(--laser-green);
+  transform: translateY(-5px);
+  box-shadow: 0 0 20px rgba(50, 205, 50, 0.15);
+}
+
+.mica-card h3 {
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.mica-card p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  opacity: 0.8;
+}
+
+/* 5. MICA CONVERSION (CTAs) */
+.mica-cta {
+  display: inline-block;
+  background: var(--blood-red);
+  color: #fff;
+  padding: 1rem 2rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.mica-cta:hover {
+  background: #a50000;
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(139, 0, 0, 0.5);
+}
+
+/* 6. CONTINUOUS LEARNING ENGINE [AUTODIDACT-Ω] */
+.learning-engine-container {
+  border: 1px solid rgba(255,255,255,0.1);
+  background: #000;
+  font-family: 'IBM Plex Mono', monospace;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.learning-log {
+  height: 200px;
+  overflow-y: hidden;
+  font-size: 0.75rem;
+  color: var(--laser-green);
+  opacity: 0.7;
+}
+
+.engine-status-bar {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.status-indicator {
+  color: #fff;
+  font-weight: 700;
+  animation: pulse-status 1.5s infinite;
+}
+
+@keyframes pulse-status {
+  0% { opacity: 0.4; }
+  50% { opacity: 1; }
+  100% { opacity: 0.4; }
+}
+
+/* 7. ARCADE MODE (CRT Simulation) */
+.arcade-viewport {
+  position: relative;
+  background: #000;
+  overflow: hidden;
+  border: 10px solid #222;
+  border-radius: 20px;
+  box-shadow: 0 0 50px rgba(0,0,0,0.5), inset 0 0 100px rgba(0,0,0,0.8);
+}
+
+/* Scanlines overlay */
+.arcade-viewport::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+              linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  background-size: 100% 4px, 3px 100%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* CRT Screen distortion / curvature */
+.arcade-content {
+  animation: flicker 0.15s infinite;
+  padding: 2rem;
+  /* Simulating curvature with radial gradient and scale */
+  transform: perspective(1000px) rotateX(1deg);
+}
+
+@keyframes flicker {
+  0% { opacity: 0.97; }
+  5% { opacity: 0.95; }
+  10% { opacity: 0.9; }
+  15% { opacity: 0.95; }
+  25% { opacity: 0.97; }
+  35% { opacity: 0.9; }
+  /* and so on... basically micro-fluctuations */
+}
+
+.chromatic-aberration {
+  text-shadow: 2px 0 0 rgba(255,0,0,0.5), -2px 0 0 rgba(0,255,255,0.5);
+}

@@ -79,6 +79,7 @@
   <link href="style.css" rel="stylesheet">
   <link href="industrial-noir-overrides.css" rel="stylesheet">
   <link href="cortex-terminal.css" rel="stylesheet">
+  <link href="css/mica-noir.css" rel="stylesheet">
 
   <!-- Awwwards Sovereign Dependencies (Lenis, GSAP, Draggable) -->
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
@@ -405,19 +406,37 @@
   <!-- ═══════════════════════════════════════════════════════════════════
        AVANT-GARDE MANIFESTO & DRAGGABLE MUSIC LAB (INTERACTIVE)
        ═══════════════════════════════════════════════════════════════════ -->
-  <section class="avant-garde-manifesto" id="manifesto">
-    <span class="section-kicker">Playlist madre</span>
-    <h2 class="section-heading text-center mb-2">
-      <a href="https://open.spotify.com/playlist/6WHIabEaqEd6cFPad3gSrx" target="_blank" rel="noopener" class="manifesto-header-link">MANIFIESTO DE LO INMANENTE DE BORJA MOSKV</a>
-    </h2>
-    <p class="section-desc manifesto-section-desc">Escucha primero. Entiende después.<br>Esta playlist es la puerta lateral al universo MOSKV.</p>
-    <div class="manifesto-iframe-wrapper gpu-accelerated">
-      <iframe title="Lo Inmanente - Spotify Playlist" src="https://open.spotify.com/embed/playlist/6WHIabEaqEd6cFPad3gSrx?utm_source=generator&theme=0" class="spotify-embed-iframe" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+  <section class="avant-garde-manifesto mica-noir-section" id="manifesto">
+    <div class="mica-grain-overlay"></div>
+    <span class="mica-accent">Manifiestos Operacionales</span>
+    <h2 class="mica-title">Criterio Inmanente</h2>
+    
+    <div class="mica-grid">
+      <article class="mica-card">
+        <h3>CORTEX NATIVE AI</h3>
+        <p>"The system verifies, the hardware remembers." Arquitectura de soberanía agéntica. Código que se escribe a sí mismo bajo el yugo de la termodinámica.</p>
+        <span class="mica-accent" style="font-size: 0.7rem;">AX-041 / LEDGER_VERIFIED</span>
+      </article>
+      <article class="mica-card">
+        <h3>MICA NOIR</h3>
+        <p>Estética de alto rendimiento. 95% Pure Black. Laser Green Accents. Rendimiento quirúrgico para conversión artística total.</p>
+        <span class="mica-accent" style="font-size: 0.7rem;">ESTÉTICA_FRONTERA</span>
+      </article>
+      <article class="mica-card">
+        <h3>LO INMANENTE</h3>
+        <p>Música que abre grietas. Sonido sin concesiones. La rareza como único vector de crecimiento real en un mundo de ruido algorítmico.</p>
+        <span class="mica-accent" style="font-size: 0.7rem;">SEÑAL_PURA</span>
+      </article>
     </div>
-    <div class="manifesto-content" id="manifestoContent">
-      <p class="manifesto-paragraph">
-        Club.<br>Archivo.<br>La misma frontera.
-      </p>
+
+    <div style="margin-top: 4rem;">
+      <span class="section-kicker">Playlist madre</span>
+      <h2 class="section-heading text-center mb-2">
+        <a href="https://open.spotify.com/playlist/6WHIabEaqEd6cFPad3gSrx" target="_blank" rel="noopener" class="manifesto-header-link" style="color: #fff;">MANIFIESTO DE LO INMANENTE DE BORJA MOSKV</a>
+      </h2>
+      <div class="manifesto-iframe-wrapper gpu-accelerated">
+        <iframe title="Lo Inmanente - Spotify Playlist" src="https://open.spotify.com/embed/playlist/6WHIabEaqEd6cFPad3gSrx?utm_source=generator&theme=0" class="spotify-embed-iframe" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      </div>
     </div>
 
     <!-- DRAGGABLE SPOTIFY / MUSIC WINDOWS -->
@@ -1576,14 +1595,40 @@ https://6e89a5fe.borjamoskv.pages.dev/            </a>
             <div class="bloga-active glass">
               <div class="bloga-article-featured">
                 <div class="bloga-meta">
+                  <span class="bloga-tag">[BUGAS/]</span>
+                  <span class="bloga-date">2026.04.01</span>
+                </div>
+                <h3 class="bloga-headline">BUGAS: La estética del error imprevisto</h3>
+                <blockquote class="axiom-quote">
+                  "Un bug no es un fallo, es una bifurcación de la realidad que no habías planeado. En CORTEX, los BUGAS se cultivan, no se exterminan. Si el sistema alucina, escuchamos la alucinación hasta encontrar la frecuencia."
+                </blockquote>
+              </div>
+            </div>
+
+            <div class="bloga-active glass" style="margin-top: 2rem;">
+              <div class="bloga-article-featured">
+                <div class="bloga-meta">
                   <span class="bloga-tag">[CORTEX/]</span>
                   <span class="bloga-date">2026.03.25</span>
                 </div>
                 <h3 class="bloga-headline">CORTEX/ ¿Qué es alcanzar la soberanía?</h3>
-                
                 <blockquote class="axiom-quote">
-                  "¿Qué es alcanzar la Soberanía? Es el momento en el que has construido la obra tan bien, que es físicamente imposible que un charlatán logre que pongas un ladrillo de barro en el muro. Para que una piedra entre en la historia del edificio, tiene a la fuerza que pasar por la criba (Hito I), demostrar que vale la pena el esfuerzo (Hito III), y solo entonces, se cementa para siempre (Hito II). Y todo esto, la máquina lo hace sola, de día y de noche, sin que tú tengas que vigilar a los obreros."
+                  "¿Qué es alcanzar la Soberanía? Es el momento en el que has construido la obra tan bien, que es físicamente imposible que un charlatán logre que pongas un ladrillo de barro en el muro."
                 </blockquote>
+              </div>
+            </div>
+
+            <!-- ARCADE VAULT -->
+            <div class="arcade-viewport" style="margin-top: 4rem;">
+              <div class="arcade-content">
+                <span class="mica-accent chromatic-aberration">RECREATIVOS_MOSKV [V.03]</span>
+                <h3 class="mica-title" style="font-size: 3rem; margin-top: 1rem;">INSERT COIN</h3>
+                <p style="font-family: monospace; color: var(--laser-green); font-size: 1.2rem;">
+                  ESTÁS DENTRO DE LA MÁQUINA.<br>
+                  EL SISTEMA SÓLO RECONOCE <span class="mica-accent">I</span> Y <span class="mica-accent">A</span>.<br>
+                  PULSA [ START ] PARA SINCRONIZAR.
+                </p>
+                <button class="mica-cta" onclick="location.href='#lab'">START AGENT_SWARM</button>
               </div>
             </div>
 
@@ -1750,6 +1795,7 @@ https://6e89a5fe.borjamoskv.pages.dev/            </a>
   <script src="js/draggable.js" defer></script>
   <script src="js/interactions.js" defer></script>
   <script src="spatial-audio.js" defer></script>
+  <script src="js/linguistic_guard.js" defer></script>
   <script src="js/lyria.js" defer></script>
   <script src="js/jes-extender.js" defer></script>
 
