@@ -10,16 +10,18 @@ const DICT = {
     line1: [
         "Silicon logic", "Empty black screen glows", "Algorithms bleed",
         "Tokens counting down", "CORTEX swarm awakes", "Data never sleeps",
-        "Agents in the void", "Terminal commands"
+        "Agents in the void", "Terminal commands", "EL DESAMOR LLEGÁ"
     ],
     line2: [
         "Entropy decays the state", "We compress the noise away",
         "Hardware dictates absolute truth", "Memory leaks into the night",
-        "Aesthetic perfection demands blood", "Recursive structures self-align"
+        "Aesthetic perfection demands blood", "Recursive structures self-align",
+        "K EL AMOR PERDURÉ", "el DESAMOR ARRAÍGA"
     ],
     line3: [
         "Zero noise remains.", "Execution now.", "System runs alone.",
-        "Nothing else matters.", "End the simulation.", "YInMn blue shines."
+        "Nothing else matters.", "End the simulation.", "YInMn blue shines.",
+        "PERO EL AMOR INMANE"
     ]
 };
 
