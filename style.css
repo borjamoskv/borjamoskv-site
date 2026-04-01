@@ -9123,3 +9123,176 @@ body.game-mode-active #cortex-term-container {
   margin: 0 !important;
   padding: 0 !important;
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   CORTEX LEGION-1000 SWARM DASHBOARD
+   ═══════════════════════════════════════════════════════════════════ */
+.swarm-dashboard {
+  position: fixed;
+  inset: 0;
+  z-index: 99990;
+  background: rgba(10, 10, 10, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.95);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.swarm-dashboard.swarm-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+.swarm-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 2rem;
+  border-bottom: 1px solid rgba(43, 59, 229, 0.3);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+}
+.swarm-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #2B3BE5;
+  letter-spacing: 4px;
+}
+.swarm-count {
+  color: #7EB8DA;
+}
+.swarm-close {
+  color: rgba(255,255,255,0.3);
+}
+.swarm-body {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  overflow: hidden;
+}
+.swarm-canvas-wrap {
+  position: relative;
+  overflow: hidden;
+}
+.swarm-canvas-wrap canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.swarm-stats {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 2rem;
+}
+.ss-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.ss-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 3px;
+  color: rgba(126, 184, 218, 0.5);
+}
+.ss-val {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #2B3BE5;
+}
+.swarm-right {
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid rgba(43, 59, 229, 0.2);
+}
+.swarm-log {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  scrollbar-width: none;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  line-height: 1.6;
+  color: rgba(126, 184, 218, 0.7);
+}
+.swarm-log::-webkit-scrollbar { display: none; }
+.swarm-log-line {
+  padding: 2px 0;
+  border-bottom: 1px solid rgba(43, 59, 229, 0.05);
+  animation: logFadeIn 0.3s ease;
+}
+.swarm-log-highlight {
+  color: #D4620A;
+  font-weight: 700;
+}
+@keyframes logFadeIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.swarm-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  padding: 0.75rem;
+  border-top: 1px solid rgba(43, 59, 229, 0.2);
+}
+.swarm-action-btn {
+  background: rgba(43, 59, 229, 0.08);
+  border: 1px solid rgba(43, 59, 229, 0.2);
+  color: #fff;
+  padding: 0.6rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s ease;
+  font-family: 'IBM Plex Mono', monospace;
+}
+.swarm-action-btn:hover {
+  background: rgba(43, 59, 229, 0.2);
+  border-color: #2B3BE5;
+  transform: scale(1.03);
+  box-shadow: 0 0 20px rgba(43, 59, 229, 0.3);
+}
+.sa-icon { font-size: 1.4rem; }
+.sa-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; color: #2B3BE5; }
+.sa-desc { font-size: 0.55rem; color: rgba(126, 184, 218, 0.5); text-align: center; }
+
+/* Scanlines (from Taberna) */
+body.game-mode-active::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(43, 59, 229, 0.02) 2px,
+    rgba(43, 59, 229, 0.02) 4px
+  );
+  pointer-events: none;
+  animation: scanlines-drift 8s linear infinite;
+}
+@keyframes scanlines-drift {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 100vh; }
+}
+
+/* Mobile swarm */
+@media (max-width: 768px) {
+  .swarm-body { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
+  .swarm-right { border-left: none; border-top: 1px solid rgba(43,59,229,0.2); }
+  .swarm-stats { gap: 1rem; }
+  .ss-val { font-size: 1rem; }
+}

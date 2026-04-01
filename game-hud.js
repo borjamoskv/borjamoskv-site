@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Keyboard Hints
     const kbHints = document.createElement('div');
     kbHints.className = 'kb-hints';
-    kbHints.textContent = '[SPACE] MUTE · [N/→] NEXT · [V/↑] VAULT · [F] FILTER';
+    kbHints.textContent = '[SPACE] MUTE · [N] NEXT · [V] VAULT · [F] FILTER · [A] AGENTS';
     kbHints.style.display = 'none';
     document.body.appendChild(kbHints);
 
@@ -396,6 +396,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 haptic([15, 30]);
                 if (window.MOSKV_ARCADE) window.MOSKV_ARCADE.onFilterUsed();
                 break;
+            case 'a':
+                if (window.CORTEX_SWARM_UI) window.CORTEX_SWARM_UI.toggle();
+                haptic([20, 40, 20]); break;
         }
     });
 
