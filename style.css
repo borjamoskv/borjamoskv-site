@@ -43,8 +43,8 @@ body {
   --glass-border: rgba(200, 200, 220, 0.06);
   
   /* TYPOGRAPHY */
-  --font-display: 'Space Grotesk', system-ui, sans-serif;
-  --font-body: 'Inter', system-ui, sans-serif;
+  --font-display: 'Outfit', 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Outfit', 'Inter', system-ui, sans-serif;
   --mouse-x: 50%;
   --mouse-y: 50%;
   --bg-atmosphere:
@@ -3370,7 +3370,7 @@ body.is-dragging-window iframe {
 
 .shock-wrapper:hover .glitch-mega {
   animation: glitch-anim-mega 0.2s steps(2, end) infinite;
-  color: #ff003c;
+  color: #2B3BE5;
   transform: scale(1.05) skew(-10deg);
 }
 
@@ -3388,19 +3388,19 @@ body.is-dragging-window iframe {
 
 .shock-wrapper:hover .glitch-mega::before {
   opacity: 1;
-  color: #0ff;
+  color: #2B3BE5;
   animation: glitch-anim-mega-2 0.3s steps(3, end) infinite reverse;
   left: 10px;
-  text-shadow: -2px 0 #ccff00;
+  text-shadow: -2px 0 #FF003C;
   clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%);
 }
 
 .shock-wrapper:hover .glitch-mega::after {
   opacity: 1;
-  color: #ccff00;
+  color: #FF003C;
   animation: glitch-anim-mega 0.4s steps(2, end) infinite reverse;
   left: -10px;
-  text-shadow: -2px 0 #e0e0e0;
+  text-shadow: -2px 0 #2B3BE5;
   clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%);
 }
 
