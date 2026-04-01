@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="bezel-top"><span>MOSKV ARCADE SYSTEM</span></div>
         <div class="bezel-left"></div>
         <div class="bezel-right"></div>
-        <div class="bezel-bottom"><span>INSERT SIGNAL TO CONTINUE</span></div>
+        <div class="bezel-bottom"><span>EL ARTE NO TE DEBE NADA</span></div>
     `;
     document.body.appendChild(bezel);
 
@@ -144,9 +144,9 @@ document.addEventListener('DOMContentLoaded', () => {
             '> CORTEX_v7.0 ARCADE BOOT...',
             '> AUTODJ ENGINE: ARMED',
             '> EXERGY: 100.00T',
-            '> VOWEL_CYCLE: I→O→A [21s]',
             '> VISUAL_MODES: 5 ARMED',
             '> ZERO NOISE ENFORCED',
+            '> "EL ARTE NO TE DEBE NADA"',
             ''
         ];
         const bootLog = document.createElement('div');

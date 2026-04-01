@@ -71,6 +71,104 @@ if (hour >= 2 && hour < 5 && !state.secretsFound.includes('night_owl')) {
 
 saveState(state);
 
+// ═══════════════════════════════════════════════════
+// PER-VISIT GENERATIVE SYSTEM
+// Palette + Music + Structure mutate every visit
+// ═══════════════════════════════════════════════════
+
+// Seeded PRNG from visit count (deterministic per visit)
+function seededRandom(seed) {
+    let s = seed;
+    return function() {
+        s = (s * 16807 + 0) % 2147483647;
+        return (s - 1) / 2147483646;
+    };
+}
+const rng = seededRandom(state.visits * 7919 + 31);
+
+// 1. PALETTE ROTATION — YInMn Blue always dominant, accents rotate
+const PALETTES = [
+    { name: 'COBALT_ELECTRIC', primary: '#2B3BE5', secondary: '#D4620A', tertiary: '#7EB8DA', glow: 'rgba(43,59,229,0.4)' },
+    { name: 'YINMN_ROSE',     primary: '#3B5FE0', secondary: '#E8B4B8', tertiary: '#B8A9C9', glow: 'rgba(59,95,224,0.4)' },
+    { name: 'VOID_MINT',      primary: '#1E3A8A', secondary: '#A8D5BA', tertiary: '#F5CBA7', glow: 'rgba(30,58,138,0.4)' },
+    { name: 'NEON_INDIGO',    primary: '#4F46E5', secondary: '#FBBF24', tertiary: '#6EE7B7', glow: 'rgba(79,70,229,0.4)' },
+    { name: 'DEEP_VERMILLION',primary: '#2B3BE5', secondary: '#FF6B6B', tertiary: '#C4B5FD', glow: 'rgba(43,59,229,0.4)' },
+    { name: 'ARCTIC_BLUE',    primary: '#0EA5E9', secondary: '#FB923C', tertiary: '#A5F3FC', glow: 'rgba(14,165,233,0.4)' },
+    { name: 'MOSKV_GOLD',     primary: '#3B5FE0', secondary: '#D4A017', tertiary: '#FDE68A', glow: 'rgba(59,95,224,0.4)' },
+    { name: 'PHANTOM_VIOLET', primary: '#6366F1', secondary: '#EC4899', tertiary: '#DDD6FE', glow: 'rgba(99,102,241,0.4)' },
+];
+const currentPalette = PALETTES[state.visits % PALETTES.length];
+
+function applyPalette(p) {
+    const root = document.documentElement;
+    root.style.setProperty('--accent-primary', p.primary);
+    root.style.setProperty('--accent-secondary', p.secondary);
+    root.style.setProperty('--accent-blue', p.primary);
+    root.style.setProperty('--narnanka', p.secondary);
+    // Update glow references
+    root.style.setProperty('--visit-glow', p.glow);
+    root.style.setProperty('--visit-tertiary', p.tertiary);
+    // Update bezel colors
+    document.querySelectorAll('.bezel-top span').forEach(el => el.style.color = p.primary + '88');
+    document.querySelectorAll('.bezel-bottom span').forEach(el => el.style.color = p.secondary + '66');
+    // Update lyzer panel borders
+    const styleyzer = document.getElementById('styleyzer');
+    if (styleyzer) styleyzer.style.borderLeftColor = p.primary;
+    const playlyzer = document.getElementById('playlyzer');
+    if (playlyzer) playlyzer.style.borderRightColor = p.secondary;
+}
+
+// 2. MUSIC SHUFFLE — different starting sequence each visit
+function shuffleMusicOrder() {
+    if (window.djAesthetic && window.djAesthetic.mixSequence) {
+        const seq = window.djAesthetic.mixSequence;
+        // Fisher-Yates with seeded RNG
+        for (let i = seq.length - 1; i > 0; i--) {
+            const j = Math.floor(rng() * (i + 1));
+            [seq[i], seq[j]] = [seq[j], seq[i]];
+        }
+    }
+}
+
+// 3. STRUCTURE MUTATION — rotate which clips are featured, vault grid style
+const GRID_LAYOUTS = [
+    'repeat(auto-fill, minmax(250px, 1fr))',  // Default
+    'repeat(auto-fill, minmax(180px, 1fr))',  // Denser
+    'repeat(auto-fill, minmax(320px, 1fr))',  // Wider
+    'repeat(3, 1fr)',                          // Fixed 3-col
+    'repeat(2, 1fr)',                          // Fixed 2-col
+];
+
+function mutateStructure() {
+    // Rotate vault grid
+    const vault = document.querySelector('.vault-grid');
+    if (vault) {
+        vault.style.gridTemplateColumns = GRID_LAYOUTS[state.visits % GRID_LAYOUTS.length];
+    }
+    // Randomize featured strip order
+    const stripEl = document.querySelector('.featured-strip');
+    if (stripEl) {
+        const chips = Array.from(stripEl.children);
+        for (let i = chips.length - 1; i > 0; i--) {
+            const j = Math.floor(rng() * (i + 1));
+            stripEl.appendChild(chips[j]);
+        }
+    }
+}
+
+// Apply palette immediately on DOM load
+document.addEventListener('DOMContentLoaded', () => {
+    applyPalette(currentPalette);
+    // Log palette to console for artistry
+    console.log(`%c MOSKV ARCADE — Visit #${state.visits} — Palette: ${currentPalette.name} `,
+        `background: ${currentPalette.primary}; color: #fff; font-size: 14px; padding: 4px 8px;`);
+    // Defer music+structure mutation slightly
+    setTimeout(() => {
+        shuffleMusicOrder();
+        mutateStructure();
+    }, 500);
+});
+
 // ═══ ACHIEVEMENT TOAST UI ═══
 function showAchievement(achievement) {
     if (state.achievementsUnlocked.includes(achievement.id)) return;
