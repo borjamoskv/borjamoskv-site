@@ -559,6 +559,19 @@ section {
   padding: 8rem 0; /* Expanded padding for cinematic breathing room */
   scroll-margin-top: 60px; /* Offset for fixed nav */
   z-index: 2; /* Ensure sections sit above ambient background */
+}
+
+/* Kinetic contract:
+   `.fx-kinetic-section` is the only owner of section-level transform/filter physics.
+   Any phase-specific effect must update the variables below instead of overwriting
+   `transform` or `filter` directly on the same selector. */
+.fx-kinetic-section {
+  --section-gravity-offset: calc((var(--cortex-gravity, 9.8) - 9.8) * 4px);
+  --section-energy-scale: 1;
+  --section-energy-z: 0px;
+  --section-energy-brightness: 1;
+  --section-energy-contrast: 1;
+  --section-energy-saturate: 1;
   
   /* CORTEX AWWWARDS-100: Global DOM-to-GPU Physics Sync */
   /* Animate smooth transitions when JS updates the gravity variable based on Audio Buildups/Drops */
@@ -567,11 +580,33 @@ section {
               opacity 0.8s ease-out;
               
   /* Apply the gravity offset mathematically. Negative gravity (-9.8) means FLOAT UP. Positive means FLOAT DOWN. */
-  transform: translateY(calc((var(--cortex-gravity, 9.8) - 9.8) * 4px)) 
-             scale(calc(1 - (var(--cortex-viscosity, 0.3) * 0.015)));
+  transform: translate3d(0, var(--section-gravity-offset), var(--section-energy-z))
+             scale(calc((1 - (var(--cortex-viscosity, 0.3) * 0.015)) * var(--section-energy-scale)));
   
   /* Extreme viscosity adds turbulence blur during Peak / Buildup */
-  filter: blur(calc((var(--cortex-viscosity, 0.3) - 0.3) * 6px));
+  filter:
+    blur(calc((var(--cortex-viscosity, 0.3) - 0.3) * 6px))
+    brightness(var(--section-energy-brightness))
+    contrast(var(--section-energy-contrast))
+    saturate(var(--section-energy-saturate));
+}
+
+.fx-debug-badge {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 9999;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid rgba(126, 231, 216, 0.25);
+  border-radius: 999px;
+  background: rgba(5, 10, 18, 0.84);
+  color: rgba(244, 246, 250, 0.9);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+  pointer-events: none;
 }
 
 body::before,

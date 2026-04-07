@@ -5,6 +5,67 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  const root = document.documentElement;
+  const kineticSections = document.querySelectorAll('section:not([data-kinetic-skip="true"])');
+  kineticSections.forEach((section) => section.classList.add('fx-kinetic-section'));
+
+  const DEBUG_KEY = 'moskv_fx_debug';
+  let debugBadge = null;
+  let debugTimer = 0;
+
+  const isDebugEnabled = () => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('fxdebug') === '1' || window.localStorage.getItem(DEBUG_KEY) === '1';
+  };
+
+  const setDebugEnabled = (enabled) => {
+    window.localStorage.setItem(DEBUG_KEY, enabled ? '1' : '0');
+  };
+
+  const updateDebugBadge = () => {
+    if (!debugBadge) return;
+    const styles = getComputedStyle(root);
+    const phase = root.dataset.energyPhase || 'warmup';
+    const gravity = styles.getPropertyValue('--cortex-gravity').trim() || '9.8';
+    const viscosity = styles.getPropertyValue('--cortex-viscosity').trim() || '0.3';
+    debugBadge.textContent = `FX ${phase.toUpperCase()} | g=${gravity} | mu=${viscosity} | sections=${kineticSections.length}`;
+  };
+
+  const mountDebugBadge = () => {
+    if (debugBadge) return;
+    debugBadge = document.createElement('div');
+    debugBadge.className = 'fx-debug-badge';
+    document.body.appendChild(debugBadge);
+    updateDebugBadge();
+    debugTimer = window.setInterval(updateDebugBadge, 200);
+  };
+
+  const unmountDebugBadge = () => {
+    if (debugTimer) {
+      window.clearInterval(debugTimer);
+      debugTimer = 0;
+    }
+    if (debugBadge) {
+      debugBadge.remove();
+      debugBadge = null;
+    }
+  };
+
+  if (isDebugEnabled()) {
+    mountDebugBadge();
+  }
+
+  document.addEventListener('keydown', (event) => {
+    if (!event.altKey || event.key.toLowerCase() !== 'g') return;
+    const nextEnabled = !isDebugEnabled();
+    setDebugEnabled(nextEnabled);
+    if (nextEnabled) {
+      mountDebugBadge();
+    } else {
+      unmountDebugBadge();
+    }
+  });
+
   // P0: Bail on mobile/touch — zero overhead
   if (matchMedia('(pointer: coarse)').matches) {
     console.log('[KINETIC] Touch device detected. Physics disabled for performance.');
@@ -84,5 +145,5 @@ document.addEventListener('DOMContentLoaded', () => {
     el.addEventListener('mouseleave', releasePhysics);
   });
 
-  console.log(`[AESTHETIC-FOUNDRY] 120Hz Magnetic Kinematics injected on ${kineticSurfaces.length} surfaces.`);
+  console.log(`[AESTHETIC-FOUNDRY] 120Hz Magnetic Kinematics injected on ${kineticSurfaces.length} surfaces. Section physics owner: ${kineticSections.length} fx-kinetic sections.`);
 });

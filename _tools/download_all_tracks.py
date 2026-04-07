@@ -1,6 +1,7 @@
-import subprocess
 import os
 import re
+import shutil
+import subprocess
 
 with open('data.js', 'r') as f:
     content = f.read()
@@ -30,15 +31,19 @@ for line in lines:
 
 print(f"Total unique tracks to ensure downloaded: {len(ids_to_download)}")
 
+yt_dlp_bin = os.environ.get("YT_DLP_BIN") or shutil.which("yt-dlp")
+if not yt_dlp_bin:
+    raise SystemExit("yt-dlp not found. Install it or set YT_DLP_BIN.")
+
 for yt_id in ids_to_download:
     file_path = f"audio/{yt_id}.webm"
     if not os.path.exists(file_path):
         print(f"Downloading {yt_id}...")
         try:
             subprocess.run([
-                '/Users/borjafernandezangulo/30_CORTEX/.venv/bin/yt-dlp', 
-                '-f', '251', 
-                '-o', f"audio/{yt_id}.%(ext)s", 
+                yt_dlp_bin,
+                '-f', '251',
+                '-o', f"audio/{yt_id}.%(ext)s",
                 f"https://www.youtube.com/watch?v={yt_id}"
             ], check=True)
         except subprocess.CalledProcessError:

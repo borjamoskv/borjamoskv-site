@@ -11,8 +11,18 @@ MOSKV.lyria = (() => {
     'use strict';
 
     // --- Configuration ---
-    const WS_URL = 'ws://localhost:8000/ws/generate';
+    const LOCAL_WS_URL = 'ws://localhost:8000/ws/generate';
     const SAMPLE_RATE = 24000; // Lyria default
+    const LOCAL_HOSTS = new Set(['localhost', '127.0.0.1']);
+
+    const getConfiguredWsUrl = () => {
+        const runtime = globalThis.MOSKV_RUNTIME || globalThis.__BORJA_RUNTIME__ || null;
+        const configured = runtime?.lyriaWsUrl;
+        return typeof configured === 'string' && configured.trim() ? configured.trim() : null;
+    };
+
+    const resolveWsUrl = () => getConfiguredWsUrl()
+        || (LOCAL_HOSTS.has(globalThis.location.hostname) ? LOCAL_WS_URL : null);
 
     // --- State ---
     let socket = null;
@@ -114,10 +124,20 @@ MOSKV.lyria = (() => {
     };
 
     const connect = () => {
-        if (socket) socket.close();
         if (!ui.statusText) return;
+        if (socket?.readyState === WebSocket.OPEN || socket?.readyState === WebSocket.CONNECTING) {
+            return;
+        }
+
+        const wsUrl = resolveWsUrl();
+        if (!wsUrl) {
+            log('Lyria queda en modo local opcional. No hay engine configurado para este entorno.', 'warn');
+            ui.statusText.textContent = 'STATUS: LOCAL ONLY';
+            ui.statusText.classList.remove('neon-green');
+            return;
+        }
         
-        socket = new WebSocket(WS_URL);
+        socket = new WebSocket(wsUrl);
         socket.binaryType = 'arraybuffer';
 
         socket.onopen = () => {
@@ -155,6 +175,9 @@ MOSKV.lyria = (() => {
     const startGeneration = () => {
         if (!socket || socket.readyState !== WebSocket.OPEN) {
             connect();
+            if (!socket || socket.readyState !== WebSocket.CONNECTING) {
+                return;
+            }
             setTimeout(startGeneration, 500);
             return;
         }

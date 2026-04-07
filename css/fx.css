@@ -496,17 +496,21 @@ nav, .nav-wrapper, .site-nav {
    15. v3: SECTION Depth Breathing
    ═══════════════════════════════════════════════════════════════════ */
 
-[data-energy-phase="buildup"] section {
-    transform: translateZ(0) scale(1.003);
-    filter: brightness(1.02);
+[data-energy-phase="buildup"] .fx-kinetic-section {
+    --section-energy-scale: 1.003;
+    --section-energy-z: 0px;
+    --section-energy-brightness: 1.02;
 }
 
-[data-energy-phase="peak"] section {
-    transform: translateZ(0) scale(0.998);
-    filter: contrast(1.05);
+[data-energy-phase="peak"] .fx-kinetic-section {
+    --section-energy-scale: 0.998;
+    --section-energy-z: 0px;
+    --section-energy-contrast: 1.05;
 }
 
-[data-energy-phase="cooldown"] section {
-    transform: translateZ(0) scale(1);
-    filter: brightness(0.98) saturate(0.92);
+[data-energy-phase="cooldown"] .fx-kinetic-section {
+    --section-energy-scale: 1;
+    --section-energy-z: 0px;
+    --section-energy-brightness: 0.98;
+    --section-energy-saturate: 0.92;
 }

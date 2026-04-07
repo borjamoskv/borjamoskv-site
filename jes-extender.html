@@ -36,7 +36,7 @@
       "@type": "Person",
       "name": "Borja Moskv"
     },
-    "description": "Interfaz web para construir extendeds de temas de electronica con prompts dobles, morph weight y salida WebSocket."
+    "description": "Interfaz web para construir extendeds de temas de electronica con prompts dobles, morph weight y runtime local opcional."
   }
   </script>
 
@@ -72,14 +72,14 @@
           <span>Extended edits</span>
           <span>Intros / breakdowns</span>
           <span>Tool versions</span>
-          <span>WebSocket engine</span>
+          <span>Runtime local opcional</span>
         </div>
       </div>
 
       <aside class="jes-app-runtime glass">
         <span class="jes-runtime-label">Runtime</span>
-        <strong>Necesita engine activo en <code>ws://localhost:8001/ws/generate</code></strong>
-        <p>La UI ya queda lista para coger un tema, abrirle aire y sacar una version mas larga, mas util y mas club si el backend esta encendido.</p>
+        <strong>Admite bridge local opcional para extraer audio en tiempo real</strong>
+        <p>La UI queda publicable y operativa como demo. Si detecta un engine local o una URL runtime configurada, puede sacar una version mas larga, mas util y mas club.</p>
         <div class="jes-runtime-grid" aria-label="Estado de Jes-Extender">
           <article class="jes-runtime-card">
             <span class="jes-runtime-card-label">Engine</span>

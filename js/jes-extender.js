@@ -11,8 +11,18 @@ MOSKV.jesExtender = (() => {
     'use strict';
 
     // --- Configuration ---
-    const WS_URL = 'ws://localhost:8001/ws/generate';
+    const LOCAL_WS_URL = 'ws://localhost:8001/ws/generate';
     const SAMPLE_RATE = 24000;
+    const LOCAL_HOSTS = new Set(['localhost', '127.0.0.1']);
+
+    const getConfiguredWsUrl = () => {
+        const runtime = globalThis.MOSKV_RUNTIME || globalThis.__BORJA_RUNTIME__ || null;
+        const configured = runtime?.jesExtenderWsUrl;
+        return typeof configured === 'string' && configured.trim() ? configured.trim() : null;
+    };
+
+    const resolveWsUrl = () => getConfiguredWsUrl()
+        || (LOCAL_HOSTS.has(globalThis.location.hostname) ? LOCAL_WS_URL : null);
 
     // --- State ---
     let socket = null;
@@ -50,7 +60,7 @@ MOSKV.jesExtender = (() => {
                 tone: statusTone,
                 isPlaying,
                 socketReadyState: socket ? socket.readyState : WebSocket.CLOSED,
-                wsUrl: WS_URL
+                wsUrl: resolveWsUrl()
             }
         }));
     };
@@ -156,6 +166,18 @@ MOSKV.jesExtender = (() => {
             return;
         }
         if (!ui.statusText) return;
+        
+        const wsUrl = resolveWsUrl();
+        if (!wsUrl) {
+            pendingAutoStart = false;
+            log('Jes-Extender funciona en modo local opcional. No hay bridge configurado en este entorno.', 'warn');
+            setStatus('LOCAL ONLY', {
+                color: 'rgba(255, 196, 85, 0.92)',
+                shadow: '0 0 10px rgba(255, 196, 85, 0.35)',
+                tone: 'idle'
+            });
+            return;
+        }
 
         setStatus('CONNECTING', {
             color: 'rgba(255, 196, 85, 0.92)',
@@ -163,7 +185,7 @@ MOSKV.jesExtender = (() => {
             tone: 'connecting'
         });
         
-        socket = new WebSocket(WS_URL);
+        socket = new WebSocket(wsUrl);
         socket.binaryType = 'arraybuffer';
 
         socket.onopen = () => {
@@ -362,7 +384,7 @@ MOSKV.jesExtender = (() => {
             isPlaying,
             socketReadyState: socket ? socket.readyState : WebSocket.CLOSED
         }),
-        getWsUrl: () => WS_URL
+        getWsUrl: () => resolveWsUrl()
     };
 })();
 

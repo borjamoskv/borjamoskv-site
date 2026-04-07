@@ -80,6 +80,17 @@ const HERO_MATRIX = {
     }
 };
 
+const CORTEX_LOCAL_HOSTS = new Set(['localhost', '127.0.0.1']);
+
+function getRuntimeWsUrl(configKey, localUrl) {
+    const runtime = window.MOSKV_RUNTIME || window.__BORJA_RUNTIME__ || null;
+    const configured = runtime?.[configKey];
+    if (typeof configured === 'string' && configured.trim()) {
+        return configured.trim();
+    }
+    return CORTEX_LOCAL_HOSTS.has(window.location.hostname) ? localUrl : null;
+}
+
 class KineticTensorEngine {
     constructor(container) {
         this.container = container;
@@ -241,6 +252,8 @@ class CortexTerminal {
         this.heroData = HERO_MATRIX['DEFAULT'];
         this.idleTimer = null;
         this.idleIndex = 0;
+        this.swarmUrl = getRuntimeWsUrl('cortexSwarmWsUrl', 'ws://127.0.0.1:8000/ws');
+        this.swarmAvailable = false;
 
         this.engine = new KineticTensorEngine(this.terminal);
 
@@ -316,10 +329,15 @@ class CortexTerminal {
     }
 
     connectToSwarm() {
-        this.ws = new WebSocket('ws://127.0.0.1:8000/ws');
+        if (!this.swarmUrl) {
+             this.swarmAvailable = false;
+             return;
+        }
+
+        this.ws = new WebSocket(this.swarmUrl);
         
         this.ws.onopen = () => {
-             // Silently connect for live stream
+             this.swarmAvailable = true;
         };
 
         this.ws.onmessage = (event) => {
@@ -337,6 +355,7 @@ class CortexTerminal {
         };
 
         this.ws.onclose = () => {
+             this.swarmAvailable = false;
              if (this.isOpen) {
                  this.print('[SWARM LINK] Orquestador desconectado. Intentando reconexión autonoma...', 'warn', 0);
              }
@@ -387,6 +406,9 @@ class CortexTerminal {
         this.output.innerHTML = '';
         await this.print('CORTEX-TERMINAL v6.1 // SOVEREIGN CONVERGENCE', 'ascii', 0);
         await this.print('Singularity Contract AX-100 Verified.', 'sys');
+        if (!this.swarmUrl) {
+            await this.print('Swarm Bridge: local opcional. Esta shell corre en modo cliente.', 'info');
+        }
         await this.print('Type "help" for a list of available commands.', 'info');
     }
 
@@ -453,12 +475,16 @@ class CortexTerminal {
             this.print('SYSTEM: SOVEREIGN', 'info');
             this.print('ENGINE: KineticTensorEngine v6.1 (Three.js)', 'info');
             this.print('LATENCY: 0.8ms (V8 JIT Optimized)', 'exergy');
+            this.print(`SWARM LINK: ${this.swarmUrl ? (this.swarmAvailable ? 'CONNECTED' : 'LOCAL BRIDGE') : 'CLIENT MODE ONLY'}`, 'info');
         }
     }
 
     cmdSwarm() {
         this.print('SYNCHRONIZING KINETIC SWARM...', 'info');
         this.print('Total Virtual Shards: 4,096 | Thread Group: CORTEX-α', 'log');
+        if (!this.swarmUrl) {
+            this.print('Swarm bridge no configurado. Manteniendo visualizacion local sin backend.', 'warn');
+        }
         this.engine.setState('SWARM');
         setTimeout(() => this.print('Swarm state identified: <span class="cterm-yield-mid">OPTIMIZED</span>', 'success'), 1000);
     }

@@ -1,2 +1,9 @@
 audio/
 .vercel
+__pycache__/
+*.pyc
+cortex_vault_ledger.json
+lean_proofs/
+.playwright-cli/
+.wrangler/
+output/

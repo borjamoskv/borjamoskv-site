@@ -1,10 +1,19 @@
 import * as fs from 'fs';
-import { execSync } from 'child_process';
+import { execFileSync } from 'child_process';
 
 const scriptContent = fs.readFileSync('data.js', 'utf8');
 // Evaluate DATA safely
 const dataObjStr = scriptContent.replace('const DATA = {', 'global.DATA = {');
 eval(dataObjStr);
+
+const ytDlpBin = process.env.YT_DLP_BIN || 'yt-dlp';
+
+try {
+  execFileSync(ytDlpBin, ['--version'], { stdio: 'ignore' });
+} catch {
+  console.error('yt-dlp not found. Install it or set YT_DLP_BIN.');
+  process.exit(1);
+}
 
 const idsToDownload = new Set();
 
@@ -23,7 +32,11 @@ for (const id of ids) {
     if (!fs.existsSync(`audio/${id}.webm`)) {
         console.log(`Downloading ${id}...`);
         try {
-            execSync(`/Users/borjafernandezangulo/30_CORTEX/.venv/bin/yt-dlp -f 251 -o "audio/%(id)s.%(ext)s" "https://www.youtube.com/watch?v=${id}"`, {stdio: 'inherit'});
+            execFileSync(
+              ytDlpBin,
+              ['-f', '251', '-o', 'audio/%(id)s.%(ext)s', `https://www.youtube.com/watch?v=${id}`],
+              { stdio: 'inherit' },
+            );
         } catch(e) { 
             console.error(`Failed ${id}`); 
         }

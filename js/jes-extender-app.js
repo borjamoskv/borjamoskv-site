@@ -106,27 +106,36 @@
   };
 
   const setIdleEngineState = () => {
-    setEngineBadge('LOCAL ONLY', 'Se comprobara al extraer o al pulsar CHECK ENGINE.', 'idle');
+    setEngineBadge('LOCAL OPTION', 'Solo se comprobara si detectamos un bridge local o una URL configurada.', 'idle');
   };
 
   const getWsUrl = () => {
     const module = getModule();
-    return module?.getWsUrl?.() || 'ws://localhost:8001/ws/generate';
+    return module?.getWsUrl?.() || null;
   };
 
-  const getProbeUrl = () => getWsUrl().replace(/^ws/i, 'http');
+  const getProbeUrl = () => {
+    const wsUrl = getWsUrl();
+    return wsUrl ? wsUrl.replace(/^ws/i, 'http') : null;
+  };
 
   const probeEngine = () => {
+    const probeUrl = getProbeUrl();
+    if (!probeUrl) {
+      setEngineBadge('LOCAL ONLY', 'Esta demo no abre localhost en publico. Usa un bridge local o configura una URL runtime.', 'idle');
+      return;
+    }
+
     globalThis.clearTimeout(probeTimer);
-    setEngineBadge('CHECKING', 'Probando acceso al WebSocket local.', 'checking');
+    setEngineBadge('CHECKING', 'Probando acceso al bridge de audio en tiempo real.', 'checking');
 
     const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
     probeTimer = globalThis.setTimeout(() => {
       controller?.abort();
-      setEngineBadge('OFFLINE', 'El engine no respondio a tiempo en localhost:8001.', 'offline');
+      setEngineBadge('OFFLINE', 'El bridge no respondio a tiempo.', 'offline');
     }, 1400);
 
-    fetch(`${getProbeUrl()}?probe=${Date.now()}`, {
+    fetch(`${probeUrl}?probe=${Date.now()}`, {
       method: 'GET',
       mode: 'no-cors',
       cache: 'no-store',
@@ -136,7 +145,7 @@
       setEngineBadge('ONLINE', 'Engine disponible. Puedes extraer en tiempo real.', 'online');
     }).catch(() => {
       globalThis.clearTimeout(probeTimer);
-      setEngineBadge('OFFLINE', 'No hay respuesta del engine local en este puerto.', 'offline');
+      setEngineBadge('OFFLINE', 'No hay respuesta del bridge configurado.', 'offline');
     });
   };
 
