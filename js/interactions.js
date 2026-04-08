@@ -10,6 +10,8 @@ MOSKV.interactions = (() => {
     'use strict';
 
     const MARKS_STORAGE_KEY = 'moskv_marks';
+    const shouldUseLightweightMode = () => MOSKV.core?.isLightweightMode?.() ??
+        (globalThis.matchMedia?.('(hover: none), (pointer: coarse), (prefers-reduced-motion: reduce)')?.matches ?? false);
 
     const readStoredMarks = () => {
         try {
@@ -493,14 +495,18 @@ MOSKV.interactions = (() => {
 
     // ── MASTER INIT ──
     const init = () => {
-        initPuntazos();
-
-        initCursorTrail();
         initScrollReveal();
+        initDJAutomata();
+
+        if (shouldUseLightweightMode()) {
+            return;
+        }
+
+        initPuntazos();
+        initCursorTrail();
         init3DHoverTilt();
         initRandomGlitch();
         setTimeout(initStitchEgg, 500);
-        initDJAutomata();
         initStellarApparitions();
     };
 

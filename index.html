@@ -4,9 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BORJA MOSKV | Artista Frontera · Sonido, Visuales y Sistemas</title>
+  <title>BORJA MOSKV | Música, Live AV y Sistemas</title>
   <meta name="description"
-    content="Electrónica, Sistemas y coherencia rara. Una misma obra desplegada entre pista, pantalla y silicio.">
+    content="Sets, live AV, diario, manifiestos y laboratorio open source desde Bilbao. Una misma firma entre pista, pantalla y máquina.">
   <meta name="theme-color" content="#041427">
   <link rel="manifest" href="/site.webmanifest">
   <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
@@ -17,16 +17,18 @@
   <meta name="referrer" content="strict-origin-when-cross-origin">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="BORJA MOSKV | Artista Frontera · Sonido, Visuales y Sistemas">
+  <meta property="og:title" content="BORJA MOSKV | Música, Live AV y Sistemas">
   <meta property="og:description"
-    content="Electrónica, Sistemas y coherencia rara. Una misma obra desplegada entre pista, pantalla y silicio.">
+    content="Sets, live AV, diario, manifiestos y laboratorio open source desde Bilbao. Una misma firma entre pista, pantalla y máquina.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://borjamoskv.com">
   <meta property="og:image" content="https://borjamoskv.com/img/og-cover.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="BORJA MOSKV | Artista Frontera">
+  <meta name="twitter:title" content="BORJA MOSKV | Música, Live AV y Sistemas">
+  <meta name="twitter:description"
+    content="Sets, live AV, diario, manifiestos y laboratorio open source desde Bilbao. Una misma firma entre pista, pantalla y máquina.">
   <meta name="twitter:image" content="https://borjamoskv.com/img/og-cover.jpg">
 
   <!-- SEO & GEO -->
@@ -73,8 +75,22 @@
     (function(){
       var h = new Date().getHours();
       document.documentElement.dataset.theme = (h >= 7 && h < 20) ? 'day' : 'night';
+      document.documentElement.dataset.entry = 'editorial';
     })();
   </script>
+
+  <style>
+    html[data-entry="editorial"] #loader {
+      opacity: 0;
+      pointer-events: none;
+      visibility: hidden;
+    }
+
+    html[data-entry="editorial"] #game-hud,
+    html[data-entry="editorial"] #hero-select-modal {
+      display: none !important;
+    }
+  </style>
 
   <link href="style.css" rel="stylesheet">
   <link href="industrial-noir-overrides.css" rel="stylesheet">
@@ -225,7 +241,7 @@
   <!-- ═══════════════════════════════════════════════════════════════════
        NAVIGATION
        ═══════════════════════════════════════════════════════════════════ -->
-  <nav class="main-nav" id="mainNav" style="display: none;">
+  <nav class="main-nav" id="mainNav">
     <a href="#hero" class="nav-logo">MOSKV</a>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-controls="navLinks" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -257,22 +273,22 @@
   <!-- ═══════════════════════════════════════════════════════════════════
        HERO (HIDDEN IN GAME MODE)
        ═══════════════════════════════════════════════════════════════════ -->
-  <section class="hero-section" id="hero" style="display: none;">
+  <section class="hero-section" id="hero">
     <span class="section-kicker hero-kicker">Artista frontera · club / visual / sistema</span>
     <div class="hero-shell">
       <div class="hero-main">
         <div class="shock-wrapper">
-          <h1 class="hero-title glitch-mega" data-text="BORJA MOSKV" style="opacity: 0; pointer-events: none;">BORJA<br>MOSKV</h1>
+          <h1 class="hero-title glitch-mega" data-text="BORJA MOSKV">BORJA<br>MOSKV</h1>
         </div>
         <p class="hero-axiom">Sonido que abre grietas.<br>Visuales con pulso.<br>Sistemas con firma.</p>
-        <p class="hero-lead">Una misma obra desplegada entre pista, pantalla y máquina.</p>
-        <p class="hero-positioning">No es un portfolio cerrado: es una señal viva donde conviven sets largos, piezas visuales, manifiestos, herramientas y diarios con criterio.</p>
+        <p class="hero-lead">Música, live AV y software con una misma firma.</p>
+        <p class="hero-positioning">Aquí conviven sets, piezas visuales, texto y laboratorio open source. Primero escuchas, luego lees, luego entras al sistema.</p>
         <div class="hero-facts" aria-label="Señal principal">
-          <span>DJ set / live AV / score</span>
-          <span>Ambient / IDM / Techno / spoken</span>
-          <span>SEÑAL / CORTEX / JARANA / ULTRA THINK</span>
-          <span>CORTEX / tools / open source</span>
-          <span>Bilbo → clubs → red → instalaciones</span>
+          <span>DJ set / live AV / piezas por encargo</span>
+          <span>Ambient / IDM / techno / spoken</span>
+          <span>Archivo vivo / manifiestos / diario</span>
+          <span>CORTEX / GitHub / tools / open source</span>
+          <span>Bilbao → clubs → pantalla → red</span>
         </div>
         <div class="hero-proof-strip" aria-label="Pruebas rápidas">
           <article class="hero-proof-chip">
@@ -293,9 +309,9 @@
           </article>
         </div>
         <div class="hero-ctas">
-          <a href="#players" class="cta-primary">Entrar por sonido</a>
+          <a href="#players" class="cta-primary">Escuchar ahora</a>
           <a href="#welcome-map" class="cta-secondary">Leer archivo vivo</a>
-          <button id="btn-claim-wav" class="cta-primary neon-hover" style="background: rgba(46, 80, 144, 0.4); border-color: rgba(242, 221, 51, 0.8);">⬇️ DL MASTER MÁXIMO [OWN NFT]</button>
+          <button id="btn-claim-wav" type="button" class="cta-secondary neon-hover" onclick="window.open('https://github.com/borjamoskv', '_blank', 'noopener');">Abrir laboratorio</button>
           <a href="https://borjamoskv.substack.com" target="_blank" rel="noopener" class="cta-ghost">Recibir señal nueva →</a>
         </div>
         <p class="hero-microproof">La rareza atrae, pero aquí también hay mapa: frontera sonora, frontera visual y frontera de sistemas. Si algo te engancha, ya tiene continuación dentro del archivo.</p>
@@ -350,7 +366,7 @@
     </div>
   </section>
 
-  <section class="frontier-band" id="frontier-band" style="display: none;">
+  <section class="frontier-band" id="frontier-band">
     <div class="frontier-band-shell">
       <div class="frontier-band-copy">
         <span class="section-kicker frontier-band-kicker">Frontera operativa</span>

@@ -11,37 +11,61 @@ globalThis.MOSKV = MOSKV;
 MOSKV.core = (() => {
     'use strict';
 
+    const isLightweightMode = () => globalThis.matchMedia?.('(hover: none), (pointer: coarse), (prefers-reduced-motion: reduce)')?.matches ?? false;
+
+    const runDeferred = (callback, delay = 180) => {
+        if (typeof callback !== 'function') return;
+
+        if ('requestIdleCallback' in globalThis) {
+            globalThis.requestIdleCallback(() => callback(), { timeout: 1200 });
+            return;
+        }
+
+        globalThis.setTimeout(callback, delay);
+    };
+
+    const showElement = (element, display) => {
+        if (!element) return;
+        element.style.setProperty('display', display, 'important');
+        element.removeAttribute('hidden');
+        element.setAttribute('aria-hidden', 'false');
+    };
+
+    const activateEditorialLanding = () => {
+        const nav = document.getElementById('mainNav');
+        const hero = document.getElementById('hero');
+        const frontierBand = document.getElementById('frontier-band');
+        const heroTitle = document.querySelector('.hero-title');
+
+        document.body.classList.add('loaded', 'editorial-mode-active');
+        document.documentElement.dataset.entry = 'editorial';
+
+        if (isLightweightMode()) {
+            document.body.classList.add('touch-editorial');
+        } else {
+            document.body.classList.remove('touch-editorial');
+        }
+
+        showElement(nav, 'flex');
+        showElement(hero, 'flex');
+        showElement(frontierBand, 'block');
+
+        if (heroTitle) {
+            heroTitle.style.opacity = '1';
+            heroTitle.style.pointerEvents = 'auto';
+        }
+    };
+
     // ── LOADER & INITIALIZATION ──
     const initSystem = () => {
         try {
-            const progress = document.querySelector('.loader-progress');
-            if (!progress) return;
-            
-            let width = 0;
-            const interval = setInterval(() => {
-                width += Math.random() * 25;
-                if (width >= 100) {
-                    width = 100;
-                    clearInterval(interval);
-                    requestAnimationFrame(() => {
-                        progress.style.width = width + '%';
-                    });
-                    
-                    setTimeout(() => {
-                        document.body.classList.add('loaded');
-                        if (MOSKV.scroll?.initAwwwardsScroll) {
-                            MOSKV.scroll.initAwwwardsScroll();
-                        }
-                    }, 200);
-                } else {
-                    requestAnimationFrame(() => {
-                        progress.style.width = width + '%';
-                    });
-                }
-            }, 30);
+            activateEditorialLanding();
+            if (MOSKV.scroll?.initAwwwardsScroll) {
+                MOSKV.scroll.initAwwwardsScroll();
+            }
         } catch (e) {
             console.error("[CORTEX] Initialization failure:", e);
-            document.body.classList.add('loaded');
+            activateEditorialLanding();
             if (MOSKV.scroll?.initAwwwardsScroll) {
                 MOSKV.scroll.initAwwwardsScroll();
             }
@@ -111,6 +135,7 @@ MOSKV.core = (() => {
     // ── BOOT SEQUENCE ──
     const boot = () => {
         console.log("%c SYSTEM ONLINE %c v2.0 MODULAR ", "background:#CCFF00; color:#0A0A0A; font-weight:bold;", "background:#0A0A0A; color:#CCFF00;");
+        const lightweightMode = isLightweightMode();
 
         // Phase 1: Critical path (synchronous)
         initSystem();
@@ -122,24 +147,32 @@ MOSKV.core = (() => {
         if (MOSKV.mutator) MOSKV.mutator.init();
         if (MOSKV.media) MOSKV.media.init();
         if (MOSKV.works) MOSKV.works.init();
-        if (MOSKV.particles) MOSKV.particles.init();
-        if (MOSKV.chat) MOSKV.chat.init();
+        if (!lightweightMode && MOSKV.particles) {
+            runDeferred(() => MOSKV.particles.init());
+        }
+        if (MOSKV.chat) {
+            runDeferred(() => MOSKV.chat.init(), 320);
+        }
         
         // Phase 3: Desktop-only enhancements
-        if (globalThis.innerWidth > 768) {
-            if (MOSKV.cursor) MOSKV.cursor.init();
+        if (!lightweightMode && globalThis.innerWidth > 768) {
+            if (MOSKV.cursor) {
+                runDeferred(() => MOSKV.cursor.init(), 260);
+            }
         }
 
         // Phase 4: Heavy interactive (deferred)
-        if (MOSKV.draggable) MOSKV.draggable.init();
+        if (!lightweightMode && MOSKV.draggable) {
+            runDeferred(() => MOSKV.draggable.init(), 420);
+        }
         
         // Phase 5: Non-critical interactions (delayed)
         setTimeout(() => {
             if (MOSKV.interactions) MOSKV.interactions.init();
-        }, 1000);
+        }, lightweightMode ? 1400 : 700);
     };
 
-    return { boot, setTranslate };
+    return { boot, setTranslate, isLightweightMode };
 })();
 
 // ── DOM READY ──

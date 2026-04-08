@@ -454,3 +454,84 @@ div.chatquito { display: none !important; }
 @media (max-width: 500px) {
   .hero-grid { grid-template-columns: 1fr; }
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   2026 EDITORIAL ENTRY
+   Default to an immediate editorial landing. Arcade layers stay available
+   deeper in the experience, but they no longer block first read.
+   ═══════════════════════════════════════════════════════════════════ */
+body.editorial-mode-active #game-hud,
+body.editorial-mode-active #hero-select-modal {
+  display: none !important;
+}
+
+body.editorial-mode-active .video-background-system {
+  opacity: 0.78;
+  filter: saturate(0.88) contrast(1.04) brightness(0.68);
+  transition: opacity 0.45s ease, filter 0.45s ease;
+}
+
+body.editorial-mode-active .video-overlay {
+  background-image:
+    linear-gradient(180deg, rgba(4, 14, 28, 0.22) 0%, rgba(4, 14, 28, 0.38) 18%, rgba(4, 14, 28, 0.62) 72%, rgba(4, 14, 28, 0.82) 100%),
+    radial-gradient(circle at 18% 18%, rgba(46, 80, 144, 0.24) 0%, transparent 26%),
+    radial-gradient(circle at 82% 24%, rgba(242, 221, 51, 0.12) 0%, transparent 18%);
+}
+
+body.editorial-mode-active .deck-ui,
+body.editorial-mode-active .video-identity-wrap {
+  opacity: 0.68;
+}
+
+body.editorial-mode-active .hero-positioning {
+  max-width: 44rem;
+}
+
+body.editorial-mode-active .hero-ctas {
+  gap: 0.85rem;
+}
+
+body.editorial-mode-active .hero-ctas > * {
+  justify-content: center;
+  min-width: 12.75rem;
+}
+
+body.editorial-mode-active .hero-operating-card,
+body.editorial-mode-active .hero-signal-card,
+body.editorial-mode-active .frontier-band-card {
+  box-shadow: 0 18px 42px rgba(3, 10, 24, 0.18);
+}
+
+body.touch-editorial #webgl-canvas,
+body.touch-editorial #particles,
+body.touch-editorial .cortex-cursor-dot,
+body.touch-editorial .cortex-cursor-halo,
+body.touch-editorial #cursorTrail {
+  display: none !important;
+}
+
+body.touch-editorial .video-background-system {
+  opacity: 0.5;
+  filter: saturate(0.72) contrast(1.02) brightness(0.48);
+}
+
+body.touch-editorial .deck-ui,
+body.touch-editorial .video-identity-wrap {
+  display: none !important;
+}
+
+body.touch-editorial .frontier-open-btn {
+  right: 1rem;
+  bottom: 1rem;
+  padding: 0.72rem 1rem;
+  letter-spacing: 0.12em;
+}
+
+@media (max-width: 992px) {
+  body.editorial-mode-active .hero-proof-strip,
+  body.editorial-mode-active .hero-operating-grid,
+  body.editorial-mode-active .hero-signal-grid,
+  body.editorial-mode-active .frontier-band-grid {
+    gap: 0.9rem;
+  }
+}
