@@ -1,8 +1,8 @@
-# borjamoskv_site
+# borjamoskv-site
 
 Personal site and publishing system for Borja Moskv: essays, interactive experiments, portfolio surfaces, and edge-backed utilities in one deployable artifact.
 
-![borjamoskv_site screenshot](docs/screenshots/homepage.png)
+![borjamoskv-site screenshot](docs/screenshots/homepage.png)
 
 ## Objective
 
