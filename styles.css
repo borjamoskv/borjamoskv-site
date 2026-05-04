@@ -50,8 +50,8 @@ section {
 .glass {
     background: var(--bg-card);
     border: 1px solid var(--border);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
 }
 
 .card {
@@ -111,8 +111,8 @@ section {
 #scroll-top {
     position: fixed; bottom: 2rem; right: 2rem; width: 44px; height: 44px; 
     background: var(--bg-card); border: 1px solid var(--border); border-radius: 50%; 
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
     color: var(--yinmn-light); font-size: 1rem; cursor: pointer; opacity: 0; 
     visibility: hidden; transform: translateY(20px); transition: all 0.4s var(--ease); z-index: 100; 
 }
