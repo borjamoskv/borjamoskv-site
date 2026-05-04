@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>borjamoskv // 0.498 // scientific triad</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=JetBrains+Mono:wght@100..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- SOTY IMPACT STACK -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/ogl"></script>
+</head>
+<body class="zero-ego">
+    <div id="custom-cursor"></div>
+    <canvas id="gl-canvas"></canvas>
+    
+    <!-- MINIMAL TERMINAL -->
+    <div id="terminal-overlay" class="hidden">
+        <div id="terminal-log"></div>
+    </div>
+
+    <header>
+        <div class="logo-group">
+            <h1 id="dynamic-signal">borjamoskv // 0.498</h1>
+        </div>
+        <nav>
+            <a href="#optical" class="nav-link">optical</a>
+            <a href="#swarm" class="nav-link">swarm</a>
+            <a href="#acoustic" class="nav-link">acoustic</a>
+            <div class="mode-selector">
+                <button id="toggle-spectrometer" class="mode-btn">lens_off</button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="horizontal-container">
+        <!-- OPTICAL YIELD -->
+        <section id="optical">
+            <h2 class="section-title">optical_yield</h2>
+            <div class="section-meta">v. 2026.04.12 | status: research_operational</div>
+            <div class="media-canvas">
+                <iframe src="https://www.youtube.com/embed/b9ktVQN48OU?autoplay=1&mute=1&controls=0&loop=1&playlist=b9ktVQN48OU" frameborder="0"></iframe>
+            </div>
+        </section>
+
+        <!-- SWARM CORE -->
+        <section id="swarm">
+            <h2 class="section-title">swarm_core</h2>
+            <div class="section-meta">vsa-sdm | 100 agents | zero_ego</div>
+            <div class="experiment-grid">
+                <div class="card" onclick="window.open('https://moltbook.com/u/moskv-1')">
+                    <div class="card-meta">node: 0x1</div>
+                    <div class="card-title">sync_now</div>
+                    <div class="card-meta">status: active</div>
+                </div>
+                <div class="card" onclick="window.open('https://www.youtube.com/watch?v=NYhOQTcNLkA')">
+                    <div class="card-meta">node: 0x2</div>
+                    <div class="card-title">void_01</div>
+                    <div class="card-meta">status: stable</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACOUSTIC EXERGY -->
+        <section id="acoustic">
+            <h2 class="section-title">acoustic_exergy</h2>
+            <div class="section-meta">moskvlogia | 1,918 tracks | 2008-2025</div>
+            <div class="media-canvas">
+                <iframe width="100%" height="600" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/1256331&color=%230055ff&auto_play=false&visual=true"></iframe>
+            </div>
+        </section>
+
+        <!-- CONTACT / SYNC -->
+        <section id="sync">
+            <h2 class="section-title">sync_ledger</h2>
+            <div class="section-meta">0x2026 // sovereign_identity</div>
+            <div class="experiment-grid">
+                <div class="card" onclick="window.location.href='mailto:borja@borjamoskv.com'">
+                    <div class="card-meta">protocol: smtp</div>
+                    <div class="card-title">contact</div>
+                    <div class="card-meta">priority: high</div>
+                </div>
+                <div class="card" onclick="window.open('https://open.spotify.com/artist/4p7wMuZpktE5aBFhBoQdqa')">
+                    <div class="card-meta">protocol: spotify</div>
+                    <div class="card-title">stream</div>
+                    <div class="card-meta">exergy: max</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="indicator-group">
+            <div class="active-signal"></div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
