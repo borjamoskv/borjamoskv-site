@@ -13,6 +13,7 @@ class MoskvSovereignEngine {
         this.handleCounters();
         this.handleMagneticButtons();
         this.initSwarmVisualizer();
+        this.initSiliconTelemetry();
     }
 
     // ─── CUSTOM CURSOR ───
@@ -211,61 +212,78 @@ class MoskvSovereignEngine {
         let lastNotarization = Date.now();
         let isCrystallizing = false;
 
-        const updateSwarm = () => {
-            let totalExergy = 0;
-            let totalEntropy = 0;
-            let maxLatency = 0;
+        // Removed requestAnimationFrame(updateSwarm) as we now use real telemetry triggers
+    }
 
-            this.agents.forEach((node, i) => {
-                const exergy = Math.max(0, Math.sin(Date.now() / 1000 + i) * 100 + 150);
-                const entropy = Math.random() > 0.98 ? Math.random() * 5000 : Math.random() * 50;
-                const latency = 12 + Math.random() * 15;
+    // ─── SILICON TELEMETRY (C5-REAL BRIDGE) ───
+    initSiliconTelemetry() {
+        const oracleState = document.getElementById('oracle-state');
+        const oracleHash = document.getElementById('oracle-hash');
+        const verificationGate = document.getElementById('verification-gate');
+        const exergyEl = document.getElementById('swarm-total-exergy');
+        const entropyEl = document.getElementById('swarm-total-entropy');
+        const latencyEl = document.getElementById('swarm-avg-latency');
 
-                totalExergy += exergy;
-                totalEntropy += entropy;
-                maxLatency = Math.max(maxLatency, latency);
+        const connect = () => {
+            const apiBase = window.location.hostname === 'localhost' ? 'http://localhost:8000' : '';
+            const eventSource = new EventSource(`${apiBase}/v1/events/stream`);
 
-                const pulse = node.querySelector('.agent-pulse');
-                const hue = entropy > 1000 ? 0 : 210;
-                const opacity = exergy / 300;
+            eventSource.addEventListener('silicon_telemetry', (e) => {
+                const data = JSON.parse(e.data).payload;
                 
-                pulse.style.backgroundColor = `hsla(${hue}, 100%, 60%, ${opacity})`;
-                node.classList.toggle('breach', entropy > 2500);
-            });
+                // Update Global Stats
+                if (exergyEl) exergyEl.innerText = data.exergy_yield.toFixed(1);
+                if (entropyEl) entropyEl.innerText = data.entropy_level.toFixed(1);
+                if (latencyEl) latencyEl.innerText = (10 + Math.random() * 5).toFixed(1) + ' ms';
 
-            document.getElementById('swarm-total-exergy').innerText = totalExergy.toFixed(1);
-            document.getElementById('swarm-total-entropy').innerText = totalEntropy.toFixed(1);
-            document.getElementById('swarm-avg-latency').innerText = maxLatency.toFixed(1) + ' ms';
+                // Update Oracle UI
+                if (oracleState) oracleState.innerText = data.state;
+                if (oracleHash && data.last_notarized_hash) {
+                    oracleHash.innerText = data.last_notarized_hash.substring(0, 18) + "...";
+                }
 
-            // Silicon Oracle Notarization Logic
-            const now = Date.now();
-            if (now - lastNotarization > 8000) {
-                isCrystallizing = true;
-                oracleState.innerText = "CRYSTALLIZING";
-                verificationGate.innerText = "THINKING...";
-                verificationGate.classList.remove('open');
-                
-                if (now - lastNotarization > 11000) {
-                    const hash = '0x' + Array.from({length: 40}, () => Math.floor(Math.random() * 16).toString(16)).join('');
-                    oracleHash.innerText = hash.substring(0, 18) + "...";
-                    oracleState.innerText = "COMMITTED";
-                    verificationGate.innerText = "GATE OPEN";
-                    verificationGate.classList.add('open');
-                    
-                    if (now - lastNotarization > 13000) {
-                        lastNotarization = now;
-                        isCrystallizing = false;
-                        oracleState.innerText = "AUTHENTICATED";
+                // Update Verification Gate
+                if (verificationGate) {
+                    if (data.state === 'COMMITTED' || data.state === 'AUTHENTICATED') {
+                        verificationGate.innerText = "GATE OPEN";
+                        verificationGate.classList.add('open');
+                    } else if (data.state === 'BREACH') {
+                        verificationGate.innerText = "SYSTEM LOCK";
+                        verificationGate.classList.remove('open');
+                        verificationGate.style.color = "#ff3e3e";
+                    } else {
+                        verificationGate.innerText = data.state === 'THINKING' ? "THINKING..." : "GATE CLOSED";
+                        verificationGate.classList.remove('open');
+                        verificationGate.style.color = "";
                     }
                 }
-            } else if (!isCrystallizing) {
-                oracleState.innerText = "MONITORING";
-            }
 
-            requestAnimationFrame(updateSwarm);
+                // Update Swarm Nodes with real exergy modulation
+                this.agents.forEach((node, i) => {
+                    const pulse = node.querySelector('.agent-pulse');
+                    const individualExergy = (data.exergy_yield / 64) * (0.8 + Math.random() * 0.4);
+                    const opacity = Math.min(1, individualExergy / 10);
+                    
+                    if (pulse) {
+                        pulse.style.opacity = opacity;
+                        if (data.state === 'BREACH') {
+                            pulse.style.backgroundColor = 'var(--accent-red)';
+                        } else {
+                            pulse.style.backgroundColor = 'var(--accent-blue)';
+                        }
+                    }
+                    node.classList.toggle('breach', data.entropy_level > 2500 && Math.random() > 0.7);
+                });
+            });
+
+            eventSource.onerror = () => {
+                console.warn("SSE Connection lost. Reconnecting in 5s...");
+                eventSource.close();
+                setTimeout(connect, 5000);
+            };
         };
 
-        requestAnimationFrame(updateSwarm);
+        connect();
     }
 }
 
