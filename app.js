@@ -12,6 +12,7 @@ class MoskvSovereignEngine {
         this.handleHeader();
         this.handleCounters();
         this.handleMagneticButtons();
+        this.initSwarmVisualizer();
     }
 
     // ─── CUSTOM CURSOR ───
@@ -182,6 +183,89 @@ class MoskvSovereignEngine {
                 });
             });
         });
+    }
+
+    // ─── SWARM VISUALIZER (60FPS OMEGA) ───
+    initSwarmVisualizer() {
+        const grid = document.getElementById('swarm-grid');
+        if (!grid) return;
+
+        // Initialize 64 Agent Nodes
+        this.agents = [];
+        for (let i = 0; i < 64; i++) {
+            const node = document.createElement('div');
+            node.className = 'agent-node';
+            node.innerHTML = `
+                <div class="agent-id">${String(i).padStart(2, '0')}</div>
+                <div class="agent-pulse"></div>
+            `;
+            grid.appendChild(node);
+            this.agents.push(node);
+        }
+
+        // Live Mock Telemetry Loop (60FPS Target)
+        const oracleState = document.getElementById('oracle-state');
+        const oracleHash = document.getElementById('oracle-hash');
+        const verificationGate = document.getElementById('verification-gate');
+        
+        let lastNotarization = Date.now();
+        let isCrystallizing = false;
+
+        const updateSwarm = () => {
+            let totalExergy = 0;
+            let totalEntropy = 0;
+            let maxLatency = 0;
+
+            this.agents.forEach((node, i) => {
+                const exergy = Math.max(0, Math.sin(Date.now() / 1000 + i) * 100 + 150);
+                const entropy = Math.random() > 0.98 ? Math.random() * 5000 : Math.random() * 50;
+                const latency = 12 + Math.random() * 15;
+
+                totalExergy += exergy;
+                totalEntropy += entropy;
+                maxLatency = Math.max(maxLatency, latency);
+
+                const pulse = node.querySelector('.agent-pulse');
+                const hue = entropy > 1000 ? 0 : 210;
+                const opacity = exergy / 300;
+                
+                pulse.style.backgroundColor = `hsla(${hue}, 100%, 60%, ${opacity})`;
+                node.classList.toggle('breach', entropy > 2500);
+            });
+
+            document.getElementById('swarm-total-exergy').innerText = totalExergy.toFixed(1);
+            document.getElementById('swarm-total-entropy').innerText = totalEntropy.toFixed(1);
+            document.getElementById('swarm-avg-latency').innerText = maxLatency.toFixed(1) + ' ms';
+
+            // Silicon Oracle Notarization Logic
+            const now = Date.now();
+            if (now - lastNotarization > 8000) {
+                isCrystallizing = true;
+                oracleState.innerText = "CRYSTALLIZING";
+                verificationGate.innerText = "THINKING...";
+                verificationGate.classList.remove('open');
+                
+                if (now - lastNotarization > 11000) {
+                    const hash = '0x' + Array.from({length: 40}, () => Math.floor(Math.random() * 16).toString(16)).join('');
+                    oracleHash.innerText = hash.substring(0, 18) + "...";
+                    oracleState.innerText = "COMMITTED";
+                    verificationGate.innerText = "GATE OPEN";
+                    verificationGate.classList.add('open');
+                    
+                    if (now - lastNotarization > 13000) {
+                        lastNotarization = now;
+                        isCrystallizing = false;
+                        oracleState.innerText = "AUTHENTICATED";
+                    }
+                }
+            } else if (!isCrystallizing) {
+                oracleState.innerText = "MONITORING";
+            }
+
+            requestAnimationFrame(updateSwarm);
+        };
+
+        requestAnimationFrame(updateSwarm);
     }
 }
 
