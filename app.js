@@ -6,7 +6,6 @@
 class MoskvSovereignEngine {
     constructor() {
         this.initCursor();
-        this.initGSAP();
         this.initWebGL();
         this.initReveals();
         this.handleHeader();
@@ -14,19 +13,77 @@ class MoskvSovereignEngine {
         this.handleMagneticButtons();
         this.initSwarmVisualizer();
         this.initSiliconTelemetry();
+        
+        // Empezar Boot Sequence
+        this.initPreloader();
     }
 
     // ─── CUSTOM CURSOR ───
     initCursor() {
         const cursor = document.getElementById('custom-cursor');
-        const dot = cursor.querySelector('.cursor-dot');
-        const ring = cursor.querySelector('.cursor-ring');
+        const dot = cursor?.querySelector('.cursor-dot');
+        const ring = cursor?.querySelector('.cursor-ring');
 
         if (!cursor) return;
 
         window.addEventListener('mousemove', (e) => {
             gsap.to(dot, { x: e.clientX, y: e.clientY, duration: 0.1 });
             gsap.to(ring, { x: e.clientX, y: e.clientY, duration: 0.3, ease: "power2.out" });
+        });
+    }
+
+    // ─── PRELOADER (BOOT SEQUENCE) ───
+    initPreloader() {
+        const preloader = document.getElementById('preloader');
+        if (!preloader) {
+            this.initGSAP();
+            return;
+        }
+
+        const fill = document.getElementById('preloader-fill');
+        const status = document.getElementById('preloader-status');
+        const log = document.getElementById('preloader-log');
+
+        const logs = [
+            "CORTEX BOOT SEQUENCE INITIATED...",
+            "INITIALIZING NEURAL PATHWAYS...",
+            "LOADING MOSKVLOGIA ARCHIVE...",
+            "ESTABLISHING SILICON BRIDGE...",
+            "SYSTEM READY."
+        ];
+
+        let progress = { value: 0 };
+        let logIndex = 0;
+
+        const tl = gsap.timeline({
+            onComplete: () => {
+                gsap.to(preloader, {
+                    opacity: 0,
+                    duration: 1,
+                    ease: "power2.inOut",
+                    onComplete: () => {
+                        preloader.style.display = 'none';
+                        this.initGSAP(); // Iniciar animación Hero
+                    }
+                });
+            }
+        });
+
+        tl.to(progress, {
+            value: 100,
+            duration: 3,
+            ease: "expo.inOut",
+            onUpdate: () => {
+                fill.style.width = progress.value + '%';
+                status.innerText = Math.floor(progress.value) + '%';
+                
+                // Cambiar log strings según progreso
+                let newIndex = Math.floor((progress.value / 100) * (logs.length - 1));
+                if (newIndex !== logIndex) {
+                    logIndex = newIndex;
+                    log.innerText = logs[logIndex];
+                }
+            }
         });
     }
 
@@ -70,19 +127,89 @@ class MoskvSovereignEngine {
         });
     }
 
-    // ─── WEBGL SIMULATION (Tinte YInMn) ───
+    // ─── WEBGL SIMULATION (Real Shader via OGL) ───
     initWebGL() {
         const canvas = document.getElementById('gl-canvas');
-        if (!canvas) return;
+        if (!canvas || !window.ogl) return;
 
-        // Pulso de color soberano para el fondo
-        gsap.to(canvas, {
-            opacity: 0.4,
-            duration: 3,
-            repeat: -1,
-            yoyo: true,
-            ease: "sine.inOut"
+        const { Renderer, Camera, Program, Mesh, Triangle } = window.ogl;
+        
+        const renderer = new Renderer({ canvas, dpr: window.devicePixelRatio, alpha: true });
+        const gl = renderer.gl;
+        gl.clearColor(0, 0, 0, 0);
+
+        const camera = new Camera(gl);
+        camera.position.z = 1;
+
+        const geometry = new Triangle(gl);
+
+        const vertex = `
+            attribute vec2 uv;
+            attribute vec2 position;
+            varying vec2 vUv;
+            void main() {
+                vUv = uv;
+                gl_Position = vec4(position, 0, 1);
+            }
+        `;
+
+        const fragment = `
+            precision highp float;
+            uniform float uTime;
+            uniform vec2 uResolution;
+            varying vec2 vUv;
+
+            // Simple noise function
+            float hash(vec2 p) { return fract(1e4 * sin(17.0 * p.x + p.y * 0.1) * (0.1 + abs(sin(p.y * 13.0 + p.x)))); }
+            float noise(vec2 x) {
+                vec2 i = floor(x);
+                vec2 f = fract(x);
+                float a = hash(i);
+                float b = hash(i + vec2(1.0, 0.0));
+                float c = hash(i + vec2(0.0, 1.0));
+                float d = hash(i + vec2(1.0, 1.0));
+                vec2 u = f * f * (3.0 - 2.0 * f);
+                return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
+            }
+
+            void main() {
+                vec2 pos = vUv * 3.0;
+                float n = noise(pos + uTime * 0.2);
+                n += 0.5 * noise(pos * 2.0 - uTime * 0.1);
+                
+                // Industrial Noir colors: very dark with subtle YinMn Blue glows
+                vec3 baseColor = vec3(0.03, 0.03, 0.03);
+                vec3 glowColor = vec3(0.17, 0.23, 0.9); // YinMn Blue #2B3BE5
+                
+                vec3 finalColor = mix(baseColor, glowColor, n * 0.18);
+                gl_FragColor = vec4(finalColor, 1.0);
+            }
+        `;
+
+        const program = new Program(gl, {
+            vertex,
+            fragment,
+            uniforms: {
+                uTime: { value: 0 },
+                uResolution: { value: [window.innerWidth, window.innerHeight] }
+            }
         });
+
+        const mesh = new Mesh(gl, { geometry, program });
+
+        const resize = () => {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            program.uniforms.uResolution.value = [window.innerWidth, window.innerHeight];
+        };
+        window.addEventListener('resize', resize, false);
+        resize();
+
+        const update = (t) => {
+            requestAnimationFrame(update);
+            program.uniforms.uTime.value = t * 0.001;
+            renderer.render({ scene: mesh, camera });
+        };
+        requestAnimationFrame(update);
     }
 
     // ─── REVEAL ON SCROLL ───
@@ -94,7 +221,6 @@ class MoskvSovereignEngine {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('is-visible');
                     
-                    // Lógica específica para elementos de datos
                     if (entry.target.id === 'valence-fill') {
                         entry.target.style.width = '49.8%';
                     }
@@ -103,7 +229,7 @@ class MoskvSovereignEngine {
                         const fill = entry.target.querySelector('.genre-bar__fill');
                         if (fill) {
                             const width = fill.dataset.width || '0%';
-                            fill.style.transform = `scaleX(${parseInt(width)/100})`;
+                            fill.style.transform = \`scaleX(\${parseInt(width)/100})\`;
                         }
                     }
                 }
@@ -191,28 +317,17 @@ class MoskvSovereignEngine {
         const grid = document.getElementById('swarm-grid');
         if (!grid) return;
 
-        // Initialize 64 Agent Nodes
         this.agents = [];
         for (let i = 0; i < 64; i++) {
             const node = document.createElement('div');
             node.className = 'agent-node';
-            node.innerHTML = `
-                <div class="agent-id">${String(i).padStart(2, '0')}</div>
+            node.innerHTML = \`
+                <div class="agent-id">\${String(i).padStart(2, '0')}</div>
                 <div class="agent-pulse"></div>
-            `;
+            \`;
             grid.appendChild(node);
             this.agents.push(node);
         }
-
-        // Live Mock Telemetry Loop (60FPS Target)
-        const oracleState = document.getElementById('oracle-state');
-        const oracleHash = document.getElementById('oracle-hash');
-        const verificationGate = document.getElementById('verification-gate');
-        
-        let lastNotarization = Date.now();
-        let isCrystallizing = false;
-
-        // Removed requestAnimationFrame(updateSwarm) as we now use real telemetry triggers
     }
 
     // ─── SILICON TELEMETRY (C5-REAL BRIDGE) ───
@@ -226,23 +341,20 @@ class MoskvSovereignEngine {
 
         const connect = () => {
             const apiBase = window.location.hostname === 'localhost' ? 'http://localhost:8000' : '';
-            const eventSource = new EventSource(`${apiBase}/v1/events/stream`);
+            const eventSource = new EventSource(\`\${apiBase}/v1/events/stream\`);
 
             eventSource.addEventListener('silicon_telemetry', (e) => {
                 const data = JSON.parse(e.data).payload;
                 
-                // Update Global Stats
                 if (exergyEl) exergyEl.innerText = data.exergy_yield.toFixed(1);
                 if (entropyEl) entropyEl.innerText = data.entropy_level.toFixed(1);
                 if (latencyEl) latencyEl.innerText = (10 + Math.random() * 5).toFixed(1) + ' ms';
 
-                // Update Oracle UI
                 if (oracleState) oracleState.innerText = data.state;
                 if (oracleHash && data.last_notarized_hash) {
                     oracleHash.innerText = data.last_notarized_hash.substring(0, 18) + "...";
                 }
 
-                // Update Verification Gate
                 if (verificationGate) {
                     if (data.state === 'COMMITTED' || data.state === 'AUTHENTICATED') {
                         verificationGate.innerText = "GATE OPEN";
@@ -258,7 +370,6 @@ class MoskvSovereignEngine {
                     }
                 }
 
-                // Update Swarm Nodes with real exergy modulation
                 this.agents.forEach((node, i) => {
                     const pulse = node.querySelector('.agent-pulse');
                     const individualExergy = (data.exergy_yield / 64) * (0.8 + Math.random() * 0.4);
@@ -283,6 +394,7 @@ class MoskvSovereignEngine {
             };
         };
 
+        // Attempt connection (will gracefully fail/retry if no backend)
         connect();
     }
 }
