@@ -2,413 +2,314 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Borja Moskv — Sonic Archaeologist · 0.498</title>
-    <meta name="description" content="Borja Moskv: Sonic Archaeologist & Visual Artist. Industrial Noir 2026. High-fidelity sonic archaeology and electronic music.">
-    <meta name="theme-color" content="#0A0A0A">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
-    <!-- OG -->
-    <meta property="og:title" content="Borja Moskv — Scientific Triad">
-    <meta property="og:description" content="Scientific Triad v6.1. High-reflectance clinical architectures and electronic music.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.borjamoskv.com">
-
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Borja Moskv — Sonic Archaeologist">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>borja_moskv // platform_v6.0</title>
+    <meta name="description" content="Ecosistema unificado de Borja Moskv. Artista, Arquitecto y Diseñador de Sonido. Explorando la arqueología sónica y el diseño Industrial Noir 2026.">
+    
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=JetBrains+Mono:wght@100..800&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;300;400;700&family=Outfit:wght@100;300;400;900&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
     <link rel="stylesheet" href="styles.css">
-
-    <!-- GSAP + OGL -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
-    <script src="https://unpkg.com/ogl" defer></script>
 </head>
 <body>
-    <!-- Boot Sequence Preloader -->
-    <div id="preloader">
-        <div class="preloader-content">
-            <div class="preloader-log" id="preloader-log">CORTEX BOOT SEQUENCE INITIATED...</div>
-            <div class="preloader-bar">
-                <div class="preloader-fill" id="preloader-fill"></div>
-            </div>
-            <div class="preloader-status" id="preloader-status">0%</div>
-        </div>
-    </div>
 
-    <!-- Analog Noise Overlay -->
-    <div id="noise-overlay" aria-hidden="true"></div>
+    <!-- SVG Analog Noise Overlay -->
+    <div id="noise-overlay"></div>
 
-    <!-- WebGL Background -->
-    <canvas id="gl-canvas" aria-hidden="true"></canvas>
+    <!-- WebGL Background Canvas -->
+    <canvas id="gl-canvas"></canvas>
 
     <!-- Custom Cursor -->
-    <div id="custom-cursor" aria-hidden="true">
+    <div id="custom-cursor">
         <div class="cursor-dot"></div>
         <div class="cursor-ring"></div>
     </div>
 
-    <!-- Navigation -->
+    <!-- Boot Sequence Preloader -->
+    <div id="preloader">
+        <div class="preloader-content">
+            <div class="preloader-log">booting system_core...</div>
+            <div class="preloader-bar">
+                <div class="preloader-fill"></div>
+            </div>
+            <div class="preloader-status">0%</div>
+        </div>
+    </div>
+
+    <!-- Site Header -->
     <header id="site-header">
         <div class="logo-group">
-            <a href="#hero" class="logo-link">
-                <span class="logo-text">BM</span>
-                <span class="logo-signal"></span>
-            </a>
+            <div class="logo-signal"></div>
+            <a href="#" class="logo-link">BORJA_MOSKV //</a>
         </div>
-        <nav id="main-nav" aria-label="Main navigation">
-            <a href="#moskvlogia" class="nav-link" data-section="1">moskvlogia</a>
-            <a href="#visual" class="nav-link" data-section="2">visual</a>
-            <a href="#manifesto" class="nav-link" data-section="3">manifesto</a>
-            <a href="#connect" class="nav-link" data-section="4">connect</a>
+        
+        <nav>
+            <a href="#moskvlogia" class="nav-link">§01.moskvlogia</a>
+            <a href="#visual" class="nav-link">§02.visual_world</a>
+            <a href="#lore" class="nav-link">§03.lore</a>
+            <a href="#museum" class="nav-link">§04.museum</a>
+            <a href="#connect" class="nav-link">§05.connect</a>
         </nav>
+
+        <div class="mode-selector">
+            <div class="mode-label">acoustic_id:</div>
+            <button id="toggle-sound" class="mode-btn">OFF</button>
+            <div class="mode-label">spectrometer:</div>
+            <button id="toggle-spectrometer" class="mode-btn">OFF</button>
+        </div>
     </header>
 
-    <main>
-        <!-- §0 · HERO -->
-        <section id="hero" class="section section--hero">
-            <div class="hero-content">
-                <h1 class="hero-title" data-kinetic>
-                    <span class="hero-title__line">BORJA</span>
-                    <span class="hero-title__line">MOSKV</span>
-                </h1>
-                <div class="hero-sub">
-                    <span class="hero-sub__role">Sonic Archaeologist</span>
-                    <span class="hero-sub__separator">·</span>
-                    <span class="hero-sub__valence" data-count="0.498">0.498</span>
-                </div>
-                <p class="hero-tagline">1,918 tracks · 117 hours · 6 decades of sound</p>
-            </div>
-            <div class="scroll-indicator" aria-hidden="true">
-                <span class="scroll-indicator__text">scroll</span>
-                <div class="scroll-indicator__line"></div>
-            </div>
-        </section>
+    <!-- Hero Section -->
+    <section class="section--hero">
+        <div class="hero-content">
+            <div class="hero-sub">architecture // sound // code</div>
+            <h1 class="hero-title">
+                <span class="hero-title__line">borja</span>
+                <span class="hero-title__line">moskv</span>
+            </h1>
+            <p class="hero-tagline">unificando la arqueología sónica y el diseño termodinámico en una sola señal.</p>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-indicator__line"></div>
+            <span>scroll_to_explore</span>
+        </div>
+    </section>
 
-        <!-- §SWARM · OMEGA TELEMETRY -->
-        <section id="swarm" class="section section--swarm">
-            <div class="section-header">
-                <span class="section-index">Ω</span>
-                <h2 class="section-title reveal-text">CORTEX Swarm</h2>
-                <p class="section-subtitle">Real-time Exergy & Entropy Visualization · 64 Agents</p>
-            </div>
-            
-            <div class="swarm-container glass-card">
-                <div class="swarm-header">
-                    <div class="swarm-stat"><span class="label">Total Exergy</span><span id="swarm-total-exergy" class="value">0.0</span></div>
-                    <div class="swarm-stat"><span class="label">System Entropy</span><span id="swarm-total-entropy" class="value">0.0</span></div>
-                    <div class="swarm-stat"><span class="label">Global Latency</span><span id="swarm-avg-latency" class="value">0 ms</span></div>
-                </div>
-                <div class="swarm-grid" id="swarm-grid">
-                    <!-- 64 Agent nodes will be injected here via app.js -->
-                </div>
+    <!-- §01 · Moskvlogia -->
+    <section id="moskvlogia">
+        <div class="section-header">
+            <span class="section-index">§01</span>
+            <h2 class="section-title">moskvlogia</h2>
+            <p class="section-subtitle">arqueología sónica. un archivo viviente de 1,918 tracks auto-producidos de 2008 a 2026.</p>
+        </div>
 
-                <!-- Silicon Oracle Notarization Bridge -->
-                <div class="oracle-bridge">
-                    <div class="oracle-status">
-                        <span class="oracle-label">Silicon Oracle</span>
-                        <div class="oracle-indicator">
-                            <div class="oracle-pulse"></div>
-                            <span id="oracle-state">AUTHENTICATING</span>
+        <div class="moskvlogia-grid">
+            <!-- Stats -->
+            <div class="stats-row">
+                <div class="glass-card stat-card">
+                    <span class="stat-card__number">1,918</span>
+                    <span class="stat-card__label">tracks creados</span>
+                </div>
+                <div class="glass-card stat-card">
+                    <span class="stat-card__number">117</span>
+                    <span class="stat-card__label">horas de audio</span>
+                </div>
+                <div class="glass-card stat-card">
+                    <span class="stat-card__number">18</span>
+                    <span class="stat-card__label">años de archivo</span>
+                </div>
+                <div class="glass-card stat-card">
+                    <span class="stat-card__number">2.1G</span>
+                    <span class="stat-card__label">muestras procesadas</span>
+                </div>
+            </div>
+
+            <!-- Chart and Spotify Embed -->
+            <div class="stats-row">
+                <div class="glass-card genre-chart">
+                    <div class="genre-bar">
+                        <span class="genre-bar__label">lofi-industrial</span>
+                        <div class="genre-bar__track">
+                            <div class="genre-bar__fill" style="width: 85%;"></div>
                         </div>
+                        <span class="genre-bar__count">85%</span>
                     </div>
-                    <div class="oracle-hash-container">
-                        <span class="hash-label">Last Notarized Hash (C5-REAL)</span>
-                        <div id="oracle-hash" class="hash-value">0x0000...0000</div>
-                    </div>
-                    <div class="oracle-verification">
-                        <span class="verification-gate" id="verification-gate">GATE CLOSED</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- §1 · MOSKVLOGIA -->
-        <section id="moskvlogia" class="section section--moskvlogia">
-            <div class="section-header">
-                <span class="section-index">01</span>
-                <h2 class="section-title reveal-text">Moskvlogia</h2>
-                <p class="section-subtitle">Una arqueología del sonido personal · 2008–2025</p>
-            </div>
-
-            <div class="moskvlogia-grid">
-                <!-- Stats Cards -->
-                <div class="stats-row">
-                    <div class="stat-card glass-card">
-                        <span class="stat-card__number" data-count="1918">0</span>
-                        <span class="stat-card__label">tracks</span>
-                    </div>
-                    <div class="stat-card glass-card">
-                        <span class="stat-card__number" data-count="850">0</span>
-                        <span class="stat-card__label">artists</span>
-                    </div>
-                    <div class="stat-card glass-card">
-                        <span class="stat-card__number" data-count="600">0</span>
-                        <span class="stat-card__label">labels</span>
-                    </div>
-                    <div class="stat-card glass-card">
-                        <span class="stat-card__number" data-count="117">0</span>
-                        <span class="stat-card__label">hours</span>
-                    </div>
-                </div>
-
-                <!-- Genre Bars -->
-                <div class="genre-chart">
-                    <h3 class="genre-chart__title">Sonic DNA</h3>
-                    <div class="genre-bar" data-width="100" data-genre="Experimental">
-                        <span class="genre-bar__label">Experimental</span>
-                        <div class="genre-bar__fill"></div>
-                        <span class="genre-bar__count">109</span>
-                    </div>
-                    <div class="genre-bar" data-width="93" data-genre="Alt Rock">
-                        <span class="genre-bar__label">Alt Rock</span>
-                        <div class="genre-bar__fill"></div>
-                        <span class="genre-bar__count">102</span>
-                    </div>
-                    <div class="genre-bar" data-width="78" data-genre="Indie">
-                        <span class="genre-bar__label">Indie</span>
-                        <div class="genre-bar__fill"></div>
-                        <span class="genre-bar__count">85</span>
-                    </div>
-                    <div class="genre-bar" data-width="73" data-genre="Post-Punk">
-                        <span class="genre-bar__label">Post-Punk</span>
-                        <div class="genre-bar__fill"></div>
-                        <span class="genre-bar__count">80</span>
-                    </div>
-                    <div class="genre-bar" data-width="64" data-genre="Trip Hop">
-                        <span class="genre-bar__label">Trip Hop</span>
-                        <div class="genre-bar__fill"></div>
-                        <span class="genre-bar__count">70</span>
-                    </div>
-                    <div class="genre-bar" data-width="64" data-genre="Art Rock">
-                        <span class="genre-bar__label">Art Rock</span>
-                        <div class="genre-bar__fill"></div>
-                        <span class="genre-bar__count">70</span>
-                    </div>
-                    <div class="genre-bar" data-width="56" data-genre="Downtempo">
-                        <span class="genre-bar__label">Downtempo</span>
-                        <div class="genre-bar__fill"></div>
-                        <span class="genre-bar__count">61</span>
-                    </div>
-                </div>
-
-                <!-- Spotify Embed -->
-                <div class="spotify-embed glass-card">
-                    <iframe
-                        id="spotify-player"
-                        src="https://open.spotify.com/embed/playlist/6WHIabEaqEd6cFPad3gSrx?utm_source=generator&theme=0"
-                        width="100%"
-                        height="352"
-                        frameBorder="0"
-                        allowfullscreen=""
-                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                        loading="lazy"
-                        title="Moskvlogia Playlist"></iframe>
-                </div>
-            </div>
-        </section>
-
-        <!-- §2 · VISUAL WORLD -->
-        <section id="visual" class="section section--visual">
-            <div class="section-header">
-                <span class="section-index">02</span>
-                <h2 class="section-title reveal-text">Visual World</h2>
-                <p class="section-subtitle">Moving Cinema · DJ Sets · Live</p>
-            </div>
-
-            <div class="visual-grid">
-                <figure class="video-card tilt-card" data-tilt>
-                    <div class="video-card__media">
-                        <iframe
-                            src="https://www.youtube.com/embed/b9ktVQN48OU?rel=0"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen
-                            loading="lazy"
-                            title="Borja Moskv Visual 1"></iframe>
-                    </div>
-                    <figcaption class="video-card__caption">
-                        <span class="video-card__tag">set</span>
-                        <span class="video-card__title">Signal // Impact Edition</span>
-                    </figcaption>
-                </figure>
-
-                <figure class="video-card tilt-card" data-tilt>
-                    <div class="video-card__media">
-                        <iframe
-                            src="https://www.youtube.com/embed/NYhOQTcNLkA?rel=0"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen
-                            loading="lazy"
-                            title="Borja Moskv Visual 2"></iframe>
-                    </div>
-                    <figcaption class="video-card__caption">
-                        <span class="video-card__tag">void</span>
-                        <span class="video-card__title">Void_01</span>
-                    </figcaption>
-                </figure>
-
-                <!-- SoundCloud Embed -->
-                <figure class="video-card tilt-card soundcloud-card" data-tilt>
-                    <div class="video-card__media">
-                        <iframe
-                            width="100%"
-                            height="100%"
-                            scrolling="no"
-                            frameborder="no"
-                            allow="autoplay"
-                            src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/1256331&color=%230055ff&auto_play=false&visual=true"
-                            loading="lazy"
-                            title="Borja Moskv SoundCloud"></iframe>
-                    </div>
-                    <figcaption class="video-card__caption">
-                        <span class="video-card__tag">archive</span>
-                        <span class="video-card__title">SoundCloud Vault</span>
-                    </figcaption>
-                </figure>
-            </div>
-        </section>
-
-        <!-- §3 · MANIFESTO -->
-        <section id="manifesto" class="section section--manifesto">
-            <div class="section-header">
-                <span class="section-index">03</span>
-                <h2 class="section-title reveal-text">Manifesto</h2>
-            </div>
-
-            <div class="manifesto-content">
-                <blockquote class="manifesto-quote reveal-text">
-                    <p>"La música es la biografía que no puedes falsificar."</p>
-                </blockquote>
-
-                <!-- Valence Meter -->
-                <div class="valence-meter glass-card">
-                    <div class="valence-meter__header">
-                        <span class="valence-meter__label">Global Valence</span>
-                        <span class="valence-meter__value" data-count="0.498">0.000</span>
-                    </div>
-                    <div class="valence-meter__track">
-                        <div class="valence-meter__fill" data-target="49.8"></div>
-                        <div class="valence-meter__marker" data-position="49.8">
-                            <span class="valence-meter__marker-label">liminal threshold</span>
+                    <div class="genre-bar">
+                        <span class="genre-bar__label">ambient drone</span>
+                        <div class="genre-bar__track">
+                            <div class="genre-bar__fill" style="width: 72%;"></div>
                         </div>
+                        <span class="genre-bar__count">72%</span>
                     </div>
-                    <div class="valence-meter__legend">
-                        <span>🌙 melancholic</span>
-                        <span>⚡ euphoric</span>
+                    <div class="genre-bar">
+                        <span class="genre-bar__label">hardware techno</span>
+                        <div class="genre-bar__track">
+                            <div class="genre-bar__fill" style="width: 64%;"></div>
+                        </div>
+                        <span class="genre-bar__count">64%</span>
                     </div>
-                </div>
-
-                <!-- Mood Quadrants -->
-                <div class="quadrants-grid">
-                    <div class="quadrant glass-card quadrant--chill">
-                        <span class="quadrant__emoji">🌅</span>
-                        <span class="quadrant__name">Chill Happy</span>
-                        <span class="quadrant__pct">14.7%</span>
-                        <span class="quadrant__tracks">281 tracks</span>
-                    </div>
-                    <div class="quadrant glass-card quadrant--energetic">
-                        <span class="quadrant__emoji">⚡</span>
-                        <span class="quadrant__name">Energetic Happy</span>
-                        <span class="quadrant__pct">33.8%</span>
-                        <span class="quadrant__tracks">648 tracks</span>
-                    </div>
-                    <div class="quadrant glass-card quadrant--melancholic">
-                        <span class="quadrant__emoji">🌙</span>
-                        <span class="quadrant__name">Melancholic</span>
-                        <span class="quadrant__pct">26.3%</span>
-                        <span class="quadrant__tracks">505 tracks</span>
-                    </div>
-                    <div class="quadrant glass-card quadrant--intense">
-                        <span class="quadrant__emoji">🔥</span>
-                        <span class="quadrant__name">Intense Dark</span>
-                        <span class="quadrant__pct">25.2%</span>
-                        <span class="quadrant__tracks">484 tracks</span>
+                    <div class="genre-bar">
+                        <span class="genre-bar__label">abstract experimental</span>
+                        <div class="genre-bar__track">
+                            <div class="genre-bar__fill" style="width: 48%;"></div>
+                        </div>
+                        <span class="genre-bar__count">48%</span>
                     </div>
                 </div>
 
-                <!-- Key Identity Stats -->
-                <div class="identity-stats">
-                    <div class="identity-stat glass-card">
-                        <span class="identity-stat__value">123.7</span>
-                        <span class="identity-stat__unit">BPM</span>
-                        <span class="identity-stat__desc">Average tempo — double the resting heart</span>
+                <div class="glass-card spotify-embed">
+                    <!-- Spotify Player Embed -->
+                    <iframe style="border-radius:4px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX6b57K36669r?utm_source=generator&theme=0" width="100%" height="100%" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- §02 · Visual World -->
+    <section id="visual">
+        <div class="section-header">
+            <span class="section-index">§02</span>
+            <h2 class="section-title">visual_world</h2>
+            <p class="section-subtitle">sets audiovisuales y remasterizaciones directas desde el canal oficial de YouTube.</p>
+        </div>
+
+        <div class="visual-grid">
+            <div class="glass-card video-card">
+                <div class="video-card__media">
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                </div>
+                <div class="video-card__caption">
+                    <span class="video-card__tag">live_session</span>
+                    <span class="video-card__title">analog_jam_node_01</span>
+                </div>
+            </div>
+            <div class="glass-card video-card">
+                <div class="video-card__media">
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                </div>
+                <div class="video-card__caption">
+                    <span class="video-card__tag">music_video</span>
+                    <span class="video-card__title">giro_inesperado_visuals</span>
+                </div>
+            </div>
+            <div class="glass-card video-card">
+                <div class="video-card__media">
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                </div>
+                <div class="video-card__caption">
+                    <span class="video-card__tag">remaster</span>
+                    <span class="video-card__title">this_was_in_rainbows_jam</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- §03 · Lore // Giro Inesperado -->
+    <section id="lore">
+        <div class="section-header">
+            <span class="section-index">§03</span>
+            <h2 class="section-title">lore // giro_inesperado</h2>
+            <p class="section-subtitle">narrativas estocásticas sobre la fricción de crear, codificar y perderse entre madrid y silicon valley.</p>
+        </div>
+
+        <div class="glass-card moltbook-reader">
+            <div class="moltbook-slides">
+                <!-- Slide 1 -->
+                <div class="molt-slide active">
+                    <div class="molt-slide__content">
+                        <h3>capítulo 01 // el callejón de madrid</h3>
+                        <p>el aire de madrid a las cuatro de la mañana huele a ozono y asfalto frío. las luces de los sintetizadores iluminaban mi habitación con una luz azul hibonita muy densa. el ordenador escupía miles de líneas de logs redundantes mientras cargaba el preloader del sistema.</p>
+                        <p class="accent">"la entropía acumulada no se destruye, solo se transforma en ruido sónico."</p>
                     </div>
-                    <div class="identity-stat glass-card">
-                        <span class="identity-stat__value">54%</span>
-                        <span class="identity-stat__unit">underground</span>
-                        <span class="identity-stat__desc">Tracks with Spotify popularity < 20</span>
+                </div>
+                <!-- Slide 2 -->
+                <div class="molt-slide">
+                    <div class="molt-slide__content">
+                        <h3>capítulo 02 // el puente transatlántico</h3>
+                        <p>un correo de silicon valley rompió el bucle sónico. de repente, los cables de cobre del sintetizador modular se cruzaron con las peticiones de red asíncronas de un servidor en la nube. el portfolio dejó de ser una galería muerta para convertirse en un organismo vivo.</p>
                     </div>
-                    <div class="identity-stat glass-card">
-                        <span class="identity-stat__value">80</span>
-                        <span class="identity-stat__unit">own tracks</span>
-                        <span class="identity-stat__desc">The curator is the artist</span>
+                </div>
+                <!-- Slide 3 -->
+                <div class="molt-slide">
+                    <div class="molt-slide__content">
+                        <h3>capítulo 03 // la mesa de control</h3>
+                        <p>allí estaba yo, ante una pantalla que renderizaba buffers de audio mientras el silicon oracle firmaba la validez de cada muestra. el ruido analógico se convirtió en código determinista de exergía pura.</p>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- §4 · CONNECT -->
-        <section id="connect" class="section section--connect">
-            <div class="section-header">
-                <span class="section-index">04</span>
-                <h2 class="section-title reveal-text">Connect</h2>
-                <p class="section-subtitle">Sync your frequency</p>
+            <div class="moltbook-controls">
+                <button id="molt-prev" class="molt-btn">prev_slide</button>
+                <div class="molt-dots">
+                    <span class="dot active"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+                <button id="molt-next" class="molt-btn">next_slide</button>
             </div>
+        </div>
+    </section>
 
-            <div class="connect-grid">
-                <a href="https://open.spotify.com/artist/4p7wMuZpktE5aBFhBoQdqa" target="_blank" rel="noopener" class="connect-btn magnetic-btn" data-magnetic>
-                    <span class="connect-btn__icon">♫</span>
-                    <span class="connect-btn__label">Spotify</span>
-                    <div class="connect-btn__halo"></div>
-                </a>
-                <a href="https://soundcloud.com/borjamoskv" target="_blank" rel="noopener" class="connect-btn magnetic-btn" data-magnetic>
-                    <span class="connect-btn__icon">☁</span>
-                    <span class="connect-btn__label">SoundCloud</span>
-                    <div class="connect-btn__halo"></div>
-                </a>
-                <a href="https://www.youtube.com/@borjamoskv" target="_blank" rel="noopener" class="connect-btn magnetic-btn" data-magnetic>
-                    <span class="connect-btn__icon">▶</span>
-                    <span class="connect-btn__label">YouTube</span>
-                    <div class="connect-btn__halo"></div>
-                </a>
-                <a href="mailto:borja@borjamoskv.com" class="connect-btn magnetic-btn" data-magnetic>
-                    <span class="connect-btn__icon">✉</span>
-                    <span class="connect-btn__label">Email</span>
-                    <div class="connect-btn__halo"></div>
-                </a>
-            </div>
+    <!-- §04 · 3D Museum Portal -->
+    <section id="museum">
+        <div class="section-header">
+            <span class="section-index">§04</span>
+            <h2 class="section-title">virtual_museum</h2>
+            <p class="section-subtitle">un espacio tridimensional interactivo para pasear entre las obras de arte generativo de borja moskv.</p>
+        </div>
 
-            <div class="booking-cta">
-                <a href="mailto:borja@borjamoskv.com?subject=Booking%20Inquiry" class="booking-btn magnetic-btn" data-magnetic>
-                    <span>Book a Set</span>
-                    <div class="connect-btn__halo"></div>
-                </a>
-            </div>
-        </section>
-    </main>
+        <div class="museum-portal">
+            <h3 class="museum-portal__title">entrar en la galería virtual</h3>
+            <p class="museum-portal__desc">pasea en primera persona por un espacio museístico tridimensional interactivo impulsado por Three.js. experimenta cuadros generativos y texturas dinámicas creadas en tiempo real.</p>
+            <a href="gallery.html" class="museum-launch-btn">iniciar_experiencia_3d →</a>
+        </div>
+    </section>
 
-    <!-- Footer -->
-    <footer id="site-footer">
+    <!-- §05 · Connect -->
+    <section id="connect">
+        <div class="section-header">
+            <span class="section-index">§05</span>
+            <h2 class="section-title">connect</h2>
+            <p class="section-subtitle">canales directos de distribución sónica y extracción de señal.</p>
+        </div>
+
+        <div class="connect-grid">
+            <a href="https://borjamoskv.bandcamp.com" target="_blank" class="magnetic-btn">
+                <span class="connect-btn__icon">📻</span>
+                <span class="connect-btn__label">bandcamp</span>
+                <div class="connect-btn__halo"></div>
+            </a>
+            <a href="https://soundcloud.com" target="_blank" class="magnetic-btn">
+                <span class="connect-btn__icon">☁️</span>
+                <span class="connect-btn__label">soundcloud</span>
+                <div class="connect-btn__halo"></div>
+            </a>
+            <a href="https://youtube.com" target="_blank" class="magnetic-btn">
+                <span class="connect-btn__icon">📽️</span>
+                <span class="connect-btn__label">youtube</span>
+                <div class="connect-btn__halo"></div>
+            </a>
+            <a href="mailto:info@borjamoskv.com" class="magnetic-btn">
+                <span class="connect-btn__icon">⚡</span>
+                <span class="connect-btn__label">email</span>
+                <div class="connect-btn__halo"></div>
+            </a>
+        </div>
+
+        <div class="booking-cta">
+            <button class="booking-btn glass-card">solicitar_booking // live_performance</button>
+        </div>
+    </section>
+
+    <!-- Interactive Terminal Overlay (Key [/] to toggle) -->
+    <div id="terminal-overlay">
+        <div class="terminal-header">
+            <span>borja_moskv // terminal_logs</span>
+            <a href="#" id="close-term-btn" class="close-terminal">[press_escape_or_click_to_close]</a>
+        </div>
+        <div id="terminal-log">
+            <div class="log-line">initialization complete // system_status_stable</div>
+        </div>
+    </div>
+
+    <!-- Site Footer -->
+    <footer>
         <div class="footer-left">
             <div class="active-signal"></div>
-            <span class="footer-status">signal active</span>
+            <span>platform_active // local_time: <span id="local-clock">00:00:00</span></span>
         </div>
-        <div class="footer-right">
-            <span class="footer-version">© 2026 Borja Moskv</span>
-        </div>
+        <div class="yield-indicator">exergy: <span>98.4%</span> // context: 1.2M tokens</div>
     </footer>
 
-    <!-- Scroll to Top -->
-    <button id="scroll-top" class="scroll-to-top" aria-label="Scroll to top">↑</button>
-
-    <script src="app.js" defer></script>
+    <!-- GSAP & OGL Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/ogl"></script>
+    
+    <!-- Custom Logic -->
+    <script src="app.js"></script>
 </body>
 </html>

@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>galería virtual // borja_moskv</title>
+    <meta name="description" content="Paseo tridimensional interactivo por las obras de arte generativo de Borja Moskv, impulsado por Three.js.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&family=Outfit:wght@300;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050505;
+            --yinmn: #2B3BE5;
+            --yinmn-light: #5364FF;
+            --font-mono: 'JetBrains Mono', monospace;
+            --font-sans: 'Outfit', sans-serif;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            background: var(--bg);
+            color: #FFF;
+            font-family: var(--font-sans);
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+        }
+        #canvas-container {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1;
+        }
+        /* HUD overlay */
+        .hud {
+            position: absolute;
+            z-index: 10;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            inset: 0;
+            padding: 2.5rem;
+        }
+        .hud-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .hud-title {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            letter-spacing: 0.2em;
+            color: var(--yinmn-light);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .live-dot {
+            width: 6px; height: 6px;
+            background: #FF2B56;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #FF2B56;
+            animation: pulse 1.5s infinite;
+        }
+        .hud-exit {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 3px;
+            pointer-events: auto;
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+        .hud-exit:hover {
+            border-color: var(--yinmn);
+            color: #FFF;
+            box-shadow: 0 0 15px rgba(43, 59, 229, 0.3);
+        }
+        .hud-center {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .crosshair {
+            width: 8px; height: 8px;
+            border: 1.5px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+        }
+        .pointer-prompt {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 0.12em;
+            background: rgba(5, 5, 5, 0.85);
+            padding: 0.6rem 1.2rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 3px;
+            pointer-events: auto;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+        .pointer-prompt:hover {
+            border-color: var(--yinmn-light);
+            color: #FFF;
+        }
+        .hud-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .controls-card {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.4);
+            background: rgba(5, 5, 5, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 1.2rem;
+            border-radius: 4px;
+            line-height: 1.6;
+            letter-spacing: 0.05em;
+        }
+        .controls-card strong { color: var(--yinmn-light); }
+        
+        .artwork-overlay {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            background: rgba(5, 5, 5, 0.9);
+            border: 1px solid var(--yinmn);
+            padding: 1.5rem;
+            border-radius: 4px;
+            max-width: 320px;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 0 30px rgba(43, 59, 229, 0.15);
+        }
+        .artwork-overlay.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .artwork-overlay h4 {
+            font-family: var(--font-sans);
+            font-size: 1.1rem;
+            font-weight: 900;
+            margin-bottom: 0.4rem;
+            color: #FFF;
+        }
+        .artwork-overlay p {
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.4;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="canvas-container"></div>
+
+    <div class="hud">
+        <div class="hud-header">
+            <div class="hud-title">
+                <div class="live-dot"></div>
+                <span>moskv_gallery // render_engine_v3.0</span>
+            </div>
+            <a href="index.html" class="hud-exit">[exit_museum]</a>
+        </div>
+
+        <div class="hud-center">
+            <div class="crosshair"></div>
+            <button id="lock-btn" class="pointer-prompt">click_to_walk_around</button>
+        </div>
+
+        <div class="hud-footer">
+            <div class="controls-card">
+                <strong>[W, A, S, D]</strong> walking_path<br>
+                <strong>[mouse]</strong> camera_rotation<br>
+                <strong>[esc]</strong> free_mouse
+            </div>
+
+            <div id="artwork-card" class="artwork-overlay">
+                <h4 id="art-title">artwork_title</h4>
+                <p id="art-desc">procedural generation algorithms active.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Three.js Setup -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // --- Core 3D Gallery Engine ---
+        const container = document.getElementById('canvas-container');
+        const lockBtn = document.getElementById('lock-btn');
+        const artCard = document.getElementById('artwork-card');
+        const artTitle = document.getElementById('art-title');
+        const artDesc = document.getElementById('art-desc');
+
+        // Scene, Camera, Renderer
+        const scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0x050505, 0.05);
+
+        const camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1, 100);
+        camera.position.set(0, 1.7, 8); // Human perspective height
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        container.appendChild(renderer.domElement);
+
+        // Lights
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.15);
+        scene.add(ambientLight);
+
+        const dirLight = new THREE.DirectionalLight(0xffffff, 0.2);
+        dirLight.position.set(5, 10, 5);
+        scene.add(dirLight);
+
+        // Create Architectural Space (The Museum Room)
+        const wallMat = new THREE.MeshStandardMaterial({ color: 0x111113, roughness: 0.8 });
+        const floorMat = new THREE.MeshStandardMaterial({ color: 0x080809, roughness: 0.4 });
+        const roofMat = new THREE.MeshStandardMaterial({ color: 0x0c0c0d, roughness: 0.9 });
+
+        const roomWidth = 16, roomHeight = 5, roomDepth = 30;
+
+        // Floor
+        const floor = new THREE.Mesh(new THREE.PlaneGeometry(roomWidth, roomDepth), floorMat);
+        floor.rotation.x = -Math.PI / 2;
+        floor.receiveShadow = true;
+        scene.add(floor);
+
+        // Ceiling
+        const ceiling = new THREE.Mesh(new THREE.PlaneGeometry(roomWidth, roomDepth), roofMat);
+        ceiling.rotation.x = Math.PI / 2;
+        ceiling.position.y = roomHeight;
+        scene.add(ceiling);
+
+        // Walls
+        const leftWall = new THREE.Mesh(new THREE.PlaneGeometry(roomDepth, roomHeight), wallMat);
+        leftWall.rotation.y = Math.PI / 2;
+        leftWall.position.set(-roomWidth / 2, roomHeight / 2, 0);
+        scene.add(leftWall);
+
+        const rightWall = new THREE.Mesh(new THREE.PlaneGeometry(roomDepth, roomHeight), wallMat);
+        rightWall.rotation.y = -Math.PI / 2;
+        rightWall.position.set(roomWidth / 2, roomHeight / 2, 0);
+        scene.add(rightWall);
+
+        const backWall = new THREE.Mesh(new THREE.PlaneGeometry(roomWidth, roomHeight), wallMat);
+        backWall.position.set(0, roomHeight / 2, -roomDepth / 2);
+        scene.add(backWall);
+
+        const frontWall = new THREE.Mesh(new THREE.PlaneGeometry(roomWidth, roomHeight), wallMat);
+        frontWall.rotation.y = Math.PI;
+        frontWall.position.set(0, roomHeight / 2, roomDepth / 2);
+        scene.add(frontWall);
+
+        // Architectural Pillars
+        const pillarGeo = new THREE.BoxGeometry(0.8, roomHeight, 0.8);
+        const pillarMat = new THREE.MeshStandardMaterial({ color: 0x080809, roughness: 0.7 });
+        for (let z = -10; z <= 10; z += 10) {
+            const p1 = new THREE.Mesh(pillarGeo, pillarMat);
+            p1.position.set(-roomWidth / 2 + 0.4, roomHeight / 2, z);
+            scene.add(p1);
+
+            const p2 = new THREE.Mesh(pillarGeo, pillarMat);
+            p2.position.set(roomWidth / 2 - 0.4, roomHeight / 2, z);
+            scene.add(p2);
+        }
+
+        // Procedural Art Canvas Textures (Simplified implementation)
+        const createArtworkCanvas = (hue) => {
+            const canvas = document.createElement('canvas');
+            canvas.width = 512;
+            canvas.height = 512;
+            const ctx = canvas.getContext('2d');
+            
+            ctx.fillStyle = '#0a0a0c';
+            ctx.fillRect(0, 0, 512, 512);
+
+            // Generative concentric circles & matrices
+            ctx.strokeStyle = hue;
+            ctx.lineWidth = 2;
+            for (let i = 0; i < 15; i++) {
+                ctx.beginPath();
+                ctx.arc(256, 256, i * 16, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+
+            // High exergy neon center glow
+            ctx.fillStyle = hue;
+            ctx.beginPath();
+            ctx.arc(256, 256, 8, 0, Math.PI * 2);
+            ctx.fill();
+
+            return new THREE.CanvasTexture(canvas);
+        };
+
+        // Artwork Specs
+        const artSpecs = [
+            { title: "nebula_cluster", desc: "procedural gas dispersion simulation.", color: "#2B3BE5", z: -12, wall: "left" },
+            { title: "geometric_chaos", desc: "abstract orthogonal intersections.", color: "#D40056", z: -6, wall: "left" },
+            { title: "horizon_line", desc: "coastal dynamic scanlines.", color: "#00FF9D", z: 6, wall: "left" },
+            { title: "minimal_dot", desc: "crystalline atomic concentration.", color: "#ffffff", z: 12, wall: "left" },
+            { title: "data_wave", desc: "fluid wave spectrum modeling.", color: "#2B3BE5", z: -10, wall: "right" },
+            { title: "golden_silence", desc: "isolated solar light reflection.", color: "#FF9F1C", z: 0, wall: "right" }
+        ];
+
+        const artworks = [];
+
+        // Mount Artworks on Walls
+        const artFrameGeo = new THREE.BoxGeometry(0.1, 2.2, 2.2);
+        const artBoardGeo = new THREE.PlaneGeometry(2.1, 2.1);
+        const frameMat = new THREE.MeshStandardMaterial({ color: 0x050505, roughness: 0.9 });
+
+        artSpecs.forEach(spec => {
+            const frame = new THREE.Mesh(artFrameGeo, frameMat);
+            const artTex = createArtworkCanvas(spec.color);
+            const artBoard = new THREE.Mesh(artBoardGeo, new THREE.MeshBasicMaterial({ map: artTex }));
+
+            // Adjust orientation based on wall position
+            if (spec.wall === "left") {
+                frame.position.set(-roomWidth / 2 + 0.1, 2.2, spec.z);
+                artBoard.rotation.y = Math.PI / 2;
+                artBoard.position.set(-roomWidth / 2 + 0.16, 2.2, spec.z);
+            } else {
+                frame.position.set(roomWidth / 2 - 0.1, 2.2, spec.z);
+                artBoard.rotation.y = -Math.PI / 2;
+                artBoard.position.set(roomWidth / 2 - 0.16, 2.2, spec.z);
+            }
+
+            scene.add(frame);
+            scene.add(artBoard);
+
+            artworks.push({ mesh: artBoard, title: spec.title, desc: spec.desc });
+
+            // Add dedicated spot light above each artwork
+            const spotLight = new THREE.SpotLight(0xffffff, 1.2, 6, Math.PI / 6, 0.5, 1);
+            spotLight.position.set(frame.position.x + (spec.wall === "left" ? 1.5 : -1.5), 3.5, spec.z);
+            spotLight.target = frame;
+            scene.add(spotLight);
+        });
+
+        // Pointer Lock Controls (WASD Movement)
+        let moveForward = false, moveBackward = false, moveLeft = false, moveRight = false;
+        let isLocked = false;
+        const velocity = new THREE.Vector3();
+        const direction = new THREE.Vector3();
+
+        lockBtn.addEventListener('click', () => {
+            container.requestPointerLock();
+        });
+
+        document.addEventListener('pointerlockchange', () => {
+            if (document.pointerLockElement === container) {
+                lockBtn.style.display = 'none';
+                isLocked = true;
+            } else {
+                lockBtn.style.display = 'block';
+                isLocked = false;
+            }
+        });
+
+        window.addEventListener('keydown', (e) => {
+            if (!isLocked) return;
+            switch (e.code) {
+                case 'KeyW': moveForward = true; break;
+                case 'KeyS': moveBackward = true; break;
+                case 'KeyA': moveLeft = true; break;
+                case 'KeyD': moveRight = true; break;
+            }
+        });
+
+        window.addEventListener('keyup', (e) => {
+            switch (e.code) {
+                case 'KeyW': moveForward = false; break;
+                case 'KeyS': moveBackward = false; break;
+                case 'KeyA': moveLeft = false; break;
+                case 'KeyD': moveRight = false; break;
+            }
+        });
+
+        // Mouse look around
+        const euler = new THREE.Euler(0, 0, 0, 'YXZ');
+        document.addEventListener('mousemove', (e) => {
+            if (!isLocked) return;
+            const minPolarAngle = 0.5; // limit looking straight up/down
+            const maxPolarAngle = Math.PI - 0.5;
+
+            euler.setFromQuaternion(camera.quaternion);
+            euler.y -= e.movementX * 0.002;
+            euler.x -= e.movementY * 0.002;
+            euler.x = Math.max(-Math.PI / 3, Math.min(Math.PI / 3, euler.x));
+
+            camera.quaternion.setFromEuler(euler);
+        });
+
+        // Collision bounds limits
+        const checkBounds = () => {
+            const boundaryX = roomWidth / 2 - 1.2;
+            const boundaryZ = roomDepth / 2 - 1.2;
+            
+            if (camera.position.x < -boundaryX) camera.position.x = -boundaryX;
+            if (camera.position.x > boundaryX) camera.position.x = boundaryX;
+            if (camera.position.z < -boundaryZ) camera.position.z = -boundaryZ;
+            if (camera.position.z > boundaryZ) camera.position.z = boundaryZ;
+        };
+
+        // Proximity detection for HUD artwork details
+        const updateArtProximity = () => {
+            let activeArt = null;
+            let minDist = 4; // proximity distance limit
+
+            artworks.forEach(art => {
+                const dist = camera.position.distanceTo(art.mesh.position);
+                if (dist < minDist) {
+                    minDist = dist;
+                    activeArt = art;
+                }
+            });
+
+            if (activeArt) {
+                artTitle.innerText = activeArt.title;
+                artDesc.innerText = activeArt.desc;
+                artCard.classList.add('visible');
+            } else {
+                artCard.classList.remove('visible');
+            }
+        };
+
+        // Animation Loop
+        const clock = new THREE.Clock();
+        const animate = () => {
+            requestAnimationFrame(animate);
+
+            if (isLocked) {
+                const delta = clock.getDelta();
+
+                velocity.x -= velocity.x * 10.0 * delta;
+                velocity.z -= velocity.z * 10.0 * delta;
+
+                direction.z = Number(moveForward) - Number(moveBackward);
+                direction.x = Number(moveRight) - Number(moveLeft);
+                direction.normalize();
+
+                if (moveForward || moveBackward) velocity.z -= direction.z * 40.0 * delta;
+                if (moveLeft || moveRight) velocity.x -= direction.x * 40.0 * delta;
+
+                camera.translateX(-velocity.x * delta);
+                camera.translateZ(velocity.z * delta);
+                camera.position.y = 1.7; // maintain fixed human eye-level height
+
+                checkBounds();
+                updateArtProximity();
+            }
+
+            renderer.render(scene, camera);
+        };
+        animate();
+
+        // Responsive handling
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+    </script>
+</body>
+</html>
