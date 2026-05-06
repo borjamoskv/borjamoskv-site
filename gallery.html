@@ -10,9 +10,9 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&family=Outfit:wght@300;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #050505;
-            --yinmn: #2B3BE5;
-            --yinmn-light: #5364FF;
+            --bg: #030303;
+            --yinmn: #1E2FD5;
+            --yinmn-light: #4D5FFF;
             --font-mono: 'JetBrains Mono', monospace;
             --font-sans: 'Outfit', sans-serif;
         }
@@ -79,7 +79,7 @@
         .hud-exit:hover {
             border-color: var(--yinmn);
             color: #FFF;
-            box-shadow: 0 0 15px rgba(43, 59, 229, 0.3);
+            box-shadow: 0 0 15px rgba(30, 47, 213, 0.3);
         }
         .hud-center {
             position: absolute;
@@ -142,7 +142,7 @@
             transform: translateY(20px);
             opacity: 0;
             transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 0 30px rgba(43, 59, 229, 0.15);
+            box-shadow: 0 0 30px rgba(30, 47, 213, 0.15);
         }
         .artwork-overlay.visible {
             transform: translateY(0);
@@ -174,7 +174,7 @@
         <div class="hud-header">
             <div class="hud-title">
                 <div class="live-dot"></div>
-                <span>moskv_gallery // render_engine_v3.0</span>
+                <span>moskv_gallery // render_engine_v3.5</span>
             </div>
             <a href="index.html" class="hud-exit">[exit_museum]</a>
         </div>
@@ -210,7 +210,7 @@
 
         // Scene, Camera, Renderer
         const scene = new THREE.Scene();
-        scene.fog = new THREE.FogExp2(0x050505, 0.05);
+        scene.fog = new THREE.FogExp2(0x030303, 0.04);
 
         const camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1, 100);
         camera.position.set(0, 1.7, 8); // Human perspective height
@@ -222,18 +222,37 @@
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         container.appendChild(renderer.domElement);
 
-        // Lights
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.15);
+        // Ambient & Directional Lights
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.08);
         scene.add(ambientLight);
 
-        const dirLight = new THREE.DirectionalLight(0xffffff, 0.2);
+        const dirLight = new THREE.DirectionalLight(0xffffff, 0.15);
         dirLight.position.set(5, 10, 5);
         scene.add(dirLight);
 
-        // Create Architectural Space (The Museum Room)
-        const wallMat = new THREE.MeshStandardMaterial({ color: 0x111113, roughness: 0.8 });
-        const floorMat = new THREE.MeshStandardMaterial({ color: 0x080809, roughness: 0.4 });
-        const roofMat = new THREE.MeshStandardMaterial({ color: 0x0c0c0d, roughness: 0.9 });
+        // Ambient Dust Particle Cloud (x10000 Premium atmosphere)
+        const particleCount = 450;
+        const particleGeo = new THREE.BufferGeometry();
+        const positions = new Float32Array(particleCount * 3);
+        for(let i=0; i<particleCount*3; i+=3) {
+            positions[i] = (Math.random() - 0.5) * 15;
+            positions[i+1] = Math.random() * 5;
+            positions[i+2] = (Math.random() - 0.5) * 28;
+        }
+        particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        const particleMat = new THREE.PointsMaterial({
+            color: 0x4D5FFF,
+            size: 0.045,
+            transparent: true,
+            opacity: 0.35
+        });
+        const dustCloud = new THREE.Points(particleGeo, particleMat);
+        scene.add(dustCloud);
+
+        // Architectural Space (Premium Gallery Room)
+        const wallMat = new THREE.MeshStandardMaterial({ color: 0x09090b, roughness: 0.85 });
+        const floorMat = new THREE.MeshStandardMaterial({ color: 0x030304, roughness: 0.35, metalness: 0.2 });
+        const roofMat = new THREE.MeshStandardMaterial({ color: 0x060608, roughness: 0.9 });
 
         const roomWidth = 16, roomHeight = 5, roomDepth = 30;
 
@@ -269,9 +288,21 @@
         frontWall.position.set(0, roomHeight / 2, roomDepth / 2);
         scene.add(frontWall);
 
+        // Ceiling Linear Neons
+        const neonGeo = new THREE.BoxGeometry(0.06, 0.03, roomDepth);
+        const neonMat = new THREE.MeshBasicMaterial({ color: 0x1E2FD5 });
+        
+        const neon1 = new THREE.Mesh(neonGeo, neonMat);
+        neon1.position.set(-roomWidth / 3, roomHeight - 0.02, 0);
+        scene.add(neon1);
+
+        const neon2 = new THREE.Mesh(neonGeo, neonMat);
+        neon2.position.set(roomWidth / 3, roomHeight - 0.02, 0);
+        scene.add(neon2);
+
         // Architectural Pillars
         const pillarGeo = new THREE.BoxGeometry(0.8, roomHeight, 0.8);
-        const pillarMat = new THREE.MeshStandardMaterial({ color: 0x080809, roughness: 0.7 });
+        const pillarMat = new THREE.MeshStandardMaterial({ color: 0x050507, roughness: 0.65 });
         for (let z = -10; z <= 10; z += 10) {
             const p1 = new THREE.Mesh(pillarGeo, pillarMat);
             p1.position.set(-roomWidth / 2 + 0.4, roomHeight / 2, z);
@@ -282,75 +313,80 @@
             scene.add(p2);
         }
 
-        // Procedural Art Canvas Textures (Simplified implementation)
-        const createArtworkCanvas = (hue) => {
-            const canvas = document.createElement('canvas');
-            canvas.width = 512;
-            canvas.height = 512;
-            const ctx = canvas.getContext('2d');
-            
-            ctx.fillStyle = '#0a0a0c';
-            ctx.fillRect(0, 0, 512, 512);
-
-            // Generative concentric circles & matrices
-            ctx.strokeStyle = hue;
-            ctx.lineWidth = 2;
-            for (let i = 0; i < 15; i++) {
-                ctx.beginPath();
-                ctx.arc(256, 256, i * 16, 0, Math.PI * 2);
-                ctx.stroke();
-            }
-
-            // High exergy neon center glow
-            ctx.fillStyle = hue;
-            ctx.beginPath();
-            ctx.arc(256, 256, 8, 0, Math.PI * 2);
-            ctx.fill();
-
-            return new THREE.CanvasTexture(canvas);
-        };
-
-        // Artwork Specs
+        // Procedural Artwork Specs
         const artSpecs = [
-            { title: "nebula_cluster", desc: "procedural gas dispersion simulation.", color: "#2B3BE5", z: -12, wall: "left" },
-            { title: "geometric_chaos", desc: "abstract orthogonal intersections.", color: "#D40056", z: -6, wall: "left" },
-            { title: "horizon_line", desc: "coastal dynamic scanlines.", color: "#00FF9D", z: 6, wall: "left" },
-            { title: "minimal_dot", desc: "crystalline atomic concentration.", color: "#ffffff", z: 12, wall: "left" },
-            { title: "data_wave", desc: "fluid wave spectrum modeling.", color: "#2B3BE5", z: -10, wall: "right" },
-            { title: "golden_silence", desc: "isolated solar light reflection.", color: "#FF9F1C", z: 0, wall: "right" }
+            { title: "nebula_cluster", desc: "procedural gas dispersion simulation.", color: 0x1E2FD5, z: -12, wall: "left", shape: "torus" },
+            { title: "geometric_chaos", desc: "abstract orthogonal intersections.", color: 0xD40056, z: -6, wall: "left", shape: "dodecahedron" },
+            { title: "horizon_line", desc: "coastal dynamic scanlines.", color: 0x00FF9D, z: 6, wall: "left", shape: "cylinder" },
+            { title: "minimal_dot", desc: "crystalline atomic concentration.", color: 0xffffff, z: 12, wall: "left", shape: "sphere" },
+            { title: "data_wave", desc: "fluid wave spectrum modeling.", color: 0x1E2FD5, z: -10, wall: "right", shape: "torusKnot" },
+            { title: "golden_silence", desc: "isolated solar light reflection.", color: 0xFF9F1C, z: 0, wall: "right", shape: "octahedron" }
         ];
 
         const artworks = [];
 
-        // Mount Artworks on Walls
-        const artFrameGeo = new THREE.BoxGeometry(0.1, 2.2, 2.2);
-        const artBoardGeo = new THREE.PlaneGeometry(2.1, 2.1);
-        const frameMat = new THREE.MeshStandardMaterial({ color: 0x050505, roughness: 0.9 });
+        // Mount Artwork Frames + FLOAT 3D Shapes (x10000 Premium level)
+        const frameMat = new THREE.MeshStandardMaterial({ color: 0x030304, roughness: 0.95 });
+        const canvasMat = new THREE.MeshBasicMaterial({ color: 0x080809 });
 
         artSpecs.forEach(spec => {
-            const frame = new THREE.Mesh(artFrameGeo, frameMat);
-            const artTex = createArtworkCanvas(spec.color);
-            const artBoard = new THREE.Mesh(artBoardGeo, new THREE.MeshBasicMaterial({ map: artTex }));
+            const frameGroup = new THREE.Group();
 
-            // Adjust orientation based on wall position
+            // 1. Frame base
+            const frame = new THREE.Mesh(new THREE.BoxGeometry(0.1, 2.2, 2.2), frameMat);
+            const canvas = new THREE.Mesh(new THREE.PlaneGeometry(2.1, 2.1), canvasMat);
+            
             if (spec.wall === "left") {
                 frame.position.set(-roomWidth / 2 + 0.1, 2.2, spec.z);
-                artBoard.rotation.y = Math.PI / 2;
-                artBoard.position.set(-roomWidth / 2 + 0.16, 2.2, spec.z);
+                canvas.rotation.y = Math.PI / 2;
+                canvas.position.set(-roomWidth / 2 + 0.16, 2.2, spec.z);
             } else {
                 frame.position.set(roomWidth / 2 - 0.1, 2.2, spec.z);
-                artBoard.rotation.y = -Math.PI / 2;
-                artBoard.position.set(roomWidth / 2 - 0.16, 2.2, spec.z);
+                canvas.rotation.y = -Math.PI / 2;
+                canvas.position.set(roomWidth / 2 - 0.16, 2.2, spec.z);
+            }
+            
+            scene.add(frame);
+            scene.add(canvas);
+
+            // 2. Floating 3D Procedural Mesh inside frame
+            let geom;
+            if (spec.shape === "torus") geom = new THREE.TorusGeometry(0.5, 0.15, 12, 36);
+            else if (spec.shape === "dodecahedron") geom = new THREE.DodecahedronGeometry(0.6);
+            else if (spec.shape === "cylinder") geom = new THREE.CylinderGeometry(0.4, 0.4, 1.0, 16);
+            else if (spec.shape === "sphere") geom = new THREE.SphereGeometry(0.5, 16, 16);
+            else if (spec.shape === "torusKnot") geom = new THREE.TorusKnotGeometry(0.38, 0.12, 64, 8);
+            else geom = new THREE.OctahedronGeometry(0.6);
+
+            const specMeshMat = new THREE.MeshStandardMaterial({
+                color: spec.color,
+                wireframe: true,
+                roughness: 0.3,
+                metalness: 0.8,
+                emissive: spec.color,
+                emissiveIntensity: 0.4
+            });
+
+            const floatingMesh = new THREE.Mesh(geom, specMeshMat);
+            
+            // Positioning mesh in front of frame
+            if (spec.wall === "left") {
+                floatingMesh.position.set(-roomWidth / 2 + 0.6, 2.2, spec.z);
+            } else {
+                floatingMesh.position.set(roomWidth / 2 - 0.6, 2.2, spec.z);
             }
 
-            scene.add(frame);
-            scene.add(artBoard);
+            scene.add(floatingMesh);
 
-            artworks.push({ mesh: artBoard, title: spec.title, desc: spec.desc });
+            artworks.push({
+                mesh: floatingMesh,
+                title: spec.title,
+                desc: spec.desc
+            });
 
-            // Add dedicated spot light above each artwork
-            const spotLight = new THREE.SpotLight(0xffffff, 1.2, 6, Math.PI / 6, 0.5, 1);
-            spotLight.position.set(frame.position.x + (spec.wall === "left" ? 1.5 : -1.5), 3.5, spec.z);
+            // Dedicated Spotlight above each frame
+            const spotLight = new THREE.SpotLight(spec.color, 1.4, 6, Math.PI / 5, 0.5, 1);
+            spotLight.position.set(frame.position.x + (spec.wall === "left" ? 1.6 : -1.6), 3.8, spec.z);
             spotLight.target = frame;
             scene.add(spotLight);
         });
@@ -398,12 +434,9 @@
         const euler = new THREE.Euler(0, 0, 0, 'YXZ');
         document.addEventListener('mousemove', (e) => {
             if (!isLocked) return;
-            const minPolarAngle = 0.5; // limit looking straight up/down
-            const maxPolarAngle = Math.PI - 0.5;
-
             euler.setFromQuaternion(camera.quaternion);
-            euler.y -= e.movementX * 0.002;
-            euler.x -= e.movementY * 0.002;
+            euler.y -= e.movementX * 0.0018;
+            euler.x -= e.movementY * 0.0018;
             euler.x = Math.max(-Math.PI / 3, Math.min(Math.PI / 3, euler.x));
 
             camera.quaternion.setFromEuler(euler);
@@ -423,7 +456,7 @@
         // Proximity detection for HUD artwork details
         const updateArtProximity = () => {
             let activeArt = null;
-            let minDist = 4; // proximity distance limit
+            let minDist = 3.5; // proximity limit
 
             artworks.forEach(art => {
                 const dist = camera.position.distanceTo(art.mesh.position);
@@ -447,6 +480,25 @@
         const animate = () => {
             requestAnimationFrame(animate);
 
+            const elapsed = clock.getElapsedTime();
+
+            // Rotate 3D floating artworks dynamically
+            artworks.forEach((art, i) => {
+                art.mesh.rotation.y = elapsed * 0.4 + i;
+                art.mesh.rotation.x = elapsed * 0.2;
+                art.mesh.position.y = 2.2 + Math.sin(elapsed * 1.5 + i) * 0.08; // float bobbing
+            });
+
+            // Float ambient dust clouds
+            const posAttr = dustCloud.geometry.attributes.position;
+            for (let i = 0; i < posAttr.count; i++) {
+                let py = posAttr.getY(i);
+                py -= 0.0025; // drift down
+                if (py < 0) py = 5; // wrap ceiling
+                posAttr.setY(i, py);
+            }
+            dustCloud.geometry.attributes.position.needsUpdate = true;
+
             if (isLocked) {
                 const delta = clock.getDelta();
 
@@ -457,12 +509,18 @@
                 direction.x = Number(moveRight) - Number(moveLeft);
                 direction.normalize();
 
-                if (moveForward || moveBackward) velocity.z -= direction.z * 40.0 * delta;
-                if (moveLeft || moveRight) velocity.x -= direction.x * 40.0 * delta;
+                if (moveForward || moveBackward) velocity.z -= direction.z * 35.0 * delta;
+                if (moveLeft || moveRight) velocity.x -= direction.x * 35.0 * delta;
 
                 camera.translateX(-velocity.x * delta);
                 camera.translateZ(velocity.z * delta);
-                camera.position.y = 1.7; // maintain fixed human eye-level height
+
+                // Walking head-bobbing mechanics
+                let bob = 1.7;
+                if (moveForward || moveBackward || moveLeft || moveRight) {
+                    bob += Math.sin(elapsed * 10) * 0.04;
+                }
+                camera.position.y = bob;
 
                 checkBounds();
                 updateArtProximity();
