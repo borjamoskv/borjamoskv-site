@@ -34,6 +34,7 @@ html {
   min-width: 320px;
   background: var(--ink);
   scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
 }
 
 #inicio,
@@ -118,8 +119,11 @@ video {
   height: 100svh;
   object-fit: cover;
   filter: saturate(0.88) contrast(1.14) brightness(0.78);
-  transform: translate3d(calc(var(--mx) * -16px), calc(var(--my) * -10px), 0)
-    scale(1.06);
+  transform: translate3d(
+    calc(var(--mx, 0) * -16px), 
+    calc((var(--my, 0) * -10px) + (var(--sy, 0) * 12vh)), 
+    0
+  ) scale(1.15);
 }
 
 .backdrop__still {
@@ -252,6 +256,8 @@ main,
 .section-block {
   min-height: 100svh;
   padding: 112px 24px 96px;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
 
 .hero {
@@ -871,12 +877,17 @@ p {
 }
 
 .site-footer {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
-  gap: 16px;
-  padding: 24px 22px 88px;
-  border-top: 1px solid var(--line);
+  gap: 22px;
+  padding: 44px 24px 54px;
+  font-size: 0.8rem;
+  font-weight: 760;
+  scroll-snap-align: end;
   background: rgba(9, 6, 4, 0.66);
   color: var(--soft);
 }

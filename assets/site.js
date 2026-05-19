@@ -357,3 +357,13 @@ window.addEventListener(
   },
   { passive: true },
 );
+
+window.addEventListener(
+  "scroll",
+  () => {
+    const scrollMax = document.documentElement.scrollHeight - window.innerHeight;
+    const sy = window.scrollY / scrollMax;
+    document.documentElement.style.setProperty("--sy", sy.toFixed(3));
+  },
+  { passive: true },
+);
