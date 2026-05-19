@@ -1,315 +1,351 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>borja_moskv // platform_v6.0</title>
-    <meta name="description" content="Ecosistema unificado de Borja Moskv. Artista, Arquitecto y Diseñador de Sonido. Explorando la arqueología sónica y el diseño Industrial Noir 2026.">
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;300;400;700&family=Outfit:wght@100;300;400;900&display=swap" rel="stylesheet">
-    
-    <!-- CSS -->
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="BORJA MOSKV: música electrónica, sesiones y vídeos desde Bilbao."
+    />
+    <meta name="author" content="BORJA MOSKV" />
+    <meta name="robots" content="index,follow" />
+    <meta property="og:title" content="BORJA MOSKV" />
+    <meta
+      property="og:description"
+      content="Música electrónica, sesiones y vídeos desde Bilbao."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://borjamoskv.com/" />
+    <meta
+      property="og:image"
+      content="https://borjamoskv.com/media/no-sleep-in-my-city-poster.jpg"
+    />
+    <meta property="og:image:width" content="640" />
+    <meta property="og:image:height" content="360" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="BORJA MOSKV" />
+    <meta
+      name="twitter:description"
+      content="Música electrónica, sesiones y vídeos desde Bilbao."
+    />
+    <meta
+      name="twitter:image"
+      content="https://borjamoskv.com/media/no-sleep-in-my-city-poster.jpg"
+    />
+    <link rel="canonical" href="https://borjamoskv.com/" />
+    <link rel="preload" href="media/no-sleep-in-my-city-poster.jpg" as="image" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#070604" />
+    <title>BORJA MOSKV - Música y vídeos</title>
+    <link rel="stylesheet" href="assets/site.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "MusicGroup",
+        "name": "BORJA MOSKV",
+        "url": "https://borjamoskv.com/",
+        "image": "https://borjamoskv.com/media/no-sleep-in-my-city-poster.jpg",
+        "genre": ["Electronic", "Techno", "IDM"],
+        "sameAs": [
+          "https://borjamoskv.bandcamp.com",
+          "https://soundcloud.com/borjamoskv",
+          "https://www.youtube.com/@borjamoskv",
+          "https://open.spotify.com/artist/4p7wMuZpktE5aBFhBoQdqa"
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Saltar al contenido</a>
 
-    <!-- SVG Analog Noise Overlay -->
-    <div id="noise-overlay"></div>
-
-    <!-- WebGL Background Canvas -->
-    <canvas id="gl-canvas"></canvas>
-
-    <!-- Custom Cursor -->
-    <div id="custom-cursor">
-        <div class="cursor-dot"></div>
-        <div class="cursor-ring"></div>
+    <div class="backdrop" aria-hidden="true">
+      <video
+        class="backdrop__video"
+        data-bg-video
+        autoplay
+        muted
+        loop
+        playsinline
+        poster="media/no-sleep-in-my-city-poster.jpg"
+      >
+        <source src="media/no-sleep-in-my-city.mp4" type="video/mp4" />
+      </video>
+      <div class="backdrop__still"></div>
+      <div class="backdrop__shade"></div>
     </div>
 
-    <!-- Boot Sequence Preloader -->
-    <div id="preloader">
-        <div class="preloader-content">
-            <div class="preloader-log">booting system_core...</div>
-            <div class="preloader-bar">
-                <div class="preloader-fill"></div>
-            </div>
-            <div class="preloader-status">0%</div>
-        </div>
-    </div>
-
-    <!-- Site Header -->
-    <header id="site-header">
-        <div class="logo-group">
-            <div class="logo-signal"></div>
-            <a href="#" class="logo-link">BORJA_MOSKV //</a>
-        </div>
-        
-        <nav>
-            <a href="#moskvlogia" class="nav-link">§01.moskvlogia</a>
-            <a href="#visual" class="nav-link">§02.visual_world</a>
-            <a href="#lore" class="nav-link">§03.lore</a>
-            <a href="#museum" class="nav-link">§04.museum</a>
-            <a href="#connect" class="nav-link">§05.connect</a>
-        </nav>
-
-        <div class="mode-selector">
-            <div class="mode-label">acoustic_id:</div>
-            <button id="toggle-sound" class="mode-btn">OFF</button>
-            <div class="mode-label">spectrometer:</div>
-            <button id="toggle-spectrometer" class="mode-btn">OFF</button>
-        </div>
+    <header class="site-header" data-header>
+      <a class="brand" href="#inicio" aria-label="BORJA MOSKV inicio">
+        BORJA MOSKV
+      </a>
+      <nav class="site-nav" aria-label="Principal">
+        <a href="#musica">Música</a>
+        <a href="#video">Vídeo</a>
+        <a href="#fotogramas">Imagen</a>
+      </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section class="section--hero">
-        <div class="hero-content">
-            <div class="hero-sub">architecture // sound // code</div>
-            <h1 class="hero-title">
-                <span class="hero-title__line">borja</span>
-                <span class="hero-title__line">moskv</span>
-            </h1>
-            <p class="hero-tagline">unificando la arqueología sónica y el diseño termodinámico en una sola señal.</p>
+    <main id="main">
+      <section class="hero" id="inicio" aria-label="BORJA MOSKV">
+        <div class="title-echo" aria-hidden="true">
+          <span>No Sleep</span>
+          <span>In My City</span>
         </div>
-        <div class="scroll-indicator">
-            <div class="scroll-indicator__line"></div>
-            <span>scroll_to_explore</span>
-        </div>
-    </section>
-
-    <!-- §01 · Moskvlogia -->
-    <section id="moskvlogia">
-        <div class="section-header">
-            <span class="section-index">§01</span>
-            <h2 class="section-title">moskvlogia</h2>
-            <p class="section-subtitle">arqueología sónica. un archivo viviente de 1,918 tracks auto-producidos de 2008 a 2026.</p>
-        </div>
-
-        <div class="moskvlogia-grid">
-            <!-- Stats -->
-            <div class="stats-row">
-                <div class="glass-card stat-card">
-                    <span class="stat-card__number">1,918</span>
-                    <span class="stat-card__label">tracks creados</span>
-                </div>
-                <div class="glass-card stat-card">
-                    <span class="stat-card__number">117</span>
-                    <span class="stat-card__label">horas de audio</span>
-                </div>
-                <div class="glass-card stat-card">
-                    <span class="stat-card__number">18</span>
-                    <span class="stat-card__label">años de archivo</span>
-                </div>
-                <div class="glass-card stat-card">
-                    <span class="stat-card__number">2.1G</span>
-                    <span class="stat-card__label">muestras procesadas</span>
-                </div>
+        <p class="place-mark">Bilbao / audio / imagen</p>
+        <div class="hero__copy">
+          <p class="kicker">Audio visual desde la noche</p>
+          <h1>
+            <span>BORJA</span>
+            <span>MOSKV</span>
+          </h1>
+          <p class="hero__lead">
+            Tracks que funcionan como escenas: bajo seco, aire nocturno y vídeo
+            ocupando toda la pantalla.
+          </p>
+          <div class="hero__actions">
+            <a class="text-link" href="#musica">Escuchar ahora</a>
+            <a class="text-link" href="#video">Ver la pieza</a>
+            <button class="text-link" type="button" data-open-immersive>
+              Modo pieza
+            </button>
+          </div>
+          <dl class="hero__meta" aria-label="Obra destacada">
+            <div>
+              <dt>Obra</dt>
+              <dd>No Sleep In My City</dd>
             </div>
-
-            <!-- Chart and Spotify Embed -->
-            <div class="stats-row">
-                <div class="glass-card genre-chart">
-                    <div class="genre-bar">
-                        <span class="genre-bar__label">lofi-industrial</span>
-                        <div class="genre-bar__track">
-                            <div class="genre-bar__fill" style="width: 85%;"></div>
-                        </div>
-                        <span class="genre-bar__count">85%</span>
-                    </div>
-                    <div class="genre-bar">
-                        <span class="genre-bar__label">ambient drone</span>
-                        <div class="genre-bar__track">
-                            <div class="genre-bar__fill" style="width: 72%;"></div>
-                        </div>
-                        <span class="genre-bar__count">72%</span>
-                    </div>
-                    <div class="genre-bar">
-                        <span class="genre-bar__label">hardware techno</span>
-                        <div class="genre-bar__track">
-                            <div class="genre-bar__fill" style="width: 64%;"></div>
-                        </div>
-                        <span class="genre-bar__count">64%</span>
-                    </div>
-                    <div class="genre-bar">
-                        <span class="genre-bar__label">abstract experimental</span>
-                        <div class="genre-bar__track">
-                            <div class="genre-bar__fill" style="width: 48%;"></div>
-                        </div>
-                        <span class="genre-bar__count">48%</span>
-                    </div>
-                </div>
-
-                <div class="glass-card spotify-embed">
-                    <!-- Spotify Player Embed -->
-                    <iframe style="border-radius:4px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX6b57K36669r?utm_source=generator&theme=0" width="100%" height="100%" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                </div>
+            <div>
+              <dt>Formato</dt>
+              <dd>Vídeo musical</dd>
             </div>
-        </div>
-    </section>
-
-    <!-- §02 · Visual World -->
-    <section id="visual">
-        <div class="section-header">
-            <span class="section-index">§02</span>
-            <h2 class="section-title">visual_world</h2>
-            <p class="section-subtitle">sets audiovisuales y remasterizaciones directas desde el canal oficial de YouTube.</p>
-        </div>
-
-        <div class="visual-grid">
-            <div class="glass-card video-card">
-                <div class="video-card__media">
-                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
-                </div>
-                <div class="video-card__caption">
-                    <span class="video-card__tag">live_session</span>
-                    <span class="video-card__title">analog_jam_node_01</span>
-                </div>
+            <div>
+              <dt>Duración</dt>
+              <dd>03:35</dd>
             </div>
-            <div class="glass-card video-card">
-                <div class="video-card__media">
-                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
-                </div>
-                <div class="video-card__caption">
-                    <span class="video-card__tag">music_video</span>
-                    <span class="video-card__title">giro_inesperado_visuals</span>
-                </div>
+          </dl>
+        </div>
+
+        <article class="poster-sleeve" aria-label="Obra destacada">
+          <img src="media/no-sleep-in-my-city-poster.jpg" alt="Fotograma de No Sleep In My City" />
+          <div class="poster-sleeve__copy">
+            <p>No Sleep In My City</p>
+            <span>03:35 · vídeo musical</span>
+          </div>
+        </article>
+
+        <p class="artist-note">
+          “Cuando todo baja la voz, la ciudad empieza a sonar mejor.”
+        </p>
+      </section>
+
+      <section class="release-ledger" aria-label="Obra actual">
+        <div class="release-ledger__inner">
+          <p>NO SLEEP IN MY CITY</p>
+          <span>Obra 01</span>
+          <span>Audio propio</span>
+          <span>Vídeo en pantalla completa</span>
+          <span>Bilbao</span>
+        </div>
+      </section>
+
+      <section class="cue-strip" aria-label="Cues de No Sleep In My City">
+        <div class="cue-strip__inner">
+          <p>No Sleep In My City / Cues</p>
+          <div class="cue-line">
+            <button type="button" data-cue-time="0" data-cue-frame="media/no-sleep-in-my-city-poster.jpg">
+              <span>00:00</span>
+              <strong>Entrada</strong>
+              <small>aire abierto</small>
+            </button>
+            <button type="button" data-cue-time="34" data-cue-frame="media/gambitero-real-01.jpg">
+              <span>00:34</span>
+              <strong>Bowl</strong>
+              <small>cuerpo en caída</small>
+            </button>
+            <button type="button" data-cue-time="88" data-cue-frame="media/gambitero-real-03.jpg">
+              <span>01:28</span>
+              <strong>Ruido</strong>
+              <small>texto contra noche</small>
+            </button>
+            <button type="button" data-cue-time="150" data-cue-frame="media/gambitero-real-06.jpg">
+              <span>02:30</span>
+              <strong>Salida</strong>
+              <small>último reflejo</small>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="listen section-block" id="musica" aria-labelledby="music-title">
+        <div class="section-head">
+          <p class="kicker">Música</p>
+          <h2 id="music-title">Cuatro salidas para la misma señal.</h2>
+        </div>
+
+        <div class="listen-lines" aria-label="Plataformas de escucha">
+          <a href="https://borjamoskv.bandcamp.com" target="_blank" rel="noopener noreferrer">
+            <em>01</em>
+            <span>Bandcamp</span>
+            <small>Apoyar, descargar, guardar</small>
+          </a>
+          <a href="https://soundcloud.com/borjamoskv" target="_blank" rel="noopener noreferrer">
+            <em>02</em>
+            <span>SoundCloud</span>
+            <small>Sesiones, señales, pruebas largas</small>
+          </a>
+          <a
+            href="https://open.spotify.com/artist/4p7wMuZpktE5aBFhBoQdqa"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <em>03</em>
+            <span>Spotify</span>
+            <small>Catálogo para volver</small>
+          </a>
+          <a href="https://www.youtube.com/@borjamoskv" target="_blank" rel="noopener noreferrer">
+            <em>04</em>
+            <span>YouTube</span>
+            <small>Vídeo, música, archivo</small>
+          </a>
+        </div>
+
+        <p class="listen-note">
+          La web empieza por lo que suena. Lo demás entra después, como luz de
+          ciudad por una persiana.
+        </p>
+      </section>
+
+      <section class="video-piece section-block" id="video" aria-labelledby="video-title">
+        <div class="video-piece__copy">
+          <p class="kicker">Vídeo</p>
+          <h2 id="video-title">No Sleep In My City</h2>
+          <p>
+            Una pieza principal servida desde la propia web: play, pantalla,
+            sombra, repetición.
+          </p>
+          <dl class="video-piece__credits">
+            <div>
+              <dt>Audio</dt>
+              <dd>BORJA MOSKV</dd>
             </div>
-            <div class="glass-card video-card">
-                <div class="video-card__media">
-                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
-                </div>
-                <div class="video-card__caption">
-                    <span class="video-card__tag">remaster</span>
-                    <span class="video-card__title">this_was_in_rainbows_jam</span>
-                </div>
+            <div>
+              <dt>Imagen</dt>
+              <dd>Archivo nocturno</dd>
             </div>
-        </div>
-    </section>
-
-    <!-- §03 · Lore // Giro Inesperado -->
-    <section id="lore">
-        <div class="section-header">
-            <span class="section-index">§03</span>
-            <h2 class="section-title">lore // giro_inesperado</h2>
-            <p class="section-subtitle">narrativas estocásticas sobre la fricción de crear, codificar y perderse entre madrid y silicon valley.</p>
-        </div>
-
-        <div class="glass-card moltbook-reader">
-            <div class="moltbook-slides">
-                <!-- Slide 1 -->
-                <div class="molt-slide active">
-                    <div class="molt-slide__content">
-                        <h3>capítulo 01 // el callejón de madrid</h3>
-                        <p>el aire de madrid a las cuatro de la mañana huele a ozono y asfalto frío. las luces de los sintetizadores iluminaban mi habitación con una luz azul hibonita muy densa. el ordenador escupía miles de líneas de logs redundantes mientras cargaba el preloader del sistema.</p>
-                        <p class="accent">"la entropía acumulada no se destruye, solo se transforma en ruido sónico."</p>
-                    </div>
-                </div>
-                <!-- Slide 2 -->
-                <div class="molt-slide">
-                    <div class="molt-slide__content">
-                        <h3>capítulo 02 // el puente transatlántico</h3>
-                        <p>un correo de silicon valley rompió el bucle sónico. de repente, los cables de cobre del sintetizador modular se cruzaron con las peticiones de red asíncronas de un servidor en la nube. el portfolio dejó de ser una galería muerta para convertirse en un organismo vivo.</p>
-                    </div>
-                </div>
-                <!-- Slide 3 -->
-                <div class="molt-slide">
-                    <div class="molt-slide__content">
-                        <h3>capítulo 03 // la mesa de control</h3>
-                        <p>allí estaba yo, ante una pantalla que renderizaba buffers de audio mientras el silicon oracle firmaba la validez de cada muestra. el ruido analógico se convirtió en código determinista de exergía pura.</p>
-                    </div>
-                </div>
+            <div>
+              <dt>Estado</dt>
+              <dd>Disponible</dd>
             </div>
-
-            <div class="moltbook-controls">
-                <button id="molt-prev" class="molt-btn">prev_slide</button>
-                <div class="molt-dots">
-                    <span class="dot active"></span>
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                </div>
-                <button id="molt-next" class="molt-btn">next_slide</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- §04 · 3D Museum Portal -->
-    <section id="museum">
-        <div class="section-header">
-            <span class="section-index">§04</span>
-            <h2 class="section-title">virtual_museum</h2>
-            <p class="section-subtitle">un espacio tridimensional interactivo para pasear entre las obras de arte generativo de borja moskv.</p>
+          </dl>
+          <button class="text-link video-play" type="button" data-focus-video>
+            Reproducir aquí
+          </button>
+          <button class="text-link video-play" type="button" data-open-immersive>
+            Pantalla completa
+          </button>
         </div>
 
-        <div class="museum-portal">
-            <h3 class="museum-portal__title">entrar en la galería virtual</h3>
-            <p class="museum-portal__desc">pasea en primera persona por un espacio museístico tridimensional interactivo impulsado por Three.js. experimenta cuadros generativos y texturas dinámicas creadas en tiempo real.</p>
-            <a href="gallery.html" class="museum-launch-btn">iniciar_experiencia_3d →</a>
+        <div class="screen">
+          <video
+            class="screen__video"
+            data-main-video
+            poster="media/no-sleep-in-my-city-poster.jpg"
+            controls
+            playsinline
+            preload="metadata"
+          >
+            <source src="media/no-sleep-in-my-city.mp4" type="video/mp4" />
+          </video>
         </div>
-    </section>
+      </section>
 
-    <!-- §05 · Connect -->
-    <section id="connect">
-        <div class="section-header">
-            <span class="section-index">§05</span>
-            <h2 class="section-title">connect</h2>
-            <p class="section-subtitle">canales directos de distribución sónica y extracción de señal.</p>
-        </div>
-
-        <div class="connect-grid">
-            <a href="https://borjamoskv.bandcamp.com" target="_blank" class="magnetic-btn">
-                <span class="connect-btn__icon">📻</span>
-                <span class="connect-btn__label">bandcamp</span>
-                <div class="connect-btn__halo"></div>
-            </a>
-            <a href="https://soundcloud.com" target="_blank" class="magnetic-btn">
-                <span class="connect-btn__icon">☁️</span>
-                <span class="connect-btn__label">soundcloud</span>
-                <div class="connect-btn__halo"></div>
-            </a>
-            <a href="https://youtube.com" target="_blank" class="magnetic-btn">
-                <span class="connect-btn__icon">📽️</span>
-                <span class="connect-btn__label">youtube</span>
-                <div class="connect-btn__halo"></div>
-            </a>
-            <a href="mailto:info@borjamoskv.com" class="magnetic-btn">
-                <span class="connect-btn__icon">⚡</span>
-                <span class="connect-btn__label">email</span>
-                <div class="connect-btn__halo"></div>
-            </a>
+      <section class="stills section-block" id="fotogramas" aria-labelledby="stills-title">
+        <div class="section-head section-head--wide">
+          <p class="kicker">Fotogramas</p>
+          <h2 id="stills-title">El archivo visual no está quieto.</h2>
         </div>
 
-        <div class="booking-cta">
-            <button class="booking-btn glass-card">solicitar_booking // live_performance</button>
+        <div class="collage">
+          <button class="still still--one" type="button" data-frame="media/gambitero-real-01.jpg">
+            <img src="media/gambitero-real-01.jpg" alt="Fotograma de vídeo con bowl nocturno" />
+            <span>Frame 01</span>
+          </button>
+          <button class="still still--two" type="button" data-frame="media/gambitero-real-02.jpg">
+            <img src="media/gambitero-real-02.jpg" alt="Fotograma de vídeo en skatepark" />
+            <span>Frame 02</span>
+          </button>
+          <button class="still still--three" type="button" data-frame="media/gambitero-real-03.jpg">
+            <img src="media/gambitero-real-03.jpg" alt="Fotograma oscuro con texto manuscrito" />
+            <span>Frame 03</span>
+          </button>
+          <button class="still still--four" type="button" data-frame="media/gambitero-real-04.jpg">
+            <img src="media/gambitero-real-04.jpg" alt="Fotograma con patinador y sombra" />
+            <span>Frame 04</span>
+          </button>
+          <button class="still still--five" type="button" data-frame="media/gambitero-real-05.jpg">
+            <img src="media/gambitero-real-05.jpg" alt="Fotograma nocturno de vídeo" />
+            <span>Frame 05</span>
+          </button>
+          <button class="still still--six" type="button" data-frame="media/gambitero-real-06.jpg">
+            <img src="media/gambitero-real-06.jpg" alt="Fotograma en bowl bajo estrellas" />
+            <span>Frame 06</span>
+          </button>
         </div>
-    </section>
+      </section>
+    </main>
 
-    <!-- Interactive Terminal Overlay (Key [/] to toggle) -->
-    <div id="terminal-overlay">
-        <div class="terminal-header">
-            <span>borja_moskv // terminal_logs</span>
-            <a href="#" id="close-term-btn" class="close-terminal">[press_escape_or_click_to_close]</a>
-        </div>
-        <div id="terminal-log">
-            <div class="log-line">initialization complete // system_status_stable</div>
-        </div>
+    <div class="ambient-player" aria-label="Vídeo de fondo">
+      <div>
+        <span>Fondo</span>
+        <strong>No Sleep In My City</strong>
+      </div>
+      <button type="button" data-toggle-bg aria-label="Pausar fondo de vídeo">
+        Pausar
+      </button>
     </div>
 
-    <!-- Site Footer -->
-    <footer>
-        <div class="footer-left">
-            <div class="active-signal"></div>
-            <span>platform_active // local_time: <span id="local-clock">00:00:00</span></span>
-        </div>
-        <div class="yield-indicator">exergy: <span>98.4%</span> // context: 1.2M tokens</div>
+    <footer class="site-footer">
+      <strong>BORJA MOSKV</strong>
+      <a href="https://borjamoskv.bandcamp.com" target="_blank" rel="noopener noreferrer">Bandcamp</a>
+      <a href="https://soundcloud.com/borjamoskv" target="_blank" rel="noopener noreferrer">SoundCloud</a>
+      <a href="https://www.youtube.com/@borjamoskv" target="_blank" rel="noopener noreferrer">YouTube</a>
+      <a href="#inicio">Arriba</a>
     </footer>
 
-    <!-- GSAP & OGL Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://unpkg.com/ogl"></script>
-    
-    <!-- Custom Logic -->
-    <script src="app.js"></script>
-</body>
+    <dialog class="lightbox" data-lightbox>
+      <button class="lightbox__close" type="button" data-close aria-label="Cerrar imagen">
+        Cerrar
+      </button>
+      <img src="media/gambitero-real-01.jpg" alt="" data-lightbox-image />
+    </dialog>
+
+    <dialog class="immersive" data-immersive aria-labelledby="immersive-title">
+      <video
+        class="immersive__video"
+        data-immersive-video
+        controls
+        playsinline
+        preload="metadata"
+        poster="media/no-sleep-in-my-city-poster.jpg"
+      >
+        <source src="media/no-sleep-in-my-city.mp4" type="video/mp4" />
+      </video>
+      <div class="immersive__shade" aria-hidden="true"></div>
+      <div class="immersive__label">
+        <p id="immersive-title">BORJA MOSKV</p>
+        <strong>No Sleep In My City</strong>
+        <span>Vídeo musical / 03:35</span>
+      </div>
+      <button
+        class="immersive__close"
+        type="button"
+        data-close-immersive
+        aria-label="Cerrar modo pieza"
+      >
+        Cerrar
+      </button>
+    </dialog>
+
+    <script type="module" src="assets/site.js"></script>
+  </body>
 </html>
