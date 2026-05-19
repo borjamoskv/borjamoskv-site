@@ -2,7 +2,6 @@ const header = document.querySelector("[data-header]");
 const navLinks = Array.from(document.querySelectorAll(".site-nav a"));
 const backgroundVideo = document.querySelector("[data-bg-video]");
 const backdropStill = document.querySelector(".backdrop__still");
-const mainVideo = document.querySelector("[data-main-video]");
 const toggleBackground = document.querySelector("[data-toggle-bg]");
 const focusVideo = document.querySelector("[data-focus-video]");
 const openImmersiveButtons = Array.from(document.querySelectorAll("[data-open-immersive]"));
@@ -12,8 +11,34 @@ const lightbox = document.querySelector("[data-lightbox]");
 const lightboxImage = document.querySelector("[data-lightbox-image]");
 const closeLightbox = document.querySelector("[data-close]");
 const immersive = document.querySelector("[data-immersive]");
-const immersiveVideo = document.querySelector("[data-immersive-video]");
 const closeImmersive = document.querySelector("[data-close-immersive]");
+
+// Dynamic element queries to prevent stale references when swapping players
+const getMainVideo = () => document.querySelector("[data-main-video]");
+const getImmersiveVideo = () => document.querySelector("[data-immersive-video]");
+
+const screenContainer = document.querySelector("[data-screen-container]");
+const immersiveVideoContainer = document.querySelector("[data-immersive-video-container]");
+const currentTitleEl = document.querySelector("[data-video-current-title]");
+const playlistItems = Array.from(document.querySelectorAll(".playlist-item"));
+const immersiveTitle = document.getElementById("immersive-title");
+
+let activeVideoId = "LOCAL";
+let activeVideoSrc = "media/no-sleep-in-my-city.mp4";
+let activeVideoTitle = "No Sleep In My City";
+
+const localImmersiveTemplate = `
+  <video
+    class="immersive__video"
+    data-immersive-video
+    controls
+    playsinline
+    preload="metadata"
+    poster="media/no-sleep-in-my-city-poster.jpg"
+  >
+    <source src="media/no-sleep-in-my-city.mp4" type="video/mp4" />
+  </video>
+`;
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const backgroundStart = 8;
 const defaultBackdropImage = 'url("media/no-sleep-in-my-city-poster.jpg")';
@@ -78,76 +103,78 @@ const updateBackgroundProgress = () => {
 };
 
 const seekMainVideo = (time) => {
-  if (!mainVideo || !Number.isFinite(time)) {
+  const mainVid = getMainVideo();
+  if (!mainVid || !Number.isFinite(time)) {
     return;
   }
 
-  const maxTime = Number.isFinite(mainVideo.duration)
-    ? Math.max(mainVideo.duration - 0.25, 0)
+  const maxTime = Number.isFinite(mainVid.duration)
+    ? Math.max(mainVid.duration - 0.25, 0)
     : time;
 
   try {
-    mainVideo.currentTime = Math.min(time, maxTime);
+    mainVid.currentTime = Math.min(time, maxTime);
   } catch {
-    mainVideo.addEventListener("loadedmetadata", () => seekMainVideo(time), { once: true });
+    mainVid.addEventListener("loadedmetadata", () => seekMainVideo(time), { once: true });
   }
 };
 
 const jumpMainVideo = async (time) => {
-  if (!mainVideo || !Number.isFinite(time)) {
+  const mainVid = getMainVideo();
+  if (!mainVid || !Number.isFinite(time)) {
     return;
   }
 
-  if (mainVideo.readyState >= 1) {
+  if (mainVid.readyState >= 1) {
     seekMainVideo(time);
   } else {
-    mainVideo.addEventListener("loadedmetadata", () => seekMainVideo(time), { once: true });
-    mainVideo.load();
+    mainVid.addEventListener("loadedmetadata", () => seekMainVideo(time), { once: true });
+    mainVid.load();
   }
 
-  mainVideo.scrollIntoView({ behavior: "smooth", block: "center" });
+  mainVid.scrollIntoView({ behavior: "smooth", block: "center" });
 
   try {
-    await mainVideo.play();
+    await mainVid.play();
     window.setTimeout(() => seekMainVideo(time), 80);
   } catch {
     seekMainVideo(time);
-    mainVideo.focus();
+    mainVid.focus();
   }
 };
 
 const seekImmersiveVideo = (time) => {
-  if (!immersiveVideo || !Number.isFinite(time)) {
+  const immVid = getImmersiveVideo();
+  if (!immVid || !Number.isFinite(time)) {
     return;
   }
 
-  const maxTime = Number.isFinite(immersiveVideo.duration)
-    ? Math.max(immersiveVideo.duration - 0.25, 0)
+  const maxTime = Number.isFinite(immVid.duration)
+    ? Math.max(immVid.duration - 0.25, 0)
     : time;
 
   try {
-    immersiveVideo.currentTime = Math.min(time, maxTime);
+    immVid.currentTime = Math.min(time, maxTime);
   } catch {
-    immersiveVideo.addEventListener("loadedmetadata", () => seekImmersiveVideo(time), {
+    immVid.addEventListener("loadedmetadata", () => seekImmersiveVideo(time), {
       once: true,
     });
   }
 };
 
 const getVideoTime = () => {
-  if (mainVideo && mainVideo.currentTime > 0.2) {
-    return mainVideo.currentTime;
+  const mainVid = getMainVideo();
+  if (mainVid && mainVid.currentTime > 0.2) {
+    return mainVid.currentTime;
   }
 
   return backgroundVideo?.currentTime ?? 0;
 };
 
 const openImmersive = async () => {
-  if (!immersive || !immersiveVideo) {
+  if (!immersive) {
     return;
   }
-
-  const time = getVideoTime();
 
   if (typeof immersive.showModal === "function" && !immersive.open) {
     immersive.showModal();
@@ -157,51 +184,128 @@ const openImmersive = async () => {
 
   document.body.classList.add("is-immersive");
 
-  if (immersiveVideo.readyState >= 1) {
-    seekImmersiveVideo(time);
-  } else {
-    immersiveVideo.addEventListener("loadedmetadata", () => seekImmersiveVideo(time), {
-      once: true,
-    });
-    immersiveVideo.load();
-  }
+  if (activeVideoId === "LOCAL") {
+    if (!getImmersiveVideo()) {
+      if (immersiveVideoContainer) {
+        immersiveVideoContainer.innerHTML = localImmersiveTemplate;
+      }
+    }
+    const immVid = getImmersiveVideo();
+    if (!immVid) return;
 
-  try {
-    await immersiveVideo.play();
-    window.setTimeout(() => seekImmersiveVideo(time), 80);
-  } catch {
-    seekImmersiveVideo(time);
-    closeImmersive?.focus();
+    const time = getVideoTime();
+
+    if (immVid.readyState >= 1) {
+      seekImmersiveVideo(time);
+    } else {
+      immVid.addEventListener("loadedmetadata", () => seekImmersiveVideo(time), {
+        once: true,
+      });
+      immVid.load();
+    }
+
+    try {
+      await immVid.play();
+      window.setTimeout(() => seekImmersiveVideo(time), 80);
+    } catch {
+      seekImmersiveVideo(time);
+      closeImmersive?.focus();
+    }
+  } else {
+    if (immersiveVideoContainer) {
+      immersiveVideoContainer.innerHTML = `
+        <iframe
+          class="immersive__video"
+          src="https://www.youtube.com/embed/${activeVideoId}?autoplay=1&enablejsapi=1&rel=0"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      `;
+    }
+    if (immersiveTitle) {
+      immersiveTitle.textContent = activeVideoTitle;
+    }
   }
 };
 
 const syncMainVideoFromImmersive = () => {
-  if (!mainVideo || !immersiveVideo || !Number.isFinite(immersiveVideo.currentTime)) {
+  const mainVid = getMainVideo();
+  const immVid = getImmersiveVideo();
+  if (!mainVid || !immVid || !Number.isFinite(immVid.currentTime)) {
     return;
   }
 
-  if (mainVideo.readyState >= 1) {
-    seekMainVideo(immersiveVideo.currentTime);
+  if (mainVid.readyState >= 1) {
+    seekMainVideo(immVid.currentTime);
   } else {
-    mainVideo.addEventListener("loadedmetadata", () => seekMainVideo(immersiveVideo.currentTime), {
+    mainVid.addEventListener("loadedmetadata", () => seekMainVideo(immVid.currentTime), {
       once: true,
     });
   }
 };
 
 const closeImmersiveMode = () => {
-  if (!immersive || !immersiveVideo) {
+  if (!immersive) {
     return;
   }
 
-  syncMainVideoFromImmersive();
-  immersiveVideo.pause();
+  if (activeVideoId === "LOCAL") {
+    const immVid = getImmersiveVideo();
+    syncMainVideoFromImmersive();
+    immVid?.pause();
+  } else {
+    if (immersiveVideoContainer) {
+      immersiveVideoContainer.innerHTML = "";
+    }
+  }
+
   document.body.classList.remove("is-immersive");
 
   if (immersive.open) {
     immersive.close();
   } else {
     immersive.removeAttribute("open");
+  }
+};
+
+// Switch playlist video
+const switchVideo = (videoId, title, localSrc = null) => {
+  activeVideoId = videoId;
+  activeVideoTitle = title;
+
+  if (currentTitleEl) {
+    currentTitleEl.textContent = title;
+  }
+
+  if (videoId === "LOCAL") {
+    activeVideoSrc = localSrc || "media/no-sleep-in-my-city.mp4";
+    if (screenContainer) {
+      screenContainer.innerHTML = `
+        <video
+          class="screen__video"
+          data-main-video
+          poster="media/no-sleep-in-my-city-poster.jpg"
+          controls
+          playsinline
+          preload="metadata"
+        >
+          <source src="${activeVideoSrc}" type="video/mp4" />
+        </video>
+      `;
+    }
+  } else {
+    if (screenContainer) {
+      screenContainer.innerHTML = `
+        <iframe
+          class="screen__video"
+          src="https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1&rel=0"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      `;
+    }
   }
 };
 
@@ -257,7 +361,19 @@ toggleBackground?.addEventListener("click", async () => {
 });
 
 focusVideo?.addEventListener("click", async () => {
-  await jumpMainVideo(mainVideo?.currentTime ?? 0);
+  if (activeVideoId === "LOCAL") {
+    const mainVid = getMainVideo();
+    await jumpMainVideo(mainVid?.currentTime ?? 0);
+  } else {
+    const iframe = screenContainer?.querySelector("iframe");
+    if (iframe) {
+      iframe.scrollIntoView({ behavior: "smooth", block: "center" });
+      const currentSrc = iframe.src;
+      if (!currentSrc.includes("autoplay=1")) {
+        iframe.src = currentSrc.replace("autoplay=0", "autoplay=1");
+      }
+    }
+  }
 });
 
 openImmersiveButtons.forEach((button) => {
@@ -267,13 +383,30 @@ openImmersiveButtons.forEach((button) => {
 closeImmersive?.addEventListener("click", closeImmersiveMode);
 
 immersive?.addEventListener("cancel", () => {
-  syncMainVideoFromImmersive();
-  immersiveVideo?.pause();
+  if (activeVideoId === "LOCAL") {
+    const immVid = getImmersiveVideo();
+    syncMainVideoFromImmersive();
+    immVid?.pause();
+  } else {
+    if (immersiveVideoContainer) {
+      immersiveVideoContainer.innerHTML = "";
+    }
+  }
   document.body.classList.remove("is-immersive");
 });
 
 immersive?.addEventListener("close", () => {
   document.body.classList.remove("is-immersive");
+});
+
+playlistItems.forEach((item) => {
+  item.addEventListener("click", () => {
+    playlistItems.forEach((p) => p.classList.toggle("is-active", p === item));
+    const videoId = item.dataset.videoId;
+    const title = item.dataset.title;
+    const localSrc = item.dataset.videoSrc || null;
+    switchVideo(videoId, title, localSrc);
+  });
 });
 
 cues.forEach((cue) => {
