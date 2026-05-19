@@ -966,16 +966,83 @@ p {
   transition: transform 300ms ease, filter 300ms ease;
 }
 
-.still span {
+.still__overlay {
   position: absolute;
-  left: 12px;
-  bottom: 10px;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 12px;
+  background: linear-gradient(to top, rgba(10, 10, 10, 0.9) 0%, rgba(10, 10, 10, 0.25) 60%, rgba(10, 10, 10, 0) 100%);
+  opacity: 1;
   z-index: 2;
-  padding: 6px 8px;
-  background: rgba(9, 6, 4, 0.72);
+  transition: background 300ms ease;
+}
+
+.still:hover .still__overlay {
+  background: rgba(10, 10, 10, 0.88);
+}
+
+.still__num {
+  align-self: flex-start;
+  padding: 3px 6px;
+  background: rgba(10, 10, 10, 0.85);
+  border: 1px solid var(--line);
   color: var(--paper);
-  font-size: 0.76rem;
-  font-weight: 820;
+  font-size: 0.65rem;
+  font-family: monospace;
+  font-weight: 700;
+  transition: background 300ms ease, border-color 300ms ease, color 300ms ease;
+}
+
+.still:hover .still__num {
+  background: var(--honey);
+  border-color: var(--honey);
+  color: #000;
+}
+
+.still__info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  opacity: 0.85;
+  transition: opacity 300ms ease;
+}
+
+.still:hover .still__info {
+  opacity: 1;
+}
+
+.still__desc {
+  color: var(--paper);
+  font-size: 0.74rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.still__crypto {
+  display: block;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  color: var(--honey);
+  font-size: 0.58rem;
+  font-family: monospace;
+  line-height: 1.2;
+  transition: max-height 350ms cubic-bezier(0.16, 1, 0.3, 1), opacity 250ms ease, margin-top 350ms ease;
+}
+
+.still:hover .still__crypto {
+  max-height: 50px;
+  opacity: 0.85;
+  margin-top: 5px;
+}
+
+.still__crypto span {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .still:hover img {

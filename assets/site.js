@@ -356,6 +356,62 @@ const closeImmersiveMode = () => {
   }
 };
 
+const getStillMetadata = (videoId, idx) => {
+  if (videoId === "LOCAL") {
+    const localMeta = [
+      {
+        desc: "Fotograma de vídeo con bowl nocturno",
+        hash: "SHA256-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        provenance: "STATUS: C5-REAL | LEDGER: ETH-842918"
+      },
+      {
+        desc: "Fotograma de vídeo en skatepark",
+        hash: "SHA256-8f4b1d3d63b27ae64700777fa6b7852b855ca495991b7852b855ca495991b785",
+        provenance: "STATUS: C5-REAL | LEDGER: ETH-842918"
+      },
+      {
+        desc: "Fotograma oscuro con texto manuscrito",
+        hash: "SHA256-0193f6c512347890abcdef1234567890abcdef1234567890abcdef1234567890",
+        provenance: "STATUS: C5-REAL | LEDGER: ETH-842918"
+      },
+      {
+        desc: "Fotograma con patinador y sombra",
+        hash: "SHA256-550e8400e29b41d4a716446655440000abcdef1234567890abcdef1234567890",
+        provenance: "STATUS: C5-REAL | LEDGER: ETH-842918"
+      },
+      {
+        desc: "Fotograma nocturno de vídeo",
+        hash: "SHA256-7c9c0f49ea2c448d8b4b1d3d63b27ae64700777fa6b7852b855ca495991b7852b",
+        provenance: "STATUS: C5-REAL | LEDGER: ETH-842918"
+      },
+      {
+        desc: "Fotograma en bowl bajo estrellas",
+        hash: "SHA256-06f1ae8d2c448d9a8b4b1d3d63b27ae64700777fa6b7852b855ca495991b7852bc",
+        provenance: "STATUS: C5-REAL | LEDGER: ETH-842918"
+      }
+    ];
+    return localMeta[idx] || localMeta[0];
+  } else {
+    const descText = `Fotograma de ${activeVideoTitle} - Frame ${idx + 1}`;
+    let val = 0;
+    const key = (videoId || "") + idx;
+    for (let i = 0; i < key.length; i++) {
+      val = (val << 5) - val + key.charCodeAt(i);
+      val |= 0;
+    }
+    const hex = Math.abs(val).toString(16).padStart(8, "0") + 
+                Math.abs(val * 31).toString(16).padStart(8, "0") +
+                Math.abs(val * 97).toString(16).padStart(8, "0");
+    const hash = `SHA256-${hex.substring(0, 16).padEnd(16, "0")}...`;
+    
+    return {
+      desc: descText,
+      hash: hash,
+      provenance: "STATUS: C5-REAL | LEDGER: ETH-842918"
+    };
+  }
+};
+
 const updateCollageStills = (videoId, framesAttr = null) => {
   const stillButtons = Array.from(document.querySelectorAll(".still"));
   if (stillButtons.length === 0) return;
@@ -398,6 +454,16 @@ const updateCollageStills = (videoId, framesAttr = null) => {
       
       img.src = frameUrl;
       img.alt = `Fotograma de ${activeVideoTitle} - Frame ${idx + 1}`;
+
+      // Update description and cryptographic metadata text inside the overlay
+      const descEl = button.querySelector(".still__desc");
+      const hashEl = button.querySelector(".crypto-hash");
+      const provEl = button.querySelector(".crypto-prov");
+      const meta = getStillMetadata(videoId, idx);
+
+      if (descEl) descEl.textContent = meta.desc;
+      if (hashEl) hashEl.textContent = `HASH: ${meta.hash}`;
+      if (provEl) provEl.textContent = meta.provenance;
       
       setTimeout(() => {
         button.style.opacity = "";
