@@ -23,6 +23,53 @@ const currentTitleEl = document.querySelector("[data-video-current-title]");
 const playlistItems = Array.from(document.querySelectorAll(".playlist-item"));
 const immersiveTitle = document.getElementById("immersive-title");
 
+const bindMainVideoListeners = () => {
+  const mainVid = getMainVideo();
+  if (!mainVid) return;
+
+  mainVid.addEventListener("play", () => {
+    if (backgroundVideo && !backgroundVideo.paused) {
+      backgroundVideo.pause();
+      setToggleLabel();
+    }
+  });
+
+  mainVid.addEventListener("pause", () => {
+    if (backgroundVideo && backgroundVideo.paused && !reducedMotion.matches) {
+      backgroundVideo.play().then(setToggleLabel, setToggleLabel);
+    }
+  });
+
+  mainVid.addEventListener("ended", () => {
+    if (backgroundVideo && backgroundVideo.paused && !reducedMotion.matches) {
+      backgroundVideo.play().then(setToggleLabel, setToggleLabel);
+    }
+  });
+};
+
+const bindImmersiveVideoListeners = (immVid) => {
+  if (!immVid) return;
+
+  immVid.addEventListener("play", () => {
+    if (backgroundVideo && !backgroundVideo.paused) {
+      backgroundVideo.pause();
+      setToggleLabel();
+    }
+  });
+
+  immVid.addEventListener("pause", () => {
+    if (backgroundVideo && backgroundVideo.paused && !reducedMotion.matches) {
+      backgroundVideo.play().then(setToggleLabel, setToggleLabel);
+    }
+  });
+
+  immVid.addEventListener("ended", () => {
+    if (backgroundVideo && backgroundVideo.paused && !reducedMotion.matches) {
+      backgroundVideo.play().then(setToggleLabel, setToggleLabel);
+    }
+  });
+};
+
 let activeVideoId = "LOCAL";
 let activeVideoSrc = "media/no-sleep-in-my-city.mp4";
 let activeVideoTitle = "No Sleep In My City";
@@ -41,7 +88,7 @@ const localImmersiveTemplate = `
 `;
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const backgroundStart = 8;
-const defaultBackdropImage = 'url("media/no-sleep-in-my-city-poster.jpg")';
+let defaultBackdropImage = 'url("media/no-sleep-in-my-city-poster.jpg")';
 
 const setScrolledHeader = () => {
   header?.classList.toggle("is-scrolled", window.scrollY > 18);
@@ -193,6 +240,9 @@ const openImmersive = async () => {
     const immVid = getImmersiveVideo();
     if (!immVid) return;
 
+    // Bind listeners to manage backdrop video during immersive playback
+    bindImmersiveVideoListeners(immVid);
+
     const time = getVideoTime();
 
     if (immVid.readyState >= 1) {
@@ -252,8 +302,14 @@ const closeImmersiveMode = () => {
 
   if (activeVideoId === "LOCAL") {
     const immVid = getImmersiveVideo();
+    const wasPlaying = immVid && !immVid.paused;
     syncMainVideoFromImmersive();
     immVid?.pause();
+
+    if (wasPlaying) {
+      const mainVid = getMainVideo();
+      mainVid?.play().catch(() => {});
+    }
   } else {
     if (immersiveVideoContainer) {
       immersiveVideoContainer.innerHTML = "";
@@ -269,8 +325,59 @@ const closeImmersiveMode = () => {
   }
 };
 
+const updateCollageStills = (videoId, framesAttr = null) => {
+  const stillButtons = Array.from(document.querySelectorAll(".still"));
+  if (stillButtons.length === 0) return;
+
+  let framesArray = [];
+
+  if (framesAttr) {
+    framesArray = framesAttr.split(",").map(f => f.trim());
+  } else if (videoId === "LOCAL") {
+    framesArray = [
+      "media/gambitero-real-01.jpg",
+      "media/gambitero-real-02.jpg",
+      "media/gambitero-real-03.jpg",
+      "media/gambitero-real-04.jpg",
+      "media/gambitero-real-05.jpg",
+      "media/gambitero-real-06.jpg"
+    ];
+  } else {
+    // Generate YouTube frames
+    framesArray = [
+      `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
+      `https://img.youtube.com/vi/${videoId}/hq1.jpg`,
+      `https://img.youtube.com/vi/${videoId}/hq2.jpg`,
+      `https://img.youtube.com/vi/${videoId}/hq3.jpg`,
+      `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`,
+      `https://img.youtube.com/vi/${videoId}/default.jpg`
+    ];
+  }
+
+  stillButtons.forEach((button, idx) => {
+    const frameUrl = framesArray[idx] || framesArray[0];
+    if (!frameUrl) return;
+
+    button.dataset.frame = frameUrl;
+
+    const img = button.querySelector("img");
+    if (img) {
+      button.style.opacity = "0.2";
+      button.style.transform = "scale(0.96) translate3d(0,0,0)";
+      
+      img.src = frameUrl;
+      img.alt = `Fotograma de ${activeVideoTitle} - Frame ${idx + 1}`;
+      
+      setTimeout(() => {
+        button.style.opacity = "";
+        button.style.transform = "";
+      }, 80 + idx * 40);
+    }
+  });
+};
+
 // Switch playlist video
-const switchVideo = (videoId, title, localSrc = null) => {
+const switchVideo = (videoId, title, localSrc = null, framesAttr = null) => {
   activeVideoId = videoId;
   activeVideoTitle = title;
 
@@ -280,6 +387,7 @@ const switchVideo = (videoId, title, localSrc = null) => {
 
   if (videoId === "LOCAL") {
     activeVideoSrc = localSrc || "media/no-sleep-in-my-city.mp4";
+    defaultBackdropImage = 'url("media/no-sleep-in-my-city-poster.jpg")';
     if (screenContainer) {
       screenContainer.innerHTML = `
         <video
@@ -294,7 +402,9 @@ const switchVideo = (videoId, title, localSrc = null) => {
         </video>
       `;
     }
+    bindMainVideoListeners();
   } else {
+    defaultBackdropImage = `url("https://img.youtube.com/vi/${videoId}/hqdefault.jpg")`;
     if (screenContainer) {
       screenContainer.innerHTML = `
         <iframe
@@ -307,6 +417,12 @@ const switchVideo = (videoId, title, localSrc = null) => {
       `;
     }
   }
+
+  if (backdropStill) {
+    backdropStill.style.backgroundImage = defaultBackdropImage;
+  }
+
+  updateCollageStills(videoId, framesAttr);
 };
 
 const primeBackgroundVideo = () => {
@@ -321,6 +437,7 @@ const primeBackgroundVideo = () => {
 
 setScrolledHeader();
 setActiveSection("inicio");
+bindMainVideoListeners();
 window.addEventListener("scroll", setScrolledHeader, { passive: true });
 
 if (backgroundVideo) {
@@ -405,7 +522,8 @@ playlistItems.forEach((item) => {
     const videoId = item.dataset.videoId;
     const title = item.dataset.title;
     const localSrc = item.dataset.videoSrc || null;
-    switchVideo(videoId, title, localSrc);
+    const frames = item.dataset.frames || null;
+    switchVideo(videoId, title, localSrc, frames);
   });
 });
 
@@ -424,9 +542,66 @@ cues.forEach((cue) => {
 
 frames.forEach((frame) => {
   frame.addEventListener("pointerenter", () => showFramePreview(frame.dataset.frame));
-  frame.addEventListener("pointerleave", clearFramePreview);
+  
+  frame.addEventListener("pointerleave", () => {
+    clearFramePreview();
+    if (frame.dataset.tiltRaf) {
+      cancelAnimationFrame(Number(frame.dataset.tiltRaf));
+    }
+    frame.style.transform = "";
+    frame.style.boxShadow = "";
+    const shine = frame.querySelector(".still-shine");
+    if (shine) {
+      shine.style.background = "";
+    }
+  });
+  
   frame.addEventListener("focus", () => showFramePreview(frame.dataset.frame));
-  frame.addEventListener("blur", clearFramePreview);
+  
+  frame.addEventListener("blur", () => {
+    clearFramePreview();
+    if (frame.dataset.tiltRaf) {
+      cancelAnimationFrame(Number(frame.dataset.tiltRaf));
+    }
+    frame.style.transform = "";
+    frame.style.boxShadow = "";
+  });
+
+  frame.addEventListener("pointermove", (e) => {
+    if (reducedMotion.matches) return;
+
+    if (frame.dataset.tiltRaf) {
+      cancelAnimationFrame(Number(frame.dataset.tiltRaf));
+    }
+
+    frame.dataset.tiltRaf = requestAnimationFrame(() => {
+      const rect = frame.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      const xc = rect.width / 2;
+      const yc = rect.height / 2;
+      
+      const nx = (x - xc) / xc;
+      const ny = (yc - y) / yc;
+      
+      const rotX = (ny * 10).toFixed(2);
+      const rotY = (nx * 10).toFixed(2);
+      
+      frame.style.transform = `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-8px) scale(1.035)`;
+      frame.style.boxShadow = `${-nx * 12}px ${ny * 12 + 16}px 32px rgba(0, 0, 0, 0.6), 0 0 24px rgba(43, 59, 229, 0.18)`;
+      
+      let shine = frame.querySelector(".still-shine");
+      if (!shine) {
+        shine = document.createElement("div");
+        shine.className = "still-shine";
+        frame.appendChild(shine);
+      }
+      const pctX = ((x / rect.width) * 100).toFixed(1);
+      const pctY = ((y / rect.height) * 100).toFixed(1);
+      shine.style.background = `radial-gradient(circle at ${pctX}% ${pctY}%, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 65%)`;
+    });
+  });
 
   frame.addEventListener("click", () => {
     const image = frame.dataset.frame;
@@ -480,23 +655,36 @@ if ("IntersectionObserver" in window) {
   });
 }
 
+let windowTiltRaf;
 window.addEventListener(
   "pointermove",
   (event) => {
-    const x = event.clientX / window.innerWidth - 0.5;
-    const y = event.clientY / window.innerHeight - 0.5;
-    document.documentElement.style.setProperty("--mx", x.toFixed(3));
-    document.documentElement.style.setProperty("--my", y.toFixed(3));
+    if (windowTiltRaf) {
+      cancelAnimationFrame(windowTiltRaf);
+    }
+    windowTiltRaf = requestAnimationFrame(() => {
+      const x = event.clientX / window.innerWidth - 0.5;
+      const y = event.clientY / window.innerHeight - 0.5;
+      document.documentElement.style.setProperty("--mx", x.toFixed(3));
+      document.documentElement.style.setProperty("--my", y.toFixed(3));
+    });
   },
   { passive: true },
 );
 
+let windowScrollRaf;
 window.addEventListener(
   "scroll",
   () => {
-    const scrollMax = document.documentElement.scrollHeight - window.innerHeight;
-    const sy = window.scrollY / scrollMax;
-    document.documentElement.style.setProperty("--sy", sy.toFixed(3));
+    if (windowScrollRaf) {
+      cancelAnimationFrame(windowScrollRaf);
+    }
+    windowScrollRaf = requestAnimationFrame(() => {
+      const scrollMax = document.documentElement.scrollHeight - window.innerHeight;
+      if (scrollMax <= 0) return;
+      const sy = window.scrollY / scrollMax;
+      document.documentElement.style.setProperty("--sy", sy.toFixed(3));
+    });
   },
   { passive: true },
 );
