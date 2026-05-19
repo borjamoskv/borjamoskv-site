@@ -183,6 +183,9 @@ const openImmersive = async () => {
   }
 
   document.body.classList.add("is-immersive");
+  if (immersiveTitle) {
+    immersiveTitle.textContent = activeVideoTitle;
+  }
 
   if (activeVideoId === "LOCAL") {
     if (!getImmersiveVideo()) {
@@ -222,9 +225,6 @@ const openImmersive = async () => {
           allowfullscreen
         ></iframe>
       `;
-    }
-    if (immersiveTitle) {
-      immersiveTitle.textContent = activeVideoTitle;
     }
   }
 };
@@ -271,14 +271,18 @@ const closeImmersiveMode = () => {
 
 // Switch playlist video
 const switchVideo = (videoId, title, localSrc = null) => {
-  activeVideoId = videoId;
-  activeVideoTitle = title;
+  activeVideoId = videoId || "LOCAL";
+  activeVideoTitle = title || "No Sleep In My City";
 
   if (currentTitleEl) {
-    currentTitleEl.textContent = title;
+    currentTitleEl.textContent = activeVideoTitle;
   }
 
-  if (videoId === "LOCAL") {
+  if (immersiveTitle) {
+    immersiveTitle.textContent = activeVideoTitle;
+  }
+
+  if (activeVideoId === "LOCAL") {
     activeVideoSrc = localSrc || "media/no-sleep-in-my-city.mp4";
     if (screenContainer) {
       screenContainer.innerHTML = `
@@ -299,7 +303,7 @@ const switchVideo = (videoId, title, localSrc = null) => {
       screenContainer.innerHTML = `
         <iframe
           class="screen__video"
-          src="https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1&rel=0"
+          src="https://www.youtube.com/embed/${activeVideoId}?autoplay=1&enablejsapi=1&rel=0"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen
