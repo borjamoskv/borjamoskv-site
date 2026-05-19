@@ -20,8 +20,12 @@ const getImmersiveVideo = () => document.querySelector("[data-immersive-video]")
 const screenContainer = document.querySelector("[data-screen-container]");
 const immersiveVideoContainer = document.querySelector("[data-immersive-video-container]");
 const currentTitleEl = document.querySelector("[data-video-current-title]");
+const currentNoteEl = document.querySelector("[data-video-current-note]");
+const currentTypeEl = document.querySelector("[data-video-current-type]");
+const currentSourceEl = document.querySelector("[data-video-current-source]");
 const playlistItems = Array.from(document.querySelectorAll(".playlist-item"));
 const immersiveTitle = document.getElementById("immersive-title");
+const immersiveMeta = document.querySelector("[data-immersive-meta]");
 
 const bindMainVideoListeners = () => {
   const mainVid = getMainVideo();
@@ -73,6 +77,9 @@ const bindImmersiveVideoListeners = (immVid) => {
 let activeVideoId = "LOCAL";
 let activeVideoSrc = "media/no-sleep-in-my-city.mp4";
 let activeVideoTitle = "No Sleep In My City";
+let activeVideoNote = "Música propia con vídeo local: noche, bowl y ciudad en loop.";
+let activeVideoType = "Vídeo musical";
+let activeVideoSource = "MP4 local";
 
 const localImmersiveTemplate = `
   <video
@@ -89,6 +96,32 @@ const localImmersiveTemplate = `
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const backgroundStart = 8;
 let defaultBackdropImage = 'url("media/no-sleep-in-my-city-poster.jpg")';
+
+const updateVideoMeta = () => {
+  if (currentTitleEl) {
+    currentTitleEl.textContent = activeVideoTitle;
+  }
+
+  if (currentNoteEl) {
+    currentNoteEl.textContent = activeVideoNote;
+  }
+
+  if (currentTypeEl) {
+    currentTypeEl.textContent = activeVideoType;
+  }
+
+  if (currentSourceEl) {
+    currentSourceEl.textContent = activeVideoSource;
+  }
+
+  if (immersiveTitle) {
+    immersiveTitle.textContent = activeVideoTitle;
+  }
+
+  if (immersiveMeta) {
+    immersiveMeta.textContent = `${activeVideoType} / ${activeVideoSource}`;
+  }
+};
 
 const setScrolledHeader = () => {
   header?.classList.toggle("is-scrolled", window.scrollY > 18);
@@ -230,6 +263,7 @@ const openImmersive = async () => {
   }
 
   document.body.classList.add("is-immersive");
+  updateVideoMeta();
 
   if (activeVideoId === "LOCAL") {
     if (!getImmersiveVideo()) {
@@ -272,9 +306,6 @@ const openImmersive = async () => {
           allowfullscreen
         ></iframe>
       `;
-    }
-    if (immersiveTitle) {
-      immersiveTitle.textContent = activeVideoTitle;
     }
   }
 };
@@ -377,15 +408,16 @@ const updateCollageStills = (videoId, framesAttr = null) => {
 };
 
 // Switch playlist video
-const switchVideo = (videoId, title, localSrc = null, framesAttr = null) => {
-  activeVideoId = videoId;
-  activeVideoTitle = title;
+const switchVideo = (videoId, title, localSrc = null, meta = {}) => {
+  activeVideoId = videoId || "LOCAL";
+  activeVideoTitle = title || "No Sleep In My City";
+  activeVideoNote = meta.note || "Música y vídeo seleccionados del archivo.";
+  activeVideoType = meta.type || "Pieza";
+  activeVideoSource = meta.source || "YouTube";
+  const framesAttr = meta.frames || null;
+  updateVideoMeta();
 
-  if (currentTitleEl) {
-    currentTitleEl.textContent = title;
-  }
-
-  if (videoId === "LOCAL") {
+  if (activeVideoId === "LOCAL") {
     activeVideoSrc = localSrc || "media/no-sleep-in-my-city.mp4";
     defaultBackdropImage = 'url("media/no-sleep-in-my-city-poster.jpg")';
     if (screenContainer) {
@@ -409,7 +441,7 @@ const switchVideo = (videoId, title, localSrc = null, framesAttr = null) => {
       screenContainer.innerHTML = `
         <iframe
           class="screen__video"
-          src="https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1&rel=0"
+          src="https://www.youtube.com/embed/${activeVideoId}?autoplay=1&enablejsapi=1&rel=0"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen
@@ -438,6 +470,7 @@ const primeBackgroundVideo = () => {
 setScrolledHeader();
 setActiveSection("inicio");
 bindMainVideoListeners();
+updateVideoMeta();
 window.addEventListener("scroll", setScrolledHeader, { passive: true });
 
 if (backgroundVideo) {
@@ -523,7 +556,12 @@ playlistItems.forEach((item) => {
     const title = item.dataset.title;
     const localSrc = item.dataset.videoSrc || null;
     const frames = item.dataset.frames || null;
-    switchVideo(videoId, title, localSrc, frames);
+    switchVideo(videoId, title, localSrc, {
+      note: item.dataset.note,
+      source: item.dataset.source,
+      type: item.dataset.type,
+      frames: frames,
+    });
   });
 });
 
