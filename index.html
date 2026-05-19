@@ -83,7 +83,11 @@
         <a href="#musica">Música</a>
         <a href="#video">Vídeo</a>
         <a href="#fotogramas">Imagen</a>
+        <a href="#arcade" data-open-arcade>Arcade</a>
       </nav>
+      <button id="theme-switch" type="button" aria-label="Cambiar tema de contraste" class="theme-btn">
+        <span class="theme-indicator"></span>
+      </button>
     </header>
 
     <main id="main">
@@ -104,6 +108,9 @@
             <a class="text-link" href="#video">Ver la pieza</a>
             <button class="text-link" type="button" data-open-immersive>
               Modo pieza
+            </button>
+            <button class="text-link" type="button" data-open-arcade>
+              Sala de Juegos
             </button>
           </div>
           <dl class="hero__meta" aria-label="Obra destacada">
@@ -498,6 +505,204 @@
       >
         Cerrar
       </button>
+    </dialog>
+
+    <!-- SVG Displacement filter definition for interactive wave animations -->
+    <svg style="position: absolute; width: 0; height: 0; pointer-events: none;" aria-hidden="true" class="svg-filters">
+      <defs>
+        <filter id="liquid-hover">
+          <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="3" result="noise" seed="1" />
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="0" xChannelSelector="R" yChannelSelector="G" id="liquid-disp" />
+        </filter>
+      </defs>
+    </svg>
+
+    <!-- Retro CRT Arcade Dialog with 21 visual & sound mini-games -->
+    <dialog class="arcade" data-arcade aria-labelledby="arcade-title">
+      <div class="arcade__container">
+        <header class="arcade__header">
+          <div class="arcade__title-group">
+            <span class="arcade__kicker">NUEVE LEYES · COMPILACIÓN EXERGÍA</span>
+            <h2 id="arcade-title" class="arcade__title">MOSKV ARCADE 2026</h2>
+          </div>
+          <div class="arcade__telemetry">
+            <div class="telemetry-item">
+              <span class="telemetry-label">SYSTEM</span>
+              <span class="telemetry-value text-neon-blue">ONLINE</span>
+            </div>
+            <div class="telemetry-item">
+              <span class="telemetry-label">EXERGY</span>
+              <span class="telemetry-value text-neon-amber" data-arcade-exergy>100.0%</span>
+            </div>
+            <div class="telemetry-item">
+              <span class="telemetry-label">STATE</span>
+              <span class="telemetry-value text-neon-green" data-arcade-state>C5-REAL</span>
+            </div>
+          </div>
+          <button class="arcade__close-btn" type="button" data-close-arcade aria-label="Cerrar arcade">
+            CERRAR
+          </button>
+        </header>
+
+        <div class="arcade__layout">
+          <!-- Left: selector grid of 21 games -->
+          <aside class="arcade__selector">
+            <div class="arcade__grid" data-arcade-grid>
+              <button class="arcade-slot active" data-game-idx="0" type="button">
+                <span class="slot-num">01</span>
+                <span class="slot-name">Acid Synth 303</span>
+                <span class="slot-status"></span>
+              </button>
+              <button class="arcade-slot" data-game-idx="1" type="button">
+                <span class="slot-num">02</span>
+                <span class="slot-name">Cortex Void</span>
+                <span class="slot-status"></span>
+              </button>
+              <button class="arcade-slot" data-game-idx="2" type="button">
+                <span class="slot-num">03</span>
+                <span class="slot-name">Brush Magnifier</span>
+                <span class="slot-status"></span>
+              </button>
+              <button class="arcade-slot" data-game-idx="3" type="button">
+                <span class="slot-num">04</span>
+                <span class="slot-name">Studio Spotlight</span>
+                <span class="slot-status"></span>
+              </button>
+              <button class="arcade-slot" data-game-idx="4" type="button">
+                <span class="slot-num">05</span>
+                <span class="slot-name">Pixel Canvas</span>
+                <span class="slot-status"></span>
+              </button>
+              <button class="arcade-slot" data-game-idx="5" type="button">
+                <span class="slot-num">06</span>
+                <span class="slot-name">Kaleido Mirror</span>
+                <span class="slot-status"></span>
+              </button>
+              <button class="arcade-slot" data-game-idx="6" type="button">
+                <span class="slot-num">07</span>
+                <span class="slot-name">Bezier Ropes</span>
+                <span class="slot-status"></span>
+              </button>
+              <button class="arcade-slot" data-game-idx="7" type="button">
+                <span class="slot-num">08</span>
+                <span class="slot-name">Fourier Spiro</span>
+                <span class="slot-status"></span>
+              </button>
+              <button class="arcade-slot" data-game-idx="8" type="button">
+                <span class="slot-num">09</span>
+                <span class="slot-name">Binary Matrix</span>
+                <span class="slot-status"></span>
+              </button>
+              <button class="arcade-slot" data-game-idx="9" type="button">
+                <span class="slot-num">10</span>
+                <span class="slot-name">Life Automata</span>
+                <span class="slot-status"></span>
+              </button>
+              <button class="arcade-slot" data-game-idx="10" type="button">
+                <span class="slot-num">11</span>
+                <span class="slot-name">Lorenz Attractor</span>
+                <span class="slot-status"></span>
+              </button>
+              <button class="arcade-slot" data-game-idx="11" type="button">
+                <span class="slot-num">12</span>
+                <span class="slot-name">Ambient Matrix</span>
+                <span class="slot-status"></span>
+              </button>
+              <button class="arcade-slot" data-game-idx="12" type="button">
+                <span class="slot-num">13</span>
+                <span class="slot-name">Liquid Metaballs</span>
+                <span class="slot-status"></span>
+              </button>
+              <button class="arcade-slot" data-game-idx="13" type="button">
+                <span class="slot-num">14</span>
+                <span class="slot-name">Turing Diffusion</span>
+                <span class="slot-status"></span>
+              </button>
+              <button class="arcade-slot" data-game-idx="14" type="button">
+                <span class="slot-num">15</span>
+                <span class="slot-name">Lajus Drum Box</span>
+                <span class="slot-status"></span>
+              </button>
+              <button class="arcade-slot" data-game-idx="15" type="button">
+                <span class="slot-num">16</span>
+                <span class="slot-name">RGB Glitch Split</span>
+                <span class="slot-status"></span>
+              </button>
+              <button class="arcade-slot" data-game-idx="16" type="button">
+                <span class="slot-num">17</span>
+                <span class="slot-name">Bezier Flows</span>
+                <span class="slot-status"></span>
+              </button>
+              <button class="arcade-slot" data-game-idx="17" type="button">
+                <span class="slot-num">18</span>
+                <span class="slot-name">Sovereign Pad</span>
+                <span class="slot-status"></span>
+              </button>
+              <button class="arcade-slot" data-game-idx="18" type="button">
+                <span class="slot-num">19</span>
+                <span class="slot-name">Braitenberg Bugs</span>
+                <span class="slot-status"></span>
+              </button>
+              <button class="arcade-slot" data-game-idx="19" type="button">
+                <span class="slot-num">20</span>
+                <span class="slot-name">Ray Obstacles</span>
+                <span class="slot-status"></span>
+              </button>
+              <button class="arcade-slot" data-game-idx="20" type="button">
+                <span class="slot-num">21</span>
+                <span class="slot-name">Morse Typist</span>
+                <span class="slot-status"></span>
+              </button>
+            </div>
+          </aside>
+
+          <!-- Right: CRT Viewport and parameter controls -->
+          <main class="arcade__viewport">
+            <div class="arcade__screen-outer">
+              <div class="arcade__screen-inner">
+                <canvas id="arcade-canvas" width="640" height="400"></canvas>
+                <div class="crt-scanlines"></div>
+                <div class="crt-curve"></div>
+                <div class="crt-glow"></div>
+                <div class="crt-noise"></div>
+              </div>
+            </div>
+
+            <div class="arcade__footer-controls">
+              <div class="arcade__meta-display">
+                <h3 class="active-game-title" data-arcade-game-title>Acid Synth 303</h3>
+                <p class="active-game-desc" data-arcade-game-desc>Sintetizador clásico TB-303 con secuenciador y filtros. Haz click y arrastra en la pantalla para modificar resonancia y frecuencia.</p>
+              </div>
+
+              <div class="arcade__sliders">
+                <div class="slider-control">
+                  <div class="slider-header">
+                    <span id="slider-1-label">MODULACIÓN (X)</span>
+                    <span data-slider-1-val>50</span>
+                  </div>
+                  <input type="range" id="param-1" min="0" max="100" value="50" class="neon-slider" aria-labelledby="slider-1-label" />
+                </div>
+                <div class="slider-control">
+                  <div class="slider-header">
+                    <span id="slider-2-label">INTENSIDAD (Y)</span>
+                    <span data-slider-2-val>50</span>
+                  </div>
+                  <input type="range" id="param-2" min="0" max="100" value="50" class="neon-slider" aria-labelledby="slider-2-label" />
+                </div>
+              </div>
+
+              <div class="arcade__buttons">
+                <button type="button" id="btn-audio" class="arcade-btn-toggle active" aria-pressed="true">
+                  AUDIO: ON
+                </button>
+                <button type="button" id="btn-reset" class="arcade-btn-action">
+                  REINICIAR
+                </button>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
     </dialog>
 
     <script type="module" src="assets/site.js"></script>

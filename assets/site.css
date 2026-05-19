@@ -1545,3 +1545,663 @@ p {
     display: none;
   }
 }
+
+/* ==========================================================================
+   FRONTIER TECHNIQUES: APCA OKLCH THEMES & DYNAMIC EFFECTS
+   ========================================================================== */
+
+:root {
+  /* OKLCH Wide-Gamut high-exergy color declarations */
+  --ok-ink: oklch(0.08 0.01 250);
+  --ok-paper: oklch(0.96 0.01 250);
+  --ok-blue: oklch(0.48 0.32 250);      /* YInMn Blue */
+  --ok-amber: oklch(0.78 0.22 80);      /* Sovereign Amber */
+  --ok-green: oklch(0.82 0.24 140);     /* Neon Green */
+  --ok-red: oklch(0.62 0.25 25);
+  
+  --line-ok: oklch(1 0 0 / 0.12);
+  --line-strong-ok: oklch(1 0 0 / 0.28);
+}
+
+/* Theme Switch UI */
+.theme-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 44px;
+  height: 24px;
+  background: var(--line-strong);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  cursor: pointer;
+  padding: 2px;
+  transition: background 0.3s ease;
+  margin-left: 20px;
+  align-self: center;
+}
+
+.theme-indicator {
+  display: block;
+  width: 18px;
+  height: 18px;
+  background: var(--honey);
+  border-radius: 50%;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease;
+  box-shadow: 0 0 6px var(--honey);
+}
+
+/* Light High-Contrast APCA Theme Override */
+body.light-theme {
+  --ink: oklch(0.98 0.005 250);
+  --paper: oklch(0.08 0.01 250);
+  --soft: rgba(10, 10, 10, 0.76);
+  --dim: rgba(10, 10, 10, 0.52);
+  --line: rgba(10, 10, 10, 0.12);
+  --line-strong: rgba(10, 10, 10, 0.28);
+  --blue: oklch(0.38 0.28 250);
+  --honey: oklch(0.68 0.22 75);
+  --terracotta: oklch(0.55 0.18 45);
+}
+
+body.light-theme .theme-indicator {
+  transform: translateX(20px);
+  background: var(--blue);
+  box-shadow: 0 0 6px var(--blue);
+}
+
+/* Liquid Distortion Hover Style */
+.liquid-trigger {
+  filter: url(#liquid-hover);
+  transition: transform 0.2s ease;
+}
+.liquid-trigger:hover {
+  transform: scale(1.02);
+}
+
+/* Scroll-Driven Animations (Viewport entry timeline) */
+@supports (animation-range: entry) {
+  .hero__copy,
+  .musica__content,
+  .video-piece,
+  .fotogramas__grid {
+    animation: scroll-entry-fade linear both;
+    animation-timeline: view();
+    animation-range: entry 10% cover 30%;
+  }
+}
+
+@keyframes scroll-entry-fade {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================================================
+   HYPERREALISTIC ART PREVIEW & VIRTUAL LOUPE SYSTEM
+   ========================================================================== */
+
+/* Anchorage of magnification components on gallery items */
+.still {
+  position: relative;
+  overflow: hidden;
+  touch-action: none;
+}
+
+/* Fine-brushstroke canvas texture simulator layer */
+.still-texture-layer {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='canvasWeave'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.45' numOctaves='3' result='noise'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23canvasWeave)'/%3E%3C/svg%3E");
+  opacity: 0.12;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  z-index: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Virtual Loupe Lens */
+.still-loupe {
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 2px solid var(--ok-blue);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6), inset 0 0 10px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.6);
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  background-repeat: no-repeat;
+  z-index: 5;
+  background-color: #0A0A0A;
+}
+
+/* Lens highlights simulating reflective curved glass magnifier */
+.still-loupe::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 50%, rgba(0,0,0,0.5) 100%);
+  z-index: 2;
+}
+
+/* Spotlight Relief Shading (simulates paint height / canvas weave) */
+.still-spotlight-shading {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle 120px at var(--light-x, 50%) var(--light-y, 50%), rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.4) 100%);
+  pointer-events: none;
+  opacity: 0;
+  z-index: 2;
+  transition: opacity 0.3s ease;
+  mix-blend-mode: multiply;
+}
+
+/* Cryptographic Provenance Overlay Card */
+.provenance-card {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+  background: rgba(10, 10, 10, 0.88);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(10px);
+  padding: 8px 12px;
+  border-radius: 4px;
+  pointer-events: none;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  z-index: 4;
+}
+
+.provenance-card span {
+  display: block;
+  font-family: "JetBrains Mono", Courier, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  color: var(--dim);
+}
+
+.provenance-card strong {
+  display: block;
+  font-family: "JetBrains Mono", Courier, monospace;
+  font-size: 0.76rem;
+  color: var(--honey);
+  margin-bottom: 2px;
+}
+
+/* Hover behaviors */
+.still:hover .still-loupe,
+.still:focus-within .still-loupe {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.still:hover .still-spotlight-shading,
+.still:focus-within .still-spotlight-shading {
+  opacity: 1;
+}
+
+.still:hover .provenance-card,
+.still:focus-within .provenance-card {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* ==========================================================================
+   THE COGNITIVE RETRO-CRT ARCADE ROOM STYLING (SALA DE JUEGOS)
+   ========================================================================== */
+
+.arcade {
+  width: min(1200px, calc(100vw - 28px));
+  height: min(820px, calc(100vh - 40px));
+  background: #0A0A0A;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  padding: 0;
+  overflow: hidden;
+  color: #fff;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 40px rgba(43, 59, 229, 0.15);
+}
+
+.arcade::backdrop {
+  background: rgba(5, 5, 5, 0.88);
+  backdrop-filter: blur(12px);
+}
+
+.arcade__container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: inherit;
+}
+
+.arcade__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--line);
+  background: #0D0D0D;
+}
+
+.arcade__title-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.arcade__kicker {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.68rem;
+  color: var(--honey);
+  letter-spacing: 0.15em;
+}
+
+.arcade__title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: 0.05em;
+  color: #fff;
+}
+
+.arcade__telemetry {
+  display: flex;
+  gap: 24px;
+}
+
+.telemetry-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.telemetry-label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.6rem;
+  color: var(--dim);
+}
+
+.telemetry-value {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.text-neon-blue {
+  color: #5d6eff;
+  text-shadow: 0 0 6px rgba(43, 59, 229, 0.6);
+}
+
+.text-neon-amber {
+  color: #ffb755;
+  text-shadow: 0 0 6px rgba(255, 159, 28, 0.6);
+}
+
+.text-neon-green {
+  color: #55ff77;
+  text-shadow: 0 0 6px rgba(40, 220, 100, 0.6);
+}
+
+.arcade__close-btn {
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  padding: 6px 14px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.72rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.arcade__close-btn:hover {
+  background: #fff;
+  color: #000;
+  border-color: #fff;
+}
+
+/* Master grid layout for controls and screen */
+.arcade__layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  flex-grow: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* Left panel grid selector list */
+.arcade__selector {
+  border-right: 1px solid var(--line);
+  background: #070707;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.arcade__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: 12px;
+  gap: 6px;
+}
+
+.arcade-slot {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.arcade-slot:hover {
+  background: rgba(43, 59, 229, 0.08);
+  border-color: rgba(43, 59, 229, 0.3);
+}
+
+.arcade-slot.active {
+  background: rgba(43, 59, 229, 0.2);
+  border-color: var(--blue);
+  box-shadow: inset 0 0 8px rgba(43, 59, 229, 0.3);
+}
+
+.slot-num {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.72rem;
+  color: var(--honey);
+  font-weight: 700;
+  width: 24px;
+}
+
+.slot-name {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  flex-grow: 1;
+  color: #e0e0e0;
+}
+
+.arcade-slot.active .slot-name {
+  color: #fff;
+  font-weight: 700;
+}
+
+.slot-status {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.arcade-slot:hover .slot-status {
+  background: var(--honey);
+}
+
+.arcade-slot.active .slot-status {
+  background: #55ff77;
+  box-shadow: 0 0 6px #55ff77;
+}
+
+/* Center console & CRT Screen styling */
+.arcade__viewport {
+  background: #030303;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  overflow: hidden;
+  justify-content: space-between;
+}
+
+.arcade__screen-outer {
+  background: #111;
+  border: 8px solid #1a1a1a;
+  border-radius: 12px;
+  box-shadow: inset 0 0 20px #000, 0 10px 25px rgba(0,0,0,0.6);
+  padding: 10px;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arcade__screen-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 640 / 400;
+  background: #000;
+  overflow: hidden;
+  border-radius: 4px;
+  border: 2px solid #080808;
+}
+
+#arcade-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: #020202;
+}
+
+/* CRT Screen Effects overlays */
+.crt-scanlines {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.25) 50%
+  ), linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.06),
+    rgba(0, 255, 0, 0.02),
+    rgba(0, 0, 255, 0.06)
+  );
+  background-size: 100% 4px, 6px 100%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.crt-curve {
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.9);
+  pointer-events: none;
+  z-index: 11;
+  border-radius: 4px;
+}
+
+.crt-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.6) 100%);
+  pointer-events: none;
+  z-index: 12;
+  mix-blend-mode: overlay;
+}
+
+.crt-noise {
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.02;
+  pointer-events: none;
+  z-index: 13;
+  animation: crt-noise-shift 0.2s steps(4) infinite;
+}
+
+@keyframes crt-noise-shift {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(-2px, 3px); }
+  100% { transform: translate(1px, -2px); }
+}
+
+/* CRT Screen phosphor phosphor grid flicker */
+.arcade__screen-inner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.015);
+  pointer-events: none;
+  z-index: 14;
+  animation: crt-flicker 0.15s infinite;
+}
+
+@keyframes crt-flicker {
+  0% { opacity: 0.27; }
+  50% { opacity: 0.32; }
+  100% { opacity: 0.27; }
+}
+
+/* Footer Dashboard controls */
+.arcade__footer-controls {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: 1fr 240px 180px;
+  gap: 20px;
+  align-items: center;
+}
+
+.arcade__meta-display {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.active-game-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin: 0;
+  color: var(--honey);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.active-game-desc {
+  font-size: 0.74rem;
+  color: var(--dim);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.arcade__sliders {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.slider-control {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.slider-header {
+  display: flex;
+  justify-content: space-between;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.62rem;
+  color: var(--dim);
+}
+
+.neon-slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 4px;
+  background: var(--line-strong);
+  border-radius: 2px;
+  outline: none;
+}
+
+.neon-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--honey);
+  cursor: pointer;
+  box-shadow: 0 0 6px var(--honey);
+  transition: transform 0.1s ease;
+}
+
+.neon-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.arcade__buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.arcade-btn-toggle,
+.arcade-btn-action {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.arcade-btn-toggle {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--line-strong);
+  color: var(--dim);
+}
+
+.arcade-btn-toggle.active {
+  background: rgba(40, 220, 100, 0.1);
+  border-color: #28dc64;
+  color: #28dc64;
+  text-shadow: 0 0 4px rgba(40, 220, 100, 0.4);
+}
+
+.arcade-btn-action {
+  background: #fff;
+  border: 1px solid #fff;
+  color: #000;
+}
+
+.arcade-btn-action:hover {
+  background: var(--honey);
+  border-color: var(--honey);
+}
+
+/* Responsive Arcade overrides */
+@media (max-width: 900px) {
+  .arcade__layout {
+    grid-template-columns: 1fr;
+    height: auto;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+  }
+
+  .arcade__selector {
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+    height: 140px;
+  }
+
+  .arcade__grid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  }
+
+  .arcade__footer-controls {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+
