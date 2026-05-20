@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diario — Borja Moskv</title>
+  <meta name="description" content="Textos, análisis, set lore y archivo editorial de Borja Moskv. Ensayo, técnica, crítica cultural.">
+  <meta name="theme-color" content="#041427">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta property="og:title" content="Diario — Borja Moskv">
+  <meta property="og:description" content="Textos, análisis, set lore y archivo editorial.">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="192x192" href="/img/icon-192.png">
+  <link rel="shortcut icon" href="/img/icon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
+  <link rel="canonical" href="https://borjamoskv.com/blog.html">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;900&family=Inter:wght@300;400;500;600&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="cortex-terminal.css">
+
+  <style>
+    /* ═══════════════════════════════════════════════════
+       BLOG PAGE — Industrial Noir Editorial System
+       ═══════════════════════════════════════════════════ */
+
+    /* ── Page shell ── */
+    .blog-page {
+      min-height: 100vh;
+      background: var(--bg-color, #020202);
+    }
+
+    /* ── Hero header ── */
+    .blog-hero {
+      padding: 10rem 2rem 5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .blog-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 25% 60%, rgba(46, 80, 144, 0.18) 0%, transparent 55%),
+        radial-gradient(ellipse at 75% 20%, rgba(255, 102, 0, 0.07) 0%, transparent 45%);
+      pointer-events: none;
+    }
+
+    .blog-hero-label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: var(--accent-primary, #2E5090);
+      margin-bottom: 1.5rem;
+    }
+
+    .blog-hero-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(3rem, 9vw, 7rem);
+      font-weight: 900;
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      color: #E0E0E0;
+      margin-bottom: 1.5rem;
+    }
+
+    .blog-hero-title span {
+      background: linear-gradient(135deg, var(--accent-primary, #2E5090), #5a7ed6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .blog-hero-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: rgba(224, 224, 224, 0.5);
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* ── Filter bar ── */
+    .blog-filters {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      padding: 0 2rem 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .filter-label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(224, 224, 224, 0.3);
+      margin-right: 0.5rem;
+    }
+
+    .filter-btn {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.4rem 1rem;
+      border: 1px solid rgba(224, 224, 224, 0.08);
+      border-radius: 9999px;
+      background: transparent;
+      color: rgba(224, 224, 224, 0.45);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--accent-primary, #2E5090);
+      color: #E0E0E0;
+    }
+
+    .filter-btn.active {
+      background: var(--accent-primary, #2E5090);
+      border-color: var(--accent-primary, #2E5090);
+      color: #E0E0E0;
+    }
+
+    /* ── Blog grid ── */
+    .blog-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem 6rem;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1.5rem;
+    }
+
+    /* ── Base card ── */
+    .blog-card {
+      display: flex;
+      flex-direction: column;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 2rem;
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+                  border-color 0.3s ease,
+                  background 0.3s ease;
+    }
+
+    .blog-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 3px;
+      background: linear-gradient(90deg, transparent, var(--accent-primary, #2E5090), transparent);
+      transform: scaleX(0);
+      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .blog-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(46, 80, 144, 0.35);
+      background: rgba(46, 80, 144, 0.04);
+    }
+
+    .blog-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    /* ── Featured card (spans 8 cols) ── */
+    .blog-card--featured {
+      grid-column: span 8;
+      padding: 3rem;
+      min-height: 340px;
+      background: rgba(46, 80, 144, 0.06);
+      border-color: rgba(46, 80, 144, 0.2);
+    }
+
+    .blog-card--featured::before {
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent-primary, #2E5090), #5a7ed6 50%, transparent);
+      transform: scaleX(1);
+    }
+
+    .blog-card--featured .card-title {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+    }
+
+    /* ── Side card (spans 4 cols) ── */
+    .blog-card--side {
+      grid-column: span 4;
+    }
+
+    /* ── Half card (spans 6 cols) ── */
+    .blog-card--half {
+      grid-column: span 6;
+    }
+
+    /* ── Third card (spans 4 cols) ── */
+    .blog-card--third {
+      grid-column: span 4;
+    }
+
+    /* ── Card internals ── */
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .card-tag {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      border: 1px solid currentColor;
+      color: var(--accent-primary, #2E5090);
+    }
+
+    .card-tag--ensayo  { color: #FF6600; border-color: rgba(255, 102, 0, 0.4); }
+    .card-tag--tecnica { color: #2E5090; border-color: rgba(46, 80, 144, 0.4); }
+    .card-tag--analisis{ color: #5a7ed6; border-color: rgba(90, 126, 214, 0.4); }
+    .card-tag--articulo{ color: #E5B94B; border-color: rgba(229, 185, 75, 0.4); }
+    .card-tag--tesis   { color: #b4ff00; border-color: rgba(180, 255, 0, 0.4); }
+    .card-tag--paragraph{ color: rgba(224,224,224,0.4); border-color: rgba(224,224,224,0.12); }
+
+    .card-date {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      color: rgba(224, 224, 224, 0.3);
+      letter-spacing: 0.05em;
+    }
+
+    .card-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      color: #E0E0E0;
+      margin-bottom: 1rem;
+      flex: 1;
+    }
+
+    .card-excerpt {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      line-height: 1.65;
+      color: rgba(224, 224, 224, 0.5);
+      margin-bottom: 1.5rem;
+    }
+
+    .card-cta {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent-primary, #2E5090);
+      margin-top: auto;
+      transition: color 0.2s ease, letter-spacing 0.2s ease;
+    }
+
+    .blog-card:hover .card-cta {
+      color: #5a7ed6;
+      letter-spacing: 0.28em;
+    }
+
+    /* ── Paragraph dynamic section ── */
+    .paragraph-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem 2rem;
+    }
+
+    .section-label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(224, 224, 224, 0.25);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(224, 224, 224, 0.06);
+    }
+
+    .paragraph-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .paragraph-loader {
+      grid-column: span 3;
+      text-align: center;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: var(--accent-primary, #2E5090);
+      padding: 2rem;
+    }
+
+    /* ── Divider ── */
+    .blog-divider {
+      max-width: 1200px;
+      margin: 0 auto 2rem;
+      padding: 0 2rem;
+      border: none;
+      height: 1px;
+      background: rgba(224, 224, 224, 0.04);
+    }
+
+    /* ── Hidden filter state ── */
+    .blog-card[data-hidden="true"] {
+      display: none;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 1024px) {
+      .blog-card--featured { grid-column: span 12; }
+      .blog-card--side      { grid-column: span 6; }
+      .blog-card--half      { grid-column: span 6; }
+      .blog-card--third     { grid-column: span 6; }
+    }
+
+    @media (max-width: 640px) {
+      .blog-grid { gap: 1rem; }
+      .blog-card--featured,
+      .blog-card--side,
+      .blog-card--half,
+      .blog-card--third { grid-column: span 12; }
+      .blog-hero { padding: 8rem 1.5rem 3rem; }
+      .blog-filters { padding: 0 1.5rem 2rem; }
+      .blog-grid,
+      .paragraph-section { padding-left: 1.5rem; padding-right: 1.5rem; }
+    }
+  </style>
+</head>
+<body class="blog-page">
+
+  <!-- BOOT LOADER -->
+  <div id="loader" class="loader">
+    <div class="spinner"></div>
+    <div class="loader-text pulse-text">Cargando Diario...</div>
+  </div>
+
+  <!-- NAVIGATION -->
+  <nav class="main-nav" id="mainNav">
+    <a href="/" class="nav-logo">MOSKV</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-controls="navLinks" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <a href="/#music">Music</a>
+      <a href="/#sets">Sets</a>
+      <a href="/#lab">Lab</a>
+      <a href="blog.html" class="active">Diario</a>
+      <a href="/#contact">Contact</a>
+    </div>
+    <div class="nav-platforms">
+      <a href="https://borjamoskv.bandcamp.com" target="_blank" rel="noopener" title="Bandcamp">BC</a>
+      <a href="https://open.spotify.com/intl-es/artist/4p7wMuZpktE5aBFhBoQdqa" target="_blank" rel="noopener" title="Spotify">SP</a>
+      <a href="https://soundcloud.com/borja-moskv" target="_blank" rel="noopener" title="SoundCloud">SC</a>
+      <a href="https://www.youtube.com/@borjamoskv" target="_blank" rel="noopener" title="YouTube">YT</a>
+      <button id="bizarreToggle" class="bizarre-btn" title="Activar Modo Bizarro">☢️</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="blog-hero">
+    <p class="blog-hero-label">Archivo Editorial</p>
+    <h1 class="blog-hero-title"><span>Diario</span></h1>
+    <p class="blog-hero-sub">Textos, análisis, set lore y crítica cultural. Sin relleno.</p>
+  </header>
+
+  <!-- FILTER BAR -->
+  <div class="blog-filters" id="filterBar" role="toolbar" aria-label="Filtrar por categoría">
+    <span class="filter-label">Filtrar</span>
+    <button class="filter-btn active" data-filter="all">Todo</button>
+    <button class="filter-btn" data-filter="ensayo">Ensayo</button>
+    <button class="filter-btn" data-filter="articulo">Artículo</button>
+    <button class="filter-btn" data-filter="analisis">Análisis</button>
+    <button class="filter-btn" data-filter="tecnica">Técnica</button>
+    <button class="filter-btn" data-filter="tesis">Tesis</button>
+  </div>
+
+  <!-- MAIN GRID -->
+  <main class="blog-grid" id="blogGrid">
+
+    <!-- FEATURED: Hito Nobel 95% -->
+    <a href="hito-nobel.html" class="blog-card blog-card--featured" data-category="tesis">
+      <div class="card-meta">
+        <span class="card-tag card-tag--tesis">Hito Omega</span>
+        <span class="card-date">2026‑03‑27</span>
+      </div>
+      <h2 class="card-title">Ω: Hito Nobel — ARC-AGI-3 [95%]</h2>
+      <p class="card-excerpt">El 95% en ARC-AGI no es solo un número; es la aniquilación de la entropía estocástica mediante la inducción de programas PeARL. El futuro de la inteligencia soberana ha llegado.</p>
+      <span class="card-cta">Ver telemetría →</span>
+    </a>
+
+    <!-- SIDE: Cómo suena Jarana d'Or -->
+    <a href="como-suena-jarana-dor.html" class="blog-card blog-card--side" data-category="analisis">
+      <div class="card-meta">
+        <span class="card-tag card-tag--analisis">JARANA/</span>
+        <span class="card-date">2026‑03‑27</span>
+      </div>
+      <h2 class="card-title">Cómo suena Jarana d'Or</h2>
+      <p class="card-excerpt">Seis leitmotivs, seis tracks y seis moods para convertir Jarana d'Or en gramática sonora usable.</p>
+      <span class="card-cta">Abrir pieza →</span>
+    </a>
+
+    <!-- HALF: Catarsis Colectiva -->
+    <a href="catarsis-colectiva.html" class="blog-card blog-card--half" data-category="articulo">
+      <div class="card-meta">
+        <span class="card-tag card-tag--articulo">Artículo</span>
+        <span class="card-date">2026‑02‑12</span>
+      </div>
+      <h2 class="card-title">Catarsis Colectiva: Los 20 Pilares del Duelo</h2>
+      <p class="card-excerpt">Por qué la muerte de Robe Iniesta ha sido la que más ha conmovido al pueblo español.</p>
+      <span class="card-cta">Leer artículo →</span>
+    </a>
+
+    <!-- HALF: Termodinámica de Agentes -->
+    <a href="termodinamica-de-agentes.html" class="blog-card blog-card--half" data-category="ensayo">
+      <div class="card-meta">
+        <span class="card-tag card-tag--ensayo">Ensayo</span>
+        <span class="card-date">2026‑03‑25</span>
+      </div>
+      <h2 class="card-title">La Termodinámica de los Agentes</h2>
+      <p class="card-excerpt">Más IQ no significa menos entropía. Un paper de Anthropic confirma lo que CORTEX ya sabía.</p>
+      <span class="card-cta">Leer →</span>
+    </a>
+
+    <!-- HALF: Colapso Millennial -->
+    <a href="colapso-millennial.html" class="blog-card blog-card--half" data-category="ensayo">
+      <div class="card-meta">
+        <span class="card-tag card-tag--ensayo">Ensayo</span>
+        <span class="card-date">2026‑03‑13</span>
+      </div>
+      <h2 class="card-title">La Generación Que Se Quedó Sin Futuro Pero No Sin Wi-Fi</h2>
+      <p class="card-excerpt">Los 12 Marcos del Colapso Millennial. Cómo una generación entera fue estafada estructuralmente.</p>
+      <span class="card-cta">Leer →</span>
+    </a>
+
+    <!-- HALF: La Semana Que Viene -->
+    <a href="la-semana-que-viene.html" class="blog-card blog-card--half" data-category="ensayo">
+      <div class="card-meta">
+        <span class="card-tag card-tag--ensayo">Ensayo</span>
+        <span class="card-date">2026‑03‑25</span>
+      </div>
+      <h2 class="card-title">¿Qué echas de menos de la semana que viene?</h2>
+      <p class="card-excerpt">Sobre la nostalgia inversa y la aceleración algorítmica. Varados en un presente perpetuo.</p>
+      <span class="card-cta">Leer →</span>
+    </a>
+
+    <!-- THIRD: Fútbol Moderno -->
+    <a href="odio-eterno-futbol-moderno.html" class="blog-card blog-card--third" data-category="ensayo">
+      <div class="card-meta">
+        <span class="card-tag card-tag--ensayo">Ensayo</span>
+        <span class="card-date">2026‑03‑13</span>
+      </div>
+      <h2 class="card-title">Odio Eterno al Fútbol Moderno</h2>
+      <p class="card-excerpt">El fútbol era la última religión analógica. Después lo compraron y lo plastificaron.</p>
+      <span class="card-cta">Leer →</span>
+    </a>
+
+    <!-- THIRD: Ajuste PA -->
+    <a href="ajuste-sistemas-pa.html" class="blog-card blog-card--third" data-category="tecnica">
+      <div class="card-meta">
+        <span class="card-tag card-tag--tecnica">Técnica</span>
+        <span class="card-date">2026‑03‑26</span>
+      </div>
+      <h2 class="card-title">Cómo Aprender a Ajustar un Sistema PA</h2>
+      <p class="card-excerpt">Bob McCarthy primero. Smaart después. El orden importa más que el software.</p>
+      <span class="card-cta">Leer →</span>
+    </a>
+
+    <!-- THIRD: Idioma Nativo -->
+    <a href="idioma-nativo-progreso.html" class="blog-card blog-card--third" data-category="tesis">
+      <div class="card-meta">
+        <span class="card-tag card-tag--tesis">Tesis</span>
+        <span class="card-date">2026‑05‑29</span>
+      </div>
+      <h2 class="card-title">Idioma Nativo = Progreso</h2>
+      <p class="card-excerpt">Por qué pensar en tu propio idioma es la precondición de la soberanía tecnológica y cognitiva.</p>
+      <span class="card-cta">Leer →</span>
+    </a>
+
+    <!-- FEATURED-style wide: Arqueología Sónica -->
+    <a href="eclectic-electronic-analysis.html" class="blog-card blog-card--featured" data-category="analisis">
+      <div class="card-meta">
+        <span class="card-tag card-tag--analisis">Análisis</span>
+        <span class="card-date">2026‑02‑12</span>
+      </div>
+      <h2 class="card-title">Arqueología Sónica: 36 tracks, 12 países, 60 años</h2>
+      <p class="card-excerpt">La arquitectura de una sesión de 15 horas. Cumbia colombiana conectada con drone ambient noruego y electro industrial ruso. Un mapa de influencias que atraviesa décadas.</p>
+      <span class="card-cta">Leer análisis →</span>
+    </a>
+
+  </main>
+
+  <hr class="blog-divider">
+
+  <!-- PARAGRAPH.XYZ LIVE POSTS -->
+  <section class="paragraph-section" aria-label="Últimas entradas en Paragraph">
+    <p class="section-label">Paragraph.xyz — Últimas transmisiones</p>
+    <div class="paragraph-grid" id="paragraphGrid">
+      <div class="paragraph-loader pulse-text">Sincronizando con paragraph.xyz…</div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-copy">© 2026 BORJA MOSKV · INDUSTRIAL NOIR SYSTEM</div>
+    <div class="footer-links">
+      <a href="https://borjamoskv.com" class="footer-yt">borjamoskv.com</a>
+      <a href="https://portrait.so/borja" class="footer-yt" target="_blank" rel="noopener">portrait.so/borja</a>
+      <a href="https://borjamoskv.github.io/Cortex-Persist/demo-padres/" class="footer-yt" target="_blank">demo-padres</a>
+    </div>
+  </footer>
+
+  <!-- CHATQUITO -->
+  <button id="chatquitoOpen" class="chatquito-open-btn">RITXIE HAWTING</button>
+  <div id="chatquito" class="chatquito">
+    <div class="chatquito-header">
+      <span class="chatquito-title">RITXIE HAWTING</span>
+      <button class="chatquito-close" id="chatquitoClose">✖</button>
+    </div>
+    <div class="chatquito-body" id="chatquitoBody">
+      <div class="chat-msg bot">Soy RITXIE HAWTING. Si quieres, te oriento entre textos, sets y archivo.</div>
+    </div>
+    <div class="chatquito-input">
+      <input type="text" id="chatquitoInput" placeholder="Escribe a RITXIE HAWTING..." autocomplete="off">
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="data.js"></script>
+  <script>window.MOSKV = window.MOSKV || {};</script>
+  <script src="js/chat.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // ── Nav toggle ──────────────────────────────────
+      const mainNav   = document.getElementById('mainNav');
+      const navToggle = document.getElementById('navToggle');
+      const navLinks  = document.getElementById('navLinks');
+      const setMenuState = (isOpen) => {
+        if (!mainNav) return;
+        mainNav.classList.toggle('menu-open', isOpen);
+        navToggle?.setAttribute('aria-expanded', String(isOpen));
+      };
+
+      navToggle?.addEventListener('click', (event) => {
+        event.stopPropagation();
+        setMenuState(!mainNav?.classList.contains('menu-open'));
+      });
+
+      navLinks?.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => setMenuState(false));
+      });
+
+      document.addEventListener('click', (event) => {
+        if (mainNav?.classList.contains('menu-open') && !mainNav.contains(event.target)) {
+          setMenuState(false);
+        }
+      });
+
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 992) {
+          setMenuState(false);
+        }
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          setMenuState(false);
+        }
+      });
+
+      if (window.MOSKV?.chat?.init) window.MOSKV.chat.init();
+
+      // ── Filter bar ──────────────────────────────────
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      const cards      = document.querySelectorAll('.blog-card[data-category]');
+
+      filterBtns.forEach(btn => {
+        btn.setAttribute('aria-pressed', btn.classList.contains('active') ? 'true' : 'false');
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          filterBtns.forEach(b => b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'));
+          const filter = btn.dataset.filter;
+          cards.forEach(card => {
+            const match = filter === 'all' || card.dataset.category === filter;
+            card.dataset.hidden = match ? 'false' : 'true';
+          });
+        });
+      });
+
+      // ── Paragraph RSS ───────────────────────────────
+      (async function loadParagraphPosts() {
+        const grid = document.getElementById('paragraphGrid');
+        try {
+          const res  = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://paragraph.xyz/@borjamoskv/rss');
+          const data = await res.json();
+          if (data.status === 'ok' && data.items?.length) {
+            grid.innerHTML = '';
+            data.items.slice(0, 3).forEach(item => {
+              const date = item.pubDate.split(' ')[0];
+              const card = document.createElement('a');
+              card.href  = item.link;
+              card.target = '_blank';
+              card.rel    = 'noopener';
+              card.className = 'blog-card blog-card--third';
+              card.innerHTML = `
+                <div class="card-meta">
+                  <span class="card-tag card-tag--paragraph">Paragraph</span>
+                  <span class="card-date">${date}</span>
+                </div>
+                <h2 class="card-title" style="font-size:1.1rem">${item.title}</h2>
+                <span class="card-cta">Leer en Paragraph →</span>
+              `;
+              grid.appendChild(card);
+            });
+          } else {
+            grid.innerHTML = `<p style="color:rgba(224,224,224,0.3);font-size:0.85rem;padding:1rem 0;">No se encontraron entradas en Paragraph.</p>`;
+          }
+        } catch (e) {
+          grid.innerHTML = `<p style="color:rgba(224,224,224,0.3);font-size:0.85rem;padding:1rem 0;">Error cargando Paragraph.xyz.</p>`;
+        }
+      })();
+    });
+  </script>
+  <!-- VIDEO BACKGROUND SYSTEM (AUTODJ DUAL-DECK) -->
+  <div class="video-background-system" id="av-trigger">
+    <div class="video-deck-wrap" id="video-deck-a">
+      <div id="bg-video-a"></div>
+      <div class="video-poster" id="video-poster-a"></div>
+      <div class="deck-ui" id="dj-deck-a-ui">
+          <span>DK-A ⏸</span>
+          <span>INITIALIZING...</span>
+      </div>
+    </div>
+    <div class="video-deck-wrap" id="video-deck-b">
+      <div id="bg-video-b"></div>
+      <div class="video-poster" id="video-poster-b"></div>
+      <div class="deck-ui" id="dj-deck-b-ui">
+          <span>DK-B ⏸</span>
+          <span>STANDBY</span>
+      </div>
+    </div>
+    <div class="video-overlay"></div>
+    <div class="video-identity-wrap" id="videoIdentity">
+        <span class="video-identity-label" id="videoIdentityLabel">BACKGROUND REEL</span>
+        <strong class="video-identity-title" id="videoIdentityTitle">BORJA MOSKV — SIGNAL</strong>
+    </div>
+  </div>
+
+  <script src="autodj-video.js" defer></script>
+  <script src="cortex-terminal.js" defer></script>
+</body>
+</html>
