@@ -2177,3 +2177,76 @@ class ArcadeManager {
 // Instantiate Arcade
 new ArcadeManager();
 
+// ==========================================================================
+// SECRET EASTER EGG LOGIC (BANDCAMP EXERGY OVERDRIVE)
+// ==========================================================================
+(function() {
+  const eggBtn = document.getElementById("easter-egg-btn");
+  if (!eggBtn) return;
+
+  function playSynthSnd() {
+    try {
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(330, audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(660, audioCtx.currentTime + 0.12);
+      osc.frequency.exponentialRampToValueAtTime(110, audioCtx.currentTime + 0.28);
+      
+      gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.28);
+      
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.35);
+    } catch (err) {
+      console.warn("Audio Context blocked or not supported.");
+    }
+  }
+
+  function triggerEgg() {
+    eggBtn.classList.add("pulse-active");
+    document.body.classList.add("is-glitching");
+    playSynthSnd();
+
+    setTimeout(() => {
+      document.body.classList.remove("is-glitching");
+    }, 250);
+
+    setTimeout(() => {
+      eggBtn.classList.remove("pulse-active");
+      window.open("https://borjamoskv.bandcamp.com", "_blank", "noopener,noreferrer");
+    }, 450);
+  }
+
+  eggBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    triggerEgg();
+  });
+
+  let buffer = "";
+  const codes = ["moskv", "bandcamp"];
+  
+  window.addEventListener("keydown", (e) => {
+    if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
+    
+    buffer += e.key.toLowerCase();
+    if (buffer.length > 15) {
+      buffer = buffer.substring(buffer.length - 15);
+    }
+
+    for (const code of codes) {
+      if (buffer.endsWith(code)) {
+        triggerEgg();
+        buffer = "";
+        break;
+      }
+    }
+  });
+})();
+
+

@@ -2414,3 +2414,60 @@ body.light-theme .theme-indicator {
   }
 }
 
+/* Easter Egg styling */
+.easter-egg-btn {
+  position: fixed;
+  bottom: 12px;
+  left: 12px;
+  z-index: 100;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--line-strong);
+  opacity: 0.15;
+  transition: opacity 0.3s cubic-bezier(0.19, 1, 0.22, 1), 
+              color 0.3s cubic-bezier(0.19, 1, 0.22, 1),
+              transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.easter-egg-btn:hover {
+  opacity: 0.95;
+  color: var(--blue);
+  transform: scale(1.2) rotate(10deg);
+  filter: drop-shadow(0 0 8px rgba(43, 59, 229, 0.8));
+}
+
+.easter-egg-btn svg {
+  transition: transform 0.3s ease;
+}
+
+.easter-egg-btn:active svg {
+  transform: scale(0.8);
+}
+
+.easter-egg-btn.pulse-active {
+  animation: egg-pulse 0.4s infinite alternate;
+}
+
+@keyframes egg-pulse {
+  from {
+    transform: scale(1.2);
+    color: var(--honey);
+    filter: drop-shadow(0 0 12px var(--honey));
+  }
+  to {
+    transform: scale(1.5);
+    color: var(--blue);
+    filter: drop-shadow(0 0 16px var(--blue));
+  }
+}
+
+body.is-glitching {
+  filter: invert(1) hue-rotate(180deg);
+  transition: filter 0.05s ease;
+}
+
+
+
