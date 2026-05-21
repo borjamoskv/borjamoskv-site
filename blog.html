@@ -438,6 +438,31 @@
       text-shadow: 0 0 8px rgba(43, 59, 229, 0.5);
     }
 
+    .chatquito-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .chatquito-voice-btn {
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: color 0.2s ease, transform 0.2s ease;
+      padding: 0.2rem;
+    }
+
+    .chatquito-voice-btn:hover {
+      color: #2B3BE5;
+      transform: scale(1.1);
+    }
+
+    .chatquito-voice-btn.muted {
+      color: rgba(255, 255, 255, 0.2);
+    }
+
     .chatquito-close {
       background: none;
       border: none;
@@ -842,7 +867,10 @@
   <div id="chatquito" class="chatquito">
     <div class="chatquito-header">
       <span class="chatquito-title">RITXIE HAWTING</span>
-      <button class="chatquito-close" id="chatquitoClose">✖</button>
+      <div class="chatquito-controls">
+        <button id="chatquitoVoiceToggle" class="chatquito-voice-btn" title="Toggle Voice Synth">🔊</button>
+        <button class="chatquito-close" id="chatquitoClose">✖</button>
+      </div>
     </div>
     <div class="chatquito-body" id="chatquitoBody">
       <div class="chat-msg bot">Soy RITXIE HAWTING. Si quieres, te oriento entre textos, sets y archivo.</div>
@@ -855,6 +883,10 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script type="module" src="data.js"></script>
   <script>window.MOSKV = window.MOSKV || {};</script>
+  <script type="module" src="js/wasm-search-engine.js"></script>
+  <script type="module" src="js/search-results-renderer.js"></script>
+  <script type="module" src="js/response-router.js"></script>
+  <script type="module" src="js/voice-effects-pipeline.js"></script>
   <script type="module" src="js/chat.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
