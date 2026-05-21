@@ -2019,6 +2019,141 @@ class ArcadeManager {
           window.removeEventListener("keydown", this.onKey);
           this.lines = [];
         }
+      },
+
+      // 22: ARC-AGI Grid
+      {
+        name: "ARC-AGI Grid",
+        desc: "Simulador de pruebas ARC-AGI. Deduce el patrón lógico y haz click en las celdas de la derecha para cambiar su color y completar la matriz.",
+        gridSize: 3,
+        inputGrid: [
+          [1, 0, 1],
+          [0, 2, 0],
+          [1, 0, 1]
+        ],
+        outputGrid: [
+          [0, 0, 0],
+          [0, 0, 0],
+          [0, 0, 0]
+        ],
+        targetGrid: [
+          [2, 0, 2],
+          [0, 1, 0],
+          [2, 0, 2]
+        ],
+        palette: ["#0A0A0A", "#2B3BE5", "#FF9F1C", "#9D5B65"], // ink, blue, honey, wine
+        solved: false,
+        lastMouseDown: false,
+        setup(c) {
+          this.outputGrid = [
+            [0, 0, 0],
+            [0, 0, 0],
+            [0, 0, 0]
+          ];
+          this.solved = false;
+          this.lastMouseDown = false;
+        },
+        update(c, ctx, p1, p2, mx, my, md) {
+          ctx.fillStyle = "#0A0A0A";
+          ctx.fillRect(0, 0, c.width, c.height);
+          
+          ctx.fillStyle = "rgba(243, 244, 246, 0.8)";
+          ctx.font = "bold 16px monospace";
+          ctx.fillText("ENTRADA (Deduce la regla)", 40, 50);
+          ctx.fillText("SALIDA (Haz click para resolver)", 340, 50);
+          
+          const cellSize = 60;
+          const startY = 100;
+          
+          // Draw Input Grid (Left)
+          const startXInput = 60;
+          for (let r = 0; r < 3; r++) {
+            for (let col = 0; col < 3; col++) {
+              const val = this.inputGrid[r][col];
+              ctx.fillStyle = this.palette[val];
+              ctx.fillRect(startXInput + col * cellSize, startY + r * cellSize, cellSize - 4, cellSize - 4);
+              ctx.strokeStyle = "rgba(243, 244, 246, 0.2)";
+              ctx.strokeRect(startXInput + col * cellSize, startY + r * cellSize, cellSize - 4, cellSize - 4);
+            }
+          }
+          
+          // Draw Output Grid (Right)
+          const startXOutput = 380;
+          for (let r = 0; r < 3; r++) {
+            for (let col = 0; col < 3; col++) {
+              const val = this.outputGrid[r][col];
+              ctx.fillStyle = this.palette[val];
+              ctx.fillRect(startXOutput + col * cellSize, startY + r * cellSize, cellSize - 4, cellSize - 4);
+              ctx.strokeStyle = "rgba(243, 244, 246, 0.4)";
+              ctx.strokeRect(startXOutput + col * cellSize, startY + r * cellSize, cellSize - 4, cellSize - 4);
+            }
+          }
+          
+          // Handle clicks on Output Grid
+          if (md && !this.lastMouseDown) {
+            const relativeX = mx - startXOutput;
+            const relativeY = my - startY;
+            
+            if (relativeX >= 0 && relativeX < cellSize * 3 && relativeY >= 0 && relativeY < cellSize * 3) {
+              const colIdx = Math.floor(relativeX / cellSize);
+              const rowIdx = Math.floor(relativeY / cellSize);
+              
+              if (rowIdx >= 0 && rowIdx < 3 && colIdx >= 0 && colIdx < 3) {
+                this.outputGrid[rowIdx][colIdx] = (this.outputGrid[rowIdx][colIdx] + 1) % this.palette.length;
+                
+                if (self.isAudioOn && self.audioCtx) {
+                  const freq = 300 + (rowIdx * 3 + colIdx) * 50;
+                  const synth = getSynth(freq, "sine", 0.1);
+                  if (synth) {
+                    synth.osc.start();
+                    synth.gain.gain.exponentialRampToValueAtTime(0.001, self.audioCtx.currentTime + 0.09);
+                    synth.osc.stop(self.audioCtx.currentTime + 0.1);
+                  }
+                }
+                
+                let match = true;
+                for (let r = 0; r < 3; r++) {
+                  for (let col = 0; col < 3; col++) {
+                    if (this.outputGrid[r][col] !== this.targetGrid[r][col]) {
+                      match = false;
+                    }
+                  }
+                }
+                
+                if (match && !this.solved) {
+                  this.solved = true;
+                  if (self.isAudioOn && self.audioCtx) {
+                    const freqs = [523.25, 659.25, 783.99, 1046.50];
+                    freqs.forEach((freq, index) => {
+                      const synth = getSynth(freq, "triangle", 0.2);
+                      if (synth) {
+                        synth.osc.start(self.audioCtx.currentTime + index * 0.1);
+                        synth.gain.gain.setValueAtTime(0.08, self.audioCtx.currentTime + index * 0.1);
+                        synth.gain.gain.exponentialRampToValueAtTime(0.001, self.audioCtx.currentTime + index * 0.1 + 0.18);
+                        synth.osc.stop(self.audioCtx.currentTime + index * 0.1 + 0.2);
+                      }
+                    });
+                  }
+                }
+              }
+            }
+          }
+          
+          this.lastMouseDown = md;
+          
+          if (this.solved) {
+            ctx.fillStyle = "#FF9F1C";
+            ctx.font = "bold 16px monospace";
+            ctx.fillText("¡EXERGÍA DE RETÍCULA COMPLETA! C5-REAL", 60, 310);
+            ctx.font = "12px monospace";
+            ctx.fillText("Has resuelto la invariante del espacio computacional.", 60, 335);
+          } else {
+            ctx.fillStyle = "rgba(243, 244, 246, 0.4)";
+            ctx.font = "12px monospace";
+            ctx.fillText("Regla: Invierte los colores azul (1) y miel (2) de la entrada.", 60, 310);
+          }
+        },
+        destroy() {}
       }
     ];
   }
@@ -2029,6 +2164,8 @@ class ArcadeManager {
       btn.addEventListener("click", () => {
         if (!this.audioCtx) {
           this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        } else if (this.audioCtx.state === "suspended") {
+          this.audioCtx.resume();
         }
         if (typeof this.dialog.showModal === "function") {
           this.dialog.showModal();
@@ -2055,6 +2192,9 @@ class ArcadeManager {
     const slots = this.dialog.querySelectorAll(".arcade-slot");
     slots.forEach(slot => {
       slot.addEventListener("click", () => {
+        if (this.audioCtx && this.audioCtx.state === "suspended") {
+          this.audioCtx.resume();
+        }
         slots.forEach(s => s.classList.remove("active"));
         slot.classList.add("active");
         
@@ -2071,8 +2211,17 @@ class ArcadeManager {
       this.mouseY = ((clientY - rect.top) / rect.height) * this.canvas.height;
     };
 
+    const resumeAudioCtx = () => {
+      if (!this.audioCtx) {
+        this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      } else if (this.audioCtx.state === "suspended") {
+        this.audioCtx.resume();
+      }
+    };
+
     this.canvas.addEventListener("mousedown", (e) => {
       this.isMouseDown = true;
+      resumeAudioCtx();
       getCoords(e);
     });
     this.canvas.addEventListener("mousemove", (e) => {
@@ -2084,6 +2233,7 @@ class ArcadeManager {
 
     this.canvas.addEventListener("touchstart", (e) => {
       this.isMouseDown = true;
+      resumeAudioCtx();
       getCoords(e);
     }, { passive: true });
     this.canvas.addEventListener("touchmove", (e) => {
@@ -2105,6 +2255,9 @@ class ArcadeManager {
       this.btnAudio.classList.toggle("active", this.isAudioOn);
       this.btnAudio.textContent = this.isAudioOn ? "AUDIO: ON" : "AUDIO: OFF";
       this.btnAudio.setAttribute("aria-pressed", this.isAudioOn ? "true" : "false");
+      if (this.isAudioOn) {
+        resumeAudioCtx();
+      }
     });
 
     this.btnReset.addEventListener("click", () => {
