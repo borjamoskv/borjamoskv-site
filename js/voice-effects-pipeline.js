@@ -12,6 +12,7 @@ class VoiceEffectsPipeline {
      * @param {AudioContext} [audioContext] — Option to share main page context.
      */
     constructor(audioContext = null) {
+        this.isPrivateCtx = !audioContext && !window.MOSKV.audioContext;
         this.ctx = audioContext || window.MOSKV.audioContext || new (window.AudioContext || window.webkitAudioContext)();
         this.bpm = 125;
         this.isReady = false;
@@ -230,13 +231,13 @@ class VoiceEffectsPipeline {
     speak(text) {
         if (!this.ctx) return;
         
-        // Resume context on user action
+        // Clean up any ongoing synthesis and pending timeouts
+        this.stopSynthesis();
+
+        // Resume context on user action if suspended
         if (this.ctx.state === 'suspended') {
             this.ctx.resume();
         }
-
-        // Clean up any ongoing synthesis
-        this.stopSynthesis();
 
         const words = text.toLowerCase().split(/\s+/);
         let time = this.ctx.currentTime + 0.05;
@@ -359,8 +360,11 @@ class VoiceEffectsPipeline {
         });
 
         // Stop sources at the end
-        osc.stop(time + 0.1);
-        noise.stop(time + 0.1);
+        const endTime = time + 0.1;
+        osc.stop(endTime);
+        noise.stop(endTime);
+
+        this._scheduleSuspend(endTime);
     }
 
     stopSynthesis() {
@@ -371,6 +375,27 @@ class VoiceEffectsPipeline {
                 } catch(e) {}
             });
             this.activeSynthSources = null;
+        }
+        if (this.suspendTimeout) {
+            clearTimeout(this.suspendTimeout);
+            this.suspendTimeout = null;
+        }
+    }
+
+    _scheduleSuspend(endTime) {
+        if (!this.isPrivateCtx) return;
+        if (this.suspendTimeout) {
+            clearTimeout(this.suspendTimeout);
+        }
+        const delay = (endTime - this.ctx.currentTime) * 1000 + 500; // 500ms safety tail
+        if (delay > 0) {
+            this.suspendTimeout = setTimeout(() => {
+                if (this.ctx.state === 'running' && !this.activeSynthSources) {
+                    this.ctx.suspend().then(() => {
+                        console.log('Voice audio context suspended successfully to reclaim CPU cycles.');
+                    });
+                }
+            }, delay);
         }
     }
 
