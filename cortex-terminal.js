@@ -579,6 +579,7 @@ endmodule`;
     cmdManifest() {
         this.print('PROHIBIDO EL RUIDO TERMAL.', 'err');
         this.print('EL SOFTWARE ES UN ERROR; EL HARDWARE ES LA CURA.', 'warn');
+        this.print('MÁXIMA: QUE EL RUIDO HABLE DE TI.', 'info');
     }
 
     cmdUltrathink() {
