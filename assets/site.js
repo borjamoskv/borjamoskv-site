@@ -751,7 +751,7 @@ if ("IntersectionObserver" in window) {
     { rootMargin: "-46% 0px -46% 0px", threshold: 0 },
   );
 
-  ["inicio", "musica", "video", "fotogramas"].forEach((id) => {
+  ["inicio", "musica", "artworks", "video", "fotogramas"].forEach((id) => {
     const section = document.getElementById(id);
     if (section) {
       sectionObserver.observe(section);

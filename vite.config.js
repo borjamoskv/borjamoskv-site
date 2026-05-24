@@ -37,6 +37,18 @@ export default {
         } catch (e) {
           // Ignorar si no existe
         }
+        try {
+          await mkdir("dist/exergia-omega", { recursive: true });
+          await cp(resolve(__dirname, "../exergia-omega"), "dist/exergia-omega", { recursive: true });
+        } catch (e) {
+          // Ignorar
+        }
+        try {
+          await mkdir("dist/borjamoskv-rauw-clone", { recursive: true });
+          await cp(resolve(__dirname, "../borjamoskv-rauw-clone"), "dist/borjamoskv-rauw-clone", { recursive: true });
+        } catch (e) {
+          // Ignorar
+        }
       },
     },
   ],
