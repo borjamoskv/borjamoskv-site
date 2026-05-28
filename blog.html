@@ -1052,7 +1052,7 @@
         <h2 class="sub-title">Ensayos, audio y artefactos...</h2>
         <p class="sub-description">1–3 envíos/semana, mezcla de ensayo, audio y artefactos prácticos sobre IA y música.</p>
       </div>
-      <form class="sub-form" id="subForm" action="https://paragraph.xyz/@borjamoskv/subscribe" method="GET" target="_blank">
+      <form class="sub-form" id="subForm" action="https://borjamoskv.substack.com/subscribe" method="GET" target="_blank">
         <input type="email" name="email" class="sub-input" placeholder="Tu correo electrónico" required>
         <button type="submit" class="sub-btn">Suscribirse</button>
       </form>
@@ -1247,11 +1247,11 @@
 
   <hr class="blog-divider">
 
-  <!-- PARAGRAPH.XYZ LIVE POSTS -->
-  <section class="paragraph-section" aria-label="Últimas entradas en Paragraph">
-    <p class="section-label">Paragraph.xyz — Últimas transmisiones</p>
+  <!-- SUBSTACK LIVE POSTS -->
+  <section class="paragraph-section" aria-label="Últimas entradas en Substack">
+    <p class="section-label">Substack — Últimas transmisiones</p>
     <div class="paragraph-grid" id="paragraphGrid">
-      <div class="paragraph-loader pulse-text">Sincronizando con paragraph.xyz…</div>
+      <div class="paragraph-loader pulse-text">Sincronizando con Substack…</div>
     </div>
   </section>
 
@@ -1358,11 +1358,11 @@
 
 
 
-      // ── Paragraph RSS ───────────────────────────────
+      // ── Substack RSS ───────────────────────────────
       (async function loadParagraphPosts() {
         const grid = document.getElementById('paragraphGrid');
         try {
-          const res  = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://paragraph.xyz/@borjamoskv/rss');
+          const res  = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://borjamoskv.substack.com/feed');
           const data = await res.json();
           if (data.status === 'ok' && data.items?.length) {
             grid.innerHTML = '';
@@ -1375,19 +1375,19 @@
               card.className = 'blog-card blog-card--third';
               card.innerHTML = `
                 <div class="card-meta">
-                  <span class="card-tag card-tag--paragraph">Paragraph</span>
+                  <span class="card-tag card-tag--paragraph">Substack</span>
                   <span class="card-date">${date}</span>
                 </div>
                 <h2 class="card-title" style="font-size:1.1rem">${item.title}</h2>
-                <span class="card-cta">Leer en Paragraph →</span>
+                <span class="card-cta">Leer en Substack →</span>
               `;
               grid.appendChild(card);
             });
           } else {
-            grid.innerHTML = `<p style="color:rgba(224,224,224,0.3);font-size:0.85rem;padding:1rem 0;">No se encontraron entradas en Paragraph.</p>`;
+            grid.innerHTML = `<p style="color:rgba(224,224,224,0.3);font-size:0.85rem;padding:1rem 0;">No se encontraron entradas en Substack.</p>`;
           }
         } catch (e) {
-          grid.innerHTML = `<p style="color:rgba(224,224,224,0.3);font-size:0.85rem;padding:1rem 0;">Error cargando Paragraph.xyz.</p>`;
+          grid.innerHTML = `<p style="color:rgba(224,224,224,0.3);font-size:0.85rem;padding:1rem 0;">Error cargando Substack.</p>`;
         }
       })();
     });
