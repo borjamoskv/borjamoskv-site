@@ -1,8 +1,13 @@
 /* Blog page specific styles – glassmorphism premium */
 :root {
-  --post-bg: rgba(212, 212, 212, 0.04);
-  --post-border: rgba(212, 212, 212, 0.1);
-  --post-radius: 12px;
+  --post-bg: rgba(43, 59, 229, 0.04);
+  --post-border: rgba(236, 72, 153, 0.3);
+  --post-radius: 8px;
+  --accent-primary: #ec4899;
+  --accent-secondary: #00FF9D;
+  --bg-dark: #0A0A0A;
+  --text-primary: #FFFFFF;
+  --text-secondary: rgba(255, 255, 255, 0.6);
 }
 
 .blog-container {
