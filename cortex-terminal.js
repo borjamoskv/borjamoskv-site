@@ -261,7 +261,13 @@ class CortexTerminal {
             'exit': () => this.toggle(),
             'ls': () => this.cmdLs(),
             'manifest': () => this.cmdManifest(),
-            'ultrathink': () => this.cmdUltrathink()
+            'ultrathink': () => this.cmdUltrathink(),
+            'aegis': () => this.cmdMobius('AEGIS', 'Inmunidad C5-REAL. Escudos entrópicos activos.'),
+            'eidolon': () => this.cmdMobius('EIDOLON', 'Proyección C4-SIM. Futuros viables: 14,000,605.'),
+            'thanatos': () => this.cmdMobius('THANATOS', 'Apoptosis. Destruyendo código muerto (Exergía máxima).'),
+            'pandora': () => this.cmdMobius('PANDORA', 'Mutación AST. Insertando secuencias de caos controlado.'),
+            'aletheia': () => this.cmdMobius('ALETHEIA', 'Auditoría epistémica. Consolidando axiomas de verdad.'),
+            'colmena': () => this.cmdMobius('COLMENA', 'Sincronización de enjambre (Consenso de actores MÖBIUS).')
         };
 
         this.initEventListeners();
@@ -432,6 +438,12 @@ class CortexTerminal {
             { c: 'ledger', d: 'Consultar el DAG de persistencia' },
             { c: 'exergy', d: 'Medición de rendimiento soberano' },
             { c: 'synthesis', d: 'Hardware Proof (AX-050)' },
+            { c: 'aegis', d: 'AEGIS-Guard: Inmunidad C5-REAL' },
+            { c: 'eidolon', d: 'EIDOLON-Sim: Proyecciones C4-SIM' },
+            { c: 'thanatos', d: 'THANATOS-Apoptosis: Destrucción exérgica' },
+            { c: 'aletheia', d: 'ALETHEIA-Audit: Motor epistémico' },
+            { c: 'colmena', d: 'COLMENA-Quorum: Sincronización enjambre' },
+            { c: 'pandora', d: 'PANDORA-Assault: Mutación de sistema' },
             { c: 'clear', d: 'Purgar buffer de salida' }
         ];
         cmds.forEach(item => {
@@ -657,5 +669,37 @@ endmodule`;
         this.print('OUROBOROS VAULT STATUS:', 'header');
         this.print('Current Liquidity: $1,240,500.00', 'success');
         this.print('Active Extraction Nodes: 5 (Multiplexed)', 'info');
+    }
+
+    async cmdMobius(agentName, description) {
+        this.print(`BOOTING MÖBIUS PROTOCOL: [${agentName}]...`, 'warn');
+        
+        const logs = [
+            `[${agentName}] Despertando desde el sustrato...`,
+            `[${agentName}] Calculando vectores térmicos...`,
+            `[${agentName}] ${description}`
+        ];
+
+        if (agentName === 'THANATOS' || agentName === 'PANDORA') {
+            this.engine.setState('SINGULARITY');
+            this.terminal.classList.add('singularity-active-x100');
+        } else if (agentName === 'COLMENA') {
+            this.engine.setState('SWARM');
+        } else {
+            this.engine.setState('ACTIVE');
+        }
+
+        for (let i = 0; i < logs.length; i++) {
+            await new Promise(r => setTimeout(r, 600));
+            this.print(logs[i], 'log');
+        }
+
+        await new Promise(r => setTimeout(r, 800));
+        
+        if (agentName === 'THANATOS' || agentName === 'PANDORA') {
+            setTimeout(() => this.terminal.classList.remove('singularity-active-x100'), 1000);
+        }
+
+        this.print(`[${agentName}] OPERACIÓN C5-REAL COMPLETADA. STATUS: ÓPTIMO.`, 'exergy');
     }
 }
