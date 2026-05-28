@@ -30,7 +30,11 @@
     /* ── Page shell ── */
     .blog-page {
       min-height: 100vh;
-      background: var(--bg-color, #020202);
+      background: #0c0514; /* Deep purple background */
+      color: #F3F4F6;
+      --bg-color: #0c0514;
+      --accent-primary: #FF0055; /* Pink */
+      --accent-secondary: #2B3BE5; /* YInMn Blue */
     }
 
     /* ── Hero header ── */
@@ -46,8 +50,8 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse at 25% 60%, rgba(46, 80, 144, 0.18) 0%, transparent 55%),
-        radial-gradient(ellipse at 75% 20%, rgba(255, 102, 0, 0.07) 0%, transparent 45%);
+        radial-gradient(ellipse at 25% 60%, rgba(43, 59, 229, 0.22) 0%, transparent 55%),
+        radial-gradient(ellipse at 75% 20%, rgba(255, 0, 85, 0.12) 0%, transparent 45%);
       pointer-events: none;
     }
 
@@ -56,7 +60,7 @@
       font-size: 0.65rem;
       letter-spacing: 0.5em;
       text-transform: uppercase;
-      color: var(--accent-primary, #2E5090);
+      color: var(--accent-primary, #FF0055);
       margin-bottom: 1.5rem;
     }
 
@@ -71,7 +75,7 @@
     }
 
     .blog-hero-title span {
-      background: linear-gradient(135deg, var(--accent-primary, #2E5090), #5a7ed6);
+      background: linear-gradient(135deg, #FF0055, #2B3BE5);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -164,15 +168,15 @@
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 3px;
-      background: linear-gradient(90deg, transparent, var(--accent-primary, #2E5090), transparent);
+      background: linear-gradient(90deg, transparent, var(--accent-primary, #FF0055), transparent);
       transform: scaleX(0);
       transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
     }
 
     .blog-card:hover {
       transform: translateY(-4px);
-      border-color: rgba(46, 80, 144, 0.35);
-      background: rgba(46, 80, 144, 0.04);
+      border-color: rgba(255, 0, 85, 0.35);
+      background: rgba(255, 0, 85, 0.04);
     }
 
     .blog-card:hover::before {
@@ -184,13 +188,13 @@
       grid-column: span 8;
       padding: 3rem;
       min-height: 340px;
-      background: rgba(46, 80, 144, 0.06);
-      border-color: rgba(46, 80, 144, 0.2);
+      background: rgba(43, 59, 229, 0.06);
+      border-color: rgba(43, 59, 229, 0.2);
     }
 
     .blog-card--featured::before {
       height: 4px;
-      background: linear-gradient(90deg, var(--accent-primary, #2E5090), #5a7ed6 50%, transparent);
+      background: linear-gradient(90deg, #FF0055, #2B3BE5 50%, transparent);
       transform: scaleX(1);
     }
 
@@ -672,6 +676,390 @@
       background: #2B3BE5;
     }
 
+    /* ── Full card (spans 12 cols) ── */
+    .blog-card--full {
+      grid-column: span 12;
+      padding: 3rem;
+      min-height: 280px;
+      background: rgba(43, 59, 229, 0.04);
+      border-color: rgba(43, 59, 229, 0.15);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+                  border-color 0.3s ease,
+                  background 0.3s ease;
+    }
+
+    .blog-card--full::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 3px;
+      background: linear-gradient(90deg, transparent, var(--accent-primary, #FF0055), transparent);
+      transform: scaleX(0);
+      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .blog-card--full:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 0, 85, 0.35);
+      background: rgba(255, 0, 85, 0.04);
+    }
+
+    .blog-card--full:hover::before {
+      transform: scaleX(1);
+    }
+
+    .blog-card--full .card-cta {
+      margin-top: auto;
+    }
+
+    /* ── Excerpt Organizers ── */
+    .excerpt-image {
+      display: block;
+      color: #E0E0E0;
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+    
+    .excerpt-context {
+      display: block;
+      color: rgba(224, 224, 224, 0.45);
+      font-size: 0.85rem;
+    }
+
+    /* ── Subscription Card ── */
+    .sub-section {
+      max-width: 1200px;
+      margin: 0 auto 3rem;
+      padding: 0 2rem;
+    }
+
+    .sub-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 16px;
+      padding: 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 3rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .sub-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 80% 50%, rgba(255, 0, 85, 0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .sub-content {
+      flex: 1;
+      max-width: 500px;
+    }
+
+    .sub-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      line-height: 1.1;
+      color: #E0E0E0;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.03em;
+    }
+
+    .sub-description {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: rgba(224, 224, 224, 0.6);
+      margin: 0;
+    }
+
+    .sub-form {
+      display: flex;
+      gap: 1rem;
+      flex: 1;
+      max-width: 480px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .sub-input {
+      flex: 1;
+      background: rgba(10, 10, 10, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      color: #FFF;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .sub-input:focus {
+      border-color: #FF0055;
+      box-shadow: 0 0 15px rgba(255, 0, 85, 0.25);
+      background: rgba(10, 10, 10, 0.8);
+    }
+
+    .sub-btn {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      background: #FF0055;
+      color: #FFF;
+      border: none;
+      border-radius: 8px;
+      padding: 1rem 2rem;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 15px rgba(255, 0, 85, 0.3);
+    }
+
+    .sub-btn:hover {
+      background: #e6004c;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 0, 85, 0.5);
+    }
+
+    .sub-btn:active {
+      transform: translateY(0);
+    }
+
+    /* ── Archive Toggle ── */
+    .blog-card[data-archive="true"] {
+      display: none !important;
+    }
+
+    .blog-page.show-archive .blog-card[data-archive="true"]:not([data-hidden="true"]) {
+      display: flex !important;
+      animation: cardFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes cardFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .archive-btn-container {
+      display: flex;
+      justify-content: center;
+      margin: 2rem auto 4rem;
+      max-width: 1200px;
+      padding: 0 2rem;
+    }
+
+    .archive-btn {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      background: transparent;
+      color: #E0E0E0;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 999px;
+      padding: 0.8rem 2.5rem;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .archive-btn:hover {
+      border-color: #FF0055;
+      color: #FF0055;
+      background: rgba(255, 0, 85, 0.05);
+      box-shadow: 0 0 20px rgba(255, 0, 85, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .archive-btn:active {
+      transform: translateY(0);
+    }
+
+    .blog-page.show-archive .archive-btn-container {
+      display: none;
+    }
+
+    /* ── Recommendations Block ── */
+    .recommendations-section {
+      max-width: 1200px;
+      margin: 4rem auto 6rem;
+      padding: 0 2rem;
+    }
+
+    .recommendations-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #E0E0E0;
+      margin-bottom: 2rem;
+      text-align: center;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+
+    .recommendations-heading::before,
+    .recommendations-heading::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      max-width: 150px;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .recommendations-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .recommendation-card {
+      background: rgba(255, 255, 255, 0.015);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 12px;
+      padding: 2rem;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.3s ease;
+    }
+
+    .recommendation-card::before {
+      content: '“';
+      position: absolute;
+      top: 1rem;
+      left: 1.5rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 5rem;
+      color: rgba(255, 0, 85, 0.1);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .recommendation-quote {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: rgba(224, 224, 224, 0.7);
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+      font-style: italic;
+    }
+
+    .recommendation-author {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: #FF0055;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    .recommendation-card:hover {
+      border-color: rgba(43, 59, 229, 0.2);
+      background: rgba(43, 59, 229, 0.02);
+      transform: translateY(-2px);
+    }
+
+    /* ── Footer Overrides ── */
+    .site-footer {
+      background: rgba(12, 5, 20, 0.85) !important;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 6rem 2rem 4rem !important;
+      margin-top: 6rem;
+    }
+
+    .footer-social-platforms {
+      margin-top: 1.5rem;
+      font-size: 0.7rem;
+      color: rgba(224, 224, 224, 0.3);
+      width: 100%;
+      text-align: center;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .footer-social-platforms a {
+      color: rgba(224, 224, 224, 0.4) !important;
+      text-decoration: none !important;
+      transition: color 0.2s ease;
+      margin: 0 0.5rem;
+    }
+
+    .footer-social-platforms a:hover {
+      color: #FF0055 !important;
+    }
+
+    /* ── Mobile adjustments & Mobile contrast/weight ── */
+    @media (max-width: 1024px) {
+      .recommendations-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .sub-card {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 2rem;
+        text-align: center;
+        gap: 2rem;
+      }
+      .sub-content {
+        max-width: 100%;
+      }
+      .sub-form {
+        max-width: 100%;
+      }
+      .recommendations-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .sub-form {
+        flex-direction: column;
+      }
+      .sub-title {
+        font-size: 1.8rem !important;
+        font-weight: 900 !important;
+      }
+      .card-title {
+        font-size: 1.5rem !important;
+        font-weight: 800 !important;
+      }
+      .sub-btn, .filter-btn, .card-cta, .archive-btn {
+        font-weight: 800 !important;
+        font-size: 0.75rem !important;
+      }
+    }
+
     .metric-bar-fill.energy {
       background: #9D2BE5;
     }
@@ -716,6 +1104,20 @@
     <p class="blog-hero-sub">Textos, análisis, set lore y crítica cultural. Sin relleno.</p>
   </header>
 
+  <!-- SUBSCRIPTION BLOCK -->
+  <section class="sub-section">
+    <div class="sub-card">
+      <div class="sub-content">
+        <h2 class="sub-title">Ensayos, audio y artefactos...</h2>
+        <p class="sub-description">1–3 envíos/semana, mezcla de ensayo, audio y artefactos prácticos sobre IA y música.</p>
+      </div>
+      <form class="sub-form" id="subForm" action="https://paragraph.xyz/@borjamoskv/subscribe" method="GET" target="_blank">
+        <input type="email" name="email" class="sub-input" placeholder="Tu correo electrónico" required>
+        <button type="submit" class="sub-btn">Suscribirse</button>
+      </form>
+    </div>
+  </section>
+
   <!-- FILTER BAR -->
   <div class="blog-filters" id="filterBar" role="toolbar" aria-label="Filtrar por categoría">
     <span class="filter-label">Filtrar</span>
@@ -727,120 +1129,183 @@
     <button class="filter-btn" data-filter="tesis">Tesis</button>
   </div>
 
-  <!-- MAIN GRID -->
-  <main class="blog-grid" id="blogGrid">
+  <!-- SECTION: POPULAR -->
+  <section class="blog-section-container">
+    <div class="section-label">Más populares</div>
+    <div class="blog-grid" id="popularGrid">
+      <!-- FEATURED: Hito Nobel 95% -->
+      <a href="hito-nobel.html" class="blog-card blog-card--featured" data-category="tesis">
+        <div class="card-meta">
+          <span class="card-tag card-tag--tesis">Hito Omega</span>
+          <span class="card-date">2026‑03‑27</span>
+        </div>
+        <h2 class="card-title">Ω: Hito Nobel — ARC-AGI-3 [95%]</h2>
+        <p class="card-excerpt">
+          <span class="excerpt-image">Inducción de programas PeARL y la aniquilación de la entropía estocástica.</span>
+          <span class="excerpt-context">Tesis sobre el futuro de la inteligencia artificial soberana.</span>
+        </p>
+        <span class="card-cta">Ver telemetría →</span>
+      </a>
 
-    <!-- FEATURED: Hito Nobel 95% -->
-    <a href="hito-nobel.html" class="blog-card blog-card--featured" data-category="tesis">
-      <div class="card-meta">
-        <span class="card-tag card-tag--tesis">Hito Omega</span>
-        <span class="card-date">2026‑03‑27</span>
+      <!-- SIDE: Cómo suena Jarana d'Or -->
+      <a href="como-suena-jarana-dor.html" class="blog-card blog-card--side" data-category="analisis">
+        <div class="card-meta">
+          <span class="card-tag card-tag--analisis">JARANA/</span>
+          <span class="card-date">2026‑03‑27</span>
+        </div>
+        <h2 class="card-title">Cómo suena Jarana d'Or</h2>
+        <p class="card-excerpt">
+          <span class="excerpt-image">Seis leitmotivs sintetizados en gramática sónica para modular el caos.</span>
+          <span class="excerpt-context">Análisis y mapas de estados de ánimo musicales.</span>
+        </p>
+        <span class="card-cta">Abrir pieza →</span>
+      </a>
+
+      <!-- FULL: Termodinámica de Agentes -->
+      <a href="termodinamica-de-agentes.html" class="blog-card blog-card--full" data-category="ensayo">
+        <div class="card-meta">
+          <span class="card-tag card-tag--ensayo">Ensayo</span>
+          <span class="card-date">2026‑03‑25</span>
+        </div>
+        <h2 class="card-title">La Termodinámica de los Agentes</h2>
+        <p class="card-excerpt">
+          <span class="excerpt-image">La paradoja del cómputo: cuando el aumento de inteligencia expande el desorden.</span>
+          <span class="excerpt-context">Ensayo sobre la entropía informática en arquitecturas de agentes.</span>
+        </p>
+        <span class="card-cta">Leer ensayo →</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- SECTION: RECENT -->
+  <section class="blog-section-container">
+    <div class="section-label">Recent posts</div>
+    <div class="blog-grid" id="blogGrid">
+      <!-- HALF: Idioma Nativo -->
+      <a href="idioma-nativo-progreso.html" class="blog-card blog-card--half" data-category="tesis">
+        <div class="card-meta">
+          <span class="card-tag card-tag--tesis">Tesis</span>
+          <span class="card-date">2026‑05‑29</span>
+        </div>
+        <h2 class="card-title">Idioma Nativo = Progreso</h2>
+        <p class="card-excerpt">
+          <span class="excerpt-image">La resistencia lingüística como escudo de soberanía cognitiva frente al colonialismo técnico.</span>
+          <span class="excerpt-context">Tesis de geopolítica del lenguaje e inteligencia artificial.</span>
+        </p>
+        <span class="card-cta">Leer →</span>
+      </a>
+
+      <!-- HALF: Ajuste PA -->
+      <a href="ajuste-sistemas-pa.html" class="blog-card blog-card--half" data-category="tecnica">
+        <div class="card-meta">
+          <span class="card-tag card-tag--tecnica">Técnica</span>
+          <span class="card-date">2026‑03‑26</span>
+        </div>
+        <h2 class="card-title">Cómo Aprender a Ajustar un Sistema PA</h2>
+        <p class="card-excerpt">
+          <span class="excerpt-image">La alineación física del aire como paso previo a la calibración del software.</span>
+          <span class="excerpt-context">Guía metodológica de acústica física y sistemas PA.</span>
+        </p>
+        <span class="card-cta">Leer →</span>
+      </a>
+
+      <!-- HALF: La Semana Que Viene -->
+      <a href="la-semana-que-viene.html" class="blog-card blog-card--half" data-category="ensayo">
+        <div class="card-meta">
+          <span class="card-tag card-tag--ensayo">Ensayo</span>
+          <span class="card-date">2026‑03‑25</span>
+        </div>
+        <h2 class="card-title">¿Qué echas de menos de la semana que viene?</h2>
+        <p class="card-excerpt">
+          <span class="excerpt-image">Nostalgia inversa en el bucle infinito del feed predictivo.</span>
+          <span class="excerpt-context">Ensayo sobre la aceleración temporal y la parálisis del presente.</span>
+        </p>
+        <span class="card-cta">Leer →</span>
+      </a>
+
+      <!-- HALF: Colapso Millennial -->
+      <a href="colapso-millennial.html" class="blog-card blog-card--half" data-category="ensayo">
+        <div class="card-meta">
+          <span class="card-tag card-tag--ensayo">Ensayo</span>
+          <span class="card-date">2026‑03‑13</span>
+        </div>
+        <h2 class="card-title">La Generación Que Se Quedó Sin Futuro Pero No Sin Wi-Fi</h2>
+        <p class="card-excerpt">
+          <span class="excerpt-image">Vidas suspendidas en el limbo digital de una estafa macroeconómica estructurada.</span>
+          <span class="excerpt-context">Ensayo sobre los 12 marcos del colapso generacional.</span>
+        </p>
+        <span class="card-cta">Leer →</span>
+      </a>
+
+      <!-- ARCHIVE CARDS (data-archive="true") -->
+
+      <!-- THIRD: Fútbol Moderno -->
+      <a href="odio-eterno-futbol-moderno.html" class="blog-card blog-card--third" data-category="ensayo" data-archive="true">
+        <div class="card-meta">
+          <span class="card-tag card-tag--ensayo">Ensayo</span>
+          <span class="card-date">2026‑03‑13</span>
+        </div>
+        <h2 class="card-title">Odio Eterno al Fútbol Moderno</h2>
+        <p class="card-excerpt">
+          <span class="excerpt-image">El ritual sagrado del asfalto profanado por algoritmos financieros de plástico.</span>
+          <span class="excerpt-context">Crítica cultural de la mercantilización del deporte.</span>
+        </p>
+        <span class="card-cta">Leer →</span>
+      </a>
+
+      <!-- THIRD: Catarsis Colectiva -->
+      <a href="catarsis-colectiva.html" class="blog-card blog-card--third" data-category="articulo" data-archive="true">
+        <div class="card-meta">
+          <span class="card-tag card-tag--articulo">Artículo</span>
+          <span class="card-date">2026‑02‑12</span>
+        </div>
+        <h2 class="card-title">Catarsis Colectiva: Los 20 Pilares del Duelo</h2>
+        <p class="card-excerpt">
+          <span class="excerpt-image">La orquestación del luto colectivo tras el apagón de la última voz analógica.</span>
+          <span class="excerpt-context">Análisis cultural sobre el duelo y la memoria colectiva.</span>
+        </p>
+        <span class="card-cta">Leer artículo →</span>
+      </a>
+
+      <!-- THIRD: Arqueología Sónica -->
+      <a href="eclectic-electronic-analysis.html" class="blog-card blog-card--third" data-category="analisis" data-archive="true">
+        <div class="card-meta">
+          <span class="card-tag card-tag--analisis">Análisis</span>
+          <span class="card-date">2026‑02‑12</span>
+        </div>
+        <h2 class="card-title">Arqueología Sónica: 36 tracks, 12 países, 60 años</h2>
+        <p class="card-excerpt">
+          <span class="excerpt-image">Un puente espectral de 15 horas entre cumbia andina y drone polar noruego.</span>
+          <span class="excerpt-context">Análisis y desglose estructural de una sesión híbrida.</span>
+        </p>
+        <span class="card-cta">Leer análisis →</span>
+      </a>
+    </div>
+
+    <!-- ARCHIVE BUTTON CONTAINER -->
+    <div class="archive-btn-container">
+      <button class="archive-btn" id="loadArchiveBtn">Ver todo el archivo →</button>
+    </div>
+  </section>
+
+  <!-- RECOMMENDATIONS SECTION -->
+  <section class="recommendations-section">
+    <h2 class="recommendations-heading">Recomendaciones</h2>
+    <div class="recommendations-grid">
+      <div class="recommendation-card">
+        <p class="recommendation-quote">El único espacio que no intenta venderte el hype de la IA con hilos vacíos. Termodinámica, código real y música underground. Brutal.</p>
+        <p class="recommendation-author">Senior Software Architect</p>
       </div>
-      <h2 class="card-title">Ω: Hito Nobel — ARC-AGI-3 [95%]</h2>
-      <p class="card-excerpt">El 95% en ARC-AGI no es solo un número; es la aniquilación de la entropía estocástica mediante la inducción de programas PeARL. El futuro de la inteligencia soberana ha llegado.</p>
-      <span class="card-cta">Ver telemetría →</span>
-    </a>
-
-    <!-- SIDE: Cómo suena Jarana d'Or -->
-    <a href="como-suena-jarana-dor.html" class="blog-card blog-card--side" data-category="analisis">
-      <div class="card-meta">
-        <span class="card-tag card-tag--analisis">JARANA/</span>
-        <span class="card-date">2026‑03‑27</span>
+      <div class="recommendation-card">
+        <p class="recommendation-quote">Una cura de realidad técnica y musical en castellano. Jarana d'Or es el contrapeso perfecto al ruido de Linkedin.</p>
+        <p class="recommendation-author">Music Producer & Tech Lead</p>
       </div>
-      <h2 class="card-title">Cómo suena Jarana d'Or</h2>
-      <p class="card-excerpt">Seis leitmotivs, seis tracks y seis moods para convertir Jarana d'Or en gramática sonora usable.</p>
-      <span class="card-cta">Abrir pieza →</span>
-    </a>
-
-    <!-- HALF: Catarsis Colectiva -->
-    <a href="catarsis-colectiva.html" class="blog-card blog-card--half" data-category="articulo">
-      <div class="card-meta">
-        <span class="card-tag card-tag--articulo">Artículo</span>
-        <span class="card-date">2026‑02‑12</span>
+      <div class="recommendation-card">
+        <p class="recommendation-quote">La intersección entre algoritmos y contracultura que nadie se atreve a escribir. Textos afilados como cuchillas.</p>
+        <p class="recommendation-author">DevRel Engineer</p>
       </div>
-      <h2 class="card-title">Catarsis Colectiva: Los 20 Pilares del Duelo</h2>
-      <p class="card-excerpt">Por qué la muerte de Robe Iniesta ha sido la que más ha conmovido al pueblo español.</p>
-      <span class="card-cta">Leer artículo →</span>
-    </a>
-
-    <!-- HALF: Termodinámica de Agentes -->
-    <a href="termodinamica-de-agentes.html" class="blog-card blog-card--half" data-category="ensayo">
-      <div class="card-meta">
-        <span class="card-tag card-tag--ensayo">Ensayo</span>
-        <span class="card-date">2026‑03‑25</span>
-      </div>
-      <h2 class="card-title">La Termodinámica de los Agentes</h2>
-      <p class="card-excerpt">Más IQ no significa menos entropía. Un paper de Anthropic confirma lo que CORTEX ya sabía.</p>
-      <span class="card-cta">Leer →</span>
-    </a>
-
-    <!-- HALF: Colapso Millennial -->
-    <a href="colapso-millennial.html" class="blog-card blog-card--half" data-category="ensayo">
-      <div class="card-meta">
-        <span class="card-tag card-tag--ensayo">Ensayo</span>
-        <span class="card-date">2026‑03‑13</span>
-      </div>
-      <h2 class="card-title">La Generación Que Se Quedó Sin Futuro Pero No Sin Wi-Fi</h2>
-      <p class="card-excerpt">Los 12 Marcos del Colapso Millennial. Cómo una generación entera fue estafada estructuralmente.</p>
-      <span class="card-cta">Leer →</span>
-    </a>
-
-    <!-- HALF: La Semana Que Viene -->
-    <a href="la-semana-que-viene.html" class="blog-card blog-card--half" data-category="ensayo">
-      <div class="card-meta">
-        <span class="card-tag card-tag--ensayo">Ensayo</span>
-        <span class="card-date">2026‑03‑25</span>
-      </div>
-      <h2 class="card-title">¿Qué echas de menos de la semana que viene?</h2>
-      <p class="card-excerpt">Sobre la nostalgia inversa y la aceleración algorítmica. Varados en un presente perpetuo.</p>
-      <span class="card-cta">Leer →</span>
-    </a>
-
-    <!-- THIRD: Fútbol Moderno -->
-    <a href="odio-eterno-futbol-moderno.html" class="blog-card blog-card--third" data-category="ensayo">
-      <div class="card-meta">
-        <span class="card-tag card-tag--ensayo">Ensayo</span>
-        <span class="card-date">2026‑03‑13</span>
-      </div>
-      <h2 class="card-title">Odio Eterno al Fútbol Moderno</h2>
-      <p class="card-excerpt">El fútbol era la última religión analógica. Después lo compraron y lo plastificaron.</p>
-      <span class="card-cta">Leer →</span>
-    </a>
-
-    <!-- THIRD: Ajuste PA -->
-    <a href="ajuste-sistemas-pa.html" class="blog-card blog-card--third" data-category="tecnica">
-      <div class="card-meta">
-        <span class="card-tag card-tag--tecnica">Técnica</span>
-        <span class="card-date">2026‑03‑26</span>
-      </div>
-      <h2 class="card-title">Cómo Aprender a Ajustar un Sistema PA</h2>
-      <p class="card-excerpt">Bob McCarthy primero. Smaart después. El orden importa más que el software.</p>
-      <span class="card-cta">Leer →</span>
-    </a>
-
-    <!-- THIRD: Idioma Nativo -->
-    <a href="idioma-nativo-progreso.html" class="blog-card blog-card--third" data-category="tesis">
-      <div class="card-meta">
-        <span class="card-tag card-tag--tesis">Tesis</span>
-        <span class="card-date">2026‑05‑29</span>
-      </div>
-      <h2 class="card-title">Idioma Nativo = Progreso</h2>
-      <p class="card-excerpt">Por qué pensar en tu propio idioma es la precondición de la soberanía tecnológica y cognitiva.</p>
-      <span class="card-cta">Leer →</span>
-    </a>
-
-    <!-- FEATURED-style wide: Arqueología Sónica -->
-    <a href="eclectic-electronic-analysis.html" class="blog-card blog-card--featured" data-category="analisis">
-      <div class="card-meta">
-        <span class="card-tag card-tag--analisis">Análisis</span>
-        <span class="card-date">2026‑02‑12</span>
-      </div>
-      <h2 class="card-title">Arqueología Sónica: 36 tracks, 12 países, 60 años</h2>
-      <p class="card-excerpt">La arquitectura de una sesión de 15 horas. Cumbia colombiana conectada con drone ambient noruego y electro industrial ruso. Un mapa de influencias que atraviesa décadas.</p>
-      <span class="card-cta">Leer análisis →</span>
-    </a>
-
-  </main>
+    </div>
+  </section>
 
   <hr class="blog-divider">
 
@@ -859,6 +1324,12 @@
       <a href="https://borjamoskv.com" class="footer-yt">borjamoskv.com</a>
       <a href="https://portrait.so/borja" class="footer-yt" target="_blank" rel="noopener">portrait.so/borja</a>
       <a href="https://borjamoskv.github.io/Cortex-Persist/demo-padres/" class="footer-yt" target="_blank">demo-padres</a>
+    </div>
+    <div class="footer-social-platforms">
+      <a href="https://borjamoskv.bandcamp.com" target="_blank" rel="noopener">Bandcamp</a> ·
+      <a href="https://open.spotify.com/intl-es/artist/4p7wMuZpktE5aBFhBoQdqa" target="_blank" rel="noopener">Spotify</a> ·
+      <a href="https://soundcloud.com/borja-moskv" target="_blank" rel="noopener">SoundCloud</a> ·
+      <a href="https://www.youtube.com/@borjamoskv" target="_blank" rel="noopener">YouTube</a>
     </div>
   </footer>
 
@@ -945,6 +1416,12 @@
             card.dataset.hidden = match ? 'false' : 'true';
           });
         });
+      });
+
+      // ── Archive toggle ──────────────────────────────
+      const loadArchiveBtn = document.getElementById('loadArchiveBtn');
+      loadArchiveBtn?.addEventListener('click', () => {
+        document.body.classList.add('show-archive');
       });
 
       // ── Paragraph RSS ───────────────────────────────
