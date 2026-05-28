@@ -2469,5 +2469,77 @@ body.is-glitching {
   transition: filter 0.05s ease;
 }
 
+/* ═══════════════════════════════════════════════════════════════════ */
+/* CORTEX MÖBIUS AGENT AESTHETICS (INDUSTRIAL NOIR 2026)               */
+/* ═══════════════════════════════════════════════════════════════════ */
 
+.cterm-aegis-shield {
+  color: var(--blue);
+  text-shadow: 0 0 8px var(--blue);
+  border-left: 4px solid var(--blue);
+  padding-left: 8px;
+  animation: aegisPulse 2s infinite alternate;
+}
+@keyframes aegisPulse { 
+  from { opacity: 0.8; box-shadow: -4px 0 10px rgba(43,59,229,0.2); } 
+  to { opacity: 1; box-shadow: -4px 0 25px rgba(43,59,229,0.8); } 
+}
 
+.cterm-eidolon-sim {
+  color: var(--honey);
+  font-style: italic;
+  letter-spacing: 2px;
+  animation: eidolonFlicker 0.15s infinite;
+}
+@keyframes eidolonFlicker { 
+  0% { opacity: 1; } 
+  50% { opacity: 0.7; } 
+  100% { opacity: 1; } 
+}
+
+.cterm-thanatos-purge {
+  color: #ff3333;
+  font-weight: 900;
+  text-transform: uppercase;
+  background: rgba(255,51,51,0.1);
+  border: 1px solid #ff3333;
+  padding: 2px 8px;
+  animation: thanatosShake 0.4s infinite;
+}
+@keyframes thanatosShake { 
+  0% { transform: translateX(0); } 
+  25% { transform: translateX(-3px); } 
+  75% { transform: translateX(3px); } 
+}
+
+.cterm-pandora-chaos {
+  color: #cc00ff;
+  filter: blur(1.5px);
+  transition: filter 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: crosshair;
+}
+.cterm-pandora-chaos:hover { 
+  filter: blur(0); 
+  text-decoration: underline; 
+  text-shadow: 0 0 10px #cc00ff;
+}
+
+.cterm-aletheia-truth {
+  color: #fff;
+  font-family: monospace;
+  background: rgba(255, 255, 255, 0.05);
+  border-left: 2px solid #fff;
+  padding-left: 10px;
+  box-shadow: inset 0 0 10px rgba(255,255,255,0.1);
+}
+
+.cterm-colmena-swarm {
+  color: #00ffcc;
+  display: inline-block;
+  animation: swarmFloat 3s infinite ease-in-out;
+  text-shadow: 0 0 8px rgba(0, 255, 204, 0.6);
+}
+@keyframes swarmFloat { 
+  0%, 100% { transform: translateY(0); } 
+  50% { transform: translateY(-3px); } 
+}

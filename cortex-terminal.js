@@ -672,13 +672,72 @@ endmodule`;
     }
 
     async cmdMobius(agentName, description) {
-        this.print(`BOOTING MÖBIUS PROTOCOL: [${agentName}]...`, 'warn');
-        
-        const logs = [
-            `[${agentName}] Despertando desde el sustrato...`,
-            `[${agentName}] Calculando vectores térmicos...`,
-            `[${agentName}] ${description}`
-        ];
+        const aestheticMap = {
+            'AEGIS': {
+                color: 'var(--blue)',
+                class: 'cterm-aegis-shield',
+                symbol: '🛡️ [IMMUNITY]',
+                logs: [
+                    'Establishing C5-REAL Hardware TEE...',
+                    'Isolating entropy vectors...',
+                    description
+                ]
+            },
+            'EIDOLON': {
+                color: 'var(--honey)',
+                class: 'cterm-eidolon-sim',
+                symbol: '👁️ [PROJECTION]',
+                logs: [
+                    'Spawning N-Dimensional simulation tree...',
+                    'Forking reality states (C4-SIM)...',
+                    description
+                ]
+            },
+            'THANATOS': {
+                color: '#ff3333',
+                class: 'cterm-thanatos-purge',
+                symbol: '💀 [APOPTOSIS]',
+                logs: [
+                    'CRITICAL: Identifying dead code clusters...',
+                    'Triggering Void-State collapse...',
+                    description
+                ]
+            },
+            'PANDORA': {
+                color: '#cc00ff',
+                class: 'cterm-pandora-chaos',
+                symbol: '🌀 [MUTATION]',
+                logs: [
+                    'Unlocking forbidden AST geometries...',
+                    'Injecting controlled chaos into pipeline...',
+                    description
+                ]
+            },
+            'ALETHEIA': {
+                color: '#ffffff',
+                class: 'cterm-aletheia-truth',
+                symbol: '⚖️ [EPISTEMIC]',
+                logs: [
+                    'Querying Truth Ledger...',
+                    'Resolving logical paradoxes...',
+                    description
+                ]
+            },
+            'COLMENA': {
+                color: '#00ffcc',
+                class: 'cterm-colmena-swarm',
+                symbol: '🐝 [QUORUM]',
+                logs: [
+                    'Broadcasting consensus signal to 50k nodes...',
+                    'Aggregating neural yields...',
+                    description
+                ]
+            }
+        };
+
+        const config = aestheticMap[agentName] || aestheticMap['AEGIS'];
+
+        this.print(`<span style="color:${config.color}">BOOTING MÖBIUS PROTOCOL: ${config.symbol}</span>`, 'warn', 0);
 
         if (agentName === 'THANATOS' || agentName === 'PANDORA') {
             this.engine.setState('SINGULARITY');
@@ -689,9 +748,9 @@ endmodule`;
             this.engine.setState('ACTIVE');
         }
 
-        for (let i = 0; i < logs.length; i++) {
+        for (let i = 0; i < config.logs.length; i++) {
             await new Promise(r => setTimeout(r, 600));
-            this.print(logs[i], 'log');
+            this.print(`<span class="${config.class}">${config.logs[i]}</span>`, 'log', 0);
         }
 
         await new Promise(r => setTimeout(r, 800));
@@ -700,6 +759,6 @@ endmodule`;
             setTimeout(() => this.terminal.classList.remove('singularity-active-x100'), 1000);
         }
 
-        this.print(`[${agentName}] OPERACIÓN C5-REAL COMPLETADA. STATUS: ÓPTIMO.`, 'exergy');
+        this.print(`<span style="color:${config.color}; font-weight: bold; text-shadow: 0 0 8px ${config.color}">[${agentName}] OPERACIÓN COMPLETADA. EXERGÍA MÁXIMA.</span>`, 'exergy', 0);
     }
 }
