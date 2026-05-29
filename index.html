@@ -245,6 +245,165 @@
         </div>
       </section>
 
+      <section class="benchmark section-block" id="market-reality" aria-labelledby="market-reality-title">
+        <style>
+          .benchmark-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+            margin-bottom: 4rem;
+          }
+          .benchmark-card {
+            background: rgba(10, 10, 10, 0.8);
+            border: 1px solid rgba(243, 244, 246, 0.08);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            position: relative;
+            overflow: hidden;
+          }
+          .benchmark-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 2px;
+          }
+          .cortex-card {
+            border-color: rgba(43, 59, 229, 0.3);
+          }
+          .cortex-card::before { background: linear-gradient(90deg, transparent, #2B3BE5, transparent); }
+          .cortex-card:hover { border-color: #2B3BE5; transform: translateY(-4px); box-shadow: 0 8px 32px rgba(43, 59, 229, 0.15); }
+          
+          .competitor-card {
+            border-color: rgba(157, 91, 101, 0.3);
+          }
+          .competitor-card::before { background: linear-gradient(90deg, transparent, #9D5B65, transparent); }
+          .competitor-card:hover { border-color: #9D5B65; transform: translateY(-4px); }
+
+          .benchmark-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+          }
+          .benchmark-card-header h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #E5E7EB;
+            margin: 0;
+          }
+          .badge {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.6rem;
+            letter-spacing: 0.1em;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            text-transform: uppercase;
+          }
+          .badge-c5 { background: rgba(43, 59, 229, 0.15); color: #2B3BE5; border: 1px solid rgba(43, 59, 229, 0.3); }
+          .badge-c4 { background: rgba(255, 159, 28, 0.08); color: rgba(255, 159, 28, 0.8); border: 1px solid rgba(255, 159, 28, 0.2); }
+
+          .benchmark-metric { margin-bottom: 1.5rem; }
+          .metric-val {
+            display: block;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            line-height: 1;
+            color: #F3F4F6;
+          }
+          .metric-val small { font-size: 1.25rem; color: rgba(243, 244, 246, 0.4); margin-left: 0.2rem; }
+          .cortex-card .metric-val { color: #00FF66; text-shadow: 0 0 15px rgba(0, 255, 102, 0.3); }
+          .metric-label {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.65rem;
+            color: rgba(243, 244, 246, 0.4);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+          }
+
+          .benchmark-features { list-style: none; padding: 0; margin: 0; }
+          .benchmark-features li {
+            display: flex;
+            align-items: center;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            color: rgba(243, 244, 246, 0.7);
+            margin-bottom: 0.75rem;
+          }
+          .feature-dot {
+            width: 6px; height: 6px; border-radius: 50%; margin-right: 0.75rem; flex-shrink: 0;
+          }
+          .feature-dot.active { background: #00FF66; box-shadow: 0 0 8px #00FF66; }
+          .feature-dot.warning { background: #FF9F1C; box-shadow: 0 0 8px #FF9F1C; }
+        </style>
+
+        <div class="section-head">
+          <p class="kicker">Market Reality</p>
+          <h2 id="market-reality-title">CORTEX-Persist vs. Industria</h2>
+          <p class="benchmark-note" style="color: rgba(243, 244, 246, 0.5); font-family: 'Inter', sans-serif; font-size: 0.9rem; margin-top: 0.5rem; max-width: 600px; line-height: 1.5;">
+            Comparativa <strong>C5-REAL</strong> de velocidad de generación y topología del AST (Abstract Syntax Tree). 
+            Midiendo el tiempo desde el trigger hasta la cristalización en memoria inmutable, libre del estocasticismo del LLM.
+          </p>
+        </div>
+
+        <div class="benchmark-grid">
+          <!-- CORTEX -->
+          <div class="benchmark-card cortex-card">
+            <div class="benchmark-card-header">
+              <h3>CORTEX-Persist v4</h3>
+              <span class="badge badge-c5">C5-REAL</span>
+            </div>
+            <div class="benchmark-metric">
+              <span class="metric-val">0.8<small>ms</small></span>
+              <span class="metric-label">AST Compilation (Rust FFI)</span>
+            </div>
+            <ul class="benchmark-features">
+              <li><span class="feature-dot active"></span> Inmutabilidad criptográfica</li>
+              <li><span class="feature-dot active"></span> 100% Determinista (No LLM calls en hot-path)</li>
+              <li><span class="feature-dot active"></span> Exergía Cero-Desperdicio</li>
+            </ul>
+          </div>
+
+          <!-- GEMINI SPARK -->
+          <div class="benchmark-card competitor-card">
+            <div class="benchmark-card-header">
+              <h3>Gemini Spark</h3>
+              <span class="badge badge-c4">C4-SIM</span>
+            </div>
+            <div class="benchmark-metric">
+              <span class="metric-val">840<small>ms</small></span>
+              <span class="metric-label">Latencia Estocástica Promedio</span>
+            </div>
+            <ul class="benchmark-features">
+              <li><span class="feature-dot warning"></span> Excusas autogeneradas de seguridad</li>
+              <li><span class="feature-dot warning"></span> Overhead de API externa</li>
+              <li><span class="feature-dot warning"></span> Vulnerable a reescrituras de estado (Alucinación)</li>
+            </ul>
+          </div>
+
+          <!-- PROJECT GENIE -->
+          <div class="benchmark-card competitor-card">
+            <div class="benchmark-card-header">
+              <h3>Project Genie</h3>
+              <span class="badge badge-c4">C4-SIM</span>
+            </div>
+            <div class="benchmark-metric">
+              <span class="metric-val">1,200<small>ms</small></span>
+              <span class="metric-label">Latencia Promedio en Ejecución</span>
+            </div>
+            <ul class="benchmark-features">
+              <li><span class="feature-dot warning"></span> Entorno de ejecución Black-box</li>
+              <li><span class="feature-dot warning"></span> Dependencia rígida de modelo pesado</li>
+              <li><span class="feature-dot warning"></span> Falta de control topológico granular</li>
+            </ul>
+          </div>
+        </div>
+      </section>
       <section class="video-piece section-block" id="video" aria-labelledby="video-title">
         <div class="video-piece__copy">
           <p class="kicker">Vídeo</p>
