@@ -1,0 +1,6 @@
+/* Anchorage of magnification components on gallery items */
+.still {
+  position: relative;
+  overflow: hidden;
+  touch-action: none;
+}

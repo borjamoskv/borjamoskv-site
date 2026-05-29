@@ -1,0 +1,118 @@
+/* Footer Dashboard controls */
+.arcade__footer-controls {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: 1fr 240px 180px;
+  gap: 20px;
+  align-items: center;
+}
+
+.arcade__meta-display {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.active-game-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin: 0;
+  color: var(--honey);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.active-game-desc {
+  font-size: 0.74rem;
+  color: var(--dim);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.arcade__sliders {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.slider-control {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.slider-header {
+  display: flex;
+  justify-content: space-between;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.62rem;
+  color: var(--dim);
+}
+
+.neon-slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 4px;
+  background: var(--line-strong);
+  border-radius: 2px;
+  outline: none;
+}
+
+.neon-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--honey);
+  cursor: pointer;
+  box-shadow: 0 0 6px var(--honey);
+  transition: transform 0.1s ease;
+}
+
+.neon-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.arcade__buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.arcade-btn-toggle,
+.arcade-btn-action {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.arcade-btn-toggle {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--line-strong);
+  color: var(--dim);
+}
+
+.arcade-btn-toggle.active {
+  background: rgba(40, 220, 100, 0.1);
+  border-color: #28dc64;
+  color: #28dc64;
+  text-shadow: 0 0 4px rgba(40, 220, 100, 0.4);
+}
+
+.arcade-btn-action {
+  background: #fff;
+  border: 1px solid #fff;
+  color: #000;
+}
+
+.arcade-btn-action:hover {
+  background: var(--honey);
+  border-color: var(--honey);
+}

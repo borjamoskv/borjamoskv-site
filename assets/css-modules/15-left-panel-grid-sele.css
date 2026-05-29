@@ -1,0 +1,74 @@
+/* Left panel grid selector list */
+.arcade__selector {
+  border-right: 1px solid var(--line);
+  background: #070707;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.arcade__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: 12px;
+  gap: 6px;
+}
+
+.arcade-slot {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.arcade-slot:hover {
+  background: rgba(43, 59, 229, 0.08);
+  border-color: rgba(43, 59, 229, 0.3);
+}
+
+.arcade-slot.active {
+  background: rgba(43, 59, 229, 0.2);
+  border-color: var(--blue);
+  box-shadow: inset 0 0 8px rgba(43, 59, 229, 0.3);
+}
+
+.slot-num {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.72rem;
+  color: var(--honey);
+  font-weight: 700;
+  width: 24px;
+}
+
+.slot-name {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  flex-grow: 1;
+  color: #e0e0e0;
+}
+
+.arcade-slot.active .slot-name {
+  color: #fff;
+  font-weight: 700;
+}
+
+.slot-status {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.arcade-slot:hover .slot-status {
+  background: var(--honey);
+}
+
+.arcade-slot.active .slot-status {
+  background: #55ff77;
+  box-shadow: 0 0 6px #55ff77;
+}

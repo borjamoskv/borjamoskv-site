@@ -1,0 +1,27 @@
+/* Theme Switch UI */
+.theme-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 44px;
+  height: 24px;
+  background: var(--line-strong);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  cursor: pointer;
+  padding: 2px;
+  transition: background 0.3s ease;
+  margin-left: 20px;
+  align-self: center;
+}
+
+.theme-indicator {
+  display: block;
+  width: 18px;
+  height: 18px;
+  background: var(--honey);
+  border-radius: 50%;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease;
+  box-shadow: 0 0 6px var(--honey);
+}

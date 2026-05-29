@@ -1,0 +1,129 @@
+/* Hover behaviors */
+.still:hover .still-loupe,
+.still:focus-within .still-loupe {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.still:hover .still-spotlight-shading,
+.still:focus-within .still-spotlight-shading {
+  opacity: 1;
+}
+
+.still:hover .provenance-card,
+.still:focus-within .provenance-card {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* ==========================================================================
+   THE COGNITIVE RETRO-CRT ARCADE ROOM STYLING (SALA DE JUEGOS)
+   ========================================================================== */
+
+.arcade {
+  width: min(1200px, calc(100vw - 28px));
+  height: min(820px, calc(100vh - 40px));
+  background: #0A0A0A;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  padding: 0;
+  overflow: hidden;
+  color: #fff;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 40px rgba(43, 59, 229, 0.15);
+}
+
+.arcade::backdrop {
+  background: rgba(5, 5, 5, 0.88);
+  backdrop-filter: blur(12px);
+}
+
+.arcade__container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: inherit;
+}
+
+.arcade__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--line);
+  background: #0D0D0D;
+}
+
+.arcade__title-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.arcade__kicker {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.68rem;
+  color: var(--honey);
+  letter-spacing: 0.15em;
+}
+
+.arcade__title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: 0.05em;
+  color: #fff;
+}
+
+.arcade__telemetry {
+  display: flex;
+  gap: 24px;
+}
+
+.telemetry-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.telemetry-label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.6rem;
+  color: var(--dim);
+}
+
+.telemetry-value {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.text-neon-blue {
+  color: #5d6eff;
+  text-shadow: 0 0 6px rgba(43, 59, 229, 0.6);
+}
+
+.text-neon-amber {
+  color: #ffb755;
+  text-shadow: 0 0 6px rgba(255, 159, 28, 0.6);
+}
+
+.text-neon-green {
+  color: #55ff77;
+  text-shadow: 0 0 6px rgba(40, 220, 100, 0.6);
+}
+
+.arcade__close-btn {
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  padding: 6px 14px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.72rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.arcade__close-btn:hover {
+  background: #fff;
+  color: #000;
+  border-color: #fff;
+}

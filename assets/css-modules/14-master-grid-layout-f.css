@@ -1,0 +1,8 @@
+/* Master grid layout for controls and screen */
+.arcade__layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  flex-grow: 1;
+  overflow: hidden;
+  min-height: 0;
+}

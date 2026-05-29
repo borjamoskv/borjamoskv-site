@@ -1,0 +1,8 @@
+/* Liquid Distortion Hover Style */
+.liquid-trigger {
+  filter: url(#liquid-hover);
+  transition: transform 0.2s ease;
+}
+.liquid-trigger:hover {
+  transform: scale(1.02);
+}
