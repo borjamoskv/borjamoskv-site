@@ -44,7 +44,7 @@
         "@type": "MusicGroup",
         "name": "BORJA MOSKV",
         "url": "https://borjamoskv.com/",
-        "image": "https://borjamoskv.com/media/no-sleep-in-my-city-poster.jpg",
+        "image": "https://borjamoskv.com/media/Borjarl.jpg",
         "genre": ["Electronic", "Techno", "IDM"],
         "sameAs": [
           "https://borjamoskv.bandcamp.com",
@@ -56,8 +56,7 @@
     </script>
   </head>
   <body>
-    <canvas id="cortex-bg" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none;"></canvas>
-    <script type="module" src="js/webgl.js"></script>
+    <canvas id="cortex-bg" class="cortex-canvas" aria-hidden="true"></canvas>
     <div class="film-grain" aria-hidden="true"></div>
     <a class="skip-link" href="#main">Saltar al contenido</a>
 
@@ -139,7 +138,7 @@
         </div>
 
         <article class="poster-sleeve" aria-label="Obra destacada">
-          <img src="media/Borjarl.jpg" alt="Borjarl Placeholder" />
+          <img src="media/Borjarl.jpg" alt="Borja Moskv — artista" fetchpriority="high" />
           <div class="poster-sleeve__copy">
             <p>Borjarl</p>
             <span>03:35 · vídeo musical</span>
@@ -645,7 +644,7 @@
 
         <div class="collage">
           <button class="still still--one" type="button" data-frame="media/gambitero-real-01.jpg">
-            <img src="media/gambitero-real-01.jpg" alt="Fotograma de vídeo con bowl nocturno" />
+            <img src="media/gambitero-real-01.jpg" alt="Fotograma de vídeo con bowl nocturno" loading="lazy" decoding="async" />
             <div class="still__overlay">
               <span class="still__num">Frame 01</span>
               <div class="still__info">
@@ -658,7 +657,7 @@
             </div>
           </button>
           <button class="still still--two" type="button" data-frame="media/gambitero-real-02.jpg">
-            <img src="media/gambitero-real-02.jpg" alt="Fotograma de vídeo en skatepark" />
+            <img src="media/gambitero-real-02.jpg" alt="Fotograma de vídeo en skatepark" loading="lazy" decoding="async" />
             <div class="still__overlay">
               <span class="still__num">Frame 02</span>
               <div class="still__info">
@@ -671,7 +670,7 @@
             </div>
           </button>
           <button class="still still--three" type="button" data-frame="media/gambitero-real-03.jpg">
-            <img src="media/gambitero-real-03.jpg" alt="Fotograma oscuro con texto manuscrito" />
+            <img src="media/gambitero-real-03.jpg" alt="Fotograma oscuro con texto manuscrito" loading="lazy" decoding="async" />
             <div class="still__overlay">
               <span class="still__num">Frame 03</span>
               <div class="still__info">
@@ -684,7 +683,7 @@
             </div>
           </button>
           <button class="still still--four" type="button" data-frame="media/gambitero-real-04.jpg">
-            <img src="media/gambitero-real-04.jpg" alt="Fotograma con patinador y sombra" />
+            <img src="media/gambitero-real-04.jpg" alt="Fotograma con patinador y sombra" loading="lazy" decoding="async" />
             <div class="still__overlay">
               <span class="still__num">Frame 04</span>
               <div class="still__info">
@@ -697,7 +696,7 @@
             </div>
           </button>
           <button class="still still--five" type="button" data-frame="media/gambitero-real-05.jpg">
-            <img src="media/gambitero-real-05.jpg" alt="Fotograma nocturno de vídeo" />
+            <img src="media/gambitero-real-05.jpg" alt="Fotograma nocturno de vídeo" loading="lazy" decoding="async" />
             <div class="still__overlay">
               <span class="still__num">Frame 05</span>
               <div class="still__info">
@@ -710,7 +709,7 @@
             </div>
           </button>
           <button class="still still--six" type="button" data-frame="media/gambitero-real-06.jpg">
-            <img src="media/gambitero-real-06.jpg" alt="Fotograma en bowl bajo estrellas" />
+            <img src="media/gambitero-real-06.jpg" alt="Fotograma en bowl bajo estrellas" loading="lazy" decoding="async" />
             <div class="still__overlay">
               <span class="still__num">Frame 06</span>
               <div class="still__info">
@@ -989,6 +988,7 @@
       </svg>
     </a>
 
+    <script type="module" src="js/webgl.js"></script>
     <script type="module" src="assets/site.js"></script>
   </body>
 </html>
