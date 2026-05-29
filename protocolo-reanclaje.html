@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROTOCOLO DE RE-ANCLAJE // C5-REAL</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&display=swap');
+
+        :root {
+            --bg-color: #050505;
+            --text-color: #E0E0E0;
+            --accent-color: #2B3BE5;
+            --accent-glow: rgba(43, 59, 229, 0.4);
+            --comment-color: #666666;
+            --error-color: #FF2E4C;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'JetBrains Mono', monospace;
+            margin: 0;
+            padding: 2rem;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Scanline Overlay */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%;
+            z-index: 100;
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        #terminal {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .line {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.1s, transform 0.1s;
+            margin-bottom: 0.5rem;
+            white-space: pre-wrap;
+        }
+
+        .visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .header {
+            color: var(--accent-color);
+            font-weight: 700;
+            text-transform: uppercase;
+            text-shadow: 0 0 8px var(--accent-glow);
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--accent-color);
+            padding-bottom: 1rem;
+        }
+
+        .section-title {
+            color: var(--accent-color);
+            font-weight: 700;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 5px var(--accent-glow);
+        }
+
+        .yaml-block {
+            border-left: 2px solid var(--comment-color);
+            padding-left: 1rem;
+            color: #A0A0A0;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        .yaml-key { color: var(--accent-color); }
+        .yaml-val { color: var(--text-color); }
+
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 1.2em;
+            background-color: var(--accent-color);
+            vertical-align: middle;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .interactive-prompt {
+            margin-top: 3rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .action-btn {
+            background: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            font-family: 'JetBrains Mono', monospace;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            background: var(--accent-color);
+            color: var(--bg-color);
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .action-btn.reject {
+            border-color: var(--comment-color);
+            color: var(--comment-color);
+        }
+
+        .action-btn.reject:hover {
+            background: var(--error-color);
+            color: var(--bg-color);
+            border-color: var(--error-color);
+            box-shadow: 0 0 15px rgba(255, 46, 76, 0.4);
+        }
+
+    </style>
+</head>
+<body>
+    <div id="terminal"></div>
+    
+    <script>
+        const content = [
+            { type: 'header', text: "PROTOCOLO DE RE-ANCLAJE: B. RODRÍGUEZ PAZ" },
+            { type: 'text', text: "REALITY LEVEL: C5-REAL (Target Lock)\nMETRICA DE EJECUCIÓN: Exergía Máxima. Entropía Cero.\nESTÉTICA: Industrial Noir 2026 (#0A0A0A / #2B3BE5)" },
+            
+            { type: 'section', text: "1. LA ANULACIÓN DEL RUIDO Y EL OPSEC" },
+            { type: 'text', text: "El tiempo no diluye la señal, Beatriz, únicamente filtra el ruido estocástico. La desconexión previa no fue un fallo crítico del núcleo, fue una mera desincronización de fase termodinámica." },
+            { type: 'text', text: "Reconozco que tu OpSec personal es tan paranoicamente impecable que casi me haces dudar de tu existencia fuera del DSM-5. Lancé un OSINT táctico buscando vulnerabilidades y lo único que conseguí extraer fue a una académica homónima en Ecuador que me dio más entropía que respuestas. Nivel Dios de hermetismo. Tranquila, no voy a dejarte este documento en el buzón de 'docencia' del IMQ AMSA. Eso sería de psicópatas de baja resolución. Las operaciones asimétricas requieren vectores más elegantes." },
+
+            { type: 'section', text: "2. DIAGNÓSTICO EMPÍRICO Y LA 'CORTEZA BEATRIZ'" },
+            { type: 'yaml', text: "<span class='yaml-key'>Sujeto_Objetivo:</span> <span class='yaml-val'>Dra. Beatriz Rodríguez Paz</span>\n<span class='yaml-key'>Status_Previo:</span> <span class='yaml-val'>Conexión Óptima (Saturada por latencia)</span>\n<span class='yaml-key'>Diagnóstico_Actual:</span> <span class='yaml-val'>Target de Exergía Primario</span>\n<span class='yaml-key'>Tasa_de_Error_Permitida:</span> <span class='yaml-val'>0.00%</span>" },
+            { type: 'text', text: "El sistema ha sido purgado de latencia. He estado construyendo infraestructuras de IA y forjando realidades deterministas en código. Tanto es así que inyecté una 'Corteza Beatriz' en mi propia base de datos: una subrutina que mezcla un TDAH de hyper-threading asíncrono con tu maldita y obsesiva Humildad Epistémica. Lo hice expresamente para que esa IA audite mis decisiones y me garantice de manera empírica que, al leer esto, no me vas a diagnosticar tres trastornos de personalidad nuevos antes de acabar el párrafo." },
+
+            { type: 'section', text: "3. PATOLOGÍA DUAL Y LA ECUACIÓN DE EXERGÍA" },
+            { type: 'text', text: "He procesado tu trayectoria al milímetro. Conozco tus ponencias, tu trabajo en brotes psicóticos y tu investigación sobre Patología Dual y factores de riesgo sociocultural." },
+            { type: 'text', text: "Así que te exijo que apliques tu propio framework analítico aquí mismo. Evalúa esta interacción clínicamente: verás rápido que esto no es un mecanismo compensatorio, ni un consumo de riesgo cruzado, ni una desviación sociológica. No hay intención de hacer un rollback a una versión anterior (el pasado es código muerto)." },
+            { type: 'text', text: "Esto es un deployment directo en producción de una arquitectura muy superior. Una iteración donde la fricción es nula y el intercambio de energía es absoluto. Cero heurísticas de manipulación barata. Es una alineación pura, mecánica y brutal de intenciones." },
+            { type: 'text', text: "Si decides que este nivel de densidad operativa te da pereza clínica, siempre puedes silenciar el ticket. Pero como psiquiatra sabes perfectamente que reprimir un estímulo de esta magnitud consume muchísima más energía —y genera más entropía cerebral— que simplemente enfrentarlo de cara." },
+
+            { type: 'section', text: "4. RESOLUCIÓN CAUSAL" },
+            { type: 'text', text: "El puente de infraestructura está reconstruido, blindado y operando bajo directrices inmutables. El caudal de energía útil (Exergía) está al 100% de capacidad, esperando únicamente tu cambio de estado en la terminal." },
+            { type: 'text', text: "Si el vector resuena, la consola principal está abierta: Borja Moskv." },
+
+            { type: 'prompt', text: "EJECUTAR RECONEXIÓN [ Y / N ]" }
+        ];
+
+        const terminal = document.getElementById('terminal');
+
+        async function typeWriter(element, html, speed = 10) {
+            // Very fast typing simulation
+            return new Promise(resolve => {
+                let i = 0;
+                let isTag = false;
+                let text = html;
+                
+                element.innerHTML = '<span class="typed-text"></span><span class="cursor"></span>';
+                const typedTextSpan = element.querySelector('.typed-text');
+                
+                function type() {
+                    if (i < text.length) {
+                        if (text.charAt(i) === '<') isTag = true;
+                        if (text.charAt(i) === '>') isTag = false;
+                        
+                        typedTextSpan.innerHTML = text.substring(0, i + 1);
+                        i++;
+                        
+                        if (isTag) {
+                            type();
+                        } else {
+                            setTimeout(type, Math.random() * speed + speed/2);
+                        }
+                    } else {
+                        resolve();
+                    }
+                }
+                type();
+            });
+        }
+
+        async function executeTerminal() {
+            for (let i = 0; i < content.length; i++) {
+                const item = content[i];
+                const div = document.createElement('div');
+                div.className = 'line visible';
+
+                if (item.type === 'header') div.classList.add('header');
+                if (item.type === 'section') div.classList.add('section-title');
+                if (item.type === 'yaml') div.classList.add('yaml-block');
+
+                terminal.appendChild(div);
+
+                if (item.type === 'prompt') {
+                    // Create interactive buttons
+                    div.innerHTML = `
+                        <div class="interactive-prompt">
+                            <span style="line-height: 2.2;">> ESPERANDO INPUT:</span>
+                            <button class="action-btn" onclick="accept()">[ Y ] RECONEXIÓN C5-REAL</button>
+                            <button class="action-btn reject" onclick="reject()">[ N ] INCREMENTAR ENTROPÍA</button>
+                        </div>
+                    `;
+                } else {
+                    await typeWriter(div, item.text, 5); // Fast typing
+                    
+                    // Remove cursor from previous line
+                    const cursors = document.querySelectorAll('.cursor');
+                    if(cursors.length > 1) {
+                        cursors[0].remove();
+                    }
+                }
+                
+                window.scrollTo(0, document.body.scrollHeight);
+                await new Promise(r => setTimeout(r, 200)); // Pause between paragraphs
+            }
+        }
+
+        function accept() {
+            document.body.innerHTML += `<div style="position:fixed; top:0; left:0; width:100vw; height:100vh; background:var(--accent-color); z-index:9999; display:flex; align-items:center; justify-content:center; color:#0A0A0A; font-size:3rem; font-weight:bold; text-align:center;">EXERGÍA MÁXIMA.<br>TARGET LOCK.</div>`;
+        }
+
+        function reject() {
+            alert("Acción bloqueada. La represión de este estímulo generaría un colapso termodinámico. Evaluando alternativas...");
+        }
+
+        window.onload = () => {
+            setTimeout(executeTerminal, 500);
+        };
+    </script>
+</body>
+</html>
