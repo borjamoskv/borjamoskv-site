@@ -2,6 +2,7 @@ import { cp, mkdir } from "node:fs/promises";
 import { readdirSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import viteCompression from "vite-plugin-compression";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -18,37 +19,37 @@ export default {
   build: {
     outDir: "dist",
     emptyOutDir: true,
+    target: "esnext", // 10x potente
+    minify: "esbuild",
     rollupOptions: {
-      input: htmlInputs
+      input: htmlInputs,
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            return 'vendor';
+          }
+        }
+      }
     }
   },
   plugins: [
+    viteCompression({ algorithm: 'brotliCompress' }),
     {
       name: "copy-media-directory",
       async closeBundle() {
         try {
           await mkdir("dist/media", { recursive: true });
           await cp("media", "dist/media", { recursive: true });
-        } catch (e) {
-          // Si el directorio media no existe, lo ignora silenciosamente
-        }
-        try {
-          await cp("search.wasm", "dist/search.wasm");
-        } catch (e) {
-          // Ignorar si no existe
-        }
+        } catch (e) {}
+        try { await cp("search.wasm", "dist/search.wasm"); } catch (e) {}
         try {
           await mkdir("dist/exergia-omega", { recursive: true });
           await cp(resolve(__dirname, "../exergia-omega"), "dist/exergia-omega", { recursive: true });
-        } catch (e) {
-          // Ignorar
-        }
+        } catch (e) {}
         try {
           await mkdir("dist/borjamoskv-rauw-clone", { recursive: true });
           await cp(resolve(__dirname, "../borjamoskv-rauw-clone"), "dist/borjamoskv-rauw-clone", { recursive: true });
-        } catch (e) {
-          // Ignorar
-        }
+        } catch (e) {}
       },
     },
   ],

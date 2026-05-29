@@ -18,7 +18,7 @@
     <meta property="og:url" content="https://borjamoskv.com/" />
     <meta
       property="og:image"
-      content="https://borjamoskv.com/media/no-sleep-in-my-city-poster.jpg"
+      content="https://borjamoskv.com/media/Borjarl.jpg"
     />
     <meta property="og:image:width" content="640" />
     <meta property="og:image:height" content="360" />
@@ -30,10 +30,10 @@
     />
     <meta
       name="twitter:image"
-      content="https://borjamoskv.com/media/no-sleep-in-my-city-poster.jpg"
+      content="https://borjamoskv.com/media/Borjarl.jpg"
     />
     <link rel="canonical" href="https://borjamoskv.com/" />
-    <link rel="preload" href="media/no-sleep-in-my-city-poster.jpg" as="image" />
+    <link rel="preload" href="media/Borjarl.jpg" as="image" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#070604" />
     <title>BORJA MOSKV - Música y vídeos</title>
@@ -56,6 +56,8 @@
     </script>
   </head>
   <body>
+    <canvas id="cortex-bg" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none;"></canvas>
+    <script type="module" src="js/webgl.js"></script>
     <div class="film-grain" aria-hidden="true"></div>
     <a class="skip-link" href="#main">Saltar al contenido</a>
 
@@ -137,9 +139,9 @@
         </div>
 
         <article class="poster-sleeve" aria-label="Obra destacada">
-          <img src="media/no-sleep-in-my-city-poster.jpg" alt="Fotograma de No Sleep In My City" />
+          <img src="media/Borjarl.jpg" alt="Borjarl Placeholder" />
           <div class="poster-sleeve__copy">
-            <p>No Sleep In My City</p>
+            <p>Borjarl</p>
             <span>03:35 · vídeo musical</span>
           </div>
         </article>
