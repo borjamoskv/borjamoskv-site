@@ -5,6 +5,7 @@
     "build": "vite build"
   },
   "devDependencies": {
+    "esbuild": "^0.28.0",
     "playwright": "^1.60.0",
     "vite": "latest",
     "vite-plugin-compression": "^0.5.1"
