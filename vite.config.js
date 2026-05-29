@@ -3,6 +3,7 @@ import { readdirSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import viteCompression from "vite-plugin-compression";
+import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -33,6 +34,12 @@ export default {
     }
   },
   plugins: [
+    ViteImageOptimizer({
+      jpeg: { quality: 80 },
+      jpg: { quality: 80 },
+      png: { quality: 80 },
+      webp: { lossless: true },
+    }),
     viteCompression({ algorithm: 'brotliCompress' }),
     {
       name: "copy-media-directory",

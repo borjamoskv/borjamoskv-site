@@ -3,8 +3,8 @@
 This site contains public information regarding BORJA MOSKV's musical releases, visual artworks, and technical infrastructure.
 
 ## Available content
-- Music releases: /#musica
-- Visuals: /#video
-- Blog/Diary: /blog.html
+- [Music releases](https://borjamoskv.com/#musica)
+- [Visuals](https://borjamoskv.com/#video)
+- [Blog/Diary](https://borjamoskv.com/blog.html)
 
 All content is C5-REAL validated and cryptographic provenance is enforced where applicable.
