@@ -3,7 +3,7 @@
   --ink: #0A0A0A;
   --paper: #FFFFFF;
   --soft: rgba(255, 255, 255, 0.76);
-  --dim: rgba(255, 255, 255, 0.52);
+  --dim: rgba(255, 255, 255, 0.65);
   --line: rgba(255, 255, 255, 0.12);
   --line-strong: rgba(255, 255, 255, 0.28);
   --terracotta: #ec4899;
@@ -235,11 +235,14 @@ main,
 
 .site-nav a {
   position: relative;
-  padding: 8px 0;
+  padding: 12px 8px;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
 }
 
 .site-nav a + a {
-  margin-left: 28px;
+  margin-left: 20px;
 }
 
 .site-nav a + a::before {

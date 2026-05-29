@@ -2410,4 +2410,9 @@ new ArcadeManager();
   });
 })();
 
-
+// Lazy-load WebGL background to improve TBT and LCP
+if (window.requestIdleCallback) {
+  requestIdleCallback(() => import('../js/webgl.js'));
+} else {
+  setTimeout(() => import('../js/webgl.js'), 1000);
+}
