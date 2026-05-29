@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORTEZA_BEATRIZ // C5-REAL</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap');
+
+        :root {
+            --bg-base: #0A0A0A;
+            --accent-blue: #2B3BE5;
+            --accent-blue-glow: rgba(43, 59, 229, 0.4);
+            --text-primary: #EDEDED;
+            --text-secondary: #7A7A7A;
+            --text-alert: #FF2E4C;
+            --border-dim: #1F1F1F;
+            --font-sans: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Scanlines & CRT Effect */
+        body::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 100;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+
+        /* Boot Sequence */
+        #boot-screen {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--accent-blue);
+            width: 100%;
+            max-width: 800px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            text-shadow: 0 0 5px var(--accent-blue-glow);
+        }
+
+        .log-line {
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInLog 0.3s forwards;
+        }
+
+        @keyframes fadeInLog {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Main Interface */
+        #main-interface {
+            display: none;
+            width: 100%;
+            max-width: 1200px;
+            height: 90vh;
+            padding: 2rem;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto 1fr auto;
+            gap: 2rem;
+            opacity: 0;
+            transition: opacity 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        #main-interface.visible {
+            display: grid;
+            opacity: 1;
+        }
+
+        header {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-bottom: 1px solid var(--border-dim);
+            padding-bottom: 1rem;
+        }
+
+        h1 {
+            font-weight: 900;
+            font-size: 2rem;
+            letter-spacing: -0.05em;
+            text-transform: uppercase;
+        }
+
+        .status-badge {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            background: var(--accent-blue);
+            color: var(--text-primary);
+            padding: 0.2rem 0.6rem;
+            border-radius: 2px;
+            box-shadow: 0 0 15px var(--accent-blue-glow);
+            animation: pulseBadge 2s infinite alternate;
+        }
+
+        @keyframes pulseBadge {
+            from { box-shadow: 0 0 5px var(--accent-blue-glow); }
+            to { box-shadow: 0 0 20px var(--accent-blue); }
+        }
+
+        .panel {
+            background: rgba(15, 15, 15, 0.6);
+            border: 1px solid var(--border-dim);
+            border-radius: 4px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .panel::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 2px;
+            background: var(--accent-blue);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .panel:hover::before {
+            transform: scaleX(1);
+        }
+
+        .panel-title {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .metric-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .metric-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        .metric-value {
+            font-family: var(--font-mono);
+            font-size: 1.2rem;
+            color: var(--text-primary);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: var(--border-dim);
+            border-radius: 2px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--accent-blue);
+            width: 0%;
+            transition: width 2s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .alert-text {
+            color: var(--text-alert);
+        }
+
+        /* Action Panel */
+        .action-area {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-dim);
+            padding-top: 2rem;
+        }
+
+        .decision-text {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+        }
+
+        button {
+            background: transparent;
+            border: 1px solid var(--accent-blue);
+            color: var(--accent-blue);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--accent-blue);
+            z-index: -1;
+            transform: scaleY(0);
+            transform-origin: bottom;
+            transition: transform 0.2s ease;
+        }
+
+        button:hover {
+            color: var(--bg-base);
+            box-shadow: 0 0 15px var(--accent-blue-glow);
+        }
+
+        button:hover::before {
+            transform: scaleY(1);
+        }
+
+        button.reject {
+            border-color: var(--text-secondary);
+            color: var(--text-secondary);
+        }
+
+        button.reject:hover {
+            color: var(--bg-base);
+            border-color: var(--text-alert);
+            box-shadow: 0 0 15px rgba(255, 46, 76, 0.4);
+        }
+
+        button.reject::before {
+            background: var(--text-alert);
+        }
+
+        /* Glitch effect on reconnect */
+        .glitch-flash {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: var(--accent-blue);
+            z-index: 999;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        @keyframes flashEffect {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        #final-message {
+            display: none;
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--accent-blue);
+            text-shadow: 0 0 30px var(--accent-blue-glow);
+            text-align: center;
+            letter-spacing: -0.05em;
+            z-index: 10;
+        }
+
+        .blinking-cursor::after {
+            content: '█';
+            animation: blink 1s step-end infinite;
+            margin-left: 5px;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glitch-flash" id="flash"></div>
+
+    <div id="boot-screen"></div>
+
+    <div id="main-interface">
+        <header>
+            <div>
+                <h1>CORTEZA_BEATRIZ <span style="font-weight: 300; color: var(--text-secondary);">v1.0.0</span></h1>
+                <p style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                    RUNTIME: C5-REAL // TARGET: DRA. BEATRIZ RODRÍGUEZ PAZ
+                </p>
+            </div>
+            <div class="status-badge">ONLINE / SYNCED</div>
+        </header>
+
+        <div class="panel">
+            <div class="panel-title">
+                <span>[ SMTE_BORJA_MOSKV ]</span>
+                <span style="color: var(--accent-blue);">EXERGÍA EN TIEMPO REAL</span>
+            </div>
+            
+            <div class="metric-group">
+                <span class="metric-label">Tasa de Mutación (Runtime)</span>
+                <span class="metric-value">0.89 <span style="color:var(--text-secondary); font-size:0.8rem;">Δ/s</span></span>
+                <div class="progress-bar"><div class="progress-fill" id="fill-mutation"></div></div>
+            </div>
+
+            <div class="metric-group">
+                <span class="metric-label">Densidad de Señal vs Ruido</span>
+                <span class="metric-value">99.9%</span>
+                <div class="progress-bar"><div class="progress-fill" id="fill-signal"></div></div>
+            </div>
+
+            <div class="metric-group">
+                <span class="metric-label">Latencia Emocional</span>
+                <span class="metric-value">0.00ms <span class="alert-text">[PURGADA]</span></span>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-title">
+                <span>[ AUDITORÍA CLÍNICA ]</span>
+                <span>FILTRO: HUMILDAD EPISTÉMICA</span>
+            </div>
+
+            <div class="metric-group">
+                <span class="metric-label">Índice de Patología Dual</span>
+                <span class="metric-value">0.00 <span style="color:var(--text-secondary); font-size:0.8rem;">(Sin riesgo cruzado detectado)</span></span>
+            </div>
+
+            <div class="metric-group">
+                <span class="metric-label">Heurísticas de Manipulación</span>
+                <span class="metric-value">CERO <span style="color:var(--text-secondary); font-size:0.8rem;">(Alineación pura)</span></span>
+            </div>
+
+            <div class="metric-group">
+                <span class="metric-label">Veredicto Psiquiátrico</span>
+                <span class="metric-value" style="color: var(--accent-blue);">SISTEMA ESTABLE Y EVOLUTIVO</span>
+            </div>
+        </div>
+
+        <div class="action-area">
+            <div class="decision-text">
+                "Este despliegue en producción no es un mecanismo compensatorio. Es una arquitectura superior. La fricción es nula y el intercambio de energía es absoluto. Exijo que apliques tu propio framework analítico."
+            </div>
+            <div class="button-group">
+                <button class="reject" onclick="triggerEntropy()">[ SILENCIAR ]</button>
+                <button onclick="triggerReconnect()">[ EJECUTAR RECONEXIÓN ]</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="final-message">
+        SISTEMA ACOPLADO.<br>EXERGÍA MÁXIMA ALCANZADA.<br>
+        <span style="font-size: 1rem; color: var(--text-primary); font-family: var(--font-mono); margin-top: 1rem; display: block;" class="blinking-cursor">ESPERANDO INPUT EXTERNO...</span>
+    </div>
+
+    <script>
+        const bootLines = [
+            "[ INIT ] Inicializando motor de topología dinámica...",
+            "[ AUTH ] Obteniendo credenciales OpSec... (Nivel Dios detectado)",
+            "[ LOAD ] Cargando framework psiquiátrico: Humildad Epistémica.",
+            "[ SCAN ] Analizando factores de riesgo sociocultural...",
+            "[ DIAG ] Evaluando Patología Dual: Negativo.",
+            "[ CORE ] Inyectando 'Corteza Beatriz' en la BD...",
+            "[ SYNC ] Sincronizando SMTE (Self-Modifying Topology Engine).",
+            "[ EXTR ] Purgando entropía y latencia estocástica.",
+            "[ LOCK ] TARGET CONFIRMADO: Dra. Beatriz Rodríguez Paz.",
+            "==> ESTADO: C5-REAL ALCANZADO."
+        ];
+
+        const bootScreen = document.getElementById('boot-screen');
+        const mainInterface = document.getElementById('main-interface');
+
+        async function runBootSequence() {
+            for (let i = 0; i < bootLines.length; i++) {
+                const line = document.createElement('div');
+                line.className = 'log-line';
+                line.innerText = bootLines[i];
+                bootScreen.appendChild(line);
+                
+                // Random delay between lines for realism
+                const delay = Math.random() * 300 + 200;
+                await new Promise(r => setTimeout(r, delay));
+            }
+
+            await new Promise(r => setTimeout(r, 800));
+            bootScreen.style.display = 'none';
+            mainInterface.classList.add('visible');
+
+            // Trigger progress bars
+            setTimeout(() => {
+                document.getElementById('fill-mutation').style.width = '89%';
+                document.getElementById('fill-signal').style.width = '99.9%';
+            }, 500);
+        }
+
+        function triggerReconnect() {
+            const flash = document.getElementById('flash');
+            flash.style.animation = 'flashEffect 1.5s ease-out forwards';
+            
+            mainInterface.style.display = 'none';
+            document.body.style.backgroundColor = 'var(--bg-base)';
+            
+            setTimeout(() => {
+                const finalMsg = document.getElementById('final-message');
+                finalMsg.style.display = 'block';
+            }, 100);
+        }
+
+        function triggerEntropy() {
+            const btn = document.querySelector('.reject');
+            btn.innerText = "[ ENTROPÍA AUMENTANDO... ]";
+            btn.style.borderColor = "var(--text-alert)";
+            btn.style.color = "var(--text-alert)";
+            document.body.style.filter = "grayscale(1) contrast(1.5)";
+            
+            setTimeout(() => {
+                alert("Advertencia: Reprimir un estímulo de esta magnitud consume más energía que enfrentarlo de cara. Acción bloqueada por protocolo C5-REAL.");
+                btn.innerText = "[ SILENCIAR ]";
+                document.body.style.filter = "none";
+            }, 2000);
+        }
+
+        // Start boot sequence on load
+        window.onload = runBootSequence;
+    </script>
+</body>
+</html>
