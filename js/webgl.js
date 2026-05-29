@@ -176,7 +176,7 @@ void main() {
 `;
 
 // ─── Constants ───────────────────────────────────────────────────────
-const PARTICLE_COUNT = 10000;
+const PARTICLE_COUNT = 100000;
 const SPREAD = 16;
 const LERP_RATE = 0.04;
 

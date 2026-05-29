@@ -617,17 +617,25 @@ immersive?.addEventListener("close", () => {
 
 playlistItems.forEach((item) => {
   item.addEventListener("click", () => {
-    playlistItems.forEach((p) => p.classList.toggle("is-active", p === item));
-    const videoId = item.dataset.videoId;
-    const title = item.dataset.title;
-    const localSrc = item.dataset.videoSrc || null;
-    const frames = item.dataset.frames || null;
-    switchVideo(videoId, title, localSrc, {
-      note: item.dataset.note,
-      source: item.dataset.source,
-      type: item.dataset.type,
-      frames: frames,
-    });
+    const executeSwitch = () => {
+      playlistItems.forEach((p) => p.classList.toggle("is-active", p === item));
+      const videoId = item.dataset.videoId;
+      const title = item.dataset.title;
+      const localSrc = item.dataset.videoSrc || null;
+      const frames = item.dataset.frames || null;
+      switchVideo(videoId, title, localSrc, {
+        note: item.dataset.note,
+        source: item.dataset.source,
+        type: item.dataset.type,
+        frames: frames,
+      });
+    };
+
+    if (document.startViewTransition) {
+      document.startViewTransition(() => executeSwitch());
+    } else {
+      executeSwitch();
+    }
   });
 });
 

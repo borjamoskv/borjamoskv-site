@@ -102,10 +102,11 @@ video {
   inset: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 0;
+  z-index: -1;
   pointer-events: none;
   opacity: 0;
   animation: canvas-fade-in 2.4s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+  mix-blend-mode: screen;
 }
 
 @keyframes canvas-fade-in {
@@ -115,7 +116,7 @@ video {
 .backdrop {
   position: fixed;
   inset: 0;
-  z-index: 0;
+  z-index: -2;
   overflow: hidden;
   background: #000 url("../media/no-sleep-in-my-city-poster.jpg") center / cover no-repeat;
   pointer-events: none;
@@ -258,12 +259,23 @@ main,
   transform-origin: left;
   content: "";
   background: var(--honey);
-  transition: transform 180ms ease;
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 300ms ease;
+}
+
+.site-nav a:hover {
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
 }
 
 .site-nav a:hover::after,
 .site-nav a.is-active::after {
   transform: scaleX(1);
+  box-shadow: 0 0 8px var(--honey);
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.5s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .hero,
@@ -777,12 +789,14 @@ p {
 .playlist-item:hover {
   color: var(--honey);
   background: rgba(255, 244, 227, 0.02);
+  text-shadow: 0 0 12px rgba(236, 72, 153, 0.4);
 }
 
 .playlist-item.is-active {
   color: var(--honey);
   border-left-color: var(--honey);
   background: rgba(255, 244, 227, 0.04);
+  text-shadow: 0 0 16px rgba(236, 72, 153, 0.6);
 }
 
 .playlist-item em {
