@@ -1,17 +1,19 @@
 #!/usr/bin/env python3
 """
-GON Y EL INTERVALO PROHIBIDO — Versión Musical Subnormal
-=========================================================
-C5-REAL | La narración se convierte en un musical continuo.
-La música evoluciona según la escena, mezclándose con las voces de say.
+GON Y EL INTERVALO PROHIBIDO — Versión Musical Subnormal Mejorada
+==================================================================
+C5-REAL | Musical con crossfades continuos, compresión sidechain (ducking suavizado),
+instrumentos mejorados y exportación de la envolvente de volumen (RMS) a JSON
+para sincronización visual en Remotion.
 """
 
 import subprocess
 import os
+import json
 import numpy as np
 import warnings
 from scipy.io import wavfile
-from scipy.signal import resample, butter, lfilter
+from scipy.signal import resample, butter, lfilter, fftconvolve
 
 SR = 44100
 OUT_DIR = "/Users/borjafernandezangulo/Desktop"
@@ -221,13 +223,13 @@ SCRIPT = [
 # === SYNTHESIS UTILITIES ===
 
 def night_ambience_mod(t):
-    noise = np.random.randn(len(t)) * 0.01
-    b, a = butter(2, 150 / (SR / 2), btype='low')
+    noise = np.random.randn(len(t)) * 0.012
+    b, a = butter(2, 120 / (SR / 2), btype='low')
     rumble = lfilter(b, a, noise)
     
-    wind_mod = 0.5 + 0.5 * np.sin(2 * np.pi * 0.05 * t)
-    wind_noise = np.random.randn(len(t)) * 0.003 * wind_mod
-    b_w, a_w = butter(2, [300 / (SR / 2), 800 / (SR / 2)], btype='band')
+    wind_mod = 0.5 + 0.5 * np.sin(2 * np.pi * 0.04 * t)
+    wind_noise = np.random.randn(len(t)) * 0.004 * wind_mod
+    b_w, a_w = butter(2, [250 / (SR / 2), 700 / (SR / 2)], btype='band')
     wind = lfilter(b_w, a_w, wind_noise)
     
     return rumble + wind
@@ -236,39 +238,43 @@ def edo21_freq(base_freq, steps):
     return base_freq * (2 ** (steps / 21.0))
 
 def saxophone_synth(freq, t_phase, expression):
+    # Sax spectrum with realistic odd/even harmonic balance
     harmonics = [
         (1, 1.0),
-        (2, 0.6),
-        (3, 0.8),
-        (4, 0.35),
-        (5, 0.65),
-        (6, 0.2),
-        (7, 0.5),
+        (2, 0.5),
+        (3, 0.75),
+        (4, 0.3),
+        (5, 0.6),
+        (6, 0.18),
+        (7, 0.45),
     ]
     sig = np.zeros_like(t_phase)
     for n, amp in harmonics:
         h_freq = freq * n
-        formant_boost = 1.6 if 1500 < h_freq < 3000 else 1.0
-        vibrato = 1.0 + 0.004 * np.sin(2 * np.pi * (5.0 + n * 0.15) * t_phase)
+        formant_boost = 1.7 if 1400 < h_freq < 2800 else 1.0
+        # Vibrato with minor complexity (adding slow secondary LFO)
+        vibrato = 1.0 + 0.0045 * np.sin(2 * np.pi * (5.2 * t_phase + 0.3 * np.sin(2 * np.pi * 0.8 * t_phase)))
         sig += amp * formant_boost * np.sin(2 * np.pi * h_freq * vibrato * t_phase)
     
-    noise = np.random.randn(len(t_phase)) * 0.015 * expression
-    b, a = butter(2, [800 / (SR/2), 3500 / (SR/2)], btype='band')
+    # Breath noise
+    noise = np.random.randn(len(t_phase)) * 0.012 * expression
+    b, a = butter(2, [700 / (SR/2), 3000 / (SR/2)], btype='band')
     breath = lfilter(b, a, noise)
     
     return (sig * expression) + breath
 
 def larguero_resonance(t_local):
+    t_rel = t_local - t_local[0] if len(t_local) > 0 else t_local
     freqs = [1247, 2089, 3351, 4217, 5683, 7129]
-    decays = [2.5, 1.7, 1.1, 0.7, 0.4, 0.2]
-    amps = [1.0, 0.65, 0.45, 0.3, 0.15, 0.08]
+    decays = [2.4, 1.6, 1.0, 0.6, 0.35, 0.18]
+    amps = [1.0, 0.6, 0.4, 0.25, 0.12, 0.06]
     
     metal = np.zeros_like(t_local)
     for f, d, amp in zip(freqs, decays, amps):
-        env = amp * np.exp(-t_local / d)
+        env = amp * np.exp(-t_rel / d)
         metal += env * np.sin(2 * np.pi * f * t_local)
         
-    impact = np.exp(-t_local / 0.003) * 0.7 * np.random.randn(len(t_local))
+    impact = np.exp(-t_rel / 0.002) * 0.65 * np.random.randn(len(t_local))
     return metal + impact
 
 def drum_sequencer(t, bpm, kick_pattern, snare_pattern, hat_pattern):
@@ -281,26 +287,26 @@ def drum_sequencer(t, bpm, kick_pattern, snare_pattern, hat_pattern):
     snare_sig = np.zeros(n_samples)
     hat_sig = np.zeros(n_samples)
     
-    kick_len = int(0.4 * SR)
-    snare_len = int(0.4 * SR)
-    hat_len = int(0.08 * SR)
+    kick_len = int(0.35 * SR)
+    snare_len = int(0.35 * SR)
+    hat_len = int(0.06 * SR)
     
     # Pre-calculate Kick
     t_k = np.arange(kick_len) / SR
-    freq_sweep = 140.0 * np.exp(-t_k / 0.08) + 45.0
-    kick_hit = np.sin(2 * np.pi * freq_sweep * t_k) * np.exp(-t_k / 0.15)
+    freq_sweep = 130.0 * np.exp(-t_k / 0.07) + 40.0
+    kick_hit = np.sin(2 * np.pi * freq_sweep * t_k) * np.exp(-t_k / 0.12)
     
     # Pre-calculate Snare
     t_s = np.arange(snare_len) / SR
-    noise_s = np.random.randn(snare_len) * np.exp(-t_s / 0.18)
-    b, a = butter(2, [300 / (SR/2), 2500 / (SR/2)], btype='band')
+    noise_s = np.random.randn(snare_len) * np.exp(-t_s / 0.15)
+    b, a = butter(2, [250 / (SR/2), 2200 / (SR/2)], btype='band')
     snare_hit = lfilter(b, a, noise_s)
-    snare_hit += np.sin(2 * np.pi * 180 * t_s) * np.exp(-t_s / 0.08) * 0.3
+    snare_hit += np.sin(2 * np.pi * 175 * t_s) * np.exp(-t_s / 0.07) * 0.25
     
     # Pre-calculate Hat
     t_h = np.arange(hat_len) / SR
-    noise_h = np.random.randn(hat_len) * np.exp(-t_h / 0.03) * 0.15
-    b_h, a_h = butter(2, 6000 / (SR/2), btype='high')
+    noise_h = np.random.randn(hat_len) * np.exp(-t_h / 0.02) * 0.12
+    b_h, a_h = butter(2, 6500 / (SR/2), btype='high')
     hat_hit = lfilter(b_h, a_h, noise_h)
     
     num_steps = int(t[-1] / step_dur) + 2
@@ -330,7 +336,7 @@ def drum_sequencer(t, bpm, kick_pattern, snare_pattern, hat_pattern):
                 hat_hit[:chunk_len]
             )
             
-    return kick_sig * 0.5 + snare_sig * 0.4 + hat_sig * 0.2
+    return kick_sig * 0.55 + snare_sig * 0.45 + hat_sig * 0.22
 
 # === COMPOSITIONS PER PHASE ===
 
@@ -341,8 +347,8 @@ def get_musical_backing_track(phase_name, duration, start_offset):
     
     if phase_name == 'title':
         amb = night_ambience_mod(t)
-        sub = np.sin(2 * np.pi * 14.7 * t) * (0.3 + 0.1 * np.sin(2 * np.pi * 0.1 * t))
-        return amb * 0.4 + sub * 0.3
+        sub = np.sin(2 * np.pi * 14.7 * t) * (0.35 + 0.1 * np.sin(2 * np.pi * 0.1 * t))
+        return amb * 0.4 + sub * 0.35
         
     elif phase_name == 'intro':
         amb = night_ambience_mod(t)
@@ -363,12 +369,12 @@ def get_musical_backing_track(phase_name, duration, start_offset):
         if duration > 10:
             sax_t = np.arange(int(min(8, duration) * SR)) / SR
             sax_freq = edo21_freq(E4, 7)
-            sax_env = np.sin(np.pi * (sax_t / sax_t[-1])) * 0.25
+            sax_env = np.sin(np.pi * (sax_t / sax_t[-1])) * 0.28
             sax_note = saxophone_synth(sax_freq, sax_t, sax_env)
-            sax_start = int(len(t) * 0.3)
+            sax_start = int(len(t) * 0.35)
             sax[sax_start:sax_start + len(sax_note)] = sax_note
             
-        return (amb * 0.35 + drums * 0.3 + bass + sax) * 0.7
+        return (amb * 0.35 + drums * 0.32 + bass + sax) * 0.75
         
     elif phase_name == 'copisteria':
         drums = drum_sequencer(t, 92,
@@ -382,8 +388,9 @@ def get_musical_backing_track(phase_name, duration, start_offset):
             s_start = int(step * step_dur * SR)
             if s_start >= len(t): break
             t_loc = t[s_start:s_start + int(step_dur * SR)]
+            t_step = np.arange(len(t_loc)) / SR
             f = base_f * 2.0 if step % 2 == 1 else base_f
-            env = np.exp(-t_loc / 0.1) * 0.3
+            env = np.exp(-t_step / 0.08) * 0.35
             bass[s_start:s_start + len(t_loc)] = np.sin(2 * np.pi * f * t_loc) * env
             
         laser = np.zeros_like(t)
@@ -392,11 +399,11 @@ def get_musical_backing_track(phase_name, duration, start_offset):
             sweep_len = int(1.2 * SR)
             if idx + sweep_len >= len(t): break
             t_sweep = np.arange(sweep_len) / SR
-            f_sweep = 1200.0 * np.exp(-t_sweep / 0.5) + 300.0
-            sweep = np.sin(2 * np.pi * f_sweep * t_sweep) * np.exp(-t_sweep / 0.8) * 0.08
+            f_sweep = 1400.0 * np.exp(-t_sweep / 0.4) + 250.0
+            sweep = np.sin(2 * np.pi * f_sweep * t_sweep) * np.exp(-t_sweep / 0.6) * 0.08
             laser[idx:idx + sweep_len] = sweep
             
-        return (drums * 0.35 + bass * 0.45 + laser) * 0.75
+        return (drums * 0.35 + bass * 0.48 + laser) * 0.78
         
     elif phase_name == 'flipar':
         drums = drum_sequencer(t, 75,
@@ -409,29 +416,30 @@ def get_musical_backing_track(phase_name, duration, start_offset):
             s_start = int(step * step_dur * SR)
             if s_start >= len(t): break
             t_loc = t[s_start:s_start + int(step_dur * SR)]
+            t_step = np.arange(len(t_loc)) / SR
             note_idx = pardo_steps[step % len(pardo_steps)]
             f = edo21_freq(E4 / 8.0, note_idx)
-            bass[s_start:s_start + len(t_loc)] = np.sin(2 * np.pi * f * t_loc) * np.exp(-t_loc / 1.0) * 0.4
+            bass[s_start:s_start + len(t_loc)] = np.sin(2 * np.pi * f * t_loc) * np.exp(-t_step / 0.8) * 0.42
             
-        return (drums * 0.3 + bass * 0.5) * 0.8
+        return (drums * 0.32 + bass * 0.52) * 0.82
         
     elif phase_name == 'edo':
         backing = np.zeros_like(t)
         cluster = [0, 5, 7, 12, 19]
         for note in cluster:
             freq = edo21_freq(E4 / 2.0, note)
-            vol_swell = 0.15 * np.sin(2 * np.pi * (0.05 + note*0.01) * t) * (0.6 + 0.4 * np.sin(2 * np.pi * 0.2 * t))
-            backing += np.sin(2 * np.pi * freq * (1.0 + 0.005 * np.sin(2 * np.pi * 0.5 * t)) * t) * vol_swell
+            vol_swell = 0.16 * np.sin(2 * np.pi * (0.052 + note*0.011) * t) * (0.6 + 0.4 * np.sin(2 * np.pi * 0.2 * t))
+            backing += np.sin(2 * np.pi * freq * (1.0 + 0.004 * np.sin(2 * np.pi * 0.4 * t)) * t) * vol_swell
             
-        return backing * 0.5
+        return backing * 0.55
         
     elif phase_name == 'manolo':
         drums = drum_sequencer(t, 104,
                                [1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0],
                                [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
                                [1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1])
-        drone = np.sin(2 * np.pi * edo21_freq(E4 / 4.0, 5) * t) * 0.15
-        drone += np.sin(2 * np.pi * edo21_freq(E4 / 2.0, 5) * t) * 0.08
+        drone = np.sin(2 * np.pi * edo21_freq(E4 / 4.0, 5) * t) * 0.16
+        drone += np.sin(2 * np.pi * edo21_freq(E4 / 2.0, 5) * t) * 0.09
         
         melody = np.zeros_like(t)
         step_dur = 60.0 / 104.0
@@ -440,14 +448,19 @@ def get_musical_backing_track(phase_name, duration, start_offset):
             s_start = int(step * step_dur * SR)
             if s_start >= len(t): break
             t_loc = t[s_start:s_start + int(step_dur * SR)]
+            t_step = np.arange(len(t_loc)) / SR
             note = melody_notes[step % len(melody_notes)]
             f = edo21_freq(E4 * 1.5, note)
-            env = np.sin(np.pi * (t_loc / step_dur)) * 0.12
-            noise = np.random.randn(len(t_loc)) * 0.005
-            whistle = np.sin(2 * np.pi * f * t_loc) * env + noise * env
+            
+            # Whistle with pseudo-random vibrato (celtic whistle)
+            vib_lfo = np.sin(2 * np.pi * 5.8 * t_loc + 0.45 * np.sin(2 * np.pi * 0.9 * t_loc))
+            f_vib = f * (1.0 + 0.006 * vib_lfo)
+            env = np.sin(np.pi * (t_step / step_dur)) * 0.13
+            noise = np.random.randn(len(t_loc)) * 0.006
+            whistle = np.sin(2 * np.pi * f_vib * t_loc) * env + noise * env
             melody[s_start:s_start + len(t_loc)] = whistle
             
-        return (drums * 0.35 + drone + melody) * 0.75
+        return (drums * 0.36 + drone + melody) * 0.78
         
     elif phase_name == 'ertzaintza':
         drums = drum_sequencer(t, 120,
@@ -460,23 +473,24 @@ def get_musical_backing_track(phase_name, duration, start_offset):
             s_start = int(step * step_dur * SR)
             if s_start >= len(t): break
             t_loc = t[s_start:s_start + int(step_dur * SR)]
+            t_step = np.arange(len(t_loc)) / SR
             note = 0 if (step // 4) % 2 == 0 else 3
             f = edo21_freq(E4 / 8.0, note)
-            wave = np.sign(np.sin(2 * np.pi * f * t_loc)) * np.exp(-t_loc / 0.12) * 0.2
+            wave = np.sign(np.sin(2 * np.pi * f * t_loc)) * np.exp(-t_step / 0.1) * 0.22
             bass[s_start:s_start + len(t_loc)] = wave
             
-        siren_mod = np.sin(2 * np.pi * 0.4 * t)
-        siren_freq = 600.0 + 300.0 * siren_mod
-        siren = np.sin(2 * np.pi * siren_freq * t) * 0.03
+        siren_mod = np.sin(2 * np.pi * 0.42 * t)
+        siren_freq = 580.0 + 320.0 * siren_mod
+        siren = np.sin(2 * np.pi * siren_freq * t) * 0.035
         
-        return (drums * 0.4 + bass + siren) * 0.7
+        return (drums * 0.42 + bass + siren) * 0.72
         
     elif phase_name == 'ramonc':
         drums = drum_sequencer(t, 145,
                                [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
                                [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
                                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
-        step_dur = 60.0 / 145.0 * 2.0
+        step_dur = 60.0 / (145.0 * 2.0)
         guitar = np.zeros_like(t)
         chord_prog = [0, 7, 3, 5]
         for step in range(int(duration / step_dur) + 2):
@@ -488,13 +502,18 @@ def get_musical_backing_track(phase_name, duration, start_offset):
             f1 = edo21_freq(chord_root, root_step)
             f2 = edo21_freq(chord_root, root_step + 12)
             
+            # Power chords with cabinet bandpass filter simulation
             saw1 = (t_loc * f1) % 1.0 - 0.5
             saw2 = (t_loc * f2) % 1.0 - 0.5
             ch = saw1 + saw2
-            guitar_dist = np.tanh(ch * 15.0) * 0.15
-            guitar[s_start:s_start + len(t_loc)] = guitar_dist
+            guitar_dist = np.tanh(ch * 18.0) * 0.16
             
-        return (drums * 0.35 + guitar) * 0.7
+            b, a = butter(2, [120 / (SR/2), 3500 / (SR/2)], btype='band')
+            guitar_filtered = lfilter(b, a, guitar_dist)
+            
+            guitar[s_start:s_start + len(t_loc)] = guitar_filtered
+            
+        return (drums * 0.36 + guitar) * 0.72
         
     elif phase_name == 'fujur':
         drums = drum_sequencer(t, 95,
@@ -513,13 +532,13 @@ def get_musical_backing_track(phase_name, duration, start_offset):
             bar_pad = np.zeros_like(t_loc)
             for note in chord:
                 f = edo21_freq(E4 / 2.0, note)
-                v1 = np.sin(2 * np.pi * f * (1.0 + 0.003 * np.sin(2 * np.pi * 6 * t_loc)) * t_loc)
-                v2 = np.sin(2 * np.pi * (f * 1.01) * (1.0 + 0.002 * np.cos(2 * np.pi * 5.5 * t_loc)) * t_loc)
+                v1 = np.sin(2 * np.pi * f * (1.0 + 0.0035 * np.sin(2 * np.pi * 5.7 * t_loc)) * t_loc)
+                v2 = np.sin(2 * np.pi * (f * 1.012) * (1.0 + 0.0022 * np.cos(2 * np.pi * 5.2 * t_loc)) * t_loc)
                 bar_pad += v1 + v2
-            env = np.sin(np.pi * (t_loc / step_dur)) * 0.12
+            env = np.sin(np.pi * (t_loc / step_dur)) * 0.13
             pad[s_start:s_start + len(t_loc)] = bar_pad * env
             
-        return (drums * 0.3 + pad) * 0.75
+        return (drums * 0.32 + pad) * 0.78
         
     elif phase_name == 'koldo':
         drums = drum_sequencer(t, 78,
@@ -533,22 +552,23 @@ def get_musical_backing_track(phase_name, duration, start_offset):
             s_start = int(step * step_dur * SR)
             if s_start >= len(t): break
             t_loc = t[s_start:s_start + int(step_dur * SR)]
+            t_step = np.arange(len(t_loc)) / SR
             chord = chord_prog[step % len(chord_prog)]
             p_chord = np.zeros_like(t_loc)
             for note in chord:
                 f = edo21_freq(E4 / 4.0, note)
-                p_chord += np.sin(2 * np.pi * f * t_loc) * np.exp(-t_loc / 1.5)
-            piano[s_start:s_start + len(t_loc)] = p_chord * 0.25
+                p_chord += np.sin(2 * np.pi * f * t_loc) * np.exp(-t_step / 1.4)
+            piano[s_start:s_start + len(t_loc)] = p_chord * 0.26
             
-        return (drums * 0.3 + piano) * 0.8
+        return (drums * 0.32 + piano) * 0.82
         
     elif phase_name == 'ane':
-        drone = np.sin(2 * np.pi * 14.7 * t) * 0.25
-        amb = night_ambience_mod(t) * 0.35
+        drone = np.sin(2 * np.pi * 14.7 * t) * 0.28
+        amb = night_ambience_mod(t) * 0.38
         clonk = np.zeros_like(t)
         if len(t) > 0:
             clonk_t = np.arange(min(len(t), int(3.0 * SR))) / SR
-            clonk[:len(clonk_t)] = larguero_resonance(clonk_t) * 0.3
+            clonk[:len(clonk_t)] = larguero_resonance(clonk_t) * 0.35
             
         return drone + amb + clonk
         
@@ -566,12 +586,12 @@ def get_musical_backing_track(phase_name, duration, start_offset):
                 s_start = int(beat * samples_per_beat)
                 if s_start >= len(t): break
                 t_loc = t[s_start:s_start + min(len(t) - s_start, int(2.5 * SR))]
-                clonk_hit = larguero_resonance(t_loc) * 0.45
+                clonk_hit = larguero_resonance(t_loc) * 0.48
                 clonks[s_start:s_start + len(t_loc)] = np.maximum(clonks[s_start:s_start + len(t_loc)], clonk_hit)
                 
-        g_drone = np.tanh(np.sin(2 * np.pi * edo21_freq(E4 / 8.0, 7) * t) * 6.0) * 0.15
+        g_drone = np.tanh(np.sin(2 * np.pi * edo21_freq(E4 / 8.0, 7) * t) * 7.5) * 0.16
         
-        return (drums * 0.35 + clonks + g_drone) * 0.8
+        return (drums * 0.35 + clonks + g_drone) * 0.82
         
     elif phase_name == 'gato':
         drums = drum_sequencer(t, 88,
@@ -588,48 +608,67 @@ def get_musical_backing_track(phase_name, duration, start_offset):
             note = scale[step % len(scale)]
             f = edo21_freq(E4, note)
             filter_env = np.sin(np.pi * (t_loc / step_dur))
-            sig = np.sin(2 * np.pi * f * t_loc) * filter_env * 0.15
+            sig = np.sin(2 * np.pi * f * t_loc) * filter_env * 0.16
             arp[s_start:s_start + len(t_loc)] = sig
             
-        return (drums * 0.3 + arp) * 0.85
+        return (drums * 0.32 + arp) * 0.88
         
     elif phase_name == 'revelation':
         sig = np.zeros_like(t)
         slide_rate = 0.05
         for octave in [0.5, 1.0, 2.0]:
             f_slide = E4 * octave * (2.0 ** (slide_rate * t))
-            sig += np.sin(2 * np.pi * f_slide * t) * 0.15
+            sig += np.sin(2 * np.pi * f_slide * t) * 0.16
             
-        sig += np.sin(2 * np.pi * (40.0 + 10.0 * t) * t) * 0.15
+        sig += np.sin(2 * np.pi * (40.0 + 10.0 * t) * t) * 0.16
         noise = np.random.randn(len(t)) * 0.01
         
-        return (sig + noise) * 0.7
+        return (sig + noise) * 0.72
         
     elif phase_name == 'pardo':
         t_phase = t
         sax_freq = edo21_freq(E4 / 2.0, 7)
-        sax1 = saxophone_synth(sax_freq, t_phase, 0.25)
+        sax1 = saxophone_synth(sax_freq, t_phase, 0.28)
         
         fifth_freq = edo21_freq(sax_freq, 12)
-        sax2 = saxophone_synth(fifth_freq, t_phase, 0.18)
+        sax2 = saxophone_synth(fifth_freq, t_phase, 0.2)
         
-        sub = np.sin(2 * np.pi * 14.7 * t) * 0.25
+        sub = np.sin(2 * np.pi * 14.7 * t) * 0.28
         
-        return (sax1 + sax2 + sub) * 0.85
+        return (sax1 + sax2 + sub) * 0.88
         
     elif phase_name == 'epilogue':
         amb = night_ambience_mod(t)
-        drone = np.sin(2 * np.pi * E4 * t) * 0.15 * np.linspace(1, 0, len(t))
-        return amb * 0.4 + drone
+        drone = np.sin(2 * np.pi * E4 * t) * 0.16 * np.linspace(1, 0, len(t))
+        return amb * 0.42 + drone
         
     else:
-        return night_ambience_mod(t) * 0.15 * np.linspace(1, 0, len(t))
+        return night_ambience_mod(t) * 0.16 * np.linspace(1, 0, len(t))
+
+# === GRADUAL PHASE CROSSFADES ===
+
+def get_phase_envelope(total_samples, start_sample, end_sample, fade_samples=88200):
+    env = np.zeros(total_samples)
+    
+    s_plat = min(start_sample + fade_samples, end_sample)
+    e_plat = max(end_sample - fade_samples, start_sample)
+    
+    if s_plat < e_plat:
+        env[s_plat:e_plat] = 1.0
+        
+    if start_sample < s_plat:
+        env[start_sample:s_plat] = np.linspace(0, 1, s_plat - start_sample)
+        
+    if e_plat < end_sample and end_sample <= total_samples:
+        env[e_plat:end_sample] = np.linspace(1, 0, end_sample - e_plat)
+        
+    return env
 
 
 def main():
     print("=" * 60)
     print("GON Y EL INTERVALO PROHIBIDO — MUSICAL VERSION (C5-REAL)")
-    print("Pre-calculated step sequencer (Fast execution)")
+    print("Enhanced with gradual crossfades and sidechain ducking")
     print("=" * 60)
     
     print("Scanning voice segments...")
@@ -698,35 +737,75 @@ def main():
     print("Synthesizing musical backing tracks...")
     
     full_backing = np.zeros(total_samples)
+    
     for phase_name, start_s, end_s in phases_samples:
-        duration_s = (end_s - start_s) / SR
-        start_offset_s = start_s / SR
-        print(f"  [backing] {phase_name.upper()} ({start_offset_s:.1f}s -> {end_s/SR:.1f}s, dur: {duration_s:.1f}s)...")
+        overlap = int(2.0 * SR)
+        start_with_overlap = max(0, start_s - overlap)
+        end_with_overlap = min(total_samples, end_s + overlap)
+        
+        duration_s = (end_with_overlap - start_with_overlap) / SR
+        start_offset_s = start_with_overlap / SR
+        
+        print(f"  [backing] {phase_name.upper()} ({start_offset_s:.1f}s -> {end_with_overlap/SR:.1f}s, dur: {duration_s:.1f}s)...")
         backing_part = get_musical_backing_track(phase_name, duration_s, start_offset_s)
         
-        limit_s = min(len(backing_part), end_s - start_s)
-        full_backing[start_s:start_s + limit_s] = backing_part[:limit_s]
+        env = get_phase_envelope(total_samples, start_s, end_s, fade_samples=overlap)
+        
+        limit = min(len(backing_part), end_with_overlap - start_with_overlap)
+        full_backing[start_with_overlap:start_with_overlap + limit] += (
+            backing_part[:limit] * env[start_with_overlap:start_with_overlap + limit]
+        )
         
     print("\nMixing voice tracks on top of backing track...")
-    mixed_audio = full_backing.copy()
+    
+    raw_ducking = np.ones(total_samples)
+    for seg in segment_infos:
+        s_start = seg['start']
+        s_end = seg['end']
+        raw_ducking[s_start:s_end] = 0.42
+        
+    print("  [sidechain] Smoothing ducking envelope...")
+    window_len = int(0.35 * SR)
+    window = np.hanning(window_len)
+    window /= np.sum(window)
+    ducking_envelope = fftconvolve(raw_ducking, window, mode='same')
+    
+    mixed_audio = full_backing * ducking_envelope
     
     for seg in segment_infos:
         voice_audio = seg['audio']
         s_start = seg['start']
-        s_end = seg['end']
-        
         len_to_mix = min(len(voice_audio), len(mixed_audio) - s_start)
-        
-        # Superimpose voice with ducking (music down to 45%)
-        mixed_audio[s_start:s_start + len_to_mix] = (
-            mixed_audio[s_start:s_start + len_to_mix] * 0.45 +
-            voice_audio[:len_to_mix] * 0.85
-        )
+        mixed_audio[s_start:s_start + len_to_mix] += voice_audio[:len_to_mix] * 0.85
         
     print("\nMastering final output...")
-    mixed_audio = np.tanh(mixed_audio * 1.1)
-    mixed_audio = mixed_audio / np.max(np.abs(mixed_audio)) * 0.9
+    mixed_audio = np.tanh(mixed_audio * 1.15)
+    mixed_audio = mixed_audio / np.max(np.abs(mixed_audio)) * 0.92
     
+    print("\nCalculating RMS volume envelope (30fps) for Remotion visualizer...")
+    samples_per_frame = int(SR / 30.0)
+    n_frames = int(total_samples / samples_per_frame)
+    rms_envelope = []
+    
+    for f in range(n_frames):
+        start_idx = f * samples_per_frame
+        end_idx = start_idx + samples_per_frame
+        block = mixed_audio[start_idx:end_idx]
+        if len(block) > 0:
+            rms = np.sqrt(np.mean(block ** 2))
+            rms_envelope.append(float(rms))
+        else:
+            rms_envelope.append(0.0)
+            
+    max_rms = max(rms_envelope) if len(rms_envelope) > 0 else 1.0
+    if max_rms > 0:
+        rms_envelope = [val / max_rms for val in rms_envelope]
+        
+    json_path = "/Users/borjafernandezangulo/Music/VISUALES/remotion-forge/src/volume_envelope.json"
+    print(f"Saving RMS volume envelope to: {json_path}...")
+    with open(json_path, "w") as jf:
+        json.dump(rms_envelope, jf)
+        
     desktop_output = f"{OUT_DIR}/gon_v2_subnormal.wav"
     remotion_public_output = "/Users/borjafernandezangulo/Music/VISUALES/remotion-forge/public/gon_v2_subnormal.wav"
     
@@ -738,7 +817,7 @@ def main():
     print(f"Copying to Remotion public: {remotion_public_output}...")
     wavfile.write(remotion_public_output, SR, audio_16bit)
     
-    print("\nSUCCESS! The musical soundtrack is completed and mixed.")
+    print("\nSUCCESS! The enhanced musical soundtrack is completed, mixed, and volume envelope is exported.")
     print("∴ 'Home, en Cuenca sempre soa distinta.'")
 
 if __name__ == "__main__":
