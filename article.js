@@ -4,8 +4,6 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     initReadingTime();
-    initReadingProgress();
-    initScrollReveal();
     initTOCSync();
 });
 
@@ -22,45 +20,6 @@ function initReadingTime() {
     readingTimeEl.textContent = `${minutes} min de lectura`;
 }
 
-// Update top reading progress bar on scroll
-function initReadingProgress() {
-    const progressEl = document.getElementById('readingProgress');
-    if (!progressEl) return;
-
-    window.addEventListener('scroll', () => {
-        const scrollTop = window.scrollY || document.documentElement.scrollTop;
-        const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-        progressEl.style.width = `${scrollPercent}%`;
-    }, { passive: true });
-}
-
-// Scroll reveal animations for sections
-function initScrollReveal() {
-    const sections = document.querySelectorAll('.article-section, .article-epigraph, .article-epilogue');
-    if (!sections.length) return;
-
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.1
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('reveal-visible');
-                // Optional: stop observing once revealed
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-
-    sections.forEach(section => {
-        section.classList.add('reveal-hidden');
-        observer.observe(section);
-    });
-}
 
 // Synchronize Table of Contents with active sections
 function initTOCSync() {
