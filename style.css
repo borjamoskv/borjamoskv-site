@@ -358,7 +358,7 @@ body {
 }
 .panel-num {
   font-family: var(--font-mono);
-  color: var(--color-yinmn);
+  color: var(--color-yinmn-light);
   font-size: 0.85rem;
 }
 .panel-header h2 {
@@ -375,7 +375,7 @@ body {
 .track-kicker {
   font-family: var(--font-mono);
   font-size: 0.65rem;
-  color: var(--color-yinmn);
+  color: var(--color-yinmn-light);
   letter-spacing: 0.1em;
   display: block;
   margin-bottom: 4px;
