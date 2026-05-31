@@ -29,4 +29,22 @@ a.liquid-trigger, .site-nav a, .text-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  margin: 4px; /* Ensure space between items */
+}
+
+/* Ensure header elements have enough gap */
+.site-header, .site-nav {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+#theme-switch, .theme-btn {
+  min-width: 48px;
+  min-height: 48px;
+  margin-left: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
