@@ -460,84 +460,7 @@
       color: #FF0055;
     }
 
-    .main-nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 70px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 2rem;
-      background: rgba(2, 2, 2, 0.8);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      z-index: 100;
-    }
-
-    .nav-logo {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.2rem;
-      font-weight: 900;
-      color: #FFF;
-      text-decoration: none;
-      letter-spacing: 0.1em;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 1.5rem;
-    }
-
-    .nav-links a {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 0.9rem;
-      color: rgba(243, 244, 246, 0.6);
-      text-decoration: none;
-      transition: color 0.2s ease;
-    }
-
-    .nav-links a:hover, .nav-links a.active {
-      color: #FFF;
-    }
-
-    .nav-links a.active-accent {
-      color: #FF0055;
-      font-weight: 700;
-    }
-
-    .nav-platforms {
-      display: flex;
-      gap: 1rem;
-    }
-
-    .nav-platforms a {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.75rem;
-      color: rgba(243, 244, 246, 0.4);
-      text-decoration: none;
-      transition: color 0.2s ease;
-    }
-
-    .nav-platforms a:hover {
-      color: #FF0055;
-    }
-
-    /* Burger Menu elements */
-    .nav-toggle {
-      display: none;
-    }
-
-    @media (max-width: 768px) {
-      .nav-links {
-        display: none;
-      }
-      .nav-platforms {
-        display: none;
-      }
-    }
+    /* Unified Site Header styling from assets/site.css */
   </style>
   <script>
     // C5-REAL Level Declaration
@@ -550,24 +473,25 @@
   <div id="readingProgress" class="reading-progress" aria-hidden="true"></div>
 
   <!-- NAVIGATION -->
-  <nav class="main-nav" id="mainNav">
-    <a href="/" class="nav-logo">MOSKV</a>
-    <div class="nav-links" id="navLinks">
-      <a href="/#music">Music</a>
-      <a href="/#sets">Sets</a>
-      <a href="/#lab">Lab</a>
-      <a href="blog.html">Diario</a>
-      <a href="benchmark-humo.html">Benchmark</a>
-      <a href="gurus.html" class="active-accent">Putos Gurús</a>
-      <a href="/#contact">Contact</a>
+  <header class="site-header" id="header">
+    <a class="brand" href="/">
+      BORJA MOSKV <span class="brand-suffix">// EXERGIA-Ω</span>
+    </a>
+    <nav class="site-nav" aria-label="Navegación Principal">
+      <a href="index.html#control-deck" class="nav-link">DECK</a>
+      <a href="index.html#discography" class="nav-link">OBRAS</a>
+      <a href="index.html#stills-gallery" class="nav-link">GALERÍA</a>
+      <a href="index.html#tour-dates" class="nav-link">TOUR</a>
+      <a href="blog.html" class="nav-link-ext">DIARIO</a>
+      <a href="gurus.html" class="nav-link-ext is-active">GURÚS</a>
+      <a href="benchmark-humo.html" class="nav-link-ext">BENCHMARK</a>
+      <a href="gon-intervalo.html" class="nav-link-ext">GON</a>
+    </nav>
+    <div class="system-status">
+      <span class="status-indicator"></span>
+      <span class="status-text">C5-REAL</span>
     </div>
-    <div class="nav-platforms">
-      <a href="https://borjamoskv.bandcamp.com" target="_blank" rel="noopener" title="Bandcamp">BC</a>
-      <a href="https://open.spotify.com/intl-es/artist/4p7wMuZpktE5aBFhBoQdqa" target="_blank" rel="noopener" title="Spotify">SP</a>
-      <a href="https://soundcloud.com/borja-moskv" target="_blank" rel="noopener" title="SoundCloud">SC</a>
-      <a href="https://www.youtube.com/@borjamoskv" target="_blank" rel="noopener" title="YouTube">YT</a>
-    </div>
-  </nav>
+  </header>
 
   <!-- Back Navigation -->
   <a href="blog.html" class="article-back" aria-label="Volver al blog">
@@ -960,8 +884,20 @@ Proof:
   <script type="module" src="cortex-terminal.js" defer></script>
   
   <script>
-    // Tab Toggling Controller
+    // Tab Toggling & Header Scroll Controller
     document.addEventListener('DOMContentLoaded', () => {
+      // ── Site Header Scroll ──────────────────────────
+      const header = document.getElementById('header');
+      if (header) {
+        window.addEventListener('scroll', () => {
+          if (window.scrollY > 50) {
+            header.classList.add('is-scrolled');
+          } else {
+            header.classList.remove('is-scrolled');
+          }
+        });
+      }
+
       const tabEp1 = document.getElementById('tab-ep1');
       const tabEp2 = document.getElementById('tab-ep2');
       const contentEp1 = document.getElementById('content-ep1');

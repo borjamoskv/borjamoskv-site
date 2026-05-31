@@ -104,6 +104,61 @@
             font-size: 0.8rem;
         }
 
+        .site-nav-custom {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .site-nav-custom a {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-decoration: none;
+            position: relative;
+            padding: 4px 0;
+            letter-spacing: 0.05em;
+            transition: color 0.2s ease;
+        }
+
+        .site-nav-custom a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-blue);
+            transition: width 0.2s ease;
+        }
+
+        .site-nav-custom a:hover, .site-nav-custom a.active {
+            color: var(--text-primary);
+        }
+
+        .site-nav-custom a.active::after, .site-nav-custom a:hover::after {
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+            .site-nav-custom {
+                width: 100%;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                gap: 0.75rem;
+            }
+            .system-status {
+                width: 100%;
+                text-align: left;
+            }
+        }
+
         .status-indicator {
             display: inline-block;
             width: 8px;
@@ -539,6 +594,15 @@
                     <span>SUSTRATO DE PERSISTENCIA MUSICAL 21-EDO</span>
                 </div>
             </div>
+            <nav class="site-nav-custom">
+                <a href="index.html#control-deck">DECK</a>
+                <a href="index.html#discography">OBRAS</a>
+                <a href="index.html#stills-gallery">GALERÍA</a>
+                <a href="blog.html">DIARIO</a>
+                <a href="gurus.html">GURÚS</a>
+                <a href="benchmark-humo.html">BENCHMARK</a>
+                <a href="gon-intervalo.html" class="active">GON</a>
+            </nav>
             <div class="system-status">
                 <span class="status-indicator"></span>
                 C5-REAL // STABLE // OSCILLOSCOPE ACTIVE

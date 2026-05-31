@@ -1016,28 +1016,25 @@
   </div>
 
   <!-- NAVIGATION -->
-  <nav class="main-nav" id="mainNav">
-    <a href="/" class="nav-logo">MOSKV</a>
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-controls="navLinks" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-    <div class="nav-links" id="navLinks">
-      <a href="/#music">Music</a>
-      <a href="/#sets">Sets</a>
-      <a href="/#lab">Lab</a>
-      <a href="blog.html" class="active">Diario</a>
-      <a href="benchmark-humo.html">Benchmark</a>
-      <a href="gurus.html">Putos Gurús</a>
-      <a href="/#contact">Contact</a>
+  <header class="site-header" id="header">
+    <a class="brand" href="/">
+      BORJA MOSKV <span class="brand-suffix">// EXERGIA-Ω</span>
+    </a>
+    <nav class="site-nav" aria-label="Navegación Principal">
+      <a href="index.html#control-deck" class="nav-link">DECK</a>
+      <a href="index.html#discography" class="nav-link">OBRAS</a>
+      <a href="index.html#stills-gallery" class="nav-link">GALERÍA</a>
+      <a href="index.html#tour-dates" class="nav-link">TOUR</a>
+      <a href="blog.html" class="nav-link-ext is-active">DIARIO</a>
+      <a href="gurus.html" class="nav-link-ext">GURÚS</a>
+      <a href="benchmark-humo.html" class="nav-link-ext">BENCHMARK</a>
+      <a href="gon-intervalo.html" class="nav-link-ext">GON</a>
+    </nav>
+    <div class="system-status">
+      <span class="status-indicator"></span>
+      <span class="status-text">C5-REAL</span>
     </div>
-    <div class="nav-platforms">
-      <a href="https://borjamoskv.bandcamp.com" target="_blank" rel="noopener" title="Bandcamp">BC</a>
-      <a href="https://open.spotify.com/intl-es/artist/4p7wMuZpktE5aBFhBoQdqa" target="_blank" rel="noopener" title="Spotify">SP</a>
-      <a href="https://soundcloud.com/borja-moskv" target="_blank" rel="noopener" title="SoundCloud">SC</a>
-      <a href="https://www.youtube.com/@borjamoskv" target="_blank" rel="noopener" title="YouTube">YT</a>
-      <button id="bizarreToggle" class="bizarre-btn" title="Activar Modo Bizarro">☢️</button>
-    </div>
-  </nav>
+  </header>
 
   <!-- HERO -->
   <header class="blog-hero">
@@ -1343,42 +1340,17 @@
   <script type="module" src="js/chat.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // ── Nav toggle ──────────────────────────────────
-      const mainNav   = document.getElementById('mainNav');
-      const navToggle = document.getElementById('navToggle');
-      const navLinks  = document.getElementById('navLinks');
-      const setMenuState = (isOpen) => {
-        if (!mainNav) return;
-        mainNav.classList.toggle('menu-open', isOpen);
-        navToggle?.setAttribute('aria-expanded', String(isOpen));
-      };
-
-      navToggle?.addEventListener('click', (event) => {
-        event.stopPropagation();
-        setMenuState(!mainNav?.classList.contains('menu-open'));
-      });
-
-      navLinks?.querySelectorAll('a').forEach((link) => {
-        link.addEventListener('click', () => setMenuState(false));
-      });
-
-      document.addEventListener('click', (event) => {
-        if (mainNav?.classList.contains('menu-open') && !mainNav.contains(event.target)) {
-          setMenuState(false);
-        }
-      });
-
-      window.addEventListener('resize', () => {
-        if (window.innerWidth > 992) {
-          setMenuState(false);
-        }
-      });
-
-      document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape') {
-          setMenuState(false);
-        }
-      });
+      // ── Site Header Scroll ──────────────────────────
+      const header = document.getElementById('header');
+      if (header) {
+        window.addEventListener('scroll', () => {
+          if (window.scrollY > 50) {
+            header.classList.add('is-scrolled');
+          } else {
+            header.classList.remove('is-scrolled');
+          }
+        });
+      }
 
       if (window.MOSKV?.chat?.init) window.MOSKV.chat.init();
 
