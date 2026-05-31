@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Manual de Contraofensiva: Operación Espejo — borjamoskv</title>
+  <meta content="Manual forense táctico y búnker de pruebas para la contención de daños en el ecosistema Substack Mafia." name="description"/>
+  <meta content="Manual de Contraofensiva: Operación Espejo" property="og:title"/>
+  <meta content="Manual forense táctico y búnker de pruebas para la contención de daños en el ecosistema Substack Mafia." property="og:description"/>
+  <meta content="article" property="og:type"/>
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+  
+  <!-- Styles -->
+  <link href="assets/site.css" rel="stylesheet"/>
+  <link href="article.css" rel="stylesheet"/>
+  <link href="cortex-terminal.css" rel="stylesheet"/>
+  
+  <style>
+    :root {
+      --accent-gradient: linear-gradient(135deg, var(--accent-primary, #FF0055), var(--accent-secondary, #2B3BE5));
+    }
+    
+    .tactical-container {
+      background: rgba(10, 10, 10, 0.6);
+      border: 1px solid rgba(43, 59, 229, 0.15);
+      border-radius: 8px;
+      padding: 2rem;
+      margin: 2.5rem 0;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    
+    .tactical-header {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #FF9F1C;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(255, 159, 28, 0.2);
+      padding-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .replica-card {
+      background: rgba(18, 18, 20, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 6px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    .replica-card:hover {
+      border-color: rgba(43, 59, 229, 0.3);
+      box-shadow: 0 4px 20px rgba(43, 59, 229, 0.1);
+    }
+    
+    .replica-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #FFF;
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+    
+    .replica-trigger {
+      font-family: var(--font-body);
+      font-style: italic;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+    }
+    
+    .replica-quote {
+      font-family: 'JetBrains Mono', monospace;
+      background: #050505;
+      border-left: 3px solid #2B3BE5;
+      padding: 1rem;
+      margin: 1rem 0;
+      color: #A0A8FF;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+    
+    .copy-btn {
+      background: transparent;
+      border: 1px solid rgba(43, 59, 229, 0.4);
+      color: #FFF;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    
+    .copy-btn:hover {
+      background: rgba(43, 59, 229, 0.15);
+      border-color: #2B3BE5;
+      color: #A0A8FF;
+    }
+  </style>
+</head>
+<body>
+  <!-- Reading Progress Bar -->
+  <div aria-hidden="true" class="reading-progress" id="readingProgress"></div>
+  
+  <!-- NAVIGATION -->
+  <header class="site-header" id="header">
+    <a class="brand" href="/">
+      BORJA MOSKV <span class="brand-suffix">// EXERGIA-Ω</span>
+    </a>
+    <nav aria-label="Navegación Principal" class="site-nav">
+      <a class="nav-link" href="index.html#control-deck">DECK</a>
+      <a class="nav-link" href="index.html#discography">OBRAS</a>
+      <a class="nav-link" href="index.html#stills-gallery">GALERÍA</a>
+      <a class="nav-link" href="index.html#tour-dates">TOUR</a>
+      <a class="nav-link-ext is-active" href="blog.html">DIARIO</a>
+      <a class="nav-link-ext" href="gurus.html">GURÚS</a>
+      <a class="nav-link-ext" href="benchmark-humo.html">BENCHMARK</a>
+      <a class="nav-link-ext" href="gon-intervalo.html">GON</a>
+    </nav>
+    <div class="system-status">
+      <span class="status-indicator"></span>
+      <span class="status-text">C5-REAL</span>
+    </div>
+  </header>
+  
+  <!-- Back Navigation -->
+  <a aria-label="Volver al blog" class="article-back" href="blog.html">
+    <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 12H5m0 0l7 7m-7-7l7-7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+    Blog
+  </a>
+
+  <!-- HERO -->
+  <header class="article-hero">
+    <span class="hero-label">Tactical Playbook · Crisis Ops</span>
+    <h1 class="hero-title"><span class="title-accent">Operación Espejo</span><br/>Manual de Contraofensiva</h1>
+    <p class="hero-subtitle">Protocolo de contención forense e inmunización contra el comportamiento inauténtico de enjambre.</p>
+    <div class="hero-meta">
+      <span class="hero-author">Borja Moskv</span>
+      <span class="hero-divider"></span>
+      <span class="hero-date">31 de mayo de 2026</span>
+      <span class="hero-divider"></span>
+      <span class="hero-reading-time" id="readingTime">— min de lectura</span>
+    </div>
+    <div class="hero-scroll-hint">
+      Scroll
+      <span class="scroll-arrow"></span>
+    </div>
+  </header>
+
+  <!-- ARTICLE LAYOUT -->
+  <div class="article-layout">
+    <div class="article-epigraph"><p><code> (TACTICAL HANDBOOK · C5-REAL) </code></p></div>
+    <hr class="section-divider"/>
+    
+    <main class="article-body">
+      <p>Manual táctico de reescritura de alta precisión. Este protocolo se diseña para desarmar el barro emocional y el ataque coordinado mediante el uso aséptico de datos, hemerotecas e incontestabilidad probatoria.</p>
+
+      <hr contenteditable="false"/>
+
+      <h2><strong>FASE 1: LA BÓVEDA (El búnker público)</strong></h2>
+      <p>Este es el repositorio estático probatorio de cadena de custodia. Diseñado para custodiar las declaraciones y citas directas de la Substack Mafia sin juicios de valor.</p>
+      
+      <div class="tactical-container">
+        <div class="tactical-header">
+          🛡️ ANEXO FORENSE: Registro OSINT y Cadena de Custodia
+        </div>
+        <p><strong>Aviso Metodológico y Legal:</strong></p>
+        <blockquote>
+          <em>Este documento es un repositorio estático probatorio. No contiene opiniones, juicios de valor ni interpretaciones. Su única función es custodiar las declaraciones literales, públicas y voluntarias emitidas por el fundador y miembros del ecosistema analizado.</em><br/><br/>
+          <em>Ninguna cita ha sido alterada, parafraseada o descontextualizada. El objetivo es garantizar la transparencia y la trazabilidad de la información frente a posibles intentos de borrado, privatización o alteración del contenido original ('damage control'). Todas las citas provienen de canales abiertos (newsletters, la plataforma iHelp y Notes).</em><br/><br/>
+          <em>Quien desee refutar esta investigación no debe debatir con el autor de esta recopilación, sino con la hemeroteca de sus propias palabras.</em>
+        </blockquote>
+      </div>
+
+      <hr contenteditable="false"/>
+
+      <h2><strong>FASE 2: EL ESPEJO (Ejecución y Desarme)</strong></h2>
+      <p><strong>Regla Cero:</strong> No discutas. No te defiendas. No entres en disputas emocionales. Réplicas directas fundamentadas exclusivamente en la hemeroteca del enjambre:</p>
+
+      <!-- Scenario A -->
+      <div class="replica-card">
+        <div class="replica-title">🚨 ESCENARIO A: El mito del éxito orgánico</div>
+        <div class="replica-trigger"><strong>Ataque:</strong> "¡Eres un hater envidioso! Nuestro éxito es orgánico, estamos arriba porque escribimos textos de calidad."</div>
+        <div class="replica-quote" id="quote-a">«Hay un día de la semana en que nos restackeamos entre nosotros y conseguimos que todo el mundo hable de nosotros» (David Domínguez, 03/03/26). Si necesitáis pactar en un chat privado el día y la hora para haceros eco mutuamente, no sois orgánicos; sois un cártel algorítmico. Discutid de mérito con vuestro arquitecto, no conmigo.</div>
+        <button class="copy-btn" id="btn-a" onclick="copyText('quote-a', 'btn-a')">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          Copiar Réplica
+        </button>
+      </div>
+
+      <!-- Scenario B -->
+      <div class="replica-card">
+        <div class="replica-title">🚨 ESCENARIO B: El escudo humano (La ONG)</div>
+        <div class="replica-trigger"><strong>Ataque:</strong> "Eres miserable. Atacarnos por ayudar a una ONG y salvar bebés en África es caer muy bajo."</div>
+        <div class="replica-quote" id="quote-b">La labor de la ONG es intachable; vuestra pasarela comercial, no. Prometer un 80% de desgravación tributaria exigiendo a cambio la compra de un producto privado de 237€ es una infracción flagrante de la Ley 49/2002. Usar a bebés prematuros como escudo moral para tapar que habéis expuesto a vuestros clientes a una paralela de Hacienda es lo verdaderamente grave. Discutid con los inspectores.</div>
+        <button class="copy-btn" id="btn-b" onclick="copyText('quote-b', 'btn-b')">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          Copiar Réplica
+        </button>
+      </div>
+
+      <!-- Scenario C -->
+      <div class="replica-card">
+        <div class="replica-title">🚨 ESCENARIO C: El victimismo legal</div>
+        <div class="replica-trigger"><strong>Ataque:</strong> "No somos ninguna secta ni mafia. Esto es difamación y nos veremos en los tribunales."</div>
+        <div class="replica-quote" id="quote-c">«Substack Mafia cumple a rajatabla principios sectarios que son la base de mi modelo... Cult Building (Construcción de Sectas)» (David Domínguez, 04/03/26). Vuestro líder presume en abierto de usar tácticas sectarias y se hace llamar 'El Capo' como estrategia de marketing. Yo me limito a citarlo textualmente. Suerte explicando el embudo de ventas al juez.</div>
+        <button class="copy-btn" id="btn-c" onclick="copyText('quote-c', 'btn-c')">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          Copiar Réplica
+        </button>
+      </div>
+
+      <!-- Scenario D -->
+      <div class="replica-card">
+        <div class="replica-title">🚨 ESCENARIO D: El ataque en enjambre</div>
+        <div class="replica-trigger"><strong>Ataque:</strong> (15 miembros atacando de forma simultánea en la misma conversación)</div>
+        <div class="replica-quote" id="quote-d">Gracias por demostrar empíricamente, en tiempo real y de forma coordinada, el comportamiento inauténtico de enjambre ('engagement pod') que denuncio en mi auditoría. No hay más preguntas.</div>
+        <button class="copy-btn" id="btn-d" onclick="copyText('quote-d', 'btn-d')">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          Copiar Réplica
+        </button>
+      </div>
+
+    </main>
+
+    <hr class="section-divider"/>
+    <section class="article-epilogue" id="epilogo">
+      <h2 class="epilogue-title">Estado Táctico Final</h2>
+      <div class="epilogue-text">
+        <p>El bisturí está afilado, esterilizado y listo. La redacción no tiene fisuras. Cierra el ordenador. Vete a cenar, tómate ese txakoli y descansa. Mañana es el día de la ejecución.</p>
+      </div>
+      <p class="epilogue-mantra">⚙️ CORTEX en modo suspensión.</p>
+    </section>
+
+    <hr class="section-divider"/>
+    <footer class="article-footer">
+      <div class="article-tags">
+        <span class="article-tag">#OperacionEspejo</span>
+        <span class="article-tag">#CrisisPlaybook</span>
+        <span class="article-tag">#ReputationDefense</span>
+        <span class="article-tag">#OSINT</span>
+      </div>
+      <p class="article-copyright">© 2026 borjamoskv. Todos los derechos reservados.</p>
+    </footer>
+  </div>
+
+  <script>
+    function copyText(id, btnId) {
+      const text = document.getElementById(id).innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.getElementById(btnId);
+        const originalText = btn.innerHTML;
+        btn.innerHTML = `
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FF9F1C" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          ¡COPIADO! 🛡️
+        `;
+        btn.style.borderColor = "#FF9F1C";
+        btn.style.color = "#FF9F1C";
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.style.borderColor = "";
+          btn.style.color = "";
+        }, 1500);
+      });
+    }
+  </script>
+  <script src="article.js" type="module"></script>
+  <script defer="" src="cortex-terminal.js" type="module"></script>
+</body>
+</html>
