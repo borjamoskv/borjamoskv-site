@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Substack Mafia: Autopsia Estructural — borjamoskv</title>
+<meta content="Análisis forense de la arquitectura comercial, validación algorítmica coordinada y opacidad fiscal en un ecosistema privado." name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet"/>
+<!-- Styles -->
+<link href="assets/site.css" rel="stylesheet"/>
+<link href="article.css" rel="stylesheet"/>
+<style>
+    :root {
+      --accent-gradient: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary, #b4ff00));
+      --radius-full: 9999px;
+    }
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      margin: 2.5rem 0;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 6px;
+      background: rgba(10, 10, 10, 0.4);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+    }
+    th, td {
+      padding: 14px 18px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    th {
+      font-family: var(--font-display);
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      color: #2B3BE5;
+      background: rgba(43, 59, 229, 0.06);
+      font-weight: 700;
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+    tr:nth-child(even) {
+      background: rgba(255, 255, 255, 0.01);
+    }
+    tr:hover {
+      background: rgba(43, 59, 229, 0.03);
+    }
+    td strong {
+      color: #FFF;
+    }
+    td em {
+      color: rgba(255, 255, 255, 0.85);
+    }
+    .equation-box {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 6px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      text-align: center;
+      font-family: 'Orbitron', monospace;
+      color: #FFF;
+      font-size: 1.1rem;
+    }
+    .equation-label {
+      display: block;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #888;
+      margin-top: 0.5rem;
+    }
+    blockquote {
+        border-left: 4px solid #2B3BE5;
+        padding-left: 1rem;
+        color: rgba(255,255,255,0.85);
+        font-style: italic;
+        margin: 1.5rem 0;
+        background: rgba(43, 59, 229, 0.05);
+        padding: 1rem;
+    }
+</style>
+<link href="cortex-terminal.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Reading Progress Bar -->
+<div aria-hidden="true" class="reading-progress" id="readingProgress"></div>
+<!-- NAVIGATION -->
+<header class="site-header" id="header">
+<a class="brand" href="/">
+      BORJA MOSKV <span class="brand-suffix">// EXERGIA-Ω</span>
+</a>
+<nav aria-label="Navegación Principal" class="site-nav">
+<a class="nav-link" href="index.html#control-deck">DECK</a>
+<a class="nav-link" href="index.html#discography">OBRAS</a>
+<a class="nav-link" href="index.html#stills-gallery">GALERÍA</a>
+<a class="nav-link" href="index.html#tour-dates">TOUR</a>
+<a class="nav-link-ext is-active" href="blog.html">DIARIO</a>
+<a class="nav-link-ext" href="gurus.html">GURÚS</a>
+<a class="nav-link-ext" href="benchmark-humo.html">BENCHMARK</a>
+<a class="nav-link-ext" href="gon-intervalo.html">GON</a>
+</nav>
+<div class="system-status">
+<span class="status-indicator"></span>
+<span class="status-text">C5-REAL</span>
+</div>
+</header>
+<!-- Back Navigation -->
+<a aria-label="Volver al blog" class="article-back" href="blog.html">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 12H5m0 0l7 7m-7-7l7-7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+    Blog
+</a>
+<!-- HERO -->
+<header class="article-hero">
+<span class="hero-label">Investigación OSINT · Autopsia Estructural</span>
+<h1 class="hero-title"><span class="title-accent">Substack Mafia:</span><br/>La Máquina de la Credibilidad</h1>
+<p class="hero-subtitle">Análisis forense de la arquitectura comercial, validación algorítmica coordinada y opacidad fiscal en un ecosistema privado.</p>
+<div class="hero-meta">
+<span class="hero-author">Borja Moskv</span>
+<span class="hero-divider"></span>
+<span class="hero-date">1 de junio de 2026</span>
+<span class="hero-divider"></span>
+<span class="hero-reading-time" id="readingTime">— min de lectura</span>
+</div>
+</header>
+<!-- ARTICLE LAYOUT -->
+<div class="article-layout">
+<div class="article-epigraph"><p><code> (INVESTIGACIÓN FORENSE · C5-REAL) </code></p></div>
+<hr class="section-divider"/>
+<main class="article-body">
+
+<h2><strong>RESUMEN EJECUTIVO</strong></h2>
+<p>
+El hallazgo más duro de este análisis no es una inferencia: es una cita. David Domínguez describe el objetivo de Substack Mafia con sus propias palabras como <em>"convertirnos en un lobby tan poderoso dentro de Substack que podamos influir de tal manera en lo que ocurre en esta red social como para ponerla constantemente a nuestro favor"</em>. El mecanismo para lograrlo: ~65 creadores que se restackean entre sí un día fijo cada semana. Los algoritmos de Substack no distinguen entre señal orgánica y coordinada. Eso no es una bug explotada accidentalmente — es el producto.
+</p>
+<p>El análisis identifica tres ejes estructurales, todos documentados en fuentes primarias públicas:</p>
+<ul>
+    <li><strong>Eje 1 — Red de amplificación mutua (CIB):</strong> Restackeo coordinado semanal declarado por el propio fundador. El 90% de los Lives visibles en Substack están organizados por miembros. Constituye comportamiento inauténtico coordinado.</li>
+    <li><strong>Eje 2 — Arquitectura de extracción progresiva:</strong> Cinco niveles de precio (0€ → 2.357€/año) donde cada escalón funciona como ancla psicológica y filtro de intención, no por mérito.</li>
+    <li><strong>Eje 3 — Opacidad fiscal en campaña iHelp:</strong> Se ofreció simultáneamente descuento del 100% en membresía por cada euro donado y desgravación fiscal del 80%. Bajo la Ley 49/2002, ambas ventajas son incompatibles.</li>
+</ul>
+
+<hr/>
+
+<h2><strong>1. HILO DE LANZAMIENTO (SÍNTESIS)</strong></h2>
+<p>Las cinco frases que lo explican todo, en sus propias palabras:</p>
+<blockquote>"Hay un día de la semana en que nos restackeamos entre nosotros y conseguimos que todo el mundo hable de nosotros en Notes."</blockquote>
+<blockquote>"Convertirnos en un lobby tan poderoso dentro de Substack, que podamos influir de tal manera en lo que ocurre en esta red social como para ponerla constantemente a nuestro favor."</blockquote>
+<blockquote>"Substack Mafia es lo que es gracias a que cumplo a rajatabla algunos 'principios sectarios'... Que se llama, recuerda… 'Cult Building'."</blockquote>
+<blockquote>"Siempre presumo de que mi mayor habilidad es… Encontrar al mejor talento en Substack, engatusarlo para que entre en Substack Mafia."</blockquote>
+<blockquote>"Ventaja fiscal: además, tu donación desgrava en la declaración de la renta." <em>— publicado en la misma página donde se ofrecía un descuento del 100%.</em></blockquote>
+
+<hr/>
+
+<h2><strong>2. VERIFICACIÓN FISCAL (Ley 49/2002)</strong></h2>
+<p>El artículo 16 de la Ley 49/2002 establece que los donativos dan derecho a deducción fiscal siempre que sean voluntarios y sin contraprestación. Se admite una excepción para contraprestaciones de "carácter simbólico", con un umbral máximo del 15% del valor del donativo.</p>
+
+<div class="table-container">
+ <table>
+  <thead>
+   <tr>
+    <th>Elemento</th>
+    <th>Valor Legal</th>
+    <th>Campaña iHelp</th>
+    <th>Estado</th>
+   </tr>
+  </thead>
+  <tbody>
+   <tr>
+    <td>Umbral de contraprestación</td>
+    <td>15% del donativo</td>
+    <td><strong>100%</strong> del donativo</td>
+    <td>❌ Excedido (×6,67)</td>
+   </tr>
+   <tr>
+    <td>Naturaleza</td>
+    <td>Simbólica</td>
+    <td>Descuento directo membresía</td>
+    <td>❌ No simbólica</td>
+   </tr>
+   <tr>
+    <td>Desgravación prometida</td>
+    <td>80% de primeros 250€</td>
+    <td>Misma cifra comunicada</td>
+    <td>⚠️ Jurídicamente inválida</td>
+   </tr>
+  </tbody>
+ </table>
+</div>
+<p>
+La estructura tripartita configura una "operación vinculada con causa mixta". La deducción fiscal no procede. Los donantes que reclamaron la desgravación habrán presentado declaraciones potencialmente incorrectas sin saberlo, víctimas de opacidad informativa.
+</p>
+
+<hr/>
+
+<h2><strong>3. PIRÁMIDE DE EXTRACCIÓN Y PRECIOS</strong></h2>
+<p>
+La pirámide de precios no es una escalera de valor progresivo: es un embudo de extracción donde cada nivel tiene una función psicológica precisa.
+</p>
+
+<div class="table-container">
+ <table>
+  <thead>
+   <tr>
+    <th>Nivel</th>
+    <th>Producto</th>
+    <th>Precio Histórico</th>
+    <th>Mecánica Psicológica (Función Real)</th>
+   </tr>
+  </thead>
+  <tbody>
+   <tr>
+    <td><strong>5</strong></td>
+    <td>Membresía Mafia</td>
+    <td>2.357€/año</td>
+    <td>Ancla psicológica + filtro de extracción. (Solo acceso vía videollamada a nodos con audiencia).</td>
+   </tr>
+   <tr>
+    <td><strong>4</strong></td>
+    <td>Remafia (Ventana)</td>
+    <td>107€ → 427€/año</td>
+    <td>Filtro temporal + compresión de decisión. (Urgencia fabricada: "si entran 5, subo precio").</td>
+   </tr>
+   <tr>
+    <td><strong>3</strong></td>
+    <td>Talleres sueltos</td>
+    <td>60€</td>
+    <td>Puerta de entrada. Señal de intención seria (convertible en descuento de membresía).</td>
+   </tr>
+   <tr>
+    <td><strong>2</strong></td>
+    <td>Libro "Secretos"</td>
+    <td>17€ → 97€</td>
+    <td>Skin in the game inicial. Escasez artificial ("nunca se volverá a vender jamás").</td>
+   </tr>
+   <tr>
+    <td><strong>1</strong></td>
+    <td>Newsletter</td>
+    <td>0€</td>
+    <td>Captación de atención. Generación de autoridad percibida y dependencia.</td>
+   </tr>
+  </tbody>
+ </table>
+</div>
+<p>El nivel 5 (2.357€) nunca fue el precio de acceso estándar: existe para que 427€ parezca una ganga. Es compresión de decisión estructural.</p>
+
+<hr/>
+
+<h2><strong>4. ANÁLISIS DE RED Y ALGORITMOS (TEORÍA DE GRAFOS)</strong></h2>
+<p>
+En un grafo orgánico de creadores, la distribución de conexiones sigue una <em>power law</em> (ley de potencia). En Substack Mafia, el diseño fuerza una distribución artificialmente homogénea: todos los nodos se conectan en ciclos semanales.
+</p>
+<div class="equation-box">
+  Nodos (65) + Homofilia Forzada = Densidad Anormal + CIB
+  <span class="equation-label">Ecuación Topológica: Motor Parasitario</span>
+</div>
+<p>
+El <strong>Test del Apagado</strong> (falsación empírica): Si mañana desaparece el chat privado y los ~65 miembros dejan de restackearse entre sí... ¿cuántos de ellos seguirían creciendo al mismo ritmo? Si la visibilidad cae, el activo nunca fue el conocimiento. Era la red.
+</p>
+<hr/>
+<h2><strong>5. EVALUACIÓN JURÍDICA TÉCNICA (Metodología OSINT)</strong></h2>
+<div class="table-container">
+ <table>
+  <thead>
+   <tr>
+    <th>Contingencia</th>
+    <th>Base Legal</th>
+    <th>Calificación OSINT</th>
+    <th>Riesgo Real</th>
+   </tr>
+  </thead>
+  <tbody>
+   <tr>
+    <td>Desgravación fiscal indebida</td>
+    <td>Ley 49/2002, art. 16</td>
+    <td><strong>MEDIA-ALTA</strong></td>
+    <td>Inspección de la AEAT a los donantes afectados (~37 estimados).</td>
+   </tr>
+   <tr>
+    <td>Publicidad engañosa</td>
+    <td>Ley 34/1988, art. 3</td>
+    <td><strong>MEDIA</strong></td>
+    <td>Dificultad de probar dolo, al no ser asesor fiscal el emisor.</td>
+   </tr>
+   <tr>
+    <td>Comportamiento Inauténtico (CIB)</td>
+    <td>ToS Substack</td>
+    <td><strong>ALTA</strong></td>
+    <td>Si hay reporte formal, suspensión de cuentas según los Términos de Servicio.</td>
+   </tr>
+  </tbody>
+ </table>
+</div>
+<br/>
+</main>
+<hr class="section-divider"/>
+<section class="article-epilogue" id="epilogo">
+<h2 class="epilogue-title">Veredicto C5-REAL</h2>
+<div class="epilogue-text">
+<p>El análisis no afirma ilegalidad penal por parte de Domínguez. Documenta tres categorías distintas de asimetría: ética (iHelp), informativa (consecuencias fiscales no comunicadas) y algorítmica (CIB). Que algo sea legal no lo exime de escrutinio público ni de análisis de sus efectos termodinámicos sobre terceros en la plataforma.</p>
+</div>
+<p class="epilogue-mantra">⚙️ Falsación por código: si no supera el test del apagado, es humo coordinado.</p>
+</section>
+<hr class="section-divider"/>
+<footer class="article-footer">
+<div class="article-tags">
+<span class="article-tag">#OSINT</span>
+<span class="article-tag">#Substack</span>
+<span class="article-tag">#C5Real</span>
+<span class="article-tag">#RedTeaming</span>
+</div>
+<p class="article-copyright">© 2026 borjamoskv. Todos los derechos reservados.</p>
+</footer>
+</div>
+<script src="article.js" type="module"></script>
+<script defer="" src="cortex-terminal.js" type="module"></script>
+</body>
+</html>
