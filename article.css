@@ -334,3 +334,69 @@
     transform: translateY(0);
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   INDUSTRIAL NOIR 2026 TOKENS (Micro-friction & Hover States)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.hero-title:hover {
+  text-shadow: 0 0 8px rgba(43, 59, 229, 0.6), 2px 2px 0px rgba(10, 10, 10, 0.9);
+  transform: skewX(-2deg);
+  transition: all 0.1s cubic-bezier(0.1, 0.9, 0.2, 1);
+}
+
+.toc-link {
+  position: relative;
+  overflow: visible;
+}
+
+.toc-link::before {
+  content: "»";
+  position: absolute;
+  left: -16px;
+  opacity: 0;
+  color: var(--blue, #2b3be5);
+  transform: translateX(-5px);
+  transition: all 0.2s ease;
+}
+
+.toc-link:hover::before {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.article-body pre {
+  position: relative;
+  overflow: hidden;
+}
+
+.article-body pre::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(transparent 50%, rgba(43, 59, 229, 0.03) 50%);
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.article-body pre:hover {
+  border-color: rgba(43, 59, 229, 0.4);
+  box-shadow: inset 0 0 20px rgba(43, 59, 229, 0.05);
+  transition: all 0.3s ease;
+}
+
+.article-body a {
+  color: var(--blue, #2b3be5);
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(43, 59, 229, 0.4);
+  transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.article-body a:hover {
+  border-bottom: 1px solid var(--blue, #2b3be5);
+  text-shadow: 0 0 5px rgba(43, 59, 229, 0.4);
+}
