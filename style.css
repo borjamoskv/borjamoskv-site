@@ -4,11 +4,12 @@
 :root {
   --color-void: #0A0A0A;
   --color-yinmn: #2B3BE5;
+  --color-yinmn-light: #A0A8FF;
   --color-amber: #FF9F1C;
   --color-white: #F3F4F6;
   --color-gray-dark: #121214;
   --color-gray-mid: #1E1E22;
-  --color-gray-light: #374151;
+  --color-gray-light: #9CA3AF;
   --color-glass-border: rgba(43, 59, 229, 0.15);
   --color-glass-bg: rgba(10, 10, 10, 0.75);
 
@@ -1139,7 +1140,7 @@ body {
 }
 
 .text-neon-blue {
-  color: var(--color-yinmn);
+  color: var(--color-yinmn-light);
   text-shadow: 0 0 10px rgba(43, 59, 229, 0.5);
 }
 
