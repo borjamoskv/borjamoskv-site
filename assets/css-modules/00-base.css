@@ -6,10 +6,10 @@
   --dim: rgba(255, 255, 255, 0.65);
   --line: rgba(255, 255, 255, 0.12);
   --line-strong: rgba(255, 255, 255, 0.28);
-  --terracotta: #ec4899;
-  --honey: #ec4899;
+  --terracotta: #2B3BE5;
+  --honey: #2B3BE5;
   --blue: #2B3BE5;
-  --wine: #2E5090;
+  --wine: #1A248A;
   --wide: 1380px;
   --max: 1180px;
   --mx: 0;
@@ -697,7 +697,7 @@ p {
   transform: translateX(12px);
   border-color: var(--honey);
   color: var(--honey);
-  background: linear-gradient(90deg, rgba(236, 72, 153, 0.04), transparent 60%);
+  background: linear-gradient(90deg, rgba(43, 59, 229, 0.08), transparent 60%);
 }
 
 .listen-lines em {
@@ -792,7 +792,7 @@ p {
 .playlist-item:hover {
   color: var(--honey);
   background: rgba(255, 244, 227, 0.02);
-  text-shadow: 0 0 12px rgba(236, 72, 153, 0.4);
+  text-shadow: 0 0 12px rgba(43, 59, 229, 0.5);
 }
 
 .playlist-item.is-active {

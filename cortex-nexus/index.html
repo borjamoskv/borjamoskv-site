@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORTEX NEXUS // AUTOPOIETIC CORE</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;500;800&family=JetBrains+Mono:wght@400;700&display=swap');
+
+        :root {
+            --bg: #0A0A0A;
+            --yinmn: #2B3BE5;
+            --yinmn-glow: rgba(43, 59, 229, 0.4);
+            --text-main: #E0E0E0;
+            --text-muted: #666666;
+            --font-ui: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: var(--font-ui);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #canvas-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .ui-layer {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 40px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .title-block h1 {
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: 6px;
+            color: var(--yinmn);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            text-shadow: 0 0 20px var(--yinmn-glow), 0 0 40px var(--yinmn-glow);
+        }
+
+        .title-block p {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+        }
+
+        .status-block {
+            text-align: right;
+            font-family: var(--font-mono);
+            font-size: 11px;
+        }
+
+        .status-line {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-bottom: 6px;
+        }
+
+        .indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--yinmn);
+            box-shadow: 0 0 15px var(--yinmn);
+            animation: pulse 1.5s infinite;
+        }
+
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 600px;
+        }
+
+        .metric-card {
+            background: rgba(10, 10, 10, 0.4);
+            border: 1px solid rgba(43, 59, 229, 0.15);
+            padding: 20px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-left: 4px solid var(--yinmn);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+        }
+
+        .metric-card:hover {
+            border: 1px solid rgba(43, 59, 229, 0.5);
+            border-left: 4px solid var(--yinmn);
+            box-shadow: 0 10px 40px rgba(43, 59, 229, 0.1);
+        }
+
+        .metric-title {
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 12px;
+        }
+
+        .metric-value {
+            font-family: var(--font-mono);
+            font-size: 32px;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(255,255,255,0.2);
+        }
+
+        .metric-value span {
+            color: var(--yinmn);
+            font-size: 16px;
+            margin-left: 4px;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.3; box-shadow: 0 0 5px var(--yinmn); }
+            50% { opacity: 1; box-shadow: 0 0 25px var(--yinmn); }
+            100% { opacity: 0.3; box-shadow: 0 0 5px var(--yinmn); }
+        }
+
+        .scanline {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.2));
+            background-size: 100% 4px;
+            z-index: 9;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        .vignette {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0,0,0,0) 30%, #0A0A0A 110%);
+            z-index: 8;
+            pointer-events: none;
+        }
+
+        .glitch-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(43, 59, 229, 0.02);
+            z-index: 7;
+            pointer-events: none;
+            mix-blend-mode: color-dodge;
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas-container"></div>
+    <div class="glitch-overlay"></div>
+    <div class="scanline"></div>
+    <div class="vignette"></div>
+
+    <div class="ui-layer">
+        <div class="header">
+            <div class="title-block">
+                <h1>CORTEX // MOSKV-1</h1>
+                <p>AUTOPOIETIC SUBSTRATE v4.0.0</p>
+            </div>
+            <div class="status-block">
+                <div class="status-line">
+                    <span style="color: #fff; font-weight: 700;">REALITY_LEVEL: C5-REAL</span>
+                    <div class="indicator"></div>
+                </div>
+                <div class="status-line">
+                    <span style="color: var(--text-muted)">AESTHETIC: IND-NOIR-26</span>
+                </div>
+                <div class="status-line">
+                    <span style="color: var(--text-muted)">SYS_CLOCK: <span id="clock"></span></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="metrics">
+            <div class="metric-card">
+                <div class="metric-title">Exergy Yield</div>
+                <div class="metric-value" id="exergy-val">99.8<span>%</span></div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">Synaptic Density</div>
+                <div class="metric-value" id="density-val">4.2<span>B</span></div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">Entropy State</div>
+                <div class="metric-value" id="entropy-val">0.01<span>Δ</span></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script>
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0x0A0A0A, 0.0015);
+
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
+        camera.position.z = 400;
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
+        renderer.setPixelRatio(window.devicePixelRatio > 1 ? 2 : 1);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setClearColor(0x0A0A0A, 1);
+        container.appendChild(renderer.domElement);
+
+        const particleCount = 20000;
+        const geometry = new THREE.BufferGeometry();
+        const positions = new Float32Array(particleCount * 3);
+        const colors = new Float32Array(particleCount * 3);
+        const sizes = new Float32Array(particleCount);
+
+        const colorBase = new THREE.Color(0x2B3BE5); // YInMn Blue
+        const colorCyan = new THREE.Color(0x00D2FF);
+        const colorDark = new THREE.Color(0x0A0A0A);
+        const colorWhite = new THREE.Color(0xFFFFFF);
+
+        for (let i = 0; i < particleCount; i++) {
+            const r = 200 + Math.pow(Math.random(), 3) * 300; 
+            const theta = Math.random() * 2 * Math.PI;
+            const phi = Math.acos(2 * Math.random() - 1);
+            
+            const x = r * Math.sin(phi) * Math.cos(theta);
+            const y = r * Math.sin(phi) * Math.sin(theta);
+            const z = r * Math.cos(phi);
+
+            positions[i * 3] = x;
+            positions[i * 3 + 1] = y;
+            positions[i * 3 + 2] = z;
+
+            let c;
+            const rand = Math.random();
+            if (rand > 0.98) c = colorWhite;
+            else if (rand > 0.7) c = colorCyan;
+            else if (rand > 0.3) c = colorBase;
+            else c = colorDark;
+            
+            colors[i * 3] = c.r;
+            colors[i * 3 + 1] = c.g;
+            colors[i * 3 + 2] = c.b;
+
+            sizes[i] = Math.random() * 2.5;
+        }
+
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+        geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+
+        // Custom shader material for better particles
+        const material = new THREE.ShaderMaterial({
+            uniforms: {
+                time: { value: 0 },
+            },
+            vertexShader: `
+                attribute float size;
+                attribute vec3 color;
+                varying vec3 vColor;
+                uniform float time;
+                void main() {
+                    vColor = color;
+                    vec3 pos = position;
+                    // Swarm micro-movements
+                    pos.x += sin(time * 2.0 + pos.z * 0.05) * 2.0;
+                    pos.y += cos(time * 2.0 + pos.x * 0.05) * 2.0;
+                    vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
+                    gl_PointSize = size * (300.0 / -mvPosition.z);
+                    gl_Position = projectionMatrix * mvPosition;
+                }
+            `,
+            fragmentShader: `
+                varying vec3 vColor;
+                void main() {
+                    // Soft circle
+                    vec2 xy = gl_PointCoord.xy - vec2(0.5);
+                    float ll = length(xy);
+                    if(ll > 0.5) discard;
+                    float alpha = (0.5 - ll) * 2.0;
+                    gl_FragColor = vec4(vColor, alpha * 0.8);
+                }
+            `,
+            blending: THREE.AdditiveBlending,
+            depthTest: false,
+            transparent: true
+        });
+
+        const particles = new THREE.Points(geometry, material);
+        scene.add(particles);
+
+        let mouseX = 0;
+        let mouseY = 0;
+        let targetX = 0;
+        let targetY = 0;
+        const windowHalfX = window.innerWidth / 2;
+        const windowHalfY = window.innerHeight / 2;
+
+        document.addEventListener('mousemove', (event) => {
+            mouseX = (event.clientX - windowHalfX) * 0.5;
+            mouseY = (event.clientY - windowHalfY) * 0.5;
+        });
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        const exergyEl = document.getElementById('exergy-val');
+        const densityEl = document.getElementById('density-val');
+        const entropyEl = document.getElementById('entropy-val');
+        const clockEl = document.getElementById('clock');
+
+        setInterval(() => {
+            exergyEl.innerHTML = (99.5 + Math.random() * 0.4).toFixed(2) + '<span>%</span>';
+            entropyEl.innerHTML = (0.01 + Math.random() * 0.005).toFixed(3) + '<span>Δ</span>';
+            const d = new Date();
+            clockEl.innerText = d.toISOString().split('T')[1].split('.')[0] + ' UTC';
+        }, 800);
+
+        let time = 0;
+        function animate() {
+            requestAnimationFrame(animate);
+            time += 0.005;
+            material.uniforms.time.value = time;
+
+            targetX = mouseX * 0.002;
+            targetY = mouseY * 0.002;
+
+            particles.rotation.y += 0.001;
+            particles.rotation.x += 0.0005;
+            
+            particles.rotation.y += (targetX - particles.rotation.y) * 0.05;
+            particles.rotation.x += (targetY - particles.rotation.x) * 0.05;
+
+            // Camera subtle breath
+            camera.position.z = 400 + Math.sin(time) * 50;
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+    </script>
+</body>
+</html>

@@ -149,7 +149,13 @@ SCRIPT = [
     (JOKIN, 215, "Fújur es un perro enorme al que Alemania le puso alas y le llamó dragón de la suerte. Es la mayor estafa visual del cine europeo.", 0.6),
     (MANOLO, 165, "Home, en Cuenca temos un animal así. Chámase o Can da Serranía. É un perro enorme que aparece nas noites de lúa chea e come queso manchego. Pero eso non vo lo contan.", 0.8),
     (JOKIN, 210, "Manolo, los manchegos van a venir a por ti.", 0.5),
-    (MANOLO, 165, "Non me importa. En Cuenca non temos medo.", 1.5),
+    (MANOLO, 165, "Non me importa. En Cuenca non temos medo.", 1.2),
+    (NARRATOR, 190, "Y en mitad de la discusión sobre el perro, apareció Espinete.", 0.8),
+    (NARRATOR, 190, "No el Espinete de Barrio Sésamo de felpa rosa que recordaba tu infancia. Un Espinete de dos metros, cubierto de púas de plástico rígido de color rosa chicle, vistiendo exclusivamente un tanga de leopardo de color marrón fecal y unas botas de cuero de la Ertzaintza.", 0.8),
+    (MANOLO, 165, "¡Home, virgen de la Serranía conquense! ¿Pero qué clase de monstruo é ese y por qué ven en tanga?", 0.6),
+    (GON, 145, "Eso sí que es punk, Ramoncín. Míralo. Es el fin de la infancia.", 0.8),
+    (VECINO, 195, "Por favor, llamad a la policía otra vez. Esto roza el delito contra la salud visual.", 0.8),
+    (NARRATOR, 190, "Espinete no dijo nada. Se limitó a bailar microtonalmente al ritmo del saxo de Gon, moviendo las caderas con una gravedad que desafiaba las leyes de la termodinámica.", 1.5),
 
     # === KOLDO ===
     (NARRATOR, 190, "La comunidad de vecinos convocó una junta extraordinaria. Begoña, la presidenta, mandó bajar a Koldo. Koldo pesaba 111 kilos y una vez había echado a un yonki del portal usando exclusivamente la mirada y un tenedor.", 1.0),
