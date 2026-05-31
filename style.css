@@ -231,7 +231,7 @@ body {
   display: flex;
   gap: 32px;
 }
-.nav-link, .nav-link-ext {
+.nav-link, .nav-link-ext, .site-nav a {
   font-family: var(--font-mono);
   font-size: 0.8rem;
   font-weight: 700;
@@ -239,7 +239,10 @@ body {
   text-decoration: none;
   letter-spacing: 0.1em;
   position: relative;
-  padding: 8px 0;
+  padding: 16px 8px;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
   transition: color var(--transition-fast);
 }
 .nav-link::after, .nav-link-ext::after {
