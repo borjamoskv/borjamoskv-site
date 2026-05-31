@@ -5,7 +5,24 @@
 document.addEventListener('DOMContentLoaded', () => {
     initReadingTime();
     initTOCSync();
+    initHeaderScroll();
 });
+
+// Toggle is-scrolled class on scroll
+function initHeaderScroll() {
+    const header = document.getElementById('header');
+    if (header) {
+        const checkScroll = () => {
+            if (window.scrollY > 50) {
+                header.classList.add('is-scrolled');
+            } else {
+                header.classList.remove('is-scrolled');
+            }
+        };
+        window.addEventListener('scroll', checkScroll);
+        checkScroll(); // Initial check
+    }
+}
 
 // Calculate reading time based on word count
 function initReadingTime() {

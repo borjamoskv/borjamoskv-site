@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CORTEZA_BEATRIZ // C5-REAL</title>
+    <link rel="stylesheet" href="assets/site.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap');
 
@@ -310,6 +311,27 @@
 </head>
 <body>
 
+  <!-- NAVIGATION -->
+  <header class="site-header" id="header">
+    <a class="brand" href="/">
+      BORJA MOSKV <span class="brand-suffix">// EXERGIA-Ω</span>
+    </a>
+    <nav class="site-nav" aria-label="Navegación Principal">
+      <a href="index.html#control-deck" class="nav-link">DECK</a>
+      <a href="index.html#discography" class="nav-link">OBRAS</a>
+      <a href="index.html#stills-gallery" class="nav-link">GALERÍA</a>
+      <a href="index.html#tour-dates" class="nav-link">TOUR</a>
+      <a href="blog.html" class="nav-link-ext is-active">DIARIO</a>
+      <a href="gurus.html" class="nav-link-ext">GURÚS</a>
+      <a href="benchmark-humo.html" class="nav-link-ext">BENCHMARK</a>
+      <a href="gon-intervalo.html" class="nav-link-ext">GON</a>
+    </nav>
+    <div class="system-status">
+      <span class="status-indicator"></span>
+      <span class="status-text">C5-REAL</span>
+    </div>
+  </header>
+
     <div class="glitch-flash" id="flash"></div>
 
     <div id="boot-screen"></div>
@@ -457,5 +479,6 @@
         // Start boot sequence on load
         window.onload = runBootSequence;
     </script>
+    <script type="module" src="article.js"></script>
 </body>
 </html>
