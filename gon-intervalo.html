@@ -9,17 +9,17 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&family=Outfit:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-base: #050505;
-            --bg-panel: rgba(10, 10, 10, 0.85);
-            --accent-blue: #2B3BE5;
-            --accent-blue-glow: rgba(43, 59, 229, 0.4);
-            --accent-copper: #8A5E3C;
-            --accent-pardo: #6B4226; /* Pardo Fecal™ */
-            --text-primary: #F3F4F6;
-            --text-secondary: #8E8E93;
-            --border-dim: rgba(243, 244, 246, 0.08);
-            --crt-glow: 0 0 20px rgba(43, 59, 229, 0.25);
-        }
+        --bg-base: #0A0A0A;
+        --bg-panel: rgba(10, 10, 10, 0.75);
+        --accent-blue: #2B3BE5;
+        --accent-blue-glow: rgba(43, 59, 229, 0.4);
+        --accent-copper: #8A5E3C;
+        --accent-pardo: #6B4226; /* Pardo Fecal™ */
+        --text-primary: #F3F4F6;
+        --text-secondary: #8E8E93;
+        --border-dim: rgba(43, 59, 229, 0.15);
+        --crt-glow: 0 0 20px rgba(43, 59, 229, 0.25);
+    }
 
         * {
             box-sizing: border-box;
@@ -33,6 +33,16 @@
             font-family: 'Outfit', sans-serif;
             overflow-x: hidden;
             position: relative;
+        }
+
+        /* Analog Film Grain Overlay */
+        .analog-grain {
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 1000;
         }
 
         /* Scanlines Overlay */
@@ -191,6 +201,8 @@
             position: relative;
             overflow: hidden;
             box-shadow: var(--crt-glow);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
         }
 
         .crt-screen-wrapper {
@@ -252,6 +264,8 @@
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
         }
 
         .player-bar {
@@ -321,6 +335,8 @@
             border: 1px solid var(--border-dim);
             border-radius: 12px;
             padding: 1.5rem;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
         }
 
         .panel-heading {
@@ -457,6 +473,8 @@
             display: flex;
             flex-direction: column;
             height: 750px;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
         }
 
         .script-container {
@@ -583,6 +601,7 @@
     </style>
 </head>
 <body>
+    <div class="analog-grain"></div>
 
     <div class="container">
         <!-- Header -->
