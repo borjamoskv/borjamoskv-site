@@ -1262,20 +1262,53 @@
           const data = await res.json();
           if (data.status === 'ok' && data.items?.length) {
             grid.innerHTML = '';
+            
+            // Map Substack slugs to local HTML pages
+            const slugMap = {
+              'la-edad-de-la-friccion-el-ultimo': 'la-edad-de-la-friccion-el-ultimo.html',
+              'hackear-la-atencion-por-que-pusimos': 'hackear-la-atencion-por-que-pusimos.html',
+              'el-protocolo-rollins-a-great-day': 'el-protocolo-rollins-a-great-day.html',
+              'la-solucion-intentada-es-el-problema': 'la-solucion-intentada-es-el-problema.html',
+              'autopoiesis-de-un-domingo-por-la': 'autopoiesis-de-un-domingo-por-la.html',
+              'autodidact-claude-opus-48-full-sota': 'autodidact-claude-opus-48-full-sota.html',
+              'alcala-norte-we-need-to-talk': 'alcala-norte-we-need-to-talk.html',
+              'hito-cortex-cruza-el-umbral-de-auto': 'hito-cortex-cruza-el-umbral-de-auto.html',
+              'que-es-un-agente-historia-ia-cortex': 'que-es-un-agente-historia-ia-cortex.html',
+              'sintetologia-agentica': 'sintetologia-agentica.html',
+              'limerencia-epistemica': 'limerencia-epistemica.html',
+              'catarsis-colectiva-los-20-pilares': 'catarsis-colectiva.html',
+              'idioma-nativo-progreso': 'idioma-nativo-progreso.html',
+              'putos-gurus': 'gurus.html',
+              'gon-y-el-intervalo-prohibido': 'gon-intervalo.html'
+            };
+
             data.items.slice(0, 3).forEach(item => {
               const date = item.pubDate.split(' ')[0];
+              let link = item.link;
+              const matches = link.match(/\/p\/([a-z0-9-]+)/);
+              let isLocal = false;
+              if (matches && matches[1]) {
+                const slug = matches[1];
+                if (slugMap[slug]) {
+                  link = slugMap[slug];
+                  isLocal = true;
+                }
+              }
+
               const card = document.createElement('a');
-              card.href  = item.link;
-              card.target = '_blank';
-              card.rel    = 'noopener';
+              card.href  = link;
+              if (!isLocal) {
+                card.target = '_blank';
+                card.rel    = 'noopener';
+              }
               card.className = 'blog-card blog-card--third';
               card.innerHTML = `
                 <div class="card-meta">
-                  <span class="card-tag card-tag--paragraph">Substack</span>
+                  <span class="card-tag card-tag--paragraph">${isLocal ? 'Diario' : 'Substack'}</span>
                   <span class="card-date">${date}</span>
                 </div>
                 <h2 class="card-title" style="font-size:1.1rem">${item.title}</h2>
-                <span class="card-cta">Leer en Substack →</span>
+                <span class="card-cta">${isLocal ? 'Leer artículo →' : 'Leer en Substack →'}</span>
               `;
               grid.appendChild(card);
             });
