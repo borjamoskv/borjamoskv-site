@@ -1,0 +1,30 @@
+name: Lighthouse Guardian Shield (C5-REAL)
+
+on:
+  pull_request:
+    branches: [ main, master ]
+  push:
+    branches: [ main, master ]
+
+jobs:
+  lighthouse-guardian:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      
+      - name: Install dependencies
+        working-directory: ./lp-lanzamiento
+        run: npm install
+      
+      - name: Build Project
+        working-directory: ./lp-lanzamiento
+        run: npm run build
+      
+      - name: Run Lighthouse CI Guardian
+        working-directory: ./lp-lanzamiento
+        run: npx @lhci/cli@0.13.0 autorun
