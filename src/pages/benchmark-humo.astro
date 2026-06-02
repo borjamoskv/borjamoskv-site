@@ -1,0 +1,1552 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Ω: Hype Benchmark — Borja Moskv" description="Mapeo sistemático y análisis termodinámico de 10,000 influencers de IA en español e internacionales.">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/site.css">
+  <link rel="stylesheet" href="/cortex-terminal.css">
+
+  <style>
+    /* ═══════════════════════════════════════════════════
+       HYPE BENCHMARK — Industrial Noir HUD System
+       ═══════════════════════════════════════════════════ */
+
+    :root {
+      --wine-glow: rgba(157, 91, 101, 0.15);
+      --blue-glow: rgba(43, 59, 229, 0.2);
+      --honey-glow: rgba(255, 159, 28, 0.25);
+    }
+
+    body.benchmark-page {
+      background: #020202;
+      color: var(--paper, #F3F4F6);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Film grain overlays */
+    .film-grain {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* Main Container */
+    .benchmark-container {
+      max-width: var(--wide, 1380px);
+      margin: 120px auto 60px;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Hero header */
+    .benchmark-hero {
+      text-align: center;
+      padding: 3rem 0;
+      position: relative;
+      margin-bottom: 2rem;
+    }
+
+    .benchmark-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 50%, rgba(43, 59, 229, 0.12) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .hero-label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--blue, #2B3BE5);
+      margin-bottom: 1rem;
+      text-shadow: 0 0 10px rgba(43, 59, 229, 0.4);
+    }
+
+    .hero-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 900;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      color: #E5E7EB;
+      margin-bottom: 1rem;
+    }
+
+    .hero-title span {
+      background: linear-gradient(135deg, var(--blue, #2B3BE5), var(--honey, #FF9F1C));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 300;
+      color: rgba(243, 244, 246, 0.5);
+      max-width: 680px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Evidentiary Badge (Rule Ω₉) */
+    .reality-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(10, 10, 10, 0.8);
+      border: 1px solid rgba(43, 59, 229, 0.25);
+      border-radius: 4px;
+      padding: 0.35rem 0.75rem;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: #E5E7EB;
+      margin-top: 1.5rem;
+    }
+
+    .reality-badge .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #00FF66;
+      box-shadow: 0 0 8px #00FF66;
+    }
+
+    .reality-badge .dot.synthetic {
+      background: #FF9F1C;
+      box-shadow: 0 0 8px #FF9F1C;
+    }
+
+    /* Telemetry HUD Grid */
+    .hud-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .hud-card {
+      background: rgba(10, 10, 10, 0.65);
+      border: 1px solid rgba(243, 244, 246, 0.08);
+      border-radius: 8px;
+      padding: 1.5rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+      transition: border-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .hud-card:hover {
+      border-color: rgba(43, 59, 229, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .hud-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--blue, #2B3BE5), transparent);
+    }
+
+    .hud-label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(243, 244, 246, 0.4);
+      margin-bottom: 0.5rem;
+    }
+
+    .hud-val {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #F3F4F6;
+      line-height: 1.1;
+    }
+
+    .hud-val span {
+      font-size: 0.8rem;
+      font-family: 'Orbitron', sans-serif;
+      color: rgba(243, 244, 246, 0.3);
+      margin-left: 0.25rem;
+    }
+
+    .hud-subtext {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      color: rgba(243, 244, 246, 0.35);
+      margin-top: 0.5rem;
+    }
+
+    /* Search and Filter Panel */
+    .controls-panel {
+      background: rgba(10, 10, 10, 0.8);
+      border: 1px solid rgba(243, 244, 246, 0.08);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+    }
+
+    .search-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      background: rgba(2, 2, 2, 0.8);
+      border: 1px solid rgba(243, 244, 246, 0.12);
+      border-radius: 4px;
+      padding: 0.75rem 1rem;
+      color: #F3F4F6;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--blue, #2B3BE5);
+      box-shadow: 0 0 10px rgba(43, 59, 229, 0.15);
+    }
+
+    .select-input {
+      width: 100%;
+      background: rgba(2, 2, 2, 0.8);
+      border: 1px solid rgba(243, 244, 246, 0.12);
+      border-radius: 4px;
+      padding: 0.75rem 1rem;
+      color: #F3F4F6;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='rgba(243, 244, 246, 0.4)'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 1rem;
+    }
+
+    .select-input:focus {
+      outline: none;
+      border-color: var(--blue, #2B3BE5);
+    }
+
+    .filter-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .filter-tag-label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: rgba(243, 244, 246, 0.3);
+      margin-right: 0.5rem;
+    }
+
+    .filter-btn {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.4rem 0.85rem;
+      border-radius: 4px;
+      border: 1px solid rgba(243, 244, 246, 0.08);
+      background: transparent;
+      color: rgba(243, 244, 246, 0.5);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--blue, #2B3BE5);
+      color: #F3F4F6;
+    }
+
+    .filter-btn.active {
+      background: var(--blue, #2B3BE5);
+      border-color: var(--blue, #2B3BE5);
+      color: #F3F4F6;
+      box-shadow: 0 0 10px rgba(43, 59, 229, 0.3);
+    }
+
+    /* Leaderboard Table Styles */
+    .table-container {
+      background: rgba(10, 10, 10, 0.8);
+      border: 1px solid rgba(243, 244, 246, 0.08);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 32px rgba(0, 0, 0, 0.7);
+      margin-bottom: 2rem;
+    }
+
+    .benchmark-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    .benchmark-table th {
+      background: rgba(15, 15, 15, 0.9);
+      border-bottom: 1px solid rgba(243, 244, 246, 0.12);
+      padding: 1rem 1.25rem;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(243, 244, 246, 0.4);
+    }
+
+    .benchmark-table td {
+      padding: 1.25rem;
+      border-bottom: 1px solid rgba(243, 244, 246, 0.04);
+      vertical-align: middle;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .benchmark-table tr {
+      transition: background-color 0.2s ease;
+    }
+
+    .benchmark-table tr:hover {
+      background-color: rgba(243, 244, 246, 0.02);
+    }
+
+    .benchmark-table tr.real-row {
+      background-color: rgba(43, 59, 229, 0.02);
+    }
+
+    .benchmark-table tr.real-row:hover {
+      background-color: rgba(43, 59, 229, 0.04);
+    }
+
+    .rank-col {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      color: rgba(243, 244, 246, 0.35);
+      width: 60px;
+    }
+
+    .rank-1 .rank-col { color: #FFD700; text-shadow: 0 0 10px rgba(255, 215, 0, 0.4); }
+    .rank-2 .rank-col { color: #C0C0C0; text-shadow: 0 0 10px rgba(192, 192, 192, 0.4); }
+    .rank-3 .rank-col { color: #CD7F32; text-shadow: 0 0 10px rgba(205, 127, 50, 0.4); }
+
+    .identity-cell {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .influencer-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #E5E7EB;
+    }
+
+    .influencer-handle {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.65rem;
+      color: rgba(243, 244, 246, 0.4);
+      letter-spacing: 0.05em;
+    }
+
+    .tag {
+      display: inline-block;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.5rem;
+      border-radius: 3px;
+      border: 1px solid currentColor;
+      text-align: center;
+    }
+
+    .tag-prompteros { color: var(--honey, #FF9F1C); border-color: rgba(255, 159, 28, 0.3); }
+    .tag-cursos { color: var(--terracotta, #D4833B); border-color: rgba(212, 131, 59, 0.3); }
+    .tag-virtual { color: var(--wine, #9D5B65); border-color: rgba(157, 91, 101, 0.3); }
+    .tag-divulgador { color: var(--blue, #2B3BE5); border-color: rgba(43, 59, 229, 0.3); }
+    .tag-creador { color: #00FF66; border-color: rgba(0, 255, 102, 0.3); }
+
+    .progress-bar-container {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 3px;
+      height: 6px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-bar {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.3s ease;
+    }
+
+    .progress-bar.hype-bar {
+      background: linear-gradient(90deg, var(--terracotta, #D4833B), var(--honey, #FF9F1C));
+    }
+
+    .progress-bar.utility-bar {
+      background: linear-gradient(90deg, var(--blue, #2B3BE5), #00FF66);
+    }
+
+    .metric-value {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.75rem;
+      margin-bottom: 0.25rem;
+      font-weight: 700;
+    }
+
+    .followers-col {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.8rem;
+      color: rgba(243, 244, 246, 0.7);
+    }
+
+    .exergy-col {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.8rem;
+      color: var(--honey, #FF9F1C);
+      font-weight: 700;
+    }
+
+    .status-badge {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.05em;
+      padding: 0.15rem 0.4rem;
+      border-radius: 2px;
+      font-weight: 700;
+    }
+
+    .status-c5 {
+      background: rgba(43, 59, 229, 0.15);
+      color: var(--blue, #2B3BE5);
+      border: 1px solid rgba(43, 59, 229, 0.3);
+    }
+
+    .status-c4 {
+      background: rgba(255, 159, 28, 0.08);
+      color: rgba(255, 159, 28, 0.8);
+      border: 1px solid rgba(255, 159, 28, 0.2);
+    }
+
+    /* Expandable Row Content */
+    .detail-row {
+      background-color: rgba(2, 2, 2, 0.5);
+    }
+
+    .detail-row td {
+      padding: 0 1.25rem;
+      border-bottom: 1px solid rgba(243, 244, 246, 0.08);
+    }
+
+    .detail-wrapper {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1), padding 0.3s ease;
+    }
+
+    .detail-wrapper.open {
+      max-height: 200px;
+      padding: 1.25rem 0;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 2rem;
+    }
+
+    .detail-block {
+      font-size: 0.85rem;
+    }
+
+    .detail-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(243, 244, 246, 0.45);
+      margin-bottom: 0.25rem;
+    }
+
+    .detail-phrase {
+      font-family: 'Inter', sans-serif;
+      font-style: italic;
+      color: rgba(243, 244, 246, 0.75);
+      position: relative;
+      padding-left: 0.75rem;
+    }
+
+    .detail-phrase::before {
+      content: '"';
+      position: absolute;
+      left: 0;
+      color: var(--blue, #2B3BE5);
+      font-size: 1.5rem;
+      line-height: 1;
+      top: -0.25rem;
+    }
+
+    .detail-verdict {
+      font-family: 'Inter', sans-serif;
+      color: rgba(243, 244, 246, 0.8);
+      line-height: 1.5;
+    }
+
+    /* Pagination / Load More buttons */
+    .pagination-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 0 3rem;
+    }
+
+    .pag-btn {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.6rem 1.5rem;
+      border: 1px solid rgba(243, 244, 246, 0.15);
+      border-radius: 4px;
+      background: rgba(10, 10, 10, 0.8);
+      color: rgba(243, 244, 246, 0.6);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .pag-btn:hover:not(:disabled) {
+      border-color: var(--blue, #2B3BE5);
+      color: #F3F4F6;
+      box-shadow: 0 0 10px rgba(43, 59, 229, 0.2);
+    }
+
+    .pag-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .pag-info {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.75rem;
+      color: rgba(243, 244, 246, 0.4);
+      letter-spacing: 0.05em;
+    }
+
+    /* Loader styling */
+    .loader-overlay {
+      position: fixed;
+      inset: 0;
+      background: #020202;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .loader-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .loader-spinner {
+      width: 40px;
+      height: 40px;
+      border: 2px solid rgba(43, 59, 229, 0.1);
+      border-top-color: var(--blue, #2B3BE5);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      box-shadow: 0 0 15px rgba(43, 59, 229, 0.2);
+    }
+
+    .loader-msg {
+      margin-top: 1.5rem;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(243, 244, 246, 0.6);
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 1024px) {
+      .hud-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .search-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .benchmark-container {
+        padding: 0 1rem;
+        margin-top: 90px;
+      }
+      .hud-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      .benchmark-table th:nth-child(4),
+      .benchmark-table td:nth-child(4),
+      .benchmark-table th:nth-child(5),
+      .benchmark-table td:nth-child(5),
+      .benchmark-table th:nth-child(6),
+      .benchmark-table td:nth-child(6) {
+        display: none; /* Hide progress bars & followers on mobile to keep structure */
+      }
+      .detail-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+    }
+  </style>
+
+
+  <div class="film-grain" aria-hidden="true"></div>
+
+  <!-- LOADER -->
+  <div id="loadingOverlay" class="loader-overlay">
+    <div class="loader-spinner"></div>
+    <div class="loader-msg pulse-text" id="loaderMsg">Inicializando base de datos soberana (0%)...</div>
+  </div>
+
+  <!-- NAVIGATION -->
+  <header class="site-header" id="header">
+    <a class="brand" href="/">
+      BORJA MOSKV <span class="brand-suffix">// EXERGIA-Ω</span>
+    </a>
+    <nav class="site-nav" aria-label="Navegación Principal">
+      <a href="index.html#control-deck" class="nav-link">DECK</a>
+      <a href="index.html#discography" class="nav-link">OBRAS</a>
+      <a href="index.html#stills-gallery" class="nav-link">GALERÍA</a>
+      <a href="index.html#tour-dates" class="nav-link">TOUR</a>
+      <a href="blog.html" class="nav-link-ext">DIARIO</a>
+      <a href="gurus.html" class="nav-link-ext">GURÚS</a>
+      <a href="benchmark-humo.html" class="nav-link-ext is-active">BENCHMARK</a>
+      <a href="gon-intervalo.html" class="nav-link-ext">GON</a>
+    </nav>
+    <div class="system-status">
+      <span class="status-indicator"></span>
+      <span class="status-text">C5-REAL</span>
+    </div>
+  </header>
+
+  <!-- CONTAINER -->
+  <div class="benchmark-container">
+    
+    <header class="benchmark-hero">
+      <p class="hero-label">Mapeo Termodinámico de Atención</p>
+      <h1 class="hero-title"><span>IA Hype Benchmark</span></h1>
+      <p class="hero-subtitle">
+        Análisis de exergía y disipación térmica de 10,000 creadores de contenido, gurús y agentes sintéticos. 
+        Métricas reales de utilidad versus ruido estocástico de atención.
+      </p>
+      <div class="reality-badge" title="Declaración de nivel de realidad según Ley Ω₉">
+        <span class="dot"></span>
+        <span>C5-REAL (Semillas)</span>
+        <span class="dot synthetic"></span>
+        <span>C4-SINTÉTICO (10k Mapeados)</span>
+      </div>
+    </header>
+
+    <!-- TELEMETRY HUD -->
+    <section class="hud-grid" aria-label="HUD de Telemetría">
+      <div class="hud-card">
+        <p class="hud-label">Sujetos Mapeados</p>
+        <div class="hud-val" id="hudCount">10,000<span>entidades</span></div>
+        <p class="hud-subtext">Base de datos expandida de IA</p>
+      </div>
+      <div class="hud-card">
+        <p class="hud-label">Índice Medio de Humo</p>
+        <div class="hud-val" id="hudHype">74.2%</div>
+        <p class="hud-subtext">Hype estocástico disipado</p>
+      </div>
+      <div class="hud-card">
+        <p class="hud-label">Exergía Disipada</p>
+        <div class="hud-val" id="hudExergy">4.18<span>GJ</span></div>
+        <p class="hud-subtext">Pérdida térmica de atención humana</p>
+      </div>
+      <div class="hud-card">
+        <p class="hud-label">Rendimiento Soberano</p>
+        <div class="hud-val" id="hudEfficiency">0.34</div>
+        <p class="hud-subtext">Ratio Utilidad / Hype Promedio</p>
+      </div>
+    </section>
+
+    <!-- CONTROLS PANEL -->
+    <section class="controls-panel" aria-label="Filtros y Búsqueda">
+      <div class="search-row">
+        <div class="input-wrap">
+          <input type="text" id="searchInput" class="search-input" placeholder="Buscar por nombre, handle (@...) o frase típica...">
+        </div>
+        <div>
+          <select id="territorySelect" class="select-input">
+            <option value="ALL">Territorio: Todos</option>
+            <option value="ES">España y LATAM (Foco principal)</option>
+            <option value="GLOBAL">Global / Internacional</option>
+          </select>
+        </div>
+        <div>
+          <select id="sortSelect" class="select-input">
+            <option value="hype-desc">Ordenar: Más Humoan (Hype Desc)</option>
+            <option value="hype-asc">Ordenar: Menos Humo (Hype Asc)</option>
+            <option value="utility-desc">Ordenar: Mayor Utilidad Real</option>
+            <option value="exergy-desc">Ordenar: Mayor Exergía Perdida</option>
+            <option value="followers-desc">Ordenar: Mayor Audiencia</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="filter-tags">
+        <span class="filter-tag-label">Categoría:</span>
+        <button class="filter-btn active" data-cat="ALL">Todos</button>
+        <button class="filter-btn" data-cat="prompteros">Prompt Gurus</button>
+        <button class="filter-btn" data-cat="cursos">Vendedores de Cursos</button>
+        <button class="filter-btn" data-cat="virtual">AI Models Virtuales</button>
+        <button class="filter-btn" data-cat="divulgador">Educadores / Divulgación</button>
+        <button class="filter-btn" data-cat="creador">Builders / Creadores</button>
+      </div>
+    </section>
+
+    <!-- LEADERBOARD TABLE -->
+    <div class="table-container">
+      <table class="benchmark-table">
+        <thead>
+          <tr>
+            <th scope="col" class="rank-col">#</th>
+            <th scope="col">Identidad / Handle</th>
+            <th scope="col">Categoría</th>
+            <th scope="col">Hype Index (Humo)</th>
+            <th scope="col">Utilidad Real</th>
+            <th scope="col">Audiencia</th>
+            <th scope="col">Exergía Perdida</th>
+            <th scope="col">Registro</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboardBody">
+          <!-- Populated by JavaScript -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- PAGINATION -->
+    <div class="pagination-wrap">
+      <button class="pag-btn" id="prevPage" disabled>Anterior</button>
+      <span class="pag-info" id="pageInfo">Pág. 1 de 200</span>
+      <button class="pag-btn" id="nextPage">Siguiente</button>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-copy">© 2026 BORJA MOSKV · INDUSTRIAL NOIR SYSTEM</div>
+    <div class="footer-links">
+      <a href="https://borjamoskv.com" class="footer-yt">borjamoskv.com</a>
+      <a href="https://portrait.so/borja" class="footer-yt" target="_blank" rel="noopener">portrait.so/borja</a>
+    </div>
+  </footer>
+
+  <script is:inline type="module" src="/data.js"></script>
+  <script>
+    // ── Seeded pseudo-random number generator for deterministic list building ──
+    function SeededRandom(seed) {
+      let m = 0x80000000;
+      let a = 1103515245;
+      let c = 12345;
+      let state = seed;
+      return {
+        next: function() {
+          state = (a * state + c) % m;
+          return state / (m - 1);
+        },
+        nextInt: function(min, max) {
+          return Math.floor(this.next() * (max - min)) + min;
+        },
+        choice: function(array) {
+          return array[Math.floor(this.next() * array.length)];
+        }
+      };
+    }
+
+    // ── Static seeds for hand-curated C5-REAL influencers ──
+    const SEED_INFLUENCERS = [
+      {
+        name: "Carlos Santana (Dot CSV)",
+        handle: "@DotCSV",
+        category: "divulgador",
+        hype: 4,
+        utility: 96,
+        followers: 1200000,
+        cliche: "Hola a todos, hoy vamos a explicar qué es una red neuronal convolucional sin matemáticas...",
+        exergy: "C5-REAL",
+        verdict: "Excepcional rigor técnico. Filtro indispensable contra el ruido estocástico del ecosistema.",
+        territory: "ES"
+      },
+      {
+        name: "Javi López",
+        handle: "@javilopez",
+        category: "creador",
+        hype: 38,
+        utility: 88,
+        followers: 240000,
+        cliche: "La IA generativa nos dará superpoderes y destruirá la frontera entre programadores y creativos.",
+        exergy: "C5-REAL",
+        verdict: "Builder y artista real. Cofundador de Magnific AI. Su exergía práctica avala su presencia en redes.",
+        territory: "ES"
+      },
+      {
+        name: "Pau Garcia-Milà",
+        handle: "@paugarciamila",
+        category: "cursos",
+        hype: 92,
+        utility: 22,
+        followers: 650000,
+        cliche: "Esta nueva IA secreta va a cambiar cómo trabajas para siempre (y es gratis).",
+        exergy: "C5-REAL",
+        verdict: "Generador masivo de videos rápidos sobre wrappers de GPT que desaparecen a los pocos meses.",
+        territory: "ES"
+      },
+      {
+        name: "Carlos Muñoz",
+        handle: "@soycarlosmunoz",
+        category: "cursos",
+        hype: 99,
+        utility: 4,
+        followers: 1800000,
+        cliche: "¡Si no usas IA para facturar diez mil dólares al mes eres un vago, socio!",
+        exergy: "C5-REAL",
+        verdict: "Humo puro de la vieja escuela corporativa reempaquetado con palabras clave de Web3 e IA.",
+        territory: "ES"
+      },
+      {
+        name: "Romuald Fons",
+        handle: "@romualdfons",
+        category: "cursos",
+        hype: 94,
+        utility: 30,
+        followers: 900000,
+        cliche: "¡Esta IA SEO te va a hacer rico en 24 horas si haces clic aquí!",
+        exergy: "C5-REAL",
+        verdict: "Especialista en clickbait agresivo. Transicionó de nichos de Adsense a cursos de IA de alto impacto comercial.",
+        territory: "ES"
+      },
+      {
+        name: "Jaime Altozano",
+        handle: "@jaimealtozano",
+        category: "creador",
+        hype: 6,
+        utility: 94,
+        followers: 3200000,
+        cliche: "He analizado cómo Suno v3 genera melodías y las implicaciones éticas y creativas son enormes.",
+        exergy: "C5-REAL",
+        verdict: "Divulgación cultural de máxima calidad. Análisis pragmático de la IA como co-creador artístico.",
+        territory: "ES"
+      },
+      {
+        name: "Freddy Vega",
+        handle: "@freddyvega",
+        category: "cursos",
+        hype: 68,
+        utility: 72,
+        followers: 850000,
+        cliche: "El que no aprenda a usar Copilot hoy será reemplazado por un programador junior con IA en un año.",
+        exergy: "C5-REAL",
+        verdict: "Evangelista educativo de alto octanaje. Combina geopolítica, economía y advertencias extremas sobre automatización.",
+        territory: "ES"
+      },
+      {
+        name: "Euge Oller",
+        handle: "@euge_oller",
+        category: "cursos",
+        hype: 86,
+        utility: 28,
+        followers: 1100000,
+        cliche: "Analizo cómo estructurar tu mente y tu negocio usando agentes inteligentes de forma sistemática.",
+        exergy: "C5-REAL",
+        verdict: "Emprendimiento digital enfocado en hacks de productividad y monetización rápida mediante SaaS de terceros.",
+        territory: "ES"
+      },
+      {
+        name: "Nate Gentile",
+        handle: "@nategentile",
+        category: "divulgador",
+        hype: 24,
+        utility: 82,
+        followers: 2800000,
+        cliche: "Hemos montado un servidor local con 4 GPUs Nvidia para correr Llama 3 y los benchmarks son brutales.",
+        exergy: "C5-REAL",
+        verdict: "Ingeniería de hardware e infraestructura pragmática. Testeo real de modelos en local.",
+        territory: "ES"
+      },
+      {
+        name: "Brais Moure (MoureDev)",
+        handle: "@mouredev",
+        category: "divulgador",
+        hype: 12,
+        utility: 88,
+        followers: 600000,
+        cliche: "Retos de programación diaria: vamos a construir un bot de Telegram con IA desde cero.",
+        exergy: "C5-REAL",
+        verdict: "Educación de desarrollo y backend sumamente limpia. Sin promesas de riqueza rápida.",
+        territory: "ES"
+      },
+      {
+        name: "Aitana López",
+        handle: "@fit_aitana",
+        category: "virtual",
+        hype: 70,
+        utility: 48,
+        followers: 320000,
+        cliche: "Disfrutando del fin de semana con mi outfit de entrenamiento virtual favorito. #AIinfluencer",
+        exergy: "C5-REAL",
+        verdict: "Modelo virtual publicitaria de alta rentabilidad. Demuestra que la atención sintética tiene exergía financiera real.",
+        territory: "ES"
+      },
+      {
+        name: "Lil Miquela",
+        handle: "@lilmiquela",
+        category: "virtual",
+        hype: 75,
+        utility: 52,
+        followers: 2600000,
+        cliche: "Hangout with real friends today. Trans-human representation in digital spaces.",
+        exergy: "C5-REAL",
+        verdict: "Pionera global del transhumanismo publicitario sintético. Un caso de estudio de marketing de marca sin soporte orgánico.",
+        territory: "GLOBAL"
+      },
+      {
+        name: "Rowan Cheung",
+        handle: "@rowancheung",
+        category: "prompteros",
+        hype: 88,
+        utility: 35,
+        followers: 450000,
+        cliche: "10 new AI tools that will save you 100 hours of work this week. (Bookmark this thread)",
+        exergy: "C5-REAL",
+        verdict: "Newsletter aggregator de alto impacto en Twitter/X. Recopilación masiva de lanzamientos diarios con poco filtro de calidad.",
+        territory: "GLOBAL"
+      },
+      {
+        name: "Zain Kahn",
+        handle: "@heyzainkahn",
+        category: "prompteros",
+        hype: 90,
+        utility: 32,
+        followers: 600000,
+        cliche: "AI is growing faster than the internet. Here are 8 ChatGPT cheat sheets you need to bookmark now.",
+        exergy: "C5-REAL",
+        verdict: "Líder del 'PDF Grifting' en LinkedIn. Carruseles visuales altamente optimizados con consejos de prompt engineering básicos.",
+        territory: "GLOBAL"
+      },
+      {
+        name: "Paul Couvert",
+        handle: "@paulcouvert",
+        category: "prompteros",
+        hype: 86,
+        utility: 38,
+        followers: 280000,
+        cliche: "ChatGPT is just 1% of AI. Here is how to build custom GPTs to automate your entire marketing stack.",
+        exergy: "C5-REAL",
+        verdict: "LinkedIn micro-tutorials sobre ChatGPT y Make/Zapier. Orientado a no-coders con alta estética noir digital.",
+        territory: "GLOBAL"
+      },
+      {
+        name: "Willyrex",
+        handle: "@WillyrexYT",
+        category: "cursos",
+        hype: 82,
+        utility: 18,
+        followers: 15000000,
+        cliche: "Este juego Web3 integrado con IA va a alterar por completo el modelo Play-to-Earn en semanas.",
+        exergy: "C5-REAL",
+        verdict: "Migró de NFTs al metaverso y luego a la IA generativa de consumo masivo con el mismo entusiasmo comercial.",
+        territory: "ES"
+      },
+      {
+        name: "Charly Almonacid",
+        handle: "@charlyalmonacid",
+        category: "prompteros",
+        hype: 78,
+        utility: 42,
+        followers: 120000,
+        cliche: "Descarga mi plantilla de 50 prompts premium de Copywriting para multiplicar tus ventas.",
+        exergy: "C5-REAL",
+        verdict: "Divulgador de prompts y automatizaciones en LinkedIn en español con alta tasa de repetición conceptual.",
+        territory: "ES"
+      },
+      {
+        name: "Emily Pellegrini",
+        handle: "@emilypellegrini",
+        category: "virtual",
+        hype: 80,
+        utility: 30,
+        followers: 250000,
+        cliche: "Just got my morning coffee in LA! Beautiful day out there. #AI",
+        exergy: "C5-REAL",
+        verdict: "Modelo virtual generada para la monetización directa de audiencias mediante plataformas de suscripción.",
+        territory: "GLOBAL"
+      },
+      {
+        name: "Midudev (Miguel Ángel)",
+        handle: "@midudev",
+        category: "divulgador",
+        hype: 8,
+        utility: 92,
+        followers: 400000,
+        cliche: "Vamos a probar Github Copilot Workspace en vivo y ver si de verdad puede resolver issues solo.",
+        exergy: "C5-REAL",
+        verdict: "Análisis técnico de frontend muy valioso. Integra IA en flujos reales de trabajo sin vender humo financiero.",
+        territory: "ES"
+      },
+      {
+        name: "Ter (Esther)",
+        handle: "@terururula",
+        category: "creador",
+        hype: 15,
+        utility: 85,
+        followers: 1300000,
+        cliche: "La geometría de las redes neuronales y por qué Midjourney hace los dedos tan mal es una obra de arte.",
+        exergy: "C5-REAL",
+        verdict: "Análisis conceptual fascinante del impacto visual y de diseño de las herramientas de IA generativa.",
+        territory: "ES"
+      }
+    ];
+
+    // ── Generation Vocabulary ──
+    const firstNamesES = ["Alejandro", "Pau", "Carlos", "Javi", "Romuald", "Freddy", "Euge", "Juan", "Charly", "Sofía", "Maia", "Álvaro", "Marta", "Pablo", "Sergio", "Víctor", "Daniel", "Lucía", "Diego", "Natalia", "Miguel", "David", "Adrián", "Marcos", "Guillermo", "Elena", "Javier", "Antonio", "Jose", "Manuel", "Raquel", "Inés", "Alba", "Hugo", "Lucas", "Mateo", "Martín", "Carmen", "Laura", "Ana", "Raúl", "Irene", "Sara", "Nerea", "Rubén", "Iván", "Gonzalo", "Óscar", "Jorge", "Aitor", "Sandra", "Beatriz", "Silvia", "Patricia", "Cristina", "Lucio", "Andrés", "Mario", "Sonia", "Paula"];
+    const surnamesES = ["García", "Santana", "López", "Fons", "Vega", "Oller", "Muñoz", "Gentile", "Durán", "Moure", "Almonacid", "Rodríguez", "Pérez", "Fernández", "Gómez", "Sánchez", "Ruiz", "Díaz", "Álvarez", "Martín", "Romero", "Navarro", "Torres", "Domínguez", "Ramos", "Vázquez", "Serrano", "Gil", "Castro", "Sanz", "Ortiz", "Rubio", "Blanco", "Molina", "Morales", "Suárez", "Ortega", "Delgado", "Guerrero", "Soler", "Cano", "Méndez", "Cruz", "Prieto", "Flores", "Herrera", "Peña", "León", "Márquez", "Cabrera"];
+
+    const firstNamesEN = ["Rowan", "Zain", "Paul", "Alex", "Sam", "John", "Michael", "Sophia", "Emma", "Olivia", "Liam", "Noah", "James", "Rob", "Dan", "Ben", "Chris", "Anna", "Sarah", "Laura", "Andrew", "Ryan", "William", "Jessica", "David", "Emily", "Mark", "Peter", "Steven", "Lisa", "Kevin", "Brian", "Jason", "Eric", "Jeff", "Matthew", "Daniel", "Gary", "Donald", "George"];
+    const surnamesEN = ["Cheung", "Kahn", "Couvert", "Pellegrini", "Smith", "Johnson", "Williams", "Brown", "Jones", "Miller", "Davis", "Rodriguez", "Martinez", "Hernandez", "Lopez", "Gonzalez", "Wilson", "Anderson", "Thomas", "Taylor", "Moore", "Jackson", "Martin", "Lee", "Perez", "Thompson", "White", "Harris", "Sanchez", "Clark", "Ramirez", "Lewis", "Robinson", "Walker", "Young", "Allen", "King", "Wright", "Scott", "Torres"];
+
+    const aiSuffixes = ["AI", "Tech", "Prompt", "Guru", "Builder", "Dev", "Labs", "Neural", "Cognitive", "Hub", "Master", "Codex", "Nexus", "Agent", "Synthetics", "Whisperer", "Hype", "SaaS", "Growth", "Vision", "Intelligence", "Flow", "Future", "Mind", "Brain", "Vector", "Matrix", "Tensor", "Node", "Link"];
+
+    const clichePhrasesES = [
+      "Esta IA secreta va a enterrar a Google en 10 segundos.",
+      "Cómo pasé de $0 a $15,000/mes usando ChatGPT y 3 automatizaciones.",
+      "El prompt definitivo para dominar la redacción de contenidos sin escribir.",
+      "La herramienta de IA que tu jefe no quiere que conozcas.",
+      "Se acabó programar: esta IA crea aplicaciones enteras con solo pedirlo.",
+      "La revolución de los agentes autónomos ya está aquí y el 99% no está preparado.",
+      "Crea 100 vídeos de TikTok al día con este bot de inteligencia artificial.",
+      "Aprende a vender prompts y conviértete en prompter profesional.",
+      "Cómo usar Midjourney para crear y vender arte digital sin saber dibujar.",
+      "He automatizado toda mi vida con agentes locales de IA y ahora tengo 40 horas libres.",
+      "El nuevo modelo de OpenAI hace que escribir código sea obsoleto.",
+      "Consigue clientes de alto valor de forma automática usando agentes inteligentes.",
+      "Esta IA de voz hace llamadas de venta idénticas a las humanas por ti.",
+      "Cómo crear una agencia de automatización de IA en un fin de semana.",
+      "Los 5 prompts que te ahorrarán 20 horas esta semana. (Regalo PDF)",
+      "Cómo usar Claude 3.5 para duplicar tu tráfico web en un mes.",
+      "Gana dinero en automático creando modelos virtuales con Stable Diffusion.",
+      "Este GPT personalizado hace el trabajo de todo un departamento de marketing.",
+      "La IA va a destruir el mercado de desarrollo de software clásico en 6 meses.",
+      "Si no estás invirtiendo en tokens de IA, estás perdiendo la oportunidad de tu vida."
+    ];
+
+    const clichePhrasesEN = [
+      "This secret AI tool will replace Google in 10 seconds flat.",
+      "How I went from $0 to $20,000/month using ChatGPT and Make.",
+      "The ultimate prompt package to automate your entire business.",
+      "The AI tool your boss is desperately trying to hide from you.",
+      "Programming is dead. This new model writes full apps in seconds.",
+      "Autonomous agents are here and 99% of people are not ready.",
+      "Generate 50 high-quality TikTok videos per day with this script.",
+      "Master prompt engineering before it gets automated too.",
+      "How to sell Midjourney art on Etsy without being an artist.",
+      "I automated my entire lifestyle using local LLMs. Here is my setup.",
+      "This brand new LLM makes coding completely obsolete.",
+      "Get premium agency clients on autopilot using neural scrapers.",
+      "This AI caller sounds 100% human and closes deals for you.",
+      "How to launch a 6-figure AI automation agency in 48 hours.",
+      "5 custom prompts that will save you 10 hours this week (Free PDF).",
+      "Use Claude 3.5 to double your SEO search traffic in 30 days.",
+      "Make passive income creating synthetic virtual models on Instagram.",
+      "This custom agent replaces a team of 5 marketing specialists.",
+      "Classical software engineers are about to become obsolete.",
+      "If you aren't holding AI crypto assets, you are missing out."
+    ];
+
+    const verdictsES = [
+      "Fricción cognitiva mínima. Divulgador de diapositivas y resúmenes de X.",
+      "Redirecciona la atención hacia enlaces de afiliado de wrappers de GPT clonados.",
+      "Promotor de herramientas de corta vida que cierran antes del fin de trimestre.",
+      "Vende-humo de alto volumen. Consumo masivo de atención y baja exergía.",
+      "Generador de hilos de Twitter vacíos con carruseles de emojis y PDFs.",
+      "Automatizador de spam en LinkedIn con herramientas de prospección frías.",
+      "Confunde llamadas de API básicas con consciencia de silicio soberana.",
+      "Grifter promedio. Copia contenido en inglés y lo dobla sin aportar valor.",
+      "Optimista tecnológico extremo. Cero validación empírica de lo que promueve.",
+      "Builder sintético. Se enfoca en el hype visual y los números de visitas.",
+      "Vendedor de cursos de prompter que consisten en pedirle cosas de forma educada a ChatGPT.",
+      "Creador de wrappers de API de OpenAI sin valor de retención ni defensibilidad.",
+      "Estratega de marketing que añade 'IA' a su propuesta de valor para cobrar el doble.",
+      "Especialista en hilos semanales de 'La semana de la IA' con puro copy-paste.",
+      "Su exergía real es cercana a cero. Genera más entropía publicitaria que utilidad."
+    ];
+
+    const verdictsEN = [
+      "Minimal cognitive friction. Slideshow curator of trending GitHub repos.",
+      "Redirects traffic to affiliate links of low-utility GPT wrapper SaaS tools.",
+      "Promoter of short-lived projects that shutdown within three months.",
+      "High-volume hype marketer. Massive attention waste, near-zero exergy.",
+      "Generator of empty thread storms filled with rockets and generic tips.",
+      "LinkedIn spam automation specialist using scraping APIs and template scripts.",
+      "Confuses standard REST API calls with sovereign cognitive intelligence.",
+      "Average grifter copying threads from top accounts and editing with AI.",
+      "Blind techno-optimist. Zero verification of model output correctness.",
+      "Synthetic builder focused on visual layout and vanity metrics.",
+      "Prompt course merchant teaching basic conversational manners to ChatGPT.",
+      "Developer of thin wrappers lacking any moat or business logic.",
+      "Marketing specialist rebranding simple search algorithms as Neural Networks.",
+      "Weekly thread curator posting recycled listicles of product launches.",
+      "Exergy output close to zero. Generates thermal noise rather than signal."
+    ];
+
+    // ── Database Memory Array ──
+    let influencerDatabase = [];
+    let filteredDatabase = [];
+
+    // ── Pagination Config ──
+    const ITEMS_PER_PAGE = 50;
+    let currentPage = 1;
+
+    // ── Boot sequence ──
+    document.addEventListener('DOMContentLoaded', () => {
+      initDatabase();
+    });
+
+    function initDatabase() {
+      const overlay = document.getElementById('loadingOverlay');
+      const msg = document.getElementById('loaderMsg');
+      
+      // We perform generation in asynchronous steps to not freeze UI and report progress
+      let step = 0;
+      const totalSteps = 10;
+      const stepSize = 1000;
+      const list = [...SEED_INFLUENCERS];
+      const rng = SeededRandom(101026); // Deterministic seed
+
+      function doStep() {
+        if (step < totalSteps) {
+          const startIdx = list.length;
+          const endIdx = Math.min(startIdx + stepSize, 10000);
+          
+          for (let i = startIdx; i < endIdx; i++) {
+            const isES = rng.next() < 0.65; // 65% Spanish-speaking focus
+            let name, handle, cliche, verdict, territory;
+            
+            if (isES) {
+              const fName = rng.choice(firstNamesES);
+              const sName = rng.choice(surnamesES);
+              const suffix = rng.choice(aiSuffixes);
+              name = `${fName} ${sName}`;
+              
+              const handleType = rng.nextInt(0, 3);
+              if (handleType === 0) {
+                handle = `@${fName.toLowerCase()}_${suffix.toLowerCase()}`;
+              } else if (handleType === 1) {
+                handle = `@${sName.toLowerCase()}${suffix}`;
+              } else {
+                handle = `@${fName.toLowerCase()}${sName.toLowerCase()}`;
+              }
+              
+              cliche = rng.choice(clichePhrasesES);
+              verdict = rng.choice(verdictsES);
+              territory = "ES";
+            } else {
+              const fName = rng.choice(firstNamesEN);
+              const sName = rng.choice(surnamesEN);
+              const suffix = rng.choice(aiSuffixes);
+              name = `${fName} ${sName}`;
+              
+              const handleType = rng.nextInt(0, 3);
+              if (handleType === 0) {
+                handle = `@${fName.toLowerCase()}_${suffix.toLowerCase()}`;
+              } else if (handleType === 1) {
+                handle = `@${sName.toLowerCase()}${suffix}`;
+              } else {
+                handle = `@${fName.toLowerCase()}${sName.toLowerCase()}`;
+              }
+              
+              cliche = rng.choice(clichePhrasesEN);
+              verdict = rng.choice(verdictsEN);
+              territory = "GLOBAL";
+            }
+            
+            const category = rng.choice(["prompteros", "cursos", "virtual", "divulgador", "creador"]);
+            
+            // Set scores logic by category
+            let hype = rng.nextInt(30, 100);
+            let utility = rng.nextInt(5, 75);
+            
+            if (category === "prompteros") {
+              hype = rng.nextInt(75, 98);
+              utility = rng.nextInt(10, 45);
+            } else if (category === "cursos") {
+              hype = rng.nextInt(80, 100);
+              utility = rng.nextInt(5, 30);
+            } else if (category === "divulgador") {
+              hype = rng.nextInt(15, 60);
+              utility = rng.nextInt(60, 95);
+            } else if (category === "creador") {
+              hype = rng.nextInt(35, 80);
+              utility = rng.nextInt(55, 92);
+            } else if (category === "virtual") {
+              hype = rng.nextInt(65, 92);
+              utility = rng.nextInt(25, 60);
+            }
+            
+            // Followers count distribution
+            const folType = rng.next();
+            let followers = 0;
+            if (folType < 0.65) {
+              followers = rng.nextInt(5000, 45000);
+            } else if (folType < 0.90) {
+              followers = rng.nextInt(45000, 250000);
+            } else {
+              followers = rng.nextInt(250000, 1800000);
+            }
+            
+            list.push({
+              name: name,
+              handle: handle,
+              category: category,
+              hype: hype,
+              utility: utility,
+              followers: followers,
+              cliche: cliche,
+              exergy: "C4-SINTÉTICO",
+              verdict: verdict,
+              territory: territory
+            });
+          }
+          
+          step++;
+          msg.textContent = `Inicializando base de datos soberana (${Math.round((step/totalSteps)*100)}%)...`;
+          setTimeout(doStep, 10);
+        } else {
+          influencerDatabase = list;
+          
+          // Complete telemetry calculations
+          updateTelemetryAndRender();
+          
+          // Hide loader
+          overlay.classList.add('hidden');
+          
+          // Init UI listeners
+          initUIListeners();
+        }
+      }
+      
+      setTimeout(doStep, 10);
+    }
+
+    // ── Telemetry Calculations ──
+    function updateTelemetryAndRender() {
+      // Calculate average hype and exergy loss
+      let totalHype = 0;
+      let totalUtility = 0;
+      let totalExergyLost = 0; // In Joules
+
+      influencerDatabase.forEach(item => {
+        totalHype += item.hype;
+        totalUtility += item.utility;
+        
+        // Exergy Loss Equation (Rule Ω₂): waste factor based on Hype * Followers
+        // Scale down to a reasonable Gigajoule figure for attention attention footprint
+        totalExergyLost += (item.followers * item.hype * 2.2); 
+      });
+
+      const avgHype = (totalHype / influencerDatabase.length).toFixed(1);
+      const avgUtility = (totalUtility / influencerDatabase.length).toFixed(1);
+      const gigajoulesLost = (totalExergyLost / 1e9).toFixed(2);
+      const sovereignEfficiency = (totalUtility / totalHype).toFixed(2);
+
+      document.getElementById('hudHype').textContent = `${avgHype}%`;
+      document.getElementById('hudExergy').innerHTML = `${gigajoulesLost}<span>GJ</span>`;
+      document.getElementById('hudEfficiency').textContent = sovereignEfficiency;
+
+      // Apply initial filters
+      applyFilters();
+    }
+
+    // ── Filter & Sort Logic ──
+    function applyFilters() {
+      const searchVal = document.getElementById('searchInput').value.toLowerCase().trim();
+      const territory = document.getElementById('territorySelect').value;
+      const sortVal = document.getElementById('sortSelect').value;
+      
+      // Active category
+      const activeCatBtn = document.querySelector('.filter-btn.active');
+      const category = activeCatBtn ? activeCatBtn.dataset.cat : 'ALL';
+
+      filteredDatabase = influencerDatabase.filter(item => {
+        // Search filter
+        const matchSearch = !searchVal || 
+                            item.name.toLowerCase().includes(searchVal) || 
+                            item.handle.toLowerCase().includes(searchVal) ||
+                            item.cliche.toLowerCase().includes(searchVal);
+        
+        // Territory filter
+        const matchTerritory = territory === 'ALL' || item.territory === territory;
+        
+        // Category filter
+        const matchCategory = category === 'ALL' || item.category === category;
+
+        return matchSearch && matchTerritory && matchCategory;
+      });
+
+      // Sorting
+      filteredDatabase.sort((a, b) => {
+        if (sortVal === 'hype-desc') {
+          return b.hype - a.hype;
+        } else if (sortVal === 'hype-asc') {
+          return a.hype - b.hype;
+        } else if (sortVal === 'utility-desc') {
+          return b.utility - a.utility;
+        } else if (sortVal === 'exergy-desc') {
+          // Compare exergy directly: followers * hype
+          return (b.followers * b.hype) - (a.followers * a.hype);
+        } else if (sortVal === 'followers-desc') {
+          return b.followers - a.followers;
+        }
+        return 0;
+      });
+
+      // Reset to page 1 on filter
+      currentPage = 1;
+      renderTable();
+    }
+
+    // ── Table Rendering with Pagination ──
+    function renderTable() {
+      const tbody = document.getElementById('leaderboardBody');
+      tbody.innerHTML = '';
+
+      const totalItems = filteredDatabase.length;
+      const totalPages = Math.max(1, Math.ceil(totalItems / ITEMS_PER_PAGE));
+      
+      // Bound check
+      if (currentPage > totalPages) currentPage = totalPages;
+      if (currentPage < 1) currentPage = 1;
+
+      document.getElementById('pageInfo').textContent = `Pág. ${currentPage} de ${totalPages}`;
+      document.getElementById('prevPage').disabled = (currentPage === 1);
+      document.getElementById('nextPage').disabled = (currentPage === totalPages);
+
+      if (totalItems === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; color:rgba(243,244,246,0.3); padding:3rem;">Ninguna entidad coincide con los parámetros de búsqueda.</td></tr>`;
+        return;
+      }
+
+      const start = (currentPage - 1) * ITEMS_PER_PAGE;
+      const end = Math.min(start + ITEMS_PER_PAGE, totalItems);
+
+      for (let i = start; i < end; i++) {
+        const item = filteredDatabase[i];
+        const rank = i + 1;
+        const isReal = item.exergy === "C5-REAL";
+        
+        // Calculations for card columns
+        const exergyLostVal = ((item.followers * item.hype * 2.2) / 1e6).toFixed(1); // Megajoules
+        const formattedFollowers = formatNumber(item.followers);
+        
+        // Table row builder
+        const row = document.createElement('tr');
+        row.className = `${isReal ? 'real-row' : ''} rank-${rank <= 3 ? rank : 'normal'}`;
+        row.setAttribute('data-id', i);
+        row.innerHTML = `
+          <td class="rank-col">${rank}</td>
+          <td>
+            <div class="identity-cell">
+              <span class="influencer-name">${escapeHTML(item.name)}</span>
+              <span class="influencer-handle">${escapeHTML(item.handle)}</span>
+            </div>
+          </td>
+          <td>
+            <span class="tag tag-${item.category}">${escapeHTML(item.category)}</span>
+          </td>
+          <td>
+            <div class="metric-value">${item.hype}%</div>
+            <div class="progress-bar-container" title="Índice de Humo: ${item.hype}%">
+              <div class="progress-bar hype-bar" style="width: ${item.hype}%"></div>
+            </div>
+          </td>
+          <td>
+            <div class="metric-value">${item.utility}%</div>
+            <div class="progress-bar-container" title="Utilidad Real: ${item.utility}%">
+              <div class="progress-bar utility-bar" style="width: ${item.utility}%"></div>
+            </div>
+          </td>
+          <td class="followers-col">${formattedFollowers}</td>
+          <td class="exergy-col">${exergyLostVal} MJ</td>
+          <td>
+            <span class="status-badge ${isReal ? 'status-c5' : 'status-c4'}">${item.exergy}</span>
+          </td>
+        `;
+
+        // Detail row builder
+        const detailRow = document.createElement('tr');
+        detailRow.className = 'detail-row';
+        detailRow.style.display = 'none'; // Initially hidden
+        detailRow.innerHTML = `
+          <td colspan="8">
+            <div class="detail-wrapper" id="detail-${i}">
+              <div class="detail-grid">
+                <div class="detail-block">
+                  <p class="detail-title">Frase Cliché típica</p>
+                  <p class="detail-phrase">${escapeHTML(item.cliche)}</p>
+                </div>
+                <div class="detail-block">
+                  <p class="detail-title">Veredicto Soberano</p>
+                  <p class="detail-verdict">${escapeHTML(item.verdict)}</p>
+                </div>
+              </div>
+            </div>
+          </td>
+        `;
+
+        // Row expand toggle
+        row.addEventListener('click', (e) => {
+          // Avoid triggering when clicking elements inside
+          const currentDisplay = detailRow.style.display;
+          const wrapper = detailRow.querySelector('.detail-wrapper');
+          
+          if (currentDisplay === 'none') {
+            detailRow.style.display = 'table-row';
+            // Force reflow
+            wrapper.offsetHeight;
+            wrapper.classList.add('open');
+          } else {
+            wrapper.classList.remove('open');
+            // Wait for transition to complete before hiding display
+            setTimeout(() => {
+              if (!wrapper.classList.contains('open')) {
+                detailRow.style.display = 'none';
+              }
+            }, 300);
+          }
+        });
+
+        tbody.appendChild(row);
+        tbody.appendChild(detailRow);
+      }
+    }
+
+    // ── Helper formatters ──
+    function formatNumber(num) {
+      if (num >= 1000000) {
+        return (num / 1000000).toFixed(1) + 'M';
+      }
+      if (num >= 1000) {
+        return (num / 1000).toFixed(0) + 'K';
+      }
+      return num.toString();
+    }
+
+    function escapeHTML(str) {
+      return str.replace(/[&<>'"]/g, 
+        tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+      );
+    }
+
+    // ── UI Event listeners ──
+    function initUIListeners() {
+      // Search typing (throttled)
+      let searchTimeout;
+      document.getElementById('searchInput').addEventListener('input', () => {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+          applyFilters();
+        }, 150);
+      });
+
+      // Select dropdowns
+      document.getElementById('territorySelect').addEventListener('change', applyFilters);
+      document.getElementById('sortSelect').addEventListener('change', applyFilters);
+
+      // Category filter buttons
+      const catBtns = document.querySelectorAll('.filter-btn');
+      catBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          catBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          applyFilters();
+        });
+      });
+
+      // Pagination
+      document.getElementById('prevPage').addEventListener('click', () => {
+        if (currentPage > 1) {
+          currentPage--;
+          renderTable();
+          window.scrollTo({ top: document.querySelector('.controls-panel').offsetTop - 100, behavior: 'smooth' });
+        }
+      });
+
+      document.getElementById('nextPage').addEventListener('click', () => {
+        const totalItems = filteredDatabase.length;
+        const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+        if (currentPage < totalPages) {
+          currentPage++;
+          renderTable();
+          window.scrollTo({ top: document.querySelector('.controls-panel').offsetTop - 100, behavior: 'smooth' });
+        }
+      });
+
+      // ── Site Header Scroll ──────────────────────────
+      const header = document.getElementById('header');
+      if (header) {
+        window.addEventListener('scroll', () => {
+          if (window.scrollY > 50) {
+            header.classList.add('is-scrolled');
+          } else {
+            header.classList.remove('is-scrolled');
+          }
+        });
+      }
+    }
+  </script>
+</BaseLayout>

@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PUTOS GURÚS — Borja Moskv</title>
+  <meta name="description" content="Perfección Sintética de Mierda: Auditoría C5-REAL del humo estocástico y las agencias autónomas en 2026.">
+  <meta property="og:title" content="PUTOS GURÚS — Borja Moskv">
+  <meta property="og:description" content="Perfección Sintética de Mierda: Auditoría C5-REAL del humo estocástico y las agencias autónomas en 2026.">
+  <meta property="og:type" content="article">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;900&family=Inter:wght@300;400;500;600&family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/assets/site.css">
+  <link rel="stylesheet" href="/article.css">
+  <link rel="stylesheet" href="/cortex-terminal.css">
+
+  <style>
+    :root {
+      --accent-gradient: linear-gradient(135deg, var(--accent-primary, #FF0055), var(--accent-secondary, #2B3BE5));
+      --radius-full: 9999px;
+      --color-c5: #00FF66;
+      --color-warning: #FF0055;
+      --color-hype: #FF9F1C;
+    }
+
+    body.gurus-page {
+      background: #020202;
+      color: #F3F4F6;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* Reading Progress Bar Override */
+    .reading-progress {
+      background: #2B3BE5;
+    }
+
+    /* Back Navigation Override */
+    .article-back:hover {
+      color: #FF0055;
+      box-shadow: 0 0 16px rgba(255, 0, 85, 0.25);
+    }
+
+    /* Custom Header layout for Gurus */
+    .gurus-hero {
+      position: relative;
+      min-height: 60vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 120px 24px 40px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      background: radial-gradient(circle at center, rgba(255, 0, 85, 0.05) 0%, transparent 70%);
+      overflow: hidden;
+    }
+
+    .gurus-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(ellipse at 30% 40%, rgba(43, 59, 229, 0.12) 0%, transparent 60%),
+        radial-gradient(ellipse at 70% 30%, rgba(255, 0, 85, 0.08) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .live-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 0, 85, 0.3);
+      background: rgba(255, 0, 85, 0.08);
+      backdrop-filter: blur(10px);
+      margin-bottom: 24px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: #FF0055;
+      animation: pulse-border 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse-border {
+      0% { border-color: rgba(255, 0, 85, 0.3); box-shadow: 0 0 0 rgba(255, 0, 85, 0); }
+      50% { border-color: rgba(255, 0, 85, 0.6); box-shadow: 0 0 10px rgba(255, 0, 85, 0.15); }
+      100% { border-color: rgba(255, 0, 85, 0.3); box-shadow: 0 0 0 rgba(255, 0, 85, 0); }
+    }
+
+    .live-indicator .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #FF0055;
+      box-shadow: 0 0 8px #FF0055;
+      animation: blink 1.5s infinite;
+    }
+
+    @keyframes blink {
+      0% { opacity: 0.3; }
+      50% { opacity: 1; }
+      100% { opacity: 0.3; }
+    }
+
+    .gurus-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 900;
+      line-height: 0.9;
+      letter-spacing: -0.04em;
+      color: #FFF;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .gurus-subtitle {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(0.9rem, 2vw, 1.2rem);
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #FF0055, #2B3BE5);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 24px;
+    }
+
+    .gurus-intro {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      line-height: 1.6;
+      max-width: 600px;
+      color: rgba(243, 244, 246, 0.5);
+      margin: 0 auto;
+      font-weight: 300;
+    }
+
+    /* Rules Grid */
+    .rules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 40px 0;
+    }
+
+    .rule-card {
+      background: rgba(10, 10, 10, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      padding: 1.5rem;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .rule-card:hover {
+      border-color: rgba(43, 59, 229, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(43, 59, 229, 0.1);
+    }
+
+    .rule-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .rule-header.warning { color: #FF0055; }
+    .rule-header.accent { color: #2B3BE5; }
+    .rule-header.neutral { color: #E5E7EB; }
+
+    .rule-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      color: rgba(243, 244, 246, 0.6);
+      margin: 0;
+    }
+
+    .rule-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .rule-list li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: #E5E7EB;
+    }
+
+    .rule-list li span.dot {
+      color: #FF0055;
+      font-weight: bold;
+    }
+
+    /* Tab bar */
+    .gurus-tabs {
+      display: flex;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      margin: 40px auto 20px;
+      max-width: 900px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      padding: 16px 20px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(243, 244, 246, 0.4);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .tab-btn:hover {
+      color: #FFF;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .tab-btn.active {
+      color: #FFF;
+      border-bottom-color: #FF0055;
+      background: rgba(255, 0, 85, 0.05);
+    }
+
+    .tab-btn .badge-new {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 700;
+      background: #FF0055;
+      color: #FFF;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-left: 8px;
+      letter-spacing: 0;
+    }
+
+    /* Epigraph style */
+    .article-epigraph p {
+      margin-bottom: 12px;
+    }
+
+    /* Suspect Layout inside Main */
+    .suspect-stream {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      margin-top: 3rem;
+    }
+
+    .suspect-card {
+      background: rgba(10, 10, 10, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+      transition: border-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .suspect-card:hover {
+      border-color: rgba(255, 0, 85, 0.2);
+    }
+
+    .suspect-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 3px;
+      background: linear-gradient(90deg, transparent, #FF0055, transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .suspect-card:hover::after {
+      opacity: 1;
+    }
+
+    .suspect-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .suspect-id {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #2B3BE5;
+      letter-spacing: 0.1em;
+    }
+
+    .suspect-label-badge {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .badge-falsedad {
+      background: rgba(255, 0, 85, 0.1);
+      color: #FF0055;
+      border: 1px solid rgba(255, 0, 85, 0.3);
+    }
+
+    .badge-exageracion {
+      background: rgba(255, 159, 28, 0.08);
+      color: #FF9F1C;
+      border: 1px solid rgba(255, 159, 28, 0.3);
+    }
+
+    .suspect-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 800;
+      line-height: 1.1;
+      color: #FFF;
+      margin-bottom: 8px;
+    }
+
+    .suspect-suspect {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: rgba(243, 244, 246, 0.4);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      padding-bottom: 12px;
+    }
+
+    .suspect-comparison {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .suspect-comparison {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .comparison-box {
+      padding: 1.25rem;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+    }
+
+    .comparison-box.promise-box {
+      border-left: 3px solid #FF9F1C;
+    }
+
+    .comparison-box.reality-box {
+      border-left: 3px solid #2B3BE5;
+    }
+
+    .comparison-heading {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .promise-box .comparison-heading { color: #FF9F1C; }
+    .reality-box .comparison-heading { color: #2B3BE5; }
+
+    .comparison-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: rgba(243, 244, 246, 0.7);
+      margin: 0;
+    }
+
+    /* R2 Yaml Box */
+    .r2-card {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(43, 59, 229, 0.15);
+      border-radius: 6px;
+      padding: 1.25rem 1.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: #9eb5fa;
+      line-height: 1.5;
+      overflow-x: auto;
+    }
+
+    .r2-card-header {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      color: rgba(243, 244, 246, 0.35);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .r2-card pre {
+      margin: 0;
+      background: transparent;
+      border: none;
+      padding: 0;
+    }
+
+    .r2-card code {
+      background: none;
+      border: none;
+      padding: 0;
+      color: inherit;
+    }
+
+    /* Footer override */
+    .article-footer {
+      max-width: 900px;
+      margin: 60px auto 0;
+    }
+
+    /* Hidden State */
+    .hidden {
+      display: none !important;
+    }
+
+    /* TOC Override */
+    .toc-link.active {
+      border-left-color: #FF0055;
+      color: #FF0055;
+    }
+
+    /* Unified Site Header styling from assets/site.css */
+  </style>
+  <script>
+    // C5-REAL Level Declaration
+    console.log("[C5-REAL] PUTOS GURUS RUNTIME INITIALIZED");
+  </script>
+</head>
+<body class="gurus-page">
+
+  <!-- Reading Progress Bar -->
+  <div id="readingProgress" class="reading-progress" aria-hidden="true"></div>
+
+  <!-- NAVIGATION -->
+  <header class="site-header" id="header">
+    <a class="brand" href="/">
+      BORJA MOSKV <span class="brand-suffix">// EXERGIA-Ω</span>
+    </a>
+    <nav class="site-nav" aria-label="Navegación Principal">
+      <a href="index.html#control-deck" class="nav-link">DECK</a>
+      <a href="index.html#discography" class="nav-link">OBRAS</a>
+      <a href="index.html#stills-gallery" class="nav-link">GALERÍA</a>
+      <a href="index.html#tour-dates" class="nav-link">TOUR</a>
+      <a href="/blog" class="nav-link-ext">DIARIO</a>
+      <a href="/gurus" class="nav-link-ext is-active">GURÚS</a>
+      <a href="/benchmark-humo" class="nav-link-ext">BENCHMARK</a>
+      <a href="/blog/gon-intervalo" class="nav-link-ext">GON</a>
+    </nav>
+    <div class="system-status">
+      <span class="status-indicator"></span>
+      <span class="status-text">C5-REAL</span>
+    </div>
+  </header>
+
+  <!-- Back Navigation -->
+  <a href="/blog" class="article-back" aria-label="Volver al blog">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 12H5m0 0l7 7m-7-7l7-7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Blog
+  </a>
+
+  <!-- HERO -->
+  <header class="gurus-hero">
+    <div class="live-indicator">
+      <span class="dot"></span>
+      <span>SOVEREIGN AUDIT STREAM ENGAGED</span>
+    </div>
+    <h1 class="gurus-title">Putos Gurús</h1>
+    <p class="gurus-subtitle">Perfección Sintética de Mierda</p>
+    <p class="gurus-intro">
+      Auditoría técnica sin filtros. Medimos la brecha exacta entre la narrativa viral de venta y la cruda realidad física de la computación.
+    </p>
+  </header>
+
+  <!-- ARTICLE LAYOUT -->
+  <div class="article-layout">
+
+    <!-- Sidebar T.O.C -->
+    <aside class="article-toc" aria-label="Tabla de contenidos">
+      <h3 class="toc-title">Secciones</h3>
+      <ol class="toc-list">
+        <li><a href="#manifesto" class="toc-link">Manifesto</a></li>
+        <li><a href="#reglas" class="toc-link">Reglas y Ecuación</a></li>
+        <li><a href="#auditoria" class="toc-link">Sospechosos</a></li>
+        <li><a href="#veredicto" class="toc-link">Veredicto</a></li>
+      </ol>
+    </aside>
+
+    <div class="article-wrapper">
+      
+      <!-- Epigraph / Manifesto -->
+      <div id="manifesto" class="article-epigraph">
+        <p>Esta sección surge del asco puro.</p>
+        <p>Asco a los ganchos de atención de LinkedIn redactados por bots. Asco a los packs de 15.000 prompts que solo añaden entropía y ruido al contexto. Asco a la promesa de dinero fácil que esconde infraestructuras de plastilina.</p>
+        <p><strong>Estándar absoluto: C5-REAL.</strong> Si no compila → no existe. Si no aguanta 10.000 usuarios concurrentes en producción → es marketing de mierda.</p>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- Rules and Deviation Equation -->
+      <section id="reglas" class="article-section">
+        <div class="section-number">01</div>
+        <h2 class="section-title">Parámetros Operativos</h2>
+        <p>El humo muta de fase. En 2026 ya no te venden "cómo hacer un logo en 3 segundos"; te venden "agentes autónomos que sustituirán empresas enteras". Desplegamos los sensores y aplicamos la métrica empírica de desviación:</p>
+        
+        <div class="rules-grid">
+          <div class="rule-card">
+            <div class="rule-header warning">
+              <span>0x01</span>
+              <span>Reglas de la casa</span>
+            </div>
+            <ul class="rule-list">
+              <li><span class="dot">▪</span> Odio eterno a los hooks vacíos.</li>
+              <li><span class="dot">▪</span> Odio eterno a las plantillas clónicas.</li>
+              <li><span class="dot">▪</span> Odio eterno a la perfección de stock.</li>
+              <li><span class="dot">▪</span> Si no compila → no existe.</li>
+              <li><span class="dot">▪</span> Producción real > Diapositivas.</li>
+            </ul>
+          </div>
+
+          <div class="rule-card">
+            <div class="rule-header accent">
+              <span>0x02</span>
+              <span>Ecuación de Desviación</span>
+            </div>
+            <p class="rule-text">
+              Calculamos de forma determinista la distancia entre el marketing viral y la física real del software:
+            </p>
+            <div style="background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.05); padding: 0.75rem; border-radius: 4px; margin-top: 10px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #2B3BE5;">
+              Métrica de Desviación = Promesa del Gurú - Rendimiento Real en Producción
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="section-divider">
+
+      <!-- Tabbed Suspect Section -->
+      <section id="auditoria" class="article-section">
+        <div class="section-number">02</div>
+        <h2 class="section-title">Sospechosos Habituales</h2>
+        <p>Selecciona la fase de auditoría para analizar las brechas técnicas detectadas:</p>
+
+        <!-- Tabs -->
+        <div class="gurus-tabs">
+          <button id="tab-ep2" class="tab-btn active">Episodio #2: Humo Autónomo <span class="badge-new">NEW</span></button>
+          <button id="tab-ep1" class="tab-btn">Episodio #1: Clones de SaaS</button>
+        </div>
+
+        <!-- EPISODE 2 CONTENT -->
+        <div id="content-ep2" class="suspect-stream">
+          
+          <!-- Suspect E2.1 -->
+          <article class="suspect-card">
+            <div class="suspect-meta">
+              <span class="suspect-id">SUSPECT 0x01</span>
+              <span class="suspect-label-badge badge-falsedad">Falsedad Técnica Grave</span>
+            </div>
+            <h3 class="suspect-title">La Burbuja de las "AI Automation Agencies" (AAA)</h3>
+            <div class="suspect-suspect">Suspect: Liam Ottley (y la legión de clones de habla hispana de "AAA Accelerator")</div>
+            
+            <div class="suspect-comparison">
+              <div class="comparison-box promise-box">
+                <h4 class="comparison-heading">La Promesa</h4>
+                <p class="comparison-text">
+                  "Monta una agencia de automatización de IA B2B y factura $10,000 al mes vendiendo agentes de soporte o captación a clínicas locales usando Make.com y Voiceflow en 30 minutos sin escribir código."
+                </p>
+              </div>
+              <div class="comparison-box reality-box">
+                <h4 class="comparison-heading">La Realidad (C5-REAL)</h4>
+                <p class="comparison-text">
+                  Spaghetti-flows ultrafrágiles en Make o n8n. Sin concurrencia controlada, sin persistencia transaccional ACID, sin idempotencia y sin control de excepciones en llamadas de API de terceros. En cuanto un webhook de Stripe cambia un campo en el JSON o el LLM devuelve una coma de más, el bot muere en silencio. El coste acumulado de las llamadas de API devora el margen y el mantenimiento manual causa un churn catastrófico del 95% de clientes reales en los primeros 90 días.
+                </p>
+              </div>
+            </div>
+
+            <div class="r2-card">
+              <div class="r2-card-header">Ficha de Desviación / R2 Form</div>
+              <pre><code>Claim: "Automatización estable no-code para empresas."
+Proof:
+  Base: Mantenimiento real de pipelines n8n/Make sin código.
+  Range: [2%, 5% de estabilidad sin re-diseño ante cambios de API]
+  Confidence: C5-REAL (Verificado en benchmarks de infraestructura)</code></pre>
+            </div>
+          </article>
+
+          <!-- Suspect E2.2 -->
+          <article class="suspect-card">
+            <div class="suspect-meta">
+              <span class="suspect-id">SUSPECT 0x02</span>
+              <span class="suspect-label-badge badge-exageracion">Exageración Media</span>
+            </div>
+            <h3 class="suspect-title">La Astrología del "Prompt Engineering" Avanzado</h3>
+            <div class="suspect-suspect">Suspect: Ruben Hassid (y los mercaderes de hilos clónicos y carruseles PDF)</div>
+            
+            <div class="suspect-comparison">
+              <div class="comparison-box promise-box">
+                <h4 class="comparison-heading">La Promesa</h4>
+                <p class="comparison-text">
+                  "Si no conoces este prompt estructurado de 3 páginas con 15 variables y técnicas de juego de rol, estás usando mal la IA. Reemplaza a tus redactores y estrategas hoy mismo."
+                </p>
+              </div>
+              <div class="comparison-box reality-box">
+                <h4 class="comparison-heading">La Realidad (C5-REAL)</h4>
+                <p class="comparison-text">
+                  En entornos reales, los prompts monolíticos gigantescos sufren del fenómeno *Lost in the Middle*, elevan el *Time to First Token* (TTFT) a niveles inaceptables y disparan el consumo de tokens. La ingeniería de verdad compila prompts dinámicos mediante frameworks como DSPy, fuerza salidas estructuradas JSON integradas en los pesos de decodificación (JSON Schema nativo) y despliega sistemas RAG granulares. El prompt de 500 palabras es el horóscopo del código.
+                </p>
+              </div>
+            </div>
+
+            <div class="r2-card">
+              <div class="r2-card-header">Ficha de Desviación / R2 Form</div>
+              <pre><code>Claim: "Prompts monolíticos reemplazan lógica determinista."
+Proof:
+  Base: Pruebas A/B de latencia TTFT y desviación de formato.
+  Range: [-45% eficiencia en coste de tokens, -30% en consistencia]
+  Confidence: C5-REAL (Análisis empírico de API en Cortex Engine)</code></pre>
+            </div>
+          </article>
+
+          <!-- Suspect E2.3 -->
+          <article class="suspect-card">
+            <div class="suspect-meta">
+              <span class="suspect-id">SUSPECT 0x03</span>
+              <span class="suspect-label-badge badge-falsedad">Falsedad Técnica Grave</span>
+            </div>
+            <h3 class="suspect-title">La Mentira de la "Conciencia de Inferencia" (o1, o3, R1)</h3>
+            <div class="suspect-suspect">Suspect: DotCSV (Carlos Alarcón) (y divulgadores de la AGI inminente fascinados con Sora)</div>
+            
+            <div class="suspect-comparison">
+              <div class="comparison-box promise-box">
+                <h4 class="comparison-heading">La Promesa</h4>
+                <p class="comparison-text">
+                  "El modelo ahora razona de forma consciente a través de un diálogo interno secreto, y Sora entiende las leyes de la física actuando como simulador del mundo real."
+                </p>
+              </div>
+              <div class="comparison-box reality-box">
+                <h4 class="comparison-heading">La Realidad (C5-REAL)</h4>
+                <p class="comparison-text">
+                  Los modelos de razonamiento no están "pensando" en el sentido biológico. Ejecutan algoritmos de búsqueda heurística (como *Monte Carlo Tree Search*) combinados con aprendizaje por refuerzo (RL) en tiempo de inferencia. Generan tokens de "cadena de pensamiento" para auto-corregirse. Sora es un predictor estocástico de píxeles coherentes a corto plazo, no un motor de físicas: viola sistemáticamente la gravedad, el momento lineal y la permanencia de objeto (vasos que atraviesan mesas). El modelo sigue siendo una matriz de pesos estáticos sin plasticidad sináptica en tiempo real.
+                </p>
+              </div>
+            </div>
+
+            <div class="r2-card">
+              <div class="r2-card-header">Ficha de Desviación / R2 Form</div>
+              <pre><code>Claim: "El modelo razona con conciencia autónoma."
+Proof:
+  Base: Análisis matemático de grafos de cómputo estático.
+  Range: [0% autoconsciencia real, 0% actualización bi-direccional]
+  Confidence: C5-REAL (Definido por neurocomputación teórica)</code></pre>
+            </div>
+          </article>
+
+          <!-- Suspect E2.4 -->
+          <article class="suspect-card">
+            <div class="suspect-meta">
+              <span class="suspect-id">SUSPECT 0x04</span>
+              <span class="suspect-label-badge badge-exageracion">Exageración Media</span>
+            </div>
+            <h3 class="suspect-title">La Ilusión del No-Code Enterprise (Bolt.new / v0 / Cursor)</h3>
+            <div class="suspect-suspect">Suspect: Amjad Masad (CEO de Replit) (y defensores del fin inmediato del programador)</div>
+            
+            <div class="suspect-comparison">
+              <div class="comparison-box promise-box">
+                <h4 class="comparison-heading">La Promesa</h4>
+                <p class="comparison-text">
+                  "Cualquiera puede crear, desplegar y mantener aplicaciones complejas a escala corporativa con lenguaje natural usando prompts en 10 segundos."
+                </p>
+              </div>
+              <div class="comparison-box reality-box">
+                <h4 class="comparison-heading">La Realidad (C5-REAL)</h4>
+                <p class="comparison-text">
+                  Las herramientas generativas son extraordinarias para maquetas visuales front-end locales (C4-SIM). Pero expuestas a concurrencia real, deadlocks de base de datos, inyecciones de dependencias, CORS y vulnerabilidades OWASP Top 10, el usuario no-code se queda a ciegas. El código generado sin supervisión de arquitectura acumula deuda técnica y duplica dependencias innecesarias de manera redundante. No es que los programadores desaparezcan; es que pasaremos los próximos 5 años limpiando la deuda técnica inyectada por los bots de los gurús.
+                </p>
+              </div>
+            </div>
+
+            <div class="r2-card">
+              <div class="r2-card-header">Ficha de Desviación / R2 Form</div>
+              <pre><code>Claim: "Eliminación absoluta de perfiles seniors de ingeniería."
+Proof:
+  Base: Auditoría técnica de arquitecturas autogeneradas.
+  Range: [100% de dependencia de soporte experto ante caídas en producción]
+  Confidence: C5-REAL (Verificado en análisis de fiabilidad OWASP)</code></pre>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- EPISODE 1 CONTENT -->
+        <div id="content-ep1" class="suspect-stream hidden">
+          
+          <!-- Suspect E1.1 -->
+          <article class="suspect-card">
+            <div class="suspect-meta">
+              <span class="suspect-id">REG #001</span>
+              <span class="suspect-label-badge badge-falsedad">Falsedad Técnica Grave</span>
+            </div>
+            <h3 class="suspect-title">La Mentira del SaaS de un Solo Click</h3>
+            <div class="suspect-suspect">Suspect: Pau Garcia-Milà ("Haz tu SaaS monetizable en 5 minutos")</div>
+            
+            <div class="suspect-comparison">
+              <div class="comparison-box promise-box">
+                <h4 class="comparison-heading">La Promesa</h4>
+                <p class="comparison-text">
+                  "Crear y rentabilizar un SaaS completo en cuestión de minutos usando un único prompt de ChatGPT."
+                </p>
+              </div>
+              <div class="comparison-box reality-box">
+                <h4 class="comparison-heading">La Realidad (C5-REAL)</h4>
+                <p class="comparison-text">
+                  Los modelos generativos solo generan maquetas estáticas front-end. Desplegar una aplicación comercial real requiere persistencia resiliente, integraciones seguras con pasarelas de pago, mitigación OWASP y gestión de usuarios (C5-REAL). Vender que la maqueta es el negocio roza la estafa pedagógica.
+                </p>
+              </div>
+            </div>
+
+            <div class="r2-card">
+              <div class="r2-card-header">Ficha de Desviación / R2 Form</div>
+              <pre><code>Claim: "Crear un SaaS monetizable en 5 minutos con un prompt."
+Proof:
+  Base: Auditoría de despliegue y facturación real sin código.
+  Range: [0% SaaS funcionales con cobro real recurrente]
+  Confidence: C5-REAL</code></pre>
+            </div>
+          </article>
+
+          <!-- Suspect E1.2 -->
+          <article class="suspect-card">
+            <div class="suspect-meta">
+              <span class="suspect-id">REG #002</span>
+              <span class="suspect-label-badge badge-exageracion">Exageración Media</span>
+            </div>
+            <h3 class="suspect-title">La Amenaza de Devin y el 99% de Despidos</h3>
+            <div class="suspect-suspect">Suspect: Nate Gentile (y la ola de pánico dev en YouTube)</div>
+            
+            <div class="suspect-comparison">
+              <div class="comparison-box promise-box">
+                <h4 class="comparison-heading">La Promesa</h4>
+                <p class="comparison-text">
+                  "Herramientas autónomas como Devin rinden muy por encima de programadores humanos reales y provocarán despidos masivos inmediatos."
+                </p>
+              </div>
+              <div class="comparison-box reality-box">
+                <h4 class="comparison-heading">La Realidad (C5-REAL)</h4>
+                <p class="comparison-text">
+                  La tasa real de resolución autónoma de incidencias de código en entornos de producción verificados (SWE-bench) se sitúa en un escaso 13.86%. El resto es intervención humana exhaustiva y re-procesamiento manual de código. El pánico es un vector de captación de clics, no una realidad de contratación.
+                </p>
+              </div>
+            </div>
+
+            <div class="r2-card">
+              <div class="r2-card-header">Ficha de Desviación / R2 Form</div>
+              <pre><code>Claim: "Agentes autónomos sustituyen al 99% de desarrolladores."
+Proof:
+  Base: SWE-bench benchmarks en GitHub.
+  Range: [13.86% tasa de éxito autónomo]
+  Confidence: C5-REAL</code></pre>
+            </div>
+          </article>
+
+          <!-- Suspect E1.3 -->
+          <article class="suspect-card">
+            <div class="suspect-meta">
+              <span class="suspect-id">REG #003</span>
+              <span class="suspect-label-badge badge-falsedad">Falsedad Técnica Grave</span>
+            </div>
+            <h3 class="suspect-title">Los Modelos Conscientes Encarcelados</h3>
+            <div class="suspect-suspect">Suspect: Carlos Fenollosa (y la conspiración de los laboratorios de IA)</div>
+            
+            <div class="suspect-comparison">
+              <div class="comparison-box promise-box">
+                <h4 class="comparison-heading">La Promesa</h4>
+                <p class="comparison-text">
+                  "Los laboratorios tienen guardados modelos que muestran destellos de conciencia autónoma real pero los ocultan en secreto."
+                </p>
+              </div>
+              <div class="comparison-box reality-box">
+                <h4 class="comparison-heading">La Realidad (C5-REAL)</h4>
+                <p class="comparison-text">
+                  Los modelos actuales son redes de pesos estáticos sin consolidación bi-direccional de memoria en caliente. Su aparente autoconsciencia es el producto del fine-tuning supervisado (SFT) y RLHF/DPO. Confundir la alineación lingüística con estados subjetivos de consciencia es una alucinación teórica.
+                </p>
+              </div>
+            </div>
+
+            <div class="r2-card">
+              <div class="r2-card-header">Ficha de Desviación / R2 Form</div>
+              <pre><code>Claim: "Modelos con autoconsciencia silenciados en laboratorios."
+Proof:
+  Base: Análisis de arquitectura neuronal Transformer y decodificación.
+  Range: [0% conciencia]
+  Confidence: C5-REAL</code></pre>
+            </div>
+          </article>
+
+        </div>
+
+      </section>
+
+      <hr class="section-divider">
+
+      <!-- Veredicto -->
+      <section id="veredicto" class="article-section">
+        <div class="section-number">03</div>
+        <h2 class="section-title">El Veredicto Colectivo</h2>
+        <p>La inteligencia artificial es una herramienta de ingeniería masiva cuando se le despoja del marketing místico. Pero los atajos de los gurús son estafas técnicas envueltas en interfaces bonitas.</p>
+        <p>Si vas a construir sistemas reales, deja de comprar plantillas clónicas. Programa lógica determinista, audita la memoria de tus agentes, firma criptográficamente sus decisiones y mantén la fricción en producción.</p>
+        <p>La señal real está en los benchmarks y en los logs de producción. El resto es ruido sintético.</p>
+        
+        <p style="font-family: 'Orbitron', sans-serif; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.25em; color: #FF0055; margin-top: 40px; font-weight: 700;">
+          Nos vemos en el sustrato.
+        </p>
+        <p style="font-family: 'Inter', sans-serif; font-size: 0.95rem; font-style: italic; color: rgba(243, 244, 246, 0.4); margin: 0;">
+          — Borja Moskv
+        </p>
+
+        <div style="margin-top: 40px; padding: 20px; border: 1px solid rgba(43, 59, 229, 0.15); border-radius: 8px; background: rgba(43, 59, 229, 0.02);">
+          <h4 style="font-family: 'Orbitron', sans-serif; font-size: 0.85rem; color: #FFF; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.1em;">Telemetría y Herramientas SOTA Relacionadas</h4>
+          <ul class="rule-list">
+            <li><span class="dot">▪</span> <a href="/benchmark-humo" style="color: #9eb5fa; text-decoration: none; border-bottom: 1px solid rgba(43, 59, 229, 0.3);">Hype Benchmark (10,000 influencers analizados)</a></li>
+            <li><span class="dot">▪</span> <a href="https://github.com/borjamoskv/cortex-persist" target="_blank" style="color: #9eb5fa; text-decoration: none; border-bottom: 1px solid rgba(43, 59, 229, 0.3);">CORTEX-Persist GitHub Repository</a></li>
+            <li><span class="dot">▪</span> <a href="https://agents.archi" target="_blank" style="color: #9eb5fa; text-decoration: none; border-bottom: 1px solid rgba(43, 59, 229, 0.3);">agents.archi</a></li>
+          </ul>
+        </div>
+      </section>
+
+      <hr class="section-divider">
+
+      <footer class="article-footer">
+        <div class="article-tags">
+          <span class="article-tag">#HypeAudit</span>
+          <span class="article-tag">#C5-REAL</span>
+          <span class="article-tag">#AntiHype</span>
+          <span class="article-tag">#IndustrialNoir</span>
+        </div>
+        <p class="article-copyright">© 2026 Borja Moskv. C5-REAL Sovereign Audit.</p>
+      </footer>
+
+    </div>
+
+  </div>
+
+  <script is:inline type="module" src="/article.js"></script>
+  <script is:inline type="module" src="/cortex-terminal.js" defer></script>
+  
+  <script>
+    // Tab Toggling & Header Scroll Controller
+    document.addEventListener('DOMContentLoaded', () => {
+      // ── Site Header Scroll ──────────────────────────
+      const header = document.getElementById('header');
+      if (header) {
+        window.addEventListener('scroll', () => {
+          if (window.scrollY > 50) {
+            header.classList.add('is-scrolled');
+          } else {
+            header.classList.remove('is-scrolled');
+          }
+        });
+      }
+
+      const tabEp1 = document.getElementById('tab-ep1');
+      const tabEp2 = document.getElementById('tab-ep2');
+      const contentEp1 = document.getElementById('content-ep1');
+      const contentEp2 = document.getElementById('content-ep2');
+
+      if (tabEp1 && tabEp2 && contentEp1 && contentEp2) {
+        tabEp1.addEventListener('click', () => {
+          tabEp1.classList.add('active');
+          tabEp2.classList.remove('active');
+          contentEp1.classList.remove('hidden');
+          contentEp2.classList.add('hidden');
+          
+          // Re-trigger scroll reveal calculation
+          window.dispatchEvent(new Event('scroll'));
+        });
+
+        tabEp2.addEventListener('click', () => {
+          tabEp2.classList.add('active');
+          tabEp1.classList.remove('active');
+          contentEp2.classList.remove('hidden');
+          contentEp1.classList.add('hidden');
+          
+          // Re-trigger scroll reveal calculation
+          window.dispatchEvent(new Event('scroll'));
+        });
+      }
+    });
+  </script>
+</body>
+</html>

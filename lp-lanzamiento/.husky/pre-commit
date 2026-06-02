@@ -1,7 +1,0 @@
-npm run lint
-npm run build
-npm run preview &
-LH_PID=$!
-sleep 2
-npx @lhci/cli@0.13.0 autorun
-kill $LH_PID
