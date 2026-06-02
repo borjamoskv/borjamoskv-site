@@ -3,7 +3,7 @@
 CRONOS-Ω: Sovereign Deep Audit, Network Drift Detector, and UI Injector.
 Performs density-based quantitative text auditing and co-recommendation graph drift analysis
 between AI Mafia and control group subdomains. Re-generates telemetry HTML dashboard
-and compiles the workspace using Vite.
+and compiles the workspace using Vite. Uses caching and rate-limiting throttling.
 """
 
 import urllib.request
@@ -27,8 +27,24 @@ BASELINE_PATH = os.path.join(BASE_DIR, "substack_archive/recommendations_graph.j
 OUTPUT_AUDIT_PATH = os.path.join(BASE_DIR, "substack_archive/cronos_deep_audit_results.json")
 HISTORY_LOG_PATH = os.path.join(BASE_DIR, "substack_archive/cronos_history.log")
 HTML_REPORT_PATH = os.path.join(BASE_DIR, "substack-mafia-autopsia-estructural.html")
+CACHE_PATH = os.path.join(BASE_DIR, "substack_archive/pub_ids_cache.json")
 
-SEEDS = ["aimafia", "cosasdefreelance", "tudosisia", "webreactiva"]
+SEEDS = [
+    "aimafia", 
+    "cosasdefreelance", 
+    "tudosisia", 
+    "webreactiva", 
+    "iaparatodo", 
+    "agentesia", 
+    "futuria", 
+    "overxtime", 
+    "cafeconia", 
+    "spacioia", 
+    "modoxtenx",
+    "enriquemartinezbermejo",
+    "hellojaume",
+    "escribepro"
+]
 
 # Refined Keywords for Density Analysis
 CLICKBAIT_PATTERNS = [
@@ -49,6 +65,23 @@ SPONSOR_PATTERNS = [
     r"pruébalo gratis", r"\bdescuento\b", r"\bprecio\b", r"\bcompra\b", r"\bsuscripción de pago\b"
 ]
 
+def load_cache():
+    if os.path.exists(CACHE_PATH):
+        try:
+            with open(CACHE_PATH, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except:
+            pass
+    return {}
+
+def save_cache(cache):
+    try:
+        os.makedirs(os.path.dirname(CACHE_PATH), exist_ok=True)
+        with open(CACHE_PATH, "w", encoding="utf-8") as f:
+            json.dump(cache, f, indent=2, ensure_ascii=False)
+    except:
+        pass
+
 def clean_html(html):
     """Simple regex HTML tag stripper to get raw text content."""
     text = re.sub(r'<script\b[^>]*>([\s\S]*?)</script>', '', html)
@@ -58,67 +91,118 @@ def clean_html(html):
     return text.strip()
 
 def resolve_pub_id_and_url(subdomain):
-    """Resolves Substack publication ID from subdomain or custom domain."""
+    """Resolves Substack publication ID from subdomain or custom domain with caching and retries."""
+    cache = load_cache()
+    if subdomain in cache:
+        return cache[subdomain].get("id"), cache[subdomain].get("url")
+
     base_url = f"https://{subdomain}.substack.com"
     url = f"{base_url}/about"
-    req = urllib.request.Request(
-        url,
-        headers={'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36'}
-    )
-    try:
-        with urllib.request.urlopen(req, context=ctx, timeout=8) as response:
-            final_url = response.geturl()
-            base_match = re.match(r'(https?://[^/]+)', final_url)
-            if base_match:
-                base_url = base_match.group(1)
-            html = response.read().decode('utf-8', 'ignore')
-            pub_id = None
+    
+    retries = 3
+    backoff = 5
+    
+    for attempt in range(retries):
+        req = urllib.request.Request(
+            url,
+            headers={'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36'}
+        )
+        try:
+            with urllib.request.urlopen(req, context=ctx, timeout=8) as response:
+                final_url = response.geturl()
+                base_match = re.match(r'(https?://[^/]+)', final_url)
+                if base_match:
+                    base_url = base_match.group(1)
+                html = response.read().decode('utf-8', 'ignore')
+                pub_id = None
+                
+                # Matches
+                match = re.search(r'window\._preloads\s*=\s*JSON\.parse\("(.*?)"\)', html)
+                if match:
+                    try:
+                        decoded = json.loads('"' + match.group(1) + '"')
+                        data = json.loads(decoded)
+                        pub_id = data.get('pub', {}).get('id')
+                    except:
+                        pass
+                if not pub_id:
+                    match_id = re.search(r'"publication_id"\s*:\s*(\d+)', html)
+                    if match_id:
+                        pub_id = int(match_id.group(1))
+                if not pub_id:
+                    match_fallback = re.search(r'publication_id[^\d]*(\d+)', html)
+                    if match_fallback:
+                        pub_id = int(match_fallback.group(1))
+                        
+                if pub_id:
+                    cache[subdomain] = {"id": pub_id, "url": base_url}
+                    save_cache(cache)
+                    return pub_id, base_url
+                break
+        except urllib.error.HTTPError as e:
+            if e.code == 429:
+                print(f"      [!] Hit 429 rate limit resolving {subdomain}. Retrying in {backoff}s (Attempt {attempt+1}/{retries})...")
+                time.sleep(backoff)
+                backoff *= 2
+            else:
+                break
+        except Exception as e:
+            break
             
-            # Matches
-            match = re.search(r'window\._preloads\s*=\s*JSON\.parse\("(.*?)"\)', html)
-            if match:
-                try:
-                    decoded = json.loads('"' + match.group(1) + '"')
-                    data = json.loads(decoded)
-                    pub_id = data.get('pub', {}).get('id')
-                except:
-                    pass
-            if not pub_id:
-                match_id = re.search(r'"publication_id"\s*:\s*(\d+)', html)
-                if match_id:
-                    pub_id = int(match_id.group(1))
-            return pub_id, base_url
-    except Exception as e:
-        return None, base_url
+    return None, base_url
 
 def fetch_recommendations(subdomain):
-    """Fetches recommendations from Substack internal API."""
+    """Fetches recommendations from Substack internal API with retry capability."""
     pub_id, base_url = resolve_pub_id_and_url(subdomain)
     if not pub_id:
         return []
     url = f"{base_url}/api/v1/recommendations/from/{pub_id}"
-    req = urllib.request.Request(
-        url,
-        headers={'User-Agent': 'Mozilla/5.0', 'Accept': 'application/json'}
-    )
-    try:
-        with urllib.request.urlopen(req, context=ctx, timeout=8) as response:
-            return json.loads(response.read().decode('utf-8'))
-    except Exception as e:
-        return []
+    
+    retries = 3
+    backoff = 5
+    for attempt in range(retries):
+        req = urllib.request.Request(
+            url,
+            headers={'User-Agent': 'Mozilla/5.0', 'Accept': 'application/json'}
+        )
+        try:
+            with urllib.request.urlopen(req, context=ctx, timeout=8) as response:
+                return json.loads(response.read().decode('utf-8'))
+        except urllib.error.HTTPError as e:
+            if e.code == 429:
+                print(f"      [!] Hit 429 rate limit fetching recommendations for {subdomain}. Retrying in {backoff}s...")
+                time.sleep(backoff)
+                backoff *= 2
+            else:
+                break
+        except Exception as e:
+            break
+    return []
 
 def fetch_archive_posts(subdomain, limit=10):
-    """Fetches recent posts metadata for a subdomain."""
+    """Fetches recent posts metadata for a subdomain with retry capability."""
     url = f"https://{subdomain}.substack.com/api/v1/archive?sort=new&limit={limit}"
-    req = urllib.request.Request(
-        url,
-        headers={'User-Agent': 'Mozilla/5.0'}
-    )
-    try:
-        with urllib.request.urlopen(req, context=ctx, timeout=8) as response:
-            return json.loads(response.read().decode('utf-8'))
-    except Exception as e:
-        return []
+    
+    retries = 3
+    backoff = 5
+    for attempt in range(retries):
+        req = urllib.request.Request(
+            url,
+            headers={'User-Agent': 'Mozilla/5.0'}
+        )
+        try:
+            with urllib.request.urlopen(req, context=ctx, timeout=8) as response:
+                return json.loads(response.read().decode('utf-8'))
+        except urllib.error.HTTPError as e:
+            if e.code == 429:
+                print(f"      [!] Hit 429 rate limit fetching archive for {subdomain}. Retrying in {backoff}s...")
+                time.sleep(backoff)
+                backoff *= 2
+            else:
+                break
+        except Exception as e:
+            break
+    return []
 
 def fetch_post_html(post_url):
     """Fetches full HTML of a specific post."""
@@ -355,6 +439,8 @@ def main():
     
     for seed in SEEDS:
         print(f"\n[*] Auditing Subdomain: {seed}")
+        # Throttle processing loop to prevent WAF 429
+        time.sleep(2.5)
         
         # 1. Fetch live recommendations
         raw_recs = fetch_recommendations(seed)
@@ -381,14 +467,16 @@ def main():
         print(f"    - Auditing latest {len(posts)} articles...")
         
         audited_articles = []
-        with ThreadPoolExecutor(max_workers=8) as executor:
-            futures = {executor.submit(audit_single_post, p): p for p in posts}
-            for future in as_completed(futures):
-                try:
-                    res = future.result()
-                    audited_articles.append(res)
-                except Exception as e:
-                    print(f"      [!] Failed to audit article: {e}")
+        if posts:
+            with ThreadPoolExecutor(max_workers=8) as executor:
+                futures = {executor.submit(audit_single_post, p): p for p in posts}
+                for future in as_completed(futures):
+                    try:
+                        res = future.result()
+                        if res:
+                            audited_articles.append(res)
+                    except Exception as e:
+                        print(f"      [!] Failed to audit article: {e}")
                     
         # Compute averages
         if audited_articles:
