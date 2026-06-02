@@ -14,5 +14,15 @@ import '../styles/global.css';
       <p>La fricción cognitiva transformada en exergía absoluta. El primer ecosistema auditivo que se retroalimenta de tu interacción.</p>
       <a href="#extract" class="cta-button" id="trigger-exergy">INICIAR SÍNTESIS</a>
     </div>
+    <script>
+      if (import.meta.env.PROD) {
+        window.__DOM_INTEGRITY__ = {
+          h1Count: document.querySelectorAll("h1").length,
+          missingLabels: Array.from(document.querySelectorAll('input, button, a')).filter(el => 
+            !el.getAttribute('aria-label') && !el.textContent?.trim() && !el.id
+          ).length
+        }
+      }
+    </script>
   </body>
 </html>

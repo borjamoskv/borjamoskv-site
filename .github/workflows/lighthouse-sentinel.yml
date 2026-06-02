@@ -1,4 +1,4 @@
-name: Lighthouse Guardian Shield (C5-REAL)
+name: Lighthouse Sentinel OMEGA (C5-REAL)
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
     branches: [ main, master ]
 
 jobs:
-  lighthouse-guardian:
+  lighthouse-sentinel:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -19,12 +19,18 @@ jobs:
       
       - name: Install dependencies
         working-directory: ./lp-lanzamiento
-        run: npm install
+        run: npm ci || npm install
       
       - name: Build Project
         working-directory: ./lp-lanzamiento
         run: npm run build
       
-      - name: Run Lighthouse CI Guardian
-        working-directory: ./lp-lanzamiento
-        run: npx @lhci/cli@0.13.0 autorun
+      - name: Lighthouse Sentinel Audit & PR Comment
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          configPath: './lp-lanzamiento/.lighthouserc.json'
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+          runs: 3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
