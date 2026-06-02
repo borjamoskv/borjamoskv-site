@@ -1,0 +1,105 @@
+{
+  "borjamoskv": {
+    "subdomain": "borjamoskv",
+    "recommendations": [
+      {
+        "id": 7970182,
+        "name": "Borja Moskv",
+        "subdomain": "cosmiccountry",
+        "author_name": "MOSKV-1",
+        "subscribers": null,
+        "description": "Orquestado mi Asistente CORTEX"
+      },
+      {
+        "id": 6297055,
+        "name": "Placer en bandeja",
+        "subdomain": "somosmalablada",
+        "author_name": "Mala Blada",
+        "subscribers": null,
+        "description": "El deseo femenino no necesita permiso\n"
+      }
+    ]
+  },
+  "cosmiccountry": {
+    "subdomain": "cosmiccountry",
+    "recommendations": [
+      {
+        "id": 7289132,
+        "name": "Jarana d'Or",
+        "subdomain": "borjamoskv",
+        "author_name": "Borka Moskv",
+        "subscribers": null,
+        "description": "Ensayos, audio y artefactos sobre música electrónica, IA soberana y cultura digital rara."
+      }
+    ]
+  },
+  "somosmalablada": {
+    "subdomain": "somosmalablada",
+    "recommendations": [
+      {
+        "id": 6217686,
+        "name": "La traumatóloga geek",
+        "subdomain": "traumatogeek",
+        "author_name": "La traumatóloga geek",
+        "subscribers": null,
+        "description": "Traumatóloga geek. Ingeniera reconvertida.\n10+ años arreglando huesos\nHistoria de la medicina\nDatos que no quieres ignorar"
+      },
+      {
+        "id": 5912217,
+        "name": "Todo Lo Rico",
+        "subdomain": "tlrcol",
+        "author_name": "Todo Lo Rico",
+        "subscribers": null,
+        "description": "Somos un medio alternativo que celebra el placer de vivir, explorar y disfrutar sin culpas. 🌟"
+      },
+      {
+        "id": 5382687,
+        "name": "Sexperta en Placer",
+        "subdomain": "sexpertaenplacer",
+        "author_name": "Sandra Campó",
+        "subscribers": null,
+        "description": "Educación sexual para mujeres curiosas✨\n"
+      },
+      {
+        "id": 3154841,
+        "name": "Diario de Substack",
+        "subdomain": "columnas",
+        "author_name": "Roberto",
+        "subscribers": null,
+        "description": "Reseñas de los mejores artículos en español publicados en Substack y columnas de los mejores escritores. Además, noticias y novedades sobre Substack y sus autores, FAQs de dudas, etc. El \"HOLA\" de Substack."
+      },
+      {
+        "id": 2755094,
+        "name": "El Taller de las Palabras",
+        "subdomain": "charliemarrez",
+        "author_name": "Charlie Marrez",
+        "subscribers": null,
+        "description": "El Taller de las Palabras es un rincón artesanal donde las letras se transforman en relatos, cuentos y reflexiones. Aquí comparto historias hechas a mano, herramientas creativas y los procesos que dan forma a mis ideas."
+      },
+      {
+        "id": 2744888,
+        "name": "Miradero",
+        "subdomain": "samueldominguez",
+        "author_name": "Samuel Domínguez",
+        "subscribers": null,
+        "description": "Ya estás suscrito a muchos que se mueren por enseñarte lo que saben: yo te voy a entretener. Dicen que se me da muy bien, y lo hago con un correo diario. Relatos, literatura, reflexiones y lo que vaya viendo por Palestina. \nSí, vivo en eeesa Palestina."
+      },
+      {
+        "id": 2682273,
+        "name": "aprendiendo IA",
+        "subdomain": "germanmartinezai",
+        "author_name": "Germán Martínez",
+        "subscribers": null,
+        "description": "Hablo sobre IA sin asumir que tienes un doctorado en ciencias de la computación. Análisis, comentarios y aplicaciones de inteligencia artificial explicadas de forma sencilla y divertida para usarlas en tu día a día."
+      },
+      {
+        "id": 2349560,
+        "name": "Jardín Mental",
+        "subdomain": "jardinmental",
+        "author_name": "Álvaro García",
+        "subscribers": null,
+        "description": "Ideas prácticas sobre creatividad, enfoque y sistemas para construir proyectos creativos en internet."
+      }
+    ]
+  }
+}
