@@ -841,7 +841,7 @@ El producto central de la Substack Mafia es su red de interacción. Esta topolog
       </div>
       <div style="text-align: right;">
         <span style="font-family: 'JetBrains Mono'; font-size: 0.8rem; background: rgba(43, 59, 229, 0.15); color: #00f3ff; border: 1px solid rgba(0, 243, 255, 0.3); border-radius: 4px; padding: 4px 8px; display: inline-block;">
-          ● DAEMON ACTIVO: 2026-06-03 03:01:24 UTC
+          ● DAEMON ACTIVO: 2026-06-03 04:01:47 UTC
         </span>
       </div>
     </div>
@@ -1302,7 +1302,7 @@ El producto central de la Substack Mafia es su red de interacción. Esta topolog
           
           <div style="background: rgba(0, 243, 255, 0.1); border: 1px solid #00f3ff44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
             <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #00f3ff; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">11.8</div>
+            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">11.1</div>
             <div style="font-size: 0.65rem; color: #00f3ff; font-family: 'JetBrains Mono';">ORGANIC / PURAMENTE TÉCNICO</div>
           </div>
           
@@ -1311,10 +1311,10 @@ El producto central de la Substack Mafia es su red de interacción. Esta topolog
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">22.0%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">21.3%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 22.0%; height: 100%; background: #ff3355;"></div>
+                <div style="width: 21.3%; height: 100%; background: #ff3355;"></div>
               </div>
             </div>
             
@@ -1331,10 +1331,10 @@ El producto central de la Substack Mafia es su red de interacción. Esta topolog
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Llamadas Comerciales</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">4.7%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">3.9%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 4.7%; height: 100%; background: #2B3BE5;"></div>
+                <div style="width: 3.9%; height: 100%; background: #2B3BE5;"></div>
               </div>
             </div>
           </div>
@@ -1359,7 +1359,7 @@ El producto central de la Substack Mafia es su red de interacción. Esta topolog
               cafeconia.substack
             </a>
             <span style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #888; background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px;">
-              Ref: 6 recs
+              Ref: 0 recs
             </span>
           </div>
           
@@ -1406,11 +1406,11 @@ El producto central de la Substack Mafia es su red de interacción. Esta topolog
         <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.75rem; margin-top: 0.5rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #888;">
           <div>
             <span>Drift Red:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #888; font-weight: bold;">0.0%</span>
+            <span style="font-family: 'JetBrains Mono'; color: #ff3355; font-weight: bold;">100.0%</span>
           </div>
           <div>
             <span>Cambios:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #FFF;">Estable</span>
+            <span style="font-family: 'JetBrains Mono'; color: #FFF;">+0 / -6</span>
           </div>
         </div>
       </div>
@@ -1743,7 +1743,7 @@ El producto central de la Substack Mafia es su red de interacción. Esta topolog
           
           <div style="background: rgba(0, 243, 255, 0.1); border: 1px solid #00f3ff44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
             <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #00f3ff; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">5.2</div>
+            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">11.1</div>
             <div style="font-size: 0.65rem; color: #00f3ff; font-family: 'JetBrains Mono';">ORGANIC / PURAMENTE TÉCNICO</div>
           </div>
           
@@ -1752,20 +1752,20 @@ El producto central de la Substack Mafia es su red de interacción. Esta topolog
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">7.8%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">21.5%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 7.8%; height: 100%; background: #ff3355;"></div>
+                <div style="width: 21.5%; height: 100%; background: #ff3355;"></div>
               </div>
             </div>
             
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Densidad Técnica</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">0.7%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">3.0%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 0.7%; height: 100%; background: #00f3ff;"></div>
+                <div style="width: 3.0%; height: 100%; background: #00f3ff;"></div>
               </div>
             </div>
             
@@ -1869,7 +1869,7 @@ El producto central de la Substack Mafia es su red de interacción. Esta topolog
           
           <div style="background: rgba(0, 243, 255, 0.1); border: 1px solid #00f3ff44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
             <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #00f3ff; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">13.7</div>
+            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">9.2</div>
             <div style="font-size: 0.65rem; color: #00f3ff; font-family: 'JetBrains Mono';">ORGANIC / PURAMENTE TÉCNICO</div>
           </div>
           
@@ -1878,20 +1878,20 @@ El producto central de la Substack Mafia es su red de interacción. Esta topolog
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">32.0%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">21.5%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 32.0%; height: 100%; background: #ff3355;"></div>
+                <div style="width: 21.5%; height: 100%; background: #ff3355;"></div>
               </div>
             </div>
             
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Densidad Técnica</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">7.1%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">4.2%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 7.1%; height: 100%; background: #00f3ff;"></div>
+                <div style="width: 4.2%; height: 100%; background: #00f3ff;"></div>
               </div>
             </div>
             
@@ -1932,7 +1932,7 @@ El producto central de la Substack Mafia es su red de interacción. Esta topolog
           
           <div style="background: rgba(0, 243, 255, 0.1); border: 1px solid #00f3ff44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
             <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #00f3ff; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">4.9</div>
+            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">6.0</div>
             <div style="font-size: 0.65rem; color: #00f3ff; font-family: 'JetBrains Mono';">ORGANIC / PURAMENTE TÉCNICO</div>
           </div>
           
@@ -1941,20 +1941,20 @@ El producto central de la Substack Mafia es su red de interacción. Esta topolog
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">7.3%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">10.5%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 7.3%; height: 100%; background: #ff3355;"></div>
+                <div style="width: 10.5%; height: 100%; background: #ff3355;"></div>
               </div>
             </div>
             
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Densidad Técnica</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">3.8%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">6.4%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 3.8%; height: 100%; background: #00f3ff;"></div>
+                <div style="width: 6.4%; height: 100%; background: #00f3ff;"></div>
               </div>
             </div>
             
@@ -1995,7 +1995,7 @@ El producto central de la Substack Mafia es su red de interacción. Esta topolog
           
           <div style="background: rgba(0, 243, 255, 0.1); border: 1px solid #00f3ff44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
             <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #00f3ff; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">4.6</div>
+            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">3.6</div>
             <div style="font-size: 0.65rem; color: #00f3ff; font-family: 'JetBrains Mono';">ORGANIC / PURAMENTE TÉCNICO</div>
           </div>
           
@@ -2004,20 +2004,20 @@ El producto central de la Substack Mafia es su red de interacción. Esta topolog
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">8.5%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">6.0%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 8.5%; height: 100%; background: #ff3355;"></div>
+                <div style="width: 6.0%; height: 100%; background: #ff3355;"></div>
               </div>
             </div>
             
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Densidad Técnica</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">11.3%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">16.6%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 11.3%; height: 100%; background: #00f3ff;"></div>
+                <div style="width: 16.6%; height: 100%; background: #00f3ff;"></div>
               </div>
             </div>
             
@@ -2113,7 +2113,7 @@ El producto central de la Substack Mafia es su red de interacción. Esta topolog
     <div class="cronos-terminal-container">
       <h4 style="font-family: 'Outfit', sans-serif; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; color: #888; margin-bottom: 0.5rem;">Registro Histórico de Auditorías (Drift Telemetry)</h4>
       <div class="cronos-terminal" style="background: #050505; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 6px; padding: 1rem; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #00f3ff; height: 140px; overflow-y: auto; box-shadow: inset 0 0 15px rgba(0,0,0,0.8);">
-        <div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-02T12:17:38Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-02T13:02:05Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-02T14:01:58Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-02T15:01:31Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-02T16:02:08Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-02T23:18:40Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-03T00:01:49Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-03T01:01:52Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-03T02:01:43Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-03T03:01:24Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div>
+        <div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-02T13:02:05Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-02T14:01:58Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-02T15:01:31Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-02T16:02:08Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-02T23:18:40Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-03T00:01:49Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-03T01:01:52Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-03T02:01:43Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-03T03:01:24Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-03T04:01:47Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div>
       </div>
     </div>
   </div>
