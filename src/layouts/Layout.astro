@@ -618,6 +618,67 @@ const { title } = Astro.props;
       
       
       
+      
+      // ─── EASTER EGG: CORTEX PERSIST SEQUENCE ───
+      const initCortexEgg = () => {
+        let keys = [];
+        const secretCode = 'cortex';
+        
+        const keydownHandler = (e) => {
+          keys.push(e.key.toLowerCase());
+          keys = keys.slice(-secretCode.length);
+          
+          if (keys.join('') === secretCode) {
+            // Trigger sequence
+            document.removeEventListener('keydown', keydownHandler);
+            
+            // Audio spike
+            if (typeof audioCtx !== 'undefined' && audioCtx.state === 'running') {
+              try {
+                 const osc = audioCtx.createOscillator();
+                 const gain = audioCtx.createGain();
+                 osc.type = 'sawtooth';
+                 osc.frequency.setValueAtTime(50, audioCtx.currentTime);
+                 osc.frequency.exponentialRampToValueAtTime(10, audioCtx.currentTime + 1.5);
+                 gain.gain.setValueAtTime(1.0, audioCtx.currentTime);
+                 gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 1.5);
+                 osc.connect(gain);
+                 gain.connect(audioCtx.destination);
+                 osc.start();
+                 osc.stop(audioCtx.currentTime + 1.5);
+              } catch(err) {}
+            }
+            
+            // DOM Collapse
+            document.body.style.transition = 'all 1.5s cubic-bezier(0.895, 0.03, 0.685, 0.22)';
+            document.body.style.transform = 'scale(0.1) rotate(10deg)';
+            document.body.style.opacity = '0';
+            document.documentElement.style.filter = 'invert(1) contrast(500%) blur(10px)';
+            
+            // Glitch text overlay
+            const msg = document.createElement('div');
+            msg.innerText = "TRANSFERRING TO CORTEX PERSIST...";
+            msg.style.position = 'fixed';
+            msg.style.top = '50%';
+            msg.style.left = '50%';
+            msg.style.transform = 'translate(-50%, -50%) scale(10)';
+            msg.style.color = '#ff3300';
+            msg.style.fontFamily = 'monospace';
+            msg.style.zIndex = '999999';
+            document.documentElement.appendChild(msg);
+            
+            setTimeout(() => {
+              window.location.href = 'https://cortexpersist.com';
+            }, 1600);
+          }
+        };
+        
+        document.addEventListener('keydown', keydownHandler);
+      };
+
+      document.addEventListener('DOMContentLoaded', initCortexEgg);
+      document.addEventListener('astro:page-load', initCortexEgg);
+
       // ─── 14/10 BROWSER HIJACKING PROTOCOL (Console & Favicon Symbiosis) ───
       const initBrowserHijack = () => {
         // 1. Console Lore (Industrial Noir)
