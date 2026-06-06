@@ -2,13 +2,16 @@
 // ARTICLE CONTROLLER: Reading progress, TOC syncing, and interactive elements
 // ═══════════════════════════════════════════════════════════════════════════
 
-document.addEventListener('DOMContentLoaded', () => {
+const initArticle = () => {
     initReadingTime();
     initTOCSync();
     initHeaderScroll();
     initReadingProgressFallback();
     initCodeBlockInteractions();
-});
+};
+
+document.addEventListener('DOMContentLoaded', initArticle);
+document.addEventListener('astro:page-load', initArticle);
 
 // Toggle is-scrolled class on scroll
 function initHeaderScroll() {

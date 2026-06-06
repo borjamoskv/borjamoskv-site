@@ -761,6 +761,100 @@ import Layout from '../layouts/Layout.astro';
   }
 }
 
+/* ─── SOTA Hero Enhancements ─── */
+.hero-corner {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  border: 1px solid rgba(255, 159, 28, 0.45);
+  box-shadow: 0 0 10px rgba(255, 159, 28, 0.2);
+  pointer-events: none;
+  z-index: 10;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hero-corner.top-left { top: 40px; left: 40px; border-right: none; border-bottom: none; }
+.hero-corner.top-right { top: 40px; right: 40px; border-left: none; border-bottom: none; }
+.hero-corner.bottom-left { bottom: 40px; left: 40px; border-right: none; border-top: none; }
+.hero-corner.bottom-right { bottom: 40px; right: 40px; border-left: none; border-top: none; }
+
+.hero:hover .hero-corner {
+  width: 50px;
+  height: 50px;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 20px rgba(43, 59, 229, 0.4);
+}
+
+.telemetry-badge {
+  position: absolute;
+  top: 15%;
+  right: 5vw;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.4);
+  border-right: 2px solid var(--color-amber);
+  padding-right: 0.8rem;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0;
+  animation: fadeUp 1s ease forwards 0.8s;
+}
+
+.telemetry-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: 0.2rem;
+}
+
+.telemetry-dot {
+  width: 4px;
+  height: 4px;
+  background: #00ff00;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #00ff00;
+  animation: pulse-live 1.2s infinite alternate;
+}
+
+@keyframes pulse-live {
+  from { opacity: 0.2; } to { opacity: 1; }
+}
+
+.hero-title-interactive {
+  display: inline-block;
+  perspective: 1000px;
+}
+
+.hero-letter {
+  display: inline-block;
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.2s ease, text-shadow 0.2s ease;
+  cursor: default;
+}
+
+.hero-letter:hover {
+  color: var(--color-amber) !important;
+  transform: translateZ(50px) rotateY(15deg) rotateX(-15deg) scale(1.1);
+  text-shadow: -3px 0 var(--color-accent), 3px 0 var(--color-pink);
+}
+
+.hero-btn::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  transform: skewX(-25deg);
+  transition: none;
+}
+.hero-btn:hover::after {
+  left: 150%;
+  transition: all 0.8s ease;
+}
+
 </style>
 
 <div class="content-layer">
@@ -827,11 +921,11 @@ import Layout from '../layouts/Layout.astro';
               <span style="font-family: var(--font-secondary); font-size: 0.6rem; color: var(--color-pink); letter-spacing: 0.2em; display: block; margin-bottom: 0.8rem; text-transform: uppercase;">Curated SOTA Reference</span>
               <iframe 
                 style="border: 0; width: 100%; height: 120px; border-radius: 8px; filter: invert(0.9) contrast(120%);" 
-                src="https://bandcamp.com/EmbeddedPlayer/album=3655180424/size=large/bgcol=333333/linkcol=2b3be5/tracklist=false/artwork=small/transparent=true/" 
+                src="https://bandcamp.com/EmbeddedPlayer/album=3000676442/size=large/bgcol=333333/linkcol=2b3be5/tracklist=false/artwork=small/transparent=true/" 
                 seamless
                 title="Oscar Mulero Tormenta Bandcamp Player"
               >
-                <a href="https://oscarmulero.bandcamp.com/album/tormenta">Tormenta by Oscar Mulero</a>
+                <a href="https://polegroup.bandcamp.com/album/tormenta-ep-polegroup-60">Tormenta EP [PoleGroup 060] by Oscar Mulero</a>
               </iframe>
             </div>
           </div>

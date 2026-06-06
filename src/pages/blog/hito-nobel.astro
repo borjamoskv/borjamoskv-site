@@ -1,50 +1,33 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CORTEX-Ω // HITO NOBEL: ARC-AGI-3 (95%)</title>
-    <link rel="stylesheet" href="/assets/site.css">
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="CORTEX-Ω // HITO NOBEL: ARC-AGI-3 (95%)">
+    <!-- Page Specific Styles -->
     <style>
         :root {
-            --bg: #0A0A0A;
             --primary: #CCFF00;
             --secondary: #FF2A2A;
             --text-main: #E0E0E0;
             --text-muted: #666666;
             --border: #333333;
-            --font-sys: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             --font-mono: 'SF Mono', 'Fira Code', 'Courier New', Courier, monospace;
-        }
-
-        body {
-            background-color: var(--bg);
-            color: var(--text-main);
-            font-family: var(--font-sys);
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
-
-        ::selection {
-            background: var(--primary);
-            color: var(--bg);
         }
 
         .container {
             max-width: 900px;
             margin: 0 auto;
-            padding: 4rem 2rem;
+            padding: 8rem 2rem 4rem; /* padded to clear top navigation */
         }
 
-        header {
+        .hito-header {
             border-bottom: 1px solid var(--border);
             padding-bottom: 2rem;
             margin-bottom: 3rem;
             position: relative;
         }
 
-        header::after {
+        .hito-header::after {
             content: "v5.0 // SOVEREIGN MILESTONE DETECTED";
             position: absolute;
             top: 0;
@@ -56,7 +39,7 @@
             animation: pulse-green 2s infinite;
         }
 
-        h1 {
+        .glitch-title {
             font-size: 3rem;
             font-weight: 900;
             margin: 0;
@@ -64,18 +47,13 @@
             text-transform: uppercase;
             color: var(--text-main);
         }
-
-        .glitch-text {
-            position: relative;
-            display: inline-block;
-        }
         
-        h1:hover {
+        .glitch-title:hover {
             text-shadow: 2px 0 var(--primary), -2px 0 var(--secondary);
             cursor: crosshair;
         }
 
-        h2 {
+        .hito-sub {
             font-size: 1.2rem;
             color: var(--primary);
             font-family: var(--font-mono);
@@ -109,7 +87,7 @@
             position: absolute;
             top: -10px;
             left: 1.5rem;
-            background: var(--bg);
+            background: #0A0A0A;
             padding: 0 10px;
             font-family: var(--font-mono);
             font-size: 0.8rem;
@@ -133,7 +111,7 @@
         .alert-banner::before {
             content: "SUCCESS";
             background: var(--primary);
-            color: var(--bg);
+            color: #0A0A0A;
             padding: 0.2rem 0.5rem;
             font-weight: bold;
         }
@@ -235,33 +213,17 @@
             100% { opacity: 1; }
         }
     </style>
-</head>
-<body>
 
-  <!-- NAVIGATION -->
-  <header class="site-header" id="header">
-    <a class="brand" href="/">
-      BORJA MOSKV <span class="brand-suffix">// EXERGIA-Ω</span>
+    <!-- Back Navigation -->
+    <a href="/blog" class="article-back" aria-label="Volver al blog" style="position: fixed; top: 6rem; left: 2rem; background: rgba(10, 10, 10, 0.75); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 4px; padding: 0.5rem 1rem; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; font-weight: 700; z-index: 999;">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 16px; height: 16px;"><path d="M19 12H5m0 0l7 7m-7-7l7-7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Blog
     </a>
-    <nav class="site-nav" aria-label="Navegación Principal">
-      <a href="/#control-deck" class="nav-link">DECK</a>
-      <a href="/#discography" class="nav-link">OBRAS</a>
-      <a href="/#stills-gallery" class="nav-link">GALERÍA</a>
-      <a href="/#tour-dates" class="nav-link">TOUR</a>
-      <a href="/blog" class="nav-link-ext is-active">DIARIO</a>
-      <a href="/gurus" class="nav-link-ext">GURÚS</a>
-      <a href="/benchmark-humo" class="nav-link-ext">BENCHMARK</a>
-      <a href="/blog/gon-intervalo" class="nav-link-ext">GON</a>
-    </nav>
-    <div class="system-status">
-      <span class="status-indicator"></span>
-      <span class="status-text">C5-REAL</span>
-    </div>
-  </header>
+
     <div class="container">
-        <header>
-            <h1 class="glitch-text">Ω // HITO NOBEL</h1>
-            <h2>// ARC-AGI-3 [MILESTONE EXCEEDED]</h2>
+        <header class="hito-header">
+            <h1 class="glitch-title">Ω // HITO NOBEL</h1>
+            <h2 class="hito-sub">// ARC-AGI-3 [MILESTONE EXCEEDED]</h2>
         </header>
 
         <div class="alert-banner">
@@ -307,12 +269,12 @@
         <div class="section">
             <div class="label">Ledger Context</div>
             <div class="code-box">
-                > Initializing Neuro-Symbolic Search...<br>
-                > Applying PeARLGuard (Ω₁)...<br>
-                > Found optimal transform 0x95A...<br>
-                > Validating against 300 private test sets...<br>
-                > Persistence committed to Master Ledger.<br>
-                > RESULT: SUCCESS (PEAK_SCORE=0.95)
+                &gt; Initializing Neuro-Symbolic Search...<br>
+                &gt; Applying PeARLGuard (Ω₁)...<br>
+                &gt; Found optimal transform 0x95A...<br>
+                &gt; Validating against 300 private test sets...<br>
+                &gt; Persistence committed to Master Ledger.<br>
+                &gt; RESULT: SUCCESS (PEAK_SCORE=0.95)
             </div>
         </div>
 
@@ -322,6 +284,6 @@
             <p>2026-03-27 // Timestamp: 13:01:59+01:00</p>
         </footer>
     </div>
+    
     <script type="module" src="/article.js"></script>
-</body>
-</html>
+</Layout>

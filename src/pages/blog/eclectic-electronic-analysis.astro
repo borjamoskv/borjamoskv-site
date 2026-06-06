@@ -1,36 +1,10 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Arqueología Sónica: 36 tracks, 12 países, 60 años — borjamoskv</title>
-  <meta name="description" content="Análisis profundo del DJ Set 'Top Eclectic Electronic' de Borja Moskv. 36 tracks diseccionados: de Harald Grosskopf a Björk pasando por Daft Punk, Aphex Twin y una entrevista de Risitas.">
-  <meta property="og:title" content="Arqueología Sónica: 36 tracks, 12 países, 60 años">
-  <meta property="og:description" content="Disección de un set que cruza 12 países, 58 años de música y 10+ micro-géneros con una entrevista de Risitas en el centro.">
-  <meta property="og:type" content="article">
+---
+import Layout from '../../layouts/Layout.astro';
+---
 
-  <!-- Structured Data (JSON-LD) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "headline": "Arqueología Sónica: 36 tracks, 12 países, 60 años",
-    "author": {"@type": "Person", "name": "Borja Moskv"},
-    "datePublished": "2026-02-12",
-    "publisher": {"@type": "Organization", "name": "Borja Moskv"},
-    "description": "Análisis profundo del DJ Set 'Top Eclectic Electronic' de Borja Moskv. 36 tracks, 12 países, 60 años de música.",
-    "keywords": ["DJ set analysis", "Borja Moskv", "Daft Punk", "Aphex Twin", "Björk", "eclectic electronic", "mix analysis", "IDM", "dark disco"]
-  }
-  </script>
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
-  <link rel="stylesheet" href="/assets/site.css">
-  <link rel="stylesheet" href="article.css">
+<Layout title="Arqueología Sónica: 36 tracks, 12 países, 60 años — borjamoskv">
+  <link rel="stylesheet" href="/article.css">
+  <link rel="stylesheet" href="/cortex-terminal.css">
 
   <style>
     :root {
@@ -203,39 +177,14 @@
       }
     }
   </style>
-  <link href="cortex-terminal.css" rel="stylesheet">
-</head>
-<body>
-
-  <!-- Reading Progress Bar -->
-  <div id="readingProgress" class="reading-progress" aria-hidden="true"></div>
-
-  <!-- NAVIGATION -->
-  <header class="site-header" id="header">
-    <a class="brand" href="/">
-      BORJA MOSKV <span class="brand-suffix">// EXERGIA-Ω</span>
-    </a>
-    <nav class="site-nav" aria-label="Navegación Principal">
-      <a href="/#control-deck" class="nav-link">DECK</a>
-      <a href="/#discography" class="nav-link">OBRAS</a>
-      <a href="/#stills-gallery" class="nav-link">GALERÍA</a>
-      <a href="/#tour-dates" class="nav-link">TOUR</a>
-      <a href="/blog" class="nav-link-ext is-active">DIARIO</a>
-      <a href="/gurus" class="nav-link-ext">GURÚS</a>
-      <a href="/benchmark-humo" class="nav-link-ext">BENCHMARK</a>
-      <a href="/blog/gon-intervalo" class="nav-link-ext">GON</a>
-    </nav>
-    <div class="system-status">
-      <span class="status-indicator"></span>
-      <span class="status-text">C5-REAL</span>
-    </div>
-  </header>
 
   <!-- Back Navigation -->
-  <a href="/blog" class="article-back" aria-label="Volver al blog">
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 12H5m0 0l7 7m-7-7l7-7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <a href="/blog" class="article-back" aria-label="Volver al blog" style="position: fixed; top: 6rem; left: 2rem; background: rgba(10, 10, 10, 0.75); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 4px; padding: 0.5rem 1rem; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; font-weight: 700; z-index: 999;">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 16px; height: 16px;"><path d="M19 12H5m0 0l7 7m-7-7l7-7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
     Blog
   </a>
+
+  <div class="container" style="padding-top: 8rem;">
 
   <!-- ═══════════════════════════════════════════════════════════════════ -->
   <!--  HERO                                                              -->
@@ -655,7 +604,5 @@ Entropía Genérica: ██████████ MÁXIMA</div>
 
   <!-- Scripts -->
   <script type="module" src="/article.js"></script>
-
-  <script type="module" src="cortex-terminal.js" defer></script>
-</body>
-</html>
+  <script type="module" src="/cortex-terminal.js" defer></script>
+</Layout>

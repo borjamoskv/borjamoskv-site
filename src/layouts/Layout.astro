@@ -47,15 +47,40 @@ const { title } = Astro.props;
     <div class="overlay" transition:persist></div>
 
     <!-- Navigation -->
-    <header transition:persist>
+    <header transition:persist="main-header">
       <nav class="top-nav" aria-label="Navegación principal">
-        <a href="/" class="nav-brand nav-link" style="font-weight: 900; color: var(--color-amber); margin-right: auto;">BM // CORE</a>
-        <a href="/#musica" class="nav-link" aria-label="Sección de música">Música</a>
-        <a href="/#video" class="nav-link" aria-label="Sección de vídeos">Vídeo</a>
-        <a href="/#blog" class="nav-link" aria-label="Sección de diario y ensayos">Diario</a>
-        <a href="/#manifiesto" class="nav-link" aria-label="Manifiesto del artista">Manifiesto</a>
-        <a href="https://www.youtube.com/@borjamoskv" target="_blank" rel="noopener" class="nav-link" aria-label="Canal de YouTube de Borja Moskv">YouTube</a>
+        <a href="/" class="nav-brand nav-link" style="font-weight: 900; color: var(--color-amber); margin-right: auto; z-index: 1001;">BM // CORE</a>
+        
+        <!-- Desktop Links -->
+        <div class="nav-links-desktop">
+          <a href="/#musica" class="nav-link" aria-label="Sección de música">Música</a>
+          <a href="/#video" class="nav-link" aria-label="Sección de vídeos">Vídeo</a>
+          <a href="/#blog" class="nav-link" aria-label="Sección de diario y ensayos">Diario</a>
+          <a href="/#manifiesto" class="nav-link" aria-label="Manifiesto del artista">Manifiesto</a>
+          <a href="https://www.youtube.com/@borjamoskv" target="_blank" rel="noopener" class="nav-link" aria-label="Canal de YouTube de Borja Moskv">YouTube</a>
+        </div>
+
+        <!-- Sliding Underline -->
+        <div class="nav-underline" id="nav-underline"></div>
+
+        <!-- Hamburger Icon for Mobile Menu -->
+        <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menú de navegación" aria-expanded="false" style="z-index: 1001;">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
       </nav>
+
+      <!-- Fullscreen Mobile Navigation Drawer -->
+      <div class="mobile-menu-overlay" id="mobile-menu-overlay">
+        <nav class="mobile-menu-nav" aria-label="Navegación móvil">
+          <a href="/#musica" class="mobile-nav-link">Música</a>
+          <a href="/#video" class="mobile-nav-link">Vídeo</a>
+          <a href="/#blog" class="mobile-nav-link">Diario</a>
+          <a href="/#manifiesto" class="mobile-nav-link">Manifiesto</a>
+          <a href="https://www.youtube.com/@borjamoskv" target="_blank" rel="noopener" class="mobile-nav-link">YouTube</a>
+        </nav>
+      </div>
     </header>
 
     <slot />
@@ -131,9 +156,12 @@ const { title } = Astro.props;
 
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         audioCtx = new AudioContext();
+        window.MOSKV = window.MOSKV || {};
+        window.MOSKV.audioContext = audioCtx;
 
         // 3D Spatial Panner
         panner = audioCtx.createPanner();
+        window.MOSKV.panner = panner;
         panner.panningModel = 'HRTF';
         panner.distanceModel = 'inverse';
         panner.refDistance = 1;
@@ -477,11 +505,20 @@ const { title } = Astro.props;
       let contentLayer = null;
 
       const loop = () => {
-        // Cursor interpolation
-        cursorX += (mouseX - cursorX) * 0.25;
-        cursorY += (mouseY - cursorY) * 0.25;
-        if (cursor) cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
+        // Cursor interpolation & velocity-based stretching/skewing
+        const dx = mouseX - cursorX;
+        const dy = mouseY - cursorY;
+        const speed = Math.sqrt(dx * dx + dy * dy);
         
+        cursorX += dx * 0.22;
+        cursorY += dy * 0.22;
+        
+        const scale = 1 + Math.min(0.6, speed * 0.015);
+        const skewX = Math.max(-20, Math.min(20, dx * 0.25));
+        
+        if (cursor) {
+          cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) scale(${scale}) skewX(${skewX}deg)`;
+        }
         
         // Update Spatial Audio Panner Position
         if (panner && audioCtx) {
@@ -501,7 +538,6 @@ const { title } = Astro.props;
              const pitch = 200 + ((window.innerHeight - cursorY) / window.innerHeight) * 1200;
              theremin.frequency.setTargetAtTime(pitch, audioCtx.currentTime, 0.05);
           }
-
         }
 
         // Scroll Velocity Skew Physics
@@ -522,7 +558,155 @@ const { title } = Astro.props;
       };
       requestAnimationFrame(loop);
 
+      // ─── SOTA WEB NAVIGATION SYSTEM ───
+      const initSOTANavigation = () => {
+        const nav = document.querySelector('.top-nav');
+        const underline = document.getElementById('nav-underline');
+        const links = document.querySelectorAll('.nav-links-desktop .nav-link');
+        const navToggle = document.getElementById('nav-toggle');
+        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+        const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+        // Play UI synth sound feedback
+        const playNavSound = (freqStart, freqEnd, duration, type = 'sine', volume = 0.03) => {
+          if (!audioCtx || audioCtx.state !== 'running') return;
+          try {
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            
+            osc.type = type;
+            osc.frequency.setValueAtTime(freqStart, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(freqEnd, audioCtx.currentTime + duration);
+            
+            gainNode.gain.setValueAtTime(volume, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+            
+            osc.connect(gainNode);
+            if (panner) {
+              gainNode.connect(panner);
+            } else {
+              gainNode.connect(audioCtx.destination);
+            }
+            
+            osc.start();
+            osc.stop(audioCtx.currentTime + duration);
+          } catch (err) {
+            console.warn("Audio UI Feedback failed:", err);
+          }
+        };
+
+        // 1. Sliding underline navigation highlight logic
+        const updateUnderline = (targetEl) => {
+          if (!underline || !targetEl) return;
+          const rect = targetEl.getBoundingClientRect();
+          const navRect = nav.getBoundingClientRect();
+          const leftOffset = rect.left - navRect.left;
+          
+          underline.style.width = `${rect.width}px`;
+          underline.style.left = `${leftOffset}px`;
+          underline.style.opacity = '1';
+        };
+
+        const resetUnderline = () => {
+          const activeLink = document.querySelector('.nav-links-desktop .nav-link.active');
+          if (activeLink) {
+            updateUnderline(activeLink);
+          } else {
+            underline.style.opacity = '0';
+            underline.style.width = '0';
+          }
+        };
+
+        links.forEach(link => {
+          link.addEventListener('mouseenter', (e) => {
+            updateUnderline(e.target);
+            playNavSound(2200, 800, 0.04, 'sine', 0.015); // Tactile soft tick
+          });
+          
+          link.addEventListener('mouseleave', () => {
+            resetUnderline();
+          });
+
+          link.addEventListener('click', () => {
+            playNavSound(150, 40, 0.08, 'triangle', 0.04); // Tactile low click pop
+          });
+        });
+
+        // Resize handler to reposition underline
+        window.addEventListener('resize', resetUnderline, { passive: true });
+
+        // 2. Active Link tracking based on scroll & current path
+        const handleActiveLinks = () => {
+          const currentPath = window.location.pathname;
+          
+          links.forEach(l => l.classList.remove('active'));
+          
+          if (currentPath.includes('/blog')) {
+            const blogLink = document.querySelector('.nav-links-desktop a[href="/#blog"]');
+            if (blogLink) blogLink.classList.add('active');
+          } else if (currentPath.includes('/video')) {
+            const videoLink = document.querySelector('.nav-links-desktop a[href="/#video"]');
+            if (videoLink) videoLink.classList.add('active');
+          } else if (currentPath.includes('/musica')) {
+            const musicLink = document.querySelector('.nav-links-desktop a[href="/#musica"]');
+            if (musicLink) musicLink.classList.add('active');
+          } else if (currentPath === '/' || currentPath === '') {
+            const sections = document.querySelectorAll('section[id], div[id].section');
+            let currentActiveSection = null;
+            
+            sections.forEach(sec => {
+              const rect = sec.getBoundingClientRect();
+              if (rect.top <= 250 && rect.bottom >= 250) {
+                currentActiveSection = sec.id;
+              }
+            });
+
+            if (currentActiveSection) {
+              const activeAnchor = document.querySelector(`.nav-links-desktop a[href="/#${currentActiveSection}"]`);
+              if (activeAnchor) activeAnchor.classList.add('active');
+            }
+          }
+          resetUnderline();
+        };
+
+        window.addEventListener('scroll', handleActiveLinks, { passive: true });
+        handleActiveLinks();
+
+        // 3. Mobile Hamburger Menu Toggle
+        if (navToggle && mobileMenuOverlay) {
+          navToggle.classList.remove('open');
+          mobileMenuOverlay.classList.remove('open');
+          
+          navToggle.onclick = (e) => {
+            e.stopPropagation();
+            const isOpen = navToggle.classList.toggle('open');
+            mobileMenuOverlay.classList.toggle('open', isOpen);
+            navToggle.setAttribute('aria-expanded', isOpen);
+            
+            if (isOpen) {
+              playNavSound(300, 600, 0.12, 'sine', 0.03);
+            } else {
+              playNavSound(600, 300, 0.1, 'sine', 0.03);
+            }
+          };
+
+          mobileLinks.forEach(link => {
+            link.addEventListener('mouseenter', () => {
+              playNavSound(2200, 800, 0.04, 'sine', 0.015);
+            });
+            
+            link.addEventListener('click', () => {
+              navToggle.classList.remove('open');
+              mobileMenuOverlay.classList.remove('open');
+              navToggle.setAttribute('aria-expanded', 'false');
+              playNavSound(150, 40, 0.08, 'triangle', 0.04);
+            });
+          });
+        }
+      };
+
       document.addEventListener('astro:page-load', () => {
+        initSOTANavigation();
         
       // ─── SOTA Fallbacks (Safari/Firefox) ───
       if (!CSS.supports('animation-timeline', 'scroll()')) {
@@ -621,6 +805,7 @@ const { title } = Astro.props;
           uniform vec2 u_resolution;
           uniform float u_time;
           uniform float u_audio;
+          uniform vec2 u_mouse;
 
           float random (in vec2 st) {
               return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
@@ -641,7 +826,17 @@ const { title } = Astro.props;
               vec2 st = gl_FragCoord.xy / u_resolution.xy;
               st.x *= u_resolution.x / u_resolution.y;
               
+              // Normalize mouse position
+              vec2 mouse = u_mouse / u_resolution.xy;
+              mouse.x *= u_resolution.x / u_resolution.y;
+              
+              // Distance from current pixel to mouse
+              float dist = distance(st, mouse);
+              
+              // Distort space based on mouse distance and audio
+              float distortion = smoothstep(0.4, 0.0, dist) * (0.15 + u_audio * 0.2);
               vec2 pos = vec2(st * (3.0 - u_audio * 3.0));
+              pos += normalize(st - mouse) * distortion;
               
               float n = noise(pos + u_time * 0.3);
               n += noise(pos * 2.0 - u_time * 0.5) * 0.5;
@@ -684,6 +879,7 @@ const { title } = Astro.props;
         const u_resolution = gl.getUniformLocation(program, "u_resolution");
         const u_time = gl.getUniformLocation(program, "u_time");
         const u_audio = gl.getUniformLocation(program, "u_audio");
+        const u_mouse = gl.getUniformLocation(program, "u_mouse");
 
         let startTime = Date.now();
         let lastAudioVal = 0;
@@ -700,6 +896,7 @@ const { title } = Astro.props;
           
           lastAudioVal += ((window.globalAudioVolume || 0) - lastAudioVal) * 0.1;
           gl.uniform1f(u_audio, lastAudioVal);
+          gl.uniform2f(u_mouse, mouseX, window.innerHeight - mouseY); // flip y-axis for WebGL
           
           gl.drawArrays(gl.TRIANGLES, 0, 6);
           requestAnimationFrame(renderGL);

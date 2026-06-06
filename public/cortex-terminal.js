@@ -7,10 +7,23 @@
  * ═══════════════════════════════════════════════════════════════════
  */
 
-document.addEventListener('DOMContentLoaded', () => {
-    if (window.cortexTerminal) return;
+const initCortexTerminal = () => {
+    const terminalEl = document.getElementById('cortex-terminal');
+    if (!terminalEl) return;
+
+    if (window.cortexTerminal) {
+        if (window.cortexTerminal.terminal === terminalEl) {
+            return;
+        }
+        if (window.cortexTerminal.ws) {
+            window.cortexTerminal.ws.close();
+        }
+    }
     window.cortexTerminal = new CortexTerminal();
-});
+};
+
+document.addEventListener('DOMContentLoaded', initCortexTerminal);
+document.addEventListener('astro:page-load', initCortexTerminal);
 
 const HERO_MATRIX = {
     'LAURA PAUSINI': {

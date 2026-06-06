@@ -117,7 +117,11 @@ class VoiceEffectsPipeline {
         this.delayGain.connect(this.outputGain);
 
         // Final Master Connection
-        this.outputGain.connect(this.ctx.destination);
+        if (window.MOSKV && window.MOSKV.panner) {
+            this.outputGain.connect(window.MOSKV.panner);
+        } else {
+            this.outputGain.connect(this.ctx.destination);
+        }
         this.isReady = true;
     }
 
