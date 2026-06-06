@@ -14,6 +14,8 @@ Lo que se presenta como una revolución de la escritura independiente es un sist
 
 Substack no democratizó la publicación. La convirtió en un problema de sincronización.
 
+![Visualización de red abstracta que representa el cártel de coordinación invisible y la densidad temporal en Substack](/media/substack-mafia-graph.png)
+
 <h3 style="color:var(--accent-primary);">El mito original</h3>
 
 Durante años, la promesa fue:
