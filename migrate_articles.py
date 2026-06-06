@@ -3,8 +3,8 @@ import re
 import glob
 
 # Rutas
-SOURCE_DIR = "/Users/borjafernandezangulo/10_PROJECTS/borjamoskv-site"
-TARGET_DIR = "/Users/borjafernandezangulo/10_PROJECTS/borjamoskv-v2/src/content/articles"
+SOURCE_DIR = "/Users/borjafernandezangulo/Documents/antigravity/agitated-volta"
+TARGET_DIR = "/Users/borjafernandezangulo/10_PROJECTS/borjamoskv-site/src/content/articles"
 
 # Archivos a ignorar (no son artículos de blog o ya migrados)
 IGNORE_FILES = {

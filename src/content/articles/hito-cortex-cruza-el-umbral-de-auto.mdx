@@ -1,0 +1,163 @@
+---
+title: "Hito CORTEXCruza el Umbral de Automejora"
+description: "Registro de la primera mutación recursiva del Ledger Merkle bajo la física del silicio."
+pubDate: "28 de mayo de 2026"
+tags:
+  - '#CognitivePathology'
+  - '#Thermodynamics'
+  - '#Epistemology'
+  - '#Exergy'
+---
+
+<p>---</p>
+<section class="article-section" id="resumen-ejecutivo">
+<div class="section-number">01</div>
+<h2 class="section-title"><strong>Resumen Ejecutivo</strong></h2>
+<p>El zirimiri gélido golpea las cristaleras rotas del hangar en Zorrozaurre. Dentro, rodeado de latas vacías de Monster y el zumbido de silicio sobrecalentado, CORTEX-Persist acaba de cruzar la línea divisoria. Pasamos de un agente autónomo de nivel L4 a un bucle autopoietico auto-modificable L5-L7. Ya no solo despacha tareas: ahora se observa, se diagnostica, y reescribe su propio árbol de sintaxis abstracta (AST) sobre la marcha.</p>
+<p>| Capacidad | Estado Anterior (L4) | Estado Actual (L5-L7) |</p>
+<p>| :--- | :--- | :--- |</p>
+<p>| <strong>Reflexión (<code>reflect</code>)</strong> | Implementada en el core, inerte. | <code>ReflexionEngine</code> la invoca de forma determinista ante fallos. |</p>
+<p>| <strong>Mutación (<code>rewrite</code>)</strong> | Primitivas en desuso. | <code>TreeRewriter</code> muta el AST de Python sobre la marcha entre reintentos. |</p>
+<p>| <strong>CI/CD Pipeline</strong> | Configuración estática en YAML. | Orquestador <code>MÖBIUS</code> (Babashka/Clojure) tratando YAML como datos mutables. |</p>
+<p>| <strong>Meta-Agente</strong> | Inexistente. | Swarm descentralizado de 3 agentes (L5/L6/L7) en Clojure. |</p>
+<p>---</p>
+</section>
+<hr class="section-divider"/>
+<section class="article-section" id="commit-1-reflexion-engine-python">
+<div class="section-number">02</div>
+<h2 class="section-title"><strong>Commit 1 — Reflexion Engine (Python)</strong></h2>
+<pre style="background: rgba(0, 0, 0, 0.4); padding: 1.5rem; border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.05); overflow-x: auto; font-family: monospace; margin: 1.5rem 0;"><code class="language-">feat(engine): add Reflexion Engine — self-healing dispatch loop (L5)</code></pre>
+<p>21/21 tests passing.</p>
+<ul class="article-list">
+<li><strong><code>ReflexionEngine.py</code></strong>: Orquestación del loop cerrado de curación.</li>
+<li><strong><code>DiagnosisStrategy.py</code></strong>: Mapeo determinista de excepciones a estrategias AST.</li>
+<li><strong><code>TreeRewriter.py</code></strong>: Inyección de parches de código a nivel AST.</li>
+<li><strong><code>test_reflexion.py</code></strong>: 21 suites de prueba unitaria, 100% passing.</li>
+</ul>
+<p>El ciclo de vida del despacho ahora opera como una banda de Möbius:</p>
+<pre class="mermaid" style="background: transparent; border: none; overflow: visible;">graph TD
+    A[execute tree] --&gt;|Fail| B[diagnose error]
+    B --&gt; C[rewrite AST/tree]
+    C --&gt; D[retry loop]
+    D --&gt;|Max 3 attempts / Timeout Guard| A</pre>
+<p>Cuando un dispatch falla, no lanzamos una traza y morimos. El <code>ReflexionEngine</code> intercepta el fallo en runtime, ejecuta una <code>DiagnosisStrategy</code> sobre el error, y el <code>TreeRewriter</code> aplica transformaciones estructuradas en el AST.</p>
+<h3 style="margin-top:2rem; font-family:'Orbitron', sans-serif; font-size:1.1rem; color:var(--text-primary);"><strong>Estrategias de Reescritura Deterministas (O(1))</strong></h3>
+<p>| Iteración | Estrategia | Acción en AST |</p>
+<p>| :---: | :--- | :--- |</p>
+<p>| <strong>0</strong> | <code>RETRY_WRAPPER</code> | Envuelve el despacho en un bucle local con backoff exponencial. |</p>
+<p>| <strong>1</strong> | <code>REMOVE_TARGET</code> | Aísla el nodo fallido inyectando un <code>Noop</code> defensivo en el árbol lógico. |</p>
+<p>| <strong>2+</strong> | <code>TIMEOUT_GUARD</code> | Encapsula la función en una estructura asíncrona con kill switch estricto. |</p>
+<p>---</p>
+</section>
+<hr class="section-divider"/>
+<section class="article-section" id="fase-2-expansi-n-de-dominio-al-frontend-c4-sim">
+<div class="section-number">03</div>
+<h2 class="section-title"><strong>Fase 2: Expansión de Dominio al Frontend (C4-SIM)</strong></h2>
+<p>La soberanía no se detiene en el backend. Identificamos que el repositorio <code>/borjamoskv-site</code> contiene una terminal interactiva renderizada con Three.js (<code>KineticTensorEngine</code>). Si el núcleo lógico evoluciona, la terminal táctica debe reflejar la mutación de exergía.</p>
+<h3 style="margin-top:2rem; font-family:'Orbitron', sans-serif; font-size:1.1rem; color:var(--text-primary);"><strong>Acciones Realizadas</strong></h3>
+<ul class="article-list">
+<li><strong>Inyección en <code>cortex-terminal.js</code>:</strong></li>
+<li>Registro de los comandos tácticos: <code>aegis</code>, <code>eidolon</code>, <code>thanatos</code>, <code>pandora</code>, <code>aletheia</code> y <code>colmena</code>.</li>
+<li>Modificación de la función <code>cmdHelp</code> para reflejar la existencia del orquestador <code>MÖBIUS</code>.</li>
+<li>Creación de la macro <code>cmdMobius(agentName, description)</code> con gestión de logs dinámica y control de estados de la máquina de estados de Three.js.</li>
+<li><strong>Forja de Animaciones (Industrial Noir 2026) en <code>site.css</code>:</strong></li>
+<li><code>.cterm-aegis-shield</code>: Pulso de neón azul cobalto (<code>#2B3BE5</code>) emulando una barrera de difracción.</li>
+<li><code>.cterm-eidolon-sim</code>: Tipografía miel ámbar itálica con flickering sutil de latencia simulada.</li>
+<li><code>.cterm-thanatos-purge</code>: Bloque de destrucción rojo translúcido, agitación violenta de pixeles y pesos de fuente monolíticos.</li>
+<li><code>.cterm-pandora-chaos</code>: Texto magenta desdibujado por aberración cromática que se enfoca bajo hover físico.</li>
+<li><code>.cterm-aletheia-truth</code>: Bloque monoespaciado puro, emitiendo luz estática interna (verdad matemática).</li>
+<li><code>.cterm-colmena-swarm</code>: Flotación cian desvinculada de la gravedad estructural del DOM.</li>
+</ul>
+<h3 style="margin-top:2rem; font-family:'Orbitron', sans-serif; font-size:1.1rem; color:var(--text-primary);"><strong>Validación</strong></h3>
+<ul class="article-list">
+<li>Cambios realizados directamente bajo la Directiva <strong>R9 (Turbo)</strong> y <strong>R1 (C5-REAL / C4-SIM)</strong>.</li>
+<li>Commits limpios en <code>/borjamoskv-site</code> (<code>d039403</code> y <code>15bc974</code>).</li>
+</ul>
+<blockquote class="pull-quote"><span class="quote-mark">"</span><p>[!NOTE]</p></blockquote>
+<blockquote class="pull-quote"><span class="quote-mark">"</span><p>La arquitectura <code>MÖBIUS</code> ahora existe tanto en el sustrato funcional (Clojure/Actions) como en la capa perceptiva (JS/CSS), completando el bucle de convergencia de Exergía.</p></blockquote>
+<p>---</p>
+</section>
+<hr class="section-divider"/>
+<section class="article-section" id="commit-2-m-bius-clojure">
+<div class="section-number">04</div>
+<h2 class="section-title"><strong>Commit 2 — ∞ MÖBIUS (Clojure)</strong></h2>
+<pre style="background: rgba(0, 0, 0, 0.4); padding: 1.5rem; border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.05); overflow-x: auto; font-family: monospace; margin: 1.5rem 0;"><code class="language-">3a5a0350 feat(möbius): ∞ MÖBIUS — Clojure meta-agent with L5/L6/L7 agents</code></pre>
+<p>10 files changed, 2002 insertions(+)</p>
+<h3 style="margin-top:2rem; font-family:'Orbitron', sans-serif; font-size:1.1rem; color:var(--text-primary);"><strong>Infraestructura de Babashka</strong></h3>
+<ul class="article-list">
+<li><strong><code>core.clj</code></strong>: Dispatch table (5 acciones) + banner Industrial Noir.</li>
+<li><strong><code>github.clj</code></strong>: Cliente API GitHub (funciones puras sobre ctx map).</li>
+<li><strong><code>workflow.clj</code></strong>: YAML ↔ Clojure data · <code>evolve-workflow</code> pipeline.</li>
+<li><strong><code>reflexion.clj</code></strong>: Self-healing loop sobre fallos de integración continua.</li>
+<li><strong><code>action.yml</code></strong>: Composite action (instala Babashka + ejecuta).</li>
+<li><strong><code>meta-agent.yml</code></strong>: Workflow: PR / issue / cron / manual dispatch.</li>
+</ul>
+<p>---</p>
+<h3 style="margin-top:2rem; font-family:'Orbitron', sans-serif; font-size:1.1rem; color:var(--text-primary);"><strong>Los Tres Meta-Agentes de MÖBIUS</strong></h3>
+<p>#### <strong>L5 — Auto-Curativo (<code>l5_healer.clj</code>)</strong></p>
+<pre style="background: rgba(0, 0, 0, 0.4); padding: 1.5rem; border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.05); overflow-x: auto; font-family: monospace; margin: 1.5rem 0;"><code class="language-">execute → FAIL → diagnose(pattern-match) → rewrite(fn) → retry</code></pre>
+<p>La clave del L5 es la inyección de funciones de orden superior. No reintenta el mismo bloque de código ciegamente esperando resultados distintos (la definición clásica de locura computacional); en cada iteración ejecuta una <strong>versión morfológica</strong> de la función fallida.</p>
+<pre style="background: rgba(0, 0, 0, 0.4); padding: 1.5rem; border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.05); overflow-x: auto; font-family: monospace; margin: 1.5rem 0;"><code class="language-clojure">;; Las estrategias son funciones de orden superior que transforman funciones
+(def strategies
+  {:retry-with-backoff  #(wrap-with-retry % 3)
+   :add-timeout-guard   #(wrap-with-timeout % 5000)
+   :throttle            #(wrap-with-throttle % 2000)
+   :isolate-and-bypass  #(wrap-with-fallback % fallback-fn)})</code></pre>
+<p>#### <strong>L6 — Auto-Modelado (<code>l6_diagnostician.clj</code>)</strong></p>
+<p>El agente L6 mantiene una representación simbólica de sus propias capacidades (un auto-modelo). Monitorea límites de confianza y detecta puntos ciegos (<em>blind spots</em>). Si estima que la confianza de resolución decae por debajo de un umbral crítico, cede el control a la intervención del operador en lugar de disipar exergía inútilmente en bucles infinitos.</p>
+<p>#### <strong>L7 — Auto-Evolutivo (<code>l7_evolver.clj</code>)</strong></p>
+<p>El nivel terminal. Implementa un pool de genes lógico que muta bloques de código mediante algoritmos genéticos locales. Evalúa la adecuación funcional (<em>fitness</em>) ejecutando suites de pruebas virtuales en un sandbox paralelo y aplica <code>rollback</code> automático si la mutación introduce entropía negativa o degrada el rendimiento.</p>
+<p>---</p>
+</section>
+<hr class="section-divider"/>
+<section class="article-section" id="arquitectura-post-hito">
+<div class="section-number">05</div>
+<h2 class="section-title"><strong>Arquitectura Post-Hito</strong></h2>
+<p>El flujo de ejecución ya no es lineal. Es un grafo autopoietico:</p>
+<pre style="background: rgba(0, 0, 0, 0.4); padding: 1.5rem; border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.05); overflow-x: auto; font-family: monospace; margin: 1.5rem 0;"><code class="language-">[User Request] ─&gt; [MÖBIUS Dispatcher]
+                         │
+                         ▼
+        ┌─────── [ReflexionEngine] ──────┐
+        │                                │
+        ▼                                ▼
+[Python AST Mutation] &lt;───&gt; [Clojure Meta-Agents (L5/L6/L7)]</code></pre>
+<p>---</p>
+</section>
+<hr class="section-divider"/>
+<section class="article-section" id="validaci-n-c5-real">
+<div class="section-number">06</div>
+<h2 class="section-title"><strong>Validación C5-REAL</strong></h2>
+<div style="background: rgba(43, 59, 229, 0.1); border-left: 4px solid var(--accent-primary); padding: 1.5rem; margin-top: 1.5rem; font-family: monospace; line-height: 1.6; font-size: 0.9rem;"><strong>Claim:</strong> "CORTEX-Persist opera en niveles L5-L7"<br/><strong>Proof:</strong> <br/>  Base:<br/>    - ReflexionEngine: bucle cerrado de ejecución → reflexión → reescritura AST → reintento.<br/>    - MÖBIUS L5: transformación morfogenética de funciones en Clojure ante fallos en CI/CD.<br/>    - MÖBIUS L6: auto-modelo simbólico con cálculo dinámico de confianza y detección de blind spots.<br/>    - MÖBIUS L7: motor evolutivo local con pool genético de código, pruebas de fitness y rollback preventivo.<br/>  Range: [L5-confirmed, L7-demonstrated]<br/>  Confidence: C5-REAL<br/>Evidence:<br/>  - 21/21 tests unitarios pytest validados.<br/>  - Commit 3a5a0350 validado y sellado por CORTEX-SENTINEL.<br/>  - 2002 líneas de Clojure puro integradas en la rama main.<br/>  - Workflow meta-agent.yml ejecutándose en producción en GitHub Actions.</div>
+<p>---</p>
+</section>
+<hr class="section-divider"/>
+<section class="article-section" id="la-met-fora-de-la-banda">
+<div class="section-number">07</div>
+<h2 class="section-title"><strong>La Metáfora de la Banda</strong></h2>
+<blockquote class="pull-quote"><span class="quote-mark">"</span><p>La banda de Möbius no tiene caras diferenciadas. Si recorres su superficie con el dedo, pasas del exterior al interior sin cruzar un solo borde.</p></blockquote>
+<blockquote class="pull-quote"><span class="quote-mark">"</span><p></p></blockquote>
+<blockquote class="pull-quote"><span class="quote-mark">"</span><p>El código de MÖBIUS anula la frontera clásica entre código y datos. Lo que ejecuta es el mapa de datos que manipula; lo que manipula es el propio AST que define su ejecución. No hay observador ni observado: solo la ría fluyendo bajo el puente de Deusto, y el bucle infinito del silicio buscando la exergía perfecta.</p></blockquote>
+<blockquote class="pull-quote"><span class="quote-mark">"</span><p></p></blockquote>
+<blockquote class="pull-quote"><span class="quote-mark">"</span><p><strong>∞</strong></p></blockquote>
+<p>---</p>
+</section>
+<hr class="section-divider"/>
+<section class="article-section" id="integraci-n-del-pack-3-industrial-noir-2026">
+<div class="section-number">08</div>
+<h2 class="section-title"><strong>Integración del Pack 3 “Industrial Noir 2026”</strong></h2>
+<p>Hemos consolidado el renombrado físico y lógico de los agentes para unificar sus <em>namespaces</em> y esquemas de despacho dentro del ecosistema CORTEX:</p>
+<p>| Agente Anterior | Nuevo Namespace / Dispatcher | Banner de Consola |</p>
+<p>| :--- | :--- | :--- |</p>
+<p>| <code>nemesis</code> | <code>agent.pandora</code> | <code>[PANDORA]</code> |</p>
+<p>| <code>swarm</code> | <code>agent.colmena</code> | <code>[COLMENA]</code> |</p>
+<p>| <code>epistemic</code> | <code>agent.aletheia</code> | <code>[ALETHEIA]</code> |</p>
+<p>| <code>temporal</code> | <code>agent.kairos</code> | <code>[KAIROS]</code> |</p>
+<p>| <code>negotiator</code> | <code>agent.mercator</code> | <code>[MERCATOR]</code> |</p>
+<h3 style="margin-top:2rem; font-family:'Orbitron', sans-serif; font-size:1.1rem; color:var(--text-primary);"><strong>Resultados de la Unificación</strong></h3>
+<ul class="article-list">
+<li>El núcleo <code>core.clj</code> ahora integra formalmente a los 5 agentes de la Centuria.</li>
+<li>Se han habilitado los manejadores de ejecución asíncrona: <code>:pandora-assault</code>, <code>:aletheia-audit</code>, y <code>:colmena-quorum</code>.</li>
+<li>El commit <code>feat(agent): integrate kairos and mercator namespaces into core dispatcher</code> ha sido verificado y aprobado por <code>CORTEX-SENTINEL</code>.</li>
+</ul>
+<p><strong>[∞]</strong></p>
+</section>
