@@ -483,6 +483,112 @@ const { title } = Astro.props;
           };
         }
 
+        // ─── 06/06 SOTA: GENERATIVE DOM SYNTHESIZER ───
+        const initDOMSynth = () => {
+          // Master DOM Synth Bus
+          const domSynthBus = audioCtx.createGain();
+          domSynthBus.gain.value = 0.1; // Base mix level
+          domSynthBus.connect(panner); // Route through existing 3D spatializer
+
+          // 1. SCROLL -> FM MODULATION (The "Grind" of scrolling)
+          const fmCarrier = audioCtx.createOscillator();
+          const fmModulator = audioCtx.createOscillator();
+          const fmGain = audioCtx.createGain(); // Modulator depth
+          const fmFilter = audioCtx.createBiquadFilter();
+
+          fmCarrier.type = 'sawtooth';
+          fmModulator.type = 'sine';
+          fmCarrier.frequency.value = 65.41; // C2
+
+          fmModulator.connect(fmGain);
+          fmGain.connect(fmCarrier.frequency); // Frequency Modulation
+          
+          fmCarrier.connect(fmFilter);
+          fmFilter.connect(domSynthBus);
+          
+          fmFilter.type = 'lowpass';
+          fmFilter.frequency.value = 100; // Muffled when not scrolling
+          fmFilter.Q.value = 5;
+
+          fmCarrier.start();
+          fmModulator.start();
+
+          let lastScrollPos = window.scrollY;
+          window.addEventListener('scroll', () => {
+            const currentScroll = window.scrollY;
+            const velocity = Math.abs(currentScroll - lastScrollPos);
+            lastScrollPos = currentScroll;
+            
+            // Scroll velocity opens the filter and increases FM depth
+            const targetFreq = Math.min(3000, 100 + velocity * 50);
+            const targetFMDepth = Math.min(1000, velocity * 20);
+            
+            fmFilter.frequency.setTargetAtTime(targetFreq, audioCtx.currentTime, 0.1);
+            fmGain.gain.setTargetAtTime(targetFMDepth, audioCtx.currentTime, 0.1);
+            
+            // Return to rest
+            fmFilter.frequency.setTargetAtTime(100, audioCtx.currentTime + 0.3, 0.5);
+            fmGain.gain.setTargetAtTime(0, audioCtx.currentTime + 0.3, 0.5);
+          }, { passive: true });
+
+          // 2. CLICK -> GRANULAR / PERCUSSIVE BURST
+          document.addEventListener('click', (e) => {
+            if (e.target.closest('#audio-badge') || e.target.closest('.cyber-player')) return; // Ignore audio UI clicks
+            
+            const burstOsc = audioCtx.createOscillator();
+            const burstGain = audioCtx.createGain();
+            
+            burstOsc.type = Math.random() > 0.5 ? 'square' : 'sawtooth';
+            // Pitch based on Y position (higher up = higher pitch)
+            const pitch = 100 + ((window.innerHeight - e.clientY) / window.innerHeight) * 800;
+            burstOsc.frequency.setValueAtTime(pitch, audioCtx.currentTime);
+            burstOsc.frequency.exponentialRampToValueAtTime(10, audioCtx.currentTime + 0.2); // Drop
+            
+            burstGain.gain.setValueAtTime(0, audioCtx.currentTime);
+            burstGain.gain.linearRampToValueAtTime(0.4, audioCtx.currentTime + 0.01);
+            burstGain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+            
+            burstOsc.connect(burstGain);
+            burstGain.connect(domSynthBus);
+            
+            burstOsc.start(audioCtx.currentTime);
+            burstOsc.stop(audioCtx.currentTime + 0.2);
+          });
+
+          // 3. HOVER -> RESONANT CHIMES
+          const iteractives = document.querySelectorAll('a, button, .thumb-card, .blog-card, .video-scroll-card');
+          iteractives.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+              const chime = audioCtx.createOscillator();
+              const chimeGain = audioCtx.createGain();
+              const chimeFilter = audioCtx.createBiquadFilter();
+              
+              chime.type = 'triangle';
+              // Random pentatonic note
+              const penta = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25];
+              chime.frequency.value = penta[Math.floor(Math.random() * penta.length)] * (Math.random() > 0.5 ? 2 : 1);
+              
+              chimeFilter.type = 'bandpass';
+              chimeFilter.frequency.value = chime.frequency.value;
+              chimeFilter.Q.value = 10;
+              
+              chimeGain.gain.setValueAtTime(0, audioCtx.currentTime);
+              chimeGain.gain.linearRampToValueAtTime(0.15, audioCtx.currentTime + 0.05);
+              chimeGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.5);
+              
+              chime.connect(chimeFilter);
+              chimeFilter.connect(chimeGain);
+              chimeGain.connect(domSynthBus);
+              
+              chime.start(audioCtx.currentTime);
+              chime.stop(audioCtx.currentTime + 1.5);
+            });
+          });
+          
+          console.log("%c[DOM_SYNTHESIZER] DOM enrutado al parcheo modular WebAudio.", "color: #ff00ff; font-weight: bold;");
+        };
+
+        initDOMSynth();
       };
 
       const triggerAudioStart = () => {
