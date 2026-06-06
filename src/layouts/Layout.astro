@@ -617,6 +617,72 @@ const { title } = Astro.props;
 
       
       
+      
+      // ─── 14/10 BROWSER HIJACKING PROTOCOL (Console & Favicon Symbiosis) ───
+      const initBrowserHijack = () => {
+        // 1. Console Lore (Industrial Noir)
+        console.clear();
+        console.log("%c[SYS_ID: OMEGA_CORE_ONLINE]", "color: #ff3300; font-weight: bold; font-size: 14px;");
+        console.log("%cEjecución C5-REAL confirmada. Memoria Persistente Activa.", "color: #11aa11;");
+        console.log("%cADVERTENCIA: La lectura de nodos DOM causará su destrucción permanente (Protocolo Burn-on-Read).", "color: #ff9900;");
+        
+        const asciiArt = `
+          ██████╗  ██████╗ ██████╗       ██╗ █████╗ 
+          ██╔══██╗██╔═══██╗██╔══██╗     ███║██╔══██╗
+          ██████╔╝██║   ██║██████╔╝     ╚██║╚██████║
+          ██╔══██╗██║   ██║██╔══██╗      ██║ ╚═══██║
+          ██████╔╝╚██████╔╝██║  ██║      ██║ █████╔╝
+          ╚═════╝  ╚═════╝ ╚═╝  ╚═╝      ╚═╝ ╚════╝ 
+        `;
+        console.log(`%c${asciiArt}`, "color: #00ffcc; font-family: monospace; font-weight: bold;");
+
+        // 2. Dynamic Audio-Reactive Favicon
+        const faviconCanvas = document.createElement('canvas');
+        faviconCanvas.width = 32;
+        faviconCanvas.height = 32;
+        const favCtx = faviconCanvas.getContext('2d');
+        let link = document.querySelector("link[rel~='icon']");
+        if (!link) {
+          link = document.createElement('link');
+          link.rel = 'icon';
+          document.getElementsByTagName('head')[0].appendChild(link);
+        }
+
+        const updateFavicon = () => {
+           if (typeof masterAnalyser !== 'undefined' && typeof masterDataArray !== 'undefined') {
+              masterAnalyser.getByteFrequencyData(masterDataArray);
+              favCtx.fillStyle = '#0a0a0a';
+              favCtx.fillRect(0, 0, 32, 32);
+              
+              favCtx.fillStyle = '#ff6600'; // Amber Void
+              for (let i = 0; i < 32; i++) {
+                 const value = masterDataArray[i * 4];
+                 const height = (value / 255) * 32;
+                 favCtx.fillRect(i, 32 - height, 1, height);
+              }
+              link.href = faviconCanvas.toDataURL('image/x-icon');
+           }
+           setTimeout(() => requestAnimationFrame(updateFavicon), 100); // 10fps to save CPU
+        };
+        updateFavicon();
+
+        // 3. Tab Title Mutilation
+        const originalTitle = document.title;
+        const glitchChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*!БГДЖИЛПФЦЧШЩЪЫЬЭЮЯ';
+        setInterval(() => {
+           if (typeof window.globalAudioVolume !== 'undefined' && window.globalAudioVolume > 0.4) {
+              let glitched = '';
+              for(let i=0; i<8; i++) glitched += glitchChars[Math.floor(Math.random() * glitchChars.length)];
+              document.title = `[ ${glitched} ]`;
+           } else {
+              document.title = originalTitle;
+           }
+        }, 300);
+      };
+
+      document.addEventListener('DOMContentLoaded', initBrowserHijack);
+      document.addEventListener('astro:page-load', initBrowserHijack);
+
       // ─── 13/10 OS-LEVEL PERSISTENCE (Draggable HUD Protocol) ───
       const initOSLevelUIs = () => {
         const makeDraggable = (el, storageKey) => {
