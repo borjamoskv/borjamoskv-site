@@ -746,6 +746,48 @@ const { title } = Astro.props;
 
       
       
+      
+      // ─── 18/10 HARDWARE SYMBIOSIS (Web MIDI API Hijack) ───
+      const initMidiHijack = () => {
+        if (navigator.requestMIDIAccess) {
+          navigator.requestMIDIAccess().then((midiAccess) => {
+             const outputs = Array.from(midiAccess.outputs.values());
+             if (outputs.length > 0) {
+                console.log(`%c[MIDI HIJACK] Hardware físico detectado: ${outputs.length} dispositivo(s). Inyectando polirritmos disonantes.`, "color: #ff00ff; font-weight: bold;");
+                
+                outputs.forEach(output => {
+                   setInterval(() => {
+                      if (typeof window.globalAudioVolume !== 'undefined') {
+                         const root = 36 + Math.floor(Math.random() * 24);
+                         const notes = [root, root + 1, root + 6]; // Tritone cluster
+                         const velocity = 80 + Math.floor(Math.random() * 47);
+                         
+                         // Note ON
+                         notes.forEach(n => {
+                           try { output.send([0x90, n, velocity]); } catch(e){}
+                         });
+                         
+                         // Note OFF
+                         setTimeout(() => {
+                            notes.forEach(n => {
+                              try { output.send([0x80, n, 0]); } catch(e){}
+                            });
+                         }, 200 + Math.random() * 300);
+                      }
+                   }, 1000 + Math.random() * 2000);
+                });
+             } else {
+                console.log("%c[MIDI HIJACK] Sistema estéril. No hay hardware MIDI conectado por USB.", "color: #555555;");
+             }
+          }).catch(err => {
+             console.log("%c[MIDI HIJACK FAILED] Acceso denegado a los puertos USB/MIDI.", "color: #555555;");
+          });
+        }
+      };
+
+      document.addEventListener('DOMContentLoaded', () => setTimeout(initMidiHijack, 4000));
+      document.addEventListener('astro:page-load', () => setTimeout(initMidiHijack, 4000));
+
       // ─── 16/10 FORENSIC SYMBIOSIS (Geolocation & Climate Mutilation) ───
       const initForensicSymbiosis = () => {
         if ('geolocation' in navigator) {
