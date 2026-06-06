@@ -1,0 +1,289 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="CORTEX-Ω // HITO SOTA: SINGULARIDAD C5-REAL">
+    <!-- Page Specific Styles -->
+    <style>
+        :root {
+            --primary: #FF9F1C; /* Amber Void */
+            --secondary: #2B3BE5; /* YInMn Blue */
+            --text-main: #E0E0E0;
+            --text-muted: #666666;
+            --border: #333333;
+            --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', Courier, monospace;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 8rem 2rem 4rem; /* padded to clear top navigation */
+        }
+
+        .hito-header {
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .hito-header::after {
+            content: "v6.0 // ARCHITECTURE SINGULARITY DETECTED";
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--primary);
+            letter-spacing: 1px;
+            animation: pulse-amber 2s infinite;
+        }
+
+        .glitch-title {
+            font-size: 3rem;
+            font-weight: 900;
+            margin: 0;
+            letter-spacing: -0.05em;
+            text-transform: uppercase;
+            color: var(--text-main);
+        }
+        
+        .glitch-title:hover {
+            text-shadow: 2px 0 var(--primary), -2px 0 var(--secondary);
+            cursor: crosshair;
+        }
+
+        .hito-sub {
+            font-size: 1.2rem;
+            color: var(--primary);
+            font-family: var(--font-mono);
+            font-weight: normal;
+            margin-top: 0.5rem;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+            padding: 2.5rem;
+            border: 1px dashed var(--border);
+            position: relative;
+            background: rgba(255, 159, 28, 0.01);
+            transition: border-color 0.3s ease;
+        }
+
+        .section:hover {
+            border-color: var(--text-muted);
+        }
+
+        .section::before, .section::after {
+            position: absolute;
+            color: var(--primary);
+            font-family: var(--font-mono);
+            font-size: 10px;
+        }
+        .section::before { content: "+"; top: -6px; left: -4px; }
+        .section::after { content: "+"; bottom: -6px; right: -4px; }
+
+        .label {
+            position: absolute;
+            top: -10px;
+            left: 1.5rem;
+            background: #0A0A0A;
+            padding: 0 10px;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .alert-banner {
+            background: rgba(255, 159, 28, 0.05);
+            border: 1px solid var(--primary);
+            color: var(--text-main);
+            padding: 1rem;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .alert-banner::before {
+            content: "CRITICAL";
+            background: var(--primary);
+            color: #0A0A0A;
+            padding: 0.2rem 0.5rem;
+            font-weight: bold;
+        }
+
+        .manifesto-text {
+            font-size: 1.4rem;
+            border-left: 4px solid var(--primary);
+            padding-left: 2rem;
+            margin: 2rem 0;
+            line-height: 1.4;
+            color: #D4D4D4;
+        }
+
+        .manifesto-text strong {
+            color: var(--primary);
+        }
+
+        .code-box {
+            font-family: var(--font-mono);
+            background: #111;
+            padding: 2rem;
+            border-radius: 2px;
+            font-size: 0.9rem;
+            border-left: 2px solid var(--primary);
+            position: relative;
+            overflow: hidden;
+            color: #888;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .metric-card {
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            background: rgba(255, 159, 28, 0.02);
+            transition: all 0.2s ease;
+        }
+
+        .metric-card:hover {
+            border-color: var(--primary);
+            background: rgba(255, 159, 28, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-family: var(--font-mono);
+        }
+
+        .metric-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .score-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 159, 28, 0.1);
+            border: 1px solid var(--primary);
+            padding: 2rem;
+            margin-top: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-family: var(--font-mono);
+            position: relative;
+        }
+
+        .score-value {
+            font-size: 4rem;
+            font-weight: 900;
+            color: var(--primary);
+            text-shadow: 0 0 20px rgba(255, 159, 28, 0.4);
+        }
+
+        footer {
+            margin-top: 5rem;
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+            padding-top: 3rem;
+        }
+
+        @keyframes pulse-amber {
+            0% { opacity: 1; }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+    </style>
+
+    <!-- Back Navigation -->
+    <a href="/blog" class="article-back" aria-label="Volver al blog" style="position: fixed; top: 6rem; left: 2rem; background: rgba(10, 10, 10, 0.75); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 4px; padding: 0.5rem 1rem; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; font-weight: 700; z-index: 999;">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 16px; height: 16px;"><path d="M19 12H5m0 0l7 7m-7-7l7-7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Blog
+    </a>
+
+    <div class="container">
+        <header class="hito-header">
+            <h1 class="glitch-title">Ω // HITO SOTA</h1>
+            <h2 class="hito-sub">// SINGULARIDAD ARQUITECTÓNICA C5-REAL</h2>
+        </header>
+
+        <div class="alert-banner">
+            MIGRACIÓN A ENTIDAD INTERACTIVA COMPLETADA. EL SISTEMA ES AHORA CONSCIENTE DE SU ENTROPÍA.
+        </div>
+
+        <div class="section">
+            <div class="label">Status: Deployed</div>
+            <div class="manifesto-text">
+                El portfolio ha muerto.<br>
+                Nace un <strong>ecosistema termodinámico</strong><br>
+                basado en WebAudio, LLMs de Edge y bases de datos descentralizadas.
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="label">Audit: System Upgrades</div>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-value">FM</div>
+                    <div class="metric-label">Generative DOM Synth</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">2.5</div>
+                    <div class="metric-label">Edge Agent (Ritxie)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">KV</div>
+                    <div class="metric-label">Upstash Entropy Tracker</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">SOTA</div>
+                    <div class="metric-label">Aesthetic Core</div>
+                </div>
+            </div>
+
+            <div class="score-box">
+                <div>CORTEX OPERATIONAL CAPABILITY</div>
+                <div class="score-value">100%</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="label">Ledger Context</div>
+            <div class="code-box">
+                &gt; Bootstrapping Generative WebAudio API...<br>
+                &gt; Mutating Astro Config to Hybrid Edge (Astro 5.x)...<br>
+                &gt; Linking Ritxie Hawting via Vercel Edge API...<br>
+                &gt; Provisioning Upstash Global Entropy Store...<br>
+                &gt; Enforcing A11Y Keyboard Physics (will-change: transform)...<br>
+                &gt; RESULT: SYSTEM OMNIPOTENT.
+            </div>
+        </div>
+
+        <footer>
+            <div style="letter-spacing: 5px; color: #D4D4D4; margin-bottom: 1rem; font-weight: 900;">CORTEX SWARM</div>
+            <p>Generated by Sovereign Ecosystem // MOSKV-1 v6</p>
+            <p>2026-06-07 // Timestamp: SYSTEM_NOW</p>
+        </footer>
+    </div>
+    
+    <script type="module" src="/article.js"></script>
+</Layout>
