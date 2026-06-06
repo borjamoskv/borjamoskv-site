@@ -112,6 +112,25 @@ const { title } = Astro.props;
         createPad(164.81, 'sine');    // E3 (Maj 7)
         createPad(196.00, 'sine', 10); // G3 (Sus2 / 9th) with slight detune for warmth
 
+        
+        // ─── INTERACTIVE THEREMIN ───
+        const theremin = audioCtx.createOscillator();
+        const thereminGain = audioCtx.createGain();
+        theremin.type = 'sine';
+        thereminGain.gain.value = 0.08;
+        
+        const vibrato = audioCtx.createOscillator();
+        vibrato.frequency.value = 7;
+        const vibratoGain = audioCtx.createGain();
+        vibratoGain.gain.value = 15;
+        vibrato.connect(vibratoGain);
+        vibratoGain.connect(theremin.frequency);
+        
+        theremin.connect(thereminGain);
+        thereminGain.connect(panner);
+        theremin.start();
+        vibrato.start();
+
         // ─── AVANT-GARDE KINETIC SEQUENCER (Polyrhythmic & Microtonal) ───
         const tempo = 111; // Non-standard prime BPM
         const lookahead = 25.0; 
@@ -168,6 +187,39 @@ const { title } = Astro.props;
              osc.stop(time + 5);
         };
         
+        
+        const playDissonantTrumpet = (time, freq) => {
+           const osc1 = audioCtx.createOscillator();
+           const osc2 = audioCtx.createOscillator();
+           const gain = audioCtx.createGain();
+           const filter = audioCtx.createBiquadFilter();
+           
+           osc1.type = 'sawtooth';
+           osc2.type = 'sawtooth';
+           
+           osc1.frequency.value = freq;
+           osc2.frequency.value = freq * 1.03; // Dissonant clash
+           osc1.detune.value = (Math.random() * 80) - 40;
+           osc2.detune.value = (Math.random() * 80) - 40;
+           
+           filter.type = 'lowpass';
+           filter.frequency.setValueAtTime(400, time);
+           filter.frequency.exponentialRampToValueAtTime(3000, time + 0.15); // Brass attack
+           filter.frequency.exponentialRampToValueAtTime(200, time + 2);
+           
+           gain.gain.setValueAtTime(0, time);
+           gain.gain.linearRampToValueAtTime(0.1, time + 0.15);
+           gain.gain.exponentialRampToValueAtTime(0.01, time + 2);
+           
+           osc1.connect(filter);
+           osc2.connect(filter);
+           filter.connect(gain);
+           gain.connect(panner);
+           
+           osc1.start(time); osc2.start(time);
+           osc1.stop(time + 2); osc2.stop(time + 2);
+        };
+
         const playDigitalGlitch = (time) => {
           const osc = audioCtx.createOscillator();
           const gain = audioCtx.createGain();
@@ -209,6 +261,13 @@ const { title } = Astro.props;
              playMicrotonalDrone(time, mathFreqs[Math.floor(Math.random() * mathFreqs.length)] * (Math.random() > 0.5 ? 1 : 0.5));
           }
           
+          
+          // Out-of-tune Trumpet Blasts
+          if (Math.random() > 0.88) {
+             const trumpetFreqs = [220.0, 233.08, 277.18, 311.13, 349.23]; // Weird minor/diminished nodes
+             playDissonantTrumpet(time, trumpetFreqs[Math.floor(Math.random() * trumpetFreqs.length)]);
+          }
+
           // Aggressive Granular Glitches + DOM Inversion (3% chance per 16th note)
           if (Math.random() > 0.97) {
              playDigitalGlitch(time);
@@ -314,6 +373,13 @@ const { title } = Astro.props;
           panner.positionX.setTargetAtTime(x * 5, audioCtx.currentTime, 0.1);
           panner.positionY.setTargetAtTime(-y * 5, audioCtx.currentTime, 0.1);
           panner.positionZ.setTargetAtTime(z * 5, audioCtx.currentTime, 0.1);
+
+          // Theremin Pitch Mapping (Inverted Y-axis)
+          if (typeof theremin !== 'undefined') {
+             const pitch = 200 + ((window.innerHeight - cursorY) / window.innerHeight) * 1200;
+             theremin.frequency.setTargetAtTime(pitch, audioCtx.currentTime, 0.05);
+          }
+
         }
 
         // Scroll Velocity Skew Physics
