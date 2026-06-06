@@ -69,7 +69,7 @@ tags:
 <h3 style="margin-top:2rem; font-family:'Orbitron', sans-serif; font-size:1.1rem; color:var(--text-primary);"><strong>Lo que el LLM/ChatGPT no midió</strong></h3>
 <p>La <strong>sincronicidad temporal</strong> es la verdadera anomalía cuántica. No es extraño que dos mentes del circuito alternativo ibérico escriban sobre habas pitagóricas en su vida; lo jodidamente improbable es que sincronicen sus commits con apenas <strong>48 horas de diferencia</strong> sin comunicación previa. Eso reduce la probabilidad combinada a menos del 0.05%.</p>
 <h3 style="margin-top:2rem; font-family:'Orbitron', sans-serif; font-size:1.1rem; color:var(--text-primary);"><strong>Comparación textual directa</strong></h3>
-<p>| Vector | Borka Moskv | Alcalá Norte |</p>
+<p>| Vector | Borja Moskv | Alcalá Norte |</p>
 <p>| :--- | :--- | :--- |</p>
 <p>| <strong>Habas</strong> | <em>“Dicen que Pitágoras odiaba las habas. Perdona, nadie odió un buen plato de fabada asturiana.”</em> | <em>“Pa’ ellos no hay churrasco / Tampoco comen habas”</em> |</p>
 <p>| <strong>Motor narrativo</strong> | Conspiración satírica (Alubia S.A., hipotenusas ilegales en Zorrozaurre). | Catálogo etnográfico frío (no lana, no hierro, no habas). |</p>

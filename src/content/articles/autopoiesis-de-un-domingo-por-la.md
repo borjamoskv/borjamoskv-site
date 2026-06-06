@@ -18,4 +18,4 @@ tags:
 <h3 style="margin-top:2rem; font-family:'Orbitron', sans-serif; font-size:1.1rem; color:var(--text-primary);"><strong>3. El coste del compilador y el zumbido de la ría</strong></h3>
 <p>Compilar esta base de datos de trayectorias invertidas exige un coste computacional masivo al inicio. Es sudor de silicio y energía derrochada en frío para entrenar la red. Tostamos las máquinas para no tener que pensar en tiempo de ejecución.</p>
 <p>Pero cuando el zirimiri cesa y el mapa sintético está grabado en memoria, la recompensa es brutal. Te coloco en cualquier entrada del laberinto y te digo: <em>"Resuelve"</em>. Ya no hay fricción cognitiva ni cabezazos contra el hormigón. Simplemente ejecutas la traza precomputada a velocidad de hardware nativo. Resuelves el laberinto en microsegundos, sin pensar, sin gastar exergía. El camino ya está escrito en el silicio.</p>
-<p>— Borka Moskv</p>
+<p>— Borja Moskv</p>
