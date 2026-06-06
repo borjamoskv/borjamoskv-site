@@ -442,6 +442,46 @@ const { title } = Astro.props;
           });
         });
       });
+    
+      // ─── 13/10 DOM DESTRUCTION PROTOCOL (Anti-UX) ───
+      const initBurnProtocol = () => {
+        const burnObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.dataset.seen = 'true';
+            } else if (!entry.isIntersecting && entry.target.dataset.seen === 'true') {
+              const rect = entry.target.getBoundingClientRect();
+              // If it exits the top of the viewport (user scrolled past it)
+              if (rect.bottom < window.innerHeight * 0.2) {
+                entry.target.classList.add('burnt');
+                // Play glitch sound if audio is active
+                if (typeof playDigitalGlitch === 'function' && Math.random() > 0.5) {
+                  playDigitalGlitch(audioCtx.currentTime);
+                }
+                setTimeout(() => {
+                  if (entry.target && entry.target.parentNode) {
+                    entry.target.remove();
+                  }
+                }, 700);
+                burnObserver.unobserve(entry.target);
+              }
+            }
+          });
+        }, { threshold: 0.1 });
+
+        const elementsToBurn = document.querySelectorAll('p, h1, h2, h3, li, .project-card, .music-card');
+        elementsToBurn.forEach(el => {
+          if (!el.classList.contains('burn-target')) {
+            el.classList.add('burn-target');
+            burnObserver.observe(el);
+          }
+        });
+      };
+      
+      // Init on load and SPA transitions
+      document.addEventListener('DOMContentLoaded', initBurnProtocol);
+      document.addEventListener('astro:page-load', initBurnProtocol);
+
     </script>
     <style is:global>
       #omega-cursor {
@@ -487,6 +527,21 @@ const { title } = Astro.props;
         animation: blink 1s infinite alternate;
       }
       @keyframes blink { from { opacity: 0.2; } to { opacity: 1; box-shadow: 0 0 8px var(--color-amber); } }
+
+    
+      /* ─── 13/10 DOM DESTRUCTION (BURN-ON-READ) ─── */
+      @keyframes burnOut {
+        0% { opacity: 1; filter: invert(0) blur(0px); transform: translateY(0) skewX(0); }
+        40% { opacity: 0.9; filter: invert(1) blur(4px) contrast(300%); color: var(--color-amber); }
+        100% { opacity: 0; filter: blur(20px); transform: translateY(-40px) skewX(30deg) scale(0.9); }
+      }
+      .burn-target {
+        transition: opacity 0.3s ease;
+      }
+      .burn-target.burnt {
+        animation: burnOut 0.7s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+        pointer-events: none;
+      }
 
     </style>
 
