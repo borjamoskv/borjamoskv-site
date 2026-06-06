@@ -41,9 +41,24 @@ const { title } = Astro.props;
 
     <!-- Background Layer -->
     <div class="bg-video-container" transition:persist>
-      <video class="bg-video" autoplay loop muted playsinline>
-        <source src="/media/videos/no-sleep-in-my-city.mp4" type="video/mp4" />
-      </video>
+      <video id="global-bg-video" class="bg-video" autoplay loop muted playsinline></video>
+      <script is:inline>
+        (function() {
+          const videos = [
+            "/media/videos/no-sleep-in-my-city.mp4",
+            "/media/videos/bizarro-loop.mp4",
+            "/media/videos/hortaliza-deep.mp4"
+          ];
+          const randomVideo = videos[Math.floor(Math.random() * videos.length)];
+          const videoEl = document.getElementById('global-bg-video');
+          // Only set source if it hasn't been set (preserves view transition persistence)
+          if (videoEl && !videoEl.getAttribute('src')) {
+            videoEl.src = randomVideo;
+            videoEl.load();
+            videoEl.play().catch(e => console.warn("Video autoplay blocked", e));
+          }
+        })();
+      </script>
     </div>
     <div class="overlay" transition:persist></div>
 
