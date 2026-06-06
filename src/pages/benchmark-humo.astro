@@ -346,11 +346,16 @@
     }
 
     .benchmark-table tr.real-row {
-      background-color: rgba(43, 59, 229, 0.02);
+      background: linear-gradient(90deg, rgba(43, 59, 229, 0.08) 0%, rgba(2, 2, 2, 0.5) 100%) !important;
+    }
+
+    .benchmark-table tr.real-row td:first-child {
+      border-left: 3px solid var(--blue, #2B3BE5);
+      box-shadow: inset 4px 0 10px rgba(43, 59, 229, 0.15);
     }
 
     .benchmark-table tr.real-row:hover {
-      background-color: rgba(43, 59, 229, 0.04);
+      background: linear-gradient(90deg, rgba(43, 59, 229, 0.12) 0%, rgba(2, 2, 2, 0.6) 100%) !important;
     }
 
     .rank-col {
@@ -1304,31 +1309,47 @@
 
     // ── Telemetry Calculations ──
     function updateTelemetryAndRender() {
-      // Calculate average hype and exergy loss
+      // Apply initial filters which triggers HUD update
+      applyFilters();
+    }
+
+    function updateHUD(dataset) {
+      const count = dataset.length;
       let totalHype = 0;
       let totalUtility = 0;
       let totalExergyLost = 0; // In Joules
 
-      influencerDatabase.forEach(item => {
+      dataset.forEach(item => {
         totalHype += item.hype;
         totalUtility += item.utility;
         
         // Exergy Loss Equation (Rule Ω₂): waste factor based on Hype * Followers
-        // Scale down to a reasonable Gigajoule figure for attention attention footprint
         totalExergyLost += (item.followers * item.hype * 2.2); 
       });
 
-      const avgHype = (totalHype / influencerDatabase.length).toFixed(1);
-      const avgUtility = (totalUtility / influencerDatabase.length).toFixed(1);
+      const avgHype = count > 0 ? (totalHype / count).toFixed(1) : "0.0";
       const gigajoulesLost = (totalExergyLost / 1e9).toFixed(2);
-      const sovereignEfficiency = (totalUtility / totalHype).toFixed(2);
+      const sovereignEfficiency = totalHype > 0 ? (totalUtility / totalHype).toFixed(2) : "0.00";
 
-      document.getElementById('hudHype').textContent = `${avgHype}%`;
-      document.getElementById('hudExergy').innerHTML = `${gigajoulesLost}<span>GJ</span>`;
-      document.getElementById('hudEfficiency').textContent = sovereignEfficiency;
-
-      // Apply initial filters
-      applyFilters();
+      const countEl = document.getElementById('hudCount');
+      if (countEl) {
+        countEl.innerHTML = `${count.toLocaleString('es-ES')}<span>entidades</span>`;
+      }
+      
+      const hypeEl = document.getElementById('hudHype');
+      if (hypeEl) {
+        hypeEl.textContent = `${avgHype}%`;
+      }
+      
+      const exergyEl = document.getElementById('hudExergy');
+      if (exergyEl) {
+        exergyEl.innerHTML = `${gigajoulesLost}<span>GJ</span>`;
+      }
+      
+      const effEl = document.getElementById('hudEfficiency');
+      if (effEl) {
+        effEl.textContent = sovereignEfficiency;
+      }
     }
 
     // ── Filter & Sort Logic ──
@@ -1376,6 +1397,7 @@
 
       // Reset to page 1 on filter
       currentPage = 1;
+      updateHUD(filteredDatabase);
       renderTable();
     }
 
