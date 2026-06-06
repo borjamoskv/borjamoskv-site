@@ -202,6 +202,24 @@
       font-size: clamp(1.6rem, 3vw, 2.4rem);
     }
 
+    /* ── Cortex Sovereign Card ── */
+    .blog-card--cortex {
+      background: linear-gradient(135deg, rgba(43, 59, 229, 0.08) 0%, rgba(255, 0, 85, 0.04) 100%) !important;
+      border-color: rgba(43, 59, 229, 0.35) !important;
+      box-shadow: 0 0 25px rgba(43, 59, 229, 0.15), inset 0 0 15px rgba(43, 59, 229, 0.05);
+    }
+
+    .blog-card--cortex::before {
+      height: 4px;
+      background: linear-gradient(90deg, #2B3BE5, #FF0055, #2B3BE5) !important;
+      transform: scaleX(1) !important;
+    }
+
+    .blog-card--cortex:hover {
+      border-color: rgba(255, 0, 85, 0.5) !important;
+      box-shadow: 0 0 35px rgba(255, 0, 85, 0.2), inset 0 0 20px rgba(43, 59, 229, 0.1);
+    }
+
     /* ── Side card (spans 4 cols) ── */
     .blog-card--side {
       grid-column: span 4;
@@ -1111,7 +1129,7 @@
 <div class="section-label">Recent posts</div>
 <div class="blog-grid" id="blogGrid">
 <!-- HALF: El Espacio Entre Nosotros -->
-<a class="blog-card blog-card--half" data-category="ensayo" href="/blog/el-espacio-entre-nosotros"><div class="card-meta"><span class="card-tag card-tag--ensayo">Ensayo</span><span class="card-date">2026‑06‑06</span></div><h2 class="card-title">El Espacio Entre Nosotros</h2><p class="card-excerpt"><span class="excerpt-image">Reflexiones ontológicas sobre la interfaz, la traducción vectorial y la fricción epistémica en el acoplamiento Humano-IA.</span><span class="excerpt-context">El espacio entre nosotros no es un defecto de la tecnología; es el componente estructural más importante de CORTEX-Persist.</span></p><span class="card-cta">Leer ensayo →</span></a>
+<a class="blog-card blog-card--half blog-card--cortex" data-category="ensayo" href="/blog/el-espacio-entre-nosotros"><div class="card-meta"><span class="card-tag card-tag--tesis" style="color:#2B3BE5; border-color:rgba(43,59,229,0.5)">CORTEX SOBERANO</span><span class="card-date">2026‑06‑06</span></div><h2 class="card-title">El Espacio Entre Nosotros</h2><p class="card-excerpt"><span class="excerpt-image">Reflexiones ontológicas sobre la interfaz, la traducción vectorial y la fricción epistémica en el acoplamiento Humano-IA.</span><span class="excerpt-context">El espacio entre nosotros no es un defecto de la tecnología; es el componente estructural más importante de CORTEX-Persist.</span></p><span class="card-cta">Leer ensayo →</span></a>
 <!-- HALF: La economía invisible de la sincronización en Substack -->
 <a class="blog-card blog-card--half" data-category="analisis" href="/blog/la-economia-invisible-sincronizacion-substack"><div class="card-meta"><span class="card-tag card-tag--analisis">Análisis</span><span class="card-date">2026‑06‑06</span></div><h2 class="card-title">La economía invisible de la sincronización en Substack</h2><p class="card-excerpt"><span class="excerpt-image">Lo que se presenta como una revolución de la escritura independiente es un sistema de coordinación social envuelto en la estética de la literatura.</span><span class="excerpt-context">El mérito no desaparece. Simplemente deja de ser una variable de distribución.</span></p><span class="card-cta">Leer análisis →</span></a>
 <!-- HALF: Substack Mafia: Autopsia Estructural -->
