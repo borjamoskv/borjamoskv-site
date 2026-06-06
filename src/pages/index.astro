@@ -115,6 +115,9 @@ import Layout from '../layouts/Layout.astro';
         width: 100%;
         box-shadow: 0 0 8px var(--color-amber);
       }
+      .nav-brand::after {
+        display: none !important;
+      }
 
       /* ─── Content Layer ─── */
       .content-layer {
@@ -691,6 +694,7 @@ import Layout from '../layouts/Layout.astro';
         :root { --gutter: 3rem; }
         .thumb-grid { grid-template-columns: repeat(3, 1fr); }
         .blog-grid { grid-template-columns: repeat(2, 1fr); }
+        .bandcamp-grid { grid-template-columns: 1fr !important; }
       }
       @media (max-width: 768px) {
         :root { --gutter: 1.5rem; }
@@ -801,7 +805,35 @@ import Layout from '../layouts/Layout.astro';
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowfullscreen
               loading="lazy"
+              aria-label="LES BUKO — Borja Moskv YouTube Video Player"
             ></iframe>
+          </div>
+
+          <!-- Bandcamp Sovereign Players -->
+          <div class="bandcamp-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 4rem;">
+            <div style="background: rgba(10, 10, 12, 0.8); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1rem; backdrop-filter: blur(10px);">
+              <span style="font-family: var(--font-secondary); font-size: 0.6rem; color: var(--color-amber); letter-spacing: 0.2em; display: block; margin-bottom: 0.8rem; text-transform: uppercase;">Sovereign Release 01</span>
+              <iframe 
+                style="border: 0; width: 100%; height: 120px; border-radius: 8px; filter: invert(0.9) contrast(120%);" 
+                src="https://bandcamp.com/EmbeddedPlayer/album=3994364503/size=large/bgcol=333333/linkcol=2b3be5/tracklist=false/artwork=small/transparent=true/" 
+                seamless
+                title="Instructions for Flying Bandcamp Player"
+              >
+                <a href="https://borjamoskv.bandcamp.com/album/instructions-for-flying">Instructions for Flying by Borja Moskv</a>
+              </iframe>
+            </div>
+            
+            <div style="background: rgba(10, 10, 12, 0.8); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1rem; backdrop-filter: blur(10px);">
+              <span style="font-family: var(--font-secondary); font-size: 0.6rem; color: var(--color-pink); letter-spacing: 0.2em; display: block; margin-bottom: 0.8rem; text-transform: uppercase;">Curated SOTA Reference</span>
+              <iframe 
+                style="border: 0; width: 100%; height: 120px; border-radius: 8px; filter: invert(0.9) contrast(120%);" 
+                src="https://bandcamp.com/EmbeddedPlayer/album=3655180424/size=large/bgcol=333333/linkcol=2b3be5/tracklist=false/artwork=small/transparent=true/" 
+                seamless
+                title="Oscar Mulero Tormenta Bandcamp Player"
+              >
+                <a href="https://oscarmulero.bandcamp.com/album/tormenta">Tormenta by Oscar Mulero</a>
+              </iframe>
+            </div>
           </div>
 
           <!-- Thumbnail grid -->
@@ -897,6 +929,7 @@ import Layout from '../layouts/Layout.astro';
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowfullscreen
               loading="lazy"
+              aria-label="Me Caigo y Me Levanto — Borja Moskv YouTube Video Player"
             ></iframe>
           </div>
 
@@ -1033,6 +1066,32 @@ import Layout from '../layouts/Layout.astro';
               Ver diario completo
               <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ MANIFIESTO / BIO ═══ -->
+      <section id="manifiesto" class="section">
+        <div class="section-inner" style="max-width: 800px; margin: 0 auto;">
+          <div class="section-header">
+            <span class="section-label">Declaración de Intenciones</span>
+            <h2 class="section-title"><span>Manifiesto</span> C5-REAL</h2>
+          </div>
+          
+          <div style="font-size: 1.1rem; line-height: 1.8; color: var(--color-parchment); font-weight: 300; display: flex; flex-direction: column; gap: 2rem;">
+            <p><strong>Borja Moskv</strong> es un productor de música electrónica, artista visual y ensayista. Su trabajo explora las colisiones físicas entre la tecnología digital, la degradación de la atención humana y los sustratos inerciales del sonido modular.</p>
+            
+            <p>Este portal es un prototipo interactivo diseñado bajo los principios del <em>Brutalismo Cinético</em>. No busca ser una experiencia dócil ni cómoda; busca la fricción directa con los límites del navegador mediante alucinaciones léxicas, persistencia del hardware y destrucción interactiva del DOM.</p>
+            
+            <p>La síntesis no es solo producción de audio: es una auditoría innegociable de la realidad física.</p>
+          </div>
+          
+          <!-- Curated Social Links Hub -->
+          <div style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-top: 4rem;">
+            <a href="https://www.youtube.com/@borjamoskv" target="_blank" rel="noopener" class="view-all-btn" style="padding: 0.8rem 2rem; font-size: 0.7rem;" aria-label="YouTube">YouTube</a>
+            <a href="https://borjamoskv.bandcamp.com" target="_blank" rel="noopener" class="view-all-btn" style="padding: 0.8rem 2rem; font-size: 0.7rem;" aria-label="Bandcamp">Bandcamp</a>
+            <a href="https://soundcloud.com/borja-moskv" target="_blank" rel="noopener" class="view-all-btn" style="padding: 0.8rem 2rem; font-size: 0.7rem;" aria-label="SoundCloud">SoundCloud</a>
+            <a href="https://x.com/bakaladetroya" target="_blank" rel="noopener" class="view-all-btn" style="padding: 0.8rem 2rem; font-size: 0.7rem;" aria-label="X (Twitter)">X / Twitter</a>
           </div>
         </div>
       </section>

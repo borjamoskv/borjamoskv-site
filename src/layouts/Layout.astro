@@ -11,14 +11,30 @@ const { title } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <meta name="description" content="Borja Moskv — Música, Vídeo y Ensayos de Vanguardia. Síntesis C5-REAL, Colapso Termodinámico y Auditoría del Silicio." />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://borjamoskvsite.vercel.app/" />
+    <meta property="og:title" content="BORJA MOSKV — Música · Vídeo · Blog" />
+    <meta property="og:description" content="Borja Moskv — Música, Vídeo y Ensayos de Vanguardia. Síntesis C5-REAL, Colapso Termodinámico y Auditoría del Silicio." />
+    <meta property="og:image" content="/og-image.jpg" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://borjamoskvsite.vercel.app/" />
+    <meta property="twitter:title" content="BORJA MOSKV — Música · Vídeo · Blog" />
+    <meta property="twitter:description" content="Borja Moskv — Música, Vídeo y Ensayos de Vanguardia. Síntesis C5-REAL, Colapso Termodinámico y Auditoría del Silicio." />
+    <meta property="twitter:image" content="/og-image.jpg" />
+
     <ClientRouter />
   </head>
   <body>
     
-    <div id="audio-badge" transition:persist>
+    <button id="audio-badge" aria-label="Inicializar y controlar el audio del sistema" transition:persist style="background: rgba(10, 10, 10, 0.95); border: 1px solid rgba(255, 159, 28, 0.4); border-radius: 4px; padding: 0.6rem 1.2rem; cursor: pointer; display: flex; align-items: center; gap: 0.8rem; pointer-events: auto; z-index: 100000; transition: all 0.3s ease;">
       <div class="audio-dot"></div>
-      <span>SYSTEM AUDIO OFFLINE — CLICK TO INITIALIZE</span>
-    </div>
+      <span style="font-family: var(--font-secondary); font-size: 0.65rem; color: #fff; letter-spacing: 0.1em; text-transform: uppercase;">AUDIO OFFLINE — TAP TO INITIALIZE</span>
+    </button>
 
     <div id="omega-progress" aria-hidden="true" transition:persist></div>
 
@@ -32,11 +48,13 @@ const { title } = Astro.props;
 
     <!-- Navigation -->
     <header transition:persist>
-      <nav class="top-nav">
-        <a href="/#musica" class="nav-link">Música</a>
-        <a href="/#video" class="nav-link">Vídeo</a>
-        <a href="/#blog" class="nav-link">Blog</a>
-        <a href="https://www.youtube.com/@borjamoskv" target="_blank" rel="noopener" class="nav-link">YouTube</a>
+      <nav class="top-nav" aria-label="Navegación principal">
+        <a href="/" class="nav-brand nav-link" style="font-weight: 900; color: var(--color-amber); margin-right: auto;">BM // CORE</a>
+        <a href="/#musica" class="nav-link" aria-label="Sección de música">Música</a>
+        <a href="/#video" class="nav-link" aria-label="Sección de vídeos">Vídeo</a>
+        <a href="/#blog" class="nav-link" aria-label="Sección de diario y ensayos">Diario</a>
+        <a href="/#manifiesto" class="nav-link" aria-label="Manifiesto del artista">Manifiesto</a>
+        <a href="https://www.youtube.com/@borjamoskv" target="_blank" rel="noopener" class="nav-link" aria-label="Canal de YouTube de Borja Moskv">YouTube</a>
       </nav>
     </header>
 
@@ -342,32 +360,56 @@ const { title } = Astro.props;
           });
         }
 
-        // Transform activation UI into a 24/7 Live Stream Badge
+        // Transform activation UI into a 24/7 Live Stream Control Panel
         const audioBadge = document.getElementById('audio-badge');
         if (audioBadge) {
-          audioBadge.style.pointerEvents = 'auto';
           const dot = audioBadge.querySelector('.audio-dot');
           const text = audioBadge.querySelector('span');
           
-          dot.style.animation = 'blink-live 2s infinite alternate';
-          dot.style.background = 'var(--color-yinmn)';
+          dot.style.animation = 'blink-live 1s infinite alternate';
+          dot.style.background = '#00ff00'; // Green online indicator
           
           let seconds = 0;
+          let isMuted = false;
+          
           setInterval(() => {
             seconds++;
             const h = Math.floor(seconds / 3600).toString().padStart(2, '0');
             const m = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
             const s = (seconds % 60).toString().padStart(2, '0');
-            text.innerText = `24/7 LIVE GENERATIVE AUDIO [${h}:${m}:${s}]`;
+            
+            if (isMuted) {
+              text.innerText = `AUDIO MUTED [${h}:${m}:${s}] — TAP TO UNMUTE`;
+            } else {
+              text.innerText = `LIVE AUDIO [${h}:${m}:${s}] — TAP TO MUTE`;
+            }
           }, 1000);
+          
+          // Re-wire click listener to act as a toggle mute
+          audioBadge.onclick = (e) => {
+             e.stopPropagation();
+             isMuted = !isMuted;
+             if (masterGain) {
+                masterGain.gain.setValueAtTime(isMuted ? 0.0 : 0.15, audioCtx.currentTime);
+             }
+             if (isMuted) {
+                dot.style.background = '#ff3300'; // Red when muted
+                dot.style.animation = 'none';
+             } else {
+                dot.style.background = '#00ff00';
+                dot.style.animation = 'blink-live 1s infinite alternate';
+             }
+          };
         }
 
       };
 
-      document.addEventListener('click', () => {
+      const triggerAudioStart = () => {
         if (!isAudioInitialized) initSpatialAudio();
         else if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
-      }, { once: true });
+      };
+      document.addEventListener('click', triggerAudioStart, { once: true });
+      document.getElementById('audio-badge').addEventListener('click', triggerAudioStart, { once: true });
 
       const cursor = document.getElementById('omega-cursor');
       let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
@@ -1215,14 +1257,21 @@ const { title } = Astro.props;
         font-family: var(--font-secondary);
         font-size: 0.6rem;
         letter-spacing: 0.1em;
-        color: rgba(243, 244, 246, 0.4);
-        background: rgba(10, 10, 10, 0.8);
-        padding: 0.5rem 1rem;
-        border: 1px solid rgba(255, 159, 28, 0.2);
-        border-radius: var(--radius-omega);
-        backdrop-filter: blur(5px);
-        transition: opacity 1s ease;
-        pointer-events: none;
+        color: #fff;
+        background: rgba(10, 10, 10, 0.95);
+        padding: 0.6rem 1.2rem;
+        border: 1px solid rgba(255, 159, 28, 0.4);
+        border-radius: 4px;
+        backdrop-filter: blur(8px);
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        pointer-events: auto;
+        cursor: pointer;
+      }
+      #audio-badge:hover {
+        border-color: #00ff00;
+        background: #000;
+        box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+        transform: scale(1.05);
       }
       .audio-dot {
         width: 6px; height: 6px;
