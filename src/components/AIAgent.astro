@@ -77,12 +77,16 @@
         </div>
       </div>
 
-      <!-- Right Panel: Silicon Telemetry Feed -->
+      <!-- Right Panel: Silicon Telemetry Feed & LLM Agent -->
       <div class="hud-panel right-panel">
-        <h3 class="panel-title">// LIVE SILICON TELEMETRY STREAM</h3>
+        <h3 class="panel-title">// RITXIE HAWTING // LLM NEURAL LINK</h3>
         <div class="logs-container" id="hud-logs">
           <!-- Streams automatically -->
         </div>
+        <form id="agent-form" class="agent-terminal" autocomplete="off">
+          <span class="terminal-prompt">&gt;</span>
+          <input type="text" id="agent-input" class="terminal-input" placeholder="INGRESA COMANDO EN LA TERMINAL..." />
+        </form>
       </div>
     </div>
   </div>
@@ -425,6 +429,42 @@
     color: var(--color-yinmn);
     border-left-color: var(--color-yinmn);
   }
+  .log-row.agent {
+    color: #fff;
+    border-left-color: #fff;
+    font-weight: 700;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.4);
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  /* LLM Terminal Input */
+  .agent-terminal {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 0.8rem;
+    margin-top: 0.5rem;
+  }
+  .terminal-prompt {
+    color: var(--color-amber);
+    font-weight: 900;
+    font-size: 0.8rem;
+  }
+  .terminal-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-family: var(--font-secondary);
+    font-size: 0.6rem;
+    outline: none;
+    letter-spacing: 0.1em;
+  }
+  .terminal-input::placeholder {
+    color: rgba(255, 255, 255, 0.2);
+  }
 
   /* Responsive HUD overlay */
   @media (max-width: 900px) {
@@ -614,6 +654,48 @@
       injectVisualPulse();
     });
 
+    // 5.5 LLM AGENT COMMUNICATION (Ritxie Hawting)
+    const agentForm = document.getElementById('agent-form');
+    const agentInput = document.getElementById('agent-input') as HTMLInputElement;
+
+    if (agentForm && agentInput) {
+      agentForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const text = agentInput.value.trim();
+        if (!text) return;
+
+        addLogEntry(`USR_CMD: ${text}`, "cyan");
+        agentInput.value = '';
+        agentInput.disabled = true;
+        
+        // Typing indicator
+        const loaderId = `loader-${Date.now()}`;
+        addLogEntry("RITXIE HAWTING_SINTETIZANDO...", "alert");
+        
+        try {
+          const res = await fetch('/api/agent', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ prompt: text })
+          });
+          
+          if (!res.ok) throw new Error('CORTEX REJECTED CONNECTION');
+          
+          const data = await res.json();
+          addLogEntry(data.response || "RITXIE_HAWTING: VACÍO", "agent");
+          
+          // Trigger physics response on AI reply
+          injectVisualPulse();
+
+        } catch(err) {
+          addLogEntry("RITXIE_HAWTING: [ERROR DE CONEXIÓN CON EL CORTEX]", "alert");
+        } finally {
+          agentInput.disabled = false;
+          agentInput.focus();
+        }
+      });
+    }
+
     // Initial logs setup
     addLogEntry("SILICON TELEMETRY OVERLAY STANDBY.", "system");
   }
@@ -679,7 +761,7 @@
   }
 
   // 6. LOG BUFFER MANAGEMENT
-  function addLogEntry(text: string, type: "system" | "alert" | "cyan" = "system") {
+  function addLogEntry(text: string, type: "system" | "alert" | "cyan" | "agent" = "system") {
     const logs = document.getElementById('hud-logs');
     if (!logs) return;
 
