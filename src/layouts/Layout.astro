@@ -169,12 +169,27 @@ const { title } = Astro.props;
         
         scheduler();
 
-        // Hide activation UI
+        
+        // Transform activation UI into a 24/7 Live Stream Badge
         const audioBadge = document.getElementById('audio-badge');
         if (audioBadge) {
-          audioBadge.style.opacity = '0';
-          setTimeout(() => audioBadge.remove(), 1000);
+          audioBadge.style.pointerEvents = 'auto';
+          const dot = audioBadge.querySelector('.audio-dot');
+          const text = audioBadge.querySelector('span');
+          
+          dot.style.animation = 'blink-live 2s infinite alternate';
+          dot.style.background = 'var(--color-yinmn)';
+          
+          let seconds = 0;
+          setInterval(() => {
+            seconds++;
+            const h = Math.floor(seconds / 3600).toString().padStart(2, '0');
+            const m = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
+            const s = (seconds % 60).toString().padStart(2, '0');
+            text.innerText = `24/7 LIVE GENERATIVE AUDIO [${h}:${m}:${s}]`;
+          }, 1000);
         }
+
       };
 
       document.addEventListener('click', () => {
@@ -182,12 +197,27 @@ const { title } = Astro.props;
         else if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
       }, { once: true });
 
-        // Hide activation UI
+        
+        // Transform activation UI into a 24/7 Live Stream Badge
         const audioBadge = document.getElementById('audio-badge');
         if (audioBadge) {
-          audioBadge.style.opacity = '0';
-          setTimeout(() => audioBadge.remove(), 1000);
+          audioBadge.style.pointerEvents = 'auto';
+          const dot = audioBadge.querySelector('.audio-dot');
+          const text = audioBadge.querySelector('span');
+          
+          dot.style.animation = 'blink-live 2s infinite alternate';
+          dot.style.background = 'var(--color-yinmn)';
+          
+          let seconds = 0;
+          setInterval(() => {
+            seconds++;
+            const h = Math.floor(seconds / 3600).toString().padStart(2, '0');
+            const m = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
+            const s = (seconds % 60).toString().padStart(2, '0');
+            text.innerText = `24/7 LIVE GENERATIVE AUDIO [${h}:${m}:${s}]`;
+          }, 1000);
         }
+
       };
 
       document.addEventListener('click', () => {
