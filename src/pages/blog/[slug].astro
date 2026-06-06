@@ -1,4 +1,5 @@
 ---
+/* src/pages/blog/[slug].astro */
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 
@@ -15,181 +16,703 @@ const { Content } = await render(entry);
 ---
 
 <Layout title={`${entry.data.title} — Borja Moskv`}>
-  <!-- Legacy CSS & Cortex Fonts -->
+  <!-- Legacy CSS compatibility -->
   <link rel="stylesheet" href="/article.css" />
-  <link rel="stylesheet" href="/cortex-terminal.css" />
 
-  <style>
-    /* ═══════════════════════════════════════════════════
-       ARTICLE LAYOUT HOLISTIC ALIGNMENTS
-       ═══════════════════════════════════════════════════ */
-    :root {
-      --blue: var(--color-yinmn, #2B3BE5);
-      --paper: var(--color-parchment, #F3F4F6);
-      --soft: var(--color-muted, rgba(255, 255, 255, 0.55));
-      --line: rgba(255, 255, 255, 0.06);
-      --line-strong: rgba(255, 255, 255, 0.12);
-    }
-
+  <style is:global>
+    /* ─── SOTA ARTICLE STYLING ─── */
     .article-page-container {
-      padding-top: 6rem;
-      padding-bottom: 8rem;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 8rem var(--gutter) 6rem;
+      display: grid;
+      grid-template-columns: 200px 1fr 200px;
+      gap: 3rem;
+      position: relative;
     }
 
-    /* Adjust Back Button below sticky header */
-    .article-back {
-      position: fixed;
-      top: 6rem;
-      left: 2rem;
-      background: rgba(10, 10, 10, 0.75);
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
+    /* Sidebars */
+    .article-sidebar-left {
+      position: sticky;
+      top: 8rem;
+      height: fit-content;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      z-index: 20;
+    }
+
+    .article-sidebar-right {
+      position: sticky;
+      top: 8rem;
+      height: fit-content;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      z-index: 20;
+    }
+
+    /* Back Button */
+    .article-back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: rgba(10, 10, 12, 0.7);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 4px;
+      padding: 0.5rem 1rem;
+      color: rgba(243, 244, 246, 0.65);
+      text-decoration: none;
+      font-family: var(--font-secondary);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      transition: all 0.3s var(--ease-omega);
+      width: fit-content;
+    }
+
+    .article-back-link:hover {
+      border-color: var(--color-yinmn);
+      color: #fff;
+      box-shadow: 0 0 12px rgba(43, 59, 229, 0.3);
+      transform: translateX(-3px);
+    }
+
+    .article-back-link svg {
+      transition: transform 0.3s ease;
+    }
+    .article-back-link:hover svg {
+      transform: translateX(-2px);
+    }
+
+    /* Circular Scroll Indicator */
+    .scroll-gauge-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 1.5rem 1rem;
+      background: rgba(10, 10, 12, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 6px;
+      backdrop-filter: blur(10px);
+    }
+
+    .scroll-gauge {
+      position: relative;
+      width: 60px;
+      height: 60px;
+    }
+
+    .scroll-gauge svg {
+      transform: rotate(-90deg);
+      width: 100%; height: 100%;
+    }
+
+    .gauge-bg {
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.04);
+      stroke-width: 2.5;
+    }
+
+    .gauge-fill {
+      fill: none;
+      stroke: var(--color-yinmn);
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-dasharray: 176;
+      stroke-dashoffset: 176;
+      transition: stroke-dashoffset 0.1s linear;
+    }
+
+    .gauge-percent {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--font-secondary);
+      font-size: 0.55rem;
+      font-weight: 700;
+      color: var(--color-parchment);
+    }
+
+    .gauge-label {
+      font-size: 0.5rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(243, 244, 246, 0.4);
+      text-align: center;
+    }
+
+    /* Table of Contents HUD */
+    .toc-hud {
+      background: rgba(10, 10, 12, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 6px;
+      padding: 1.2rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .toc-hdr {
+      font-family: var(--font-secondary);
+      font-size: 0.55rem;
+      letter-spacing: 0.2em;
+      color: var(--color-yinmn);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      font-weight: 700;
+      border-bottom: 1px solid rgba(43, 59, 229, 0.15);
+      padding-bottom: 0.4rem;
+    }
+
+    .toc-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      list-style: none;
+      max-height: 350px;
+      overflow-y: auto;
+      padding-right: 0.2rem;
+    }
+    .toc-menu::-webkit-scrollbar {
+      width: 2px;
+    }
+    .toc-menu::-webkit-scrollbar-thumb {
+      background: rgba(43, 59, 229, 0.2);
+    }
+
+    .toc-item-link {
+      font-size: 0.6rem;
+      color: rgba(243, 244, 246, 0.45);
+      text-decoration: none;
+      transition: all 0.3s var(--ease-omega);
+      line-height: 1.4;
+      display: block;
+      border-left: 1px solid rgba(255, 255, 255, 0.05);
+      padding-left: 0.6rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .toc-item-link.toc-h3 {
+      padding-left: 1.2rem;
+      font-size: 0.55rem;
+      color: rgba(243, 244, 246, 0.3);
+    }
+
+    .toc-item-link:hover, .toc-item-link.active {
+      color: var(--color-amber);
+      border-left-color: var(--color-amber);
+      padding-left: 0.8rem;
+    }
+    .toc-item-link.toc-h3:hover, .toc-item-link.toc-h3.active {
+      padding-left: 1.4rem;
+    }
+
+    /* Main Center Wrapper */
+    .article-main-content {
+      min-width: 0;
+    }
+
+    /* Article Hero header inside main panel */
+    .article-header-hud {
+      margin-bottom: 2.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding-bottom: 2.5rem;
+    }
+
+    .article-label-badge {
+      font-family: var(--font-secondary);
+      font-size: 0.6rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--color-amber);
+      margin-bottom: 1rem;
+      display: block;
+      text-shadow: 0 0 15px rgba(255, 159, 28, 0.25);
+    }
+
+    .article-main-title {
+      font-family: var(--font-primary);
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      color: #fff;
+      margin-bottom: 1.5rem;
+    }
+
+    .article-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-family: var(--font-secondary);
+      font-size: 0.6rem;
+      color: rgba(243, 244, 246, 0.45);
+      letter-spacing: 0.05em;
+      flex-wrap: wrap;
+    }
+
+    .meta-divider {
+      width: 3px; height: 3px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 50%;
+    }
+
+    .meta-reading-time {
+      color: var(--color-yinmn);
       font-weight: 700;
     }
 
-    /* Refine Hero Header to float on WebGL fluid background */
-    .article-hero {
-      background: transparent;
-      min-height: 50vh;
-      padding-top: 6rem;
-      padding-bottom: 4rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    /* Card Frame Box */
+    .article-glass-card {
+      background: rgba(10, 10, 10, 0.4);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 4.5rem 4rem;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
     }
 
-    .hero-title {
+    /* Text elements overrides */
+    .article-body-text {
       font-family: var(--font-primary);
+      font-size: 1.15rem;
+      line-height: 1.85;
+      color: rgba(243, 244, 246, 0.85);
+    }
+
+    .article-body-text p {
+      margin-bottom: 2rem;
+    }
+
+    /* Drop-cap for first paragraph */
+    .article-body-text > p:first-of-type::first-letter {
+      font-size: 4rem;
       font-weight: 900;
-      letter-spacing: -0.04em;
-    }
-
-    .hero-title :global(span) {
-      background: linear-gradient(135deg, var(--color-yinmn), var(--color-amber));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    /* Refine main body card to feel like a high-performance HUD window */
-    .article-layout {
-      background: rgba(10, 10, 10, 0.45);
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 8px;
-      padding: 4rem 3rem;
-      margin-bottom: 4rem;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-    }
-
-    .article-body {
+      float: left;
+      line-height: 0.85;
+      margin-right: 0.8rem;
+      margin-top: 0.2rem;
+      color: var(--color-amber);
       font-family: var(--font-primary);
-      font-size: 1.1rem;
-      line-height: 1.8;
-      color: var(--color-parchment);
+      text-shadow: 0 0 15px rgba(255, 159, 28, 0.2);
     }
 
-    .article-body :global(h2), .article-body :global(h3) {
-      font-family: var(--font-primary);
+    .article-body-text h2 {
+      font-size: 1.8rem;
       font-weight: 800;
-      color: var(--color-parchment);
+      letter-spacing: -0.03em;
+      margin-top: 3.5rem;
+      margin-bottom: 1.5rem;
+      color: #fff;
+      position: relative;
+      width: fit-content;
+    }
+
+    .article-body-text h3 {
+      font-size: 1.4rem;
+      font-weight: 700;
       letter-spacing: -0.02em;
+      margin-top: 2.5rem;
+      margin-bottom: 1.2rem;
+      color: rgba(243, 244, 246, 0.95);
     }
 
-    .article-body :global(code) {
-      background: rgba(255, 255, 255, 0.04) !important;
-      border-color: rgba(255, 255, 255, 0.08) !important;
-      font-family: var(--font-secondary) !important;
+    .article-body-text blockquote {
+      border-left: 2px solid var(--color-yinmn);
+      background: rgba(43, 59, 229, 0.03);
+      padding: 1.2rem 1.8rem;
+      margin: 2.5rem 0;
+      border-radius: 0 6px 6px 0;
+      font-style: italic;
+      color: rgba(243, 244, 246, 0.75);
     }
 
-    .article-body :global(pre) {
-      background: rgba(5, 5, 5, 0.85) !important;
-      border-color: rgba(255, 255, 255, 0.06) !important;
+    /* Terminal Code Wrapper */
+    .code-terminal-wrapper {
+      margin: 2.5rem 0;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      background: rgba(5, 5, 6, 0.85);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.5);
     }
 
-    .article-body :global(a) {
-      color: var(--color-amber) !important;
-      border-bottom: 1px dashed rgba(255, 159, 28, 0.4) !important;
+    .code-terminal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.6rem 1rem;
+      background: rgba(18, 18, 22, 0.8);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      user-select: none;
     }
 
-    .article-body :global(a:hover) {
-      color: #FFF !important;
-      border-bottom: 1px solid #FFF !important;
+    .terminal-dots {
+      display: flex;
+      gap: 0.35rem;
     }
 
-    .article-footer {
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-      padding-top: 2rem;
-      margin-top: 4rem;
+    .terminal-dots .dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
     }
+    .terminal-dots .dot.red { background: #ff5f56; }
+    .terminal-dots .dot.yellow { background: #ffbd2e; }
+    .terminal-dots .dot.green { background: #27c93f; }
 
-    .article-tag {
+    .terminal-lang {
       font-family: var(--font-secondary);
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
+      font-size: 0.55rem;
+      color: rgba(243, 244, 246, 0.35);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .terminal-copy-btn {
+      background: none;
+      border: none;
+      color: rgba(243, 244, 246, 0.4);
+      font-family: var(--font-secondary);
+      font-size: 0.55rem;
+      cursor: pointer;
+      padding: 0.1rem 0.4rem;
       border-radius: 2px;
-      background: rgba(43, 59, 229, 0.08);
-      border: 1px solid rgba(43, 59, 229, 0.2);
+      transition: all 0.2s ease;
+    }
+
+    .terminal-copy-btn:hover {
       color: var(--color-yinmn);
+      background: rgba(43, 59, 229, 0.08);
+    }
+
+    .code-terminal-wrapper pre {
+      margin: 0 !important;
+      padding: 1.5rem !important;
+      background: transparent !important;
+      overflow-x: auto;
+    }
+
+    /* Footer */
+    .article-footer-hud {
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 2.5rem;
+      margin-top: 4.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .tags-container {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .article-custom-tag {
+      font-family: var(--font-secondary);
+      font-size: 0.6rem;
+      letter-spacing: 0.05em;
+      background: rgba(43, 59, 229, 0.05);
+      border: 1px solid rgba(43, 59, 229, 0.15);
+      color: var(--color-yinmn);
+      padding: 0.25rem 0.75rem;
+      border-radius: 3px;
+      text-transform: uppercase;
+    }
+
+    .article-copydisclaimer {
+      font-size: 0.65rem;
+      color: rgba(243, 244, 246, 0.3);
+      font-family: var(--font-secondary);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 1100px) {
+      .article-page-container {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        padding-top: 6rem;
+      }
+      .article-sidebar-left {
+        position: static;
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .scroll-gauge-container {
+        padding: 0.5rem 1rem;
+        flex-direction: row;
+        gap: 1rem;
+      }
+      .scroll-gauge {
+        width: 35px; height: 35px;
+      }
+      .gauge-label {
+        display: none;
+      }
+      .article-sidebar-right {
+        display: none;
+      }
+      .article-glass-card {
+        padding: 3rem 2rem;
+      }
     }
   </style>
 
   <div class="content-layer">
     <div class="article-page-container">
-      <!-- Back Navigation -->
-      <a aria-label="Volver al blog" class="article-back" href="/blog">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M19 12H5m0 0l7 7m-7-7l7-7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-        </svg>
-        Blog
-      </a>
+      <!-- Left Sidebar HUD -->
+      <aside class="article-sidebar-left">
+        <a class="article-back-link" href="/blog">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          DIARIO
+        </a>
 
-      <!-- HERO -->
-      <header class="article-hero">
-        <span class="hero-label">Artículo</span>
-        <h1 class="hero-title" set:html={entry.data.title}></h1>
-        {entry.data.description && <p class="hero-subtitle">{entry.data.description}</p>}
-        <div class="hero-meta">
-          <span class="hero-author">Borja Moskv</span>
-          <span class="hero-divider"></span>
-          <span class="hero-date">{entry.data.pubDate}</span>
-          <span class="hero-divider"></span>
-          <span class="hero-reading-time" id="readingTime">— min de lectura</span>
-        </div>
-      </header>
-
-      <!-- MAIN CONTAINER -->
-      <div class="article-layout">
-        <main class="article-body">
-          <Content />
-        </main>
-
-        <footer class="article-footer">
-          <div class="article-tags">
-            {entry.data.tags?.map(tag => (
-              <span class="article-tag">#{tag}</span>
-            ))}
+        <!-- Scroll Percentage Circular Gauge -->
+        <div class="scroll-gauge-container">
+          <div class="scroll-gauge">
+            <svg>
+              <circle class="gauge-bg" cx="30" cy="30" r="28"></circle>
+              <circle class="gauge-fill" id="article-gauge-fill" cx="30" cy="30" r="28"></circle>
+            </svg>
+            <div class="gauge-percent" id="article-gauge-percent">00%</div>
           </div>
-          <p class="article-copyright">© 2026 Borja Moskv. Todos los derechos reservados.</p>
-        </footer>
+          <div class="gauge-label">LECTURA</div>
+        </div>
+      </aside>
+
+      <!-- Center Main Column -->
+      <div class="article-main-content">
+        <article class="article-glass-card">
+          <!-- Editorial Header -->
+          <header class="article-header-hud">
+            <span class="article-label-badge">REGISTRO DE TEXTO</span>
+            <h1 class="article-main-title" set:html={entry.data.title}></h1>
+            
+            <div class="article-meta-row">
+              <span>POR BORJA MOSKV</span>
+              <span class="meta-divider"></span>
+              <span>{entry.data.pubDate}</span>
+              <span class="meta-divider"></span>
+              <span class="meta-reading-time" id="readingTime">— MIN DE LECTURA</span>
+            </div>
+          </header>
+
+          <!-- Core content body -->
+          <main class="article-body-text">
+            <Content />
+          </main>
+
+          <!-- Editorial Footer -->
+          <footer class="article-footer-hud">
+            <div class="tags-container">
+              {entry.data.tags?.map(tag => (
+                <span class="article-custom-tag">#{tag}</span>
+              ))}
+            </div>
+            <p class="article-copydisclaimer">© 2026 BORJA MOSKV · PO C5-REAL · SÍNTESIS DE SILICIO</p>
+          </footer>
+        </article>
       </div>
+
+      <!-- Right Sidebar HUD: Table of Contents -->
+      <aside class="article-sidebar-right" id="article-toc-sidebar">
+        <div class="toc-hud">
+          <div class="toc-hdr">COGNITIVE INDEX</div>
+          <ul class="toc-menu" id="toc-list">
+            <!-- Dynamic links generated client side -->
+          </ul>
+        </div>
+      </aside>
     </div>
   </div>
 
   <script is:inline>
-    // ── Simple reading time calculation ──
-    const initReadingTime = () => {
-      const text = document.querySelector('.article-body')?.textContent || '';
-      const words = text.trim().split(/\s+/).length;
-      const minutes = Math.ceil(words / 225); // average reading speed
+    // ─── CLIENT SIDE ARTICLE INTELLIGENCE ───
+    
+    function initArticleCore() {
+      const body = document.querySelector('.article-body-text');
+      if (!body) return;
+
+      // 1. DYNAMIC TABLE OF CONTENTS PARSER
+      const headings = Array.from(body.querySelectorAll('h2, h3'));
+      const tocList = document.getElementById('toc-list');
+      
+      if (tocList) {
+        tocList.innerHTML = ''; // Clear previous items
+        
+        if (headings.length > 0) {
+          headings.forEach((heading, idx) => {
+            if (!heading.id) {
+              // Create clean url slug
+              const slug = heading.textContent
+                .toLowerCase()
+                .trim()
+                .replace(/[^\w\s-]/g, '')
+                .replace(/[\s_-]+/g, '-')
+                .replace(/^-+|-+$/g, '');
+              heading.id = `${slug || 'section'}-${idx}`;
+            }
+
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.href = `#${heading.id}`;
+            a.textContent = heading.textContent;
+            a.className = `toc-item-link ${heading.tagName.toLowerCase() === 'h3' ? 'toc-h3' : 'toc-h2'}`;
+            
+            // Web Audio tick on TOC hovers
+            a.addEventListener('mouseenter', () => playTinyTick(1400, 0.005));
+
+            li.appendChild(a);
+            tocList.appendChild(li);
+          });
+        } else {
+          const li = document.createElement('li');
+          li.style.fontSize = '0.55rem';
+          li.style.color = 'rgba(255,255,255,0.2)';
+          li.textContent = 'NO INDEX AVAILABLE';
+          tocList.appendChild(li);
+        }
+      }
+
+      // 2. ACTIVE HEADING SCROLL TRACKING
+      if (headings.length > 0) {
+        const observerOptions = {
+          root: null,
+          rootMargin: '0px 0px -50% 0px',
+          threshold: 0
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const id = entry.target.id;
+              document.querySelectorAll('.toc-item-link').forEach(link => {
+                if (link.getAttribute('href') === `#${id}`) {
+                  link.classList.add('active');
+                } else {
+                  link.classList.remove('active');
+                }
+              });
+            }
+          });
+        }, observerOptions);
+
+        headings.forEach(h => observer.observe(h));
+      }
+
+      // 3. CODE BLOCK ENHANCER (Mac terminal layout + Copy audio check)
+      const codeBlocks = body.querySelectorAll('pre');
+      codeBlocks.forEach(pre => {
+        // Skip if already processed
+        if (pre.closest('.code-terminal-wrapper')) return;
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'code-terminal-wrapper';
+
+        const header = document.createElement('div');
+        header.className = 'code-terminal-header';
+        
+        // Retrieve language tag if present
+        const codeEl = pre.querySelector('code');
+        let lang = 'CODE';
+        if (codeEl) {
+          const classes = Array.from(codeEl.classList);
+          const langClass = classes.find(c => c.startsWith('language-'));
+          if (langClass) {
+            lang = langClass.replace('language-', '').toUpperCase();
+          }
+        }
+
+        header.innerHTML = `
+          <div class="terminal-dots">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+          </div>
+          <span class="terminal-lang">${lang}</span>
+          <button class="terminal-copy-btn">COPY</button>
+        `;
+
+        pre.parentNode.insertBefore(wrapper, pre);
+        wrapper.appendChild(header);
+        wrapper.appendChild(pre);
+
+        const copyBtn = header.querySelector('.terminal-copy-btn');
+        if (copyBtn) {
+          copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(pre.textContent || '');
+            copyBtn.textContent = 'COPIED';
+            
+            // Synthesize audio chime confirmation
+            playTinyTick(2000, 0.015, 0.05);
+
+            setTimeout(() => {
+              copyBtn.textContent = 'COPY';
+            }, 1500);
+          });
+        }
+      });
+
+      // 4. CIRCULAR READING PROGRESS ENGINE
+      const fill = document.getElementById('article-gauge-fill');
+      const percent = document.getElementById('article-gauge-percent');
+      
+      const onScrollProgress = () => {
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        if (docHeight <= 0) return;
+        
+        const scrollPct = Math.min(100, Math.max(0, (window.scrollY / docHeight) * 100));
+        
+        if (percent) {
+          percent.textContent = `${Math.round(scrollPct).toString().padStart(2, '0')}%`;
+        }
+        
+        if (fill) {
+          // Circular stroke math: circumference is 176 (2 * PI * r = 2 * 3.1415 * 28)
+          const offset = 176 - (scrollPct / 100) * 176;
+          fill.style.strokeDashoffset = offset.toString();
+        }
+      };
+
+      window.addEventListener('scroll', onScrollProgress);
+      onScrollProgress(); // Initial run
+
+      // 5. SIMPLE READING TIME CALCULATION
+      const words = (body.textContent || '').trim().split(/\s+/).length;
+      const minutes = Math.ceil(words / 225); // 225 words per min avg
       const readingTimeSpan = document.getElementById('readingTime');
       if (readingTimeSpan) {
-        readingTimeSpan.textContent = `${minutes} min de lectura`;
+        readingTimeSpan.textContent = `${minutes} MIN DE LECTURA`;
       }
-    };
+    }
 
-    document.addEventListener('astro:page-load', initReadingTime);
-    initReadingTime();
+    // Web Audio micro synthesizer
+    function playTinyTick(freq, gainVal, duration = 0.012) {
+      try {
+        const ctx = window.audioCtx;
+        if (!ctx || ctx.state !== 'running') return;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+        gain.gain.setValueAtTime(gainVal, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+        osc.start();
+        osc.stop(ctx.currentTime + duration);
+      } catch(e){}
+    }
+
+    document.addEventListener('DOMContentLoaded', initArticleCore);
+    document.addEventListener('astro:page-load', initArticleCore);
   </script>
 </Layout>
