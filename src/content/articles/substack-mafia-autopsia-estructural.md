@@ -1103,3 +1103,65 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
   </div>
 </div>
 </section>
+
+<hr/>
+<section class="article-section" id="modelo-matematico">
+<h2 id="h2-modelo-matematico"><strong>19. Modelo Matemático de la Inflación de Visibilidad</strong></h2>
+<p>Esta sección formaliza matemáticamente los hallazgos de esta autopsia basándose en el paper de investigación de red: <a class="text-accent-blue" href="/blog/coordinated-engagement-networks-substack">Coordinated Engagement Networks and Visibility Inflation in Hybrid Newsletter Platforms: A Structural Analysis of Substack’s Recommendation Graph</a> (disponible en formato original de texto plano en <a class="text-accent-blue" href="file:///Users/borjafernandezangulo/10_PROJECTS/borjamoskv-site/src/content/articles/coordinated-engagement-networks-substack.md">coordinated-engagement-networks-substack.md</a>).</p>
+
+<p>Para modelar formalmente la dinámica de amplificación de Substack Mafia, representamos la plataforma híbrida como un grafo dirigido y ponderado:</p>
+<ul>
+  <li>Sea $G = (V, E)$ el grafo de creadores.</li>
+  <li>Los nodos $i, j \in V$ representan publicaciones individuales.</li>
+  <li>Los enlaces dirigidos representan señales de recomendación o interacción (restacks, menciones, co-recomendación).</li>
+  <li>Sea $w_{ij}(t)$ el peso de la señal de interacción de $i$ a $j$ en el instante de tiempo $t$.</li>
+</ul>
+
+<h3>Ecuación 1: Función de Ranking Algorítmico</h3>
+<p>El algoritmo de recomendación de la plataforma calcula la visibilidad (ranking) de un nodo $j$ estimando la densidad temporal de las señales entrantes frente a la varianza del sistema:</p>
+
+<div class="equation-box">
+  R(j) = f\left(\sum_{i \in V} w_{ij}(t), \Delta t, \sigma(t)\right)
+  <span class="equation-label">Ecuación 1: Función de Visibilidad Algorítmica</span>
+</div>
+
+<p>Donde $\Delta t$ representa el clustering o concentración temporal de las señales y $\sigma(t)$ representa la varianza de la actividad global del sistema.</p>
+
+<h3>Ecuación 2: Activación de Clusters Coordinados</h3>
+<p>Definimos un subconjunto de nodos coordinados $C \subset V$ que ejecutan un incremento sincronizado de su interacción recíproca dentro de una ventana de tiempo acotada $\tau$:</p>
+
+<div class="equation-box">
+  \forall i, j \in C: w_{ij}(t) \uparrow \text{ para } t \in \tau
+  <span class="equation-label">Ecuación 2: Activación del Cluster Coordinado</span>
+</div>
+
+<p>Dado que el procesador de señales algorítmicas de la plataforma no procesa intencionalidad (carece de acceso a metadatos de intenciones), las señales coordinadas y las orgánicas resultan topológicamente indistinguibles en la capa de procesamiento.</p>
+
+<h3>Ecuación 3: Densidad de Interacción Sincronizada</h3>
+<p>La densidad de interacción del cluster $C$ dentro de la ventana de tiempo $\tau$ se expresa como:</p>
+
+<div class="equation-box">
+  D(C, \tau) = \frac{\sum_{i, j \in C} w_{ij}(t)}{|\tau|}
+  <span class="equation-label">Ecuación 3: Densidad de Interacción Sincronizada</span>
+</div>
+
+<p>Si $D(C, \tau)$ es significativamente mayor que la varianza basal del sistema $\sigma(t)$, el algoritmo interpreta una anomalía de relevancia, disparando la amplificación en Notes y feeds automáticos, lo que produce una <strong>inflación de visibilidad</strong> artificial.</p>
+
+<h3>Ecuación 4: Dependencia Estructural y Retorno a Base</h3>
+<p>Sea $A$ el factor de amplificación algorítmica derivado de la pertenencia a $C$, y sea $A_{\text{external}}$ el flujo orgánico de descubrimiento externo. Se constata empíricamente que en estos clusters:</p>
+
+<div class="equation-box">
+  A \gg A_{\text{external}}
+  <span class="equation-label">Ecuación 4: Disparidad de Amplificación</span>
+</div>
+
+<p>Cuando el nodo $j$ cesa su participación en el cluster de coordinación ($C$), el factor de amplificación decae instantáneamente:</p>
+
+<div class="equation-box">
+  A \rightarrow 0 \implies \text{la visibilidad revierte al flujo basal orgánico}
+  <span class="equation-label">Ecuación 5: Regresión al Estado Basal</span>
+</div>
+
+<p>Esto demuestra que el activo extraído no es reputación acumulada del contenido, sino la posición logística de enlace en la red.</p>
+</section>
+
