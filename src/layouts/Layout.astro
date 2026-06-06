@@ -38,5 +38,76 @@ const { title } = Astro.props;
     <footer class="site-footer" transition:persist>
       <p class="footer-text">© 2026 Borja Moskv · YInMn 2026</p>
     </footer>
+  
+    <div id="omega-cursor" transition:persist></div>
+    <script>
+      // ─── C5-REAL KINETICS ENGINE ───
+      const cursor = document.getElementById('omega-cursor');
+      let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+      let cursorX = mouseX, cursorY = mouseY;
+      
+      window.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
+
+      const loop = () => {
+        cursorX += (mouseX - cursorX) * 0.15;
+        cursorY += (mouseY - cursorY) * 0.15;
+        if (cursor) cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
+        requestAnimationFrame(loop);
+      };
+      requestAnimationFrame(loop);
+
+      document.addEventListener('astro:page-load', () => {
+        // 3D Magnetic Physics on interactive elements
+        const iteractives = document.querySelectorAll('.hero-btn, .view-all-btn, .thumb-card, .video-scroll-card, .blog-card');
+        
+        iteractives.forEach(el => {
+          el.addEventListener('mousemove', (e) => {
+            const rect = el.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            
+            // Calculate tilt
+            const tiltX = (y / (rect.height / 2)) * -8;
+            const tiltY = (x / (rect.width / 2)) * 8;
+
+            el.style.transform = `perspective(1000px) translate3d(${x * 0.08}px, ${y * 0.08}px, 10px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.03)`;
+            el.style.transition = 'none';
+            el.style.zIndex = '50';
+            
+            // Add dynamic ember glow on hover edges
+            el.style.boxShadow = `0 20px 40px rgba(0,0,0,0.8), ${-tiltY * 2}px ${tiltX * 2}px 30px rgba(255, 159, 28, 0.2)`;
+          });
+          
+          el.addEventListener('mouseleave', () => {
+            el.style.transform = '';
+            el.style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+            el.style.zIndex = '1';
+            el.style.boxShadow = '';
+          });
+        });
+      });
+    </script>
+    <style is:global>
+      #omega-cursor {
+        position: fixed;
+        top: 0; left: 0;
+        width: 400px; height: 400px;
+        margin-top: -200px; margin-left: -200px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(43, 59, 229, 0.12) 0%, rgba(43, 59, 229, 0) 60%);
+        pointer-events: none;
+        z-index: 99999;
+        mix-blend-mode: screen;
+        will-change: transform;
+      }
+      body:active #omega-cursor {
+        background: radial-gradient(circle, rgba(255, 159, 28, 0.15) 0%, rgba(255, 159, 28, 0) 60%);
+        transition: background 0.1s ease;
+      }
+    </style>
+
   </body>
 </html>
