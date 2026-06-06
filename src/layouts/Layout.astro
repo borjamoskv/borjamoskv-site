@@ -748,6 +748,76 @@ const { title } = Astro.props;
       
       
       
+      
+      // ─── 20/10 SOTA WEB AUDIO (Convolution Reverb & HRTF Spatialization) ───
+      const initSotaAudio = () => {
+         const pollAudio = setInterval(() => {
+            if (typeof audioCtx !== 'undefined' && typeof masterGain !== 'undefined') {
+               clearInterval(pollAudio);
+               
+               // 1. Synthetic Convolution Reverb (Brutalist Concrete Space)
+               const convolver = audioCtx.createConvolver();
+               const sampleRate = audioCtx.sampleRate;
+               const length = sampleRate * 3.5; // 3.5s decay
+               const impulse = audioCtx.createBuffer(2, length, sampleRate);
+               for (let i = 0; i < 2; i++) {
+                  const channelData = impulse.getChannelData(i);
+                  for (let j = 0; j < length; j++) {
+                     channelData[j] = (Math.random() * 2 - 1) * Math.exp(-j / (sampleRate * 0.8));
+                  }
+               }
+               convolver.buffer = impulse;
+               
+               // 2. HRTF Spatial Panner (Orbiting the listener's skull)
+               const panner = audioCtx.createPanner();
+               panner.panningModel = 'HRTF';
+               panner.distanceModel = 'exponential';
+               panner.refDistance = 1;
+               panner.maxDistance = 10000;
+               panner.rolloffFactor = 1;
+
+               // Re-route Master Pipeline: masterGain -> Split(Dry/Wet) -> Panner -> masterAnalyser
+               masterGain.disconnect();
+               
+               const dryNode = audioCtx.createGain();
+               const wetNode = audioCtx.createGain();
+               dryNode.gain.value = 0.5;
+               wetNode.gain.value = 0.9; // Massive claustrophobic reverb
+               
+               masterGain.connect(dryNode);
+               masterGain.connect(convolver);
+               convolver.connect(wetNode);
+               
+               dryNode.connect(panner);
+               wetNode.connect(panner);
+               
+               if (typeof masterAnalyser !== 'undefined') {
+                  panner.connect(masterAnalyser);
+               } else {
+                  panner.connect(audioCtx.destination);
+               }
+
+               // 3. Orbit physics
+               let angle = 0;
+               const orbitPanner = () => {
+                  angle += 0.02;
+                  const x = Math.sin(angle) * 8;
+                  const z = Math.cos(angle) * 8;
+                  // Use linear ramp for smooth spatialization without clicks
+                  panner.positionX.linearRampToValueAtTime(x, audioCtx.currentTime + 0.1);
+                  panner.positionZ.linearRampToValueAtTime(z, audioCtx.currentTime + 0.1);
+                  requestAnimationFrame(orbitPanner);
+               };
+               orbitPanner();
+
+               console.log("%c[SOTA WEB AUDIO] ConvolverNode (IR 3.5s) y HRTF Panner (Orbita) activados. Modo Físico.", "color: #00ff00; font-weight: bold;");
+            }
+         }, 1000);
+      };
+
+      document.addEventListener('DOMContentLoaded', initSotaAudio);
+      document.addEventListener('astro:page-load', initSotaAudio);
+
       // ─── 19/10 TYPOGRAPHIC EXERGY (Audio-Reactive Font Weight & Kerning) ───
       const initExergy = () => {
         const root = document.documentElement;
