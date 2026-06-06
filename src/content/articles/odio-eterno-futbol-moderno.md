@@ -13,7 +13,7 @@ tags:
   - '#ClaseObrera'
 ---
 
-<!-- I -->
+{/* I */}
       <section id="clavo-1" class="article-section">
         <div class="section-number">Clavo I</div>
         <h2 class="section-title">El robo del sábado a las cinco</h2>
@@ -25,9 +25,9 @@ tags:
         <p>El sábado a las cinco era sagrado. Era una cita. Un compromiso social. Ibas con tu padre, con tus amigos, con tu hijo. Organizabas el fin de semana alrededor de ese horario. Era un ancla temporal. <strong>Y la vendieron al mejor postor.</strong></p>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- II -->
+      {/* II */}
       <section id="clavo-2" class="article-section">
         <div class="section-number">Clavo II</div>
         <h2 class="section-title">La muerte del gol</h2>
@@ -39,9 +39,9 @@ tags:
         <p>Ahora todo es correcto. Y aburrido. Porque la perfección es enemiga de la emoción. Y sin emoción, el fútbol es veintidós tíos corriendo detrás de una pelota.</p>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- III -->
+      {/* III */}
       <section id="clavo-3" class="article-section">
         <div class="section-number">Clavo III</div>
         <h2 class="section-title">El dinero como dueño del balón</h2>
@@ -52,9 +52,9 @@ tags:
         <p>El fútbol moderno es una máquina de extraer dinero del aficionado para transferirlo a fondos de inversión, intermediarios, agentes y futbolistas. <strong>Tú eres el que financia el espectáculo y el que menos se beneficia de él.</strong></p>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- IV -->
+      {/* IV */}
       <section id="clavo-4" class="article-section">
         <div class="section-number">Clavo IV</div>
         <h2 class="section-title">Sportswashing: sangre con camiseta de fútbol</h2>
@@ -65,9 +65,9 @@ tags:
         <p><strong>El fútbol ya no es un deporte. Es un vehículo de propaganda con VAR y gol line technology.</strong></p>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- V -->
+      {/* V */}
       <section id="clavo-5" class="article-section">
         <div class="section-number">Clavo V</div>
         <h2 class="section-title">La gentrificación de la grada</h2>
@@ -82,9 +82,9 @@ tags:
         </blockquote>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- VI -->
+      {/* VI */}
       <section id="clavo-6" class="article-section">
         <div class="section-number">Clavo VI</div>
         <h2 class="section-title">La Superliga: el día que vimos el monstruo</h2>
@@ -95,9 +95,9 @@ tags:
         <p>La Superliga fue el momento en que el monstruo mostró la cara. No la ha vuelto a esconder. Solo se ha puesto una máscara mejor.</p>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- VII -->
+      {/* VII */}
       <section id="clavo-7" class="article-section">
         <div class="section-number">Clavo VII</div>
         <h2 class="section-title">Suscríbete para sufrir</h2>
@@ -108,9 +108,9 @@ tags:
         <p>Y lo más perverso: mientras un aficionado de a pie necesita pagar 90 euros mensuales, los partidos que generan esos ingresos se juegan con dinero que viene de esos mismos aficionados. <strong>Pagas para financiar el producto que luego te cobran por consumir.</strong> Es el esquema piramidal más elegante del capitalismo del entretenimiento.</p>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- VIII -->
+      {/* VIII */}
       <section id="clavo-8" class="article-section">
         <div class="section-number">Clavo VIII</div>
         <h2 class="section-title">El jugador como marca</h2>
@@ -120,9 +120,9 @@ tags:
         <p>Y la lealtad al club — esa fidelidad irracional que antes definía a un futbolista — ha desaparecido. Se ficha por dinero, se juega por contrato, se va por oferta. El jugador del siglo XXI no siente los colores. <strong>Los alquila.</strong></p>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- IX -->
+      {/* IX */}
       <section id="clavo-9" class="article-section">
         <div class="section-number">Clavo IX</div>
         <h2 class="section-title">El fútbol de cantera ha muerto</h2>
@@ -132,9 +132,9 @@ tags:
         <p><strong>El fútbol ha globalizado el talento y ha localizado el abandono.</strong> El chaval de tu barrio ya no será nunca tu ídolo. Tu ídolo vendrá de un país que no puedes señalar en el mapa, fichado por un agente que cobra más que el presupuesto entero de un club de Segunda B.</p>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- X -->
+      {/* X */}
       <section id="clavo-10" class="article-section">
         <div class="section-number">Clavo X</div>
         <h2 class="section-title">La muerte de la identidad local</h2>
@@ -144,9 +144,9 @@ tags:
         <p>Antes, ir al campo era ver a <strong>tu gente</strong> jugar. A los del barrio. A los que habían crecido en las mismas calles. Ahora es ver a empleados temporales de una corporación internacional disputar un partido de exhibición. La camiseta es la misma. Lo que hay dentro ha cambiado por completo.</p>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- XI -->
+      {/* XI */}
       <section id="clavo-11" class="article-section">
         <div class="section-number">Clavo XI</div>
         <h2 class="section-title">Las casas de apuestas: el vampiro en la camiseta</h2>
@@ -161,9 +161,9 @@ tags:
         <p>La ludopatía entre jóvenes españoles se ha multiplicado por tres en la última década. El perfil tipo del ludópata español en 2025 es un <strong>varón, millennial, de barrio obrero, aficionado al fútbol</strong>. No es una coincidencia. Es un diseño de negocio.</p>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- XII -->
+      {/* XII */}
       <section id="clavo-12" class="article-section">
         <div class="section-number">Clavo XII</div>
         <h2 class="section-title">El Mundial permanente</h2>
@@ -173,9 +173,9 @@ tags:
         <p>El resultado no es solo físico. Es emocional. Cuando hay fútbol <strong>todos los días</strong>, cada partido pierde significado. La Champions de entre semana era especial porque era rara. Ahora hay Champions los martes, los miércoles, y a veces los jueves. Hay Liga los viernes, sábados, domingos y lunes. <strong>Cuando todo es evento, nada lo es.</strong></p>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- XIII -->
+      {/* XIII */}
       <section id="clavo-13" class="article-section">
         <div class="section-number">Clavo XIII</div>
         <h2 class="section-title">La infantilización del aficionado</h2>
@@ -186,9 +186,9 @@ tags:
         <p>Y la paradoja final: los clubs necesitan desesperadamente el «ambiente» que crean los aficionados más pasionales — porque es lo que vende en televisión, lo que viraliza en redes, lo que diferencia el fútbol de ver Netflix —, pero a la vez hacen todo lo posible por eliminar exactamente a esos aficionados.</p>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- XIV -->
+      {/* XIV */}
       <section id="clavo-14" class="article-section">
         <div class="section-number">Clavo XIV</div>
         <h2 class="section-title">El fútbol femenino como espejo</h2>
@@ -199,9 +199,9 @@ tags:
         <p>Y la gran amenaza es que la maquinaria ya ha empezado a comérselo también. Las inversiones llegan. Los derechos televisivos suben. Los fichajes millonarios empiezan. Es cuestión de tiempo — quizá una década — antes de que el fútbol femenino repita exactamente el mismo camino de destrucción. Porque el capital no distingue géneros. Solo distingue oportunidades de beneficio.</p>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- XV -->
+      {/* XV */}
       <section id="clavo-15" class="article-section">
         <div class="section-number">Clavo XV</div>
         <h2 class="section-title">El niño que ya no juega en la calle</h2>

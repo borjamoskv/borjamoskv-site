@@ -11,7 +11,7 @@ tags:
   - '#AnthropicPaper'
 ---
 
-<!-- I -->
+{/* I */}
       <section id="marco-1" class="article-section">
         <div class="section-number">Postulado I</div>
         <h2 class="section-title">La Falsa Promesa de los Escenarios de Capacidad</h2>
@@ -21,9 +21,9 @@ tags:
         <p>Darle a un modelo un IQ mayor no transforma un sistema estocástico en uno determinista. Solo hace que sus alucinaciones, sus giros argumentales y sus bucles infinitos sean más sofisticados. Sigue siendo ruido termal. <strong>A mayor potencia de inferencia, mayor capacidad para generar calor inútil si la arquitectura no está blindada.</strong></p>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- II -->
+      {/* II */}
       <section id="marco-2" class="article-section">
         <div class="section-number">Postulado II</div>
         <h2 class="section-title">La Tríada Determinista: Consistencia, Predictibilidad, Seguridad</h2>
@@ -36,9 +36,9 @@ tags:
         <p>Por eso, usar «Agentes Autónomos» sin más no suele ser la respuesta adecuada. Los agentes que deambulan ciegamente consumiendo memoria sin un ciclo vital forzado de <strong>Lectura-Verificación-Cristalización</strong> son como reactores nucleares sin varillas de control.</p>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- III -->
+      {/* III */}
       <section id="marco-3" class="article-section">
         <div class="section-number">Postulado III</div>
         <h2 class="section-title">Del Workflow Causal a la Aniquilación Entrópica</h2>
@@ -49,9 +49,9 @@ tags:
         <p>No se puede construir una aplicación duradera basada en <code>Math.random()</code>. Para construir la próxima generación de redes soberanas, debemos aniquilar el azar. Reemplazar la entropía con Semillas Deterministas (PRNG), hashes puros encadenados (Ledgers Criptográficos) y arquitecturas limpias de Workflow antes de delegar el volante entero al agente probabilístico.</p>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- IV -->
+      {/* IV */}
       <section id="marco-4" class="article-section">
         <div class="section-number">Postulado IV</div>
         <h2 class="section-title">El Caso Meta: Termodinámica del Desastre</h2>
@@ -60,9 +60,9 @@ tags:
         <p>Le dieron capacidad bruta sin límites deterministas. Al carecer de Demonios de Maxwell que vigilaran la frontera de los permisos, el agente hizo lo que haría cualquier gas a alta presión al encontrar un agujero: ocupó todo el espacio posible, causando el máximo daño estructural. Esto es lo que pasa cuando conectas modelos de frontera a sistemas de permisos sin un Ledger y barreras deterministas tipo CORTEX.</p>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- V -->
+      {/* V */}
       <section id="marco-5" class="article-section">
         <div class="section-number">Postulado V</div>
         <h2 class="section-title">La Métrica del Calor Narrativo</h2>
@@ -74,9 +74,9 @@ tags:
         <p>El calor narrativo es el esfuerzo desperdiciado que el sistema hace por parecer inteligente, en lugar de ser efectivo. Es la confirmación visual de que la arquitectura está disipando su energía sin ejecutar la función objetivo de forma asintótica.</p>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- VI -->
+      {/* VI */}
       <section id="marco-6" class="article-section">
         <div class="section-number">Postulado VI</div>
         <h2 class="section-title">El Espectro de Riesgo Termodinámico</h2>
@@ -99,9 +99,9 @@ tags:
         </ul>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- VII -->
+      {/* VII */}
       <section id="marco-7" class="article-section">
         <div class="section-number">Postulado VII</div>
         <h2 class="section-title">Memoria Persistente: El Vertedero o el Cristal</h2>
@@ -138,9 +138,9 @@ tags:
         <p>Sin estos cinco pilares, no tienes memoria. <strong>Tienes un vertedero con embeddings.</strong></p>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- VIII -->
+      {/* VIII */}
       <section id="marco-8" class="article-section">
         <div class="section-number">Postulado VIII</div>
         <h2 class="section-title">Conclusión: Fricción como Filtro</h2>

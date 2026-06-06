@@ -13,7 +13,7 @@ tags:
   - '#AES'
 ---
 
-<!-- I -->
+{/* I */}
       <section id="el-error" class="article-section">
         <div class="section-number">I</div>
         <h2 class="section-title">El error de ruta habitual</h2>
@@ -43,9 +43,9 @@ tags:
         <p>Capas al revés y tienes a alguien que mueve parámetros con confianza y sin comprensión. Capas en orden y tienes a alguien que entiende <em>por qué</em> mueve cada parámetro.</p>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- II -->
+      {/* II */}
       <section id="bob-mccarthy" class="article-section">
         <div class="section-number">II</div>
         <h2 class="section-title">Bob McCarthy — La física que no caduca</h2>
@@ -89,9 +89,9 @@ tags:
         </div>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- III -->
+      {/* III */}
       <section id="smaart-oper" class="article-section">
         <div class="section-number">III</div>
         <h2 class="section-title">La capa operativa — Smaart y las AES masterclasses</h2>
@@ -129,9 +129,9 @@ tags:
         </div>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- IV -->
+      {/* IV */}
       <section id="mapa-estudio" class="article-section">
         <div class="section-number">IV</div>
         <h2 class="section-title">El mapa de estudio completo</h2>
@@ -164,9 +164,9 @@ tags:
         </blockquote>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- V -->
+      {/* V */}
       <section id="libro" class="article-section">
         <div class="section-number">V</div>
         <h2 class="section-title">El libro que tienes que leer</h2>
@@ -198,9 +198,9 @@ tags:
         <p>La 3ª edición (2016) incorpora material específico sobre Line Arrays y sistemas modernos de gran formato. Si solo tienes tiempo para una fuente, es esta.</p>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- VI -->
+      {/* VI */}
       <section id="por-que-importa" class="article-section">
         <div class="section-number">VI</div>
         <h2 class="section-title">Por qué el orden importa más que el software</h2>

@@ -115,26 +115,26 @@ tags:
         
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- Antídotos / Infra -->
+      {/* Antídotos / Infra */}
       <section id="marco-5" class="article-section">
         <h2 class="section-title">Infraestructura C5-REAL (Antídotos)</h2>
         <ul style="margin-top:2rem; padding-left:1.5rem; line-height:1.8; font-family:'Inter', sans-serif; color:var(--text-secondary);">
           <li style="margin-bottom:1rem;">
             <strong style="color:var(--text-primary);">CORTEX-Persist</strong> 
             <a href="https://cortexpersist.com" target="_blank" style="color:var(--accent-blue); text-decoration:none; border-bottom:1px solid rgba(43,59,229,0.5);">[Website]</a> 
-            <a href="https://github.com/borjamoskv/cortex-persist" target="_blank" style="color:var(--accent-blue); text-decoration:none; border-bottom:1px solid rgba(43,59,229,0.5);">[GitHub Repo]</a><br>
+            <a href="https://github.com/borjamoskv/cortex-persist" target="_blank" style="color:var(--accent-blue); text-decoration:none; border-bottom:1px solid rgba(43,59,229,0.5);">[GitHub Repo]</a><br />
             Ledger de memoria asíncrono y enrutamiento balístico para agentes autónomos.
           </li>
           <li style="margin-bottom:1rem;">
             <strong style="color:var(--text-primary);">AGENTS.ARCHI</strong> 
-            <a href="https://agents.archi" target="_blank" style="color:var(--accent-blue); text-decoration:none; border-bottom:1px solid rgba(43,59,229,0.5);">[Explorar Hub]</a><br>
+            <a href="https://agents.archi" target="_blank" style="color:var(--accent-blue); text-decoration:none; border-bottom:1px solid rgba(43,59,229,0.5);">[Explorar Hub]</a><br />
             Self-Modifying Topology Engine. Arquitecturas que sangran y mutan en la trinchera del entorno.
           </li>
           <li style="margin-bottom:1rem;">
             <strong style="color:var(--text-primary);">Borja Moskv</strong> 
-            <a href="https://borjamoskv.com" target="_blank" style="color:var(--accent-blue); text-decoration:none; border-bottom:1px solid rgba(43,59,229,0.5);">[Base Operativa]</a><br>
+            <a href="https://borjamoskv.com" target="_blank" style="color:var(--accent-blue); text-decoration:none; border-bottom:1px solid rgba(43,59,229,0.5);">[Base Operativa]</a><br />
             Matriz operativa principal. Zona cero del despliegue.
           </li>
         </ul>

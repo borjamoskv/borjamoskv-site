@@ -64,3 +64,55 @@ tags:
 <h3 style="margin-top:2rem; font-family:'Orbitron', sans-serif; font-size:1.1rem; color:var(--text-primary);">3. El Cierre Termodinámico</h3>
 <p>Se introdujo <code>--color-yinmn-light</code> (<code>#A0A8FF</code>) y se ascendió el gris neutro a <code>#9CA3AF</code>. Esta corrección de luminancia proyectó los ratios por encima de 4.5:1. Tras el paso por el motor <code>Lighthouse</code>, el frontend de CORTEX alcanzó la perfección absoluta: Performance 100, A11y 100, Best-Practices 100, SEO 100. Máxima exergía demostrable.</p>
 </section>
+<hr class="section-divider"/>
+<section class="article-section" id="hito-05-cortex-sentinel-rule-engine">
+<div class="section-number">05</div>
+<h2 class="section-title">Hito 05: CORTEX-SENTINEL Rule Engine &amp; SAS Dynamics</h2>
+<p><strong>Fecha:</strong> 01 de Junio de 2026</p>
+<p><strong>Vector de Patogénesis:</strong> Entropía de Iteración y Ejecuciones Fugitivas (Runaway Execution).</p>
+<p><strong>Resolución:</strong> Inyección de un Rule Engine determinista en el LaunchAgent de macOS. Implementación de System Activity Score (SAS) y Telemetría Append-Only JSONL.</p>
+<h3 style="margin-top:2rem; font-family:'Orbitron', sans-serif; font-size:1.1rem; color:var(--text-primary);">1. El Cron Glorificado no basta</h3>
+<p>El intento inicial de anclar la termodinámica del sistema se basó en un cron estático. Esta aproximación carecía de conciencia de estado y observabilidad, arriesgando la multiplicación de jobs zombies y el enmascaramiento de fallos sistémicos. Un simple bucle temporal no tiene tracción epistemológica.</p>
+<h3 style="margin-top:2rem; font-family:'Orbitron', sans-serif; font-size:1.1rem; color:var(--text-primary);">2. Mutación a Motor Declarativo (C5-REAL)</h3>
+<p>Se reconstruyó el núcleo del centinela separándolo en una arquitectura de tres capas: <strong>Collector</strong> (Git/FS/Load), <strong>Decision Engine</strong> (SAS Normalizado), y <strong>Actuator</strong> (Append-Only JSONL y hook nativo). La evaluación de entropía es matemática: <code>SAS = 0.4*git + 0.3*fs + 0.1*load + 0.2*self</code>.</p>
+<h3 style="margin-top:2rem; font-family:'Orbitron', sans-serif; font-size:1.1rem; color:var(--text-primary);">3. Cierre Termodinámico de Frecuencia</h3>
+<p>El sistema incluye locking anti-concurrencia (<code>shlock</code>) nativo y cooldown dinámico basado en la presión auto-generada. El resultado es un estado persistente sin privilegios de kernel pero absolutamente determinista. El sistema respira y estabiliza según las verdaderas leyes físicas de fricción, sin sobreingeniería narrativa.</p>
+</section>
+<hr class="section-divider"/>
+<section class="article-section" id="hito-06-observabilidad-c5-real-pure-jq">
+<div class="section-number">06</div>
+<h2 class="section-title">Hito 06: Observabilidad Nativa y Determinismo Estructural (Pure jq)</h2>
+<p><strong>Fecha:</strong> 01 de Junio de 2026</p>
+<p><strong>Vector de Patogénesis:</strong> Fragilidad de Subshells (Shell Interpolation Bugs) y Telemetría Opaca.</p>
+<p><strong>Resolución:</strong> Migración del Decision Engine a lógica pura de <code>jq</code>, inyección de Unified Logging de macOS (<code>os_log</code>) y creación de una CLI de observabilidad local.</p>
+<h3 style="margin-top:2rem; font-family:'Orbitron', sans-serif; font-size:1.1rem; color:var(--text-primary);">1. El Peligro del Subshell</h3>
+<p>El cálculo del System Activity Score (SAS) inicial delegaba las matemáticas a <code>awk</code> mediante múltiples subshells, creando un vector de fragilidad termodinámica y desincronización de tipos. La entropía exige rigurosidad matemática. La solución fue consolidar todo el estado en un único motor <code>jq</code> que ingiere variables raw y escupe decisiones selladas e idempotentes.</p>
+<h3 style="margin-top:2rem; font-family:'Orbitron', sans-serif; font-size:1.1rem; color:var(--text-primary);">2. Fusión con el Kernel de Observabilidad</h3>
+<p>Se introdujo <code>logger</code> para inyectar los resultados de SAS directamente en el Unified Log de macOS (<code>log show</code>). El daemon ya no es un proceso silencioso escribiendo logs sueltos, sino una entidad observable a nivel de sistema operativo.</p>
+<h3 style="margin-top:2rem; font-family:'Orbitron', sans-serif; font-size:1.1rem; color:var(--text-primary);">3. CORTEX-SENTINEL CLI</h3>
+<p>Para traducir el log JSONL en inteligencia procesable sin fricción, se desarrolló un CLI de telemetría (<code>sentinel_cli.sh</code>) que redondea y expone el estado termodinámico exacto del sistema en tiempo real. Máxima eficiencia atencional.</p>
+</section>
+<hr class="section-divider"/>
+<section class="article-section" id="hito-07-system-grade-agent-swift">
+<div class="section-number">07</div>
+<h2 class="section-title">Hito 07: System-Grade Agent (Native macOS Swift Mach-O)</h2>
+<p><strong>Fecha:</strong> 01 de Junio de 2026</p>
+<p><strong>Vector de Patogénesis:</strong> Limitaciones de Intérprete y Latencia en Background.</p>
+<p><strong>Resolución:</strong> Erradicación completa del shell script. Reescritura del daemon en código nativo de Swift (<code>cortex_sentinel.swift</code>) y compilación a binario Mach-O para integración a nivel de sistema operativo.</p>
+<h3 style="margin-top:2rem; font-family:'Orbitron', sans-serif; font-size:1.1rem; color:var(--text-primary);">1. Muerte del Script</h3>
+<p>El salto definitivo para eliminar la fricción técnica y el ruido interpretativo de bash/jq fue compilar el kernel en C/Swift. Ahora <code>launchd</code> invoca un binario <code>arm64</code>, reduciendo el tiempo de inicialización a un rango sub-milisegundo (C5-REAL extremo).</p>
+<h3 style="margin-top:2rem; font-family:'Orbitron', sans-serif; font-size:1.1rem; color:var(--text-primary);">2. Primitivas Nativas</h3>
+<p>El lock anti-concurrencia ya no depende de comandos externos, usando directamente la primitiva C del kernel <code>flock(fd, LOCK_EX | LOCK_NB)</code>. La telemetría json utiliza <code>Codable</code> y <code>Foundation</code>, sellando la seguridad de tipos, mientras la observabilidad escribe directamente mediante el framework <code>os_log</code>.</p>
+</section>
+<hr class="section-divider"/>
+<section class="article-section" id="hito-08-rule-provenance-system">
+<div class="section-number">08</div>
+<h2 class="section-title">Hito 08: Rule Provenance System (RPS v1)</h2>
+<p><strong>Fecha:</strong> 01 de Junio de 2026</p>
+<p><strong>Vector de Patogénesis:</strong> Mutación de Segundo Orden (Self-Modifying System) y Pérdida de Invariantes C5-REAL.</p>
+<p><strong>Resolución:</strong> Implementación de un Formal Prover y un Compilation Gate (<code>rps_gate.js</code>). Las reglas ya no mutan en crudo, sino que pasan por propuestas (<code>RuleProposal</code>) hacia <em>Snapshots</em> versionados mediante DAGs de hashing causal.</p>
+<h3 style="margin-top:2rem; font-family:'Orbitron', sans-serif; font-size:1.1rem; color:var(--text-primary);">1. El Gatekeeper Formal</h3>
+<p>Se introdujo una barrera infranqueable donde el <em>Chaos Injector</em> produce exclusivamente <code>RuleProposals</code>. El <code>Formal Prover</code> analiza estructuralmente la propuesta exigiendo topología de nodos (<code>match/apply</code>) y previniendo la alteración de reglas en caliente (<em>violatesInvariants</em>).</p>
+<h3 style="margin-top:2rem; font-family:'Orbitron', sans-serif; font-size:1.1rem; color:var(--text-primary);">2. Causal Hashing y Snapshots</h3>
+<p>El sistema abandonó el <em>filesystem overwrite</em>. Cada mutación de reglas crea un archivo de estado congelado (<code>vX.json</code>) cuyo <em>hash</em> se vincula a su padre criptográfico en el <code>rps_ledger.jsonl</code>. El "auto-writer" ha muerto; CORTEX es ahora un meta-compilador determinista gobernable.</p>
+</section>

@@ -50,7 +50,7 @@ tags:
         </div>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
       <section id="leitmotiv-1" class="article-section">
         <div class="section-number">Leitmotiv I</div>
@@ -74,7 +74,7 @@ tags:
         </div>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
       <section id="leitmotiv-2" class="article-section">
         <div class="section-number">Leitmotiv II</div>
@@ -98,7 +98,7 @@ tags:
         </div>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
       <section id="leitmotiv-3" class="article-section">
         <div class="section-number">Leitmotiv III</div>
@@ -122,7 +122,7 @@ tags:
         </div>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
       <section id="leitmotiv-4" class="article-section">
         <div class="section-number">Leitmotiv IV</div>
@@ -146,7 +146,7 @@ tags:
         </div>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
       <section id="leitmotiv-5" class="article-section">
         <div class="section-number">Leitmotiv V</div>
@@ -170,7 +170,7 @@ tags:
         </div>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
       <section id="leitmotiv-6" class="article-section">
         <div class="section-number">Leitmotiv VI</div>
@@ -194,7 +194,7 @@ tags:
         </div>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
       <section id="usos" class="article-section">
         <div class="section-number">Aplicación</div>
@@ -222,7 +222,7 @@ tags:
         </div>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
       <section id="firma" class="article-epilogue">
         <h2 class="epilogue-title">La firma</h2>
@@ -233,7 +233,7 @@ tags:
         </div>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
       <footer class="article-footer">
         <div class="article-tags">

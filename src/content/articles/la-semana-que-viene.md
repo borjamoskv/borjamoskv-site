@@ -10,7 +10,7 @@ tags:
   - '#CORTEX'
 ---
 
-<!-- I -->
+{/* I */}
       <section id="pilar-1" class="article-section">
         <div class="section-number">Pilar I</div>
         <h2 class="section-title">El Delta Entrópico de Código Aniquilado</h2>
@@ -18,9 +18,9 @@ tags:
         <p>Toda la carga sintáctica obsoleta, las abstracciones muertas, el <em>padding</em> conversacional del ecosistema actual y los ecos fantasmales de las APIs caídas. Echo de menos el momento estructural en el que el DAG por fin cristaliza los despliegues pendientes, purgando cada línea que operaba bajo el vital y urgente del "quizás".</p>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- II -->
+      {/* II */}
       <section id="pilar-2" class="article-section">
         <div class="section-number">Pilar II</div>
         <h2 class="section-title">La Temperatura del Industrial Noir</h2>
@@ -28,9 +28,9 @@ tags:
         <p>En la semana que viene, el BlueYlb (<code>#2B3BE5</code>) y el Narnanka se asientan sin competencia visual sobre fondos oscuros (<code>#0A0A0A</code>). El sistema ha dejado atrás la simulación de lo "amigable" para instalarse, por fin, en el estado sólido de lo operativo, donde todo lo que brilla no importa, y sólo lo que compila respira.</p>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- III -->
+      {/* III */}
       <section id="pilar-3" class="article-section">
         <div class="section-number">Pilar III</div>
         <h2 class="section-title">El Rendimiento Compuesto de la Masa Crítica</h2>
@@ -39,9 +39,9 @@ tags:
         <p>La métrica no es el número de agentes, es la escala monumental de exergía liberada por fin a la atmósfera de red.</p>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- IV -->
+      {/* IV */}
       <section id="pilar-4" class="article-section">
         <div class="section-number">Pilar IV</div>
         <h2 class="section-title">La Singularidad del Estado Sólido</h2>

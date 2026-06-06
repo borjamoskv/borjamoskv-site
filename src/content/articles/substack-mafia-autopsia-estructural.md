@@ -140,7 +140,7 @@ tags:
       </div>
     </div>
     <div class="tweet-body">
-      La Ley 49/2002, art. 16, establece que una donación pierde su desgravación si la contraprestación supera el 15% del donativo.<br/><br/>En iHelp, la contraprestación era del 100%.<br/>Este modelo introduce un elevado riesgo fiscal sobre la deducibilidad de la donación al existir una contraprestación comercial directa, requiriendo un análisis tributario riguroso sobre su validez.
+      La Ley 49/2002, art. 16, establece que una donación pierde su desgravación si la contraprestación supera el 15% del donativo.<br/><br/>En iHelp, la contraprestación era del 100%.<br/>Las dos ventajas (descuento + deducción) eran mutuamente incompatibles. Y aparecían en el mismo párrafo, sin advertencia. Los donantes probablemente perdieron su deducción sin saberlo.
     </div>
     <div class="tweet-footer">
       <div class="tweet-action">💬 42</div>
@@ -196,7 +196,7 @@ El hallazgo más duro de este análisis no es una inferencia: es una cita. David
     <li><strong>Eje 2 — Arquitectura de extracción progresiva (confirmado, alta certeza):</strong> Cinco niveles de precio (0€ → 2.357€/año) donde cada escalón tiene una función psicológica documentable: ancla, urgencia fabricada, escasez artificial, eliminación funcional de alternativas. El precio de 2.357€ no es el precio de acceso — es el ancla que hace que 427€ parezca barato.</li>
     <li><strong>Eje 3 — Campaña iHelp y opacidad fiscal (confirmado, certeza crítica):</strong> La campaña de octubre 2025 ofrecía simultáneamente un descuento del 100% en membresía por cada euro donado a una ONG, y la promesa de desgravación fiscal del 80%. Bajo el artículo 16 de la Ley 49/2002, ambas ventajas son mutuamente incompatibles: una contraprestación del 100% invalida la deducción. Las dos promesas aparecían en el mismo párrafo, sin advertencia. Los donantes probablemente aplicaron una deducción que no procede.</li>
 </ul>
-<p><strong>Veredicto:</strong> No hay evidencia de ilegalidad penal. Hay evidencia documentada de tres asimetrías de diseño: distorsión algorítmica deliberada, presión psicológica sistemática en la venta, y riesgos fiscales derivados del modelo iHelp para los donantes. Todo ello declarado, en distinto grado, por el propio fundador.</p>
+<p><strong>Veredicto:</strong> No hay evidencia de ilegalidad penal. Hay evidencia documentada de tres asimetrías de diseño: distorsión algorítmica deliberada, presión psicológica sistemática en la venta, y opacidad fiscal sobre las consecuencias de iHelp para los donantes. Todo ello declarado, en distinto grado, por el propio fundador.</p>
 </section>
 <hr/>
 <section class="article-section" id="factchecking">
@@ -273,7 +273,7 @@ El artículo 16 de la Ley 49/2002 establece que los donativos dan derecho a dedu
     <td><strong>Desgravación prometida</strong></td>
     <td>80% de los primeros 250€</td>
     <td>Misma cifra comunicada</td>
-    <td><span class="badge badge--warning">⚠️ Sujeta a riesgo de invalidez</span></td>
+    <td><span class="badge badge--warning">⚠️ Jurídicamente inválida</span></td>
    </tr>
    <tr>
     <td><strong>Receptor de la contraprestación</strong></td>
@@ -285,10 +285,10 @@ El artículo 16 de la Ley 49/2002 establece que los donativos dan derecho a dedu
  </table>
 </div>
 <p>
-<strong>Conclusión fiscal:</strong> La estructura tripartita (donación → descuento → membresía) introduce un conflicto interpretativo en derecho tributario al mezclar una liberalidad con un beneficio comercial directo. Bajo esta óptica, existe un riesgo sustancial de que la deducción del 80% sea rechazada o regularizada en una inspección.
+<strong>Conclusión fiscal:</strong> La estructura tripartita (donación → descuento → membresía) configura lo que el derecho tributario denomina una "operación vinculada con causa mixta": parte donación, parte pago por servicio. En estas condiciones, la deducción fiscal no procede. Los donantes que reclamaron la desgravación del 80% habrán presentado declaraciones potencialmente incorrectas sin saberlo.
 </p>
 <p>
-No hay evidencia de dolo fiscal ni concertación fraudulenta por parte del fundador o la plataforma (la ONG recibió íntegramente los fondos y ejecutó su misión benéfica). Sin embargo, la falta de advertencia sobre la posible incompatibilidad de la deducción fiscal expone a los donantes a contingencias impositivas no deseadas.
+No hay evidencia de dolo fiscal por parte de Domínguez (la ONG recibió los fondos y ejecutó su misión). Sin embargo, la opacidad informativa sobre las consecuencias fiscales para los donantes constituye una asimetría ética de diseño: el impulso moral del donante fue instrumentalizado sin consentimiento informado pleno sobre sus implicaciones tributarias.
 </p>
 </section>
 <hr/>
@@ -411,6 +411,7 @@ No hay evidencia de dolo fiscal ni concertación fraudulenta por parte del funda
    <tr><td>29 mar 2026</td><td>Hito: 25 miembros en el grupo interno</td><td>Newsletter</td><td>427€/año</td></tr>
    <tr><td>12 may 2026</td><td>Evento "La Mafiadera" (3€→6€)</td><td>Original</td><td>427€/año</td></tr>
    <tr><td>17 may 2026</td><td>Anuncio futura reapertura (sin fecha)</td><td>Newsletter</td><td>427€/año</td></tr>
+   <tr><td>23 may 2026</td><td>Anuncio de novedad gratuita para miembros</td><td>Newsletter</td><td>427€/año</td></tr>
    <tr><td>27 may 2026</td><td>Podcast Substackme Deluxe 8</td><td>Original</td><td>427€/año</td></tr>
    <tr><td>28 may 2026</td><td>Newsletter "Hacer dinero cuando quieras"</td><td>Newsletter</td><td>427€/año</td></tr>
   </tbody>
@@ -429,7 +430,7 @@ No hay evidencia de dolo fiscal ni concertación fraudulenta por parte del funda
    </tr>
   </thead>
   <tbody>
-   <tr><td><strong>David Domínguez</strong></td><td>Crecer en Substack (+2.100 subs)</td><td>Fundador y Coordinador</td><td>Newsletter propia</td></tr>
+   <tr><td><strong>David Domínguez</strong></td><td>Crecer en Substack (+2.100 subs)</td><td>Fundador y Capo</td><td>Newsletter propia</td></tr>
    <tr><td><strong>Jorge Bosch Alés</strong></td><td>Cosas de Freelance (+14.000 subs)</td><td>"Bonus de Jorge" (+60 recomendaciones)</td><td>Newsletter</td></tr>
    <tr><td><strong>Gabi Contreras Aguilera</strong></td><td>Siete Días Podcast</td><td>Talleres de IA</td><td>Podcast Substackme Deluxe 8</td></tr>
    <tr><td><strong>Toni Herrera</strong></td><td>eMarketerSocial (~10.000 YT)</td><td>"Santo de la Mafia"</td><td>Podcast Substackme Deluxe 8</td></tr>
@@ -469,7 +470,7 @@ No hay evidencia de dolo fiscal ni concertación fraudulenta por parte del funda
 </section>
 <hr/>
 <section class="article-section" id="conclusiones">
-<h2 id="h2-conclusions"><strong>9. Conclusiones Integradas</strong></h2>
+<h2 id="h2-conclusiones"><strong>9. Conclusiones Integradas</strong></h2>
 <div class="table-container">
  <table>
   <thead>
@@ -481,11 +482,11 @@ No hay evidencia de dolo fiscal ni concertación fraudulenta por parte del funda
   </thead>
   <tbody>
    <tr><td><strong>Arquitectura comercial</strong></td><td>Correcta. La pirámide de precios filtra por capacidad de pago, no por talento.</td><td><span class="badge badge--success">✅ Alta</span></td></tr>
-   <tr><td><strong>Mecánica iHelp</strong></td><td>Correcta. Contraprestación del 100% compromete la deducibilidad fiscal.</td><td><span class="badge badge--success">✅ Alta</span></td></tr>
+   <tr><td><strong>Mecánica iHelp</strong></td><td>Correcta. Contraprestación 100% invalida la desgravación fiscal.</td><td><span class="badge badge--success">✅ Alta</span></td></tr>
    <tr><td><strong>Normativa fiscal</strong></td><td>Correcta. Cita exacta del art. 16 Ley 49/2002 y confirmada por AEAT.</td><td><span class="badge badge--success">✅ Alta</span></td></tr>
    <tr><td><strong>Restackeo coordinado</strong></td><td>Correcto. Confirmado por fuentes primarias (newsletter de Domínguez).</td><td><span class="badge badge--success">✅ Alta</span></td></tr>
    <tr><td><strong>Legitimidad de la ONG</strong></td><td>Correcta. La ONG es real y su impacto verificable.</td><td><span class="badge badge--success">✅ Alta</span></td></tr>
-   <tr><td><strong>Riesgo fiscal en campaña</strong></td><td>Inferencial. No hay prueba de dolo explícito.</td><td><span class="badge badge--warning">⚠️ Moderada</span></td></tr>
+   <tr><td><strong>Intencionalidad de fraude</strong></td><td>Inferencial. No hay prueba de dolo explícito.</td><td><span class="badge badge--warning">⚠️ Moderada</span></td></tr>
    <tr><td><strong>Impacto epistémico</strong></td><td>Plausible pero no cuantificado empíricamente.</td><td><span class="badge badge--warning">⚠️ Moderada</span></td></tr>
    <tr><td><strong>Metáfora termodinámica</strong></td><td>Retóricamente efectiva. Analíticamente imprecisa.</td><td><span class="badge badge--error">❌ Débil</span></td></tr>
   </tbody>
@@ -515,7 +516,7 @@ Los cuatro gráficos analíticos de la investigación forense se basan en los si
 <p>Imagina un estadio de fútbol lleno. Si 65 personas del público se ponen de pie a la vez y gritan en el mismo momento, la cámara de televisión las enfocará, aunque no hayan hecho nada más interesante que el resto. Eso es exactamente el restackeo coordinado: no es ruido más valioso, es ruido sincronizado. El algoritmo no sabe distinguirlo.</p>
 
 <h3>Altruismo apalancado sin jerga</h3>
-<p>iHelp funcionó así: donabas a una causa real (incubadoras en África), y a cambio recibías un descuento igual en una membresía de pago. El riesgo fiscal: el gobierno español permite deducirte el 80% de lo que donas, pero solo si la donación carece de contraprestación comercial directa. Si recibes un servicio de igual valor, la deducibilidad entra en zona de riesgo regulatorio.</p>
+<p>iHelp funcionó así: donabas a una causa real (incubadoras en África), y a cambio recibías un descuento igual en una membresía de pago. El problema fiscal: el gobierno español permite deducirte el 80% de lo que donas, pero solo si la donación es desinteresada. Si recibes algo a cambio del mismo valor que donaste, ya no es una donación — es una compra con pasos extra. Y las compras no se deducen.</p>
 
 <h3>Señales de alerta para detectar grupos similares:</h3>
 <ol>
@@ -566,7 +567,7 @@ Los cuatro gráficos analíticos de la investigación forense se basan en los si
 <p>Ninguna respuesta se apoya en inferencias subjetivas. Cada una se apoya en palabras textuales del propio fundador y en la legislación vigente. Haz clic en cada ataque para revelar su refutación:</p>
 
 <div class="interactive-redteam">
-  <!-- Attack 1 -->
+  {/* Attack 1 */}
   <div class="rt-card">
     <button class="rt-trigger">
       <span>Ataque 1: "El restackeo coordinado es una práctica normal entre creadores"</span>
@@ -585,7 +586,7 @@ Los cuatro gráficos analíticos de la investigación forense se basan en los si
     </div>
   </div>
 
-  <!-- Attack 2 -->
+  {/* Attack 2 */}
   <div class="rt-card">
     <button class="rt-trigger">
       <span>Ataque 2: "El precio de 2.357€ es técnico, nadie lo paga realmente"</span>
@@ -604,7 +605,7 @@ Los cuatro gráficos analíticos de la investigación forense se basan en los si
     </div>
   </div>
 
-  <!-- Attack 3 -->
+  {/* Attack 3 */}
   <div class="rt-card">
     <button class="rt-trigger">
       <span>Ataque 3: "Atacáis iHelp. Estáis atacando a bebés en África"</span>
@@ -629,7 +630,7 @@ Los cuatro gráficos analíticos de la investigación forense se basan en los si
     </div>
   </div>
 
-  <!-- Attack 4 -->
+  {/* Attack 4 */}
   <div class="rt-card">
     <button class="rt-trigger">
       <span>Ataque 4: "Esto es un ataque de envidia por no haber podido entrar"</span>
@@ -648,7 +649,7 @@ Los cuatro gráficos analíticos de la investigación forense se basan en los si
     </div>
   </div>
 
-  <!-- Attack 5 -->
+  {/* Attack 5 */}
   <div class="rt-card">
     <button class="rt-trigger">
       <span>Ataque 5: "Es todo perfectamente legal, así que no hay problema"</span>
@@ -667,7 +668,7 @@ Los cuatro gráficos analíticos de la investigación forense se basan en los si
     </div>
   </div>
 
-  <!-- Attack 6 -->
+  {/* Attack 6 */}
   <div class="rt-card">
     <button class="rt-trigger">
       <span>Ataque 6: "La comunidad genera valor real. Los miembros están contentos"</span>
@@ -686,7 +687,7 @@ Los cuatro gráficos analíticos de la investigación forense se basan en los si
     </div>
   </div>
 
-  <!-- Attack 7 -->
+  {/* Attack 7 */}
   <div class="rt-card">
     <button class="rt-trigger">
       <span>Ataque 7: "Domínguez es transparente. Explica todo públicamente"</span>
@@ -711,7 +712,7 @@ Los cuatro gráficos analíticos de la investigación forense se basan en los si
 <h2 id="h2-impacto"><strong>13. Impacto en Lectores Reales</strong></h2>
 <p>La asimetría del sistema distribuye efectos dispares sobre tres grupos de interés:</p>
 <ul>
-  <li><strong>Grupo A: Donantes de iHelp (exposición fiscal):</strong> Cerca de 37 donantes aplicaron deducciones tributarias en sus declaraciones que podrían ser regularizadas por la Agencia Tributaria al existir una contraprestación del 100% sobre la donación.</li>
+  <li><strong>Grupo A: Donantes de iHelp (afectación fiscal):</strong> Cerca de 37 donantes aplicaron deducciones tributarias en sus declaraciones que, jurídicamente, no corresponden por haber recibido una contraprestación del 100% de la donación. La responsabilidad legal recae en el declarante.</li>
   <li><strong>Grupo B: Creadores externos (distorsión algorítmica):</strong> Los escritores independientes compiten en Notes frente a un flujo de interacciones sincronizadas. Las métricas del recomendador de Substack se distorsionan, penalizando el descubrimiento orgánico.</li>
   <li><strong>Grupo C: Propios miembros (dependencia estructural):</strong> Los integrantes del colectivo sufren del "problema de la salida": su visibilidad depende del restackeo grupal. Salirse de la membresía (427€/año) significa perder el flujo, transformando la fidelización en retención por diseño de red.</li>
 </ul>
@@ -734,7 +735,7 @@ El producto central de la Substack Mafia es su red de interacción. Esta topolog
       </filter>
     </defs>
     
-    <!-- Links -->
+    {/* Links */}
     <line class="edge" data-from="DD" data-to="SD" x1="300" y1="30" x2="180" y2="110" stroke="#2B3BE5" stroke-width="0.8" opacity="0.3" />
     <line class="edge" data-from="DD" data-to="MM" x1="300" y1="30" x2="420" y2="110" stroke="#2B3BE5" stroke-width="0.8" opacity="0.3" />
     <line class="edge" data-from="DD" data-to="JB" x1="300" y1="30" x2="80" y2="190" stroke="#2B3BE5" stroke-width="0.8" opacity="0.3" />
@@ -760,7 +761,7 @@ El producto central de la Substack Mafia es su red de interacción. Esta topolog
     <line class="edge" data-from="AG" data-to="CL" x1="520" y1="200" x2="340" y2="260" stroke="#2B3BE5" stroke-width="0.8" opacity="0.3" />
     <line class="edge" data-from="TH" data-to="CL" x1="140" y1="270" x2="340" y2="260" stroke="#2B3BE5" stroke-width="0.8" opacity="0.3" />
     
-    <!-- Outer Node Labels (Backdrops) -->
+    {/* Outer Node Labels (Backdrops) */}
     <rect x="250" y="-5" width="100" height="24" class="node-label-bg" />
     <text x="300" y="8" class="node-info-name" text-anchor="middle">David Domínguez</text>
     
@@ -773,7 +774,7 @@ El producto central de la Substack Mafia es su red de interacción. Esta topolog
     <rect x="360" y="202" width="80" height="24" class="node-label-bg" />
     <text x="400" y="215" class="node-info-name" text-anchor="middle">Víctor Garcés</text>
     
-    <!-- Nodes -->
+    {/* Nodes */}
     <g class="node" data-node="DD" filter="url(#nodeGlow)">
       <circle cx="300" cy="30" r="13" fill="#0A0A0A" stroke="#f59e0b" stroke-width="2" />
       <text x="300" y="34" fill="#f59e0b" font-size="9" text-anchor="middle">DD</text>
@@ -811,7 +812,7 @@ El producto central de la Substack Mafia es su red de interacción. Esta topolog
       <text x="340" y="263" fill="#facc15" font-size="7" text-anchor="middle">CL</text>
     </g>
     
-    <!-- Info -->
+    {/* Info */}
     <text x="580" y="325" fill="#52525b" font-size="8" text-anchor="end" font-family="JetBrains Mono">~65 nodos en anillo</text>
   </svg>
   
@@ -826,1299 +827,6 @@ El producto central de la Substack Mafia es su red de interacción. Esta topolog
     <div class="net-detail-quote" id="netDetailQuote"></div>
   </div>
 </div>
-</section>
-<hr/>
-<section class="article-section" id="cronos-monitor">
-  <!-- CRONOS_MONITOR_START -->
-
-  <div class="cronos-dashboard" style="background: rgba(10, 10, 10, 0.85); border: 1px solid rgba(43, 59, 229, 0.2); border-radius: 12px; padding: 2rem; margin: 2rem 0; font-family: 'Inter', sans-serif;">
-    <div class="cronos-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 1.5rem; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
-      <div>
-        <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.5rem; margin: 0; color: #FFF; display: flex; align-items: center; gap: 0.5rem;">
-          <span style="color: #2B3BE5; font-family: 'JetBrains Mono'; font-weight: 700;">CRONOS‑Ω:</span> Telemetría de Reputación y Drift de Red
-        </h3>
-        <p style="font-size: 0.85rem; color: #888; margin: 0.25rem 0 0 0;">Monitoreo automatizado recurrente del archivo Substack y co‑recomendaciones.</p>
-      </div>
-      <div style="text-align: right;">
-        <span style="font-family: 'JetBrains Mono'; font-size: 0.8rem; background: rgba(43, 59, 229, 0.15); color: #00f3ff; border: 1px solid rgba(0, 243, 255, 0.3); border-radius: 4px; padding: 4px 8px; display: inline-block;">
-          ● DAEMON ACTIVO: 2026-06-03 10:01:35 UTC
-        </span>
-      </div>
-    </div>
-    
-    <div class="cronos-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem;">
-
-      <div class="cronos-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; transition: border 0.3s;" onmouseover="this.style.borderColor='rgba(43,59,229,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)'">
-        <div>
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
-            <a href="https://aimafia.substack.com" target="_blank" style="text-decoration: none; color: #FFF; font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 600;">
-              aimafia.substack
-            </a>
-            <span style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #888; background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px;">
-              Ref: 46 recs
-            </span>
-          </div>
-          
-          <div style="background: rgba(255, 51, 85, 0.1); border: 1px solid #ff335544; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
-            <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #ff3355; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">41.1</div>
-            <div style="font-size: 0.65rem; color: #ff3355; font-family: 'JetBrains Mono';">HUMO ELEVADO / EXTRACTIVO</div>
-          </div>
-          
-          <!-- Metodos de densidades -->
-          <div style="margin-bottom: 1rem; font-size: 0.8rem;">
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">76.0%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 76.0%; height: 100%; background: #ff3355;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Densidad Técnica</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">38.2%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 38.2%; height: 100%; background: #00f3ff;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Llamadas Comerciales</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">23.9%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 23.9%; height: 100%; background: #2B3BE5;"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.75rem; margin-top: 0.5rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #888;">
-          <div>
-            <span>Drift Red:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #888; font-weight: bold;">0.0%</span>
-          </div>
-          <div>
-            <span>Cambios:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #FFF;">Estable</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="cronos-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; transition: border 0.3s;" onmouseover="this.style.borderColor='rgba(43,59,229,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)'">
-        <div>
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
-            <a href="https://cosasdefreelance.substack.com" target="_blank" style="text-decoration: none; color: #FFF; font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 600;">
-              cosasdefreelance.substack
-            </a>
-            <span style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #888; background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px;">
-              Ref: 50 recs
-            </span>
-          </div>
-          
-          <div style="background: rgba(255, 159, 28, 0.1); border: 1px solid #ff9f1c44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
-            <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #ff9f1c; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">21.2</div>
-            <div style="font-size: 0.65rem; color: #ff9f1c; font-family: 'JetBrains Mono';">DINÁMICA COMERCIAL MIXTA</div>
-          </div>
-          
-          <!-- Metodos de densidades -->
-          <div style="margin-bottom: 1rem; font-size: 0.8rem;">
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">19.3%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 19.3%; height: 100%; background: #ff3355;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Densidad Técnica</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">0.8%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 0.8%; height: 100%; background: #00f3ff;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Llamadas Comerciales</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">28.1%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 28.1%; height: 100%; background: #2B3BE5;"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.75rem; margin-top: 0.5rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #888;">
-          <div>
-            <span>Drift Red:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #888; font-weight: bold;">0.0%</span>
-          </div>
-          <div>
-            <span>Cambios:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #FFF;">Estable</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="cronos-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; transition: border 0.3s;" onmouseover="this.style.borderColor='rgba(43,59,229,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)'">
-        <div>
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
-            <a href="https://tudosisia.substack.com" target="_blank" style="text-decoration: none; color: #FFF; font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 600;">
-              tudosisia.substack
-            </a>
-            <span style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #888; background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px;">
-              Ref: 8 recs
-            </span>
-          </div>
-          
-          <div style="background: rgba(0, 243, 255, 0.1); border: 1px solid #00f3ff44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
-            <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #00f3ff; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">17.7</div>
-            <div style="font-size: 0.65rem; color: #00f3ff; font-family: 'JetBrains Mono';">ORGANIC / PURAMENTE TÉCNICO</div>
-          </div>
-          
-          <!-- Metodos de densidades -->
-          <div style="margin-bottom: 1rem; font-size: 0.8rem;">
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">32.7%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 32.7%; height: 100%; background: #ff3355;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Densidad Técnica</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">14.4%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 14.4%; height: 100%; background: #00f3ff;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Llamadas Comerciales</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">9.5%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 9.5%; height: 100%; background: #2B3BE5;"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.75rem; margin-top: 0.5rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #888;">
-          <div>
-            <span>Drift Red:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #888; font-weight: bold;">0.0%</span>
-          </div>
-          <div>
-            <span>Cambios:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #FFF;">Estable</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="cronos-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; transition: border 0.3s;" onmouseover="this.style.borderColor='rgba(43,59,229,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)'">
-        <div>
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
-            <a href="https://webreactiva.substack.com" target="_blank" style="text-decoration: none; color: #FFF; font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 600;">
-              webreactiva.substack
-            </a>
-            <span style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #888; background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px;">
-              Ref: 19 recs
-            </span>
-          </div>
-          
-          <div style="background: rgba(0, 243, 255, 0.1); border: 1px solid #00f3ff44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
-            <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #00f3ff; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">10.4</div>
-            <div style="font-size: 0.65rem; color: #00f3ff; font-family: 'JetBrains Mono';">ORGANIC / PURAMENTE TÉCNICO</div>
-          </div>
-          
-          <!-- Metodos de densidades -->
-          <div style="margin-bottom: 1rem; font-size: 0.8rem;">
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">32.6%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 32.6%; height: 100%; background: #ff3355;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Densidad Técnica</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">56.4%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 56.4%; height: 100%; background: #00f3ff;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Llamadas Comerciales</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">2.7%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 2.7%; height: 100%; background: #2B3BE5;"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.75rem; margin-top: 0.5rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #888;">
-          <div>
-            <span>Drift Red:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #888; font-weight: bold;">0.0%</span>
-          </div>
-          <div>
-            <span>Cambios:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #FFF;">Estable</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="cronos-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; transition: border 0.3s;" onmouseover="this.style.borderColor='rgba(43,59,229,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)'">
-        <div>
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
-            <a href="https://iaparatodo.substack.com" target="_blank" style="text-decoration: none; color: #FFF; font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 600;">
-              iaparatodo.substack
-            </a>
-            <span style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #888; background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px;">
-              Ref: 8 recs
-            </span>
-          </div>
-          
-          <div style="background: rgba(0, 243, 255, 0.1); border: 1px solid #00f3ff44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
-            <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #00f3ff; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">15.3</div>
-            <div style="font-size: 0.65rem; color: #00f3ff; font-family: 'JetBrains Mono';">ORGANIC / PURAMENTE TÉCNICO</div>
-          </div>
-          
-          <!-- Metodos de densidades -->
-          <div style="margin-bottom: 1rem; font-size: 0.8rem;">
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">35.2%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 35.2%; height: 100%; background: #ff3355;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Densidad Técnica</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">29.5%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 29.5%; height: 100%; background: #00f3ff;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Llamadas Comerciales</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">5.2%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 5.2%; height: 100%; background: #2B3BE5;"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.75rem; margin-top: 0.5rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #888;">
-          <div>
-            <span>Drift Red:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #888; font-weight: bold;">0.0%</span>
-          </div>
-          <div>
-            <span>Cambios:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #FFF;">Estable</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="cronos-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; transition: border 0.3s;" onmouseover="this.style.borderColor='rgba(43,59,229,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)'">
-        <div>
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
-            <a href="https://agentesia.substack.com" target="_blank" style="text-decoration: none; color: #FFF; font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 600;">
-              agentesia.substack
-            </a>
-            <span style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #888; background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px;">
-              Ref: 2 recs
-            </span>
-          </div>
-          
-          <div style="background: rgba(0, 243, 255, 0.1); border: 1px solid #00f3ff44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
-            <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #00f3ff; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">16.6</div>
-            <div style="font-size: 0.65rem; color: #00f3ff; font-family: 'JetBrains Mono';">ORGANIC / PURAMENTE TÉCNICO</div>
-          </div>
-          
-          <!-- Metodos de densidades -->
-          <div style="margin-bottom: 1rem; font-size: 0.8rem;">
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">45.9%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 45.9%; height: 100%; background: #ff3355;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Densidad Técnica</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">53.0%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 53.0%; height: 100%; background: #00f3ff;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Llamadas Comerciales</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">1.8%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 1.8%; height: 100%; background: #2B3BE5;"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.75rem; margin-top: 0.5rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #888;">
-          <div>
-            <span>Drift Red:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #888; font-weight: bold;">0.0%</span>
-          </div>
-          <div>
-            <span>Cambios:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #FFF;">Estable</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="cronos-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; transition: border 0.3s;" onmouseover="this.style.borderColor='rgba(43,59,229,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)'">
-        <div>
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
-            <a href="https://futuria.substack.com" target="_blank" style="text-decoration: none; color: #FFF; font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 600;">
-              futuria.substack
-            </a>
-            <span style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #888; background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px;">
-              Ref: 8 recs
-            </span>
-          </div>
-          
-          <div style="background: rgba(0, 243, 255, 0.1); border: 1px solid #00f3ff44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
-            <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #00f3ff; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">13.4</div>
-            <div style="font-size: 0.65rem; color: #00f3ff; font-family: 'JetBrains Mono';">ORGANIC / PURAMENTE TÉCNICO</div>
-          </div>
-          
-          <!-- Metodos de densidades -->
-          <div style="margin-bottom: 1rem; font-size: 0.8rem;">
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">20.4%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 20.4%; height: 100%; background: #ff3355;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Densidad Técnica</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">43.2%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 43.2%; height: 100%; background: #00f3ff;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Llamadas Comerciales</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">18.5%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 18.5%; height: 100%; background: #2B3BE5;"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.75rem; margin-top: 0.5rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #888;">
-          <div>
-            <span>Drift Red:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #888; font-weight: bold;">0.0%</span>
-          </div>
-          <div>
-            <span>Cambios:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #FFF;">Estable</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="cronos-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; transition: border 0.3s;" onmouseover="this.style.borderColor='rgba(43,59,229,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)'">
-        <div>
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
-            <a href="https://overxtime.substack.com" target="_blank" style="text-decoration: none; color: #FFF; font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 600;">
-              overxtime.substack
-            </a>
-            <span style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #888; background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px;">
-              Ref: 8 recs
-            </span>
-          </div>
-          
-          <div style="background: rgba(0, 243, 255, 0.1); border: 1px solid #00f3ff44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
-            <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #00f3ff; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">11.8</div>
-            <div style="font-size: 0.65rem; color: #00f3ff; font-family: 'JetBrains Mono';">ORGANIC / PURAMENTE TÉCNICO</div>
-          </div>
-          
-          <!-- Metodos de densidades -->
-          <div style="margin-bottom: 1rem; font-size: 0.8rem;">
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">22.0%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 22.0%; height: 100%; background: #ff3355;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Densidad Técnica</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">2.5%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 2.5%; height: 100%; background: #00f3ff;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Llamadas Comerciales</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">4.7%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 4.7%; height: 100%; background: #2B3BE5;"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.75rem; margin-top: 0.5rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #888;">
-          <div>
-            <span>Drift Red:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #888; font-weight: bold;">0.0%</span>
-          </div>
-          <div>
-            <span>Cambios:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #FFF;">Estable</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="cronos-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; transition: border 0.3s;" onmouseover="this.style.borderColor='rgba(43,59,229,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)'">
-        <div>
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
-            <a href="https://cafeconia.substack.com" target="_blank" style="text-decoration: none; color: #FFF; font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 600;">
-              cafeconia.substack
-            </a>
-            <span style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #888; background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px;">
-              Ref: 6 recs
-            </span>
-          </div>
-          
-          <div style="background: rgba(255, 159, 28, 0.1); border: 1px solid #ff9f1c44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
-            <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #ff9f1c; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">24.6</div>
-            <div style="font-size: 0.65rem; color: #ff9f1c; font-family: 'JetBrains Mono';">DINÁMICA COMERCIAL MIXTA</div>
-          </div>
-          
-          <!-- Metodos de densidades -->
-          <div style="margin-bottom: 1rem; font-size: 0.8rem;">
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">28.6%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 28.6%; height: 100%; background: #ff3355;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Densidad Técnica</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">28.4%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 28.4%; height: 100%; background: #00f3ff;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Llamadas Comerciales</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">32.4%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 32.4%; height: 100%; background: #2B3BE5;"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.75rem; margin-top: 0.5rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #888;">
-          <div>
-            <span>Drift Red:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #888; font-weight: bold;">0.0%</span>
-          </div>
-          <div>
-            <span>Cambios:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #FFF;">Estable</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="cronos-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; transition: border 0.3s;" onmouseover="this.style.borderColor='rgba(43,59,229,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)'">
-        <div>
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
-            <a href="https://spacioia.substack.com" target="_blank" style="text-decoration: none; color: #FFF; font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 600;">
-              spacioia.substack
-            </a>
-            <span style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #888; background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px;">
-              Ref: 7 recs
-            </span>
-          </div>
-          
-          <div style="background: rgba(0, 243, 255, 0.1); border: 1px solid #00f3ff44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
-            <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #00f3ff; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">19.3</div>
-            <div style="font-size: 0.65rem; color: #00f3ff; font-family: 'JetBrains Mono';">ORGANIC / PURAMENTE TÉCNICO</div>
-          </div>
-          
-          <!-- Metodos de densidades -->
-          <div style="margin-bottom: 1rem; font-size: 0.8rem;">
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">34.5%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 34.5%; height: 100%; background: #ff3355;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Densidad Técnica</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">15.4%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 15.4%; height: 100%; background: #00f3ff;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Llamadas Comerciales</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">11.2%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 11.2%; height: 100%; background: #2B3BE5;"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.75rem; margin-top: 0.5rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #888;">
-          <div>
-            <span>Drift Red:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #888; font-weight: bold;">0.0%</span>
-          </div>
-          <div>
-            <span>Cambios:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #FFF;">Estable</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="cronos-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; transition: border 0.3s;" onmouseover="this.style.borderColor='rgba(43,59,229,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)'">
-        <div>
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
-            <a href="https://modoxtenx.substack.com" target="_blank" style="text-decoration: none; color: #FFF; font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 600;">
-              modoxtenx.substack
-            </a>
-            <span style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #888; background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px;">
-              Ref: 12 recs
-            </span>
-          </div>
-          
-          <div style="background: rgba(0, 243, 255, 0.1); border: 1px solid #00f3ff44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
-            <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #00f3ff; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">5.5</div>
-            <div style="font-size: 0.65rem; color: #00f3ff; font-family: 'JetBrains Mono';">ORGANIC / PURAMENTE TÉCNICO</div>
-          </div>
-          
-          <!-- Metodos de densidades -->
-          <div style="margin-bottom: 1rem; font-size: 0.8rem;">
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">13.6%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 13.6%; height: 100%; background: #ff3355;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Densidad Técnica</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">20.1%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 20.1%; height: 100%; background: #00f3ff;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Llamadas Comerciales</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">3.0%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 3.0%; height: 100%; background: #2B3BE5;"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.75rem; margin-top: 0.5rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #888;">
-          <div>
-            <span>Drift Red:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #888; font-weight: bold;">0.0%</span>
-          </div>
-          <div>
-            <span>Cambios:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #FFF;">Estable</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="cronos-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; transition: border 0.3s;" onmouseover="this.style.borderColor='rgba(43,59,229,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)'">
-        <div>
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
-            <a href="https://enriquemartinezbermejo.substack.com" target="_blank" style="text-decoration: none; color: #FFF; font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 600;">
-              enriquemartinezbermejo.substack
-            </a>
-            <span style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #888; background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px;">
-              Ref: 50 recs
-            </span>
-          </div>
-          
-          <div style="background: rgba(0, 243, 255, 0.1); border: 1px solid #00f3ff44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
-            <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #00f3ff; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">4.9</div>
-            <div style="font-size: 0.65rem; color: #00f3ff; font-family: 'JetBrains Mono';">ORGANIC / PURAMENTE TÉCNICO</div>
-          </div>
-          
-          <!-- Metodos de densidades -->
-          <div style="margin-bottom: 1rem; font-size: 0.8rem;">
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">10.9%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 10.9%; height: 100%; background: #ff3355;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Densidad Técnica</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">0.0%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 0.0%; height: 100%; background: #00f3ff;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Llamadas Comerciales</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">0.0%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 0.0%; height: 100%; background: #2B3BE5;"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.75rem; margin-top: 0.5rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #888;">
-          <div>
-            <span>Drift Red:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #888; font-weight: bold;">0.0%</span>
-          </div>
-          <div>
-            <span>Cambios:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #FFF;">Estable</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="cronos-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; transition: border 0.3s;" onmouseover="this.style.borderColor='rgba(43,59,229,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)'">
-        <div>
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
-            <a href="https://hellojaume.substack.com" target="_blank" style="text-decoration: none; color: #FFF; font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 600;">
-              hellojaume.substack
-            </a>
-            <span style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #888; background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px;">
-              Ref: 20 recs
-            </span>
-          </div>
-          
-          <div style="background: rgba(0, 243, 255, 0.1); border: 1px solid #00f3ff44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
-            <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #00f3ff; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">2.9</div>
-            <div style="font-size: 0.65rem; color: #00f3ff; font-family: 'JetBrains Mono';">ORGANIC / PURAMENTE TÉCNICO</div>
-          </div>
-          
-          <!-- Metodos de densidades -->
-          <div style="margin-bottom: 1rem; font-size: 0.8rem;">
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">0.0%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 0.0%; height: 100%; background: #ff3355;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Densidad Técnica</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">0.0%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 0.0%; height: 100%; background: #00f3ff;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Llamadas Comerciales</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">6.4%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 6.4%; height: 100%; background: #2B3BE5;"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.75rem; margin-top: 0.5rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #888;">
-          <div>
-            <span>Drift Red:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #888; font-weight: bold;">0.0%</span>
-          </div>
-          <div>
-            <span>Cambios:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #FFF;">Estable</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="cronos-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; transition: border 0.3s;" onmouseover="this.style.borderColor='rgba(43,59,229,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)'">
-        <div>
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
-            <a href="https://escribepro.substack.com" target="_blank" style="text-decoration: none; color: #FFF; font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 600;">
-              escribepro.substack
-            </a>
-            <span style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #888; background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px;">
-              Ref: 22 recs
-            </span>
-          </div>
-          
-          <div style="background: rgba(255, 159, 28, 0.1); border: 1px solid #ff9f1c44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
-            <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #ff9f1c; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">24.7</div>
-            <div style="font-size: 0.65rem; color: #ff9f1c; font-family: 'JetBrains Mono';">DINÁMICA COMERCIAL MIXTA</div>
-          </div>
-          
-          <!-- Metodos de densidades -->
-          <div style="margin-bottom: 1rem; font-size: 0.8rem;">
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">26.3%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 26.3%; height: 100%; background: #ff3355;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Densidad Técnica</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">2.6%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 2.6%; height: 100%; background: #00f3ff;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Llamadas Comerciales</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">29.2%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 29.2%; height: 100%; background: #2B3BE5;"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.75rem; margin-top: 0.5rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #888;">
-          <div>
-            <span>Drift Red:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #888; font-weight: bold;">0.0%</span>
-          </div>
-          <div>
-            <span>Cambios:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #FFF;">Estable</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="cronos-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; transition: border 0.3s;" onmouseover="this.style.borderColor='rgba(43,59,229,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)'">
-        <div>
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
-            <a href="https://aplicacionesai.substack.com" target="_blank" style="text-decoration: none; color: #FFF; font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 600;">
-              aplicacionesai.substack
-            </a>
-            <span style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #888; background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px;">
-              Ref: 0 recs
-            </span>
-          </div>
-          
-          <div style="background: rgba(0, 243, 255, 0.1); border: 1px solid #00f3ff44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
-            <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #00f3ff; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">13.1</div>
-            <div style="font-size: 0.65rem; color: #00f3ff; font-family: 'JetBrains Mono';">ORGANIC / PURAMENTE TÉCNICO</div>
-          </div>
-          
-          <!-- Metodos de densidades -->
-          <div style="margin-bottom: 1rem; font-size: 0.8rem;">
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">28.6%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 28.6%; height: 100%; background: #ff3355;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Densidad Técnica</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">6.9%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 6.9%; height: 100%; background: #00f3ff;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Llamadas Comerciales</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">2.1%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 2.1%; height: 100%; background: #2B3BE5;"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.75rem; margin-top: 0.5rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #888;">
-          <div>
-            <span>Drift Red:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #888; font-weight: bold;">0.0%</span>
-          </div>
-          <div>
-            <span>Cambios:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #FFF;">Estable</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="cronos-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; transition: border 0.3s;" onmouseover="this.style.borderColor='rgba(43,59,229,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)'">
-        <div>
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
-            <a href="https://iaenespanol.substack.com" target="_blank" style="text-decoration: none; color: #FFF; font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 600;">
-              iaenespanol.substack
-            </a>
-            <span style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #888; background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px;">
-              Ref: 44 recs
-            </span>
-          </div>
-          
-          <div style="background: rgba(0, 243, 255, 0.1); border: 1px solid #00f3ff44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
-            <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #00f3ff; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">2.1</div>
-            <div style="font-size: 0.65rem; color: #00f3ff; font-family: 'JetBrains Mono';">ORGANIC / PURAMENTE TÉCNICO</div>
-          </div>
-          
-          <!-- Metodos de densidades -->
-          <div style="margin-bottom: 1rem; font-size: 0.8rem;">
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">3.1%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 3.1%; height: 100%; background: #ff3355;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Densidad Técnica</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">3.0%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 3.0%; height: 100%; background: #00f3ff;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Llamadas Comerciales</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">1.9%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 1.9%; height: 100%; background: #2B3BE5;"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.75rem; margin-top: 0.5rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #888;">
-          <div>
-            <span>Drift Red:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #888; font-weight: bold;">0.0%</span>
-          </div>
-          <div>
-            <span>Cambios:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #FFF;">+44 / -0</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="cronos-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; transition: border 0.3s;" onmouseover="this.style.borderColor='rgba(43,59,229,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)'">
-        <div>
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
-            <a href="https://botondeayuda.substack.com" target="_blank" style="text-decoration: none; color: #FFF; font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 600;">
-              botondeayuda.substack
-            </a>
-            <span style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #888; background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px;">
-              Ref: 2 recs
-            </span>
-          </div>
-          
-          <div style="background: rgba(0, 243, 255, 0.1); border: 1px solid #00f3ff44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
-            <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #00f3ff; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">13.7</div>
-            <div style="font-size: 0.65rem; color: #00f3ff; font-family: 'JetBrains Mono';">ORGANIC / PURAMENTE TÉCNICO</div>
-          </div>
-          
-          <!-- Metodos de densidades -->
-          <div style="margin-bottom: 1rem; font-size: 0.8rem;">
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">32.0%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 32.0%; height: 100%; background: #ff3355;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Densidad Técnica</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">7.1%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 7.1%; height: 100%; background: #00f3ff;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Llamadas Comerciales</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">0.0%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 0.0%; height: 100%; background: #2B3BE5;"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.75rem; margin-top: 0.5rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #888;">
-          <div>
-            <span>Drift Red:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #888; font-weight: bold;">0.0%</span>
-          </div>
-          <div>
-            <span>Cambios:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #FFF;">+2 / -0</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="cronos-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; transition: border 0.3s;" onmouseover="this.style.borderColor='rgba(43,59,229,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)'">
-        <div>
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
-            <a href="https://estrategiabyaleph.substack.com" target="_blank" style="text-decoration: none; color: #FFF; font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 600;">
-              estrategiabyaleph.substack
-            </a>
-            <span style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #888; background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px;">
-              Ref: 8 recs
-            </span>
-          </div>
-          
-          <div style="background: rgba(0, 243, 255, 0.1); border: 1px solid #00f3ff44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
-            <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #00f3ff; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">0.6</div>
-            <div style="font-size: 0.65rem; color: #00f3ff; font-family: 'JetBrains Mono';">ORGANIC / PURAMENTE TÉCNICO</div>
-          </div>
-          
-          <!-- Metodos de densidades -->
-          <div style="margin-bottom: 1rem; font-size: 0.8rem;">
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">1.4%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 1.4%; height: 100%; background: #ff3355;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Densidad Técnica</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">0.6%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 0.6%; height: 100%; background: #00f3ff;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Llamadas Comerciales</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">0.0%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 0.0%; height: 100%; background: #2B3BE5;"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.75rem; margin-top: 0.5rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #888;">
-          <div>
-            <span>Drift Red:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #888; font-weight: bold;">0.0%</span>
-          </div>
-          <div>
-            <span>Cambios:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #FFF;">Estable</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="cronos-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; transition: border 0.3s;" onmouseover="this.style.borderColor='rgba(43,59,229,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)'">
-        <div>
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
-            <a href="https://davidlahozmartin.substack.com" target="_blank" style="text-decoration: none; color: #FFF; font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 600;">
-              davidlahozmartin.substack
-            </a>
-            <span style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #888; background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px;">
-              Ref: 3 recs
-            </span>
-          </div>
-          
-          <div style="background: rgba(0, 243, 255, 0.1); border: 1px solid #00f3ff44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
-            <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #00f3ff; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">7.7</div>
-            <div style="font-size: 0.65rem; color: #00f3ff; font-family: 'JetBrains Mono';">ORGANIC / PURAMENTE TÉCNICO</div>
-          </div>
-          
-          <!-- Metodos de densidades -->
-          <div style="margin-bottom: 1rem; font-size: 0.8rem;">
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">14.9%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 14.9%; height: 100%; background: #ff3355;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Densidad Técnica</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">13.6%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 13.6%; height: 100%; background: #00f3ff;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Llamadas Comerciales</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">2.4%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 2.4%; height: 100%; background: #2B3BE5;"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.75rem; margin-top: 0.5rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #888;">
-          <div>
-            <span>Drift Red:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #888; font-weight: bold;">0.0%</span>
-          </div>
-          <div>
-            <span>Cambios:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #FFF;">+3 / -0</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="cronos-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; transition: border 0.3s;" onmouseover="this.style.borderColor='rgba(43,59,229,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)'">
-        <div>
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
-            <a href="https://samuelgil.substack.com" target="_blank" style="text-decoration: none; color: #FFF; font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 600;">
-              samuelgil.substack
-            </a>
-            <span style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #888; background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px;">
-              Ref: 3 recs
-            </span>
-          </div>
-          
-          <div style="background: rgba(0, 243, 255, 0.1); border: 1px solid #00f3ff44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
-            <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #00f3ff; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">9.2</div>
-            <div style="font-size: 0.65rem; color: #00f3ff; font-family: 'JetBrains Mono';">ORGANIC / PURAMENTE TÉCNICO</div>
-          </div>
-          
-          <!-- Metodos de densidades -->
-          <div style="margin-bottom: 1rem; font-size: 0.8rem;">
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">19.8%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 19.8%; height: 100%; background: #ff3355;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Densidad Técnica</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">0.8%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 0.8%; height: 100%; background: #00f3ff;"></div>
-              </div>
-            </div>
-            
-            <div style="margin-bottom: 6px;">
-              <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
-                <span>Llamadas Comerciales</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">0.8%</span>
-              </div>
-              <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 0.8%; height: 100%; background: #2B3BE5;"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.75rem; margin-top: 0.5rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #888;">
-          <div>
-            <span>Drift Red:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #888; font-weight: bold;">0.0%</span>
-          </div>
-          <div>
-            <span>Cambios:</span>
-            <span style="font-family: 'JetBrains Mono'; color: #FFF;">+3 / -0</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-    
-    <div class="cronos-terminal-container">
-      <h4 style="font-family: 'Outfit', sans-serif; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; color: #888; margin-bottom: 0.5rem;">Registro Histórico de Auditorías (Drift Telemetry)</h4>
-      <div class="cronos-terminal" style="background: #050505; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 6px; padding: 1rem; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #00f3ff; height: 140px; overflow-y: auto; box-shadow: inset 0 0 15px rgba(0,0,0,0.8);">
-        <div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-03T01:01:52Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-03T02:01:43Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-03T03:01:24Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-03T04:01:47Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-03T05:01:18Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-03T06:01:50Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-03T07:01:59Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-03T08:01:29Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-03T09:01:51Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-03T10:01:35Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- CRONOS_MONITOR_END -->
 </section>
 <hr/>
 <section class="article-section" id="legal">
@@ -2221,7 +929,7 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
 
 <div class="pyramid-interactive">
   <div class="pyramid-visual-stack">
-    <button class="pyramid-layer-btn active" data-level="5">Nivel 5: Membresía Mafia</button>
+    <button class="pyramid-layer-btn active" data-level="5">Nivel 5: Membresía Capo</button>
     <button class="pyramid-layer-btn" data-level="4">Nivel 4: Remafia / Ventana</button>
     <button class="pyramid-layer-btn" data-level="3">Nivel 3: Talleres Individuales</button>
     <button class="pyramid-layer-btn" data-level="2">Nivel 2: Secretos de Substack</button>
@@ -2266,7 +974,7 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
 </div>
 
 <div class="quotes-container">
-  <!-- Cita A1 -->
+  {/* Cita A1 */}
   <div class="quote-card" data-category="CIB">
     <div class="quote-card-category">Coordinación Algorítmica</div>
     <button class="quote-card-copy">Copiar</button>
@@ -2274,7 +982,7 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
     <div class="quote-card-source">David Domínguez — Newsletter Crecer en Substack</div>
   </div>
 
-  <!-- Cita A2 -->
+  {/* Cita A2 */}
   <div class="quote-card" data-category="CIB">
     <div class="quote-card-category">Coordinación Algorítmica</div>
     <button class="quote-card-copy">Copiar</button>
@@ -2282,7 +990,7 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
     <div class="quote-card-source">David Domínguez — Newsletter Crecer en Substack</div>
   </div>
 
-  <!-- Cita A3 -->
+  {/* Cita A3 */}
   <div class="quote-card" data-category="CIB">
     <div class="quote-card-category">Coordinación Algorítmica</div>
     <button class="quote-card-copy">Copiar</button>
@@ -2290,7 +998,7 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
     <div class="quote-card-source">David Domínguez — Artículo en Rumbo al Éxito, 4 mar 2026</div>
   </div>
 
-  <!-- Cita A4 -->
+  {/* Cita A4 */}
   <div class="quote-card" data-category="CIB">
     <div class="quote-card-category">Coordinación Algorítmica</div>
     <button class="quote-card-copy">Copiar</button>
@@ -2298,7 +1006,7 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
     <div class="quote-card-source">David Domínguez — Artículo en Rumbo al Éxito, 4 mar 2026</div>
   </div>
 
-  <!-- Cita A5 -->
+  {/* Cita A5 */}
   <div class="quote-card" data-category="CIB">
     <div class="quote-card-category">Coordinación Algorítmica</div>
     <button class="quote-card-copy">Copiar</button>
@@ -2306,7 +1014,7 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
     <div class="quote-card-source">David Domínguez — Artículo en Rumbo al Éxito, 4 mar 2026</div>
   </div>
 
-  <!-- Cita B1 -->
+  {/* Cita B1 */}
   <div class="quote-card" data-category="EXIT">
     <div class="quote-card-category">Presión & Control de Salida</div>
     <button class="quote-card-copy">Copiar</button>
@@ -2314,7 +1022,7 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
     <div class="quote-card-source">David Domínguez — Newsletter Crecer en Substack</div>
   </div>
 
-  <!-- Cita C1 -->
+  {/* Cita C1 */}
   <div class="quote-card" data-category="ENGATUSAR">
     <div class="quote-card-category">Captación & Persuasión</div>
     <button class="quote-card-copy">Copiar</button>
@@ -2322,7 +1030,7 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
     <div class="quote-card-source">David Domínguez — Newsletter Crecer en Substack</div>
   </div>
 
-  <!-- Cita D1 -->
+  {/* Cita D1 */}
   <div class="quote-card" data-category="SECTA">
     <div class="quote-card-category">Cult Building</div>
     <button class="quote-card-copy">Copiar</button>
@@ -2330,7 +1038,7 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
     <div class="quote-card-source">David Domínguez — Newsletter Crecer en Substack</div>
   </div>
 
-  <!-- Cita D2 -->
+  {/* Cita D2 */}
   <div class="quote-card" data-category="SECTA">
     <div class="quote-card-category">Cult Building</div>
     <button class="quote-card-copy">Copiar</button>
@@ -2338,7 +1046,7 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
     <div class="quote-card-source">David Domínguez — Newsletter Crecer en Substack</div>
   </div>
 
-  <!-- Cita E1 -->
+  {/* Cita E1 */}
   <div class="quote-card" data-category="FISCAL">
     <div class="quote-card-category">Tributario / iHelp</div>
     <button class="quote-card-copy">Copiar</button>
@@ -2346,7 +1054,7 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
     <div class="quote-card-source">Campaña Oficial iHelp — Landing Page</div>
   </div>
 
-  <!-- Cita F1 -->
+  {/* Cita F1 */}
   <div class="quote-card" data-category="FISCAL">
     <div class="quote-card-category">Tributario / iHelp</div>
     <button class="quote-card-copy">Copiar</button>
@@ -2354,7 +1062,7 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
     <div class="quote-card-source">David Domínguez — Newsletter Crecer en Substack</div>
   </div>
 
-  <!-- Cita H1 -->
+  {/* Cita H1 */}
   <div class="quote-card" data-category="PRECIOS">
     <div class="quote-card-category">Precios Ancla</div>
     <button class="quote-card-copy">Copiar</button>
@@ -2362,7 +1070,7 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
     <div class="quote-card-source">David Domínguez — Página de Suscripción Crecer en Substack</div>
   </div>
 
-  <!-- Cita H2 -->
+  {/* Cita H2 */}
   <div class="quote-card" data-category="PRECIOS">
     <div class="quote-card-category">Precios Ancla</div>
     <button class="quote-card-copy">Copiar</button>
@@ -2370,7 +1078,7 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
     <div class="quote-card-source">David Domínguez — Newsletter Crecer en Substack</div>
   </div>
 
-  <!-- Cita I1 -->
+  {/* Cita I1 */}
   <div class="quote-card" data-category="EXIT">
     <div class="quote-card-category">Presión & Control de Salida</div>
     <button class="quote-card-copy">Copiar</button>
@@ -2378,7 +1086,7 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
     <div class="quote-card-source">David Domínguez — Newsletter Crecer en Substack</div>
   </div>
 
-  <!-- Cita I2 -->
+  {/* Cita I2 */}
   <div class="quote-card" data-category="EXIT">
     <div class="quote-card-category">Presión & Control de Salida</div>
     <button class="quote-card-copy">Copiar</button>
@@ -2386,7 +1094,7 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
     <div class="quote-card-source">David Domínguez — Newsletter Crecer en Substack</div>
   </div>
 
-  <!-- Cita J1 -->
+  {/* Cita J1 */}
   <div class="quote-card" data-category="FILTROS">
     <div class="quote-card-category">Filtros Pre-Mafia</div>
     <button class="quote-card-copy">Copiar</button>

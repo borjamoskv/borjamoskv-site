@@ -13,7 +13,7 @@ tags:
   - '#SaludMental'
 ---
 
-<!-- I -->
+{/* I */}
       <section id="marco-1" class="article-section">
         <div class="section-number">Marco I</div>
         <h2 class="section-title">La Promesa Rota</h2>
@@ -24,9 +24,9 @@ tags:
         <p>Y cuando por fin empezaron a trabajar — tarde, mal y con contratos basura — descubrieron que la experiencia que les pedían solo se podía obtener en los trabajos a los que no podían acceder sin experiencia. El bucle perfecto. La trampa existencial de una generación que hizo todo lo que le dijeron y recibió exactamente lo contrario de lo que le prometieron.</p>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- II -->
+      {/* II */}
       <section id="marco-2" class="article-section">
         <div class="section-number">Marco II</div>
         <h2 class="section-title">El Espejismo del Ladrillo</h2>
@@ -38,9 +38,9 @@ tags:
         <p>Sus padres compraron un piso de tres habitaciones en el centro de una ciudad por el equivalente a tres años de salario. Ellos no pueden alquilar un estudio en la periferia sin destinar el 60% de lo que ganan. La generación que construyó más viviendas que nadie en Europa creó hijos que no pueden vivir en ninguna de ellas.</p>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- III -->
+      {/* III */}
       <section id="marco-3" class="article-section">
         <div class="section-number">Marco III</div>
         <h2 class="section-title">La Generación Más Preparada de la Historia™</h2>
@@ -56,9 +56,9 @@ tags:
         <p>La sobrepreparación no fue una virtud. Fue un mecanismo de supervivencia ante la escasez. Cuando no hay trabajo, estudias otro máster. Cuando no hay futuro, acumulas títulos como quien llena un almacén antes de un asedio. Los millennials no se formaron por ambición. <strong>Se formaron por miedo.</strong></p>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- IV -->
+      {/* IV */}
       <section id="marco-4" class="article-section">
         <div class="section-number">Marco IV</div>
         <h2 class="section-title">El Interinato Perpetuo</h2>
@@ -69,9 +69,9 @@ tags:
         <p>El efecto psicológico de tres décadas de interinato es devastador. Los millennials no planifican a largo plazo porque <strong>nunca han tenido un largo plazo</strong>. No compran muebles caros porque puede que se muden en seis meses. No invierten en un barrio porque puede que no vivan ahí el año que viene. La temporalidad no es solo un estatus laboral. Es un estado mental. Una forma de habitar el mundo en suspensión permanente.</p>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- V -->
+      {/* V */}
       <section id="marco-5" class="article-section">
         <div class="section-number">Marco V</div>
         <h2 class="section-title">La Maternidad Aplazada Hasta El Infinito</h2>
@@ -87,9 +87,9 @@ tags:
         <p>Cuando un político dice que «los jóvenes no quieren tener hijos», está mintiendo. Todas las encuestas dicen lo contrario: el 80% de los millennials españoles desean ser padres. Lo que no desean es <strong>criar a un hijo en la precariedad que ellos mismos padecen</strong>. Y eso no es egoísmo. Es la forma más radical de amor: negarse a reproducir el sufrimiento.</p>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- VI -->
+      {/* VI */}
       <section id="marco-6" class="article-section">
         <div class="section-number">Marco VI</div>
         <h2 class="section-title">El Hotel de Mamá y Papá</h2>
@@ -101,9 +101,9 @@ tags:
         <p>Y luego está el otro lado de la moneda: los padres. Los baby boomers que se retiraron — o que están a punto de hacerlo — y que descubren que su jubilación incluye un gasto que no habían presupuestado: <strong>mantener a un hijo adulto</strong>. El Hotel de Mamá y Papá no tiene fecha de checkout.</p>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- VII -->
+      {/* VII */}
       <section id="marco-7" class="article-section">
         <div class="section-number">Marco VII</div>
         <h2 class="section-title">La Uberización de Todo</h2>
@@ -115,9 +115,9 @@ tags:
         <p>Los millennials no eligieron la gig economy. La gig economy los eligió a ellos — porque eran la generación más vulnerable, más necesitada y más dispuesta a aceptar cualquier cosa con tal de no volver al Hotel de Mamá y Papá.</p>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- VIII -->
+      {/* VIII */}
       <section id="marco-8" class="article-section">
         <div class="section-number">Marco VIII</div>
         <h2 class="section-title">La Crisis Como Estado Permanente</h2>
@@ -135,9 +135,9 @@ tags:
         <p>Y el dato más perverso: cada nueva crisis se presenta como excepcional — «es que esto nadie lo podía prever» — cuando en realidad, para un millennial, lo excepcional sería vivir cinco años consecutivos sin que se hunda algo.</p>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- IX -->
+      {/* IX */}
       <section id="marco-9" class="article-section">
         <div class="section-number">Marco IX</div>
         <h2 class="section-title">El Síndrome del Impostor Generacional</h2>
@@ -149,9 +149,9 @@ tags:
         <p>El resultado es una generación que ha interiorizado una vergüenza que no le pertenece. Que se siente fracasada por no haber cumplido un pacto que ella no rompió. Que se autocastiga con ansiedad, depresión y burnout como si fueran fallos personales y no síntomas de un sistema que la defraudó.</p>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- X -->
+      {/* X */}
       <section id="marco-10" class="article-section">
         <div class="section-number">Marco X</div>
         <h2 class="section-title">La Fuga de Cerebros</h2>
@@ -167,9 +167,9 @@ tags:
         <p>Y los que vuelven — porque muchos vuelven, porque la nostalgia pesa más que el sueldo — descubren que el mercado laboral les ofrece la mitad de lo que ganaban fuera. Que su experiencia internacional se valora «pero el presupuesto es el que es». Que España les recibe con los brazos abiertos y el bolsillo cerrado.</p>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- XI -->
+      {/* XI */}
       <section id="marco-11" class="article-section">
         <div class="section-number">Marco XI</div>
         <h2 class="section-title">El Scroll Infinito Como Anestesia</h2>
@@ -183,9 +183,9 @@ tags:
         <p>El scroll infinito es el opio del siglo XXI. Y los millennials son sus adictos más funcionales.</p>
       </section>
 
-      <hr class="section-divider">
+      <hr class="section-divider" />
 
-      <!-- XII -->
+      {/* XII */}
       <section id="marco-12" class="article-section">
         <div class="section-number">Marco XII</div>
         <h2 class="section-title">La Generación Bisagra</h2>
