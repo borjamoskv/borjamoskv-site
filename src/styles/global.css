@@ -42,6 +42,21 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+
+/* ─── Analog Grain Jitter ─── */
+@keyframes noiseJitter {
+  0%, 100% { background-position: 0 0; }
+  10% { background-position: -5px -5px; }
+  20% { background-position: -10px 5px; }
+  30% { background-position: 5px -10px; }
+  40% { background-position: -5px 15px; }
+  50% { background-position: -10px 5px; }
+  60% { background-position: 15px 0; }
+  70% { background-position: 0 15px; }
+  80% { background-position: 3px 15px; }
+  90% { background-position: -10px 10px; }
+}
+
 /* ─── Global Noise Texture ─── */
 body::before {
   content: "";
@@ -51,6 +66,7 @@ body::before {
   opacity: 0.03;
   pointer-events: none;
   z-index: 9999;
+  animation: noiseJitter 0.5s infinite steps(2);
 }
 
 /* ─── Fixed Background Video ─── */
@@ -191,4 +207,21 @@ body::before {
 }
 @media (max-width: 480px) {
   .top-nav { gap: 1rem; font-size: 0.65rem; }
+}
+
+/* ─── Chromatic Glitch Hover ─── */
+.hero-title {
+  transition: all 0.2s var(--ease-omega);
+}
+.hero-title:hover {
+  animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+  color: #fff;
+}
+@keyframes glitch {
+  0% { transform: translate(0) }
+  20% { transform: translate(-3px, 3px); text-shadow: 3px 0 var(--color-amber), -3px 0 var(--color-yinmn); }
+  40% { transform: translate(-3px, -3px); text-shadow: 3px 0 var(--color-amber), -3px 0 var(--color-yinmn); }
+  60% { transform: translate(3px, 3px); text-shadow: -3px 0 var(--color-amber), 3px 0 var(--color-yinmn); }
+  80% { transform: translate(3px, -3px); text-shadow: -3px 0 var(--color-amber), 3px 0 var(--color-yinmn); }
+  100% { transform: translate(0) }
 }

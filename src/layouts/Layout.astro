@@ -51,10 +51,31 @@ const { title } = Astro.props;
         mouseY = e.clientY;
       });
 
+      let currentScroll = window.scrollY;
+      let targetSkew = 0;
+      let currentSkew = 0;
+      let contentLayer = null;
+
       const loop = () => {
-        cursorX += (mouseX - cursorX) * 0.15;
-        cursorY += (mouseY - cursorY) * 0.15;
+        // Cursor interpolation
+        cursorX += (mouseX - cursorX) * 0.25;
+        cursorY += (mouseY - cursorY) * 0.25;
         if (cursor) cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
+        
+        // Scroll Velocity Skew Physics
+        if (!contentLayer) contentLayer = document.querySelector('.content-layer');
+        const newScroll = window.scrollY;
+        const scrollVelocity = newScroll - currentScroll;
+        currentScroll = newScroll;
+        
+        targetSkew = Math.max(-2.5, Math.min(2.5, scrollVelocity * 0.03));
+        currentSkew += (targetSkew - currentSkew) * 0.1;
+        
+        if (contentLayer) {
+          contentLayer.style.transform = `skewY(${currentSkew}deg)`;
+          contentLayer.style.transformOrigin = 'center';
+        }
+        
         requestAnimationFrame(loop);
       };
       requestAnimationFrame(loop);
@@ -81,11 +102,27 @@ const { title } = Astro.props;
             el.style.boxShadow = `0 20px 40px rgba(0,0,0,0.8), ${-tiltY * 2}px ${tiltX * 2}px 30px rgba(255, 159, 28, 0.2)`;
           });
           
+                    el.addEventListener('mouseenter', () => {
+            cursor.style.width = '50px';
+            cursor.style.height = '50px';
+            cursor.style.marginTop = '-25px';
+            cursor.style.marginLeft = '-25px';
+            cursor.style.background = 'rgba(43, 59, 229, 0.9)';
+            cursor.style.mixBlendMode = 'difference';
+          });
           el.addEventListener('mouseleave', () => {
             el.style.transform = '';
             el.style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
             el.style.zIndex = '1';
             el.style.boxShadow = '';
+            
+            // Restore cursor
+            cursor.style.width = '400px';
+            cursor.style.height = '400px';
+            cursor.style.marginTop = '-200px';
+            cursor.style.marginLeft = '-200px';
+            cursor.style.background = 'radial-gradient(circle, rgba(43, 59, 229, 0.12) 0%, rgba(43, 59, 229, 0) 60%)';
+            cursor.style.mixBlendMode = 'screen';
           });
         });
       });
