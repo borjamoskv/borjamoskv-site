@@ -744,6 +744,58 @@ const { title } = Astro.props;
       document.addEventListener('DOMContentLoaded', initBrowserHijack);
       document.addEventListener('astro:page-load', initBrowserHijack);
 
+      
+      // ─── 15/10 GENERATIVE HALLUCINATION PROTOCOL (Lexical Mutation) ───
+      const initHallucination = () => {
+        const lexicon = ['entropía', 'cortex', 'colapso', 'ruido', 'simbionte', 'aniquilación', 'SOTA', 'C5-REAL', 'vacío', 'glitch', 'oscuridad', 'flujo', 'sistema', 'latencia', 'hardware', 'vibración', 'ruina', 'código', 'memoria', 'quemar'];
+        
+        const hallucinateText = (node) => {
+           if (node.nodeType === Node.TEXT_NODE) {
+               let words = node.nodeValue.split(/(\s+)/);
+               let mutated = false;
+               for (let i = 0; i < words.length; i++) {
+                   if (words[i].trim().length > 4 && Math.random() < 0.05) {
+                       words[i] = lexicon[Math.floor(Math.random() * lexicon.length)];
+                       mutated = true;
+                   }
+               }
+               if (mutated) {
+                   node.nodeValue = words.join('');
+                   return true;
+               }
+           } else {
+               for (let child of node.childNodes) {
+                   if (hallucinateText(child)) return true; // Mutate one per tick
+               }
+           }
+           return false;
+        };
+
+        const hallucinationObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting && !entry.target.dataset.hallucinating) {
+              entry.target.dataset.hallucinating = 'true';
+              // Empezar a corromper el texto mientras el usuario lo lee
+              entry.target.hallucinationInterval = setInterval(() => {
+                 hallucinateText(entry.target);
+              }, 600); // Muta una palabra cada 600ms
+            } else if (!entry.isIntersecting && entry.target.dataset.hallucinating === 'true') {
+              clearInterval(entry.target.hallucinationInterval);
+            }
+          });
+        }, { threshold: 0.1 });
+
+        const elementsToCorrupt = document.querySelectorAll('p, li, .project-card p');
+        elementsToCorrupt.forEach(el => {
+          if (!el.dataset.hash || localStorage.getItem(el.dataset.hash) !== 'OBLITERATED') {
+             hallucinationObserver.observe(el);
+          }
+        });
+      };
+
+      document.addEventListener('DOMContentLoaded', initHallucination);
+      document.addEventListener('astro:page-load', initHallucination);
+
       // ─── 13/10 OS-LEVEL PERSISTENCE (Draggable HUD Protocol) ───
       const initOSLevelUIs = () => {
         const makeDraggable = (el, storageKey) => {
