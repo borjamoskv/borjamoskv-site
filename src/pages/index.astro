@@ -1,18 +1,10 @@
 ---
-// index.astro — BORJA MOSKV · Centered Hub
+import Layout from '../layouts/Layout.astro';
 ---
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BORJA MOSKV — Música · Vídeo · Blog</title>
-    <meta name="description" content="Borja Moskv — Música electrónica, vídeo experimental y ensayo. Audio directo, vídeo en primer plano, ciudad al fondo." />
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet" />
-    <style>
+
+<Layout title="BORJA MOSKV — Música · Vídeo · Blog">
+<style>
+
       :root {
         --color-bg: #030304;
         --color-surface: #0a0a0c;
@@ -34,13 +26,13 @@
 
       html {
         scroll-behavior: smooth;
-        background-color: var(--color-bg);
+        background-color: var(--color-void);
       }
 
       body {
-        background-color: var(--color-bg);
-        color: var(--color-text);
-        font-family: var(--font-sans);
+        background-color: var(--color-void);
+        color: var(--color-parchment);
+        font-family: var(--font-primary);
         min-height: 100vh;
         overflow-x: hidden;
         -webkit-font-smoothing: antialiased;
@@ -102,7 +94,7 @@
         font-weight: 500;
         letter-spacing: 0.2em;
         text-transform: uppercase;
-        font-family: var(--font-mono);
+        font-family: var(--font-secondary);
         transition: color 0.3s ease, text-shadow 0.3s ease;
         position: relative;
       }
@@ -115,13 +107,13 @@
         position: absolute;
         bottom: -6px; left: 50%;
         width: 0%; height: 1px;
-        background: var(--color-pink);
+        background: var(--color-amber);
         transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         transform: translateX(-50%);
       }
       .nav-link:hover::after {
         width: 100%;
-        box-shadow: 0 0 8px var(--color-pink);
+        box-shadow: 0 0 8px var(--color-amber);
       }
 
       /* ─── Content Layer ─── */
@@ -143,15 +135,15 @@
       }
 
       .hero-label {
-        font-family: var(--font-mono);
+        font-family: var(--font-secondary);
         font-size: 0.7rem;
         letter-spacing: 0.5em;
         text-transform: uppercase;
-        color: var(--color-pink);
+        color: var(--color-amber);
         margin-bottom: 1.5rem;
         opacity: 0;
         animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.2s;
-        text-shadow: 0 0 20px var(--color-pink-glow);
+        text-shadow: 0 0 20px rgba(255, 159, 28, 0.4);
       }
 
       .hero-title {
@@ -197,7 +189,7 @@
         padding: 1rem 2.5rem;
         border-radius: 100px;
         text-decoration: none;
-        font-family: var(--font-mono);
+        font-family: var(--font-secondary);
         font-size: 0.75rem;
         font-weight: 600;
         letter-spacing: 0.15em;
@@ -209,7 +201,7 @@
       }
 
       .hero-btn.primary {
-        background: var(--color-accent);
+        background: var(--color-yinmn);
         color: #FFFFFF;
         border: 1px solid rgba(255,255,255,0.1);
         box-shadow: 0 0 20px rgba(43, 59, 229, 0.3);
@@ -235,7 +227,7 @@
       .hero-btn.outline {
         background: var(--glass-bg);
         backdrop-filter: blur(10px);
-        color: var(--color-text);
+        color: var(--color-parchment);
         border: 1px solid var(--glass-border);
       }
       .hero-btn.outline:hover {
@@ -258,7 +250,7 @@
         animation: fadeUp 1s ease forwards 1.2s;
       }
       .scroll-indicator span {
-        font-family: var(--font-mono);
+        font-family: var(--font-secondary);
         font-size: 0.6rem;
         letter-spacing: 0.4em;
         text-transform: uppercase;
@@ -267,7 +259,7 @@
       .scroll-line {
         width: 1px;
         height: 60px;
-        background: linear-gradient(to bottom, var(--color-pink), transparent);
+        background: linear-gradient(to bottom, var(--color-amber), transparent);
         animation: scrollPulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
       }
 
@@ -292,15 +284,15 @@
       }
 
       .section-label {
-        font-family: var(--font-mono);
+        font-family: var(--font-secondary);
         font-size: 0.7rem;
         font-weight: 700;
         letter-spacing: 0.5em;
         text-transform: uppercase;
-        color: var(--color-pink);
+        color: var(--color-amber);
         margin-bottom: 1.5rem;
         display: block;
-        text-shadow: 0 0 15px var(--color-pink-glow);
+        text-shadow: 0 0 15px rgba(255, 159, 28, 0.4);
       }
 
       .section-title {
@@ -361,7 +353,7 @@
       .thumb-card:hover {
         transform: translateY(-6px) scale(1.02);
         border-color: rgba(43, 59, 229, 0.6);
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 30px var(--color-accent-glow);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(43, 59, 229, 0.5);
       }
       .thumb-card:hover::after {
         box-shadow: inset 0 0 0 1px rgba(255,255,255,0.15);
@@ -399,9 +391,9 @@
         margin-bottom: 0.3rem;
       }
       .thumb-desc {
-        font-family: var(--font-mono);
+        font-family: var(--font-secondary);
         font-size: 0.65rem;
-        color: var(--color-pink);
+        color: var(--color-amber);
       }
 
       .play-icon {
@@ -417,7 +409,7 @@
         justify-content: center;
         opacity: 0;
         transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        box-shadow: 0 0 20px var(--color-accent-glow);
+        box-shadow: 0 0 20px rgba(43, 59, 229, 0.5);
       }
       .thumb-card:hover .play-icon {
         opacity: 1;
@@ -470,7 +462,7 @@
       .video-scroll-card:hover {
         transform: translateY(-6px) scale(1.02);
         border-color: rgba(255, 0, 85, 0.6);
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 30px var(--color-pink-glow);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 159, 28, 0.4);
       }
       .video-scroll-card img {
         width: 100%; height: 100%;
@@ -491,7 +483,7 @@
         opacity: 1;
         transform: translate(-50%, -50%) scale(1);
         background: rgba(255, 0, 85, 0.9);
-        box-shadow: 0 0 20px var(--color-pink-glow);
+        box-shadow: 0 0 20px rgba(255, 159, 28, 0.4);
       }
 
       /* ─── BLOG Section ─── */
@@ -523,7 +515,7 @@
         position: absolute;
         top: 0; left: 0;
         width: 100%; height: 3px;
-        background: linear-gradient(90deg, transparent, var(--color-pink), var(--color-accent), transparent);
+        background: linear-gradient(90deg, transparent, var(--color-amber), var(--color-yinmn), transparent);
         transform: scaleX(0);
         transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
       }
@@ -546,12 +538,12 @@
       }
 
       .card-tag {
-        font-family: var(--font-mono);
+        font-family: var(--font-secondary);
         font-size: 0.65rem;
         font-weight: 700;
         letter-spacing: 0.15em;
         text-transform: uppercase;
-        color: var(--color-pink);
+        color: var(--color-amber);
         background: rgba(255, 0, 85, 0.08);
         border: 1px solid rgba(255, 0, 85, 0.3);
         padding: 0.4rem 1rem;
@@ -564,7 +556,7 @@
         background: rgba(255, 0, 85, 0.15);
       }
       .card-tag.tech {
-        color: var(--color-accent);
+        color: var(--color-yinmn);
         border-color: rgba(43, 59, 229, 0.3);
         background: rgba(43, 59, 229, 0.08);
       }
@@ -574,7 +566,7 @@
       }
 
       .card-date {
-        font-family: var(--font-mono);
+        font-family: var(--font-secondary);
         font-size: 0.7rem;
         color: var(--color-muted);
       }
@@ -607,7 +599,7 @@
       }
 
       .card-cta {
-        font-family: var(--font-mono);
+        font-family: var(--font-secondary);
         font-size: 0.75rem;
         font-weight: 700;
         letter-spacing: 0.15em;
@@ -619,8 +611,8 @@
         transition: all 0.3s ease;
       }
       .blog-card:hover .card-cta {
-        color: var(--color-accent);
-        text-shadow: 0 0 10px var(--color-accent-glow);
+        color: var(--color-yinmn);
+        text-shadow: 0 0 10px rgba(43, 59, 229, 0.5);
       }
       .card-cta .arrow-icon {
         transition: transform 0.3s ease;
@@ -640,7 +632,7 @@
         gap: 0.75rem;
         color: #FFFFFF;
         text-decoration: none;
-        font-family: var(--font-mono);
+        font-family: var(--font-secondary);
         font-size: 0.8rem;
         font-weight: 600;
         letter-spacing: 0.2em;
@@ -652,7 +644,7 @@
         transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
       }
       .view-all-btn:hover {
-        border-color: var(--color-accent);
+        border-color: var(--color-yinmn);
         background: rgba(43, 59, 229, 0.1);
         box-shadow: 0 10px 30px rgba(43, 59, 229, 0.2);
         transform: translateY(-3px) scale(1.02);
@@ -677,7 +669,7 @@
         background: rgba(3, 3, 4, 0.95);
       }
       .footer-text {
-        font-family: var(--font-mono);
+        font-family: var(--font-secondary);
         font-size: 0.7rem;
         letter-spacing: 0.3em;
         color: var(--color-muted);
@@ -714,28 +706,11 @@
         .top-nav { gap: 1rem; font-size: 0.65rem; }
         .hero-title { font-size: 3.5rem; }
       }
-    </style>
-  </head>
-  <body>
-    <!-- Background Layer -->
-    <div class="bg-video-container">
-      <video class="bg-video" autoplay loop muted playsinline>
-        <source src="/media/videos/no-sleep-in-my-city.mp4" type="video/mp4" />
-      </video>
-    </div>
-    <div class="overlay"></div>
+    
+</style>
 
-    <!-- Navigation -->
-    <header>
-      <nav class="top-nav">
-        <a href="#musica" class="nav-link">Música</a>
-        <a href="#video" class="nav-link">Vídeo</a>
-        <a href="#blog" class="nav-link">Blog</a>
-        <a href="https://www.youtube.com/@borjamoskv" target="_blank" rel="noopener" class="nav-link">YouTube</a>
-      </nav>
-    </header>
+<div class="content-layer">
 
-    <div class="content-layer">
       <!-- ═══ HERO ═══ -->
       <section class="hero">
         <span class="hero-label">Música · Vídeo · Ensayo</span>
@@ -1011,11 +986,6 @@
           </div>
         </div>
       </section>
-    </div>
-
-    <!-- Footer -->
-    <footer class="site-footer">
-      <p class="footer-text">© 2026 Borja Moskv · Todos los derechos reservados</p>
-    </footer>
-  </body>
-</html>
+    
+</div>
+</Layout>
