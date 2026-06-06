@@ -51,12 +51,9 @@ const { title } = Astro.props;
     <script>
       // ─── C5-REAL KINETICS ENGINE ───
 
-      // ─── C5-REAL SPATIAL AUDIO ENGINE (Synthetic Industrial Drone) ───
+      // ─── C5-REAL SPATIAL AUDIO ENGINE (Warm Generative Pads) ───
       let audioCtx = null;
       let panner = null;
-      let drone = null;
-      let filter = null;
-      let lfo = null;
       let isAudioInitialized = false;
 
       const initSpatialAudio = () => {
@@ -73,157 +70,117 @@ const { title } = Astro.props;
         panner.refDistance = 1;
         panner.maxDistance = 10000;
         panner.rolloffFactor = 1;
-        panner.coneInnerAngle = 360;
-        panner.coneOuterAngle = 0;
-        panner.coneOuterGain = 0;
-
-        // Base Drone Oscillator (55Hz - Deep Industrial Hum)
-        drone = audioCtx.createOscillator();
-        drone.type = 'sawtooth';
-        drone.frequency.value = 55; 
-
-        // Filter to shape the drone
-        filter = audioCtx.createBiquadFilter();
-        filter.type = 'lowpass';
-        filter.frequency.value = 400;
-        filter.Q.value = 5;
-
-        // LFO to modulate filter (Breathing effect)
-        lfo = audioCtx.createOscillator();
-        lfo.type = 'sine';
-        lfo.frequency.value = 0.1; // 10 second cycle
-
-        const lfoGain = audioCtx.createGain();
-        lfoGain.gain.value = 300; // Modulation depth
-
-        // Sub-bass layer
-        const sub = audioCtx.createOscillator();
-        sub.type = 'sine';
-        sub.frequency.value = 27.5;
 
         // Master Gain
         const masterGain = audioCtx.createGain();
-        masterGain.gain.value = 0.05; // Very low ambient volume
+        masterGain.gain.value = 0.15; // Pleasant ambient volume
 
-        // Routing
-        lfo.connect(lfoGain);
-        lfoGain.connect(filter.frequency);
-
-        drone.connect(filter);
-        filter.connect(panner);
-        sub.connect(panner);
-        
         panner.connect(masterGain);
         masterGain.connect(audioCtx.destination);
 
-        // Start
-        drone.start();
-        sub.start();
-        lfo.start();
-        
-        
-        // ─── AUTODJ (Algorithmic Techno Sequencer) ───
-        const tempo = 120; // BPM
-        const lookahead = 25.0; // ms
-        const scheduleAheadTime = 0.1; // s
+        // ─── WARM DRONE PADS ───
+        const createPad = (freq, type, detune = 0) => {
+          const osc = audioCtx.createOscillator();
+          osc.type = type;
+          osc.frequency.value = freq;
+          osc.detune.value = detune;
+
+          const filter = audioCtx.createBiquadFilter();
+          filter.type = 'lowpass';
+          filter.frequency.value = 300; // Warm muffling
+          filter.Q.value = 1;
+
+          // LFO for slow breathing
+          const lfo = audioCtx.createOscillator();
+          lfo.type = 'sine';
+          lfo.frequency.value = 0.05 + Math.random() * 0.05; // Very slow
+          
+          const lfoGain = audioCtx.createGain();
+          lfoGain.gain.value = 100;
+          lfo.connect(lfoGain);
+          lfoGain.connect(filter.frequency);
+          lfo.start();
+
+          osc.connect(filter);
+          filter.connect(panner);
+          osc.start();
+        };
+
+        // Tuning: F Major 7 / Sus2 Ambient Chord
+        createPad(87.31, 'triangle'); // F2 (Root)
+        createPad(130.81, 'sine');    // C3 (Fifth)
+        createPad(164.81, 'sine');    // E3 (Maj 7)
+        createPad(196.00, 'sine', 10); // G3 (Sus2 / 9th) with slight detune for warmth
+
+        // ─── GENERATIVE AMBIENT CHIMES ───
+        const tempo = 60; // Slow BPM
+        const lookahead = 25.0; 
+        const scheduleAheadTime = 0.5; 
         let currentNote = 0;
         let nextNoteTime = audioCtx.currentTime;
 
-        // White Noise Buffer for Hi-Hats
-        const bufferSize = audioCtx.sampleRate * 2;
-        const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-        const output = noiseBuffer.getChannelData(0);
-        for (let i = 0; i < bufferSize; i++) {
-          output[i] = Math.random() * 2 - 1;
-        }
-
-        const playKick = (time) => {
-          const osc = audioCtx.createOscillator();
-          const gain = audioCtx.createGain();
-          osc.connect(gain);
-          gain.connect(panner); // Route through the 3D panner
-          
-          osc.frequency.setValueAtTime(150, time);
-          osc.frequency.exponentialRampToValueAtTime(0.01, time + 0.5);
-          
-          gain.gain.setValueAtTime(1, time);
-          gain.gain.exponentialRampToValueAtTime(0.01, time + 0.5);
-          
-          osc.start(time);
-          osc.stop(time + 0.5);
-        };
-
-        const playHat = (time, isClosed) => {
-          const noiseSrc = audioCtx.createBufferSource();
-          noiseSrc.buffer = noiseBuffer;
-          
-          const noiseFilter = audioCtx.createBiquadFilter();
-          noiseFilter.type = 'highpass';
-          noiseFilter.frequency.value = 5000;
-          
-          const noiseGain = audioCtx.createGain();
-          noiseGain.gain.setValueAtTime(isClosed ? 0.2 : 0.4, time);
-          noiseGain.gain.exponentialRampToValueAtTime(0.01, time + (isClosed ? 0.05 : 0.2));
-          
-          noiseSrc.connect(noiseFilter);
-          noiseFilter.connect(noiseGain);
-          noiseGain.connect(panner);
-          
-          noiseSrc.start(time);
-        };
-        
-        const playSynth = (time, note) => {
+        const playGenerativePad = (time, note) => {
            const osc = audioCtx.createOscillator();
            const gain = audioCtx.createGain();
-           osc.type = 'square';
+           osc.type = 'sine';
            osc.frequency.value = note;
            
-           gain.gain.setValueAtTime(0.05, time);
-           gain.gain.exponentialRampToValueAtTime(0.01, time + 0.15);
+           // Very slow attack and release
+           gain.gain.setValueAtTime(0, time);
+           gain.gain.linearRampToValueAtTime(0.08, time + 2);
+           gain.gain.linearRampToValueAtTime(0, time + 6);
            
-           osc.connect(gain);
+           // Filter for warmth
+           const filter = audioCtx.createBiquadFilter();
+           filter.type = 'lowpass';
+           filter.frequency.value = 600;
+
+           osc.connect(filter);
+           filter.connect(gain);
            gain.connect(panner);
+           
            osc.start(time);
-           osc.stop(time + 0.2);
+           osc.stop(time + 6);
         };
 
         const nextNote = () => {
           const secondsPerBeat = 60.0 / tempo;
-          nextNoteTime += 0.25 * secondsPerBeat; // 16th notes
+          nextNoteTime += secondsPerBeat; // Quarter notes
           currentNote++;
-          if (currentNote === 16) {
-            currentNote = 0;
-          }
         };
 
-        const scheduleNote = (beatNumber, time) => {
-          // Kick on 1, 5, 9, 13 (Four on the floor)
-          if (beatNumber % 4 === 0) playKick(time);
-          
-          // Offbeat open hats
-          if (beatNumber % 4 === 2) playHat(time, false);
-          
-          // Random closed hats
-          if (Math.random() > 0.6) playHat(time, true);
-          
-          // Random dark industrial synth blips (G minor pentatonic low)
-          if (Math.random() > 0.8) {
-            const notes = [49.00, 58.27, 65.41, 73.42, 87.31];
-            playSynth(time, notes[Math.floor(Math.random() * notes.length)]);
+        const scheduleNote = (time) => {
+          // Generative Brian Eno style probability
+          if (Math.random() > 0.6) {
+            // Pentatonic F Major (F, G, A, C, D)
+            const notes = [174.61, 196.00, 220.00, 261.63, 293.66, 349.23, 392.00];
+            playGenerativePad(time, notes[Math.floor(Math.random() * notes.length)]);
           }
         };
 
         let timerID;
         const scheduler = () => {
           while (nextNoteTime < audioCtx.currentTime + scheduleAheadTime) {
-            scheduleNote(currentNote, nextNoteTime);
+            scheduleNote(nextNoteTime);
             nextNote();
           }
           timerID = setTimeout(scheduler, lookahead);
         };
         
-        // Start AutoDJ Sequencer
         scheduler();
+
+        // Hide activation UI
+        const audioBadge = document.getElementById('audio-badge');
+        if (audioBadge) {
+          audioBadge.style.opacity = '0';
+          setTimeout(() => audioBadge.remove(), 1000);
+        }
+      };
+
+      document.addEventListener('click', () => {
+        if (!isAudioInitialized) initSpatialAudio();
+        else if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+      }, { once: true });
 
         // Hide activation UI
         const audioBadge = document.getElementById('audio-badge');
