@@ -354,9 +354,106 @@
       background: rgba(224, 224, 224, 0.04);
     }
 
-    /* ── Hidden filter state ── */
-    .blog-card[data-hidden="true"] {
-      display: none;
+    /* ── Search Bar Style ── */
+    .blog-search-container {
+      position: relative;
+      margin-left: auto;
+      min-width: 280px;
+    }
+
+    .blog-search-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 9999px;
+      padding: 0.5rem 1rem 0.5rem 2.5rem;
+      color: #E0E0E0;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      outline: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .blog-search-input:focus {
+      border-color: var(--accent-primary, #FF0055);
+      background: rgba(255, 255, 255, 0.05);
+      box-shadow: 0 0 15px rgba(255, 0, 85, 0.2);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(224, 224, 224, 0.3);
+      pointer-events: none;
+      transition: color 0.3s ease;
+    }
+
+    .blog-search-input:focus + .search-icon {
+      color: var(--accent-primary, #FF0055);
+    }
+
+    @media (max-width: 768px) {
+      .blog-search-container {
+        margin-left: 0;
+        width: 100%;
+        margin-top: 1rem;
+      }
+    }
+
+    /* ── Filtered & Searched Grid Uniformity ── */
+    .blog-grid.is-filtered .blog-card,
+    .blog-grid.is-filtered .blog-card--featured,
+    .blog-grid.is-filtered .blog-card--side,
+    .blog-grid.is-filtered .blog-card--half,
+    .blog-grid.is-filtered .blog-card--third,
+    .blog-grid.is-filtered .blog-card--full {
+      grid-column: span 4 !important;
+      min-height: auto !important;
+    }
+
+    @media (max-width: 1024px) {
+      .blog-grid.is-filtered .blog-card,
+      .blog-grid.is-filtered .blog-card--featured,
+      .blog-grid.is-filtered .blog-card--side,
+      .blog-grid.is-filtered .blog-card--half,
+      .blog-grid.is-filtered .blog-card--third,
+      .blog-grid.is-filtered .blog-card--full {
+        grid-column: span 6 !important;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .blog-grid.is-filtered .blog-card,
+      .blog-grid.is-filtered .blog-card--featured,
+      .blog-grid.is-filtered .blog-card--side,
+      .blog-grid.is-filtered .blog-card--half,
+      .blog-grid.is-filtered .blog-card--third,
+      .blog-grid.is-filtered .blog-card--full {
+        grid-column: span 12 !important;
+      }
+    }
+
+    @keyframes cardFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.97);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .blog-card:not([data-hidden="true"]):not([data-search-hidden="true"]) {
+      animation: cardFadeIn 0.3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+
+    /* ── Hidden states ── */
+    .blog-card[data-hidden="true"],
+    .blog-card[data-search-hidden="true"] {
+      display: none !important;
     }
 
     /* ── Responsive ── */
@@ -1078,6 +1175,13 @@
 <button class="filter-btn" data-filter="analisis">Análisis</button>
 <button class="filter-btn" data-filter="tecnica">Técnica</button>
 <button class="filter-btn" data-filter="tesis">Tesis</button>
+
+<div class="blog-search-container">
+  <input type="text" id="blogSearch" placeholder="Buscar textos..." class="blog-search-input" />
+  <svg class="search-icon" viewBox="0 0 24 24" width="16" height="16">
+    <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="currentColor"/>
+  </svg>
+</div>
 </div>
 <!-- SECTION: POPULAR -->
 <section class="blog-section-container">
@@ -1270,9 +1374,42 @@
 
       if (window.MOSKV?.chat?.init) window.MOSKV.chat.init();
 
-      // ── Filter bar ──────────────────────────────────
+      // ── Filter bar & Search ─────────────────────────
       const filterBtns = document.querySelectorAll('.filter-btn');
       const cards      = document.querySelectorAll('.blog-card[data-category]');
+      const searchInput = document.getElementById('blogSearch');
+      const popularGrid = document.getElementById('popularGrid');
+      const blogGrid    = document.getElementById('blogGrid');
+
+      let currentFilter = 'all';
+      let currentQuery = '';
+
+      function applyFilterAndSearch() {
+        const query = currentQuery.toLowerCase().trim();
+        const isFilteredOrSearched = currentFilter !== 'all' || query !== '';
+
+        if (isFilteredOrSearched) {
+          popularGrid?.classList.add('is-filtered');
+          blogGrid?.classList.add('is-filtered');
+        } else {
+          popularGrid?.classList.remove('is-filtered');
+          blogGrid?.classList.remove('is-filtered');
+        }
+
+        cards.forEach(card => {
+          const category = card.dataset.category;
+          const title = card.querySelector('.card-title')?.textContent || '';
+          const excerpt = card.querySelector('.card-excerpt')?.textContent || '';
+          
+          const matchesCategory = currentFilter === 'all' || category === currentFilter;
+          const matchesSearch = query === '' || 
+                                title.toLowerCase().includes(query) || 
+                                excerpt.toLowerCase().includes(query);
+
+          card.dataset.hidden = matchesCategory ? 'false' : 'true';
+          card.dataset.searchHidden = matchesSearch ? 'false' : 'true';
+        });
+      }
 
       filterBtns.forEach(btn => {
         btn.setAttribute('aria-pressed', btn.classList.contains('active') ? 'true' : 'false');
@@ -1280,12 +1417,14 @@
           filterBtns.forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
           filterBtns.forEach(b => b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'));
-          const filter = btn.dataset.filter;
-          cards.forEach(card => {
-            const match = filter === 'all' || card.dataset.category === filter;
-            card.dataset.hidden = match ? 'false' : 'true';
-          });
+          currentFilter = btn.dataset.filter || 'all';
+          applyFilterAndSearch();
         });
+      });
+
+      searchInput?.addEventListener('input', (e) => {
+        currentQuery = e.target.value;
+        applyFilterAndSearch();
       });
 
 
