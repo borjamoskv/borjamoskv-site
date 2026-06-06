@@ -16,8 +16,8 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="/assets/site.css">
-  <link rel="stylesheet" href="/article.css">
-  <link rel="stylesheet" href="/cortex-terminal.css">
+  <link rel="stylesheet" href="article.css">
+  <link rel="stylesheet" href="cortex-terminal.css">
 
   <style>
     :root {
@@ -478,10 +478,10 @@
       BORJA MOSKV <span class="brand-suffix">// EXERGIA-Ω</span>
     </a>
     <nav class="site-nav" aria-label="Navegación Principal">
-      <a href="index.html#control-deck" class="nav-link">DECK</a>
-      <a href="index.html#discography" class="nav-link">OBRAS</a>
-      <a href="index.html#stills-gallery" class="nav-link">GALERÍA</a>
-      <a href="index.html#tour-dates" class="nav-link">TOUR</a>
+      <a href="/#control-deck" class="nav-link">DECK</a>
+      <a href="/#discography" class="nav-link">OBRAS</a>
+      <a href="/#stills-gallery" class="nav-link">GALERÍA</a>
+      <a href="/#tour-dates" class="nav-link">TOUR</a>
       <a href="/blog" class="nav-link-ext">DIARIO</a>
       <a href="/gurus" class="nav-link-ext is-active">GURÚS</a>
       <a href="/benchmark-humo" class="nav-link-ext">BENCHMARK</a>
@@ -726,74 +726,6 @@ Proof:
             </div>
           </article>
 
-          <!-- Suspect E2.5 -->
-          <article class="suspect-card">
-            <div class="suspect-meta">
-              <span class="suspect-id">SUSPECT 0x05</span>
-              <span class="suspect-label-badge badge-falsedad">Falsedad Técnica Grave</span>
-            </div>
-            <h3 class="suspect-title">La Estafa de los Clones Digitales de IA y GPTs Personalizados</h3>
-            <div class="suspect-suspect">Suspect: Sam Altman / OpenAI (y creadores de infoproductos sobre monetización de GPTs)</div>
-            
-            <div class="suspect-comparison">
-              <div class="comparison-box promise-box">
-                <h4 class="comparison-heading">La Promesa</h4>
-                <p class="comparison-text">
-                  "Crea y publica GPTs personalizados en 2 minutos para el GPT Store para generar ingresos pasivos automáticos de uso recurrentes."
-                </p>
-              </div>
-              <div class="comparison-box reality-box">
-                <h4 class="comparison-heading">La Realidad (C5-REAL)</h4>
-                <p class="comparison-text">
-                  El GPT Store carece de tracción real y el 99.8% de los GPTs no reciben visitas. Al ser simples envoltorios de system prompts con archivos PDF de conocimiento cargados, son vulnerables a ataques de extracción de prompt (jailbreaks), permitiendo a cualquiera clonar el sistema con una simple petición. No hay modelo de negocio viable en envoltorios de APIs propietarias.
-                </p>
-              </div>
-            </div>
-
-            <div class="r2-card">
-              <div class="r2-card-header">Ficha de Desviación / R2 Form</div>
-              <pre><code>Claim: "Ingresos pasivos estables vendiendo GPTs personalizados."
-Proof:
-  Base: Auditoría de la tienda de GPTs y tasas de extracción de prompt.
-  Range: [0.01% de GPTs monetizan, 100% vulnerabilidad a la extracción de prompts]
-  Confidence: C5-REAL (Análisis de vulnerabilidad en Cortex persistence)</code></pre>
-            </div>
-          </article>
-
-          <!-- Suspect E2.6 -->
-          <article class="suspect-card">
-            <div class="suspect-meta">
-              <span class="suspect-id">SUSPECT 0x06</span>
-              <span class="suspect-label-badge badge-exageracion">Exageración Media</span>
-            </div>
-            <h3 class="suspect-title">La Spam-IA de Captación Fría Automatizada</h3>
-            <div class="suspect-suspect">Suspect: Guillaume Moubeche (Lemlist) (y los gurús de agencias de prospección con IA)</div>
-            
-            <div class="suspect-comparison">
-              <div class="comparison-box promise-box">
-                <h4 class="comparison-heading">La Promesa</h4>
-                <p class="comparison-text">
-                  "Escala tu prospección enviando miles de emails personalizados con IA al día que suenan 100% humanos y cierran reuniones en piloto automático."
-                </p>
-              </div>
-              <div class="comparison-box reality-box">
-                <h4 class="comparison-heading">La Realidad (C5-REAL)</h4>
-                <p class="comparison-text">
-                  El envío masivo de correos redactados por IA destruye la reputación del dominio (domain burning) y activa los filtros anti-spam de Google y Microsoft (DMARC, DKIM, SPF). La tasa de conversión del spam generado por IA es inferior al 0.05%, y su uso viola la normativa de protección de datos (RGPD) en territorio europeo al raspar y procesar datos personales de manera masiva y no autorizada.
-                </p>
-              </div>
-            </div>
-
-            <div class="r2-card">
-              <div class="r2-card-header">Ficha de Desviación / R2 Form</div>
-              <pre><code>Claim: "Prospección fría automatizada B2B con IA escalable."
-Proof:
-  Base: Análisis de entregabilidad de dominios bajo spam masivo IA.
-  Range: [-90% entregabilidad en 15 días, <0.05% conversión real]
-  Confidence: C5-REAL (Verificado en logs de email-sentinel)</code></pre>
-            </div>
-          </article>
-
         </div>
 
         <!-- EPISODE 1 CONTENT -->
@@ -948,8 +880,8 @@ Proof:
 
   </div>
 
-  <script is:inline type="module" src="/article.js"></script>
-  <script is:inline type="module" src="/cortex-terminal.js" defer></script>
+  <script type="module" src="/article.js"></script>
+  <script type="module" src="cortex-terminal.js" defer></script>
   
   <script>
     // Tab Toggling & Header Scroll Controller

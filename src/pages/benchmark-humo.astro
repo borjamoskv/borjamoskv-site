@@ -1,10 +1,16 @@
----
-import BaseLayout from '../layouts/BaseLayout.astro';
----
-<BaseLayout title="Ω: Hype Benchmark — Borja Moskv" description="Mapeo sistemático y análisis termodinámico de 10,000 influencers de IA en español e internacionales.">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ω: Hype Benchmark — Borja Moskv</title>
+  <meta name="description" content="Mapeo sistemático y análisis termodinámico de 10,000 influencers de IA en español e internacionales.">
+  <meta name="theme-color" content="#0A0A0A">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;900&family=Inter:wght@300;400;500;600&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/site.css">
-  <link rel="stylesheet" href="/cortex-terminal.css">
+  <link rel="stylesheet" href="cortex-terminal.css">
 
   <style>
     /* ═══════════════════════════════════════════════════
@@ -640,7 +646,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       }
     }
   </style>
-
+</head>
+<body class="benchmark-page">
 
   <div class="film-grain" aria-hidden="true"></div>
 
@@ -656,14 +663,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       BORJA MOSKV <span class="brand-suffix">// EXERGIA-Ω</span>
     </a>
     <nav class="site-nav" aria-label="Navegación Principal">
-      <a href="index.html#control-deck" class="nav-link">DECK</a>
-      <a href="index.html#discography" class="nav-link">OBRAS</a>
-      <a href="index.html#stills-gallery" class="nav-link">GALERÍA</a>
-      <a href="index.html#tour-dates" class="nav-link">TOUR</a>
-      <a href="blog.html" class="nav-link-ext">DIARIO</a>
-      <a href="gurus.html" class="nav-link-ext">GURÚS</a>
-      <a href="benchmark-humo.html" class="nav-link-ext is-active">BENCHMARK</a>
-      <a href="gon-intervalo.html" class="nav-link-ext">GON</a>
+      <a href="/#control-deck" class="nav-link">DECK</a>
+      <a href="/#discography" class="nav-link">OBRAS</a>
+      <a href="/#stills-gallery" class="nav-link">GALERÍA</a>
+      <a href="/#tour-dates" class="nav-link">TOUR</a>
+      <a href="/blog" class="nav-link-ext">DIARIO</a>
+      <a href="/gurus" class="nav-link-ext">GURÚS</a>
+      <a href="/benchmark-humo" class="nav-link-ext is-active">BENCHMARK</a>
+      <a href="/blog/gon-intervalo" class="nav-link-ext">GON</a>
     </nav>
     <div class="system-status">
       <span class="status-indicator"></span>
@@ -787,7 +794,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
   </footer>
 
-  <script is:inline type="module" src="/data.js"></script>
+  <script type="module" src="data.js"></script>
   <script>
     // ── Seeded pseudo-random number generator for deterministic list building ──
     function SeededRandom(seed) {
@@ -1549,4 +1556,5 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       }
     }
   </script>
-</BaseLayout>
+</body>
+</html>
