@@ -112,56 +112,112 @@ const { title } = Astro.props;
         createPad(164.81, 'sine');    // E3 (Maj 7)
         createPad(196.00, 'sine', 10); // G3 (Sus2 / 9th) with slight detune for warmth
 
-        // ─── GENERATIVE AMBIENT CHIMES ───
-        const tempo = 60; // Slow BPM
+        // ─── ADVANCED AUTODJ (Warm Dub-Techno Sequencer) ───
+        const tempo = 105; // Hypnotic Dub BPM
         const lookahead = 25.0; 
-        const scheduleAheadTime = 0.5; 
+        const scheduleAheadTime = 0.2; 
         let currentNote = 0;
         let nextNoteTime = audioCtx.currentTime;
 
-        const playGenerativePad = (time, note) => {
-           const osc = audioCtx.createOscillator();
-           const gain = audioCtx.createGain();
-           osc.type = 'sine';
-           osc.frequency.value = note;
-           
-           // Very slow attack and release
-           gain.gain.setValueAtTime(0, time);
-           gain.gain.linearRampToValueAtTime(0.08, time + 2);
-           gain.gain.linearRampToValueAtTime(0, time + 6);
-           
-           // Filter for warmth
-           const filter = audioCtx.createBiquadFilter();
-           filter.type = 'lowpass';
-           filter.frequency.value = 600;
+        // White Noise Buffer for Soft Washes
+        const bufferSize = audioCtx.sampleRate * 2;
+        const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+        const output = noiseBuffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+          output[i] = Math.random() * 2 - 1;
+        }
 
-           osc.connect(filter);
-           filter.connect(gain);
-           gain.connect(panner);
-           
-           osc.start(time);
-           osc.stop(time + 6);
+        const playDeepKick = (time) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          
+          osc.connect(gain);
+          gain.connect(panner);
+          
+          // Warm muffled heartbeat kick
+          osc.frequency.setValueAtTime(80, time);
+          osc.frequency.exponentialRampToValueAtTime(20, time + 0.6);
+          
+          gain.gain.setValueAtTime(0, time);
+          gain.gain.linearRampToValueAtTime(0.8, time + 0.02); // slight attack removes click
+          gain.gain.exponentialRampToValueAtTime(0.01, time + 0.6);
+          
+          osc.start(time);
+          osc.stop(time + 0.6);
+        };
+
+        const playSoftNoise = (time, duration) => {
+          const noiseSrc = audioCtx.createBufferSource();
+          noiseSrc.buffer = noiseBuffer;
+          
+          const noiseFilter = audioCtx.createBiquadFilter();
+          noiseFilter.type = 'bandpass';
+          noiseFilter.frequency.value = 1500; // Warm midrange wash
+          noiseFilter.Q.value = 2;
+          
+          const noiseGain = audioCtx.createGain();
+          noiseGain.gain.setValueAtTime(0, time);
+          noiseGain.gain.linearRampToValueAtTime(0.15, time + 0.1);
+          noiseGain.gain.exponentialRampToValueAtTime(0.01, time + duration);
+          
+          noiseSrc.connect(noiseFilter);
+          noiseFilter.connect(noiseGain);
+          noiseGain.connect(panner);
+          
+          noiseSrc.start(time);
+        };
+        
+        const playWarmChord = (time, note1, note2) => {
+           [note1, note2].forEach(note => {
+             const osc = audioCtx.createOscillator();
+             const gain = audioCtx.createGain();
+             osc.type = 'sine';
+             osc.frequency.value = note;
+             
+             gain.gain.setValueAtTime(0, time);
+             gain.gain.linearRampToValueAtTime(0.1, time + 1);
+             gain.gain.linearRampToValueAtTime(0, time + 3);
+             
+             osc.connect(gain);
+             gain.connect(panner);
+             osc.start(time);
+             osc.stop(time + 3);
+           });
         };
 
         const nextNote = () => {
           const secondsPerBeat = 60.0 / tempo;
-          nextNoteTime += secondsPerBeat; // Quarter notes
+          nextNoteTime += 0.25 * secondsPerBeat; // 16th notes
           currentNote++;
+          if (currentNote === 16) {
+            currentNote = 0;
+          }
         };
 
-        const scheduleNote = (time) => {
-          // Generative Brian Eno style probability
-          if (Math.random() > 0.6) {
-            // Pentatonic F Major (F, G, A, C, D)
-            const notes = [174.61, 196.00, 220.00, 261.63, 293.66, 349.23, 392.00];
-            playGenerativePad(time, notes[Math.floor(Math.random() * notes.length)]);
+        const scheduleNote = (beatNumber, time) => {
+          // Hypnotic Heartbeat Kick on 1 and 11
+          if (beatNumber === 0 || beatNumber === 10) playDeepKick(time);
+          
+          // Soft offbeat washes on 4 and 12
+          if (beatNumber === 4 || beatNumber === 12) playSoftNoise(time, 0.4);
+          
+          // Random Generative Warm Chords (F Maj 7 / Sus 2 matrix)
+          if (beatNumber % 4 === 0 && Math.random() > 0.7) {
+             const chordMatrix = [
+               [174.61, 261.63], // F, C
+               [196.00, 293.66], // G, D
+               [220.00, 349.23], // A, F
+               [261.63, 392.00]  // C, G
+             ];
+             const chord = chordMatrix[Math.floor(Math.random() * chordMatrix.length)];
+             playWarmChord(time, chord[0], chord[1]);
           }
         };
 
         let timerID;
         const scheduler = () => {
           while (nextNoteTime < audioCtx.currentTime + scheduleAheadTime) {
-            scheduleNote(nextNoteTime);
+            scheduleNote(currentNote, nextNoteTime);
             nextNote();
           }
           timerID = setTimeout(scheduler, lookahead);
@@ -169,7 +225,6 @@ const { title } = Astro.props;
         
         scheduler();
 
-        
         // Transform activation UI into a 24/7 Live Stream Badge
         const audioBadge = document.getElementById('audio-badge');
         if (audioBadge) {
