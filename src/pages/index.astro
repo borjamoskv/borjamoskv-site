@@ -707,6 +707,56 @@ import Layout from '../layouts/Layout.astro';
         .hero-title { font-size: 3.5rem; }
       }
     
+
+/* ─── SOTA: Scroll-Driven Entry Effects (Industrial Noir / Music Visual) ─── */
+@media (prefers-reduced-motion: no-preference) {
+  @supports ((animation-timeline: view()) and (animation-range: entry)) {
+    @keyframes sota-grow {
+      from { 
+        scale: 0.8; 
+        opacity: 0; 
+        filter: blur(15px) grayscale(100%); 
+        transform: translateY(100px) perspective(1000px) rotateX(10deg); 
+      }
+      to { 
+        scale: 1; 
+        opacity: 1; 
+        filter: blur(0) grayscale(0%); 
+        transform: translateY(0) perspective(1000px) rotateX(0deg); 
+      }
+    }
+    
+    .thumb-card, .blog-card {
+      animation: sota-grow auto cubic-bezier(0.16, 1, 0.3, 1) both;
+      animation-timeline: view();
+      animation-range: entry 5% cover 35%;
+      will-change: transform, opacity, filter;
+    }
+    
+    @keyframes sota-scroll-x {
+      from { 
+        scale: 0.7; 
+        opacity: 0; 
+        filter: blur(10px);
+        transform: translateX(100px) perspective(800px) rotateY(-25deg); 
+      }
+      to { 
+        scale: 1; 
+        opacity: 1; 
+        filter: blur(0);
+        transform: translateX(0) perspective(800px) rotateY(0); 
+      }
+    }
+
+    .video-scroll-card {
+      animation: sota-scroll-x auto cubic-bezier(0.16, 1, 0.3, 1) both;
+      animation-timeline: view(inline);
+      animation-range: entry 0% cover 50%;
+      will-change: transform, opacity, filter;
+    }
+  }
+}
+
 </style>
 
 <div class="content-layer">
@@ -988,4 +1038,27 @@ import Layout from '../layouts/Layout.astro';
       </section>
     
 </div>
+
+<script>
+  // SOTA Fallback for browsers without ViewTimeline support (Safari/Firefox)
+  if (!CSS.supports('(animation-timeline: view()) and (animation-range: entry)')) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const ratio = entry.intersectionRatio;
+          entry.target.style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+          entry.target.style.opacity = 0.2 + ratio * 0.8;
+          entry.target.style.transform = `scale(${0.9 + ratio * 0.1}) translateY(${20 - ratio * 20}px)`;
+          entry.target.style.filter = `blur(${10 - ratio * 10}px) grayscale(${100 - ratio * 100}%)`;
+        }
+      },
+      { threshold: Array.from({ length: 20 }, (_, i) => i / 19) }
+    );
+
+    document.querySelectorAll('.thumb-card, .blog-card, .video-scroll-card').forEach((el) => {
+      observer.observe(el);
+    });
+  }
+</script>
+
 </Layout>
