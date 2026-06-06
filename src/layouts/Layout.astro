@@ -14,6 +14,8 @@ const { title } = Astro.props;
     <ClientRouter />
   </head>
   <body>
+    <div id="omega-progress" aria-hidden="true" transition:persist></div>
+
     <!-- Background Layer -->
     <div class="bg-video-container" transition:persist>
       <video class="bg-video" autoplay loop muted playsinline>
@@ -81,6 +83,30 @@ const { title } = Astro.props;
       requestAnimationFrame(loop);
 
       document.addEventListener('astro:page-load', () => {
+        
+      // ─── SOTA Fallbacks (Safari/Firefox) ───
+      if (!CSS.supports('animation-timeline', 'scroll()')) {
+        const progress = document.getElementById('omega-progress');
+        const nav = document.querySelector('.top-nav');
+        if (progress && nav) {
+          window.addEventListener('scroll', () => {
+            const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+            const scrolled = window.scrollY;
+            const progressPercentage = scrollable > 0 ? (scrolled / scrollable) : 0;
+            progress.style.transform = `scaleX(${progressPercentage})`;
+            
+            const shrinkRatio = Math.min(1, scrolled / 250);
+            nav.style.padding = `${1.2 - shrinkRatio * 0.6}rem 2rem`;
+            nav.style.background = `rgba(10, 10, 10, ${0.9 + shrinkRatio * 0.08})`;
+            if (shrinkRatio > 0.5) {
+                nav.style.borderBottom = '1px solid rgba(255, 159, 28, 0.2)';
+            } else {
+                nav.style.borderBottom = '1px solid transparent';
+            }
+          });
+        }
+      }
+
         // 3D Magnetic Physics on interactive elements
         const iteractives = document.querySelectorAll('.hero-btn, .view-all-btn, .thumb-card, .video-scroll-card, .blog-card');
         

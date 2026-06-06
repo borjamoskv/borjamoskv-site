@@ -79,16 +79,17 @@ body::before {
 .bg-video {
   width: 100%; height: 100%;
   object-fit: cover;
-  opacity: 0.25;
-  filter: grayscale(80%) contrast(120%);
+  opacity: 0.7;
+  filter: grayscale(60%) contrast(110%);
   mix-blend-mode: luminosity;
 }
 .overlay {
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  background: radial-gradient(ellipse at center, rgba(10,10,10,0.4) 0%, rgba(10,10,10,0.95) 100%);
+  background: radial-gradient(ellipse at center, rgba(10,10,10,0.1) 0%, rgba(10,10,10,0.75) 100%);
   z-index: 1;
+  animation: breathe-vignette 12s ease-in-out infinite;
   pointer-events: none;
 }
 
@@ -224,4 +225,90 @@ body::before {
   60% { transform: translate(3px, 3px); text-shadow: -3px 0 var(--color-amber), 3px 0 var(--color-yinmn); }
   80% { transform: translate(3px, -3px); text-shadow: -3px 0 var(--color-amber), 3px 0 var(--color-yinmn); }
   100% { transform: translate(0) }
+}
+
+
+/* ─── SOTA: Scroll Progress Indicator & Shrinking Header ─── */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: scroll()) {
+
+    .bg-video {
+      animation: abyss-sink auto linear both;
+      animation-timeline: scroll(block root);
+      animation-range: 0px 1500px;
+      will-change: transform, filter, opacity;
+    }
+
+    @keyframes shrink-nav {
+      to {
+        padding: 0.6rem 2rem;
+        background: rgba(10, 10, 10, 0.98);
+        border-bottom: 1px solid rgba(255, 159, 28, 0.2);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+      }
+    }
+    .top-nav {
+      animation: shrink-nav auto linear both;
+      animation-timeline: scroll(block root);
+      animation-range: 0px 250px;
+    }
+
+    @keyframes grow-progress {
+      from { transform: scaleX(0); }
+      to { transform: scaleX(1); }
+    }
+    #omega-progress {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 2px;
+      background: var(--color-amber);
+      box-shadow: 0 0 15px var(--color-amber);
+      transform-origin: 0 50%;
+      animation: grow-progress auto linear;
+      animation-timeline: scroll(block root);
+      z-index: 10000;
+    }
+  }
+}
+
+
+/* ─── SOTA Background Physics ─── */
+@keyframes abyss-sink {
+  to { transform: scale(0.85); filter: grayscale(100%) contrast(150%) blur(10px); opacity: 0.3; }
+}
+
+@keyframes breathe-vignette {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 0.85; }
+}
+
+/* ─── Scanlines Overlay ─── */
+.overlay::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  z-index: 2;
+  background-size: 100% 4px, 6px 100%;
+  pointer-events: none;
+}
+
+
+/* ─── MEGA GIANT TYPOGRAPHY OVERRIDES ─── */
+.section-title {
+  font-size: clamp(4rem, 12vw, 9rem) !important;
+  font-weight: 900;
+  letter-spacing: -0.06em !important;
+  line-height: 0.85 !important;
+  text-transform: uppercase;
+}
+
+.hero-title {
+  font-size: clamp(5rem, 18vw, 14rem) !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.08em !important;
+  line-height: 0.8 !important;
+  margin-bottom: 2rem !important;
+  text-transform: uppercase;
 }
