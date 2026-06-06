@@ -170,6 +170,8 @@ import Layout from '../layouts/Layout.astro';
       display: grid;
       grid-template-columns: repeat(12, 1fr);
       gap: 1.75rem;
+      will-change: transform;
+      transform-origin: center top;
     }
 
     /* ── Base card ── */
@@ -1623,6 +1625,104 @@ import Layout from '../layouts/Layout.astro';
         currentQuery = e.target.value;
         applyFilterAndSearch();
       });
+
+      // ── CORTEX VELOCITY SKEW (SOTA Distortion) ──
+      let lastScrollY = window.scrollY;
+      let scrollVelocity = 0;
+      let skewRafId = null;
+
+      const renderVelocity = () => {
+        scrollVelocity *= 0.85; // Friction
+        
+        if (blogGrid && popularGrid) {
+           const skew = Math.min(Math.max(scrollVelocity * -0.03, -2.5), 2.5); // cap at 2.5deg
+           blogGrid.style.transform = `matrix3d(1, 0, 0, 0, ${Math.tan(skew * Math.PI / 180)}, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)`;
+           popularGrid.style.transform = `matrix3d(1, 0, 0, 0, ${Math.tan(skew * Math.PI / 180)}, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)`;
+        }
+        
+        if (Math.abs(scrollVelocity) > 0.5) {
+          skewRafId = requestAnimationFrame(renderVelocity);
+        } else {
+          if (blogGrid) blogGrid.style.transform = 'none';
+          if (popularGrid) popularGrid.style.transform = 'none';
+          skewRafId = null;
+        }
+      };
+
+      window.addEventListener('scroll', () => {
+        const currentScrollY = window.scrollY;
+        const delta = currentScrollY - lastScrollY;
+        scrollVelocity += delta;
+        lastScrollY = currentScrollY;
+        
+        if (!skewRafId && Math.abs(scrollVelocity) > 0.5) {
+          skewRafId = requestAnimationFrame(renderVelocity);
+        }
+      }, { passive: true });
+
+      // ── CORTEX INFINITE ARCHIVE (Recursive Loop) ──
+      const initInfiniteScroll = () => {
+        if (!blogGrid) return;
+
+        const observerOptions = {
+          root: null,
+          rootMargin: '0px 0px 1000px 0px', // Trigger well before hitting bottom
+          threshold: 0
+        };
+
+        let isCloning = false;
+
+        const observer = new IntersectionObserver((entries) => {
+          const trigger = entries.find(entry => entry.isIntersecting);
+          
+          // Only clone if we are not filtering/searching
+          if (trigger && !isCloning && currentFilter === 'all' && currentQuery === '') {
+            isCloning = true;
+            
+            const currentCards = Array.from(blogGrid.querySelectorAll('.blog-card'));
+            const cardsToClone = currentCards.slice(0, 12); // Loop the first 12
+            
+            // Inject CORTEX Glitch Marker
+            const glitchMarker = document.createElement('div');
+            glitchMarker.className = 'blog-card--full';
+            glitchMarker.style.gridColumn = 'span 12';
+            glitchMarker.style.height = '1px';
+            glitchMarker.style.minHeight = '1px';
+            glitchMarker.style.padding = '0';
+            glitchMarker.style.background = 'linear-gradient(90deg, transparent, var(--color-amber), var(--color-yinmn), transparent)';
+            glitchMarker.style.boxShadow = '0 0 30px var(--color-yinmn)';
+            glitchMarker.style.margin = '3rem 0';
+            glitchMarker.style.border = 'none';
+            blogGrid.appendChild(glitchMarker);
+
+            cardsToClone.forEach((card, index) => {
+              const clone = card.cloneNode(true);
+              clone.style.animation = 'none';
+              clone.offsetHeight; // trigger reflow
+              clone.style.animation = `cardFadeIn 0.6s var(--ease-omega) ${index * 0.05}s forwards`;
+              
+              if (card === trigger.target) observer.unobserve(card);
+              
+              blogGrid.appendChild(clone);
+            });
+
+            // Observe the new target
+            const updatedCards = blogGrid.querySelectorAll('.blog-card');
+            if (updatedCards.length > 2) {
+              observer.observe(updatedCards[updatedCards.length - 2]);
+            }
+
+            setTimeout(() => { isCloning = false; }, 800);
+          }
+        }, observerOptions);
+
+        const cards = blogGrid.querySelectorAll('.blog-card');
+        if (cards.length > 2) {
+          observer.observe(cards[cards.length - 2]);
+        }
+      };
+
+      initInfiniteScroll();
 
       // ── Substack RSS Feed loader ──
       (async function loadParagraphPosts() {
