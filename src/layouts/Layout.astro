@@ -91,6 +91,10 @@ const { title } = Astro.props;
           <button class="player-btn" id="player-next-btn" aria-label="Siguiente pista">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
           </button>
+          
+          <button class="player-btn" id="player-close-btn" aria-label="Cerrar reproductor" style="margin-left: 0.5rem; color: rgba(255,255,255,0.35);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
         </div>
 
         <div class="player-timeline">
@@ -1289,14 +1293,37 @@ const { title } = Astro.props;
          init() {
             if (this.audio) return;
             this.audio = new Audio();
-            this.audio.volume = 0.8;
             this.audio.crossOrigin = "anonymous";
+            
+            // Read localStorage persistence
+            const savedVolume = localStorage.getItem('cyber_player_volume');
+            this.audio.volume = savedVolume !== null ? parseFloat(savedVolume) : 0.8;
+            this.audio.muted = localStorage.getItem('cyber_player_muted') === 'true';
             
             this.audio.addEventListener('timeupdate', () => this.onTimeUpdate());
             this.audio.addEventListener('loadedmetadata', () => this.onLoadedMetadata());
             this.audio.addEventListener('ended', () => this.next());
             
             this.bindEvents();
+            
+            // Restore last active track UI (without autoplaying)
+            const savedTrackIndex = localStorage.getItem('cyber_player_track_index');
+            if (savedTrackIndex !== null) {
+               const index = parseInt(savedTrackIndex);
+               const track = this.tracks[index];
+               this.currentTrackIndex = index;
+               this.audio.src = track.src;
+               
+               const cover = document.getElementById('player-cover-img');
+               const title = document.getElementById('player-track-title');
+               const artist = document.getElementById('player-track-artist');
+               const player = document.getElementById('cyber-player');
+               
+               if (cover) cover.src = track.cover;
+               if (title) title.textContent = track.title;
+               if (artist) artist.textContent = track.artist;
+               if (player) player.classList.add('active');
+            }
             
             // Route through Web Audio pipeline
             try {
@@ -1369,6 +1396,7 @@ const { title } = Astro.props;
             const playBtn = getEl('player-play-btn');
             const prevBtn = getEl('player-prev-btn');
             const nextBtn = getEl('player-next-btn');
+            const closeBtn = getEl('player-close-btn');
             const progress = getEl('progress-bar-container');
             const volSlider = getEl('volume-slider');
             const volBtn = getEl('player-volume-btn');
@@ -1376,6 +1404,32 @@ const { title } = Astro.props;
             if (playBtn) playBtn.onclick = (e) => { e.stopPropagation(); this.toggle(); };
             if (prevBtn) prevBtn.onclick = (e) => { e.stopPropagation(); this.prev(); };
             if (nextBtn) nextBtn.onclick = (e) => { e.stopPropagation(); this.next(); };
+            
+            if (closeBtn) {
+               closeBtn.onclick = (e) => {
+                  e.stopPropagation();
+                  if (this.audio) {
+                     this.audio.pause();
+                     this.isPlaying = false;
+                     this.updateIcon();
+                  }
+                  const player = document.getElementById('cyber-player');
+                  if (player) player.classList.remove('active');
+                  localStorage.removeItem('cyber_player_track_index');
+               };
+            }
+            
+            if (progress) {
+               // Add hover seeking timestamp preview
+               progress.onmousemove = (e) => {
+                  const rect = progress.getBoundingClientRect();
+                  const pct = (e.clientX - rect.left) / rect.width;
+                  if (this.audio && this.audio.duration) {
+                     const hoverSecs = pct * this.audio.duration;
+                     progress.title = this.formatTime(hoverSecs);
+                  }
+               };
+            }
             
             if (progress) {
                progress.onclick = (e) => {
@@ -1393,6 +1447,7 @@ const { title } = Astro.props;
                   const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
                   if (this.audio) {
                      this.audio.volume = pct;
+                     localStorage.setItem('cyber_player_volume', pct.toString());
                      const fill = document.getElementById('volume-slider-fill');
                      if (fill) fill.style.width = `${pct * 100}%`;
                   }
@@ -1403,6 +1458,7 @@ const { title } = Astro.props;
                volBtn.onclick = () => {
                   if (this.audio) {
                      this.audio.muted = !this.audio.muted;
+                     localStorage.setItem('cyber_player_muted', this.audio.muted.toString());
                      const fill = document.getElementById('volume-slider-fill');
                      if (fill) fill.style.width = this.audio.muted ? '0%' : `${this.audio.volume * 100}%`;
                   }
@@ -1413,6 +1469,7 @@ const { title } = Astro.props;
          playTrack(index) {
             this.init();
             this.currentTrackIndex = index;
+            localStorage.setItem('cyber_player_track_index', index.toString());
             const track = this.tracks[index];
             
             const cover = document.getElementById('player-cover-img');
