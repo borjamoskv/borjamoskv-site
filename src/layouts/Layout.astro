@@ -747,6 +747,59 @@ const { title } = Astro.props;
       
       
       
+      
+      // ─── 19/10 TYPOGRAPHIC EXERGY (Audio-Reactive Font Weight & Kerning) ───
+      const initExergy = () => {
+        const root = document.documentElement;
+        
+        // Add dynamic CSS transition for smooth snapping
+        const style = document.createElement('style');
+        style.textContent = `
+           body, h1, h2, h3, p, a, span, li {
+               transition: font-weight 0.1s ease-out, letter-spacing 0.1s ease-out !important;
+           }
+        `;
+        document.head.appendChild(style);
+
+        const updateTypography = () => {
+           if (typeof masterAnalyser !== 'undefined' && typeof masterDataArray !== 'undefined') {
+              masterAnalyser.getByteFrequencyData(masterDataArray);
+              
+              // Extract low frequencies (Kick Drum / Bass)
+              let kickEnergy = 0;
+              for(let i = 0; i < 5; i++) {
+                 kickEnergy += masterDataArray[i];
+              }
+              kickEnergy = kickEnergy / 5; // Average 0-255
+
+              if (kickEnergy > 100) {
+                 // Map kick energy to font weight (400 to 900)
+                 const weight = Math.min(900, 400 + ((kickEnergy - 100) / 155) * 500);
+                 // Map kick energy to letter spacing (-0.05em to 0.2em)
+                 const spacing = -0.05 + ((kickEnergy - 100) / 155) * 0.25;
+                 
+                 root.style.setProperty('--base-font-weight', `${Math.floor(weight)}`);
+                 root.style.setProperty('--base-letter-spacing', `${spacing.toFixed(3)}em`);
+                 
+                 // Apply directly to body to cascade
+                 document.body.style.fontWeight = Math.floor(weight);
+                 document.body.style.letterSpacing = `${spacing.toFixed(3)}em`;
+              } else {
+                 document.body.style.fontWeight = '400';
+                 document.body.style.letterSpacing = 'normal';
+              }
+           }
+           requestAnimationFrame(updateTypography);
+        };
+        
+        // Start Exergy Loop
+        updateTypography();
+        console.log("%c[EXERGY MAXIMIZED] Tipografía anclada al bombo termodinámico.", "color: #00ffff; font-weight: bold;");
+      };
+
+      document.addEventListener('DOMContentLoaded', () => setTimeout(initExergy, 2000));
+      document.addEventListener('astro:page-load', () => setTimeout(initExergy, 2000));
+
       // ─── 18/10 HARDWARE SYMBIOSIS (Web MIDI API Hijack) ───
       const initMidiHijack = () => {
         if (navigator.requestMIDIAccess) {
