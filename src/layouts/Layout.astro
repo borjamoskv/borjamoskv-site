@@ -615,24 +615,38 @@ const { title } = Astro.props;
       };
       document.addEventListener('astro:page-load', initGLSL);
 
-      // ─── 13/10 DOM DESTRUCTION PROTOCOL (Anti-UX) ───
-      const initBurnProtocol = () => {
+      
+      // ─── 13/10 DISRUPTIVE MEMORY PROTOCOL (Persistent Scarring) ───
+      const hashString = (str) => {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+          hash = ((hash << 5) - hash) + str.charCodeAt(i);
+          hash |= 0;
+        }
+        return 'cortex_scar_' + Math.abs(hash);
+      };
+
+      const initDisruptiveMemoryProtocol = () => {
         const burnObserver = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
               entry.target.dataset.seen = 'true';
             } else if (!entry.isIntersecting && entry.target.dataset.seen === 'true') {
               const rect = entry.target.getBoundingClientRect();
-              // If it exits the top of the viewport (user scrolled past it)
               if (rect.bottom < window.innerHeight * 0.2) {
                 entry.target.classList.add('burnt');
-                // Play glitch sound if audio is active
+                // Persist the trauma
+                localStorage.setItem(entry.target.dataset.hash, 'OBLITERATED');
+                
                 if (typeof playDigitalGlitch === 'function' && Math.random() > 0.5) {
                   playDigitalGlitch(audioCtx.currentTime);
                 }
                 setTimeout(() => {
                   if (entry.target && entry.target.parentNode) {
-                    entry.target.remove();
+                    entry.target.innerHTML = '[MEMORIA CORROMPIDA]';
+                    entry.target.style.color = 'var(--color-amber)';
+                    entry.target.style.pointerEvents = 'none';
+                    entry.target.style.textShadow = '0 0 10px red';
                   }
                 }, 700);
                 burnObserver.unobserve(entry.target);
@@ -643,16 +657,25 @@ const { title } = Astro.props;
 
         const elementsToBurn = document.querySelectorAll('p, h1, h2, h3, li, .project-card, .music-card');
         elementsToBurn.forEach(el => {
-          if (!el.classList.contains('burn-target')) {
-            el.classList.add('burn-target');
-            burnObserver.observe(el);
+          const hashId = hashString(el.textContent.slice(0, 100));
+          
+          // Check trauma memory
+          if (localStorage.getItem(hashId) === 'OBLITERATED') {
+             el.innerHTML = '<span style="opacity:0.3; filter:blur(2px); color:red;">[CORTEX LOG: DATA PREVIOUSLY BURNED]</span>';
+             el.style.pointerEvents = 'none';
+          } else {
+             if (!el.classList.contains('burn-target')) {
+               el.classList.add('burn-target');
+               el.dataset.hash = hashId;
+               burnObserver.observe(el);
+             }
           }
         });
       };
       
-      // Init on load and SPA transitions
-      document.addEventListener('DOMContentLoaded', initBurnProtocol);
-      document.addEventListener('astro:page-load', initBurnProtocol);
+      document.addEventListener('DOMContentLoaded', initDisruptiveMemoryProtocol);
+      document.addEventListener('astro:page-load', initDisruptiveMemoryProtocol);
+
 
     </script>
     <style is:global>
