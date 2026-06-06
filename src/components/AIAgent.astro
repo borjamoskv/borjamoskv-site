@@ -19,6 +19,7 @@
           <span class="pulse-amber"></span>
           <span>BM-Ω // SYSTEM COGNITIVE OVERLAY [NAROA-2026]</span>
         </div>
+        <div class="hud-entropy" id="hud-entropy-display">ENTROPY: --- [C4-SIM]</div>
         <div class="hud-exit" id="hud-close-btn">[ TERMINATE CORE // ESC ]</div>
       </div>
 
@@ -223,6 +224,14 @@
 
   @keyframes status-breathe {
     from { opacity: 0.3; } to { opacity: 1; }
+  }
+
+  .hud-entropy {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--color-yinmn);
+    letter-spacing: 0.15em;
+    text-shadow: 0 0 10px rgba(43, 59, 229, 0.4);
   }
 
   .hud-exit {
@@ -523,6 +532,7 @@
         addLogEntry("COGNITIVE HUD OVERLAY MOUNTED.", "cyan");
         addLogEntry("TELEMETRY CHANNEL 0xFE ALIGNED.", "system");
         document.body.style.overflow = 'hidden'; // Lock scrolling
+        syncGlobalEntropy();
       } else {
         closeHUD();
       }
@@ -648,10 +658,12 @@
     btnCorrupt.addEventListener('click', () => {
       corruptViewportHeaders();
       playTick(1200, 300, 0.4);
+      incrementGlobalEntropy(10);
     });
 
     btnPulse.addEventListener('click', () => {
       injectVisualPulse();
+      incrementGlobalEntropy(25);
     });
 
     // 5.5 LLM AGENT COMMUNICATION (Ritxie Hawting)
@@ -698,6 +710,43 @@
 
     // Initial logs setup
     addLogEntry("SILICON TELEMETRY OVERLAY STANDBY.", "system");
+  }
+
+  // ─── ENTROPY KV LOGIC ───
+  async function syncGlobalEntropy() {
+    try {
+      const res = await fetch('/api/telemetry');
+      if (res.ok) {
+        const data = await res.json();
+        const display = document.getElementById('hud-entropy-display');
+        if (display) {
+          const type = data.status.includes('REAL') ? 'C5-REAL' : 'C4-SIM';
+          display.textContent = `ENTROPY: ${data.entropy} [${type}]`;
+        }
+      }
+    } catch (e) {
+      console.warn("Entropy sync failed", e);
+    }
+  }
+
+  async function incrementGlobalEntropy(delta: number) {
+    try {
+      const res = await fetch('/api/telemetry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ delta })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        const display = document.getElementById('hud-entropy-display');
+        if (display) {
+          const type = data.status.includes('REAL') ? 'C5-REAL' : 'C4-SIM';
+          display.textContent = `ENTROPY: ${data.entropy} [${type}]`;
+        }
+      }
+    } catch (e) {
+      console.warn("Entropy increment failed", e);
+    }
   }
 
   // Web Audio custom click / tick synth
