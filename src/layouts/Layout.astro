@@ -65,6 +65,52 @@ const { title } = Astro.props;
       <p class="footer-text">© 2026 Borja Moskv · YInMn 2026</p>
     </footer>
   
+
+    <!-- Persistent Global Cyber Player -->
+    <div class="cyber-player" id="cyber-player" transition:persist="cyber-player-persisted">
+      <div class="player-inner">
+        <div class="player-cover">
+          <img id="player-cover-img" src="data:image/svg+xml,%3Csvg viewBox='0 0 1 1' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100%25' height='100%25' fill='%23111'/%3E%3C/svg%3E" alt="Portada" />
+        </div>
+        
+        <div class="player-info">
+          <div class="player-track-title" id="player-track-title">Selecciona una pista</div>
+          <div class="player-track-artist" id="player-track-artist">Borja Moskv</div>
+        </div>
+
+        <div class="player-controls">
+          <button class="player-btn" id="player-prev-btn" aria-label="Pista anterior">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5"/></svg>
+          </button>
+          
+          <button class="player-btn player-play-btn" id="player-play-btn" aria-label="Reproducir / Pausar">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" id="player-play-icon"><polygon points="5 3 19 12 5 21"/></svg>
+          </button>
+          
+          <button class="player-btn" id="player-next-btn" aria-label="Siguiente pista">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
+          </button>
+        </div>
+
+        <div class="player-timeline">
+          <span id="player-time-current">0:00</span>
+          <div class="progress-bar-container" id="progress-bar-container" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div class="progress-bar-fill" id="progress-bar-fill"></div>
+          </div>
+          <span id="player-time-duration">0:00</span>
+        </div>
+
+        <div class="player-volume-container">
+          <button class="player-btn" id="player-volume-btn" aria-label="Silenciar / Activar sonido">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          </button>
+          <div class="volume-slider" id="volume-slider">
+            <div class="volume-slider-fill" id="volume-slider-fill"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div id="omega-cursor" transition:persist></div>
     <script>
       // ─── C5-REAL KINETICS ENGINE ───
@@ -1167,6 +1213,248 @@ const { title } = Astro.props;
       document.addEventListener('DOMContentLoaded', initOSLevelUIs);
       document.addEventListener('astro:page-load', initOSLevelUIs);
 
+
+      // ─── GLOBAL CYBER AUDIO STORE & CONTROLLER ───
+      window.CyberAudioStore = {
+         tracks: [
+            {
+              id: 1,
+              title: "Ecos del Cosmos",
+              artist: "Borja Moskv",
+              src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+              cover: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=400&q=80",
+              genre: "Ambient / Sci-Fi",
+              duration: "6:12"
+            },
+            {
+              id: 2,
+              title: "Glitch in the Mirror",
+              artist: "Borja Moskv",
+              src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+              cover: "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&w=400&q=80",
+              genre: "Experimental / Glitch",
+              duration: "4:32"
+            },
+            {
+              id: 3,
+              title: "32 Y Pico",
+              artist: "Borja Moskv",
+              src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+              cover: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&w=400&q=80",
+              genre: "Electronic",
+              duration: "5:04"
+            },
+            {
+              id: 4,
+              title: "Patadas",
+              artist: "Borja Moskv",
+              src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
+              cover: "https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?auto=format&fit=crop&w=400&q=80",
+              genre: "Electronic",
+              duration: "3:45"
+            },
+            {
+              id: 5,
+              title: "4 Drogas",
+              artist: "Borja Moskv",
+              src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3",
+              cover: "https://images.unsplash.com/photo-1557672172-298e090bd0f1?auto=format&fit=crop&w=400&q=80",
+              genre: "Techno",
+              duration: "4:15"
+            },
+            {
+              id: 6,
+              title: "Antes de las Guerras",
+              artist: "Borja Moskv",
+              src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3",
+              cover: "https://images.unsplash.com/photo-1507608869274-d3177c8bb4c7?auto=format&fit=crop&w=400&q=80",
+              genre: "Ambient",
+              duration: "7:20"
+            },
+            {
+              id: 7,
+              title: "Void Cascade",
+              artist: "Borja Moskv",
+              src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3",
+              cover: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=400&q=80",
+              genre: "Ambient / Sci-Fi",
+              duration: "5:58"
+            }
+         ],
+         currentTrackIndex: 0,
+         isPlaying: false,
+         audio: null,
+         
+         init() {
+            if (this.audio) return;
+            this.audio = new Audio();
+            this.audio.volume = 0.8;
+            
+            this.audio.addEventListener('timeupdate', () => this.onTimeUpdate());
+            this.audio.addEventListener('loadedmetadata', () => this.onLoadedMetadata());
+            this.audio.addEventListener('ended', () => this.next());
+            
+            this.bindEvents();
+         },
+         
+         bindEvents() {
+            const getEl = (id) => document.getElementById(id);
+            
+            const playBtn = getEl('player-play-btn');
+            const prevBtn = getEl('player-prev-btn');
+            const nextBtn = getEl('player-next-btn');
+            const progress = getEl('progress-bar-container');
+            const volSlider = getEl('volume-slider');
+            const volBtn = getEl('player-volume-btn');
+            
+            if (playBtn) playBtn.onclick = (e) => { e.stopPropagation(); this.toggle(); };
+            if (prevBtn) prevBtn.onclick = (e) => { e.stopPropagation(); this.prev(); };
+            if (nextBtn) nextBtn.onclick = (e) => { e.stopPropagation(); this.next(); };
+            
+            if (progress) {
+               progress.onclick = (e) => {
+                  const rect = progress.getBoundingClientRect();
+                  const pct = (e.clientX - rect.left) / rect.width;
+                  if (this.audio && this.audio.duration) {
+                     this.audio.currentTime = pct * this.audio.duration;
+                  }
+               };
+            }
+            
+            if (volSlider) {
+               volSlider.onclick = (e) => {
+                  const rect = volSlider.getBoundingClientRect();
+                  const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+                  if (this.audio) {
+                     this.audio.volume = pct;
+                     const fill = document.getElementById('volume-slider-fill');
+                     if (fill) fill.style.width = `${pct * 100}%`;
+                  }
+               };
+            }
+            
+            if (volBtn) {
+               volBtn.onclick = () => {
+                  if (this.audio) {
+                     this.audio.muted = !this.audio.muted;
+                     const fill = document.getElementById('volume-slider-fill');
+                     if (fill) fill.style.width = this.audio.muted ? '0%' : `${this.audio.volume * 100}%`;
+                  }
+               };
+            }
+         },
+         
+         playTrack(index) {
+            this.init();
+            this.currentTrackIndex = index;
+            const track = this.tracks[index];
+            
+            const cover = document.getElementById('player-cover-img');
+            const title = document.getElementById('player-track-title');
+            const artist = document.getElementById('player-track-artist');
+            const player = document.getElementById('cyber-player');
+            
+            if (cover) cover.src = track.cover;
+            if (title) title.textContent = track.title;
+            if (artist) artist.textContent = track.artist;
+            if (player) player.classList.add('active');
+            
+            // Suspend background ambient pad if running to prevent clash
+            if (window.audioCtx && window.audioCtx.state === 'running') {
+               window.audioCtx.suspend();
+            }
+            
+            this.audio.src = track.src;
+            this.audio.play().then(() => {
+               this.isPlaying = true;
+               this.updateIcon();
+            }).catch(console.warn);
+         },
+         
+         toggle() {
+            this.init();
+            if (!this.audio.src) {
+               this.playTrack(0);
+               return;
+            }
+            if (this.isPlaying) {
+               this.audio.pause();
+               this.isPlaying = false;
+            } else {
+               this.audio.play().then(() => {
+                  this.isPlaying = true;
+               }).catch(console.warn);
+            }
+            this.updateIcon();
+         },
+         
+         next() {
+            const index = (this.currentTrackIndex + 1) % this.tracks.length;
+            this.playTrack(index);
+         },
+         
+         prev() {
+            const index = (this.currentTrackIndex - 1 + this.tracks.length) % this.tracks.length;
+            this.playTrack(index);
+         },
+         
+         updateIcon() {
+            const icon = document.getElementById('player-play-icon');
+            if (icon) {
+               icon.innerHTML = this.isPlaying 
+                  ? `<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>`
+                  : `<polygon points="5 3 19 12 5 21"/>`;
+            }
+         },
+         
+         onTimeUpdate() {
+            if (this.audio && this.audio.duration) {
+               const pct = (this.audio.currentTime / this.audio.duration) * 100;
+               const fill = document.getElementById('progress-bar-fill');
+               const container = document.getElementById('progress-bar-container');
+               const currentText = document.getElementById('player-time-current');
+               
+               if (fill) fill.style.width = `${pct}%`;
+               if (container) container.setAttribute('aria-valuenow', Math.floor(pct));
+               if (currentText) currentText.textContent = this.formatTime(this.audio.currentTime);
+            }
+         },
+         
+         onLoadedMetadata() {
+            const durationText = document.getElementById('player-time-duration');
+            if (durationText && this.audio) {
+               durationText.textContent = this.formatTime(this.audio.duration);
+            }
+         },
+         
+         formatTime(time) {
+            const mins = Math.floor(time / 60);
+            const secs = Math.floor(time % 60).toString().padStart(2, '0');
+            return `${mins}:${secs}`;
+         }
+      };
+      
+      // Wire global listeners on page changes
+      document.addEventListener('astro:page-load', () => {
+         if (window.CyberAudioStore) {
+            window.CyberAudioStore.bindEvents();
+            // Maintain playing states if index was set
+            if (window.CyberAudioStore.audio && window.CyberAudioStore.audio.src) {
+               const track = window.CyberAudioStore.tracks[window.CyberAudioStore.currentTrackIndex];
+               const cover = document.getElementById('player-cover-img');
+               const title = document.getElementById('player-track-title');
+               const artist = document.getElementById('player-track-artist');
+               const player = document.getElementById('cyber-player');
+               
+               if (cover) cover.src = track.cover;
+               if (title) title.textContent = track.title;
+               if (artist) artist.textContent = track.artist;
+               if (player) player.classList.add('active');
+               window.CyberAudioStore.updateIcon();
+            }
+         }
+      });
+
       // ─── 13/10 DISRUPTIVE MEMORY PROTOCOL (Persistent Scarring) ───
       const hashString = (str) => {
         let hash = 0;
@@ -1282,6 +1570,171 @@ const { title } = Astro.props;
       @keyframes blink { from { opacity: 0.2; } to { opacity: 1; box-shadow: 0 0 8px var(--color-amber); } }
 
     
+
+      /* Global Cyber Player Styles */
+      .cyber-player {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(5, 5, 8, 0.95);
+        border-top: 1px solid rgba(0, 240, 255, 0.3);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        z-index: 9999;
+        padding: 1.2rem 2rem;
+        transition: all 0.4s ease;
+        transform: translateY(100%);
+      }
+
+      .cyber-player.active {
+        transform: translateY(0);
+      }
+
+      .player-inner {
+        max-width: var(--max-w);
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .player-cover {
+        width: 50px;
+        height: 50px;
+        background: #111;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid rgba(0, 240, 255, 0.2);
+        flex-shrink: 0;
+      }
+
+      .player-cover img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .player-info {
+        flex: 0 1 200px;
+        min-width: 0;
+      }
+
+      .player-track-title {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: #fff;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .player-track-artist {
+        font-size: 0.75rem;
+        color: var(--color-cyber-cyan, #00f0ff);
+      }
+
+      .player-controls {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .player-btn {
+        background: none;
+        border: none;
+        color: var(--color-cyber-cyan, #00f0ff);
+        cursor: pointer;
+        padding: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+      }
+
+      .player-btn:hover {
+        color: #fff;
+        text-shadow: 0 0 8px var(--color-cyber-cyan, #00f0ff);
+      }
+
+      .player-play-btn {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: var(--color-cyber-cyan, #00f0ff);
+        color: #000;
+      }
+
+      .player-play-btn:hover {
+        background: #ffffff;
+        transform: scale(1.05);
+      }
+
+      .player-timeline {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        font-size: 0.7rem;
+        font-family: var(--font-secondary);
+        color: var(--color-muted);
+      }
+
+      .progress-bar-container {
+        flex: 1;
+        height: 4px;
+        background: #222;
+        border-radius: 10px;
+        cursor: pointer;
+        position: relative;
+      }
+
+      .progress-bar-fill {
+        height: 100%;
+        width: 0%;
+        background: var(--color-cyber-cyan, #00f0ff);
+        border-radius: 10px;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      .player-volume-container {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .volume-slider {
+        width: 80px;
+        height: 4px;
+        background: #222;
+        border-radius: 10px;
+        cursor: pointer;
+        position: relative;
+      }
+
+      .volume-slider-fill {
+        height: 100%;
+        width: 80%;
+        background: var(--color-cyber-cyan, #00f0ff);
+        border-radius: 10px;
+      }
+
+      @media (max-width: 768px) {
+        .player-inner {
+          flex-wrap: wrap;
+          gap: 1rem;
+        }
+        .player-timeline {
+          order: 4;
+          flex: 1 0 100%;
+        }
+        .player-volume-container {
+          display: none;
+        }
+      }
+
       /* ─── 13/10 DOM DESTRUCTION (BURN-ON-READ) ─── */
       @keyframes burnOut {
         0% { opacity: 1; filter: invert(0) blur(0px); transform: translateY(0) skewX(0); }
