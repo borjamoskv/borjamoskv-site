@@ -429,12 +429,12 @@ import Layout from '../layouts/Layout.astro';
         display: flex;
         gap: 1.5rem;
         overflow-x: auto;
-        scroll-snap-type: x mandatory;
         padding-bottom: 2rem;
         scrollbar-width: thin;
         scrollbar-color: rgba(255,255,255,0.15) transparent;
         padding-left: 0.5rem;
         padding-right: 0.5rem;
+        will-change: transform;
       }
       .video-scroll-row::-webkit-scrollbar {
         height: 6px;
@@ -453,7 +453,6 @@ import Layout from '../layouts/Layout.astro';
 
       .video-scroll-card {
         flex: 0 0 340px;
-        scroll-snap-align: start;
         aspect-ratio: 16 / 9;
         border-radius: 12px;
         overflow: hidden;
@@ -1241,6 +1240,89 @@ import Layout from '../layouts/Layout.astro';
       observer.observe(el);
     });
   }
+
+  // ─── CORTEX HORIZONTAL INFINITE SCROLL & SKEW X ───
+  const initHorizontalKinetics = () => {
+    const row = document.querySelector('.video-scroll-row');
+    if (!row) return;
+
+    // 1. Horizontal Velocity Skew (Disruptive SOTA)
+    let lastScrollX = row.scrollLeft;
+    let scrollVelocityX = 0;
+    let rafIdX = null;
+
+    const renderVelocityX = () => {
+      scrollVelocityX *= 0.85; // Friction
+      
+      const skew = Math.min(Math.max(scrollVelocityX * -0.05, -3), 3); // Max 3deg skew
+      const scaleY = Math.max(0.95, 1 - Math.abs(scrollVelocityX) * 0.001);
+      
+      row.style.transform = `matrix3d(1, 0, 0, 0, ${Math.tan(skew * Math.PI / 180)}, ${scaleY}, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)`;
+      
+      if (Math.abs(scrollVelocityX) > 0.5) {
+        rafIdX = requestAnimationFrame(renderVelocityX);
+      } else {
+        row.style.transform = 'none';
+        rafIdX = null;
+      }
+    };
+
+    row.addEventListener('scroll', () => {
+      const currentScrollX = row.scrollLeft;
+      const deltaX = currentScrollX - lastScrollX;
+      scrollVelocityX += deltaX;
+      lastScrollX = currentScrollX;
+      
+      if (!rafIdX && Math.abs(scrollVelocityX) > 0.5) {
+        rafIdX = requestAnimationFrame(renderVelocityX);
+      }
+    }, { passive: true });
+
+    // 2. Horizontal Infinite Archive Loop
+    const observerOptions = {
+      root: row,
+      rootMargin: '0px 800px 0px 0px', // Trigger well before end
+      threshold: 0
+    };
+
+    let isCloning = false;
+
+    const hObserver = new IntersectionObserver((entries) => {
+      const trigger = entries.find(entry => entry.isIntersecting);
+      if (trigger && !isCloning) {
+        isCloning = true;
+        
+        const currentCards = Array.from(row.querySelectorAll('.video-scroll-card'));
+        const cardsToClone = currentCards.slice(0, 4); // Clone first 4
+        
+        cardsToClone.forEach(card => {
+          const clone = card.cloneNode(true);
+          // Restart entrance animation if needed
+          clone.style.animation = 'none';
+          clone.offsetHeight; 
+          clone.style.animation = 'sota-scroll-x 0.5s ease forwards';
+          
+          if (card === trigger.target) hObserver.unobserve(card);
+          row.appendChild(clone);
+        });
+
+        const newCards = row.querySelectorAll('.video-scroll-card');
+        if (newCards.length > 2) {
+          hObserver.observe(newCards[newCards.length - 2]);
+        }
+
+        setTimeout(() => { isCloning = false; }, 500);
+      }
+    }, observerOptions);
+
+    const cards = row.querySelectorAll('.video-scroll-card');
+    if (cards.length > 2) {
+      hObserver.observe(cards[cards.length - 2]);
+    }
+  };
+
+  document.addEventListener('astro:page-load', initHorizontalKinetics);
+  initHorizontalKinetics();
 </script>
 
 </Layout>
