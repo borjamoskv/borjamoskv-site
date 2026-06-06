@@ -861,8 +861,29 @@ import Layout from '../layouts/Layout.astro';
 
       <!-- ═══ HERO ═══ -->
       <section class="hero">
+        <!-- Structural Corner Brackets -->
+        <div class="hero-corner top-left"></div>
+        <div class="hero-corner top-right"></div>
+        <div class="hero-corner bottom-left"></div>
+        <div class="hero-corner bottom-right"></div>
+
+        <!-- System Telemetry Badge -->
+        <div class="telemetry-badge">
+          <div>SYS_STATUS // L1_ACTIVE</div>
+          <div class="telemetry-row">
+            <span>PoC_VERIFIED</span>
+            <div class="telemetry-dot"></div>
+          </div>
+          <div>C5-REAL // OMEGA</div>
+        </div>
+
         <span class="hero-label">Música · Vídeo · Ensayo</span>
-        <h1 class="hero-title">BORJA<br/>MOSKV</h1>
+        <h1 class="hero-title" aria-label="BORJA MOSKV">
+          <span class="hero-title-interactive">
+            <span class="hero-letter">B</span><span class="hero-letter">O</span><span class="hero-letter">R</span><span class="hero-letter">J</span><span class="hero-letter">A</span><br/>
+            <span class="hero-letter">M</span><span class="hero-letter">O</span><span class="hero-letter">S</span><span class="hero-letter">K</span><span class="hero-letter">V</span>
+          </span>
+        </h1>
         <p class="hero-subtitle">SÍNTESIS C5-REAL. VIBRACIONES INERCIALES EN PRIMER PLANO. COLAPSO TERMODINÁMICO DE FONDO.</p>
         <div class="hero-actions">
           <a href="#musica" class="hero-btn primary">
