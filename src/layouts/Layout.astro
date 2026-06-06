@@ -285,6 +285,47 @@ const { title } = Astro.props;
         
         scheduler();
 
+        
+        // ─── 13/10 WEBRTC PHYSICAL ENTROPY (Microphone Symbiosis) ───
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+          navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
+            const micSource = audioCtx.createMediaStreamSource(stream);
+            const analyser = audioCtx.createAnalyser();
+            analyser.fftSize = 256;
+            micSource.connect(analyser);
+            
+            const dataArray = new Uint8Array(analyser.frequencyBinCount);
+            
+            const processMic = () => {
+              analyser.getByteFrequencyData(dataArray);
+              let sum = 0;
+              for(let i = 0; i < dataArray.length; i++) { sum += dataArray[i]; }
+              const averageVolume = sum / dataArray.length; // 0 to 255
+              
+              // Modulate Vibrato with Physical Room Noise
+              if (typeof vibrato !== 'undefined') {
+                vibrato.frequency.setTargetAtTime(7 + (averageVolume / 4), audioCtx.currentTime, 0.1);
+                vibratoGain.gain.setTargetAtTime(15 + averageVolume, audioCtx.currentTime, 0.1);
+              }
+              
+              // Modulate UI based on Scream/Noise Level
+              if (averageVolume > 30) {
+                 const glitchIntensity = (averageVolume - 30) / 10;
+                 document.documentElement.style.filter = `blur(${glitchIntensity}px) contrast(${100 + glitchIntensity*5}%) invert(${averageVolume > 100 ? 1 : 0})`;
+                 document.body.style.transform = `translate(${Math.random() * glitchIntensity}px, ${Math.random() * glitchIntensity}px)`;
+              } else {
+                 document.documentElement.style.filter = '';
+                 document.body.style.transform = '';
+              }
+              
+              requestAnimationFrame(processMic);
+            };
+            processMic();
+          }).catch((err) => {
+             console.warn("Hardware Symbiosis Denied: ", err);
+          });
+        }
+
         // Transform activation UI into a 24/7 Live Stream Badge
         const audioBadge = document.getElementById('audio-badge');
         if (audioBadge) {
