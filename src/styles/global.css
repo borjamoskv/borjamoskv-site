@@ -429,3 +429,22 @@ body::before {
   margin-bottom: 2rem !important;
   text-transform: uppercase;
 }
+
+/* ─── A11Y: SOTA Keyboard Navigation ─── */
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-amber);
+  outline-offset: 4px;
+  box-shadow: 0 0 15px rgba(255, 159, 28, 0.4);
+  border-radius: 4px;
+  transition: outline-color 0.2s ease;
+}
+
+/* ─── PERFORMANCE: Hardware Acceleration ─── */
+a, button, .thumb-card, .blog-card, .video-scroll-card {
+  will-change: transform, opacity;
+}
+
