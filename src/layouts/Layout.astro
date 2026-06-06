@@ -68,7 +68,8 @@ const { title } = Astro.props;
 
     <!-- Persistent Global Cyber Player -->
     <div class="cyber-player" id="cyber-player" transition:persist="cyber-player-persisted">
-      <div class="player-inner">
+      <canvas id="player-waveform" style="position: absolute; top: 0; left: 0; width: 100%; height: 35px; pointer-events: none; opacity: 0.75; z-index: 1;"></canvas>
+      <div class="player-inner" style="position: relative; z-index: 2;">
         <div class="player-cover">
           <img id="player-cover-img" src="data:image/svg+xml,%3Csvg viewBox='0 0 1 1' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100%25' height='100%25' fill='%23111'/%3E%3C/svg%3E" alt="Portada" />
         </div>
@@ -1289,12 +1290,77 @@ const { title } = Astro.props;
             if (this.audio) return;
             this.audio = new Audio();
             this.audio.volume = 0.8;
+            this.audio.crossOrigin = "anonymous";
             
             this.audio.addEventListener('timeupdate', () => this.onTimeUpdate());
             this.audio.addEventListener('loadedmetadata', () => this.onLoadedMetadata());
             this.audio.addEventListener('ended', () => this.next());
             
             this.bindEvents();
+            
+            // Route through Web Audio pipeline
+            try {
+               if (typeof audioCtx !== 'undefined' && audioCtx) {
+                  this.sourceNode = audioCtx.createMediaElementSource(this.audio);
+                  this.analyser = audioCtx.createAnalyser();
+                  this.analyser.fftSize = 256;
+                  this.dataArray = new Uint8Array(this.analyser.frequencyBinCount);
+                  
+                  this.sourceNode.connect(this.analyser);
+                  if (typeof panner !== 'undefined') {
+                     this.analyser.connect(panner);
+                  } else {
+                     this.analyser.connect(audioCtx.destination);
+                  }
+               }
+            } catch(err) {
+               console.warn("Web Audio Routing Failed: ", err);
+            }
+            
+            this.startCanvasLoop();
+         },
+         
+         startCanvasLoop() {
+            const draw = () => {
+               requestAnimationFrame(draw);
+               const canvas = document.getElementById('player-waveform') as HTMLCanvasElement;
+               if (!canvas) return;
+               const ctx = canvas.getContext('2d');
+               if (!ctx) return;
+               
+               if (canvas.width !== canvas.clientWidth || canvas.height !== canvas.clientHeight) {
+                  canvas.width = canvas.clientWidth;
+                  canvas.height = canvas.clientHeight;
+               }
+               
+               ctx.clearRect(0, 0, canvas.width, canvas.height);
+               
+               if (this.isPlaying && this.analyser) {
+                  this.analyser.getByteTimeDomainData(this.dataArray);
+                  
+                  ctx.lineWidth = 1.5;
+                  ctx.strokeStyle = 'rgba(0, 240, 255, 0.75)'; // Neon cyan
+                  ctx.beginPath();
+                  
+                  const sliceWidth = canvas.width / this.dataArray.length;
+                  let x = 0;
+                  
+                  for (let i = 0; i < this.dataArray.length; i++) {
+                     const v = this.dataArray[i] / 128.0;
+                     const y = v * (canvas.height / 2);
+                     if (i === 0) {
+                        ctx.moveTo(x, y);
+                     } else {
+                        ctx.lineTo(x, y);
+                     }
+                     x += sliceWidth;
+                  }
+                  
+                  ctx.lineTo(canvas.width, canvas.height / 2);
+                  ctx.stroke();
+               }
+            };
+            draw();
          },
          
          bindEvents() {
