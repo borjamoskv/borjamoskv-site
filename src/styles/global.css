@@ -138,9 +138,9 @@ body::before {
   position: absolute;
   bottom: -6px;
   height: 2px;
-  background: linear-gradient(90deg, var(--color-yinmn), var(--color-amber));
-  box-shadow: 0 0 15px var(--color-amber);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  background: var(--color-yinmn);
+  box-shadow: 0 0 8px var(--color-yinmn);
+  transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
   pointer-events: none;
   opacity: 0;
   width: 0;
@@ -359,10 +359,10 @@ body::before {
 
     @keyframes shrink-nav {
       to {
-        padding: 0.6rem 2rem;
+        padding: 0.8rem 2rem;
         background: rgba(10, 10, 10, 0.98);
-        border-bottom: 1px solid rgba(255, 159, 28, 0.2);
-        box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: 0 8px 32px rgba(0,0,0,0.5);
       }
     }
     .top-nav {
@@ -379,8 +379,8 @@ body::before {
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 2px;
-      background: var(--color-amber);
-      box-shadow: 0 0 15px var(--color-amber);
+      background: var(--color-yinmn);
+      box-shadow: 0 0 10px var(--color-yinmn);
       transform-origin: 0 50%;
       animation: grow-progress auto linear;
       animation-timeline: scroll(block root);
@@ -392,23 +392,22 @@ body::before {
 
 /* ─── SOTA Background Physics ─── */
 @keyframes abyss-sink {
-  to { transform: scale(0.85); filter: grayscale(100%) contrast(150%) blur(10px); opacity: 0.3; }
+  to { transform: scale(0.9); filter: grayscale(100%) contrast(130%) blur(8px); opacity: 0.25; }
 }
 
 @keyframes breathe-vignette {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 0.85; }
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.75; }
 }
 
-/* ─── Scanlines Overlay ─── */
+/* ─── Minimalist Vignette Overlay ─── */
 .overlay::after {
   content: " ";
   display: block;
   position: absolute;
   top: 0; left: 0; bottom: 0; right: 0;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  background: radial-gradient(circle, transparent 60%, rgba(0,0,0,0.4) 100%);
   z-index: 2;
-  background-size: 100% 4px, 6px 100%;
   pointer-events: none;
 }
 

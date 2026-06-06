@@ -1,0 +1,997 @@
+---
+/* src/components/AIAgent.astro */
+---
+<div class="ai-agent-wrapper" transition:persist="ai-agent-persisted">
+  <!-- Minimizable Badge Button -->
+  <button id="ai-agent-badge" aria-label="Abrir Asistente IA Core" class="ai-agent-badge">
+    <div class="agent-pulse-ring"></div>
+    <div class="agent-dot"></div>
+    <span class="badge-text">BM-Ω // AGENT</span>
+  </button>
+
+  <!-- Interactive Terminal Card -->
+  <div id="ai-agent-console" class="ai-agent-console hidden">
+    <!-- Top Header -->
+    <div class="console-header">
+      <div class="header-status">
+        <span class="status-indicator active"></span>
+        <span class="status-label">BM-Ω // CORE_AGENT.v1.0</span>
+      </div>
+      <button id="console-close-btn" class="console-close-btn" aria-label="Cerrar panel">&times;</button>
+    </div>
+
+    <!-- Live Telemetry Grid -->
+    <div class="console-telemetry">
+      <div class="telemetry-item">
+        <span class="telemetry-key">CPU</span>
+        <span class="telemetry-val" id="tel-cpu">NOMINAL</span>
+      </div>
+      <div class="telemetry-item">
+        <span class="telemetry-key">WEBGL</span>
+        <span class="telemetry-val" id="tel-gl">READY</span>
+      </div>
+      <div class="telemetry-item">
+        <span class="telemetry-key">AUDIO</span>
+        <span class="telemetry-val" id="tel-audio">SPATIAL</span>
+      </div>
+      <div class="telemetry-item">
+        <span class="telemetry-key">INTEGRITY</span>
+        <span class="telemetry-val" id="tel-integrity">C5-REAL</span>
+      </div>
+    </div>
+
+    <!-- Active Brain Visualizer -->
+    <div class="console-visualizer-container">
+      <canvas id="console-visualizer" width="340" height="40"></canvas>
+    </div>
+
+    <!-- Message Logs Buffer -->
+    <div class="console-logs" id="console-logs">
+      <div class="log-entry system">
+        <span class="log-time">[00:00:00]</span>
+        <span class="log-text">BM-Ω // CORE AGENT INITIALIZED. STATUS: STANDBY.</span>
+      </div>
+      <div class="log-entry system">
+        <span class="log-time">[00:00:01]</span>
+        <span class="log-text">Escribe <span class="cmd-highlight">help</span> o haz clic en los tags de abajo para explorar.</span>
+      </div>
+    </div>
+
+    <!-- Quick Command Tags -->
+    <div class="console-shortcuts">
+      <button class="shortcut-tag" data-cmd="/audit">/audit</button>
+      <button class="shortcut-tag" data-cmd="/glitch">/glitch</button>
+      <button class="shortcut-tag" data-cmd="/play 0">/play</button>
+      <button class="shortcut-tag" data-cmd="help">/help</button>
+    </div>
+
+    <!-- Text input and controls -->
+    <form id="console-form" class="console-input-row" onsubmit="return false;">
+      <span class="console-prompt">core:~$</span>
+      <input 
+        type="text" 
+        id="console-input" 
+        placeholder="Introduce comando o consulta..." 
+        autocomplete="off" 
+        enterkeyhint="send"
+      />
+      <button type="submit" class="console-send-btn" aria-label="Enviar comando">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+      </button>
+    </form>
+  </div>
+</div>
+
+<style>
+  /* ─── STYLING - INDUSTRIAL NOIR 2026 ─── */
+  .ai-agent-wrapper {
+    position: fixed;
+    bottom: 110px; /* Sits nicely above cyber-player */
+    right: 2.5rem;
+    z-index: 99999;
+    font-family: var(--font-secondary);
+  }
+
+  /* Minimizable Badge Toggle Button */
+  .ai-agent-badge {
+    position: relative;
+    background: rgba(10, 10, 10, 0.95);
+    border: 1px solid var(--glass-border);
+    border-radius: 4px;
+    padding: 0.6rem 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    color: #fff;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  }
+
+  .ai-agent-badge:hover {
+    border-color: rgba(43, 59, 229, 0.4);
+    box-shadow: 0 0 15px rgba(43, 59, 229, 0.3);
+    transform: scale(1.03);
+  }
+
+  .agent-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--color-yinmn);
+    border-radius: 50%;
+    z-index: 2;
+  }
+
+  .agent-pulse-ring {
+    position: absolute;
+    left: 1.2rem;
+    width: 6px;
+    height: 6px;
+    background: var(--color-yinmn);
+    border-radius: 50%;
+    animation: agent-pulse 2s infinite ease-out;
+    z-index: 1;
+  }
+
+  @keyframes agent-pulse {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(4); opacity: 0; }
+  }
+
+  .badge-text {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-parchment);
+  }
+
+  /* Console Terminal UI Card */
+  .ai-agent-console {
+    position: absolute;
+    bottom: calc(100% + 15px);
+    right: 0;
+    width: 370px;
+    max-width: 90vw;
+    background: rgba(10, 10, 10, 0.88);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(43, 59, 229, 0.15);
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(43, 59, 229, 0.05);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    transform-origin: bottom right;
+  }
+
+  .ai-agent-console.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px) scale(0.95);
+  }
+
+  /* Header */
+  .console-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 1rem;
+    background: rgba(18, 18, 22, 0.6);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  }
+
+  .header-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .status-indicator {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #666;
+  }
+
+  .status-indicator.active {
+    background: var(--color-amber);
+    box-shadow: 0 0 8px var(--color-amber);
+    animation: status-breathe 2s infinite alternate;
+  }
+
+  @keyframes status-breathe {
+    from { opacity: 0.4; } to { opacity: 1; }
+  }
+
+  .status-label {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: rgba(243, 244, 246, 0.6);
+    text-transform: uppercase;
+  }
+
+  .console-close-btn {
+    background: none;
+    border: none;
+    color: rgba(243, 244, 246, 0.4);
+    font-size: 1.1rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 0.2rem;
+    transition: color 0.2s ease;
+  }
+
+  .console-close-btn:hover {
+    color: var(--color-amber);
+  }
+
+  /* Telemetry Panel */
+  .console-telemetry {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    background: rgba(5, 5, 6, 0.3);
+  }
+
+  .telemetry-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5rem 0.2rem;
+    border-right: 1px solid rgba(255, 255, 255, 0.04);
+  }
+
+  .telemetry-item:last-child {
+    border-right: none;
+  }
+
+  .telemetry-key {
+    font-size: 0.5rem;
+    color: rgba(243, 244, 246, 0.4);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.1rem;
+  }
+
+  .telemetry-val {
+    font-size: 0.55rem;
+    font-weight: 700;
+    color: var(--color-yinmn);
+  }
+
+  /* Canvas Visualizer container */
+  .console-visualizer-container {
+    padding: 0.4rem 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Log history buffer */
+  .console-logs {
+    height: 240px;
+    overflow-y: auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    background: rgba(5, 5, 6, 0.2);
+    scroll-behavior: smooth;
+  }
+
+  /* Scrollbar styling */
+  .console-logs::-webkit-scrollbar {
+    width: 4px;
+  }
+  .console-logs::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .console-logs::-webkit-scrollbar-thumb {
+    background: rgba(43, 59, 229, 0.2);
+    border-radius: 2px;
+  }
+  .console-logs::-webkit-scrollbar-thumb:hover {
+    background: rgba(43, 59, 229, 0.4);
+  }
+
+  .log-entry {
+    font-size: 0.65rem;
+    line-height: 1.4;
+    word-break: break-word;
+  }
+
+  .log-time {
+    color: rgba(243, 244, 246, 0.25);
+    margin-right: 0.4rem;
+  }
+
+  .log-entry.system {
+    color: rgba(243, 244, 246, 0.6);
+  }
+
+  .log-entry.user {
+    color: var(--color-amber);
+  }
+
+  .log-entry.agent {
+    color: var(--color-parchment);
+    border-left: 1px solid var(--color-yinmn);
+    padding-left: 0.5rem;
+  }
+
+  .cmd-highlight {
+    color: var(--color-yinmn);
+    font-weight: 700;
+  }
+
+  /* Shortcuts bar */
+  .console-shortcuts {
+    display: flex;
+    gap: 0.4rem;
+    padding: 0.5rem 1rem;
+    background: rgba(18, 18, 22, 0.4);
+    border-top: 1px solid rgba(255, 255, 255, 0.03);
+    overflow-x: auto;
+  }
+  .console-shortcuts::-webkit-scrollbar {
+    display: none;
+  }
+
+  .shortcut-tag {
+    background: rgba(43, 59, 229, 0.08);
+    border: 1px solid rgba(43, 59, 229, 0.2);
+    border-radius: 3px;
+    color: var(--color-parchment);
+    font-family: var(--font-secondary);
+    font-size: 0.55rem;
+    padding: 0.2rem 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .shortcut-tag:hover {
+    background: var(--color-yinmn);
+    border-color: var(--color-yinmn);
+    box-shadow: 0 0 8px rgba(43, 59, 229, 0.4);
+  }
+
+  /* Input form area */
+  .console-input-row {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem 1rem;
+    background: rgba(12, 12, 16, 0.95);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .console-prompt {
+    color: var(--color-yinmn);
+    font-size: 0.65rem;
+    font-weight: 700;
+    margin-right: 0.5rem;
+    user-select: none;
+  }
+
+  #console-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-family: var(--font-secondary);
+    font-size: 0.65rem;
+    outline: none;
+    padding: 0;
+    width: 100%;
+  }
+
+  #console-input::placeholder {
+    color: rgba(243, 244, 246, 0.25);
+  }
+
+  .console-send-btn {
+    background: none;
+    border: none;
+    color: rgba(243, 244, 246, 0.4);
+    cursor: pointer;
+    padding: 0.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+
+  .console-send-btn:hover {
+    color: var(--color-yinmn);
+    transform: scale(1.1);
+  }
+
+  /* Glitch animation for console when warps */
+  .console-glitch-active {
+    animation: console-shake 0.3s linear infinite;
+    border-color: var(--color-amber) !important;
+    box-shadow: 0 0 30px rgba(255, 159, 28, 0.3) !important;
+  }
+
+  @keyframes console-shake {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    20% { transform: translate(-2px, 2px) rotate(-0.5deg); }
+    40% { transform: translate(2px, -1px) rotate(0.5deg); }
+    60% { transform: translate(-1px, -2px) rotate(-0.5deg); }
+    80% { transform: translate(2px, 1px) rotate(0.5deg); }
+  }
+
+  /* Body dimming for Max Noir mode */
+  :global(.body-noir-max) {
+    --color-void: #020202 !important;
+  }
+  :global(.body-noir-max .section) {
+    background: rgba(2, 2, 2, 0.98) !important;
+    border-color: rgba(255, 159, 28, 0.03) !important;
+  }
+  :global(.body-noir-max body::before) {
+    opacity: 0.08 !important;
+  }
+  :global(.body-noir-max .bg-video) {
+    opacity: 0.08 !important;
+  }
+
+  /* Responsive styling */
+  @media (max-width: 480px) {
+    .ai-agent-wrapper {
+      right: 1rem;
+      bottom: 95px;
+    }
+    .ai-agent-console {
+      width: calc(100vw - 2rem);
+    }
+  }
+</style>
+
+<script>
+  // ─── CLIENT SIDE CORE AGENT CONTROLLER (C5-REAL) ───
+  
+  // Custom interface declaration for TS
+  interface CyberAudioStore {
+    tracks: any[];
+    currentTrackIndex: number;
+    isPlaying: boolean;
+    playTrack(index: number): void;
+    toggle(): void;
+    prev(): void;
+    next(): void;
+  }
+
+  declare global {
+    interface Window {
+      audioCtx?: AudioContext;
+      globalAudioVolume?: number;
+      CyberAudioStore?: CyberAudioStore;
+    }
+  }
+
+  let visualizerAnimFrame: number;
+  let synthActive = false;
+  let voiceAmplitude = 0;
+
+  function initAIAgent() {
+    const badge = document.getElementById('ai-agent-badge');
+    const consolePanel = document.getElementById('ai-agent-console');
+    const closeBtn = document.getElementById('console-close-btn');
+    const form = document.getElementById('console-form') as HTMLFormElement;
+    const input = document.getElementById('console-input') as HTMLInputElement;
+    const logs = document.getElementById('console-logs');
+    const shortcuts = document.querySelectorAll('.shortcut-tag');
+    const canvas = document.getElementById('console-visualizer') as HTMLCanvasElement;
+    
+    if (!badge || !consolePanel || !closeBtn || !form || !input || !logs || !canvas) return;
+
+    // ─── 1. TOGGLE PANEL OPEN/CLOSE ───
+    badge.addEventListener('click', (e) => {
+      e.stopPropagation();
+      consolePanel.classList.toggle('hidden');
+      if (!consolePanel.classList.contains('hidden')) {
+        input.focus();
+        playInterfaceClick(900, 300, 0.05); // Synthesize responsive tick
+        startVisualizerLoop(canvas);
+        logs.scrollTop = logs.scrollHeight;
+        updateTelemetry();
+      } else {
+        cancelAnimationFrame(visualizerAnimFrame);
+      }
+    });
+
+    closeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      consolePanel.classList.add('hidden');
+      cancelAnimationFrame(visualizerAnimFrame);
+      playInterfaceClick(500, 150, 0.05);
+    });
+
+    // Close when clicking outside console if open
+    document.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      if (!consolePanel.classList.contains('hidden') && !consolePanel.contains(target) && !badge.contains(target)) {
+        consolePanel.classList.add('hidden');
+        cancelAnimationFrame(visualizerAnimFrame);
+      }
+    });
+
+    consolePanel.addEventListener('click', (e) => {
+      e.stopPropagation(); // Avoid closing when clicking inside
+    });
+
+    // ─── 2. SHORTCUT TAG TRIGGERS ───
+    shortcuts.forEach(tag => {
+      tag.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const cmd = tag.getAttribute('data-cmd');
+        if (cmd) {
+          input.value = cmd;
+          handleCommandSubmit(cmd);
+          input.value = '';
+        }
+      });
+    });
+
+    // ─── 3. FORM SUBMISSION ───
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const rawVal = input.value.trim();
+      if (!rawVal) return;
+      handleCommandSubmit(rawVal);
+      input.value = '';
+    });
+
+    // ─── 4. TELEMETRY UPDATE LOOP ───
+    function updateTelemetry() {
+      if (consolePanel.classList.contains('hidden')) return;
+
+      const telCpu = document.getElementById('tel-cpu');
+      const telGl = document.getElementById('tel-gl');
+      const telAudio = document.getElementById('tel-audio');
+
+      // CPU fluctuations
+      if (telCpu) {
+        const loads = ['NOMINAL', 'ACTIVE', 'CORE_OPTIM', 'IDLE'];
+        telCpu.textContent = loads[Math.floor(Math.random() * loads.length)];
+      }
+
+      // WebGL status check
+      if (telGl) {
+        const hasGL = !!document.getElementById('gl-canvas');
+        telGl.textContent = hasGL ? 'ACTIVE' : 'READY';
+      }
+
+      // Audio status check
+      if (telAudio) {
+        const activeAudio = window.audioCtx && window.audioCtx.state === 'running';
+        const isPlayingTrack = window.CyberAudioStore && window.CyberAudioStore.isPlaying;
+        telAudio.textContent = isPlayingTrack ? 'PLAYING' : (activeAudio ? 'SPATIAL' : 'OFFLINE');
+      }
+
+      setTimeout(updateTelemetry, 3000);
+    }
+  }
+
+  // ─── Web Audio Interface Synthesizer (Zero file dependency) ───
+  function playInterfaceClick(startFreq: number, endFreq: number, duration: number) {
+    try {
+      const ctx = window.audioCtx;
+      if (!ctx || ctx.state !== 'running') return;
+      
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(startFreq, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(endFreq, ctx.currentTime + duration);
+      
+      gain.gain.setValueAtTime(0.015, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+      
+      osc.start();
+      osc.stop(ctx.currentTime + duration);
+    } catch (err) {
+      // Audio context might not be initialized yet
+    }
+  }
+
+  // Typewriter tick synth sound
+  function playTypewriterTick() {
+    try {
+      const ctx = window.audioCtx;
+      if (!ctx || ctx.state !== 'running') return;
+      
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      
+      osc.type = 'sine';
+      // High frequency minimal tick
+      osc.frequency.setValueAtTime(1200 + Math.random() * 500, ctx.currentTime);
+      
+      gain.gain.setValueAtTime(0.003, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.012);
+      
+      osc.start();
+      osc.stop(ctx.currentTime + 0.012);
+    } catch(err) {}
+  }
+
+  // ─── 5. COMMAND EXECUTION INTERPRETER ───
+  function handleCommandSubmit(rawCmd: string) {
+    appendLog(rawCmd, 'user');
+    
+    // Play quick tick
+    playInterfaceClick(600, 400, 0.05);
+
+    const logs = document.getElementById('console-logs');
+    if (logs) logs.scrollTop = logs.scrollHeight;
+
+    const cmdClean = rawCmd.toLowerCase().trim();
+    
+    // Command Routing
+    setTimeout(() => {
+      executeCoreAction(cmdClean, rawCmd);
+    }, 250);
+  }
+
+  function executeCoreAction(cmdClean: string, rawCmd: string) {
+    // 1. HELP
+    if (cmdClean === 'help' || cmdClean === '/help' || cmdClean === 'h') {
+      const helpText = `[DIRECTORIO DE ACCESOS CORE]
+  /audit     - Realiza auditoría del silicio de la web.
+  /glitch    - Provoca resonancia y distorsión WebGL.
+  /play [n]  - Arranca track index n (0-6) en spatial panner.
+  /pause     - Pausa reproducción de track.
+  /telemetry - Vuelca vectores de cliente y navegador.
+  /noir      - Alterna modo Blackout minimalista absoluto.
+  /clear     - Limpia búfer de logs.`;
+      typewriteAgentResponse(helpText);
+      return;
+    }
+
+    // 2. AUDIT
+    if (cmdClean === '/audit' || cmdClean === 'audit') {
+      typewriteAgentResponse('Iniciando escaneo físico de silicio (C5-REAL)...');
+      setTimeout(() => {
+        const domCount = document.querySelectorAll('*').length;
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        const audioState = window.audioCtx ? window.audioCtx.state : 'OFFLINE';
+        const hasCanvas = !!document.getElementById('gl-canvas');
+        
+        let memString = "42.8 MB (simulated)";
+        // @ts-ignore
+        if (window.performance && window.performance.memory) {
+          // @ts-ignore
+          memString = `${Math.round(window.performance.memory.usedJSHeapSize / 1024 / 1024)} MB`;
+        }
+
+        const report = `[INFORME METAPROCESO DE SILICIO]
+- DOM Elementos: ${domCount} nodos.
+- Resolución: ${width}x${height}px.
+- Spatial Audio Pipeline: ${audioState.toUpperCase()}.
+- WebGL GPU Renderer: ${hasCanvas ? 'ALINEADO' : 'INACTIVO'}.
+- JS Heap Memory: ${memString}.
+- Latencia Red (sim): ${Math.round(10 + Math.random() * 25)}ms.
+- Calibración Exergética: 100% (MÁXIMA).
+- Integridad Física: PO C5-REAL (VERIFIED).`;
+        
+        typewriteAgentResponse(report);
+        playInterfaceClick(100, 1000, 0.4); // sweep up sound
+      }, 1000);
+      return;
+    }
+
+    // 3. GLITCH
+    if (cmdClean === '/glitch' || cmdClean === 'glitch' || cmdClean === '/warp') {
+      typewriteAgentResponse('[WARN] Exceso de exergía inducido. Modulando shader WebGL...');
+      
+      // Induce physical wiggle class to console
+      const consolePanel = document.getElementById('ai-agent-console');
+      if (consolePanel) {
+        consolePanel.classList.add('console-glitch-active');
+        setTimeout(() => consolePanel.classList.remove('console-glitch-active'), 1500);
+      }
+
+      // Modulate shader volume to maximum
+      const origAudioVol = window.globalAudioVolume || 0;
+      window.globalAudioVolume = 4.5;
+      
+      // Pulse sound
+      try {
+        const ctx = window.audioCtx;
+        if (ctx && ctx.state === 'running') {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(80, ctx.currentTime);
+          osc.frequency.linearRampToValueAtTime(10, ctx.currentTime + 1.2);
+          gain.gain.setValueAtTime(0.04, ctx.currentTime);
+          gain.gain.linearRampToValueAtTime(0.0001, ctx.currentTime + 1.2);
+          osc.start();
+          osc.stop(ctx.currentTime + 1.2);
+        }
+      } catch(e){}
+
+      setTimeout(() => {
+        window.globalAudioVolume = origAudioVol;
+        typewriteAgentResponse('Shader WebGL normalizado. Resonancia mitigada.');
+      }, 1500);
+      return;
+    }
+
+    // 4. PLAY
+    if (cmdClean.startsWith('/play') || cmdClean.startsWith('play')) {
+      const parts = cmdClean.split(' ');
+      let index = 0;
+      if (parts.length > 1) {
+        const parsed = parseInt(parts[1]);
+        if (!isNaN(parsed) && parsed >= 0 && parsed <= 6) {
+          index = parsed;
+        }
+      }
+
+      if (window.CyberAudioStore) {
+        try {
+          window.CyberAudioStore.playTrack(index);
+          const track = window.CyberAudioStore.tracks[index];
+          typewriteAgentResponse(`[audio channel active]\nReproduciendo pista ${index}: "${track.title}" por Borja Moskv. Ruteado en panner HRTF orbitante.`);
+          playInterfaceClick(400, 800, 0.25);
+        } catch(err) {
+          typewriteAgentResponse(`[error] Falló enrutar el track: ${err}`);
+        }
+      } else {
+        typewriteAgentResponse(`[error] CyberAudioStore no está cargado en el contexto global.`);
+      }
+      return;
+    }
+
+    // 5. PAUSE
+    if (cmdClean === '/pause' || cmdClean === 'pause') {
+      if (window.CyberAudioStore) {
+        if (window.CyberAudioStore.isPlaying) {
+          window.CyberAudioStore.toggle();
+          typewriteAgentResponse('Audio pausado. Pipeline espacial en espera.');
+          playInterfaceClick(600, 200, 0.15);
+        } else {
+          typewriteAgentResponse('No hay ningún track reproduciéndose actualmente.');
+        }
+      } else {
+        typewriteAgentResponse('[error] CyberAudioStore inaccesible.');
+      }
+      return;
+    }
+
+    // 6. TELEMETRY
+    if (cmdClean === '/telemetry' || cmdClean === 'telemetry') {
+      const spec = `[VECTORES DE ENTORNO CLIENTE]
+- Navegador: ${navigator.userAgent.substring(0, 70)}...
+- Idioma principal: ${navigator.language}
+- Profundidad de Color: ${window.screen.colorDepth}-bit
+- Conexión: ${// @ts-ignore
+  navigator.connection ? `Downlink ${navigator.connection.downlink}Mb/s` : 'Indeterminada'
+}
+- Ruta activa: ${window.location.pathname}${window.location.hash}
+- TimeStamp Local: ${new Date().toISOString()}`;
+      typewriteAgentResponse(spec);
+      return;
+    }
+
+    // 7. NOIR MODE TOGGLE
+    if (cmdClean === '/noir' || cmdClean === 'noir') {
+      const isNoir = document.body.classList.toggle('body-noir-max');
+      playInterfaceClick(isNoir ? 150 : 300, isNoir ? 80 : 600, 0.3);
+      typewriteAgentResponse(
+        isNoir 
+          ? 'MODO NOIR ABSOLUTO: ACTIVADO. Atenuando interfaz física, expandiendo granulado de film.'
+          : 'MODO NOIR ABSOLUTO: DESACTIVADO. Parámetros de luminancia estándar restablecidos.'
+      );
+      return;
+    }
+
+    // 8. CLEAR
+    if (cmdClean === '/clear' || cmdClean === 'clear') {
+      const logsEl = document.getElementById('console-logs');
+      if (logsEl) {
+        logsEl.innerHTML = '';
+        appendLog('Búfer de logs vaciado por el operador.', 'system');
+      }
+      return;
+    }
+
+    // 9. CONVERSATIONAL SMART REPLIES (Spanish UI focus)
+    const normalizedRaw = rawCmd.toLowerCase();
+    
+    if (normalizedRaw.includes('quien') || normalizedRaw.includes('quién') || normalizedRaw.includes('moskv') || normalizedRaw.includes('borja')) {
+      typewriteAgentResponse(`[BM-Ω PROFILE]
+Borja Moskv es un compositor y creador transmedia. En su universo creativo, la música electrónica industrial, el cine minimalista y la filosofía termodinámica se fusionan para desafiar la rigidez de la realidad técnica. Este portafolio digital es un fragmento de su núcleo.`);
+      return;
+    }
+
+    if (normalizedRaw.includes('musica') || normalizedRaw.includes('música') || normalizedRaw.includes('sonido') || normalizedRaw.includes('cancion') || normalizedRaw.includes('canción')) {
+      typewriteAgentResponse(`[SOUND DIRECTORY]
+El portafolio expone pistas sintetizadas de corte experimental y ambient espacial. Puedes verlas todas en el Cyber Player. Escribe '/play 1' o '/play 2' para ejecutarlas.`);
+      return;
+    }
+
+    if (normalizedRaw.includes('video') || normalizedRaw.includes('vídeo') || normalizedRaw.includes('cine') || normalizedRaw.includes('city')) {
+      typewriteAgentResponse(`[VISUAL ARCHIVES]
+El trabajo cinematográfico de Borja se centra en texturas oscuras y cinemáticas industriales. En la sección #video encontrarás "No Sleep In My City", un recorrido experimental de corte cyberpunk.`);
+      return;
+    }
+
+    if (normalizedRaw.includes('blog') || normalizedRaw.includes('artículo') || normalizedRaw.includes('articulo') || normalizedRaw.includes('ensayo') || normalizedRaw.includes('lectura')) {
+      typewriteAgentResponse(`[TEXT RECORDS]
+Borja escribe ensayos teóricos y manifiestos de vanguardia. Artículos clave como "Sintetología de Googlebot" analizan el impacto de la indexación artificial en el pensamiento creativo. Consúltalos en la sección de Diario.`);
+      return;
+    }
+
+    if (normalizedRaw.includes('hola') || normalizedRaw.includes('saludos') || normalizedRaw.includes('buenas')) {
+      typewriteAgentResponse('Conexión establecida. Escribe /help para desplegar todos mis comandos de control de silicio.');
+      return;
+    }
+
+    // Default response fallback
+    typewriteAgentResponse(`[core response] Entrada no indexada en matriz heurística. Escribe 'help' para ver comandos admitidos.`);
+  }
+
+  // Helper to append log entries
+  function appendLog(text: string, type: 'system' | 'user' | 'agent') {
+    const logs = document.getElementById('console-logs');
+    if (!logs) return;
+
+    const entry = document.createElement('div');
+    entry.className = `log-entry ${type}`;
+
+    const timeSpan = document.createElement('span');
+    timeSpan.className = 'log-time';
+    const now = new Date();
+    const pad = (n: number) => n.toString().padStart(2, '0');
+    timeSpan.textContent = `[${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}]`;
+
+    const textSpan = document.createElement('span');
+    textSpan.className = 'log-text';
+    
+    if (type === 'user') {
+      textSpan.textContent = `> ${text}`;
+    } else {
+      // Allow markdown-like breaks
+      textSpan.innerHTML = text.replace(/\n/g, '<br/>');
+    }
+
+    entry.appendChild(timeSpan);
+    entry.appendChild(textSpan);
+    logs.appendChild(entry);
+    logs.scrollTop = logs.scrollHeight;
+  }
+
+  // Typewrite agent text with sound feedback JIT
+  function typewriteAgentResponse(text: string) {
+    const logs = document.getElementById('console-logs');
+    if (!logs) return;
+
+    // Create entry container
+    const entry = document.createElement('div');
+    entry.className = 'log-entry agent';
+
+    const timeSpan = document.createElement('span');
+    timeSpan.className = 'log-time';
+    const now = new Date();
+    const pad = (n: number) => n.toString().padStart(2, '0');
+    timeSpan.textContent = `[${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}]`;
+
+    const textSpan = document.createElement('span');
+    textSpan.className = 'log-text';
+    
+    entry.appendChild(timeSpan);
+    entry.appendChild(textSpan);
+    logs.appendChild(entry);
+    
+    let charIndex = 0;
+    const speed = 15; // ms per character
+    synthActive = true;
+
+    // Split text into readable HTML/text tokens to preserve `<br/>`
+    const processedText = text.replace(/\n/g, '<br/>');
+    
+    // Simple tag-aware writer
+    function type() {
+      if (charIndex < processedText.length) {
+        // If we hit HTML tag, append whole tag
+        if (processedText.charAt(charIndex) === '<') {
+          const closingIndex = processedText.indexOf('>', charIndex);
+          if (closingIndex !== -1) {
+            textSpan.innerHTML += processedText.substring(charIndex, closingIndex + 1);
+            charIndex = closingIndex + 1;
+          } else {
+            textSpan.innerHTML += processedText.charAt(charIndex);
+            charIndex++;
+          }
+        } else {
+          textSpan.innerHTML += processedText.charAt(charIndex);
+          charIndex++;
+          
+          // Play micro click sound for text characters
+          if (charIndex % 2 === 0) {
+            playTypewriterTick();
+          }
+        }
+        
+        // Modulate visualizer wave height
+        voiceAmplitude = 0.8;
+
+        logs.scrollTop = logs.scrollHeight;
+        setTimeout(type, speed);
+      } else {
+        synthActive = false;
+        voiceAmplitude = 0;
+      }
+    }
+
+    type();
+  }
+
+  // ─── 6. INTERACTIVE BRAIN VISUALIZER (Sine wave generator) ───
+  function startVisualizerLoop(canvas: HTMLCanvasElement) {
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let time = 0;
+
+    function draw() {
+      visualizerAnimFrame = requestAnimationFrame(draw);
+      
+      // Clear with slight trailing opacity
+      ctx.fillStyle = 'rgba(10, 10, 10, 0.2)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.lineWidth = 1;
+      
+      // Calculate current wave color (YInMn vs Amber depending on typing state)
+      ctx.strokeStyle = synthActive ? 'rgba(255, 159, 28, 0.6)' : 'rgba(43, 59, 229, 0.5)';
+      ctx.beginPath();
+
+      time += 0.15;
+      
+      // Ambient noise amplitude vs active speaking amplitude
+      const baseAmp = synthActive ? (5 + Math.random() * 8) : 2.5;
+      
+      for (let x = 0; x < canvas.width; x++) {
+        // Double sine waves with different speeds
+        const y = canvas.height / 2 + 
+          Math.sin(x * 0.05 + time) * baseAmp + 
+          Math.cos(x * 0.02 - time * 0.8) * (baseAmp * 0.5);
+          
+        if (x === 0) {
+          ctx.moveTo(x, y);
+        } else {
+          ctx.lineTo(x, y);
+        }
+      }
+      ctx.stroke();
+    }
+
+    draw();
+  }
+
+  // Register load listeners for Astro router stability
+  document.addEventListener('DOMContentLoaded', initAIAgent);
+  document.addEventListener('astro:page-load', initAIAgent);
+</script>
