@@ -121,6 +121,110 @@ const { title } = Astro.props;
         sub.start();
         lfo.start();
         
+        
+        // ─── AUTODJ (Algorithmic Techno Sequencer) ───
+        const tempo = 120; // BPM
+        const lookahead = 25.0; // ms
+        const scheduleAheadTime = 0.1; // s
+        let currentNote = 0;
+        let nextNoteTime = audioCtx.currentTime;
+
+        // White Noise Buffer for Hi-Hats
+        const bufferSize = audioCtx.sampleRate * 2;
+        const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+        const output = noiseBuffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+          output[i] = Math.random() * 2 - 1;
+        }
+
+        const playKick = (time) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.connect(gain);
+          gain.connect(panner); // Route through the 3D panner
+          
+          osc.frequency.setValueAtTime(150, time);
+          osc.frequency.exponentialRampToValueAtTime(0.01, time + 0.5);
+          
+          gain.gain.setValueAtTime(1, time);
+          gain.gain.exponentialRampToValueAtTime(0.01, time + 0.5);
+          
+          osc.start(time);
+          osc.stop(time + 0.5);
+        };
+
+        const playHat = (time, isClosed) => {
+          const noiseSrc = audioCtx.createBufferSource();
+          noiseSrc.buffer = noiseBuffer;
+          
+          const noiseFilter = audioCtx.createBiquadFilter();
+          noiseFilter.type = 'highpass';
+          noiseFilter.frequency.value = 5000;
+          
+          const noiseGain = audioCtx.createGain();
+          noiseGain.gain.setValueAtTime(isClosed ? 0.2 : 0.4, time);
+          noiseGain.gain.exponentialRampToValueAtTime(0.01, time + (isClosed ? 0.05 : 0.2));
+          
+          noiseSrc.connect(noiseFilter);
+          noiseFilter.connect(noiseGain);
+          noiseGain.connect(panner);
+          
+          noiseSrc.start(time);
+        };
+        
+        const playSynth = (time, note) => {
+           const osc = audioCtx.createOscillator();
+           const gain = audioCtx.createGain();
+           osc.type = 'square';
+           osc.frequency.value = note;
+           
+           gain.gain.setValueAtTime(0.05, time);
+           gain.gain.exponentialRampToValueAtTime(0.01, time + 0.15);
+           
+           osc.connect(gain);
+           gain.connect(panner);
+           osc.start(time);
+           osc.stop(time + 0.2);
+        };
+
+        const nextNote = () => {
+          const secondsPerBeat = 60.0 / tempo;
+          nextNoteTime += 0.25 * secondsPerBeat; // 16th notes
+          currentNote++;
+          if (currentNote === 16) {
+            currentNote = 0;
+          }
+        };
+
+        const scheduleNote = (beatNumber, time) => {
+          // Kick on 1, 5, 9, 13 (Four on the floor)
+          if (beatNumber % 4 === 0) playKick(time);
+          
+          // Offbeat open hats
+          if (beatNumber % 4 === 2) playHat(time, false);
+          
+          // Random closed hats
+          if (Math.random() > 0.6) playHat(time, true);
+          
+          // Random dark industrial synth blips (G minor pentatonic low)
+          if (Math.random() > 0.8) {
+            const notes = [49.00, 58.27, 65.41, 73.42, 87.31];
+            playSynth(time, notes[Math.floor(Math.random() * notes.length)]);
+          }
+        };
+
+        let timerID;
+        const scheduler = () => {
+          while (nextNoteTime < audioCtx.currentTime + scheduleAheadTime) {
+            scheduleNote(currentNote, nextNoteTime);
+            nextNote();
+          }
+          timerID = setTimeout(scheduler, lookahead);
+        };
+        
+        // Start AutoDJ Sequencer
+        scheduler();
+
         // Hide activation UI
         const audioBadge = document.getElementById('audio-badge');
         if (audioBadge) {
