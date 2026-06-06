@@ -618,15 +618,139 @@
       to { transform: rotate(360deg); }
     }
 
-    /* ── Distribution Matrix ── */
+    /* ── Distribution Matrix & Spatial Map ── */
     .matrix-section {
       margin-bottom: 3rem;
     }
 
+    .matrix-container-layout {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1.5rem;
+    }
+
     .matrix-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 1.5rem;
+    }
+
+    .spatial-map-container {
+      background: rgba(10, 10, 10, 0.5);
+      border: 1px solid rgba(243, 244, 246, 0.06);
+      border-radius: 8px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+    }
+
+    .spatial-map-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .spatial-map-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: rgba(243, 244, 246, 0.8);
+    }
+
+    .spatial-map-axis-labels {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.6rem;
+      color: rgba(243, 244, 246, 0.35);
+    }
+
+    .spatial-map-grid-box {
+      flex: 1;
+      height: 220px;
+      position: relative;
+      background: rgba(2, 2, 2, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 6px;
+      overflow: visible; /* Let tooltips render outside */
+    }
+
+    .map-crosshair-h {
+      position: absolute;
+      left: 0; right: 0;
+      top: 50%;
+      height: 1px;
+      background: rgba(243, 244, 246, 0.08);
+      border-bottom: 1px dashed rgba(243, 244, 246, 0.08);
+    }
+
+    .map-crosshair-v {
+      position: absolute;
+      top: 0; bottom: 0;
+      left: 50%;
+      width: 1px;
+      background: rgba(243, 244, 246, 0.08);
+      border-right: 1px dashed rgba(243, 244, 246, 0.08);
+    }
+
+    .map-dot {
+      position: absolute;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      transform: translate(-50%, 50%);
+      transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .map-dot:hover {
+      z-index: 50;
+      scale: 1.5;
+    }
+
+    .map-dot.dot-grifter {
+      background: #FF0055;
+      box-shadow: 0 0 8px #FF0055;
+    }
+    .map-dot.dot-hypeutil {
+      background: #FF9F1C;
+      box-shadow: 0 0 8px #FF9F1C;
+    }
+    .map-dot.dot-inert {
+      background: rgba(243, 244, 246, 0.4);
+      box-shadow: 0 0 6px rgba(243, 244, 246, 0.3);
+    }
+    .map-dot.dot-sovereign {
+      background: #00FF66;
+      box-shadow: 0 0 8px #00FF66;
+    }
+
+    .map-dot-tooltip {
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(10, 10, 10, 0.95);
+      border: 1px solid rgba(243, 244, 246, 0.15);
+      padding: 0.4rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.65rem;
+      font-family: 'Inter', sans-serif;
+      color: #FFF;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      z-index: 100;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+
+    .map-dot:hover .map-dot-tooltip {
+      opacity: 1;
     }
 
     .matrix-quadrant {
@@ -817,43 +941,56 @@
       </div>
     </section>
 
-    <!-- THERMODYNAMIC DISTRIBUTION MATRIX -->
+    <!-- THERMODYNAMIC DISTRIBUTION MATRIX & SPATIAL MAP -->
     <section class="matrix-section" aria-label="Matriz de Distribución Exérgica">
-      <div class="matrix-grid">
-        <div class="matrix-quadrant quad-grifter" title="Alto Humo, Baja Utilidad">
-          <div class="quad-header">
-            <span class="quad-icon">🔥</span>
-            <span class="quad-title">Disipación Absoluta</span>
+      <div class="matrix-container-layout">
+        <div class="matrix-grid">
+          <div class="matrix-quadrant quad-grifter" title="Alto Humo, Baja Utilidad">
+            <div class="quad-header">
+              <span class="quad-icon">🔥</span>
+              <span class="quad-title">Disipación Absoluta</span>
+            </div>
+            <div class="quad-val" id="quadGrifterCount">0</div>
+            <p class="quad-label">Gurús y Hype sin soporte práctico</p>
           </div>
-          <div class="quad-val" id="quadGrifterCount">0</div>
-          <p class="quad-label">Gurús y Hype sin soporte práctico</p>
+          
+          <div class="matrix-quadrant quad-hypeutil" title="Alto Humo, Alta Utilidad">
+            <div class="quad-header">
+              <span class="quad-icon">⚡</span>
+              <span class="quad-title">Hype Útil</span>
+            </div>
+            <div class="quad-val" id="quadHypeUtilCount">0</div>
+            <p class="quad-label">Evangelistas con tracción técnica real</p>
+          </div>
+          
+          <div class="matrix-quadrant quad-inert" title="Bajo Humo, Baja Utilidad">
+            <div class="quad-header">
+              <span class="quad-icon">💤</span>
+              <span class="quad-title">Inercia Estéril</span>
+            </div>
+            <div class="quad-val" id="quadInertCount">0</div>
+            <p class="quad-label">Perfiles de bajo impacto atencional</p>
+          </div>
+          
+          <div class="matrix-quadrant quad-sovereign" title="Bajo Humo, Alta Utilidad">
+            <div class="quad-header">
+              <span class="quad-icon">🛡️</span>
+              <span class="quad-title">Exergía Pura</span>
+            </div>
+            <div class="quad-val" id="quadSovereignCount">0</div>
+            <p class="quad-label">Desarrolladores y builders soberanos</p>
+          </div>
         </div>
-        
-        <div class="matrix-quadrant quad-hypeutil" title="Alto Humo, Alta Utilidad">
-          <div class="quad-header">
-            <span class="quad-icon">⚡</span>
-            <span class="quad-title">Hype Útil</span>
+
+        <div class="spatial-map-container">
+          <div class="spatial-map-header">
+            <span class="spatial-map-title">Mapa de Densidad Atencional</span>
+            <span class="spatial-map-axis-labels">X: Humo / Y: Utilidad</span>
           </div>
-          <div class="quad-val" id="quadHypeUtilCount">0</div>
-          <p class="quad-label">Evangelistas con tracción técnica real</p>
-        </div>
-        
-        <div class="matrix-quadrant quad-inert" title="Bajo Humo, Baja Utilidad">
-          <div class="quad-header">
-            <span class="quad-icon">💤</span>
-            <span class="quad-title">Inercia Estéril</span>
+          <div class="spatial-map-grid-box" id="spatialMapBox">
+            <div class="map-crosshair-h"></div>
+            <div class="map-crosshair-v"></div>
           </div>
-          <div class="quad-val" id="quadInertCount">0</div>
-          <p class="quad-label">Perfiles de bajo impacto atencional</p>
-        </div>
-        
-        <div class="matrix-quadrant quad-sovereign" title="Bajo Humo, Alta Utilidad">
-          <div class="quad-header">
-            <span class="quad-icon">🛡️</span>
-            <span class="quad-title">Exergía Pura</span>
-          </div>
-          <div class="quad-val" id="quadSovereignCount">0</div>
-          <p class="quad-label">Desarrolladores y builders soberanos</p>
         </div>
       </div>
     </section>
@@ -890,6 +1027,7 @@
         <button class="filter-btn" data-cat="virtual">AI Models Virtuales</button>
         <button class="filter-btn" data-cat="divulgador">Educadores / Divulgación</button>
         <button class="filter-btn" data-cat="creador">Builders / Creadores</button>
+        <button class="filter-btn special-btn" id="specialSpainBtn" data-special="spain-c5" style="border-color: rgba(43, 59, 229, 0.4); color: #00FF66; margin-left: auto; font-weight: 700; text-shadow: 0 0 5px rgba(0, 255, 102, 0.3);">Solo España (C5-REAL)</button>
       </div>
     </section>
 
@@ -1207,6 +1345,54 @@
         exergy: "C5-REAL",
         verdict: "Análisis conceptual fascinante del impacto visual y de diseño de las herramientas de IA generativa.",
         territory: "ES"
+      },
+      {
+        name: "Asier G. Morato",
+        handle: "@asiermorato",
+        category: "divulgador",
+        hype: 22,
+        utility: 88,
+        followers: 18000,
+        cliche: "Esta semana analizamos cómo las grandes tecnológicas están pivotando hacia la inferencia en local.",
+        exergy: "C5-REAL",
+        verdict: "Análisis pragmático y contextualizado del ecosistema tecnológico sin dejarse arrastrar por el optimismo desmedido.",
+        territory: "ES"
+      },
+      {
+        name: "Javier Recuenco",
+        handle: "@javierrecuenco",
+        category: "creador",
+        hype: 10,
+        utility: 92,
+        followers: 35000,
+        cliche: "El prompt engineering no es ingeniería, es chamanismo estocástico de caja negra.",
+        exergy: "C5-REAL",
+        verdict: "Pensador veterano en resolución de problemas complejos. Combate activamente el reduccionismo atencional de la IA generativa.",
+        territory: "ES"
+      },
+      {
+        name: "Enrique Dans",
+        handle: "@edans",
+        category: "divulgador",
+        hype: 32,
+        utility: 78,
+        followers: 280000,
+        cliche: "El impacto disruptivo de la IA en los modelos de negocio tradicionales es irreversible.",
+        exergy: "C5-REAL",
+        verdict: "Divulgación académica constante de corte corporativo. Combina visión histórica con análisis constante de la transformación digital.",
+        territory: "ES"
+      },
+      {
+        name: "Alvinsch",
+        handle: "@Alvinsch",
+        category: "creador",
+        hype: 6,
+        utility: 90,
+        followers: 1100000,
+        cliche: "He analizado cómo los algoritmos de recomendación de Spotify modulan nuestro gusto estético.",
+        exergy: "C5-REAL",
+        verdict: "Crítica cultural y musical de alto octanaje sobre la industrialización algorítmica y la pérdida del canon analógico.",
+        territory: "ES"
       }
     ];
 
@@ -1304,6 +1490,7 @@
     // ── Database Memory Array ──
     let influencerDatabase = [];
     let filteredDatabase = [];
+    let currentSpecial = 'all';
 
     // ── Pagination Config ──
     const ITEMS_PER_PAGE = 50;
@@ -1518,6 +1705,49 @@
       if (qS) qS.innerHTML = `${sovereignCount.toLocaleString('es-ES')} <span style="font-size:0.75rem;color:rgba(0,255,102,0.6)">(${sovereignPct}%)</span>`;
     }
 
+    function renderSpatialMap(dataset) {
+      const mapBox = document.getElementById('spatialMapBox');
+      if (!mapBox) return;
+
+      // Remove existing dots
+      const existingDots = mapBox.querySelectorAll('.map-dot');
+      existingDots.forEach(dot => dot.remove());
+
+      // Show top 60 influencers to avoid overcrowding
+      const maxDots = Math.min(dataset.length, 60);
+      for (let i = 0; i < maxDots; i++) {
+        const item = dataset[i];
+        
+        const dot = document.createElement('div');
+        let categoryClass = 'dot-inert';
+        if (item.hype >= 50 && item.utility < 50) {
+          categoryClass = 'dot-grifter';
+        } else if (item.hype >= 50 && item.utility >= 50) {
+          categoryClass = 'dot-hypeutil';
+        } else if (item.hype < 50 && item.utility < 50) {
+          categoryClass = 'dot-inert';
+        } else {
+          categoryClass = 'dot-sovereign';
+        }
+
+        dot.className = `map-dot ${categoryClass}`;
+        
+        // Coordinates: X = Hype (0-100), Y = Utility (0-100)
+        dot.style.left = `${item.hype}%`;
+        dot.style.bottom = `${item.utility}%`;
+        
+        // Tooltip html
+        dot.innerHTML = `
+          <div class="map-dot-tooltip">
+            <strong>${escapeHTML(item.name)}</strong> (${escapeHTML(item.handle)})<br/>
+            Humo: ${item.hype}% | Utilidad: ${item.utility}%
+          </div>
+        `;
+        
+        mapBox.appendChild(dot);
+      }
+    }
+
     // ── Filter & Sort Logic ──
     function applyFilters() {
       const searchVal = document.getElementById('searchInput').value.toLowerCase().trim();
@@ -1535,6 +1765,10 @@
                             item.handle.toLowerCase().includes(searchVal) ||
                             item.cliche.toLowerCase().includes(searchVal);
         
+        if (currentSpecial === 'spain-c5') {
+          return matchSearch && item.territory === 'ES' && item.exergy === 'C5-REAL';
+        }
+
         // Territory filter
         const matchTerritory = territory === 'ALL' || item.territory === territory;
         
@@ -1564,6 +1798,7 @@
       // Reset to page 1 on filter
       currentPage = 1;
       updateHUD(filteredDatabase);
+      renderSpatialMap(filteredDatabase);
       renderTable();
     }
 
@@ -1715,14 +1950,35 @@
       document.getElementById('sortSelect').addEventListener('change', applyFilters);
 
       // Category filter buttons
-      const catBtns = document.querySelectorAll('.filter-btn');
+      const catBtns = document.querySelectorAll('.filter-btn:not(.special-btn)');
+      const specialSpainBtn = document.getElementById('specialSpainBtn');
+
       catBtns.forEach(btn => {
         btn.addEventListener('click', () => {
           catBtns.forEach(b => b.classList.remove('active'));
+          if (specialSpainBtn) specialSpainBtn.classList.remove('active');
           btn.classList.add('active');
+          currentSpecial = 'all';
           applyFilters();
         });
       });
+
+      if (specialSpainBtn) {
+        specialSpainBtn.addEventListener('click', () => {
+          const isActive = specialSpainBtn.classList.contains('active');
+          if (isActive) {
+            specialSpainBtn.classList.remove('active');
+            currentSpecial = 'all';
+            const allBtn = document.querySelector('.filter-btn[data-cat="ALL"]');
+            if (allBtn) allBtn.classList.add('active');
+          } else {
+            catBtns.forEach(b => b.classList.remove('active'));
+            specialSpainBtn.classList.add('active');
+            currentSpecial = 'spain-c5';
+          }
+          applyFilters();
+        });
+      }
 
       // Pagination
       document.getElementById('prevPage').addEventListener('click', () => {
