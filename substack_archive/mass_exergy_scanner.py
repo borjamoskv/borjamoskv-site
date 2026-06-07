@@ -7,19 +7,19 @@ Saves results in JSON, CSV, and Markdown formats.
 """
 
 import urllib.request
+import urllib.error
 import json
 import ssl
 import re
 import os
 import time
 import csv
+import random
 from collections import deque
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-# Disable SSL verification for simplicity
-ctx = ssl.create_default_context()
-ctx.check_hostname = False
-ctx.verify_mode = ssl.CERT_NONE
+# Disable SSL verification using unverified context
+ctx = ssl._create_unverified_context()
 
 # Paths
 BASE_DIR = "/Users/borjafernandezangulo/10_PROJECTS/borjamoskv-site"
@@ -34,6 +34,7 @@ CSV_PATH = os.path.join(SUBSTACK_DIR, "mass_exergy_full_list.csv")
 # Limits
 MAX_DISCOVERED = 2000
 MAX_AUDITED_TARGET = 1000
+CONCURRENCY = 15  # Throttled to avoid aggressive WAF blocks
 
 # Spanish Patterns
 ES_CLICKBAIT = [
@@ -100,37 +101,83 @@ def load_recommendations_graph():
 def clean_url(url):
     if not url:
         return ""
+    url = url.strip()
     if not url.startswith("http://") and not url.startswith("https://"):
         return "https://" + url
     return url
 
-def fetch_recommendations(subdomain, pub_id, base_url):
-    """Fetch recommended subdomains and IDs directly from API."""
+def fetch_recommendations(subdomain, pub_id, base_url, retries=3, delay=2.0):
+    """Fetch recommended subdomains and IDs directly from API with retry backoff."""
     base_url = clean_url(base_url)
     url = f"{base_url}/api/v1/recommendations/from/{pub_id}"
-    req = urllib.request.Request(
-        url,
-        headers={'User-Agent': 'Mozilla/5.0', 'Accept': 'application/json'}
-    )
-    try:
-        with urllib.request.urlopen(req, context=ctx, timeout=8) as r:
-            return json.loads(r.read().decode('utf-8'))
-    except Exception as e:
-        return []
+    
+    for attempt in range(retries):
+        req = urllib.request.Request(
+            url,
+            headers={
+                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                'Accept': 'application/json'
+            }
+        )
+        try:
+            with urllib.request.urlopen(req, context=ctx, timeout=8) as r:
+                return json.loads(r.read().decode('utf-8'))
+        except urllib.error.HTTPError as e:
+            if e.code == 429:
+                sleep_time = delay * (2 ** attempt) + random.uniform(0.5, 1.5)
+                time.sleep(sleep_time)
+            elif e.code in [404, 403, 410]:
+                break
+            else:
+                time.sleep(1.0)
+        except Exception as e:
+            time.sleep(1.0)
+            
+    return []
 
-def fetch_archive(subdomain, base_url, limit=5):
-    """Fetch recent posts archive metadata."""
+def fetch_archive(subdomain, base_url, limit=5, retries=3, delay=2.0):
+    """Fetch recent posts archive metadata with retry backoff."""
     base_url = clean_url(base_url)
     url = f"{base_url}/api/v1/archive?sort=new&limit={limit}"
-    req = urllib.request.Request(
-        url,
-        headers={'User-Agent': 'Mozilla/5.0'}
-    )
-    try:
-        with urllib.request.urlopen(req, context=ctx, timeout=8) as r:
-            return json.loads(r.read().decode('utf-8'))
-    except Exception as e:
-        return []
+    
+    for attempt in range(retries):
+        req = urllib.request.Request(
+            url,
+            headers={
+                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+            }
+        )
+        try:
+            with urllib.request.urlopen(req, context=ctx, timeout=8) as r:
+                return json.loads(r.read().decode('utf-8'))
+        except urllib.error.HTTPError as e:
+            if e.code == 429:
+                sleep_time = delay * (2 ** attempt) + random.uniform(0.5, 1.5)
+                time.sleep(sleep_time)
+            elif e.code in [404, 403, 410]:
+                break
+            else:
+                time.sleep(1.0)
+        except Exception as e:
+            time.sleep(1.0)
+            
+    return []
+
+def detect_lang(title, subtitle, description):
+    text_lower = f"{title} {subtitle or ''} {description or ''}".lower()
+    es_words = {"de", "la", "en", "el", "que", "los", "un", "una", "con", "para", "por", "del", "y", "como", "mas", "o"}
+    en_words = {"the", "of", "and", "to", "in", "is", "that", "it", "with", "for", "on", "this", "be", "are", "you", "or"}
+    
+    words = re.findall(r'\b\w+\b', text_lower)
+    
+    es_count = sum(1 for w in words if w in es_words)
+    en_count = sum(1 for w in words if w in en_words)
+    
+    if es_count > en_count:
+        return "es"
+    elif en_count > es_count:
+        return "en"
+    return None
 
 def audit_text(title, subtitle, description, lang):
     text = f"{title} {subtitle or ''} {description or ''}".lower()
@@ -175,12 +222,15 @@ def audit_publication(subdomain, base_url):
     langs = []
     
     for p in posts:
-        lang = p.get("language") or "es"
+        title = p.get("title", "")
+        subtitle = p.get("subtitle") or ""
+        desc = p.get("description") or ""
+        lang = detect_lang(title, subtitle, desc) or p.get("language") or "es"
         langs.append(lang)
         exergy, smoke, cb, tech, comm, c5 = audit_text(
-            p.get("title", ""),
-            p.get("subtitle") or "",
-            p.get("description") or "",
+            title,
+            subtitle,
+            desc,
             lang
         )
         exergy_list.append(exergy)
@@ -249,10 +299,20 @@ def main():
         if sub not in discovered:
             discovered[sub] = {"id": None, "url": f"https://{sub}.substack.com"}
         for rec in info.get("recommendations", []):
+            # Try flattened structure
             tsub = rec.get("subdomain")
             tid = rec.get("id")
+            turl = rec.get("custom_domain") or (f"https://{tsub}.substack.com" if tsub else None)
+            
+            # If not found, try raw structure
+            if not tsub or not tid:
+                target = rec.get("recommendedPublication") or rec.get("target_pub") or {}
+                tsub = target.get("subdomain")
+                tid = target.get("id")
+                turl = target.get("custom_domain") or (f"https://{tsub}.substack.com" if tsub else None)
+                
             if tsub and tid:
-                turl = clean_url(rec.get("custom_domain") or f"https://{tsub}.substack.com")
+                turl = clean_url(turl)
                 if tsub not in discovered:
                     discovered[tsub] = {"id": tid, "url": turl}
                     
@@ -317,14 +377,13 @@ def main():
         print(f"[✓] Recommendation graph cache updated at {GRAPH_PATH}")
         
     # 4. Run parallel exergy audits on all discovered subdomains
-    # We will audit all discovered subdomains and keep the first 1,000 that succeed (non-empty archives)
     audit_list = list(discovered.keys())
-    print(f"[*] Launching parallel exergy audit on {len(audit_list)} discovered subdomains (Targeting {MAX_AUDITED_TARGET} successful)...")
+    print(f"[*] Launching parallel exergy audit on {len(audit_list)} discovered subdomains (Concurrency: {CONCURRENCY}, Target: {MAX_AUDITED_TARGET})...")
     
     audited_results = []
     scan_start = time.time()
     
-    with ThreadPoolExecutor(max_workers=50) as executor:
+    with ThreadPoolExecutor(max_workers=CONCURRENCY) as executor:
         futures = {executor.submit(audit_publication, sub, discovered[sub]["url"]): sub for sub in audit_list}
         completed = 0
         for future in as_completed(futures):
