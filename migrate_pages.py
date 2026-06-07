@@ -1,8 +1,8 @@
 import os
 import re
 
-SOURCE_DIR = "/Users/borjafernandezangulo/10_PROJECTS/borjamoskv-site"
-TARGET_DIR = "/Users/borjafernandezangulo/10_PROJECTS/borjamoskv-v2/src/pages"
+SOURCE_DIR = "/Users/borjafernandezangulo/Documents/antigravity/agitated-volta"
+TARGET_DIR = "/Users/borjafernandezangulo/10_PROJECTS/borjamoskv-site/src/pages"
 
 pages_to_migrate = [
     "blog.html",
@@ -51,6 +51,9 @@ for page in pages_to_migrate:
     # Optional: replace <script src="article.js"> to <script src="/article.js">
     content = re.sub(r'src="(?!http|/)(.*?\.js)"', r'src="/\1"', content)
     content = re.sub(r'href="(?!http|/)(.*?\.css)"', r'href="/\1"', content)
+    
+    # Add is:inline to all script tags with a src referencing local/public js
+    content = re.sub(r'<script([^>]*?\bsrc="(?!!http)[^"]+?")([^>]*?)>', r'<script\1\2 is:inline>', content)
     
     # Save as .astro
     target_name = page.replace(".html", ".astro")

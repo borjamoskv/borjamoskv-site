@@ -1,1370 +1,379 @@
----
-import Layout from '../layouts/Layout.astro';
----
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EXERGIA-Ω // BORJA MOSKV</title>
+    <meta name="description" content="EXERGIA-Ω: Experiencia sonora y visual binaural inmersiva por Borja Moskv." />
+    <meta name="author" content="BORJA MOSKV" />
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50,15 L20,80 L80,80 Z' fill='none' stroke='%232B3BE5' stroke-width='8'/></svg>" type="image/svg+xml" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <!-- Film Grain Overlay -->
+    <div class="film-grain" aria-hidden="true"></div>
 
-<Layout title="BORJA MOSKV — Música · Vídeo · Blog">
-<style>
+    <!-- Liquid Hover SVG Filter -->
+    <svg style="position: absolute; width: 0; height: 0; pointer-events: none;" aria-hidden="true">
+      <defs>
+        <filter id="liquid-warp">
+          <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="3" result="noise" seed="1" />
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="0" xChannelSelector="R" yChannelSelector="G" id="liquid-disp-map" />
+        </filter>
+      </defs>
+    </svg>
 
-      :root {
-        --color-bg: #030304;
-        --color-surface: #0a0a0c;
-        --color-text: #F8F9FA;
-        --color-muted: rgba(255, 255, 255, 0.55);
-        --color-accent: #2B3BE5;
-        --color-pink: #FF0055;
-        --color-accent-glow: rgba(43, 59, 229, 0.5);
-        --color-pink-glow: rgba(255, 0, 85, 0.5);
-        --font-sans: 'Outfit', system-ui, sans-serif;
-        --font-mono: 'JetBrains Mono', monospace;
-        --max-w: 1280px;
-        --gutter: 5vw;
-        --glass-bg: rgba(5, 5, 6, 0.55);
-        --glass-border: rgba(255, 255, 255, 0.06);
-      }
-      
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-
-      html {
-        scroll-behavior: smooth;
-        background-color: var(--color-void);
-      }
-
-      body {
-        background-color: var(--color-void);
-        color: var(--color-parchment);
-        font-family: var(--font-primary);
-        min-height: 100vh;
-        overflow-x: hidden;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
-
-      /* ─── Global Noise Texture ─── */
-      body::before {
-        content: "";
-        position: fixed;
-        top: 0; left: 0; width: 100vw; height: 100vh;
-        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
-        pointer-events: none;
-        z-index: 9999;
-      }
-
-      /* ─── Fixed Background Video ─── */
-      .bg-video-container {
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        z-index: 0;
-      }
-      .bg-video {
-        width: 100%; height: 100%;
-        object-fit: cover;
-        opacity: 0.25;
-        filter: grayscale(80%) contrast(120%);
-        mix-blend-mode: luminosity;
-      }
-      .overlay {
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        background: radial-gradient(ellipse at center, rgba(3,3,4,0.4) 0%, rgba(3,3,4,0.95) 100%);
-        z-index: 1;
-        pointer-events: none;
-      }
-
-      /* ─── Navigation ─── */
-      .top-nav {
-        position: fixed;
-        top: 0; left: 0; right: 0;
-        z-index: 200;
-        display: flex;
-        justify-content: center;
-        gap: 3rem;
-        padding: 1.2rem 2rem;
-        background: linear-gradient(to bottom, rgba(3,3,4,0.9), rgba(3,3,4,0));
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border-bottom: 1px solid transparent;
-        transition: all 0.4s ease;
-      }
-      .nav-link {
-        color: var(--color-muted);
-        text-decoration: none;
-        font-size: 0.75rem;
-        font-weight: 500;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        font-family: var(--font-secondary);
-        transition: color 0.3s ease, text-shadow 0.3s ease;
-        position: relative;
-      }
-      .nav-link:hover { 
-        color: #FFFFFF; 
-        text-shadow: 0 0 12px rgba(255,255,255,0.4);
-      }
-      .nav-link::after {
-        content: '';
-        position: absolute;
-        bottom: -6px; left: 50%;
-        width: 0%; height: 1px;
-        background: var(--color-amber);
-        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        transform: translateX(-50%);
-      }
-      .nav-link:hover::after {
-        width: 100%;
-        box-shadow: 0 0 8px var(--color-amber);
-      }
-      .nav-brand::after {
-        display: none !important;
-      }
-
-      /* ─── Content Layer ─── */
-      .content-layer {
-        position: relative;
-        z-index: 10;
-      }
-
-      /* ─── HERO ─── */
-      .hero {
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        padding: 6rem 2rem 4rem;
-        position: relative;
-      }
-
-      .hero-label {
-        font-family: var(--font-secondary);
-        font-size: 0.7rem;
-        letter-spacing: 0.5em;
-        text-transform: uppercase;
-        color: var(--color-amber);
-        margin-bottom: 1.5rem;
-        opacity: 0;
-        animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.2s;
-        text-shadow: 0 0 20px rgba(255, 159, 28, 0.4);
-      }
-
-      .hero-title {
-        font-size: clamp(4.5rem, 15vw, 14rem);
-        font-weight: 900;
-        line-height: 0.85;
-        letter-spacing: -0.05em;
-        margin-bottom: 2rem;
-        color: #fff;
-        background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0.4) 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        opacity: 0;
-        animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.4s;
-        filter: drop-shadow(0 0 40px rgba(255,255,255,0.1));
-      }
-
-      .hero-subtitle {
-        font-size: 1.25rem;
-        font-weight: 300;
-        color: var(--color-muted);
-        max-width: 600px;
-        line-height: 1.6;
-        margin-bottom: 3.5rem;
-        opacity: 0;
-        animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.6s;
-      }
-
-      .hero-actions {
-        display: flex;
-        gap: 1.5rem;
-        flex-wrap: wrap;
-        justify-content: center;
-        opacity: 0;
-        animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.8s;
-      }
-
-      .hero-btn {
-        position: relative;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.75rem;
-        padding: 1rem 2.5rem;
-        border-radius: 100px;
-        text-decoration: none;
-        font-family: var(--font-secondary);
-        font-size: 0.75rem;
-        font-weight: 600;
-        letter-spacing: 0.15em;
-        text-transform: uppercase;
-        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        cursor: pointer;
-        overflow: hidden;
-        z-index: 1;
-      }
-
-      .hero-btn.primary {
-        background: var(--color-yinmn);
-        color: #FFFFFF;
-        border: 1px solid rgba(255,255,255,0.1);
-        box-shadow: 0 0 20px rgba(43, 59, 229, 0.3);
-      }
-      .hero-btn.primary::before {
-        content: '';
-        position: absolute;
-        top: 0; left: 0; width: 100%; height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-        transform: translateX(-100%);
-        transition: transform 0.6s ease;
-        z-index: -1;
-      }
-      .hero-btn.primary:hover {
-        background: #3A4BFF;
-        box-shadow: 0 10px 40px rgba(43, 59, 229, 0.6);
-        transform: translateY(-3px) scale(1.02);
-      }
-      .hero-btn.primary:hover::before {
-        transform: translateX(100%);
-      }
-
-      .hero-btn.outline {
-        background: var(--glass-bg);
-        backdrop-filter: blur(10px);
-        color: var(--color-parchment);
-        border: 1px solid var(--glass-border);
-      }
-      .hero-btn.outline:hover {
-        border-color: rgba(255, 255, 255, 0.3);
-        background: rgba(255, 255, 255, 0.05);
-        box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-        transform: translateY(-3px) scale(1.02);
-      }
-
-      .scroll-indicator {
-        position: absolute;
-        bottom: 3rem;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 1rem;
-        opacity: 0;
-        animation: fadeUp 1s ease forwards 1.2s;
-      }
-      .scroll-indicator span {
-        font-family: var(--font-secondary);
-        font-size: 0.6rem;
-        letter-spacing: 0.4em;
-        text-transform: uppercase;
-        color: var(--color-muted);
-      }
-      .scroll-line {
-        width: 1px;
-        height: 60px;
-        background: linear-gradient(to bottom, var(--color-amber), transparent);
-        animation: scrollPulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-      }
-
-      /* ─── Section shared ─── */
-      .section {
-        padding: 8rem var(--gutter);
-        position: relative;
-        background: rgba(3, 3, 4, 0.7);
-        backdrop-filter: blur(60px);
-        -webkit-backdrop-filter: blur(60px);
-        border-top: 1px solid var(--glass-border);
-      }
-
-      .section-inner {
-        max-width: var(--max-w);
-        margin: 0 auto;
-      }
-
-      .section-header {
-        text-align: center;
-        margin-bottom: 5rem;
-      }
-
-      .section-label {
-        font-family: var(--font-secondary);
-        font-size: 0.7rem;
-        font-weight: 700;
-        letter-spacing: 0.5em;
-        text-transform: uppercase;
-        color: var(--color-amber);
-        margin-bottom: 1.5rem;
-        display: block;
-        text-shadow: 0 0 15px rgba(255, 159, 28, 0.4);
-      }
-
-      .section-title {
-        font-size: clamp(2.5rem, 6vw, 4.5rem);
-        font-weight: 900;
-        letter-spacing: -0.04em;
-      }
-
-      .section-title span {
-        background: linear-gradient(135deg, #FFFFFF, var(--color-muted));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-
-      /* ─── MÚSICA: Featured + Grid ─── */
-      .featured-video {
-        width: 100%;
-        aspect-ratio: 16 / 9;
-        border-radius: 16px;
-        overflow: hidden;
-        margin-bottom: 4rem;
-        border: 1px solid var(--glass-border);
-        box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-        position: relative;
-        background: #000;
-      }
-      .featured-video iframe {
-        width: 100%; height: 100%;
-        border: none;
-      }
-
-      .thumb-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 1.5rem;
-      }
-
-      .thumb-card {
-        position: relative;
-        aspect-ratio: 16 / 9;
-        border-radius: 12px;
-        overflow: hidden;
-        cursor: pointer;
-        border: 1px solid var(--glass-border);
-        background: var(--glass-bg);
-        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      }
-      .thumb-card::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        border-radius: 12px;
-        box-shadow: inset 0 0 0 1px rgba(255,255,255,0.0);
-        transition: all 0.4s ease;
-        pointer-events: none;
-      }
-      .thumb-card:hover {
-        transform: translateY(-6px) scale(1.02);
-        border-color: rgba(43, 59, 229, 0.6);
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(43, 59, 229, 0.5);
-      }
-      .thumb-card:hover::after {
-        box-shadow: inset 0 0 0 1px rgba(255,255,255,0.15);
-      }
-      .thumb-card img {
-        width: 100%; height: 100%;
-        object-fit: cover;
-        transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
-        filter: saturate(0.8) contrast(1.1);
-      }
-      .thumb-card:hover img {
-        transform: scale(1.08);
-        filter: saturate(1.2) contrast(1.2);
-      }
-      .thumb-overlay {
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(to top, rgba(3, 3, 4, 0.95) 0%, rgba(3, 3, 4, 0.4) 40%, transparent 100%);
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        padding: 1.5rem;
-        opacity: 0;
-        transition: opacity 0.4s ease;
-      }
-      .thumb-card:hover .thumb-overlay {
-        opacity: 1;
-      }
-      .thumb-title {
-        font-size: 0.85rem;
-        font-weight: 700;
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
-        color: #fff;
-        margin-bottom: 0.3rem;
-      }
-      .thumb-desc {
-        font-family: var(--font-secondary);
-        font-size: 0.65rem;
-        color: var(--color-amber);
-      }
-
-      .play-icon {
-        position: absolute;
-        top: 50%; left: 50%;
-        transform: translate(-50%, -50%) scale(0.6);
-        width: 56px; height: 56px;
-        border-radius: 50%;
-        background: rgba(43, 59, 229, 0.9);
-        backdrop-filter: blur(5px);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        opacity: 0;
-        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        box-shadow: 0 0 20px rgba(43, 59, 229, 0.5);
-      }
-      .thumb-card:hover .play-icon {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-      }
-      .play-icon svg {
-        width: 20px; height: 20px;
-        fill: #FFFFFF;
-        margin-left: 3px;
-      }
-
-      /* ─── VÍDEO Section ─── */
-      .video-scroll-row {
-        display: flex;
-        gap: 1.5rem;
-        overflow-x: auto;
-        padding-bottom: 2rem;
-        scrollbar-width: thin;
-        scrollbar-color: rgba(255,255,255,0.15) transparent;
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
-        will-change: transform;
-      }
-      .video-scroll-row::-webkit-scrollbar {
-        height: 6px;
-      }
-      .video-scroll-row::-webkit-scrollbar-track {
-        background: rgba(0,0,0,0.2);
-        border-radius: 4px;
-      }
-      .video-scroll-row::-webkit-scrollbar-thumb {
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 4px;
-      }
-      .video-scroll-row::-webkit-scrollbar-thumb:hover {
-        background: rgba(255, 255, 255, 0.4);
-      }
-
-      .video-scroll-card {
-        flex: 0 0 340px;
-        aspect-ratio: 16 / 9;
-        border-radius: 12px;
-        overflow: hidden;
-        position: relative;
-        border: 1px solid var(--glass-border);
-        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        cursor: pointer;
-      }
-      .video-scroll-card:hover {
-        transform: translateY(-6px) scale(1.02);
-        border-color: rgba(255, 0, 85, 0.6);
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 159, 28, 0.4);
-      }
-      .video-scroll-card img {
-        width: 100%; height: 100%;
-        object-fit: cover;
-        transition: transform 0.6s ease;
-      }
-      .video-scroll-card:hover img {
-        transform: scale(1.08);
-      }
-      .video-scroll-card .thumb-overlay {
-        opacity: 0;
-        transition: opacity 0.4s ease;
-      }
-      .video-scroll-card:hover .thumb-overlay {
-        opacity: 1;
-      }
-      .video-scroll-card:hover .play-icon {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-        background: rgba(255, 0, 85, 0.9);
-        box-shadow: 0 0 20px rgba(255, 159, 28, 0.4);
-      }
-
-      /* ─── BLOG Section ─── */
-      .blog-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 2.5rem;
-      }
-
-      .blog-card {
-        background: var(--glass-bg);
-        border: 1px solid var(--glass-border);
-        border-radius: 16px;
-        padding: 3rem 2.5rem;
-        text-decoration: none;
-        color: inherit;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        min-height: 380px;
-        transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        position: relative;
-        overflow: hidden;
-        backdrop-filter: blur(20px);
-      }
-
-      .blog-card::before {
-        content: '';
-        position: absolute;
-        top: 0; left: 0;
-        width: 100%; height: 3px;
-        background: linear-gradient(90deg, transparent, var(--color-amber), var(--color-yinmn), transparent);
-        transform: scaleX(0);
-        transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-      }
-
-      .blog-card:hover {
-        transform: translateY(-10px);
-        border-color: rgba(43, 59, 229, 0.4);
-        background: rgba(43, 59, 229, 0.05);
-        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 40px rgba(43, 59, 229, 0.1);
-      }
-      .blog-card:hover::before {
-        transform: scaleX(1);
-      }
-
-      .card-meta {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 2rem;
-      }
-
-      .card-tag {
-        font-family: var(--font-secondary);
-        font-size: 0.65rem;
-        font-weight: 700;
-        letter-spacing: 0.15em;
-        text-transform: uppercase;
-        color: var(--color-amber);
-        background: rgba(255, 0, 85, 0.08);
-        border: 1px solid rgba(255, 0, 85, 0.3);
-        padding: 0.4rem 1rem;
-        border-radius: 100px;
-        box-shadow: 0 0 10px rgba(255, 0, 85, 0);
-        transition: all 0.3s ease;
-      }
-      .blog-card:hover .card-tag {
-        box-shadow: 0 0 15px rgba(255, 0, 85, 0.2);
-        background: rgba(255, 0, 85, 0.15);
-      }
-      .card-tag.tech {
-        color: var(--color-yinmn);
-        border-color: rgba(43, 59, 229, 0.3);
-        background: rgba(43, 59, 229, 0.08);
-      }
-      .blog-card:hover .card-tag.tech {
-        box-shadow: 0 0 15px rgba(43, 59, 229, 0.2);
-        background: rgba(43, 59, 229, 0.15);
-      }
-
-      .card-date {
-        font-family: var(--font-secondary);
-        font-size: 0.7rem;
-        color: var(--color-muted);
-      }
-
-      .card-title {
-        font-size: 1.6rem;
-        font-weight: 800;
-        line-height: 1.3;
-        margin-bottom: 1.5rem;
-        color: #FFFFFF;
-        letter-spacing: -0.02em;
-        transition: color 0.3s ease;
-      }
-      .blog-card:hover .card-title {
-        color: #fff;
-        text-shadow: 0 0 20px rgba(255,255,255,0.2);
-      }
-
-      .card-excerpt {
-        font-size: 0.95rem;
-        line-height: 1.7;
-        color: var(--color-muted);
-        margin-bottom: 2.5rem;
-        font-weight: 400;
-        flex-grow: 1;
-        transition: color 0.3s ease;
-      }
-      .blog-card:hover .card-excerpt {
-        color: rgba(255,255,255,0.7);
-      }
-
-      .card-cta {
-        font-family: var(--font-secondary);
-        font-size: 0.75rem;
-        font-weight: 700;
-        letter-spacing: 0.15em;
-        text-transform: uppercase;
-        color: var(--color-muted);
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        transition: all 0.3s ease;
-      }
-      .blog-card:hover .card-cta {
-        color: var(--color-yinmn);
-        text-shadow: 0 0 10px rgba(43, 59, 229, 0.5);
-      }
-      .card-cta .arrow-icon {
-        transition: transform 0.3s ease;
-      }
-      .blog-card:hover .card-cta .arrow-icon {
-        transform: translateX(5px);
-      }
-
-      .section-footer {
-        text-align: center;
-        margin-top: 5rem;
-      }
-
-      .view-all-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.75rem;
-        color: #FFFFFF;
-        text-decoration: none;
-        font-family: var(--font-secondary);
-        font-size: 0.8rem;
-        font-weight: 600;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        border: 1px solid var(--glass-border);
-        background: var(--glass-bg);
-        padding: 1.2rem 3rem;
-        border-radius: 100px;
-        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      }
-      .view-all-btn:hover {
-        border-color: var(--color-yinmn);
-        background: rgba(43, 59, 229, 0.1);
-        box-shadow: 0 10px 30px rgba(43, 59, 229, 0.2);
-        transform: translateY(-3px) scale(1.02);
-      }
-
-      /* ─── Arrow Icon ─── */
-      .arrow-icon {
-        width: 16px; height: 16px;
-        fill: none;
-        stroke: currentColor;
-        stroke-width: 2;
-        stroke-linecap: square;
-      }
-
-      /* ─── Footer ─── */
-      .site-footer {
-        position: relative;
-        z-index: 10;
-        text-align: center;
-        padding: 4rem 2rem;
-        border-top: 1px solid var(--glass-border);
-        background: rgba(3, 3, 4, 0.95);
-      }
-      .footer-text {
-        font-family: var(--font-secondary);
-        font-size: 0.7rem;
-        letter-spacing: 0.3em;
-        color: var(--color-muted);
-        text-transform: uppercase;
-      }
-
-      /* ─── Animations ─── */
-      @keyframes fadeUp {
-        from { opacity: 0; transform: translateY(30px); filter: blur(10px); }
-        to { opacity: 1; transform: translateY(0); filter: blur(0); }
-      }
-      @keyframes scrollPulse {
-        0%, 100% { opacity: 0.2; transform: scaleY(0.8); transform-origin: top; }
-        50% { opacity: 1; transform: scaleY(1); transform-origin: top; }
-      }
-
-      /* ─── Responsive ─── */
-      @media (max-width: 1024px) {
-        :root { --gutter: 3rem; }
-        .thumb-grid { grid-template-columns: repeat(3, 1fr); }
-        .blog-grid { grid-template-columns: repeat(2, 1fr); }
-        .bandcamp-grid { grid-template-columns: 1fr !important; }
-      }
-      @media (max-width: 768px) {
-        :root { --gutter: 1.5rem; }
-        .top-nav { gap: 1.5rem; padding: 1.2rem 1rem; }
-        .thumb-grid { grid-template-columns: repeat(2, 1fr); }
-        .blog-grid { grid-template-columns: 1fr; }
-        .hero-actions { flex-direction: column; align-items: center; width: 100%; padding: 0 2rem; }
-        .hero-btn { width: 100%; justify-content: center; }
-        .video-scroll-card { flex: 0 0 280px; }
-      }
-      @media (max-width: 480px) {
-        .thumb-grid { grid-template-columns: 1fr; }
-        .top-nav { gap: 1rem; font-size: 0.65rem; }
-        .hero-title { font-size: 3.5rem; }
-      }
-    
-
-/* ─── SOTA: Scroll-Driven Entry Effects (Industrial Noir / Music Visual) ─── */
-@media (prefers-reduced-motion: no-preference) {
-  @supports ((animation-timeline: view()) and (animation-range: entry)) {
-    @keyframes sota-grow {
-      from { 
-        scale: 0.8; 
-        opacity: 0; 
-        filter: blur(15px) grayscale(100%); 
-        transform: translateY(100px) perspective(1000px) rotateX(10deg); 
-      }
-      to { 
-        scale: 1; 
-        opacity: 1; 
-        filter: blur(0) grayscale(0%); 
-        transform: translateY(0) perspective(1000px) rotateX(0deg); 
-      }
-    }
-    
-    .thumb-card, .blog-card {
-      animation: sota-grow auto cubic-bezier(0.16, 1, 0.3, 1) both;
-      animation-timeline: view();
-      animation-range: entry 5% cover 35%;
-      will-change: transform, opacity, filter;
-    }
-    
-    @keyframes sota-scroll-x {
-      from { 
-        scale: 0.7; 
-        opacity: 0; 
-        filter: blur(10px);
-        transform: translateX(100px) perspective(800px) rotateY(-25deg); 
-      }
-      to { 
-        scale: 1; 
-        opacity: 1; 
-        filter: blur(0);
-        transform: translateX(0) perspective(800px) rotateY(0); 
-      }
-    }
-
-    .video-scroll-card {
-      animation: sota-scroll-x auto cubic-bezier(0.16, 1, 0.3, 1) both;
-      animation-timeline: view(inline);
-      animation-range: entry 0% cover 50%;
-      will-change: transform, opacity, filter;
-    }
-  }
-}
-
-/* ─── SOTA Hero Enhancements (Minimalist Edition) ─── */
-.hero-corner {
-  position: absolute;
-  width: 14px;
-  height: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  pointer-events: none;
-  z-index: 10;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.hero-corner.top-left { top: 35px; left: 35px; border-right: none; border-bottom: none; }
-.hero-corner.top-right { top: 35px; right: 35px; border-left: none; border-bottom: none; }
-.hero-corner.bottom-left { bottom: 35px; left: 35px; border-right: none; border-top: none; }
-.hero-corner.bottom-right { bottom: 35px; right: 35px; border-left: none; border-top: none; }
-
-.hero:hover .hero-corner {
-  width: 24px;
-  height: 24px;
-  border-color: var(--color-accent);
-}
-
-.telemetry-badge {
-  position: absolute;
-  top: 12%;
-  right: 5vw;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  font-family: var(--font-mono);
-  font-size: 0.55rem;
-  letter-spacing: 0.15em;
-  color: rgba(255, 255, 255, 0.25);
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
-  padding-right: 0.8rem;
-  pointer-events: none;
-  z-index: 5;
-  opacity: 0;
-  animation: fadeUp 1s ease forwards 0.8s;
-}
-
-.telemetry-row {
-  display: flex;
-  gap: 0.4rem;
-  align-items: center;
-  margin-top: 0.1rem;
-}
-
-.telemetry-dot {
-  width: 3px;
-  height: 3px;
-  background: #00ff00;
-  border-radius: 50%;
-  box-shadow: 0 0 6px #00ff00;
-  animation: pulse-live 1.2s infinite alternate;
-}
-
-@keyframes pulse-live {
-  from { opacity: 0.3; } to { opacity: 1; }
-}
-
-.hero-title-interactive {
-  display: inline-block;
-}
-
-.hero-letter {
-  display: inline-block;
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
-  cursor: default;
-}
-
-.hero-letter:hover {
-  color: var(--color-amber) !important;
-  transform: translateY(-6px);
-}
-
-.hero-btn::after {
-  content: '';
-  position: absolute;
-  top: 0; left: -100%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-  transform: skewX(-25deg);
-  transition: none;
-}
-.hero-btn:hover::after {
-  left: 150%;
-  transition: all 0.8s ease;
-}
-
-</style>
-
-<div class="content-layer">
-
-      <!-- ═══ HERO ═══ -->
-      <section class="hero">
-        <!-- Structural Corner Brackets -->
-        <div class="hero-corner top-left"></div>
-        <div class="hero-corner top-right"></div>
-        <div class="hero-corner bottom-left"></div>
-        <div class="hero-corner bottom-right"></div>
-
-        <!-- System Telemetry Badge -->
-        <div class="telemetry-badge">
-          <div>SYS_STATUS // L1_ACTIVE</div>
-          <div class="telemetry-row">
-            <span>PoC_VERIFIED</span>
-            <div class="telemetry-dot"></div>
-          </div>
-          <div>C5-REAL // OMEGA</div>
+    <!-- Interactive Aperture Loading Screen -->
+    <div class="aperture-loader" id="loader">
+      <div class="aperture-bg-grid" id="loader-grid"></div>
+      <div class="loader-content">
+        <h1 class="loader-glitch-title" data-text="EXERGIA-Ω">EXERGIA-Ω</h1>
+        <div class="loader-status">INICIALIZANDO SISTEMA DE EXERGÍA...</div>
+        <div class="loader-bar-container">
+          <div class="loader-bar" id="loader-bar"></div>
         </div>
+        <div class="loader-telemetry" id="loader-telemetry">SYS.BOOT // ADDR: 0x2B3BE5</div>
+      </div>
+    </div>
 
-        <span class="hero-label">Música · Vídeo · Ensayo</span>
-        <h1 class="hero-title" aria-label="BORJA MOSKV">
-          <span class="hero-title-interactive">
-            <span class="hero-letter">B</span><span class="hero-letter">O</span><span class="hero-letter">R</span><span class="hero-letter">J</span><span class="hero-letter">A</span><br/>
-            <span class="hero-letter">M</span><span class="hero-letter">O</span><span class="hero-letter">S</span><span class="hero-letter">K</span><span class="hero-letter">V</span>
-          </span>
-        </h1>
-        <p class="hero-subtitle">SÍNTESIS C5-REAL. VIBRACIONES INERCIALES EN PRIMER PLANO. COLAPSO TERMODINÁMICO DE FONDO.</p>
-        <div class="hero-actions">
-          <a href="#musica" class="hero-btn primary">
-            Escuchar
-            <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-          <a href="#video" class="hero-btn outline">
-            Ver vídeos
-            <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-          <a href="#blog" class="hero-btn outline">
-            Leer diario
-          </a>
-        </div>
-        <div class="scroll-indicator">
-          <span>Scroll</span>
-          <div class="scroll-line"></div>
-        </div>
-      </section>
+    <!-- Background Ambient Video / Canvas System -->
+    <div class="backdrop" aria-hidden="true">
+      <div class="backdrop__radial"></div>
+      <div class="backdrop__grid"></div>
+    </div>
 
-      <!-- ═══ MÚSICA ═══ -->
-      <section id="musica" class="section">
-        <div class="section-inner">
-          <div class="section-header">
-            <span class="section-label">Producción Original</span>
-            <h2 class="section-title"><span>Música</span></h2>
-          </div>
+    <!-- Main Navigation Header -->
+    <header class="site-header" id="header">
+      <a class="brand" href="#inicio">
+        BORJA MOSKV <span class="brand-suffix">// EXERGIA-Ω</span>
+      </a>
+      <nav class="site-nav" aria-label="Navegación Principal">
+        <a href="#control-deck" class="nav-link is-active">DECK</a>
+        <a href="#discography" class="nav-link">OBRAS</a>
+        <a href="#stills-gallery" class="nav-link">GALERÍA</a>
+        <a href="/blog" class="nav-link-ext">DIARIO</a>
+        <a href="/gurus" class="nav-link-ext">GURÚS</a>
+        <a href="/benchmark-humo" class="nav-link-ext">BENCHMARK</a>
+        <a href="/blog/gon-intervalo" class="nav-link-ext">GON</a>
+      </nav>
+      <div class="system-status">
+        <span class="status-indicator"></span>
+        <span class="status-text">C5-REAL</span>
+      </div>
+    </header>
 
-          <!-- Featured embed -->
-          <div class="featured-video">
-            <iframe
-              src="https://www.youtube.com/embed/b9ktVQN48OU?rel=0&modestbranding=1&color=white"
-              title="LES BUKO — Borja Moskv [8K]"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-              loading="lazy"
-              aria-label="LES BUKO — Borja Moskv YouTube Video Player"
-            ></iframe>
-          </div>
-
-          <!-- Audio Sovereign Players Grid -->
-          <div class="bandcamp-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 4rem;">
-            <div style="background: rgba(10, 10, 12, 0.8); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1rem; backdrop-filter: blur(10px);">
-              <span style="font-family: var(--font-secondary); font-size: 0.6rem; color: var(--color-amber); letter-spacing: 0.2em; display: block; margin-bottom: 0.8rem; text-transform: uppercase;">Sovereign Release 01</span>
-              <iframe 
-                style="border: 0; width: 100%; height: 120px; border-radius: 8px; filter: invert(0.9) contrast(120%);" 
-                src="https://bandcamp.com/EmbeddedPlayer/album=3994364503/size=large/bgcol=333333/linkcol=2b3be5/tracklist=false/artwork=small/transparent=true/" 
-                seamless
-                title="Instructions for Flying Bandcamp Player"
-              >
-                <a href="https://borjamoskv.bandcamp.com/album/instructions-for-flying">Instructions for Flying by Borja Moskv</a>
-              </iframe>
+    <!-- Main Workspace Container -->
+    <main class="workspace" id="main-content">
+      <!-- Section 1: The Interactive Vinyl Control Deck -->
+      <section class="workspace-section active" id="control-deck" aria-label="Control Deck">
+        <div class="section-layout">
+          <!-- Left Panel: Info & Custom Crossover Controls -->
+          <div class="control-panel panel-left">
+            <div class="panel-header">
+              <span class="panel-num">01 /</span>
+              <h2>SEÑAL DE SALIDA</h2>
             </div>
             
-            <div style="background: rgba(10, 10, 12, 0.8); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1rem; backdrop-filter: blur(10px);">
-              <span style="font-family: var(--font-secondary); font-size: 0.6rem; color: var(--color-pink); letter-spacing: 0.2em; display: block; margin-bottom: 0.8rem; text-transform: uppercase;">Curated SOTA Reference // TECHNO</span>
-              <iframe 
-                style="border: 0; width: 100%; height: 120px; border-radius: 8px; filter: invert(0.9) contrast(120%);" 
-                src="https://open.spotify.com/embed/playlist/37i9dQZF1DX6J5VNnQKSs7?utm_source=generator&theme=0" 
-                allowfullscreen="" 
-                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-                loading="lazy"
-                title="SOTA Techno Archive"
-              >
-              </iframe>
+            <div class="track-details">
+              <span class="track-kicker">REPRODUCTOR DE VINILO INTERACTIVO</span>
+              <h3 id="current-track-title">NO SLEEP IN MY CITY</h3>
+              <p id="current-track-desc">Procesamiento binaural espacial con vector de fase a 120Hz.</p>
             </div>
 
-            <div style="background: rgba(10, 10, 12, 0.8); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1rem; backdrop-filter: blur(10px);">
-              <span style="font-family: var(--font-secondary); font-size: 0.6rem; color: var(--color-yinmn); letter-spacing: 0.2em; display: block; margin-bottom: 0.8rem; text-transform: uppercase;">MOSKVLOGIA 2008 – 2026</span>
-              <iframe 
-                style="border: 0; width: 100%; height: 120px; border-radius: 8px; filter: invert(0.9) contrast(120%);" 
-                src="https://open.spotify.com/embed/playlist/1xZOEfnpUEtZoPp2UDbiYg?utm_source=generator&theme=0" 
-                allowfullscreen="" 
-                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-                loading="lazy"
-                title="MOSKVLOGIA 2008 - 2026 Spotify Playlist"
-              ></iframe>
-            </div>
-          </div>
-
-          <!-- Thumbnail grid -->
-          <div class="thumb-grid">
-            <a href="https://www.youtube.com/watch?v=NYhOQTcNLkA" target="_blank" rel="noopener" class="thumb-card">
-              <img src="https://img.youtube.com/vi/NYhOQTcNLkA/hqdefault.jpg" alt="Ecos del Cosmos" loading="lazy" />
-              <div class="thumb-overlay">
-                <span class="thumb-title">Ecos del Cosmos</span>
-                <span class="thumb-desc">Ambient / Sci-Fi [4K]</span>
-              </div>
-              <div class="play-icon"><svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg></div>
-            </a>
-            <a href="https://www.youtube.com/watch?v=x8E9HInpzE4" target="_blank" rel="noopener" class="thumb-card">
-              <img src="https://img.youtube.com/vi/x8E9HInpzE4/hqdefault.jpg" alt="Glitch in the Mirror" loading="lazy" />
-              <div class="thumb-overlay">
-                <span class="thumb-title">Glitch in the Mirror</span>
-                <span class="thumb-desc">Experimental [4K]</span>
-              </div>
-              <div class="play-icon"><svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg></div>
-            </a>
-            <a href="https://www.youtube.com/watch?v=hY0G0Zxf_uo" target="_blank" rel="noopener" class="thumb-card">
-              <img src="https://img.youtube.com/vi/hY0G0Zxf_uo/hqdefault.jpg" alt="32 Y PICO" loading="lazy" />
-              <div class="thumb-overlay">
-                <span class="thumb-title">32 Y Pico</span>
-                <span class="thumb-desc">Electronic [4K]</span>
-              </div>
-              <div class="play-icon"><svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg></div>
-            </a>
-            <a href="https://www.youtube.com/watch?v=NJqC3Xf6RzE" target="_blank" rel="noopener" class="thumb-card">
-              <img src="https://img.youtube.com/vi/NJqC3Xf6RzE/hqdefault.jpg" alt="PATADAS" loading="lazy" />
-              <div class="thumb-overlay">
-                <span class="thumb-title">Patadas</span>
-                <span class="thumb-desc">Electronic</span>
-              </div>
-              <div class="play-icon"><svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg></div>
-            </a>
-            <a href="https://www.youtube.com/watch?v=LDzdKd4WxvI" target="_blank" rel="noopener" class="thumb-card">
-              <img src="https://img.youtube.com/vi/LDzdKd4WxvI/hqdefault.jpg" alt="4 DROGAS" loading="lazy" />
-              <div class="thumb-overlay">
-                <span class="thumb-title">4 Drogas</span>
-                <span class="thumb-desc">Techno</span>
-              </div>
-              <div class="play-icon"><svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg></div>
-            </a>
-            <a href="https://www.youtube.com/watch?v=hsdOCzJpUMg" target="_blank" rel="noopener" class="thumb-card">
-              <img src="https://img.youtube.com/vi/hsdOCzJpUMg/hqdefault.jpg" alt="Antes de las Guerras" loading="lazy" />
-              <div class="thumb-overlay">
-                <span class="thumb-title">Antes de las Guerras</span>
-                <span class="thumb-desc">Ambient</span>
-              </div>
-              <div class="play-icon"><svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg></div>
-            </a>
-            <a href="https://www.youtube.com/watch?v=EP5s0yKZUKk" target="_blank" rel="noopener" class="thumb-card">
-              <img src="https://img.youtube.com/vi/EP5s0yKZUKk/hqdefault.jpg" alt="Void Cascade" loading="lazy" />
-              <div class="thumb-overlay">
-                <span class="thumb-title">Void Cascade</span>
-                <span class="thumb-desc">Ambient [4K]</span>
-              </div>
-              <div class="play-icon"><svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg></div>
-            </a>
-            <a href="https://www.youtube.com/watch?v=tMorCDfedf8" target="_blank" rel="noopener" class="thumb-card">
-              <img src="https://img.youtube.com/vi/tMorCDfedf8/hqdefault.jpg" alt="Jar to the System" loading="lazy" />
-              <div class="thumb-overlay">
-                <span class="thumb-title">Jar to the System</span>
-                <span class="thumb-desc">Electronic</span>
-              </div>
-              <div class="play-icon"><svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg></div>
-            </a>
-          </div>
-
-          <div class="section-footer">
-            <a href="https://www.youtube.com/@borjamoskv" target="_blank" rel="noopener" class="view-all-btn">
-              Ver todo en YouTube
-              <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <!-- ═══ VÍDEO ═══ -->
-      <section id="video" class="section">
-        <div class="section-inner">
-          <div class="section-header">
-            <span class="section-label">Visual · Experimental · 4K/8K</span>
-            <h2 class="section-title"><span>Vídeo</span></h2>
-          </div>
-
-          <!-- Featured video embed -->
-          <div class="featured-video">
-            <iframe
-              src="https://www.youtube.com/embed/Otvpn9vfXOE?rel=0&modestbranding=1&color=white"
-              title="Me Caigo y Me Levanto — Borja Moskv [4K]"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-              loading="lazy"
-              aria-label="Me Caigo y Me Levanto — Borja Moskv YouTube Video Player"
-            ></iframe>
-          </div>
-
-          <!-- Horizontal scroll gallery -->
-          <div class="video-scroll-row">
-            <a href="https://www.youtube.com/watch?v=rmzKC8AYkVw" target="_blank" rel="noopener" class="video-scroll-card">
-              <img src="https://img.youtube.com/vi/rmzKC8AYkVw/hqdefault.jpg" alt="32 Electronic Music Visual Tracks" loading="lazy" />
-              <div class="thumb-overlay">
-                <span class="thumb-title">32 Electronic Music Visual Tracks</span>
-                <span class="thumb-desc">Visual Compilation [4K]</span>
-              </div>
-              <div class="play-icon"><svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg></div>
-            </a>
-            <a href="https://www.youtube.com/watch?v=eIrt6Uw-SEo" target="_blank" rel="noopener" class="video-scroll-card">
-              <img src="https://img.youtube.com/vi/eIrt6Uw-SEo/hqdefault.jpg" alt="En el Prisma del Xokas" loading="lazy" />
-              <div class="thumb-overlay">
-                <span class="thumb-title">En el Prisma del Xokas</span>
-                <span class="thumb-desc">Experimental</span>
-              </div>
-              <div class="play-icon"><svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg></div>
-            </a>
-            <a href="https://www.youtube.com/watch?v=Zc8QEQ8y1f8" target="_blank" rel="noopener" class="video-scroll-card">
-              <img src="https://img.youtube.com/vi/Zc8QEQ8y1f8/hqdefault.jpg" alt="Retratos Naroa Gutiérrez Gil" loading="lazy" />
-              <div class="thumb-overlay">
-                <span class="thumb-title">Retratos Naroa Gutiérrez Gil</span>
-                <span class="thumb-desc">Visual · Photography [4K]</span>
-              </div>
-              <div class="play-icon"><svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg></div>
-            </a>
-            <a href="https://www.youtube.com/watch?v=zzHETLKSeT4" target="_blank" rel="noopener" class="video-scroll-card">
-              <img src="https://img.youtube.com/vi/zzHETLKSeT4/hqdefault.jpg" alt="Metafashion" loading="lazy" />
-              <div class="thumb-overlay">
-                <span class="thumb-title">Metafashion</span>
-                <span class="thumb-desc">Experimental</span>
-              </div>
-              <div class="play-icon"><svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg></div>
-            </a>
-            <a href="https://www.youtube.com/watch?v=4Cb-Iu8DnJM" target="_blank" rel="noopener" class="video-scroll-card">
-              <img src="https://img.youtube.com/vi/4Cb-Iu8DnJM/hqdefault.jpg" alt="BLAC" loading="lazy" />
-              <div class="thumb-overlay">
-                <span class="thumb-title">BLAC</span>
-                <span class="thumb-desc">Electronic [4K]</span>
-              </div>
-              <div class="play-icon"><svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg></div>
-            </a>
-            <a href="https://www.youtube.com/watch?v=PCjZruRuoNY" target="_blank" rel="noopener" class="video-scroll-card">
-              <img src="https://img.youtube.com/vi/PCjZruRuoNY/hqdefault.jpg" alt="Building Your Own Universe" loading="lazy" />
-              <div class="thumb-overlay">
-                <span class="thumb-title">Building Your Own Universe</span>
-                <span class="thumb-desc">Short</span>
-              </div>
-              <div class="play-icon"><svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg></div>
-            </a>
-            <a href="https://www.youtube.com/watch?v=YvGpocK-Iqg" target="_blank" rel="noopener" class="video-scroll-card">
-              <img src="https://img.youtube.com/vi/YvGpocK-Iqg/hqdefault.jpg" alt="Neural Transfer" loading="lazy" />
-              <div class="thumb-overlay">
-                <span class="thumb-title">Neural Transfer</span>
-                <span class="thumb-desc">Electronic</span>
-              </div>
-              <div class="play-icon"><svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg></div>
-            </a>
-            <a href="https://www.youtube.com/watch?v=T_rU7WfOVTI" target="_blank" rel="noopener" class="video-scroll-card">
-              <img src="https://img.youtube.com/vi/T_rU7WfOVTI/hqdefault.jpg" alt="Frases con Nata" loading="lazy" />
-              <div class="thumb-overlay">
-                <span class="thumb-title">Frases con Nata</span>
-                <span class="thumb-desc">Electronic [4K]</span>
-              </div>
-              <div class="play-icon"><svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg></div>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <!-- ═══ LABORATORIO / WEB SOTA ═══ -->
-      <section id="laboratorio" class="section">
-        <div class="section-inner">
-          <div class="section-header">
-            <span class="section-label">Ingeniería Web · Agentes Autónomos · C5-REAL</span>
-            <h2 class="section-title"><span>Laboratorio</span> SOTA</h2>
-          </div>
-
-          <div class="blog-grid" style="grid-template-columns: 1fr;">
-            <!-- Featured SOTA Web Project -->
-            <a href="https://naroagutierrezgil.com" target="_blank" rel="noopener" class="blog-card" style="min-height: 480px; background-image: url('https://naroagutierrezgil.com/noise.png'); background-blend-mode: overlay;">
-              <div class="card-meta">
-                <span class="card-tag tech" style="background: rgba(43, 59, 229, 0.2); border-color: #2B3BE5; color: #fff;">Next.js + C5-REAL</span>
-                <span class="card-date">2026.06</span>
-              </div>
-              <div style="position: relative; z-index: 10;">
-                <h3 class="card-title" style="font-size: 3rem;">Naroa Gutiérrez Gil — Enciclopedia Kinética</h3>
-                <p class="card-excerpt" style="font-size: 1.2rem; max-width: 800px; color: rgba(255,255,255,0.8);">
-                  Arquitectura web forjada por el enjambre autónomo MOSKV-1. Estética Industrial Noir 2026, motores de scroll cinemático, interactividad WebGL y despliegue SOTA C5-REAL. Un laboratorio inmersivo para el hiperrealismo pop y el arte matérico.
-                </p>
-              </div>
-              <span class="card-cta" style="position: relative; z-index: 10;">
-                Explorar Laboratorio
-                <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-              </span>
+            <!-- DSP & Space knobs -->
+            <div class="dsp-module">
+              <div class="module-title">PARÁMETROS BINAURALES</div>
               
-              <!-- Decoration -->
-              <div style="position: absolute; right: -50px; bottom: -50px; width: 300px; height: 300px; background: #2B3BE5; filter: blur(150px); opacity: 0.3; border-radius: 50%; z-index: 1;"></div>
-            </a>
+              <div class="knob-grid">
+                <div class="knob-control" data-param="presence">
+                  <div class="knob-outer">
+                    <div class="knob-inner" style="transform: rotate(0deg);"></div>
+                  </div>
+                  <span class="knob-label">PRESENCE</span>
+                  <span class="knob-value" id="val-presence">0.0 dB</span>
+                </div>
+
+                <div class="knob-control" data-param="width">
+                  <div class="knob-outer">
+                    <div class="knob-inner" style="transform: rotate(45deg);"></div>
+                  </div>
+                  <span class="knob-label">M/S WIDTH</span>
+                  <span class="knob-value" id="val-width">100%</span>
+                </div>
+
+                <div class="knob-control" data-param="crossover">
+                  <div class="knob-outer">
+                    <div class="knob-inner" style="transform: rotate(-30deg);"></div>
+                  </div>
+                  <span class="knob-label">CROSSOVER</span>
+                  <span class="knob-value" id="val-crossover">120 Hz</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Phase Correlation Vectorscope -->
+            <div class="vectorscope-module">
+              <div class="module-header">
+                <span>VECTORSCOPIO DE FASE</span>
+                <span class="telemetry-value text-neon-blue" id="val-correlation">+1.00</span>
+              </div>
+              <div class="canvas-container">
+                <canvas id="vectorscope-canvas" width="220" height="220"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Center Panel: Immersive Vinyl 3D Simulator -->
+          <div class="control-panel panel-center">
+            <div class="deck-container">
+              <div class="turntable">
+                <div class="turntable-platter"></div>
+                
+                <!-- Vinyl Sleeve / Jacket Mockup -->
+                <div class="vinyl-sleeve" id="vinyl-sleeve">
+                  <img src="https://images.unsplash.com/photo-1614680376593-902f74fa0d41?q=80&w=800&auto=format&fit=crop" alt="Album Cover" id="sleeve-cover" />
+                  <div class="sleeve-glow"></div>
+                </div>
+
+                <!-- Interactive Rotating Vinyl -->
+                <div class="vinyl-record" id="vinyl-record">
+                  <div class="vinyl-grooves"></div>
+                  <div class="vinyl-center">
+                    <div class="vinyl-label" id="vinyl-label">
+                      <div class="label-logo">Ω</div>
+                      <div class="label-track" id="label-track-name">NO SLEEP</div>
+                    </div>
+                    <div class="vinyl-spindle"></div>
+                  </div>
+                </div>
+
+                <!-- Interactive Tone Arm -->
+                <div class="tonearm" id="tonearm">
+                  <svg viewBox="0 0 100 300" width="80" height="240">
+                    <!-- Tonearm base -->
+                    <circle cx="50" cy="50" r="24" fill="#0A0A0A" stroke="#2B3BE5" stroke-width="4" />
+                    <circle cx="50" cy="50" r="10" fill="#2B3BE5" />
+                    <!-- Arm shaft -->
+                    <path d="M 50 50 Q 75 150 45 250" fill="none" stroke="#F3F4F6" stroke-width="6" stroke-linecap="round" />
+                    <!-- Counterweight -->
+                    <rect x="35" y="10" width="30" height="20" rx="3" fill="#374151" stroke="#2B3BE5" stroke-width="2" />
+                    <!-- Cartridge & Stylus -->
+                    <path d="M 40 250 L 50 275 L 45 285" fill="none" stroke="#2B3BE5" stroke-width="5" stroke-linecap="round" />
+                  </svg>
+                </div>
+              </div>
+
+              <!-- Deck controls overlay -->
+              <div class="deck-controls">
+                <button type="button" class="deck-btn" id="btn-play" aria-label="Play Track">
+                  <svg viewBox="0 0 24 24" width="24" height="24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+                </button>
+                <div class="deck-status-display">
+                  <div class="status-row">
+                    <span>STATE:</span>
+                    <strong id="deck-state-text" class="text-neon-amber">STOPPED</strong>
+                  </div>
+                  <div class="status-row">
+                    <span>PITCH:</span>
+                    <strong id="deck-pitch-text">1.00x</strong>
+                  </div>
+                </div>
+                <div class="scratch-helper">ARRASATRA EL VINILO PARA HACER SCRATCH</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Panel: Ledger Registry & Terminal -->
+          <div class="control-panel panel-right">
+            <div class="panel-header">
+              <span class="panel-num">02 /</span>
+              <h2>MONITOR DE EXERGÍA</h2>
+            </div>
+
+            <!-- Signal Output Gauge -->
+            <div class="gauge-module">
+              <div class="gauge-header">
+                <span>NIVEL DE SALIDA LUFS</span>
+                <span class="telemetry-value text-neon-amber" id="val-lufs">-11.2 LUFS</span>
+              </div>
+              <div class="gauge-bar-container">
+                <div class="gauge-bar" id="lufs-gauge" style="width: 72%;"></div>
+                <div class="gauge-peak" id="lufs-peak" style="left: 85%;"></div>
+              </div>
+            </div>
+
+            <!-- Ledger Activity Monitor -->
+            <div class="ledger-module">
+              <div class="module-title">SYSTEM INTEGRITY LEDGER</div>
+              <div class="ledger-terminal" id="ledger-terminal">
+                <div class="terminal-line"><span class="text-neon-blue">[INFO]</span> Canal C5-REAL establecido con la red.</div>
+                <div class="terminal-line"><span class="text-neon-green">[OK]</span> Algoritmo de Crossover calibrado a 120Hz.</div>
+              </div>
+              <button class="export-btn" id="btn-export-log">EXPORT EXERGY LOG</button>
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- ═══ BLOG / DIARIO ═══ -->
-      <section id="blog" class="section">
-        <div class="section-inner">
+      <!-- Section 2: Obras / Discography Grid -->
+      <section class="workspace-section" id="discography" aria-label="Discografía">
+        <div class="section-container">
           <div class="section-header">
-            <span class="section-label">Industrial Noir Editorial</span>
-            <h2 class="section-title"><span>Diario</span> / Transmisiones</h2>
+            <span class="section-num">02 //</span>
+            <h2>COSA NUESTRA / EXERGÍA-Ω</h2>
           </div>
+          
+          <div class="tracklist-grid">
+            <!-- Track Card 1 -->
+            <div class="track-card is-active" data-track-id="0" data-src="media/no-sleep-in-my-city.mp4" data-title="NO SLEEP IN MY CITY" data-desc="Procesamiento binaural espacial con vector de fase a 120Hz." data-cover="https://images.unsplash.com/photo-1614680376593-902f74fa0d41?q=80&w=800&auto=format&fit=crop">
+              <div class="card-cover">
+                <img src="https://images.unsplash.com/photo-1614680376593-902f74fa0d41?q=80&w=800&auto=format&fit=crop" alt="No Sleep In My City" />
+                <div class="cover-overlay">
+                  <div class="play-icon">
+                    <svg viewBox="0 0 24 24" width="32" height="32"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+                  </div>
+                </div>
+              </div>
+              <div class="card-info">
+                <span class="card-num">01.</span>
+                <div class="card-text">
+                  <h4>NO SLEEP IN MY CITY</h4>
+                  <p>Binaural DSP / Bilbao</p>
+                </div>
+              </div>
+            </div>
 
-          <div class="blog-grid">
-            <!-- Card 1 -->
-            <a href="/blog/la-economia-invisible-sincronizacion-substack" class="blog-card">
-              <div class="card-meta">
-                <span class="card-tag">Análisis</span>
-                <span class="card-date">2026.06.06</span>
+            <!-- Track Card 2 -->
+            <div class="track-card" data-track-id="1" data-title="HIPOTENUSAS ILEGALES" data-desc="Geometría torcida, pulso seco y borde urbano del puerto de Bilbao." data-cover="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=800&auto=format&fit=crop">
+              <div class="card-cover">
+                <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=800&auto=format&fit=crop" alt="Hipotenusas Ilegales" />
+                <div class="cover-overlay">
+                  <div class="play-icon">
+                    <svg viewBox="0 0 24 24" width="32" height="32"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+                  </div>
+                </div>
               </div>
-              <div>
-                <h3 class="card-title">La economía invisible de la sincronización en Substack</h3>
-                <p class="card-excerpt">Lo que se presenta como una revolución de la escritura independiente es un sistema de coordinación social envuelto en la estética de la literatura.</p>
+              <div class="card-info">
+                <span class="card-num">02.</span>
+                <div class="card-text">
+                  <h4>HIPOTENUSAS ILEGALES</h4>
+                  <p>Industrial Minimal / Puerto</p>
+                </div>
               </div>
-              <span class="card-cta">
-                Leer análisis
-                <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-              </span>
-            </a>
+            </div>
 
-            <!-- Card 2 -->
-            <a href="/blog/substack-mafia-autopsia-estructural" class="blog-card">
-              <div class="card-meta">
-                <span class="card-tag">Investigación</span>
-                <span class="card-date">2026.06.01</span>
+            <!-- Track Card 3 -->
+            <div class="track-card" data-track-id="2" data-title="PATADAS" data-desc="Ritmo físico descarnado, gesto corto y energía frontal analógica." data-cover="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=800&auto=format&fit=crop">
+              <div class="card-cover">
+                <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=800&auto=format&fit=crop" alt="Patadas" />
+                <div class="cover-overlay">
+                  <div class="play-icon">
+                    <svg viewBox="0 0 24 24" width="32" height="32"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+                  </div>
+                </div>
               </div>
-              <div>
-                <h3 class="card-title">Substack Mafia: Autopsia Estructural</h3>
-                <p class="card-excerpt">Análisis forense de la arquitectura comercial y validación algorítmica coordinada en un ecosistema privado.</p>
+              <div class="card-info">
+                <span class="card-num">03.</span>
+                <div class="card-text">
+                  <h4>PATADAS</h4>
+                  <p>Raw Beats / Frontal</p>
+                </div>
               </div>
-              <span class="card-cta">
-                Ver autopsia
-                <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-              </span>
-            </a>
+            </div>
 
-            <!-- Card 3 -->
-            <a href="/blog/ultramap-substrate" class="blog-card">
-              <div class="card-meta">
-                <span class="card-tag tech">Auditoría Silicio</span>
-                <span class="card-date">2026.06.01</span>
+            <!-- Track Card 4 -->
+            <div class="track-card" data-track-id="3" data-title="COHERENCIA RARA 42" data-desc="Electrónica de ángulo extraño: repetición matemática y tensión sostenida." data-cover="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=800&auto=format&fit=crop">
+              <div class="card-cover">
+                <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=800&auto=format&fit=crop" alt="Coherencia Rara 42" />
+                <div class="cover-overlay">
+                  <div class="play-icon">
+                    <svg viewBox="0 0 24 24" width="32" height="32"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+                  </div>
+                </div>
               </div>
-              <div>
-                <h3 class="card-title">ULTRAMAP-Ω: Autopsia del Sustrato</h3>
-                <p class="card-excerpt">Análisis de la memoria física lock-free y la orquestación del enjambre K-0 bajo la física del silicio.</p>
+              <div class="card-info">
+                <span class="card-num">04.</span>
+                <div class="card-text">
+                  <h4>COHERENCIA RARA 42</h4>
+                  <p>IDM / Math Synth</p>
+                </div>
               </div>
-              <span class="card-cta">
-                Ver auditoría
-                <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-              </span>
-            </a>
-          </div>
-
-          <div class="section-footer">
-            <a href="/blog" class="view-all-btn">
-              Ver diario completo
-              <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- ═══ MANIFIESTO / BIO ═══ -->
-      <section id="manifiesto" class="section">
-        <div class="section-inner" style="max-width: 800px; margin: 0 auto;">
+      <!-- Section 3: Premium Stills / Interactive Collage -->
+      <section class="workspace-section" id="stills-gallery" aria-label="Galería de Fotogramas">
+        <div class="section-container">
           <div class="section-header">
-            <span class="section-label">Declaración de Intenciones</span>
-            <h2 class="section-title"><span>Manifiesto</span> C5-REAL</h2>
+            <span class="section-num">03 //</span>
+            <h2>FOTOGRAMAS C5-REAL</h2>
           </div>
-          
-          <div style="font-size: 1.1rem; line-height: 1.8; color: var(--color-parchment); font-weight: 300; display: flex; flex-direction: column; gap: 2rem;">
-            <p>Si todo esto parece un plan, no lo es. Es más bien una acumulación de decisiones ligeramente dudosas tomadas con bastante convicción. A veces me preguntan qué hago exactamente. Suelo decir “electrónica”, porque es corto y la gente asiente. Luego, en casa, pienso que tampoco era eso, pero ya es tarde.</p>
-            <p>Sigo añadiendo capas como quien pone otra silla en una habitación que ya está llena. No porque haga falta, sino porque alguien podría sentarse. Si algún día este universo se vuelve demasiado claro, probablemente cambie de nombre otra vez y finja que siempre fue así.</p>
-            <p>No es épico.<br>Pero insiste.</p>
-            <p>Me llamo Borja Moskv, pero eso es verdad a medias. Casi nadie me llama así. Hay días que soy Bakala de Troya, otros Flamenc Osmic, otros Boney Mdma & Neil Ráyadon, y otros simplemente no me llaman.</p>
-            <p>No tengo una identidad fija porque no la necesito. Los nombres no son máscaras: son modos de funcionamiento. Interruptores. Cambios de tono. A veces sirven para hacer música, a veces para escribir, a veces para no tener que explicar nada. Cada alias es la misma cabeza mirando desde otro ángulo.</p>
-            <p>Todo lo que hago —música, visuales, textos, proyectos digitales, sets, relatos— responde a la misma manía persistente: construir un universo propio. Un sitio donde la electrónica no es solo baile, sino relato, ironía y pensamiento de barrio. Donde se puede mover el cuerpo y, si te descuidas, también alguna idea.</p>
-            <p>Trabajo la electrónica como quien escribe sin esquema: con capas, repeticiones, silencios y pequeñas desviaciones que no estaban previstas pero se quedaron. Me interesan más las cosas que insisten que las que impresionan. Prefiero un groove que acompaña a uno que empuja. Prefiero una frase que vuelve días después a un subidón perfectamente calculado.</p>
-            <p>No hago música para demostrar nada. Bastante cansado estoy ya de la gente demostrando cosas. Hago música para ordenar el ruido, aunque casi siempre lo ordeno de una manera que genera más ruido. Es una contradicción funcional. Me llevo bien con ella.</p>
-            <p>La electrónica, para mí, no es futuro ni vanguardia: es costumbrismo con máquinas. Gente bailando con cara de estar resolviendo algo importante. Sintetizadores diciendo más de lo que deberían. Un bombo marcando el tiempo mientras tú piensas que igual esto no iba exactamente de hoy.</p>
-            <p>Mis proyectos digitales funcionan igual. No son productos, son ideas con patas. Algunas avanzan, otras se quedan quietas, otras se sientan en medio y no hay manera de moverlas. Las dejo estar. Con el tiempo suelen decir algo, o al menos hacen ruido.</p>
-            <p>No persigo la novedad. Persigo la coherencia rara. Que alguien escuche algo mío y piense: “no sé muy bien qué es esto, pero es claramente de la misma cabeza”. Con eso me basta.</p>
-            <p>No busco cerrar significados. Busco abrir escenas. Que cada pieza sea una habitación más del mismo lugar. Algunas están ordenadas, otras no; en casi todas hay ruido de fondo y algo que no se sabe muy bien para qué sirve, pero ahí sigue.</p>
-            <p>Todo esto sale de Bilbao. No de Berlín. Con humedad, ironía y tendencia a complicarme la vida. Podría simplificarlo todo, claro.<br><strong>Pero entonces no tendría gracia.</strong></p>
-          </div>
-          
-          <!-- Curated Social Links Hub -->
-          <div style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-top: 4rem;">
-            <a href="https://www.youtube.com/@borjamoskv" target="_blank" rel="noopener" class="view-all-btn" style="padding: 0.8rem 2rem; font-size: 0.7rem;" aria-label="YouTube">YouTube</a>
-            <a href="https://borjamoskv.bandcamp.com" target="_blank" rel="noopener" class="view-all-btn" style="padding: 0.8rem 2rem; font-size: 0.7rem;" aria-label="Bandcamp">Bandcamp</a>
-            <a href="https://soundcloud.com/borja-moskv" target="_blank" rel="noopener" class="view-all-btn" style="padding: 0.8rem 2rem; font-size: 0.7rem;" aria-label="SoundCloud">SoundCloud</a>
-            <a href="https://x.com/bakaladetroya" target="_blank" rel="noopener" class="view-all-btn" style="padding: 0.8rem 2rem; font-size: 0.7rem;" aria-label="X (Twitter)">X / Twitter</a>
+
+          <div class="gallery-grid">
+            <!-- Still Item 1 -->
+            <div class="gallery-item" data-src="https://images.unsplash.com/photo-1539683255143-73a6b838b106?q=80&w=800&auto=format&fit=crop">
+              <img src="https://images.unsplash.com/photo-1539683255143-73a6b838b106?q=80&w=800&auto=format&fit=crop" alt="Estética Industrial Noir" />
+              <div class="item-overlay">
+                <div class="item-meta">
+                  <span class="item-hash">SHA256: 0x93f6c5...</span>
+                  <span class="item-title">BOWL NOCTURNO</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Still Item 2 -->
+            <div class="gallery-item" data-src="https://images.unsplash.com/photo-1518609878373-06d740f60d8b?q=80&w=800&auto=format&fit=crop">
+              <img src="https://images.unsplash.com/photo-1518609878373-06d740f60d8b?q=80&w=800&auto=format&fit=crop" alt="Estética Synth" />
+              <div class="item-overlay">
+                <div class="item-meta">
+                  <span class="item-hash">SHA256: 0xe3b0c4...</span>
+                  <span class="item-title">SÍNTESIS VÍA ANALÓGICA</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Still Item 3 -->
+            <div class="gallery-item" data-src="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=800&auto=format&fit=crop">
+              <img src="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=800&auto=format&fit=crop" alt="Geometría puerto" />
+              <div class="item-overlay">
+                <div class="item-meta">
+                  <span class="item-hash">SHA256: 0x8f4b1d...</span>
+                  <span class="item-title">GEOMETRÍA DEL PUERTO</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Still Item 4 -->
+            <div class="gallery-item" data-src="https://images.unsplash.com/photo-1516280440614-37939bbacd6a?q=80&w=800&auto=format&fit=crop">
+              <img src="https://images.unsplash.com/photo-1516280440614-37939bbacd6a?q=80&w=800&auto=format&fit=crop" alt="Micrófono y oscilador" />
+              <div class="item-overlay">
+                <div class="item-meta">
+                  <span class="item-hash">SHA256: 0x7c9c0f...</span>
+                  <span class="item-title">CAPTACIÓN MICROFÓNICA</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
-    
-</div>
 
-<script>
-  // SOTA Fallback for browsers without ViewTimeline support (Safari/Firefox)
-  if (!CSS.supports('(animation-timeline: view()) and (animation-range: entry)')) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          const ratio = entry.intersectionRatio;
-          entry.target.style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
-          entry.target.style.opacity = 0.2 + ratio * 0.8;
-          entry.target.style.transform = `scale(${0.9 + ratio * 0.1}) translateY(${20 - ratio * 20}px)`;
-          entry.target.style.filter = `blur(${10 - ratio * 10}px) grayscale(${100 - ratio * 100}%)`;
-        }
-      },
-      { threshold: Array.from({ length: 20 }, (_, i) => i / 19) }
-    );
 
-    document.querySelectorAll('.thumb-card, .blog-card, .video-scroll-card').forEach((el) => {
-      observer.observe(el);
-    });
-  }
+    </main>
 
-  // ─── CORTEX HORIZONTAL INFINITE SCROLL & SKEW X ───
-  const initHorizontalKinetics = () => {
-    const row = document.querySelector('.video-scroll-row');
-    if (!row) return;
+    <!-- Lightbox for Image Zoom -->
+    <dialog class="lightbox" id="lightbox">
+      <button class="lightbox-close" id="lightbox-close-btn" type="button" aria-label="Cerrar">CERRAR</button>
+      <div class="lightbox-content">
+        <img src="" alt="" id="lightbox-img" />
+      </div>
+    </dialog>
 
-    // 1. Horizontal Velocity Skew (Disruptive SOTA)
-    let lastScrollX = row.scrollLeft;
-    let scrollVelocityX = 0;
-    let rafIdX = null;
-
-    const renderVelocityX = () => {
-      scrollVelocityX *= 0.85; // Friction
-      
-      const skew = Math.min(Math.max(scrollVelocityX * -0.05, -3), 3); // Max 3deg skew
-      const scaleY = Math.max(0.95, 1 - Math.abs(scrollVelocityX) * 0.001);
-      
-      row.style.transform = `matrix3d(1, 0, 0, 0, ${Math.tan(skew * Math.PI / 180)}, ${scaleY}, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)`;
-      
-      if (Math.abs(scrollVelocityX) > 0.5) {
-        rafIdX = requestAnimationFrame(renderVelocityX);
-      } else {
-        row.style.transform = 'none';
-        rafIdX = null;
-      }
-    };
-
-    row.addEventListener('scroll', () => {
-      const currentScrollX = row.scrollLeft;
-      const deltaX = currentScrollX - lastScrollX;
-      scrollVelocityX += deltaX;
-      lastScrollX = currentScrollX;
-      
-      if (!rafIdX && Math.abs(scrollVelocityX) > 0.5) {
-        rafIdX = requestAnimationFrame(renderVelocityX);
-      }
-    }, { passive: true });
-
-    // 2. Horizontal Infinite Archive Loop
-    const observerOptions = {
-      root: row,
-      rootMargin: '0px 800px 0px 0px', // Trigger well before end
-      threshold: 0
-    };
-
-    let isCloning = false;
-
-    const hObserver = new IntersectionObserver((entries) => {
-      const trigger = entries.find(entry => entry.isIntersecting);
-      if (trigger && !isCloning) {
-        isCloning = true;
-        
-        const currentCards = Array.from(row.querySelectorAll('.video-scroll-card'));
-        const cardsToClone = currentCards.slice(0, 4); // Clone first 4
-        
-        cardsToClone.forEach(card => {
-          const clone = card.cloneNode(true);
-          // Restart entrance animation if needed
-          clone.style.animation = 'none';
-          clone.offsetHeight; 
-          clone.style.animation = 'sota-scroll-x 0.5s ease forwards';
-          
-          if (card === trigger.target) hObserver.unobserve(card);
-          row.appendChild(clone);
-        });
-
-        const newCards = row.querySelectorAll('.video-scroll-card');
-        if (newCards.length > 2) {
-          hObserver.observe(newCards[newCards.length - 2]);
-        }
-
-        setTimeout(() => { isCloning = false; }, 500);
-      }
-    }, observerOptions);
-
-    const cards = row.querySelectorAll('.video-scroll-card');
-    if (cards.length > 2) {
-      hObserver.observe(cards[cards.length - 2]);
-    }
-  };
-
-  document.addEventListener('astro:page-load', initHorizontalKinetics);
-  initHorizontalKinetics();
-</script>
-
-</Layout>
+    <script type="module" src="/main.js" is:inline></script>
+  </body>
+</html>
