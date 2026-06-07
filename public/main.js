@@ -190,20 +190,168 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ==========================================================================
-     3. INTERACTIVE VINYL CONTROLS
+     3. INTERACTIVE VINYL & WEB AUDIO CONTROLS
      ========================================================================== */
   
+  let audioCtx = null;
+  let audioEl = null;
+  let sourceNode = null;
+  let splitter = null;
+  let lowPassL = null;
+  let lowPassR = null;
+  let highPassL = null;
+  let highPassR = null;
+  let sideToL = null;
+  let sideToR = null;
+  let presenceFilter = null;
+  let analyserL = null;
+  let analyserR = null;
+  let audioInitialized = false;
+
+  function initAudioEngine() {
+    if (audioInitialized) return;
+    try {
+      // Access global AudioContext if created by Layout.astro, or spawn new
+      audioCtx = window.MOSKV?.audioContext || new (window.AudioContext || window.webkitAudioContext)();
+      
+      // Dedicated Audio element for vinyl control deck
+      audioEl = new Audio();
+      audioEl.crossOrigin = "anonymous";
+      audioEl.loop = true;
+      
+      sourceNode = audioCtx.createMediaElementSource(audioEl);
+      
+      splitter = audioCtx.createChannelSplitter(2);
+      sourceNode.connect(splitter);
+      
+      // 1. Crossover Filtering (Split lows and highs)
+      lowPassL = audioCtx.createBiquadFilter(); lowPassL.type = 'lowpass';
+      lowPassR = audioCtx.createBiquadFilter(); lowPassR.type = 'lowpass';
+      highPassL = audioCtx.createBiquadFilter(); highPassL.type = 'highpass';
+      highPassR = audioCtx.createBiquadFilter(); highPassR.type = 'highpass';
+      
+      splitter.connect(lowPassL, 0);
+      splitter.connect(lowPassR, 1);
+      splitter.connect(highPassL, 0);
+      splitter.connect(highPassR, 1);
+      
+      // 2. Bass Mono Summing (Low frequencies mapped centered/mono)
+      const bassGainL = audioCtx.createGain(); bassGainL.gain.value = 0.5;
+      const bassGainR = audioCtx.createGain(); bassGainR.gain.value = 0.5;
+      lowPassL.connect(bassGainL);
+      lowPassR.connect(bassGainR);
+      
+      const bassMono = audioCtx.createGain();
+      bassGainL.connect(bassMono);
+      bassGainR.connect(bassMono);
+      
+      // 3. Highs M/S Processing Matrix
+      const highsLtoMid = audioCtx.createGain(); highsLtoMid.gain.value = 0.5;
+      const highsRtoMid = audioCtx.createGain(); highsRtoMid.gain.value = 0.5;
+      highPassL.connect(highsLtoMid);
+      highPassR.connect(highsRtoMid);
+      const highsMid = audioCtx.createGain();
+      highsLtoMid.connect(highsMid);
+      highsRtoMid.connect(highsMid);
+      
+      const highsLtoSide = audioCtx.createGain(); highsLtoSide.gain.value = 0.5;
+      const highsRtoSide = audioCtx.createGain(); highsRtoSide.gain.value = -0.5;
+      highPassL.connect(highsLtoSide);
+      highPassR.connect(highsRtoSide);
+      const highsSide = audioCtx.createGain();
+      highsLtoSide.connect(highsSide);
+      highsRtoSide.connect(highsSide);
+      
+      sideToL = audioCtx.createGain();
+      sideToR = audioCtx.createGain();
+      highsSide.connect(sideToL);
+      highsSide.connect(sideToR);
+      
+      // 4. Reconstruct & Merge channels
+      const merger = audioCtx.createChannelMerger(2);
+      bassMono.connect(merger, 0, 0);
+      bassMono.connect(merger, 0, 1);
+      highsMid.connect(merger, 0, 0);
+      highsMid.connect(merger, 0, 1);
+      sideToL.connect(merger, 0, 0);
+      sideToR.connect(merger, 0, 1);
+      
+      // 5. High-Mids Peak Presence EQ Filter
+      presenceFilter = audioCtx.createBiquadFilter();
+      presenceFilter.type = 'peaking';
+      presenceFilter.frequency.value = 3000;
+      presenceFilter.Q.value = 1.0;
+      merger.connect(presenceFilter);
+      
+      // 6. Split output to L/R analysers for authentic vectorscope telemetry
+      analyserL = audioCtx.createAnalyser(); analyserL.fftSize = 512;
+      analyserR = audioCtx.createAnalyser(); analyserR.fftSize = 512;
+      
+      const outputSplitter = audioCtx.createChannelSplitter(2);
+      presenceFilter.connect(outputSplitter);
+      outputSplitter.connect(analyserL, 0);
+      outputSplitter.connect(analyserR, 1);
+      
+      // Connect to output destination
+      presenceFilter.connect(audioCtx.destination);
+      
+      audioInitialized = true;
+      updateAudioNodes();
+      
+      addTerminalLine('INFO', 'Matriz de procesado binaural WebAudio inicializada.');
+    } catch (err) {
+      console.error("Failed to initialize Web Audio Engine: ", err);
+      addTerminalLine('ERR', 'Error en el Kernel de WebAudio.');
+    }
+  }
+
+  function updateAudioNodes() {
+    if (!audioInitialized) return;
+    const now = audioCtx.currentTime;
+    
+    // Smoothly transition parameters to avoid audible pops
+    presenceFilter.gain.setTargetAtTime(state.params.presence, now, 0.1);
+    
+    const widthFactor = state.params.width / 100;
+    sideToL.gain.setTargetAtTime(widthFactor, now, 0.1);
+    sideToR.gain.setTargetAtTime(-widthFactor, now, 0.1);
+    
+    lowPassL.frequency.setTargetAtTime(state.params.crossover, now, 0.1);
+    lowPassR.frequency.setTargetAtTime(state.params.crossover, now, 0.1);
+    highPassL.frequency.setTargetAtTime(state.params.crossover, now, 0.1);
+    highPassR.frequency.setTargetAtTime(state.params.crossover, now, 0.1);
+  }
+
+  function ensureAudioContextActive() {
+    initAudioEngine();
+    if (audioCtx && audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+  }
+
   // Play/Pause button
   btnPlay.addEventListener('click', togglePlayback);
 
   function togglePlayback() {
+    ensureAudioContextActive();
     state.isPlaying = !state.isPlaying;
+    
     if (state.isPlaying) {
       deckContainer.classList.add('is-playing');
       btnPlay.innerHTML = `<svg viewBox="0 0 24 24" width="24" height="24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" fill="currentColor"/></svg>`;
       deckStateText.textContent = 'PLAYING';
       deckStateText.className = 'text-neon-blue';
       state.targetPitch = 1.0;
+      
+      const card = document.querySelector(`.track-card[data-track-id="${state.currentTrackId}"]`);
+      const trackSrc = card ? card.getAttribute('data-src') : null;
+      if (trackSrc && audioEl.src !== window.location.origin + trackSrc) {
+        audioEl.src = trackSrc;
+      }
+      
+      audioEl.play().catch(e => {
+        console.warn("Playback blocked by browser autoplay rules.", e);
+      });
       addTerminalLine('PLAY', `Reproduciendo: ${tracks[state.currentTrackId].title}`);
     } else {
       deckContainer.classList.remove('is-playing');
@@ -211,6 +359,10 @@ document.addEventListener('DOMContentLoaded', () => {
       deckStateText.textContent = 'STOPPED';
       deckStateText.className = 'text-neon-amber';
       state.targetPitch = 0.0;
+      
+      if (audioEl) {
+        audioEl.pause();
+      }
       addTerminalLine('STOP', 'Reproducción en pausa.');
     }
   }
@@ -222,7 +374,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const trackId = parseInt(card.getAttribute('data-track-id'));
       loadTrack(trackId);
       
-      // Update UI active states
       trackCards.forEach(c => c.classList.remove('is-active'));
       card.classList.add('is-active');
     });
@@ -232,26 +383,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const track = tracks[id];
     state.currentTrackId = id;
     
+    const card = document.querySelector(`.track-card[data-track-id="${id}"]`);
+    const trackSrc = card ? card.getAttribute('data-src') : null;
+    
     // Animate vinyl loading (slide in and out)
     deckContainer.classList.remove('is-active');
     
     setTimeout(() => {
-      // Update data
       sleeveCover.src = track.cover;
       labelTrackName.textContent = track.title.substring(0, 10);
       currentTrackTitle.textContent = track.title;
       currentTrackDesc.textContent = track.desc;
       
-      // Update Knobs values to track preset
       updatePresetKnobs(track);
 
       // Slide back out
       deckContainer.classList.add('is-active');
-      addTerminalLine('LOAD', `Cargado stem: ${track.title} [SHA-256: ${generateHash(track.title).substring(0, 16)}]`);
+      addTerminalLine('LOAD', `Cargado: ${track.title} [SHA-256: ${generateHash(track.title).substring(0, 16)}]`);
       
-      // Start playback if was playing
-      if (state.isPlaying) {
-        addTerminalLine('PLAY', `Reproduciendo: ${track.title}`);
+      if (trackSrc) {
+        ensureAudioContextActive();
+        audioEl.src = trackSrc;
+        audioEl.load();
+        
+        if (state.isPlaying) {
+          audioEl.play().catch(e => console.warn("Blocked play on load", e));
+          addTerminalLine('PLAY', `Reproduciendo: ${track.title}`);
+        }
       }
     }, 600);
   }
@@ -264,6 +422,8 @@ document.addEventListener('DOMContentLoaded', () => {
     updateKnobUI('presence', track.presence, `${track.presence.toFixed(1)} dB`);
     updateKnobUI('width', track.width, `${track.width}%`);
     updateKnobUI('crossover', track.crossover, `${track.crossover} Hz`);
+    
+    updateAudioNodes();
   }
 
   function updateKnobUI(param, val, textVal) {
@@ -273,16 +433,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const valueEl = knob.querySelector('.knob-value');
     valueEl.textContent = textVal;
     
-    // Rotate indicator
     let rotation = 0;
     if (param === 'presence') {
-      // range -6 to +6 dB -> -150 to +150 deg
       rotation = (val / 6) * 150;
     } else if (param === 'width') {
-      // range 0 to 200% -> -150 to +150 deg
       rotation = ((val - 100) / 100) * 150;
     } else if (param === 'crossover') {
-      // range 40 to 400 Hz -> -150 to +150 deg
       rotation = ((val - 220) / 180) * 150;
     }
     
@@ -307,6 +463,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   vinylRecord.addEventListener('pointerdown', (e) => {
+    ensureAudioContextActive();
     state.isDragging = true;
     vinylRecord.setPointerCapture(e.pointerId);
     
@@ -317,7 +474,6 @@ document.addEventListener('DOMContentLoaded', () => {
     state.dragVelocity = 0;
     state.lastDragTime = performance.now();
     
-    // Pitch drops to zero/manual speed
     state.targetPitch = 0.0;
   });
 
@@ -328,27 +484,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const angle = getAngle(e.clientX, e.clientY, center.x, center.y);
     
     let angleDiff = angle - state.dragStartAngle;
-    
-    // Calculate rotation in degrees
     const currentRotation = state.dragStartRotation + (angleDiff * 180) / Math.PI;
     state.vinylRotation = currentRotation;
     vinylRecord.style.transform = `translate3d(22%, 0, 0) rotate(${currentRotation}deg)`;
     
-    // Track velocity for scratch sound emulation / speed
     const now = performance.now();
     const dt = now - state.lastDragTime;
     if (dt > 10) {
       let deltaAngle = angle - state.dragLastAngle;
-      // Normalize wrap-around angles
       if (deltaAngle > Math.PI) deltaAngle -= Math.PI * 2;
       if (deltaAngle < -Math.PI) deltaAngle += Math.PI * 2;
       
-      // Compute pitch from angular velocity (rad/ms scaled)
-      const targetSpeed = (deltaAngle / dt) * 1000 * 0.15; // scalar adjustment
-      state.pitch = state.pitch * 0.4 + targetSpeed * 0.6; // smooth
+      const targetSpeed = (deltaAngle / dt) * 1000 * 0.15; // Angular speed scalar
+      state.pitch = state.pitch * 0.3 + targetSpeed * 0.7; // Smooth interpolation
       
       state.dragLastAngle = angle;
       state.lastDragTime = now;
+      
+      // Dynamically warp playback speed to follow scratching velocity
+      if (audioInitialized && audioEl) {
+        const absPitch = Math.abs(state.pitch);
+        if (absPitch < 0.08) {
+          audioEl.playbackRate = 0.0;
+          if (!audioEl.paused) audioEl.pause();
+        } else {
+          audioEl.playbackRate = Math.min(3.5, absPitch);
+          if (audioEl.paused && state.isPlaying) {
+            audioEl.play().catch(()=>{});
+          }
+        }
+      }
     }
   });
 
@@ -356,11 +521,18 @@ document.addEventListener('DOMContentLoaded', () => {
     state.isDragging = false;
     vinylRecord.releasePointerCapture(e.pointerId);
     
-    // Restore normal playback speed target
     if (state.isPlaying) {
       state.targetPitch = 1.0;
+      if (audioInitialized && audioEl) {
+        audioEl.playbackRate = 1.0;
+        audioEl.play().catch(()=>{});
+      }
     } else {
       state.targetPitch = 0.0;
+      if (audioInitialized && audioEl) {
+        audioEl.playbackRate = 0.0;
+        audioEl.pause();
+      }
     }
     
     addTerminalLine('SCRATCH', `Inercia de arrastre: ${state.pitch.toFixed(2)}x`);
@@ -375,12 +547,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const param = knob.getAttribute('data-param');
     
     knob.addEventListener('pointerdown', (e) => {
+      ensureAudioContextActive();
       startY = e.clientY;
       startVal = state.params[param];
       knob.setPointerCapture(e.pointerId);
       
       const onMove = (moveEvent) => {
-        const dy = startY - moveEvent.clientY; // upwards increases value
+        const dy = startY - moveEvent.clientY;
         let newVal = startVal;
         
         if (param === 'presence') {
@@ -396,13 +569,15 @@ document.addEventListener('DOMContentLoaded', () => {
           state.params.crossover = Math.round(newVal);
           updateKnobUI(param, newVal, `${Math.round(newVal)} Hz`);
         }
+        
+        updateAudioNodes();
       };
       
       const onUp = () => {
         knob.releasePointerCapture(e.pointerId);
         knob.removeEventListener('pointermove', onMove);
         knob.removeEventListener('pointerup', onUp);
-        addTerminalLine('PARAM', `Ajustado ${param.toUpperCase()} -> ${state.params[param].toFixed(1)}`);
+        addTerminalLine('PARAM', `Ajustado: ${param.toUpperCase()} -> ${state.params[param].toFixed(1)}`);
       };
       
       knob.addEventListener('pointermove', onMove);
@@ -416,31 +591,28 @@ document.addEventListener('DOMContentLoaded', () => {
   
   function updatePhysics(dt) {
     if (!state.isDragging) {
-      // Spring decay towards target pitch
       state.pitch += (state.targetPitch - state.pitch) * 0.08;
       
-      // Update vinyl rotation based on speed/pitch
+      if (audioInitialized && audioEl && state.isPlaying && Math.abs(audioEl.playbackRate - state.pitch) > 0.01) {
+        audioEl.playbackRate = Math.max(0.01, Math.min(4.0, state.pitch));
+      }
+      
       if (Math.abs(state.pitch) > 0.01) {
-        // Base rotation speed: 33 RPM = 0.55 rev/sec = 198 deg/sec
-        const baseSpeed = 198 * (dt / 1000);
+        const baseSpeed = 198 * (dt / 1000); // 33 RPM standard degrees/sec
         state.vinylRotation += baseSpeed * state.pitch;
         
-        // Update DOM transform
         const suffix = deckContainer.classList.contains('is-active') ? 'translate3d(22%, 0, 0)' : 'translate3d(0, 0, 0)';
         vinylRecord.style.transform = `${suffix} rotate(${state.vinylRotation}deg)`;
       }
     }
 
-    // Update tone arm angle
     if (state.isPlaying && !state.isDragging) {
-      // Map platter location relative to track progress (mocked angle progression)
       const armRotation = 5 + Math.sin(performance.now() * 0.0001) * 3;
       tonearm.style.transform = `rotate(${armRotation}deg)`;
     } else if (!state.isPlaying && !state.isDragging) {
       tonearm.style.transform = `rotate(-35deg)`;
     }
     
-    // Update pitch indicator text
     deckPitchText.textContent = `${state.pitch.toFixed(2)}x`;
   }
 
@@ -451,11 +623,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const cy = canvas.height / 2;
     const radius = canvas.width * 0.45;
     
-    // Draw background polar scope grid
+    // Grid Background
     ctx.strokeStyle = 'rgba(43, 59, 229, 0.08)';
     ctx.lineWidth = 1;
     
-    // Diagonal axis (+45, -45)
     ctx.beginPath();
     ctx.moveTo(cx - radius, cy + radius);
     ctx.lineTo(cx + radius, cy - radius);
@@ -463,41 +634,39 @@ document.addEventListener('DOMContentLoaded', () => {
     ctx.lineTo(cx + radius, cy + radius);
     ctx.stroke();
 
-    // Concentric grid circles
     ctx.beginPath();
     ctx.arc(cx, cy, radius * 0.5, 0, Math.PI * 2);
     ctx.arc(cx, cy, radius, 0, Math.PI * 2);
     ctx.stroke();
 
-    // Signal generation physics based on current playback and settings
     const signalStrength = state.isPlaying ? Math.abs(state.pitch) : 0.0;
-    const time = performance.now() * 0.005;
     
-    if (signalStrength > 0.05) {
+    if (audioInitialized && signalStrength > 0.05) {
+      const bufferLength = analyserL.frequencyBinCount;
+      const dataL = new Float32Array(bufferLength);
+      const dataR = new Float32Array(bufferLength);
+      
+      analyserL.getFloatTimeDomainData(dataL);
+      analyserR.getFloatTimeDomainData(dataR);
+      
       ctx.beginPath();
-      ctx.strokeStyle = `rgba(43, 59, 229, ${0.4 + signalStrength * 0.4})`;
-      ctx.lineWidth = 1.5;
+      ctx.strokeStyle = `rgba(43, 59, 229, ${0.4 + signalStrength * 0.55})`;
+      ctx.lineWidth = 1.6;
       
       const widthFactor = state.params.width / 100;
-      const presenceFactor = Math.pow(10, state.params.presence / 20); // convert dB to gain
-      const numPoints = 80;
+      const presenceFactor = Math.pow(10, state.params.presence / 20);
       
-      let lastX = cx;
-      let lastY = cy;
-
-      for (let i = 0; i < numPoints; i++) {
-        const theta = (i / numPoints) * Math.PI * 4;
+      // Plot actual Lissajous pattern
+      for (let i = 0; i < bufferLength; i += 2) {
+        const leftVal = dataL[i] || 0.0;
+        const rightVal = dataR[i] || 0.0;
         
-        // Mid (mono sum) and Side (stereo diff) mock synthesis
-        const m = Math.sin(theta + time) * radius * 0.4 * presenceFactor;
-        const s = Math.cos(theta * 1.5 - time) * radius * 0.3 * widthFactor * presenceFactor;
+        // Convert to vectorscope coordinates
+        const xVal = leftVal - rightVal;
+        const yVal = leftVal + rightVal;
         
-        // Apply jitter for high realistic signal noise
-        const noise = (Math.random() - 0.5) * 8 * signalStrength;
-        
-        // Map Mid/Side to L/R 45-degree vectorscope rotation
-        const x = cx + (m - s + noise);
-        const y = cy - (m + s + noise);
+        const x = cx + xVal * radius * 1.3 * presenceFactor;
+        const y = cy - yVal * radius * 1.3 * presenceFactor;
         
         if (i === 0) {
           ctx.moveTo(x, y);
@@ -506,41 +675,53 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
       ctx.stroke();
-    }
 
-    // Dynamic phase correlation telemetry calculation
-    // Max width = low correlation, Low width = correlation approaches +1.0
-    const rawCorrelation = 1.0 - (state.params.width / 200) * 0.8;
-    // Add micro jitter
-    const finalCorrelation = Math.min(1.0, Math.max(-1.0, rawCorrelation + (Math.random() - 0.5) * 0.05));
-    valCorrelation.textContent = (state.isPlaying ? finalCorrelation : 1.0).toFixed(2);
-    if (finalCorrelation < 0.2) {
-      valCorrelation.className = 'telemetry-value text-neon-amber';
+      // Compute actual phase correlation coefficient (Pearson correlation estimate)
+      let sumL2 = 0, sumR2 = 0, sumLR = 0;
+      for (let i = 0; i < bufferLength; i++) {
+        const l = dataL[i];
+        const r = dataR[i];
+        sumL2 += l * l;
+        sumR2 += r * r;
+        sumLR += l * r;
+      }
+      const denominator = Math.sqrt(sumL2 * sumR2);
+      const correlation = denominator > 1e-6 ? sumLR / denominator : 1.0;
+      
+      valCorrelation.textContent = correlation.toFixed(2);
+      if (correlation < 0.15) {
+        valCorrelation.className = 'telemetry-value text-neon-amber';
+      } else {
+        valCorrelation.className = 'telemetry-value text-neon-blue';
+      }
+
+      // Compute exact LUFS (RMS relative to full scale)
+      const rms = Math.sqrt((sumL2 + sumR2) / (2 * bufferLength));
+      let dbFS = 20 * Math.log10(rms + 1e-5) - 3.0; // Offset for LUFS estimation
+      dbFS = Math.max(-60, Math.min(0, dbFS));
+      updateGauges(dbFS);
     } else {
-      valCorrelation.className = 'telemetry-value text-neon-blue';
+      // Idle vectorscope animation (slow rotating line)
+      if (Math.random() < 0.1) {
+        valCorrelation.textContent = "1.00";
+        valCorrelation.className = 'telemetry-value text-neon-blue';
+      }
+      updateGauges(-Infinity);
     }
-
-    // Update Output Gain Gauges
-    updateGauges(signalStrength);
   }
 
-  function updateGauges(strength) {
-    if (state.isPlaying) {
-      // LUFS calculation based on target pitch and parameters
-      const baseLUFS = -14.0 + state.params.presence;
-      const currentLUFS = baseLUFS + (strength - 1.0) * 3;
-      valLUFS.textContent = `${currentLUFS.toFixed(1)} LUFS`;
+  function updateGauges(dbValue) {
+    if (state.isPlaying && dbValue > -60) {
+      valLUFS.textContent = `${dbValue.toFixed(1)} LUFS`;
       
-      // Gauge visual representation (0% is -40LUFS, 100% is 0LUFS)
-      const pct = Math.min(100, Math.max(0, ((currentLUFS + 40) / 40) * 100));
+      const pct = Math.min(100, Math.max(0, ((dbValue + 45) / 45) * 100));
       lufsGauge.style.width = `${pct}%`;
       
-      // Slow peak decay
       const curPeakPct = parseFloat(lufsPeak.style.left) || 0;
       if (pct > curPeakPct) {
         lufsPeak.style.left = `${pct}%`;
       } else {
-        lufsPeak.style.left = `${curPeakPct - 0.2}%`;
+        lufsPeak.style.left = `${curPeakPct - 0.4}%`;
       }
     } else {
       valLUFS.textContent = '-INF LUFS';
@@ -572,12 +753,10 @@ document.addEventListener('DOMContentLoaded', () => {
     line.innerHTML = `<span class="${colorClass}">[${type}]</span> ${text}`;
     ledgerTerminal.appendChild(line);
     
-    // Auto scroll
     ledgerTerminal.scrollTop = ledgerTerminal.scrollHeight;
   }
 
   btnExportLog.addEventListener('click', () => {
-    // Generate Exergy Validation Ledger Hash format
     const ledgerHeader = `EXERGIA-Ω INTEGRITY LEDGER // CLIENT-REAL STATE REPORT
 TIMESTAMP: ${new Date().toISOString()}
 FIRMWARE: C5-REAL-VERIFIED-V7.1
@@ -592,7 +771,6 @@ SYSTEM INTEGRITY HASH: ${generateHash(JSON.stringify(state.logs))}
       content += `[${log.time || new Date().toISOString()}] [${log.type}] ${log.text}\n`;
     });
     
-    // Generate file download
     const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -606,7 +784,6 @@ SYSTEM INTEGRITY HASH: ${generateHash(JSON.stringify(state.logs))}
     addTerminalLine('OK', 'Fichero de validación de registro plano exportado.');
   });
 
-  /* Helper Cryptographic Simulator SHA-256 */
   function generateHash(str) {
     let hash = 0;
     for (let i = 0; i < str.length; i++) {
@@ -630,12 +807,11 @@ SYSTEM INTEGRITY HASH: ${generateHash(JSON.stringify(state.logs))}
       const xc = rect.width / 2;
       const yc = rect.height / 2;
       
-      const rotateX = -(y - yc) / 10; // Max tilt rotation
+      const rotateX = -(y - yc) / 10;
       const rotateY = (x - xc) / 10;
       
       item.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
       
-      // Reflection shine overlay
       const shine = item.querySelector('.item-overlay');
       if (shine) {
         const pctX = (x / rect.width) * 100;

@@ -911,7 +911,7 @@ const { title } = Astro.props;
       });
     
       
-      // ─── 13/10 WEBGL GLSL SHADER (FERRO-MAGNETIC FLUID) ───
+      // ─── 13/10 WEBGL GLSL SHADER (FERRO-MAGNETIC CHROMATIC GRID) ───
       const initGLSL = () => {
         if (document.getElementById('gl-canvas')) return;
         
@@ -933,12 +933,14 @@ const { title } = Astro.props;
           attribute vec2 position;
           void main() { gl_Position = vec4(position, 0.0, 1.0); }
         `;
+        
         const fs = `
           precision mediump float;
           uniform vec2 u_resolution;
           uniform float u_time;
           uniform float u_audio;
           uniform vec2 u_mouse;
+          uniform float u_distortion;
 
           float random (in vec2 st) {
               return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
@@ -955,36 +957,73 @@ const { title } = Astro.props;
               return mix(a, b, u.x) + (c - a)* u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
           }
 
+          // Distort coordinates based on mouse gravity and noise
+          vec2 warpSpace(vec2 st, vec2 mouse, float amp, float chromaShift) {
+              float dist = distance(st, mouse);
+              float effect = smoothstep(0.5 + chromaShift * 0.1, 0.0, dist);
+              
+              // Gravity pull toward mouse + audio pulsation
+              float pull = effect * (0.12 * u_distortion + u_audio * 0.18);
+              vec2 dir = st - mouse;
+              vec2 pos = st - normalize(dir + 0.001) * pull;
+              
+              // Add simplex noise turbulence
+              float n = noise(pos * 2.0 + u_time * 0.25) * 0.35;
+              pos += vec2(n, -n) * (0.05 + u_audio * 0.1);
+              return pos;
+          }
+
+          float evaluateChannel(vec2 pos, float freq) {
+              float n = noise(pos * freq + u_time * 0.15);
+              n += noise(pos * freq * 2.0 - u_time * 0.2) * 0.5;
+              n = sin(n * 8.0 + u_time * 1.5 + u_audio * 6.0) * 0.5 + 0.5;
+              return n;
+          }
+
           void main() {
               vec2 st = gl_FragCoord.xy / u_resolution.xy;
               st.x *= u_resolution.x / u_resolution.y;
               
-              // Normalize mouse position
               vec2 mouse = u_mouse / u_resolution.xy;
               mouse.x *= u_resolution.x / u_resolution.y;
               
-              // Distance from current pixel to mouse
-              float dist = distance(st, mouse);
+              // ─── CHROMATIC ABERRATION SPLITTING ───
+              float aberration = 0.008 + u_audio * 0.015;
+              vec2 posR = warpSpace(st, mouse, 3.0, -aberration);
+              vec2 posG = warpSpace(st, mouse, 3.0, 0.0);
+              vec2 posB = warpSpace(st, mouse, 3.0, aberration);
               
-              // Distort space based on mouse distance and audio
-              float distortion = smoothstep(0.4, 0.0, dist) * (0.15 + u_audio * 0.2);
-              vec2 pos = vec2(st * (3.0 - u_audio * 3.0));
-              pos += normalize(st - mouse) * distortion;
+              float nR = evaluateChannel(posR, 2.5);
+              float nG = evaluateChannel(posG, 2.5);
+              float nB = evaluateChannel(posB, 2.5);
               
-              float n = noise(pos + u_time * 0.3);
-              n += noise(pos * 2.0 - u_time * 0.5) * 0.5;
-              n += noise(pos * 4.0 + u_time) * 0.25;
+              // ─── WARPED GRID OVERLAY ───
+              vec2 gridCoords = fract(posG * 8.0);
+              float gridLine = min(gridCoords.x, gridCoords.y);
+              float gridPattern = smoothstep(0.04 + u_audio * 0.03, 0.0, gridLine);
               
-              n = sin(n * 10.0 + u_time * 2.0 + u_audio * 8.0) * 0.5 + 0.5;
+              // Base colors
+              vec3 colorVoid = vec3(0.02, 0.02, 0.03);
+              vec3 colorYInMn = vec3(0.168, 0.231, 0.898);
+              vec3 colorAmber = vec3(0.996, 0.623, 0.109);
               
-              vec3 colorA = vec3(0.02, 0.02, 0.02);
-              vec3 colorB = vec3(0.17, 0.23, 0.90); // YInMn
-              vec3 colorC = vec3(1.0, 0.62, 0.11);  // Amber Void
+              // Mix colors for R, G, B channels
+              float r = mix(colorVoid.r, colorYInMn.r, nR * (0.25 + u_audio * 0.5)) + gridPattern * colorYInMn.r * 0.4;
+              float g = mix(colorVoid.g, colorYInMn.g, nG * (0.25 + u_audio * 0.5)) + gridPattern * colorYInMn.g * 0.4;
+              float b = mix(colorVoid.b, colorYInMn.b, nB * (0.25 + u_audio * 0.5)) + gridPattern * colorYInMn.b * 0.4;
               
-              vec3 color = mix(colorA, colorB, n * (0.2 + u_audio));
-              color = mix(color, colorC, n * u_audio * 2.0);
+              // Inject Amber glow in high transients
+              vec3 finalColor = vec3(r, g, b);
+              float amberMix = nG * u_audio * 1.5;
+              finalColor = mix(finalColor, colorAmber, clamp(amberMix, 0.0, 1.0));
               
-              gl_FragColor = vec4(color, 1.0);
+              // Vignette
+              vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+              float vignette = uv.x * uv.y * (1.0 - uv.x) * (1.0 - uv.y);
+              vignette = clamp(pow(16.0 * vignette, 0.35), 0.0, 1.0);
+              finalColor *= vignette;
+              
+              gl_FragColor = vec4(finalColor, 1.0);
           }
         `;
 
@@ -1013,8 +1052,10 @@ const { title } = Astro.props;
         const u_time = gl.getUniformLocation(program, "u_time");
         const u_audio = gl.getUniformLocation(program, "u_audio");
         const u_mouse = gl.getUniformLocation(program, "u_mouse");
+        const u_distortion = gl.getUniformLocation(program, "u_distortion");
 
-        let startTime = Date.now();
+        let timeAccumulator = 0;
+        let lastTimestamp = Date.now();
         let lastAudioVal = 0;
 
         const renderGL = () => {
@@ -1024,12 +1065,22 @@ const { title } = Astro.props;
             gl.viewport(0, 0, canvas.width, canvas.height);
           }
           
+          const now = Date.now();
+          const dt = (now - lastTimestamp) / 1000;
+          lastTimestamp = now;
+          
+          const timeScale = window.glslTimeScale !== undefined ? window.glslTimeScale : 1.0;
+          timeAccumulator += dt * timeScale;
+          
           gl.uniform2f(u_resolution, canvas.width, canvas.height);
-          gl.uniform1f(u_time, (Date.now() - startTime) / 1000);
+          gl.uniform1f(u_time, timeAccumulator);
           
           lastAudioVal += ((window.globalAudioVolume || 0) - lastAudioVal) * 0.1;
           gl.uniform1f(u_audio, lastAudioVal);
-          gl.uniform2f(u_mouse, mouseX, window.innerHeight - mouseY); // flip y-axis for WebGL
+          gl.uniform2f(u_mouse, mouseX, window.innerHeight - mouseY);
+          
+          const distRatio = window.globalDistortionRatio !== undefined ? window.globalDistortionRatio : 1.0;
+          gl.uniform1f(u_distortion, distRatio);
           
           gl.drawArrays(gl.TRIANGLES, 0, 6);
           requestAnimationFrame(renderGL);

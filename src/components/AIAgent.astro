@@ -616,8 +616,9 @@
       const val = parseFloat(sDist.value);
       document.getElementById('val-distortion').textContent = `${val.toFixed(1)}x`;
       // Direct WebGL shader binding
-      window.globalAudioVolume = val * 0.5; // Warps the shader
-      addLogEntry(`WEBGL SHADER VOL-SCALE MULTIPLIER => ${val.toFixed(2)}`, "cyan");
+      // @ts-ignore
+      window.globalDistortionRatio = val;
+      addLogEntry(`WEBGL SHADER DISTORTION RATIO => ${val.toFixed(2)}`, "cyan");
     });
 
     sTime.addEventListener('input', () => {
