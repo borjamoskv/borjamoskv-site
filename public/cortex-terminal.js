@@ -7,9 +7,44 @@
  * ═══════════════════════════════════════════════════════════════════
  */
 
-const initCortexTerminal = () => {
-    const terminalEl = document.getElementById('cortex-terminal');
-    if (!terminalEl) return;
+const initCortexTerminal = async () => {
+    let terminalEl = document.getElementById('cortex-terminal');
+    if (!terminalEl) {
+        terminalEl = document.createElement('div');
+        terminalEl.id = 'cortex-terminal';
+        terminalEl.innerHTML = `
+            <canvas id="cortex-canvas-bg"></canvas>
+            <div id="cortex-terminal-content">
+                <div class="terminal-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(43,59,229,0.3); padding-bottom: 12px; margin-bottom: 20px;">
+                    <span style="font-weight: 800; letter-spacing: 0.1em; color: var(--cterm-accent, #E5A82B); font-family: 'Orbitron', sans-serif; font-size: 0.85rem;">CORTEX COGNITIVE SHELL // v6.1</span>
+                    <button class="terminal-close" style="background: transparent; border: 1px solid rgba(43,59,229,0.5); color: #2B3BE5; padding: 4px 12px; cursor: pointer; font-family: inherit; font-size: 0.75rem; text-transform: uppercase; font-weight: 700; transition: all 0.3s ease;">CLOSE [ESC / \`]</button>
+                </div>
+                <div id="cortex-terminal-output"></div>
+                <div class="cortex-terminal-input-line">
+                    <span id="cortex-terminal-prompt">cortex@borjamoskv:~#</span>
+                    <div id="cortex-terminal-input-wrapper">
+                        <input type="text" id="cortex-terminal-input" autocomplete="off" spellcheck="false" />
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(terminalEl);
+    }
+
+    if (!window.THREE) {
+        try {
+            await new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+                script.onload = resolve;
+                script.onerror = reject;
+                document.head.appendChild(script);
+            });
+            console.log('[CORTEX] Three.js loaded dynamically.');
+        } catch (e) {
+            console.error('[CORTEX] Failed to load Three.js via CDN.', e);
+        }
+    }
 
     if (window.cortexTerminal) {
         if (window.cortexTerminal.terminal === terminalEl) {
@@ -304,6 +339,9 @@ class CortexTerminal {
 
         document.addEventListener('keydown', (e) => {
             if (e.key === '`') {
+                e.preventDefault();
+                this.toggle();
+            } else if (e.key === 'Escape' && this.isOpen) {
                 e.preventDefault();
                 this.toggle();
             }

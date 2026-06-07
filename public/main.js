@@ -207,6 +207,9 @@ document.addEventListener('DOMContentLoaded', () => {
   let analyserL = null;
   let analyserR = null;
   let audioInitialized = false;
+  let synthOscs = [];
+  let synthGains = [];
+  let synthActive = false;
 
   function initAudioEngine() {
     if (audioInitialized) return;
@@ -218,6 +221,12 @@ document.addEventListener('DOMContentLoaded', () => {
       audioEl = new Audio();
       audioEl.crossOrigin = "anonymous";
       audioEl.loop = true;
+      
+      // Bind error handling to trigger synthesizer fallback
+      audioEl.addEventListener('error', (e) => {
+        console.warn("Audio element failed to load resource. Activating synth fallback...", e);
+        startSynthFallback();
+      });
       
       sourceNode = audioCtx.createMediaElementSource(audioEl);
       
@@ -305,6 +314,68 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  function startSynthFallback() {
+    if (synthActive) return;
+    synthActive = true;
+    addTerminalLine('WARN', 'Fallo de media detectado. Inicializando Sintetizador de Emergencia.');
+    
+    try {
+      const frequencies = [55, 110, 165, 220];
+      const types = ['sine', 'triangle', 'sawtooth', 'triangle'];
+      const gains = [0.4, 0.2, 0.1, 0.05];
+      
+      const now = audioCtx.currentTime;
+      
+      frequencies.forEach((freq, idx) => {
+        const osc = audioCtx.createOscillator();
+        const oscGain = audioCtx.createGain();
+        
+        osc.type = types[idx];
+        osc.frequency.value = freq * Math.max(0.01, Math.min(4.0, state.pitch));
+        oscGain.gain.value = 0; // fade in
+        
+        osc.connect(oscGain);
+        
+        // Connect to filters to pass through processing
+        if (lowPassL) oscGain.connect(lowPassL);
+        if (lowPassR) oscGain.connect(lowPassR);
+        if (highPassL) oscGain.connect(highPassL);
+        if (highPassR) oscGain.connect(highPassR);
+        
+        // Fade in
+        oscGain.gain.setTargetAtTime(gains[idx] * 0.4, now, 1.5);
+        
+        osc.start(now);
+        synthOscs.push({ node: osc, baseFreq: freq });
+        synthGains.push(oscGain);
+      });
+      
+      addTerminalLine('OK', 'Sintetizador enrutado a filtros analógicos.');
+    } catch (err) {
+      console.error("Failed to start synth fallback:", err);
+    }
+  }
+
+  function stopSynthFallback() {
+    if (!synthActive) return;
+    const now = audioCtx ? audioCtx.currentTime : 0;
+    
+    synthGains.forEach(gainNode => {
+      if (audioCtx) {
+        gainNode.gain.setTargetAtTime(0, now, 0.3);
+      }
+    });
+    
+    setTimeout(() => {
+      synthOscs.forEach(osc => {
+        try { osc.node.stop(); } catch(e){}
+      });
+      synthOscs = [];
+      synthGains = [];
+      synthActive = false;
+    }, 1000);
+  }
+
   function updateAudioNodes() {
     if (!audioInitialized) return;
     const now = audioCtx.currentTime;
@@ -349,8 +420,11 @@ document.addEventListener('DOMContentLoaded', () => {
         audioEl.src = trackSrc;
       }
       
-      audioEl.play().catch(e => {
-        console.warn("Playback blocked by browser autoplay rules.", e);
+      audioEl.play().then(() => {
+        stopSynthFallback();
+      }).catch(e => {
+        console.warn("Playback blocked by browser autoplay rules. Activating synth fallback...", e);
+        startSynthFallback();
       });
       addTerminalLine('PLAY', `Reproduciendo: ${tracks[state.currentTrackId].title}`);
     } else {
@@ -363,6 +437,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (audioEl) {
         audioEl.pause();
       }
+      stopSynthFallback();
       addTerminalLine('STOP', 'Reproducción en pausa.');
     }
   }
@@ -380,6 +455,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   function loadTrack(id) {
+    stopSynthFallback();
     const track = tracks[id];
     state.currentTrackId = id;
     
@@ -407,7 +483,12 @@ document.addEventListener('DOMContentLoaded', () => {
         audioEl.load();
         
         if (state.isPlaying) {
-          audioEl.play().catch(e => console.warn("Blocked play on load", e));
+          audioEl.play().then(() => {
+            stopSynthFallback();
+          }).catch(e => {
+            console.warn("Blocked play on load. Activating synth fallback...", e);
+            startSynthFallback();
+          });
           addTerminalLine('PLAY', `Reproduciendo: ${track.title}`);
         }
       }
@@ -606,6 +687,14 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
+    if (synthActive && audioCtx) {
+      const factor = Math.max(0.01, Math.min(4.0, state.pitch));
+      const now = audioCtx.currentTime;
+      synthOscs.forEach(item => {
+        item.node.frequency.setTargetAtTime(item.baseFreq * factor, now, 0.05);
+      });
+    }
+
     if (state.isPlaying && !state.isDragging) {
       const armRotation = 5 + Math.sin(performance.now() * 0.0001) * 3;
       tonearm.style.transform = `rotate(${armRotation}deg)`;
@@ -617,11 +706,23 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderVectorscope() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // Dynamically adjust internal canvas size to match CSS layout dimensions
+    const dpr = window.devicePixelRatio || 1;
+    const cssWidth = canvas.clientWidth || 220;
+    const cssHeight = canvas.clientHeight || 220;
     
-    const cx = canvas.width / 2;
-    const cy = canvas.height / 2;
-    const radius = canvas.width * 0.45;
+    if (canvas.width !== cssWidth * dpr || canvas.height !== cssHeight * dpr) {
+      canvas.width = cssWidth * dpr;
+      canvas.height = cssHeight * dpr;
+    }
+
+    ctx.save();
+    ctx.scale(dpr, dpr);
+    ctx.clearRect(0, 0, cssWidth, cssHeight);
+    
+    const cx = cssWidth / 2;
+    const cy = cssHeight / 2;
+    const radius = cssWidth * 0.45;
     
     // Grid Background
     ctx.strokeStyle = 'rgba(43, 59, 229, 0.08)';
@@ -708,6 +809,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       updateGauges(-Infinity);
     }
+    
+    ctx.restore();
   }
 
   function updateGauges(dbValue) {

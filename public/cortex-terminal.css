@@ -15,7 +15,7 @@
    Sovereign Industrial Noir v6.1.1 — CAPITAL CONVERGENCE
    ═══════════════════════════════════════════════════════════════════ */
 
-#cortex-terminal-overlay {
+#cortex-terminal {
   position: fixed;
   inset: 0;
   z-index: 999999;
@@ -38,7 +38,7 @@
   contain: strict;
 }
 
-#cortex-terminal-overlay.active {
+#cortex-terminal.active {
   opacity: 1;
   pointer-events: auto;
   animation: 
@@ -46,7 +46,7 @@
     cortex-glitch-shift 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
-#cortex-canvas-bg {
+#cortex-canvas-bg, #tensor-canvas {
   position: absolute;
   top: 0;
   left: 0;
@@ -60,12 +60,12 @@
 /* ═══════════════════════════════════════════════════════════════════
    SINGULARITY VOID ENGINE (V6.0 ALPHA)
    ═══════════════════════════════════════════════════════════════════ */
-#cortex-terminal-overlay.singularity-active {
+#cortex-terminal.singularity-active {
   background: radial-gradient(circle at center, rgba(43, 59, 229, 0.2) 0%, rgba(0, 0, 0, 1) 100%) !important;
   animation: singularity-drift 0.1s linear infinite alternate-reverse !important;
 }
 
-#cortex-terminal-overlay.singularity-active::before {
+#cortex-terminal.singularity-active::before {
   background: 
     repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(230, 0, 126, 0.3) 1px, rgba(230, 0, 126, 0.3) 2px),
     repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0, 255, 157, 0.1) 3px, rgba(0, 255, 157, 0.1) 4px);
@@ -493,7 +493,7 @@
    CRT SCANLINES & PHOSPHOR DECAY
    ═══════════════════════════════════════════════════════════════════ */
 
-#cortex-terminal-overlay::before {
+#cortex-terminal::before {
   content: "";
   display: block;
   position: absolute;
@@ -519,7 +519,7 @@
   opacity: 0.9;
 }
 
-#cortex-terminal-overlay::after {
+#cortex-terminal::after {
   content: "";
   display: block;
   position: absolute;
@@ -772,7 +772,7 @@ html[data-cortex-state="singularity"] .cortex-cursor-halo {
   box-shadow: 0 0 50px #f0f !important;
 }
 
-html[data-cortex-state="singularity"] #cortex-terminal-overlay {
+html[data-cortex-state="singularity"] #cortex-terminal {
   border: 20px solid #f0f !important;
   box-shadow: 0 0 100px #f0f inset !important;
 }
