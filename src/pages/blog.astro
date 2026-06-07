@@ -1171,50 +1171,54 @@
 <h2 class="recommendations-heading">Recomendaciones</h2>
 <div class="recommendations-grid">
 <div class="recommendation-card">
-<p class="recommendation-quote">El único espacio que no intenta venderte el hype de la IA con hilos vacíos. Termodinámica, código real y música entropía entropía</p>
-<p class="recommendation-author"><span class="surreal-name"></span> // Senior Software Architect</p>
+<p class="recommendation-quote"></p>
+<p class="recommendation-author"><span class="surreal-name"></span> <span class="surreal-role"></span></p>
 </div>
 <div class="recommendation-card">
-<p class="recommendation-quote">Una cura de realidad técnica y musical en castellano. Jarana d'Or es el contrapeso perfecto al ruido de Linkedin.</p>
-<p class="recommendation-author"><span class="surreal-name"></span> // Music Producer &amp; Tech Lead</p>
+<p class="recommendation-quote"></p>
+<p class="recommendation-author"><span class="surreal-name"></span> <span class="surreal-role"></span></p>
 </div>
 <div class="recommendation-card">
-<p class="recommendation-quote">La intersección entre algoritmos y contracultura que nadie se atreve a escribir. Textos afilados como cuchillas.</p>
-<p class="recommendation-author"><span class="surreal-name"></span> // DevRel Engineer</p>
+<p class="recommendation-quote"></p>
+<p class="recommendation-author"><span class="surreal-name"></span> <span class="surreal-role"></span></p>
 </div>
 </div>
 </section>
 
 <script>
-  document.addEventListener('astro:page-load', () => {
-    const names = [
-      "JULEN GUERRERO", "Doraemon", "E.T y Espinete", "Gervasio Defer", 
-      "David Bowie", "EL Sgt. Slaughter", "Cayetana Guillen Cuervo", 
-      "Emilio Aragón", "Prudencia Indurain", "El Note", "El Lute", "El Xokas"
-    ];
-    // Shuffle and pick 3 unique names
-    const shuffled = names.sort(() => 0.5 - Math.random());
+  const surrealReviews = [
+    { name: "JULEN GUERRERO", role: "// Leyenda de San Mamés", quote: "Puro pundonor. Este ecosistema tiene más garra que el Athletic en los 90. Cero humo, todo músculo." },
+    { name: "Doraemon", role: "// Gato Cósmico", quote: "Borja ha sacado de su bolsillo mágico un código tan puro que ni mis mejores inventos del siglo XXII. Y sin gorrocóptero." },
+    { name: "E.T y Espinete", role: "// Colaboración Astral", quote: "Mi caaaasa... es este servidor. Pinchos y extraterrestres unidos por la termodinámica y el buen código." },
+    { name: "Gervasio Defer", role: "// Oro Olímpico", quote: "Un salto mortal hacia atrás perfecto. Cero penalizaciones en la ejecución técnica. Pura gimnasia de silicio." },
+    { name: "David Bowie", role: "// Starman", quote: "Ground Control to Major Borja... The algorithms are stepping out in a most peculiar way. Absolute Starman energy." },
+    { name: "EL Sgt. Slaughter", role: "// Instructor Táctico", quote: "¡ATENCIÓN MAGGOTS! ¡ESTO NO ES UN CAMPAMENTO DE VERANO, ES CÓDIGO REAL C5! ¡LEED Y APRENDED!" },
+    { name: "Cayetana Guillen Cuervo", role: "// Musa Intelectual", quote: "Me parece un blog fascinante, arrebatador, una deconstrucción posmoderna del algoritmo que interpela directamente al alma." },
+    { name: "Emilio Aragón", role: "// Médico de Familia", quote: "Señoras y señores, con todos ustedes... menos líneas de código, menos latencia y ¡cuidado con la raya de en medio!" },
+    { name: "Prudencia Indurain", role: "// Ciclismo de Alta Montaña", quote: "Más desarrollo que mi hermano Miguel en las rampas de Hautacam. Este sistema escala puertos de categoría especial sin despeinarse." },
+    { name: "El Note", role: "// Filosofía Urbana", quote: "Bro... esto es locura pura. Le he dado un hit a la base de datos y me ha devuelto un backend astral. Cero mal rollo." },
+    { name: "El Lute", role: "// Superviviente", quote: "Camina o revienta, compadre. Aquí se pica código como si nos persiguieran los picolos. Supervivencia pura y dura." },
+    { name: "El Xokas", role: "// Número 1", quote: "Esto no es un blog, ESTO ES UNA PUTA BARBARIDAD. ¡Es que no sois conscientes del puto nivelazo que tiene esto! ¡Es de locos, joder!" }
+  ];
+
+  function renderReviews() {
+    const shuffled = surrealReviews.sort(() => 0.5 - Math.random());
     const selected = shuffled.slice(0, 3);
     
-    document.querySelectorAll('.surreal-name').forEach((el, idx) => {
-      el.textContent = selected[idx];
-      el.style.color = '#FFF';
+    document.querySelectorAll('.recommendation-card').forEach((card, idx) => {
+      if(selected[idx]) {
+        card.querySelector('.recommendation-quote').textContent = selected[idx].quote;
+        card.querySelector('.surreal-name').textContent = selected[idx].name;
+        card.querySelector('.surreal-role').textContent = selected[idx].role;
+        card.querySelector('.surreal-name').style.color = '#FFF';
+      }
     });
-  });
+  }
+
+  document.addEventListener('astro:page-load', renderReviews);
   
-  // Si no usa ViewTransitions o es carga directa
   if (!document.startViewTransition) {
-    const names = [
-      "JULEN GUERRERO", "Doraemon", "E.T y Espinete", "Gervasio Defer", 
-      "David Bowie", "EL Sgt. Slaughter", "Cayetana Guillen Cuervo", 
-      "Emilio Aragón", "Prudencia Indurain", "El Note", "El Lute", "El Xokas"
-    ];
-    const shuffled = names.sort(() => 0.5 - Math.random());
-    const selected = shuffled.slice(0, 3);
-    document.querySelectorAll('.surreal-name').forEach((el, idx) => {
-      el.textContent = selected[idx];
-      el.style.color = '#FFF';
-    });
+    renderReviews();
   }
 </script>
 <hr class="blog-divider"/>
