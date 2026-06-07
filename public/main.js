@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       header.classList.remove('is-scrolled');
     }
-  });
+  }, { passive: true });
 
   navLinks.forEach(link => {
     link.addEventListener('click', (e) => {
@@ -185,7 +185,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
 
-      addTerminalLine('NAV', `Sección activa cambiada a: ${targetId.toUpperCase()}`);
+      // Defer logging to keep click latency low (INP optimization)
+      setTimeout(() => {
+        addTerminalLine('NAV', `Sección activa cambiada a: ${targetId.toUpperCase()}`);
+      }, 0);
     });
   });
 
@@ -543,13 +546,20 @@ document.addEventListener('DOMContentLoaded', () => {
     return Math.atan2(y - centerY, x - centerX);
   }
 
+  let vinylCenter = null;
+  window.addEventListener('resize', () => {
+    if (vinylRecord) {
+      vinylCenter = getCenter(vinylRecord);
+    }
+  }, { passive: true });
+
   vinylRecord.addEventListener('pointerdown', (e) => {
     ensureAudioContextActive();
     state.isDragging = true;
     vinylRecord.setPointerCapture(e.pointerId);
     
-    const center = getCenter(vinylRecord);
-    state.dragStartAngle = getAngle(e.clientX, e.clientY, center.x, center.y);
+    vinylCenter = getCenter(vinylRecord);
+    state.dragStartAngle = getAngle(e.clientX, e.clientY, vinylCenter.x, vinylCenter.y);
     state.dragStartRotation = state.vinylRotation;
     state.dragLastAngle = state.dragStartAngle;
     state.dragVelocity = 0;
@@ -558,43 +568,60 @@ document.addEventListener('DOMContentLoaded', () => {
     state.targetPitch = 0.0;
   });
 
+  let scratchPending = false;
+  let lastPointerX = 0;
+  let lastPointerY = 0;
+
   vinylRecord.addEventListener('pointermove', (e) => {
     if (!state.isDragging) return;
+    lastPointerX = e.clientX;
+    lastPointerY = e.clientY;
     
-    const center = getCenter(vinylRecord);
-    const angle = getAngle(e.clientX, e.clientY, center.x, center.y);
-    
-    let angleDiff = angle - state.dragStartAngle;
-    const currentRotation = state.dragStartRotation + (angleDiff * 180) / Math.PI;
-    state.vinylRotation = currentRotation;
-    vinylRecord.style.transform = `translate3d(22%, 0, 0) rotate(${currentRotation}deg)`;
-    
-    const now = performance.now();
-    const dt = now - state.lastDragTime;
-    if (dt > 10) {
-      let deltaAngle = angle - state.dragLastAngle;
-      if (deltaAngle > Math.PI) deltaAngle -= Math.PI * 2;
-      if (deltaAngle < -Math.PI) deltaAngle += Math.PI * 2;
-      
-      const targetSpeed = (deltaAngle / dt) * 1000 * 0.15; // Angular speed scalar
-      state.pitch = state.pitch * 0.3 + targetSpeed * 0.7; // Smooth interpolation
-      
-      state.dragLastAngle = angle;
-      state.lastDragTime = now;
-      
-      // Dynamically warp playback speed to follow scratching velocity
-      if (audioInitialized && audioEl) {
-        const absPitch = Math.abs(state.pitch);
-        if (absPitch < 0.08) {
-          audioEl.playbackRate = 0.0;
-          if (!audioEl.paused) audioEl.pause();
-        } else {
-          audioEl.playbackRate = Math.min(3.5, absPitch);
-          if (audioEl.paused && state.isPlaying) {
-            audioEl.play().catch(()=>{});
+    if (!scratchPending) {
+      scratchPending = true;
+      requestAnimationFrame(() => {
+        scratchPending = false;
+        if (!state.isDragging) return;
+        
+        if (!vinylCenter) {
+          vinylCenter = getCenter(vinylRecord);
+        }
+        const center = vinylCenter;
+        const angle = getAngle(lastPointerX, lastPointerY, center.x, center.y);
+        
+        let angleDiff = angle - state.dragStartAngle;
+        const currentRotation = state.dragStartRotation + (angleDiff * 180) / Math.PI;
+        state.vinylRotation = currentRotation;
+        vinylRecord.style.transform = `translate3d(22%, 0, 0) rotate(${currentRotation}deg)`;
+        
+        const now = performance.now();
+        const dt = now - state.lastDragTime;
+        if (dt > 10) {
+          let deltaAngle = angle - state.dragLastAngle;
+          if (deltaAngle > Math.PI) deltaAngle -= Math.PI * 2;
+          if (deltaAngle < -Math.PI) deltaAngle += Math.PI * 2;
+          
+          const targetSpeed = (deltaAngle / dt) * 1000 * 0.15; // Angular speed scalar
+          state.pitch = state.pitch * 0.3 + targetSpeed * 0.7; // Smooth interpolation
+          
+          state.dragLastAngle = angle;
+          state.lastDragTime = now;
+          
+          // Dynamically warp playback speed to follow scratching velocity
+          if (audioInitialized && audioEl) {
+            const absPitch = Math.abs(state.pitch);
+            if (absPitch < 0.08) {
+              audioEl.playbackRate = 0.0;
+              if (!audioEl.paused) audioEl.pause();
+            } else {
+              audioEl.playbackRate = Math.min(3.5, absPitch);
+              if (audioEl.paused && state.isPlaying) {
+                audioEl.play().catch(()=>{});
+              }
+            }
           }
         }
-      }
+      });
     }
   });
 
@@ -616,7 +643,10 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
     
-    addTerminalLine('SCRATCH', `Inercia de arrastre: ${state.pitch.toFixed(2)}x`);
+    // Defer logging
+    setTimeout(() => {
+      addTerminalLine('SCRATCH', `Inercia de arrastre: ${state.pitch.toFixed(2)}x`);
+    }, 0);
   });
 
   /* ==========================================================================
@@ -902,33 +932,55 @@ SYSTEM INTEGRITY HASH: ${generateHash(JSON.stringify(state.logs))}
      8. 3D TILT EFFECT (GALLERY COLLAGE)
      ========================================================================== */
   galleryItems.forEach(item => {
+    let rect = null;
+    let tiltPending = false;
+
+    item.addEventListener('mouseenter', () => {
+      rect = item.getBoundingClientRect();
+    });
+
     item.addEventListener('mousemove', (e) => {
-      const rect = item.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      
-      const xc = rect.width / 2;
-      const yc = rect.height / 2;
-      
-      const rotateX = -(y - yc) / 10;
-      const rotateY = (x - xc) / 10;
-      
-      item.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-      
-      const shine = item.querySelector('.item-overlay');
-      if (shine) {
-        const pctX = (x / rect.width) * 100;
-        const pctY = (y / rect.height) * 100;
-        shine.style.background = `radial-gradient(circle at ${pctX}% ${pctY}%, rgba(43, 59, 229, 0.15) 0%, rgba(10, 10, 10, 0.9) 80%)`;
+      if (!rect) {
+        rect = item.getBoundingClientRect();
+      }
+      const clientX = e.clientX;
+      const clientY = e.clientY;
+
+      if (!tiltPending) {
+        tiltPending = true;
+        requestAnimationFrame(() => {
+          tiltPending = false;
+          if (!rect) return;
+          const x = clientX - rect.left;
+          const y = clientY - rect.top;
+          
+          const xc = rect.width / 2;
+          const yc = rect.height / 2;
+          
+          const rotateX = -(y - yc) / 10;
+          const rotateY = (x - xc) / 10;
+          
+          item.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+          
+          const shine = item.querySelector('.item-overlay');
+          if (shine) {
+            const pctX = (x / rect.width) * 100;
+            const pctY = (y / rect.height) * 100;
+            shine.style.background = `radial-gradient(circle at ${pctX}% ${pctY}%, rgba(43, 59, 229, 0.15) 0%, rgba(10, 10, 10, 0.9) 80%)`;
+          }
+        });
       }
     });
 
     item.addEventListener('mouseleave', () => {
-      item.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
-      const shine = item.querySelector('.item-overlay');
-      if (shine) {
-        shine.style.background = 'linear-gradient(to top, rgba(10, 10, 10, 0.9) 0%, transparent 60%)';
-      }
+      rect = null;
+      requestAnimationFrame(() => {
+        item.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+        const shine = item.querySelector('.item-overlay');
+        if (shine) {
+          shine.style.background = 'linear-gradient(to top, rgba(10, 10, 10, 0.9) 0%, transparent 60%)';
+        }
+      });
     });
 
     item.addEventListener('click', () => {

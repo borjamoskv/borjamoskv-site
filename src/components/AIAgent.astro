@@ -510,6 +510,15 @@
     }
   }
 
+  // Helper to run non-critical updates deferred (INP optimization)
+  function addLogEntryDeferred(text: string, type: "system" | "alert" | "cyan" | "agent" = "system") {
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(() => addLogEntry(text, type));
+    } else {
+      setTimeout(() => addLogEntry(text, type), 0);
+    }
+  }
+
   function initTelemetryHUD() {
     const trigger = document.getElementById('ai-telemetry-badge');
     const hud = document.getElementById('ai-agent-hud');
@@ -523,16 +532,21 @@
     // 1. OPEN / CLOSE HANDLERS
     trigger.addEventListener('click', (e) => {
       e.stopPropagation();
+      const nextActive = hud.classList.contains('hidden');
       hud.classList.toggle('hidden');
-      hudActive = !hud.classList.contains('hidden');
+      hudActive = nextActive;
       
       if (hudActive) {
-        playTick(800, 200, 0.08); // responsive click
-        startSpectrogram(document.getElementById('hud-spectrogram') as HTMLCanvasElement);
-        addLogEntry("COGNITIVE HUD OVERLAY MOUNTED.", "cyan");
-        addLogEntry("TELEMETRY CHANNEL 0xFE ALIGNED.", "system");
         document.body.style.overflow = 'hidden'; // Lock scrolling
-        syncGlobalEntropy();
+        
+        // Defer audio context loading and layout operations
+        setTimeout(() => {
+          playTick(800, 200, 0.08); // responsive click
+          startSpectrogram(document.getElementById('hud-spectrogram') as HTMLCanvasElement);
+          addLogEntryDeferred("COGNITIVE HUD OVERLAY MOUNTED.", "cyan");
+          addLogEntryDeferred("TELEMETRY CHANNEL 0xFE ALIGNED.", "system");
+          syncGlobalEntropy();
+        }, 0);
       } else {
         closeHUD();
       }
@@ -551,26 +565,42 @@
       hud.classList.add('hidden');
       hudActive = false;
       document.body.style.overflow = ''; // Unlock scrolling
-      cancelAnimationFrame(spectrogramAnimFrame);
-      stopTheremin();
-      playTick(400, 100, 0.08);
+      
+      // Defer teardown to avoid blocking close rendering
+      setTimeout(() => {
+        cancelAnimationFrame(spectrogramAnimFrame);
+        stopTheremin();
+        playTick(400, 100, 0.08);
+      }, 0);
     }
 
-    // 2. LIVE CURSOR COMPASS TRACKER
-    document.addEventListener('mousemove', (e) => {
-      const coords = document.getElementById('compass-coords');
-      if (coords) {
-        const xStr = e.clientX.toString().padStart(3, '0');
-        const yStr = e.clientY.toString().padStart(3, '0');
-        coords.textContent = `X: ${xStr} | Y: ${yStr}`;
-      }
+    // 2. LIVE CURSOR COMPASS TRACKER - Throttled with requestAnimationFrame
+    let mouseMovePending = false;
+    let lastX = 0, lastY = 0;
 
-      if (hudActive && Math.random() < 0.04) {
-        addLogEntry(`CURSOR COORDINATES ATTAINED: X=${e.clientX} Y=${e.clientY}`);
+    document.addEventListener('mousemove', (e) => {
+      lastX = e.clientX;
+      lastY = e.clientY;
+
+      if (!mouseMovePending) {
+        mouseMovePending = true;
+        requestAnimationFrame(() => {
+          mouseMovePending = false;
+          const coords = document.getElementById('compass-coords');
+          if (coords) {
+            const xStr = lastX.toString().padStart(3, '0');
+            const yStr = lastY.toString().padStart(3, '0');
+            coords.textContent = `X: ${xStr} | Y: ${yStr}`;
+          }
+
+          if (hudActive && Math.random() < 0.04) {
+            addLogEntryDeferred(`CURSOR COORDINATES ATTAINED: X=${lastX} Y=${lastY}`);
+          }
+        });
       }
     });
 
-    // 3. THEREMIN SYNTH LOGIC
+    // 3. THEREMIN SYNTH LOGIC - Throttled with requestAnimationFrame
     thPad.addEventListener('mouseenter', () => {
       thCursor.style.display = 'block';
       startTheremin();
@@ -581,29 +611,41 @@
       stopTheremin();
     });
 
+    let thereminPending = false;
+    let lastThX = 0, lastThY = 0;
+
     thPad.addEventListener('mousemove', (e) => {
-      const rect = thPad.getBoundingClientRect();
-      const pctX = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-      const pctY = Math.max(0, Math.min(1, (e.clientY - rect.top) / rect.height));
+      lastThX = e.clientX;
+      lastThY = e.clientY;
 
-      // Map Y to top position of cursor, X to left
-      thCursor.style.left = `${pctX * 100}%`;
-      thCursor.style.top = `${pctY * 100}%`;
+      if (!thereminPending) {
+        thereminPending = true;
+        requestAnimationFrame(() => {
+          thereminPending = false;
+          const rect = thPad.getBoundingClientRect();
+          const pctX = Math.max(0, Math.min(1, (lastThX - rect.left) / rect.width));
+          const pctY = Math.max(0, Math.min(1, (lastThY - rect.top) / rect.height));
 
-      // Frequency mapping: 150Hz to 1200Hz
-      const freq = 150 + (pctX * 1050);
-      // Volume mapping: inverse Y (top is louder)
-      const volume = (1 - pctY) * 0.08;
+          // Map Y to top position of cursor, X to left
+          thCursor.style.left = `${pctX * 100}%`;
+          thCursor.style.top = `${pctY * 100}%`;
 
-      thReadout.textContent = `Hz: ${freq.toFixed(2)} // Amp: ${volume.toFixed(3)}`;
+          // Frequency mapping: 150Hz to 1200Hz
+          const freq = 150 + (pctX * 1050);
+          // Volume mapping: inverse Y (top is louder)
+          const volume = (1 - pctY) * 0.08;
 
-      if (synthOsc && synthGain && window.audioCtx) {
-        synthOsc.frequency.setValueAtTime(freq, window.audioCtx.currentTime);
-        synthGain.gain.setValueAtTime(volume, window.audioCtx.currentTime);
-      }
+          thReadout.textContent = `Hz: ${freq.toFixed(2)} // Amp: ${volume.toFixed(3)}`;
 
-      if (Math.random() < 0.05) {
-        addLogEntry(`THEREMIN SYNAPTIC INJECTOR: FREQ=${freq.toFixed(1)}Hz GAIN=${(volume * 1000).toFixed(0)}mB`, "alert");
+          if (synthOsc && synthGain && window.audioCtx) {
+            synthOsc.frequency.setValueAtTime(freq, window.audioCtx.currentTime);
+            synthGain.gain.setValueAtTime(volume, window.audioCtx.currentTime);
+          }
+
+          if (Math.random() < 0.05) {
+            addLogEntryDeferred(`THEREMIN SYNAPTIC INJECTOR: FREQ=${freq.toFixed(1)}Hz GAIN=${(volume * 1000).toFixed(0)}mB`, "alert");
+          }
+        });
       }
     });
 
@@ -618,7 +660,7 @@
       // Direct WebGL shader binding
       // @ts-ignore
       window.globalDistortionRatio = val;
-      addLogEntry(`WEBGL SHADER DISTORTION RATIO => ${val.toFixed(2)}`, "cyan");
+      addLogEntryDeferred(`WEBGL SHADER DISTORTION RATIO => ${val.toFixed(2)}`, "cyan");
     });
 
     sTime.addEventListener('input', () => {
@@ -629,7 +671,7 @@
       // Let's bind it to window object so initGLSL can read it!
       // @ts-ignore
       window.glslTimeScale = val;
-      addLogEntry(`GLSL CLOCK DILATION FACTOR => ${val.toFixed(2)}`, "cyan");
+      addLogEntryDeferred(`GLSL CLOCK DILATION FACTOR => ${val.toFixed(2)}`, "cyan");
     });
 
     sGrain.addEventListener('input', () => {
@@ -649,7 +691,7 @@
         document.head.appendChild(sheet);
       }
       sheet.textContent = `body::before { opacity: ${val / 100} !important; }`;
-      addLogEntry(`EXERGY FILM GRAIN DENSITY INJECTED => ${val}%`);
+      addLogEntryDeferred(`EXERGY FILM GRAIN DENSITY INJECTED => ${val}%`);
     });
 
     // 5. INTERACTIVE PAGE DISRUPTIONS
@@ -657,14 +699,19 @@
     const btnPulse = document.getElementById('btn-pulse');
 
     btnCorrupt.addEventListener('click', () => {
-      corruptViewportHeaders();
       playTick(1200, 300, 0.4);
-      incrementGlobalEntropy(10);
+      setTimeout(() => {
+        corruptViewportHeaders();
+        incrementGlobalEntropy(10);
+      }, 0);
     });
 
     btnPulse.addEventListener('click', () => {
-      injectVisualPulse();
-      incrementGlobalEntropy(25);
+      playTick(80, 2800, 0.6);
+      setTimeout(() => {
+        injectVisualPulse();
+        incrementGlobalEntropy(25);
+      }, 0);
     });
 
     // 5.5 LLM AGENT COMMUNICATION (Ritxie Hawting)
@@ -677,13 +724,12 @@
         const text = agentInput.value.trim();
         if (!text) return;
 
-        addLogEntry(`USR_CMD: ${text}`, "cyan");
+        addLogEntryDeferred(`USR_CMD: ${text}`, "cyan");
         agentInput.value = '';
         agentInput.disabled = true;
         
         // Typing indicator
-        const loaderId = `loader-${Date.now()}`;
-        addLogEntry("RITXIE HAWTING_SINTETIZANDO...", "alert");
+        addLogEntryDeferred("RITXIE HAWTING_SINTETIZANDO...", "alert");
         
         try {
           const res = await fetch('/api/agent', {
@@ -695,13 +741,15 @@
           if (!res.ok) throw new Error('CORTEX REJECTED CONNECTION');
           
           const data = await res.json();
-          addLogEntry(data.response || "RITXIE_HAWTING: VACÍO", "agent");
+          addLogEntryDeferred(data.response || "RITXIE_HAWTING: VACÍO", "agent");
           
           // Trigger physics response on AI reply
-          injectVisualPulse();
+          setTimeout(() => {
+            injectVisualPulse();
+          }, 0);
 
         } catch(err) {
-          addLogEntry("RITXIE_HAWTING: [ERROR DE CONEXIÓN CON EL CORTEX]", "alert");
+          addLogEntryDeferred("RITXIE_HAWTING: [ERROR DE CONEXIÓN CON EL CORTEX]", "alert");
         } finally {
           agentInput.disabled = false;
           agentInput.focus();
@@ -710,7 +758,7 @@
     }
 
     // Initial logs setup
-    addLogEntry("SILICON TELEMETRY OVERLAY STANDBY.", "system");
+    addLogEntryDeferred("SILICON TELEMETRY OVERLAY STANDBY.", "system");
   }
 
   // ─── ENTROPY KV LOGIC ───
