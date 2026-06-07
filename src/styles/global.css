@@ -10,6 +10,11 @@
   --color-parchment: #F3F4F6;
   --color-mica: rgba(43, 59, 229, 0.05);
 
+  /* NAROA-2026 Autodidact Synthesis Tokens (Plástica & Entanglement) */
+  --color-naroa-acrylic: #E63946;
+  --color-naroa-mineral: #A8DADC;
+  --color-naroa-quantum: #1D3557;
+
   --font-primary: 'Outfit', system-ui, sans-serif;
   --font-secondary: 'JetBrains Mono', monospace;
 
@@ -449,3 +454,19 @@ a, button, .thumb-card, .blog-card, .video-scroll-card {
   will-change: transform, opacity;
 }
 
+/* ─── AUTODIDACT-OMEGA: Naroa Entanglement Classes ─── */
+.naroa-entanglement-gradient {
+  background: linear-gradient(135deg, var(--color-naroa-acrylic) 0%, var(--color-naroa-quantum) 50%, var(--color-naroa-mineral) 100%);
+  background-size: 200% 200%;
+  animation: quantum-breathe 8s ease infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+@keyframes quantum-breathe {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
