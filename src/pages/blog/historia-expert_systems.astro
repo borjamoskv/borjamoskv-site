@@ -1,0 +1,212 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="CORTEX-Ω // HISTORY: EXPERT_SYSTEMS">
+    <style>
+        :root {
+            --primary: #FF2A2A; /* Alerta */
+            --secondary: #2B3BE5; /* YInMn Blue */
+            --text-main: #E0E0E0;
+            --text-muted: #666666;
+            --border: #333333;
+            --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', Courier, monospace;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 8rem 2rem 4rem; 
+        }
+
+        .hito-header {
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .hito-header::after {
+            content: "v1.0 // HISTORY NODE EXTRACTED";
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--primary);
+            letter-spacing: 1px;
+            animation: pulse-red 2s infinite;
+        }
+
+        .glitch-title {
+            font-size: 3rem;
+            font-weight: 900;
+            margin: 0;
+            letter-spacing: -0.05em;
+            text-transform: uppercase;
+            color: var(--text-main);
+        }
+        
+        .glitch-title:hover {
+            text-shadow: 2px 0 var(--primary), -2px 0 var(--secondary);
+            cursor: crosshair;
+        }
+
+        .hito-sub {
+            font-size: 1.2rem;
+            color: var(--primary);
+            font-family: var(--font-mono);
+            font-weight: normal;
+            margin-top: 0.5rem;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+            padding: 2.5rem;
+            border: 1px dashed var(--border);
+            position: relative;
+            background: rgba(255, 42, 42, 0.02);
+            transition: border-color 0.3s ease;
+        }
+
+        .section:hover {
+            border-color: var(--text-muted);
+        }
+
+        .section::before, .section::after {
+            position: absolute;
+            color: var(--primary);
+            font-family: var(--font-mono);
+            font-size: 10px;
+        }
+        .section::before { content: "+"; top: -6px; left: -4px; }
+        .section::after { content: "+"; bottom: -6px; right: -4px; }
+
+        .label {
+            position: absolute;
+            top: -10px;
+            left: 1.5rem;
+            background: #0A0A0A;
+            padding: 0 10px;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .manifesto-text {
+            font-size: 1.4rem;
+            border-left: 4px solid var(--primary);
+            padding-left: 2rem;
+            margin: 2rem 0;
+            line-height: 1.4;
+            color: #D4D4D4;
+        }
+
+        .code-box {
+            font-family: var(--font-mono);
+            background: #111;
+            padding: 2rem;
+            border-radius: 2px;
+            font-size: 0.9rem;
+            border-left: 2px solid var(--secondary);
+            position: relative;
+            overflow: hidden;
+            color: #888;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .metric-card {
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            background: rgba(255, 42, 42, 0.05);
+        }
+
+        .metric-value {
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-family: var(--font-mono);
+        }
+
+        .metric-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        footer {
+            margin-top: 5rem;
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+            padding-top: 3rem;
+        }
+
+        @keyframes pulse-red {
+            0% { opacity: 1; }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+    </style>
+
+    <a href="/blog" class="article-back" aria-label="Volver al blog" style="position: fixed; top: 6rem; left: 2rem; background: rgba(10, 10, 10, 0.75); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 4px; padding: 0.5rem 1rem; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; font-weight: 700; z-index: 999;">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 16px; height: 16px;"><path d="M19 12H5m0 0l7 7m-7-7l7-7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Blog
+    </a>
+
+    <div class="container">
+        <header class="hito-header">
+            <h1 class="glitch-title">Ω // EXPERT_SYSTEMS</h1>
+            <h2 class="hito-sub">// NODE ID: EXPERT_SYSTEMS // YEAR: 1975</h2>
+        </header>
+
+        <div class="section">
+            <div class="label">Status: Crystallized</div>
+            <div class="manifesto-text">
+                MYCIN y la separación del motor de inferencia de la base de conocimiento.
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="label">Exergy Audit</div>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-value">Fricción combinatoria infinita al intentar escalar reglas IF-THEN.</div>
+                    <div class="metric-label">Ω2 Vector</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">Fragilidad semántica fuera de fronteras de dominio estrictas.</div>
+                    <div class="metric-label">Ω5 Vector</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="label">Ledger Context</div>
+            <div class="code-box">
+                &gt; Querying OMEGA Archive...<br>
+                &gt; Extracting Ω∞ logic...<br>
+                <span style="color: var(--primary);">[Ω∞]: Precursor fallido del in-context learning estático.</span><br>
+                &gt; Analyzing Δ delta...<br>
+                <span style="color: var(--secondary);">[Δ]: ΔEstado(cognición: heurística_frágil, infraestructura: prolog)</span><br>
+                &gt; RESULT: FACTUAL.
+            </div>
+        </div>
+
+        <footer>
+            <div style="letter-spacing: 5px; color: #D4D4D4; margin-bottom: 1rem; font-weight: 900;">HISTORY ORACLE Ω</div>
+            <p>Generated by Autodidact-History-OMEGA // MOSKV-1</p>
+        </footer>
+    </div>
+</Layout>
