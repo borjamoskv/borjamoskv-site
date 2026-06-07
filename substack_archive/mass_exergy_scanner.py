@@ -98,6 +98,16 @@ def load_recommendations_graph():
             print(f"[!] Failed to load recommendations graph: {e}")
     return {}
 
+def load_existing_results():
+    if os.path.exists(DATABASE_PATH):
+        try:
+            with open(DATABASE_PATH, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                return {x["subdomain"]: x for x in data.get("results", [])}
+        except Exception as e:
+            print(f"[!] Warning: failed to load existing database: {e}")
+    return {}
+
 def clean_url(url):
     if not url:
         return ""
@@ -283,6 +293,7 @@ def main():
     
     seeds = load_seeds()
     graph = load_recommendations_graph()
+    existing_results = load_existing_results()
     
     discovered = {}
     
@@ -381,32 +392,42 @@ def main():
     print(f"[*] Launching parallel exergy audit on {len(audit_list)} discovered subdomains (Concurrency: {CONCURRENCY}, Target: {MAX_AUDITED_TARGET})...")
     
     audited_results = []
+    to_audit_list = []
+    
+    for sub in audit_list:
+        if sub in existing_results:
+            audited_results.append(existing_results[sub])
+        else:
+            to_audit_list.append(sub)
+            
+    print(f"[*] Re-used {len(audited_results)} cached audits. Need to audit {len(to_audit_list)} subdomains on network.")
+    
     scan_start = time.time()
-    
-    with ThreadPoolExecutor(max_workers=CONCURRENCY) as executor:
-        futures = {executor.submit(audit_publication, sub, discovered[sub]["url"]): sub for sub in audit_list}
-        completed = 0
-        for future in as_completed(futures):
-            sub = futures[future]
-            completed += 1
-            try:
-                res = future.result()
-                if res:
-                    audited_results.append(res)
-            except Exception as e:
-                pass
-            if completed % 100 == 0 or completed == len(audit_list):
-                print(f"    Audited {completed}/{len(audit_list)} publications (Successful: {len(audited_results)})...")
-                
+    if to_audit_list:
+        with ThreadPoolExecutor(max_workers=CONCURRENCY) as executor:
+            futures = {executor.submit(audit_publication, sub, discovered[sub]["url"]): sub for sub in to_audit_list}
+            completed = 0
+            for future in as_completed(futures):
+                sub = futures[future]
+                completed += 1
+                try:
+                    res = future.result()
+                    if res:
+                        audited_results.append(res)
+                except Exception as e:
+                    pass
+                if completed % 100 == 0 or completed == len(to_audit_list):
+                    print(f"    Audited {completed}/{len(to_audit_list)} publications (Successful: {len(audited_results)})...")
+                    
     scan_end = time.time()
-    print(f"[✓] Audit complete. Processed {len(audited_results)} successful publications in {scan_end - scan_start:.2f} seconds.")
+    print(f"[✓] Audit complete. Processed {len(audited_results)} successful publications (including cache) in {scan_end - scan_start:.2f} seconds.")
     
-    # Sort results by exergy descending
-    audited_results.sort(key=lambda x: x["exergy"], reverse=True)
+    # Sort results by exergy descending, sub-sorting by tech and c5_real descending
+    audited_results.sort(key=lambda x: (x["exergy"], x["tech"], x["c5_real"]), reverse=True)
     
-    # Slice to target count (1000)
-    final_results = audited_results[:MAX_AUDITED_TARGET]
-    print(f"[*] Retained top {len(final_results)} audited publications for the final report.")
+    # Retain all successful results for complete analysis
+    final_results = audited_results
+    print(f"[*] Retained all {len(final_results)} audited publications for the final report.")
     
     # 5. Aggregate Stats
     total_audited = len(final_results)
@@ -469,7 +490,7 @@ def main():
     top_50 = final_results[:50]
     worst_50 = final_results[-50:][::-1]
     
-    report_md = f"""# MASS-EXERGY-SCANNER: Autopsia Termodinámica de 1,000 Influencers de Substack
+    report_md = f"""# MASS-EXERGY-SCANNER: Autopsia Termodinámica de {total_audited} Influencers de Substack
 > **Nivel de Realidad:** `C5-REAL` (BFS Crawler de Co-Recomendaciones e Inferencia AST)  
 > **Fecha de Análisis:** {time.strftime("%Y-%m-%d %H:%M:%S UTC", time.gmtime())}  
 > **Publicaciones Descubiertas:** {len(discovered)}  
