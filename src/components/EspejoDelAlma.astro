@@ -1,0 +1,108 @@
+---
+// src/components/EspejoDelAlma.astro
+// Mechanism: "Espejos del alma" - Recursive Self-Correction Loop / Infinite Identity Reflection
+---
+<div id="espejo-del-alma" class="cyber-mirror" aria-hidden="true">
+  <div class="mirror-frame">
+    <div class="mirror-overlay"></div>
+    <iframe id="recursive-mirror" src="/" tabindex="-1" loading="lazy"></iframe>
+  </div>
+  <div class="mirror-label">ESPEJO_DEL_ALMA // RECURSIVE_STATE</div>
+</div>
+
+<style>
+  .cyber-mirror {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    width: 180px;
+    height: 180px;
+    z-index: 40;
+    pointer-events: none;
+    opacity: 0.15;
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: perspective(800px) rotateY(-15deg) rotateX(5deg);
+    transform-origin: bottom right;
+  }
+
+  .cyber-mirror:hover {
+    opacity: 0.7;
+    transform: perspective(800px) rotateY(0deg) rotateX(0deg) scale(1.1);
+  }
+
+  .mirror-frame {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border: 1px solid var(--color-naroa-quantum);
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(29, 53, 87, 0.3);
+  }
+
+  .mirror-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle, transparent 10%, rgba(10,10,10,0.95) 85%);
+    z-index: 2;
+    mix-blend-mode: overlay;
+  }
+
+  #recursive-mirror {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    border: none;
+    transform: scale(0.5); /* Scale down the site inside */
+    filter: invert(1) hue-rotate(180deg) grayscale(60%) contrast(160%);
+    pointer-events: none;
+    opacity: 0.9;
+    transition: transform 0.1s linear;
+  }
+
+  .mirror-label {
+    position: absolute;
+    bottom: -20px;
+    right: 0;
+    font-family: var(--font-secondary);
+    font-size: 0.45rem;
+    color: var(--color-naroa-mineral);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-align: right;
+  }
+</style>
+
+<script>
+  // Autopoietic Reflection Logic
+  const initMirror = () => {
+    // Prevent infinite recursive iframe nesting depth > 1
+    if (window.self !== window.top) {
+      const mirrorNode = document.getElementById('espejo-del-alma');
+      if (mirrorNode) mirrorNode.remove();
+      return;
+    }
+
+    const mirror = document.getElementById('recursive-mirror');
+    if (mirror) {
+      let currentScroll = window.scrollY;
+      
+      const renderReflection = () => {
+        const docHeight = Math.max(document.body.scrollHeight, document.body.offsetHeight) - window.innerHeight;
+        if (docHeight > 0) {
+          const scrollPercent = window.scrollY / docHeight;
+          // Apply inverse parallax to the recursive mirror
+          mirror.style.transform = `scale(0.5) translateY(-${scrollPercent * 15}%)`;
+        }
+      };
+
+      window.addEventListener('scroll', renderReflection, { passive: true });
+    }
+  };
+
+  document.addEventListener('astro:page-load', initMirror);
+  if (document.readyState === 'complete') initMirror();
+  else window.addEventListener('load', initMirror);
+</script>
