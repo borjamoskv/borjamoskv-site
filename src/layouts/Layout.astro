@@ -1,4 +1,8 @@
 ---
+// ─── C5-REAL SOTA EDGE CACHING ───
+// Cloudflare Edge Cache: 1 day, Browser Cache: 1 hour.
+Astro.response.headers.set('Cache-Control', 'public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800');
+
 import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
 import AIAgent from '../components/AIAgent.astro';
