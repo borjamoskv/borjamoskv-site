@@ -1171,19 +1171,52 @@
 <h2 class="recommendations-heading">Recomendaciones</h2>
 <div class="recommendations-grid">
 <div class="recommendation-card">
-<p class="recommendation-quote">El único espacio que no intenta venderte el hype de la IA con hilos vacíos. Termodinámica, código real y música underground. Brutal.</p>
-<p class="recommendation-author">Senior Software Architect</p>
+<p class="recommendation-quote">El único espacio que no intenta venderte el hype de la IA con hilos vacíos. Termodinámica, código real y música entropía entropía</p>
+<p class="recommendation-author"><span class="surreal-name"></span> // Senior Software Architect</p>
 </div>
 <div class="recommendation-card">
 <p class="recommendation-quote">Una cura de realidad técnica y musical en castellano. Jarana d'Or es el contrapeso perfecto al ruido de Linkedin.</p>
-<p class="recommendation-author">Music Producer &amp; Tech Lead</p>
+<p class="recommendation-author"><span class="surreal-name"></span> // Music Producer &amp; Tech Lead</p>
 </div>
 <div class="recommendation-card">
 <p class="recommendation-quote">La intersección entre algoritmos y contracultura que nadie se atreve a escribir. Textos afilados como cuchillas.</p>
-<p class="recommendation-author">DevRel Engineer</p>
+<p class="recommendation-author"><span class="surreal-name"></span> // DevRel Engineer</p>
 </div>
 </div>
 </section>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const names = [
+      "JULEN GUERRERO", "Doraemon", "E.T y Espinete", "Gervasio Defer", 
+      "David Bowie", "EL Sgt. Slaughter", "Cayetana Guillen Cuervo", 
+      "Emilio Aragón", "Prudencia Indurain", "El Note", "El Lute", "El Xokas"
+    ];
+    // Shuffle and pick 3 unique names
+    const shuffled = names.sort(() => 0.5 - Math.random());
+    const selected = shuffled.slice(0, 3);
+    
+    document.querySelectorAll('.surreal-name').forEach((el, idx) => {
+      el.textContent = selected[idx];
+      el.style.color = '#FFF';
+    });
+  });
+  
+  // Si no usa ViewTransitions o es carga directa
+  if (!document.startViewTransition) {
+    const names = [
+      "JULEN GUERRERO", "Doraemon", "E.T y Espinete", "Gervasio Defer", 
+      "David Bowie", "EL Sgt. Slaughter", "Cayetana Guillen Cuervo", 
+      "Emilio Aragón", "Prudencia Indurain", "El Note", "El Lute", "El Xokas"
+    ];
+    const shuffled = names.sort(() => 0.5 - Math.random());
+    const selected = shuffled.slice(0, 3);
+    document.querySelectorAll('.surreal-name').forEach((el, idx) => {
+      el.textContent = selected[idx];
+      el.style.color = '#FFF';
+    });
+  }
+</script>
 <hr class="blog-divider"/>
 <!-- SUBSTACK LIVE POSTS -->
 <section aria-label="Últimas entradas en Substack" class="paragraph-section">
