@@ -102,10 +102,10 @@ body::before {
   justify-content: flex-end;
   align-items: center;
   padding: 1.5rem 2rem;
-  background: linear-gradient(to bottom, rgba(10,10,10,0.95), rgba(10,10,10,0));
+  background: linear-gradient(to bottom, rgba(10,10,10,0.95), rgba(43,59,229,0.05));
   backdrop-filter: blur(var(--glass-blur));
   -webkit-backdrop-filter: blur(var(--glass-blur));
-  border-bottom: 1px solid transparent;
+  border-bottom: 1px solid rgba(43, 59, 229, 0.1);
   transition: var(--transition-omega);
 }
 
@@ -172,9 +172,10 @@ body::before {
 .mobile-menu-overlay {
   position: fixed;
   top: 0; left: 0; width: 100vw; height: 100vh;
-  background: rgba(5, 5, 8, 0.96);
-  backdrop-filter: blur(25px);
-  -webkit-backdrop-filter: blur(25px);
+  background: rgba(10, 10, 10, 0.85); /* Void + transparency */
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border-left: 1px solid rgba(43, 59, 229, 0.15); /* YInMn Edge */
   z-index: 1000;
   display: flex;
   justify-content: center;
@@ -222,15 +223,15 @@ body::before {
 .mobile-menu-overlay.open .mobile-nav-link:nth-child(5) { transition-delay: 0.3s; }
 
 .mobile-nav-link:hover {
-  color: var(--color-amber);
-  text-shadow: 0 0 20px var(--color-amber);
+  color: var(--color-yinmn);
+  text-shadow: 0 0 25px var(--color-yinmn);
   transform: scale(1.08);
 }
 
 /* Menu Toggle active styles (animate to X) */
 .nav-toggle.open .hamburger-line:nth-child(1) {
   transform: rotate(45deg) translate(2px, -2px);
-  background-color: var(--color-amber);
+  background-color: var(--color-yinmn);
 }
 .nav-toggle.open .hamburger-line:nth-child(2) {
   opacity: 0;
@@ -238,7 +239,7 @@ body::before {
 }
 .nav-toggle.open .hamburger-line:nth-child(3) {
   transform: rotate(-45deg) translate(2px, 2px);
-  background-color: var(--color-amber);
+  background-color: var(--color-yinmn);
 }
 
 
@@ -360,9 +361,9 @@ body::before {
     @keyframes shrink-nav {
       to {
         padding: 0.8rem 2rem;
-        background: rgba(10, 10, 10, 0.98);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+        background: rgba(10, 10, 10, 0.9);
+        border-bottom: 1px solid rgba(43, 59, 229, 0.2);
+        box-shadow: 0 8px 32px rgba(43, 59, 229, 0.1);
       }
     }
     .top-nav {
