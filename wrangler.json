@@ -1,0 +1,11 @@
+{
+  "name": "borjamoskv-site",
+  "pages_build_output_dir": "dist",
+  "compatibility_date": "2026-06-07",
+  "kv_namespaces": [
+    {
+      "binding": "CORTEX_ENTROPY",
+      "id": "<AÑADE_AQUI_EL_ID_DESDE_EL_DASHBOARD_DE_CLOUDFLARE>"
+    }
+  ]
+}
