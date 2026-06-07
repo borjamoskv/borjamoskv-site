@@ -1,6 +1,6 @@
 # MASS-EXERGY-SCANNER: Autopsia Termodinámica de 1983 Influencers de Substack
 > **Nivel de Realidad:** `C5-REAL` (BFS Crawler de Co-Recomendaciones e Inferencia AST)  
-> **Fecha de Análisis:** 2026-06-07 21:47:25 UTC  
+> **Fecha de Análisis:** 2026-06-07 21:47:46 UTC  
 > **Publicaciones Descubiertas:** 2030  
 > **Publicaciones Exitosamente Auditadas:** 1983  
 > **Total de Posts Analizados:** 9670  
@@ -65,8 +65,8 @@
 | 33 | [aakashgupta](https://www.news.aakashg.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
 | 34 | [racheltribble](https://racheltribble.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
 | 35 | [thealphaengineer](https://www.thealphaengineer.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
-| 36 | [josramnprezagera](https://josramnprezagera.substack.com) | **100.0%** | 0.0% | 0.0% | `es` | `Técnico / Práctico` |
-| 37 | [responseawareness](https://responseawareness.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
+| 36 | [responseawareness](https://responseawareness.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
+| 37 | [josramnprezagera](https://josramnprezagera.substack.com) | **100.0%** | 0.0% | 0.0% | `es` | `Técnico / Práctico` |
 | 38 | [thezvi](https://thezvi.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
 | 39 | [jpctan](https://jpctan.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
 | 40 | [iwetterapoport](https://iwetterapoport.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
@@ -106,23 +106,23 @@
 | 17 | [themultibaggerplaybook](https://themultibaggerplaybook.substack.com) | **82.0%** | 18.0% | 0.0% | `en` | `Comercial / Transaccional` |
 | 18 | [optionsai](https://optionsai.substack.com) | **82.0%** | 18.0% | 0.0% | `en` | `Comercial / Transaccional` |
 | 19 | [specialsituationinvesting](https://specialsituationinvesting.substack.com) | **82.0%** | 18.0% | 20.0% | `en` | `Hype-driven / Divulgativo` |
-| 20 | [peterzalewski](https://peterzalewski.substack.com) | **82.0%** | 18.0% | 0.0% | `en` | `Comercial / Transaccional` |
-| 21 | [rmainvestments](https://rmainvestments.substack.com) | **82.0%** | 18.0% | 20.0% | `en` | `Hype-driven / Divulgativo` |
-| 22 | [iggyoninvesting](https://iggyoninvesting.substack.com) | **82.0%** | 18.0% | 20.0% | `en` | `Hype-driven / Divulgativo` |
-| 23 | [etruscancapital](https://etruscancapital.substack.com) | **82.0%** | 18.0% | 20.0% | `en` | `Hype-driven / Divulgativo` |
-| 24 | [crackthemarket](https://crackthemarket.substack.com) | **82.0%** | 18.0% | 20.0% | `en` | `Hype-driven / Divulgativo` |
-| 25 | [diyinvestor1](https://diyinvestor1.substack.com) | **82.0%** | 18.0% | 20.0% | `en` | `Hype-driven / Divulgativo` |
-| 26 | [sleepwellinvestments](https://www.sleepwellinvestments.com) | **82.0%** | 18.0% | 20.0% | `en` | `Hype-driven / Divulgativo` |
-| 27 | [fluentinfinance](https://www.thefinancenewsletter.com) | **82.0%** | 18.0% | 40.0% | `en` | `Hype-driven / Divulgativo` |
-| 28 | [timdenning](https://timdenning.substack.com) | **82.0%** | 18.0% | 40.0% | `en` | `Hype-driven / Divulgativo` |
-| 29 | [tradecompanion](https://tradecompanion.substack.com) | **82.0%** | 18.0% | 0.0% | `en` | `Comercial / Transaccional` |
+| 20 | [rmainvestments](https://rmainvestments.substack.com) | **82.0%** | 18.0% | 20.0% | `en` | `Hype-driven / Divulgativo` |
+| 21 | [peterzalewski](https://peterzalewski.substack.com) | **82.0%** | 18.0% | 0.0% | `en` | `Comercial / Transaccional` |
+| 22 | [etruscancapital](https://etruscancapital.substack.com) | **82.0%** | 18.0% | 20.0% | `en` | `Hype-driven / Divulgativo` |
+| 23 | [iggyoninvesting](https://iggyoninvesting.substack.com) | **82.0%** | 18.0% | 20.0% | `en` | `Hype-driven / Divulgativo` |
+| 24 | [diyinvestor1](https://diyinvestor1.substack.com) | **82.0%** | 18.0% | 20.0% | `en` | `Hype-driven / Divulgativo` |
+| 25 | [tradecompanion](https://tradecompanion.substack.com) | **82.0%** | 18.0% | 0.0% | `en` | `Comercial / Transaccional` |
+| 26 | [fluentinfinance](https://www.thefinancenewsletter.com) | **82.0%** | 18.0% | 40.0% | `en` | `Hype-driven / Divulgativo` |
+| 27 | [crackthemarket](https://crackthemarket.substack.com) | **82.0%** | 18.0% | 20.0% | `en` | `Hype-driven / Divulgativo` |
+| 28 | [sleepwellinvestments](https://www.sleepwellinvestments.com) | **82.0%** | 18.0% | 20.0% | `en` | `Hype-driven / Divulgativo` |
+| 29 | [timdenning](https://timdenning.substack.com) | **82.0%** | 18.0% | 40.0% | `en` | `Hype-driven / Divulgativo` |
 | 30 | [grahamstephan](https://grahamstephan.substack.com) | **82.0%** | 18.0% | 20.0% | `en` | `Hype-driven / Divulgativo` |
 | 31 | [fcompounders](https://fcompounders.substack.com) | **82.0%** | 18.0% | 20.0% | `en` | `Hype-driven / Divulgativo` |
 | 32 | [theoldeconomy](https://theoldeconomy.substack.com) | **82.0%** | 18.0% | 0.0% | `en` | `Comercial / Transaccional` |
 | 33 | [grahamqualityinvestor](https://www.worldlyinvest.com) | **82.0%** | 18.0% | 40.0% | `en` | `Hype-driven / Divulgativo` |
 | 34 | [nasduck](https://nasduck.substack.com) | **82.0%** | 18.0% | 40.0% | `en` | `Hype-driven / Divulgativo` |
-| 35 | [andyfenske](https://andyfenske.substack.com) | **82.0%** | 18.0% | 20.0% | `en` | `Hype-driven / Divulgativo` |
-| 36 | [beyondplatitudes](https://beyondplatitudes.substack.com) | **82.0%** | 18.0% | 40.0% | `en` | `Hype-driven / Divulgativo` |
+| 35 | [beyondplatitudes](https://beyondplatitudes.substack.com) | **82.0%** | 18.0% | 40.0% | `en` | `Hype-driven / Divulgativo` |
+| 36 | [andyfenske](https://andyfenske.substack.com) | **82.0%** | 18.0% | 20.0% | `en` | `Hype-driven / Divulgativo` |
 | 37 | [indexante](https://www.indexante.com) | **82.0%** | 18.0% | 0.0% | `es` | `Comercial / Transaccional` |
 | 38 | [rogerserret](https://rogerserret.substack.com) | **82.0%** | 18.0% | 40.0% | `es` | `Hype-driven / Divulgativo` |
 | 39 | [jamesbreiner](https://jamesbreiner.substack.com) | **82.0%** | 18.0% | 40.0% | `en` | `Hype-driven / Divulgativo` |
@@ -132,8 +132,8 @@
 | 43 | [byosko](https://www.focusedchaos.co) | **82.0%** | 18.0% | 20.0% | `en` | `Hype-driven / Divulgativo` |
 | 44 | [whitewiki](https://www.whitewiki.org) | **82.0%** | 18.0% | 40.0% | `en` | `Hype-driven / Divulgativo` |
 | 45 | [timmoon](https://timmoon.substack.com) | **82.0%** | 18.0% | 20.0% | `en` | `Hype-driven / Divulgativo` |
-| 46 | [ahorrocapital](https://www.ahorrocapital.es) | **82.0%** | 18.0% | 40.0% | `es` | `Hype-driven / Divulgativo` |
-| 47 | [inversoracon30](https://inversoracon30.substack.com) | **82.0%** | 18.0% | 40.0% | `es` | `Hype-driven / Divulgativo` |
+| 46 | [inversoracon30](https://inversoracon30.substack.com) | **82.0%** | 18.0% | 40.0% | `es` | `Hype-driven / Divulgativo` |
+| 47 | [ahorrocapital](https://www.ahorrocapital.es) | **82.0%** | 18.0% | 40.0% | `es` | `Hype-driven / Divulgativo` |
 | 48 | [economex](https://economex.substack.com) | **82.0%** | 18.0% | 20.0% | `es` | `Hype-driven / Divulgativo` |
 | 49 | [insightdigital](https://insightdigital.substack.com) | **82.0%** | 18.0% | 0.0% | `es` | `Comercial / Transaccional` |
 | 50 | [wiseopinions](https://wiseopinions.substack.com) | **82.0%** | 18.0% | 40.0% | `en` | `Hype-driven / Divulgativo` |
