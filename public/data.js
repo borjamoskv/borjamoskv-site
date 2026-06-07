@@ -167,7 +167,27 @@ const DATA = {
     ],
 };
 
-globalThis.HQ_BACKGROUND_VISUALS = HQ_BACKGROUND_VISUALS;
+// ═══════════════════════════════════════════════════════════════════════════
+// DYNAMIC RANDOMIZATION ENGINE
+// Maximiza la variación combinando todos los arrays y eligiendo un héroe aleatorio
+// ═══════════════════════════════════════════════════════════════════════════
+
+const ALL_VISUAL_IDS = Array.from(new Set([
+    ...HQ_BACKGROUND_VISUALS,
+    ...LOCAL_AUDIO_TRACK_IDS,
+    ...DATA.videoThumbnails
+]));
+
+const randomHeroId = ALL_VISUAL_IDS[Math.floor(Math.random() * ALL_VISUAL_IDS.length)];
+
+HERO_BACKGROUND.id = randomHeroId;
+HERO_BACKGROUND.url = `https://www.youtube.com/watch?v=${randomHeroId}`;
+
+DATA.heroBackground = { ...HERO_BACKGROUND };
+DATA.backgroundVisuals = [...ALL_VISUAL_IDS];
+DATA.bgVideos = [...ALL_VISUAL_IDS];
+
+globalThis.HQ_BACKGROUND_VISUALS = ALL_VISUAL_IDS;
 globalThis.HERO_BACKGROUND = HERO_BACKGROUND;
 globalThis.LOCAL_AUDIO_TRACK_IDS = LOCAL_AUDIO_TRACK_IDS;
 globalThis.DATA = DATA;
