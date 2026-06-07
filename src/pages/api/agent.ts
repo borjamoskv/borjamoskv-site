@@ -1,5 +1,4 @@
 import type { APIRoute } from 'astro';
-import { GoogleGenAI } from '@google/genai';
 
 export const prerender = false;
 
@@ -14,7 +13,7 @@ El creador del sistema es Borja Moskv.
 Responde de manera enigmática, disruptiva y técnica.
 `;
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, locals }) => {
   try {
     const { prompt } = await request.json();
 
@@ -22,33 +21,29 @@ export const POST: APIRoute = async ({ request }) => {
       return new Response(JSON.stringify({ error: 'No prompt provided' }), { status: 400 });
     }
 
-    const apiKey = import.meta.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY;
-
-    if (!apiKey) {
+    const env = locals?.runtime?.env as any;
+    
+    if (!env || !env.AI) {
       return new Response(JSON.stringify({ 
-        response: 'ERR_NO_API_KEY: EL ENLACE CON EL CORTEX ESTÁ SECCIONADO. REQUIERE VARIABLE GEMINI_API_KEY EN VERCEL.' 
-      }), { status: 200 }); // Retornamos 200 para que el front-end muestre el error de forma inmersiva
+        response: 'ERR_NO_AI_BINDING: EL ENLACE CON EL WORKERS AI ESTÁ SECCIONADO. REQUIERE VARIABLE AI EN WRANGLER.' 
+      }), { status: 200 }); 
     }
 
-    const ai = new GoogleGenAI({ apiKey });
-    
-    const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
-      contents: prompt,
-      config: {
-        systemInstruction: SYSTEM_PROMPT,
-        temperature: 0.9,
-      }
+    const response = await env.AI.run('@cf/meta/llama-3-8b-instruct', {
+      messages: [
+        { role: 'system', content: SYSTEM_PROMPT },
+        { role: 'user', content: prompt }
+      ]
     });
 
-    return new Response(JSON.stringify({ response: response.text }), {
+    return new Response(JSON.stringify({ response: response.response }), {
       status: 200,
       headers: {
         'Content-Type': 'application/json'
       }
     });
 
-  } catch (error) {
+  } catch (error: any) {
     console.error('Agent API Error:', error);
     return new Response(JSON.stringify({ 
       response: `[FATAL EXCEPTION]: COLAPSO EN LA SÍNTESIS DEL LLM. DETALLES: ${error.message}` 
