@@ -1,0 +1,119 @@
+{
+  "timestamp": "2026-06-07T18:34:57Z",
+  "discovered_total": 2000,
+  "audited_total": 8,
+  "aggregates": {
+    "exergy": 98.88,
+    "smoke": 1.12,
+    "clickbait": 2.5,
+    "tech": 2.5,
+    "comm": 0.0,
+    "c5_real": 0.0
+  },
+  "results": [
+    {
+      "subdomain": "estilo",
+      "url": "https://estilo.substack.com",
+      "language": "es",
+      "exergy": 100.0,
+      "smoke": 0.0,
+      "clickbait": 0.0,
+      "tech": 0.0,
+      "comm": 0.0,
+      "c5_real": 0.0,
+      "classification": "Hype-driven / Divulgativo",
+      "posts_scanned": 5
+    },
+    {
+      "subdomain": "lavidaesunpoema",
+      "url": "https://lavidaesunpoema.substack.com",
+      "language": "es",
+      "exergy": 100.0,
+      "smoke": 0.0,
+      "clickbait": 0.0,
+      "tech": 0.0,
+      "comm": 0.0,
+      "c5_real": 0.0,
+      "classification": "Hype-driven / Divulgativo",
+      "posts_scanned": 5
+    },
+    {
+      "subdomain": "iaparalaempresa",
+      "url": "https://iaparalaempresa.substack.com",
+      "language": "es",
+      "exergy": 100.0,
+      "smoke": 0.0,
+      "clickbait": 0.0,
+      "tech": 0.0,
+      "comm": 0.0,
+      "c5_real": 0.0,
+      "classification": "Hype-driven / Divulgativo",
+      "posts_scanned": 5
+    },
+    {
+      "subdomain": "iwanajohannsen",
+      "url": "https://iwanajohannsen.substack.com",
+      "language": "en",
+      "exergy": 100.0,
+      "smoke": 0.0,
+      "clickbait": 0.0,
+      "tech": 0.0,
+      "comm": 0.0,
+      "c5_real": 0.0,
+      "classification": "Hype-driven / Divulgativo",
+      "posts_scanned": 5
+    },
+    {
+      "subdomain": "dragoninvest",
+      "url": "https://dragoninvest.substack.com",
+      "language": "en",
+      "exergy": 100.0,
+      "smoke": 0.0,
+      "clickbait": 0.0,
+      "tech": 0.0,
+      "comm": 0.0,
+      "c5_real": 0.0,
+      "classification": "Hype-driven / Divulgativo",
+      "posts_scanned": 5
+    },
+    {
+      "subdomain": "thebusinessengineer",
+      "url": "https://businessengineer.ai",
+      "language": "en",
+      "exergy": 100.0,
+      "smoke": 0.0,
+      "clickbait": 0.0,
+      "tech": 20.0,
+      "comm": 0.0,
+      "c5_real": 0.0,
+      "classification": "Hype-driven / Divulgativo",
+      "posts_scanned": 5
+    },
+    {
+      "subdomain": "mohamedelerian",
+      "url": "https://mohamedelerian.substack.com",
+      "language": "en",
+      "exergy": 100.0,
+      "smoke": 0.0,
+      "clickbait": 0.0,
+      "tech": 0.0,
+      "comm": 0.0,
+      "c5_real": 0.0,
+      "classification": "Hype-driven / Divulgativo",
+      "posts_scanned": 5
+    },
+    {
+      "subdomain": "lifeisapoem",
+      "url": "https://lifeisapoem.substack.com",
+      "language": "en",
+      "exergy": 91.0,
+      "smoke": 9.0,
+      "clickbait": 20.0,
+      "tech": 0.0,
+      "comm": 0.0,
+      "c5_real": 0.0,
+      "classification": "Hype-driven / Divulgativo",
+      "posts_scanned": 5
+    }
+  ]
+}
