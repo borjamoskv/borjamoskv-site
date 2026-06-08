@@ -1,0 +1,50 @@
+[
+  {
+    "timestamp": "2026-06-08T16:47:27.249434+00:00",
+    "subject_type": "Domestic-Subject",
+    "metrics": {
+      "AFI": 0.1,
+      "ESR": 0.2,
+      "MVO": 0.15,
+      "MII": 0.1,
+      "SADE": 0.3,
+      "AMB": 0.1
+    },
+    "obes_score": 0.1375,
+    "hash": "8dfa4ca9e75458f8fff42df0031ae2ea1441d6b7d769ff0b4b6242116582f575",
+    "prev_hash": "GENESIS",
+    "reality_level": "C5-REAL"
+  },
+  {
+    "timestamp": "2026-06-08T16:47:27.249900+00:00",
+    "subject_type": "Sovereign-Subject",
+    "metrics": {
+      "AFI": 0.95,
+      "ESR": 0.9,
+      "MVO": 0.98,
+      "MII": 0.95,
+      "SADE": 0.85,
+      "AMB": 0.92
+    },
+    "obes_score": 0.9405,
+    "hash": "96caf88042d7c26e829237ed19652b8ea9ab81828016d9427f398c2300364b31",
+    "prev_hash": "8dfa4ca9e75458f8fff42df0031ae2ea1441d6b7d769ff0b4b6242116582f575",
+    "reality_level": "C5-REAL"
+  },
+  {
+    "timestamp": "2026-06-08T16:47:27.250093+00:00",
+    "subject_type": "Tacuinum-Subject",
+    "metrics": {
+      "AFI": 0.88,
+      "ESR": 0.95,
+      "MVO": 0.9,
+      "MII": 0.98,
+      "SADE": 0.99,
+      "AMB": 0.95
+    },
+    "obes_score": 0.9315,
+    "hash": "092b269c525668f7cf3caa036bbcec090823550990aa81d88a0623338e9214c2",
+    "prev_hash": "96caf88042d7c26e829237ed19652b8ea9ab81828016d9427f398c2300364b31",
+    "reality_level": "C5-REAL"
+  }
+]

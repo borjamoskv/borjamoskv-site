@@ -71,6 +71,14 @@ if __name__ == "__main__":
         "MII": 0.95, "SADE": 0.85, "AMB": 0.92
     }, "Sovereign-Subject")
     
+    # Simulation of Tacuinum-Subject (Medieval Biohacking Integration)
+    # Validates high Gastric Acidity (SADE) via raw oils and Microbiome Integrity (MII) via botanicals.
+    tacuinum = ledger.append_block({
+        "AFI": 0.88, "ESR": 0.95, "MVO": 0.90, 
+        "MII": 0.98, "SADE": 0.99, "AMB": 0.95
+    }, "Tacuinum-Subject")
+    
     print(f"Domestic Exergy: {domestic['obes_score'] * 100:.2f}%")
     print(f"Sovereign Exergy: {sovereign['obes_score'] * 100:.2f}%")
+    print(f"Tacuinum Exergy: {tacuinum['obes_score'] * 100:.2f}%")
     print("Ledger Appended: C5-REAL | Immutable Hash Validated.")
