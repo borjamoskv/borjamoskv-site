@@ -1,6 +1,6 @@
 # MASS-EXERGY-SCANNER: Autopsia Termodinámica de 1983 Influencers de Substack
 > **Nivel de Realidad:** `C5-REAL` (BFS Crawler de Co-Recomendaciones e Inferencia AST)  
-> **Fecha de Análisis:** 2026-06-07 21:47:46 UTC  
+> **Fecha de Análisis:** 2026-06-08 11:39:13 UTC  
 > **Publicaciones Descubiertas:** 2030  
 > **Publicaciones Exitosamente Auditadas:** 1983  
 > **Total de Posts Analizados:** 9670  
@@ -30,56 +30,56 @@
 
 | # | Subdominio | Exergía | Humo | C5-REAL | Lang | Tipo |
 | :---: | :--- | :---: | :---: | :---: | :---: | :--- |
-| 1 | [srilaxmi](https://srilaxmi.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
-| 2 | [nousresearch](https://nousresearch.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
-| 3 | [claudefinance](https://claudefinance.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
-| 4 | [googlegemini](https://googlegemini.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
-| 5 | [shmulc](https://shmulc.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
-| 6 | [joozio](https://joozio.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
+| 1 | [shmulc](https://shmulc.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
+| 2 | [srilaxmi](https://srilaxmi.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
+| 3 | [joozio](https://joozio.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
+| 4 | [nousresearch](https://nousresearch.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
+| 5 | [claudefinance](https://claudefinance.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
+| 6 | [googlegemini](https://googlegemini.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
 | 7 | [thediydatascientist](https://thediydatascientist.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
 | 8 | [postsyntax](https://postsyntax.substack.com) | **100.0%** | 0.0% | 20.0% | `en` | `Técnico / Práctico` |
 | 9 | [tylerfolkman](https://tylerfolkman.substack.com) | **100.0%** | 0.0% | 20.0% | `en` | `Técnico / Práctico` |
 | 10 | [pipspost](https://pipspost.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
 | 11 | [cjonsystems](https://cjonsystems.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
-| 12 | [karozieminski](https://karozieminski.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
-| 13 | [hannahstulberg](https://hannahstulberg.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
-| 14 | [openclaw](https://openclawunboxed.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
-| 15 | [hohoda](https://hohoda.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
-| 16 | [excellentprompts](https://excellentprompts.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
-| 17 | [foundersgtm](https://www.foundersgtm.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
-| 18 | [hodmanmurad](https://hodmanmurad.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
-| 19 | [mlpills](https://mlpills.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
+| 12 | [hodmanmurad](https://hodmanmurad.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
+| 13 | [karozieminski](https://karozieminski.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
+| 14 | [hannahstulberg](https://hannahstulberg.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
+| 15 | [openclaw](https://openclawunboxed.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
+| 16 | [hohoda](https://hohoda.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
+| 17 | [excellentprompts](https://excellentprompts.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
+| 18 | [mlpills](https://mlpills.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
+| 19 | [foundersgtm](https://www.foundersgtm.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
 | 20 | [jtnovelo2131](https://jtnovelo2131.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
 | 21 | [toxsec](https://www.toxsec.com) | **100.0%** | 0.0% | 20.0% | `en` | `Técnico / Práctico` |
 | 22 | [mondayswifeclub](https://mondayswifeclub.substack.com) | **100.0%** | 0.0% | 20.0% | `en` | `Técnico / Práctico` |
 | 23 | [mattpaige68](https://mattpaige68.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
 | 24 | [thecodinggopher](https://thecodinggopher.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
-| 25 | [cashandcache](https://cashandcache.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
-| 26 | [hodgesj](https://hodgesj.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
-| 27 | [buildtolaunch](https://buildtolaunch.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
-| 28 | [machinelearningplus](https://machinelearningplus.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
-| 29 | [arquitecturasoftware](https://arquitecturasoftware.substack.com) | **100.0%** | 0.0% | 0.0% | `es` | `Técnico / Práctico` |
-| 30 | [artificialintelligencemadesimple](https://www.artificialintelligencemadesimple.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
-| 31 | [natesnewsletter](https://natesnewsletter.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
-| 32 | [savvysloth](https://savvysloth.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
-| 33 | [aakashgupta](https://www.news.aakashg.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
-| 34 | [racheltribble](https://racheltribble.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
-| 35 | [thealphaengineer](https://www.thealphaengineer.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
-| 36 | [responseawareness](https://responseawareness.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
-| 37 | [josramnprezagera](https://josramnprezagera.substack.com) | **100.0%** | 0.0% | 0.0% | `es` | `Técnico / Práctico` |
-| 38 | [thezvi](https://thezvi.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
-| 39 | [jpctan](https://jpctan.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
+| 25 | [josramnprezagera](https://josramnprezagera.substack.com) | **100.0%** | 0.0% | 0.0% | `es` | `Técnico / Práctico` |
+| 26 | [responseawareness](https://responseawareness.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
+| 27 | [cashandcache](https://cashandcache.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
+| 28 | [hodgesj](https://hodgesj.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
+| 29 | [buildtolaunch](https://buildtolaunch.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
+| 30 | [machinelearningplus](https://machinelearningplus.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
+| 31 | [arquitecturasoftware](https://arquitecturasoftware.substack.com) | **100.0%** | 0.0% | 0.0% | `es` | `Técnico / Práctico` |
+| 32 | [thezvi](https://thezvi.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
+| 33 | [artificialintelligencemadesimple](https://www.artificialintelligencemadesimple.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
+| 34 | [natesnewsletter](https://natesnewsletter.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
+| 35 | [savvysloth](https://savvysloth.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
+| 36 | [jpctan](https://jpctan.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
+| 37 | [aakashgupta](https://www.news.aakashg.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
+| 38 | [racheltribble](https://racheltribble.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
+| 39 | [thealphaengineer](https://www.thealphaengineer.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
 | 40 | [iwetterapoport](https://iwetterapoport.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
 | 41 | [mikitaaliaksandrovich](https://mikitaaliaksandrovich.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
 | 42 | [fundaai](https://fundaai.substack.com) | **100.0%** | 0.0% | 40.0% | `en` | `C5-REAL / Arquitectura` |
 | 43 | [artofsaience](https://newsletter.artofsaience.com) | **100.0%** | 0.0% | 20.0% | `en` | `Técnico / Práctico` |
-| 44 | [todatabeyond](https://todatabeyond.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
-| 45 | [benbunan](https://benbunan.substack.com) | **100.0%** | 0.0% | 0.0% | `es` | `Técnico / Práctico` |
-| 46 | [theaicorner1](https://theaicorner1.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
-| 47 | [timomason](https://timomason.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
-| 48 | [mvidmar](https://mvidmar.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
-| 49 | [awesomeneuron](https://awesomeneuron.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
-| 50 | [prosperinai](https://prosperinai.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
+| 44 | [davidlahozmartin](https://davidlahozmartin.substack.com) | **100.0%** | 0.0% | 0.0% | `es` | `Técnico / Práctico` |
+| 45 | [thefoundercorner](https://thefoundercorner.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
+| 46 | [todatabeyond](https://todatabeyond.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
+| 47 | [benbunan](https://benbunan.substack.com) | **100.0%** | 0.0% | 0.0% | `es` | `Técnico / Práctico` |
+| 48 | [theaicorner1](https://theaicorner1.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
+| 49 | [timomason](https://timomason.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
+| 50 | [mvidmar](https://mvidmar.substack.com) | **100.0%** | 0.0% | 0.0% | `en` | `Técnico / Práctico` |
 
 ---
 
@@ -108,21 +108,21 @@
 | 19 | [specialsituationinvesting](https://specialsituationinvesting.substack.com) | **82.0%** | 18.0% | 20.0% | `en` | `Hype-driven / Divulgativo` |
 | 20 | [rmainvestments](https://rmainvestments.substack.com) | **82.0%** | 18.0% | 20.0% | `en` | `Hype-driven / Divulgativo` |
 | 21 | [peterzalewski](https://peterzalewski.substack.com) | **82.0%** | 18.0% | 0.0% | `en` | `Comercial / Transaccional` |
-| 22 | [etruscancapital](https://etruscancapital.substack.com) | **82.0%** | 18.0% | 20.0% | `en` | `Hype-driven / Divulgativo` |
-| 23 | [iggyoninvesting](https://iggyoninvesting.substack.com) | **82.0%** | 18.0% | 20.0% | `en` | `Hype-driven / Divulgativo` |
+| 22 | [iggyoninvesting](https://iggyoninvesting.substack.com) | **82.0%** | 18.0% | 20.0% | `en` | `Hype-driven / Divulgativo` |
+| 23 | [etruscancapital](https://etruscancapital.substack.com) | **82.0%** | 18.0% | 20.0% | `en` | `Hype-driven / Divulgativo` |
 | 24 | [diyinvestor1](https://diyinvestor1.substack.com) | **82.0%** | 18.0% | 20.0% | `en` | `Hype-driven / Divulgativo` |
-| 25 | [tradecompanion](https://tradecompanion.substack.com) | **82.0%** | 18.0% | 0.0% | `en` | `Comercial / Transaccional` |
+| 25 | [crackthemarket](https://crackthemarket.substack.com) | **82.0%** | 18.0% | 20.0% | `en` | `Hype-driven / Divulgativo` |
 | 26 | [fluentinfinance](https://www.thefinancenewsletter.com) | **82.0%** | 18.0% | 40.0% | `en` | `Hype-driven / Divulgativo` |
-| 27 | [crackthemarket](https://crackthemarket.substack.com) | **82.0%** | 18.0% | 20.0% | `en` | `Hype-driven / Divulgativo` |
-| 28 | [sleepwellinvestments](https://www.sleepwellinvestments.com) | **82.0%** | 18.0% | 20.0% | `en` | `Hype-driven / Divulgativo` |
-| 29 | [timdenning](https://timdenning.substack.com) | **82.0%** | 18.0% | 40.0% | `en` | `Hype-driven / Divulgativo` |
+| 27 | [sleepwellinvestments](https://www.sleepwellinvestments.com) | **82.0%** | 18.0% | 20.0% | `en` | `Hype-driven / Divulgativo` |
+| 28 | [timdenning](https://timdenning.substack.com) | **82.0%** | 18.0% | 40.0% | `en` | `Hype-driven / Divulgativo` |
+| 29 | [tradecompanion](https://tradecompanion.substack.com) | **82.0%** | 18.0% | 0.0% | `en` | `Comercial / Transaccional` |
 | 30 | [grahamstephan](https://grahamstephan.substack.com) | **82.0%** | 18.0% | 20.0% | `en` | `Hype-driven / Divulgativo` |
 | 31 | [fcompounders](https://fcompounders.substack.com) | **82.0%** | 18.0% | 20.0% | `en` | `Hype-driven / Divulgativo` |
 | 32 | [theoldeconomy](https://theoldeconomy.substack.com) | **82.0%** | 18.0% | 0.0% | `en` | `Comercial / Transaccional` |
 | 33 | [grahamqualityinvestor](https://www.worldlyinvest.com) | **82.0%** | 18.0% | 40.0% | `en` | `Hype-driven / Divulgativo` |
 | 34 | [nasduck](https://nasduck.substack.com) | **82.0%** | 18.0% | 40.0% | `en` | `Hype-driven / Divulgativo` |
-| 35 | [beyondplatitudes](https://beyondplatitudes.substack.com) | **82.0%** | 18.0% | 40.0% | `en` | `Hype-driven / Divulgativo` |
-| 36 | [andyfenske](https://andyfenske.substack.com) | **82.0%** | 18.0% | 20.0% | `en` | `Hype-driven / Divulgativo` |
+| 35 | [andyfenske](https://andyfenske.substack.com) | **82.0%** | 18.0% | 20.0% | `en` | `Hype-driven / Divulgativo` |
+| 36 | [beyondplatitudes](https://beyondplatitudes.substack.com) | **82.0%** | 18.0% | 40.0% | `en` | `Hype-driven / Divulgativo` |
 | 37 | [indexante](https://www.indexante.com) | **82.0%** | 18.0% | 0.0% | `es` | `Comercial / Transaccional` |
 | 38 | [rogerserret](https://rogerserret.substack.com) | **82.0%** | 18.0% | 40.0% | `es` | `Hype-driven / Divulgativo` |
 | 39 | [jamesbreiner](https://jamesbreiner.substack.com) | **82.0%** | 18.0% | 40.0% | `en` | `Hype-driven / Divulgativo` |
