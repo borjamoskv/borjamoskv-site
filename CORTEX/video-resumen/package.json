@@ -1,0 +1,23 @@
+{
+  "name": "video-resumen",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "remotion preview src/index.ts",
+    "build": "remotion render src/index.ts CortazarSummary out/video.mp4"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@remotion/cli": "^4.0.474",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "remotion": "^4.0.474",
+    "typescript": "^6.0.3"
+  }
+}
