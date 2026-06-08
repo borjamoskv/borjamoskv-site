@@ -640,7 +640,7 @@ Los cuatro gráficos analíticos de la investigación forense se basan en los si
         <div class="rt-attack-desc"><strong>Argumento del lobby:</strong> "El autor critica lo que no puede tener porque no cumple el perfil o no le admitieron."</div>
         <div class="rt-response">
           <strong>Respuesta Forense (Cita Categoría D):</strong><br/>
-          Este es un argumento ad hominem. La Ley 49/2002 y el umbral de desgravación del 15% no cambian según la identidad de quien los cite. Domínguez define su propia dinámica como:
+          Este es un argumento ad hominem y una proyección de encuadre. Ante críticas de opacidad o falta de ética, el fundador reacciona en Notes acusando de "envidia de quienes ganamos dinero online" (Nota de Domínguez, 03/06/2026), intentando desviar el debate técnico. Sin embargo, la Ley 49/2002 y el umbral del 15% no cambian según los ingresos de quien los señale. Domínguez define su propio sistema como:
         </div>
         <div class="rt-quote">
           "Substack Mafia es lo que es gracias a que cumplo a rajatabla algunos 'principios sectarios' que son la base de mi modelo de creación de comunidades. Que se llama, recuerda… 'Cult Building'."
