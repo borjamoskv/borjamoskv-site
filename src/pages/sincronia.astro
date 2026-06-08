@@ -1,0 +1,127 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+
+// Obtener todos los artículos
+const allArticles = await getCollection('articles');
+
+// Filtrar artículos que tienen sentimiento y ordenarlos por fecha
+const articlesWithSentiment = allArticles
+  .filter(article => article.data.sentiment)
+  .sort((a, b) => new Date(b.data.pubDate || 0).valueOf() - new Date(a.data.pubDate || 0).valueOf());
+
+// Agrupar por sentimiento
+const sentimentGroups = articlesWithSentiment.reduce((acc, article) => {
+  const sentiment = article.data.sentiment;
+  if (!acc[sentiment]) {
+    acc[sentiment] = [];
+  }
+  acc[sentiment].push(article);
+  return acc;
+}, {});
+
+// Definir los sentimientos disponibles para el menú ancla
+const availableSentiments = Object.keys(sentimentGroups);
+
+// Mapas de colores / estilos según el sentimiento
+const sentimentStyles = {
+  "🚨 Incertidumbre y Alerta (Ansiedad)": { border: "var(--accent-red)", bg: "rgba(255,51,85,0.05)" },
+  "💔 Vacío y Fractura (Duelo y Pérdida)": { border: "var(--accent-purple)", bg: "rgba(163,51,255,0.05)" },
+  "⚡ Distorsión y Ruido (Inseguridad y Estrés Social)": { border: "var(--accent-yellow)", bg: "rgba(255,204,51,0.05)" },
+  "🪫 Inercia y Desconexión (Apatía)": { border: "var(--accent-blue)", bg: "rgba(43,59,229,0.05)" },
+  "🔋 Homeostasis y Vigor (Calma y Gratitud)": { border: "var(--accent-cyan)", bg: "rgba(0,243,255,0.05)" }
+};
+
+---
+
+<Layout title="Sincronía | Mapa de Sentimientos" description="Mapa de la manada organizado por estado emocional biológico.">
+  <main class="content-wrapper">
+    <header class="section-header">
+      <h1 class="page-title">Sincronía: El Mapa de la Manada</h1>
+      <p class="subtitle">Un vademécum biológico de colaboraciones para recuperar el mando de tu sistema nervioso.</p>
+    </header>
+
+    <section class="intro-section">
+      <p>Este no es un artículo escrito solo por mí, es un <strong>mapa tejido con las voces de la manada</strong>. Según lo que estés sintiendo, busca la categoría que necesites y descarga el comando exacto para estabilizar tu hardware.</p>
+      <div class="c5-badge-container" style="margin-top:1.5rem;">
+        <span class="c5-badge" style="display:inline-block; padding:0.4rem 1rem; border:1px solid var(--accent-blue); color:var(--accent-blue); border-radius:4px; font-family:'JetBrains Mono', monospace; font-size:0.8rem;">C5-REAL: NAVEGACIÓN BIOLÓGICA</span>
+      </div>
+    </section>
+
+    <nav class="sentiment-nav">
+      <h2 style="font-family:'Orbitron', sans-serif; font-size:1.2rem; color:var(--text-primary); margin-bottom:1rem;">Estado del Sistema:</h2>
+      <ul style="list-style:none; padding:0; display:flex; flex-direction:column; gap:0.5rem;">
+        {availableSentiments.map(sentiment => (
+          <li>
+            <a href={`#${sentiment.replace(/\s+/g, '-').replace(/[^\w-]/g, '')}`} class="sentiment-link" style={`border-left: 3px solid ${sentimentStyles[sentiment]?.border || 'var(--accent-primary)'}; padding-left: 1rem; display:block; padding-block:0.5rem; text-decoration:none; color:var(--text-secondary); background: ${sentimentStyles[sentiment]?.bg || 'transparent'}; transition: all 0.2s ease;`}>
+              {sentiment}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="sentiment-groups" style="margin-top: 4rem;">
+      {Object.entries(sentimentGroups).map(([sentiment, articles]) => (
+        <section id={sentiment.replace(/\s+/g, '-').replace(/[^\w-]/g, '')} class="sentiment-group" style="margin-bottom: 4rem;">
+          <h2 style={`font-family:'Orbitron', sans-serif; font-size:1.5rem; color:${sentimentStyles[sentiment]?.border || 'var(--text-primary)'}; border-bottom:1px solid ${sentimentStyles[sentiment]?.bg || 'rgba(255,255,255,0.1)'}; padding-bottom:0.5rem; margin-bottom:1.5rem;`}>
+            {sentiment}
+          </h2>
+          <div class="article-grid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;">
+            {articles.map(article => (
+              <article class="article-card" style={`background: rgba(10,10,10,0.5); border: 1px solid ${sentimentStyles[sentiment]?.border || 'rgba(43,59,229,0.2)'}; border-radius: 8px; padding: 1.5rem; transition: transform 0.2s ease;`}>
+                <h3 style="font-family:'Inter', sans-serif; font-size:1.1rem; margin-top:0; margin-bottom:0.5rem;">
+                  <a href={`/blog/${article.id}`} style="color:var(--text-primary); text-decoration:none;">{article.data.title}</a>
+                </h3>
+                {article.data.description && <p style="font-size:0.9rem; color:var(--text-secondary); line-height:1.5;">{article.data.description}</p>}
+                <div style="margin-top:1rem;">
+                  <a href={`/blog/${article.id}`} style={`color:${sentimentStyles[sentiment]?.border || 'var(--accent-blue)'}; font-family:'JetBrains Mono', monospace; font-size:0.8rem; text-decoration:none; text-transform:uppercase;`}>[ CONCRETAR LECTURA ]</a>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .content-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  .section-header {
+    margin-bottom: 3rem;
+  }
+  .page-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.5rem;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+  .subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .intro-section {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px dashed rgba(255,255,255,0.1);
+  }
+  .sentiment-link:hover {
+    background: rgba(255,255,255,0.05) !important;
+    color: var(--text-primary) !important;
+  }
+  .article-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  }
+</style>

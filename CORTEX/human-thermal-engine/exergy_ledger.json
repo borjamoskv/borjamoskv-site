@@ -1,0 +1,66 @@
+[
+  {
+    "timestamp": "2026-06-08T11:58:15.842112",
+    "subject_type": "Domestic-Subject",
+    "metrics": {
+      "AFI": 0.1,
+      "ESR": 0.2,
+      "MVO": 0.15,
+      "MII": 0.1,
+      "SADE": 0.3,
+      "AMB": 0.1
+    },
+    "obes_score": 0.1375,
+    "hash": "19b8692008a29afa628a4a1fc512786ed4ceeb650ada7d8b44642fd7f8633364",
+    "prev_hash": "GENESIS",
+    "reality_level": "C5-REAL"
+  },
+  {
+    "timestamp": "2026-06-08T11:58:15.842612",
+    "subject_type": "Sovereign-Subject",
+    "metrics": {
+      "AFI": 0.95,
+      "ESR": 0.9,
+      "MVO": 0.98,
+      "MII": 0.95,
+      "SADE": 0.85,
+      "AMB": 0.92
+    },
+    "obes_score": 0.9405,
+    "hash": "28a3e42af830a4e310242ad9be7b1257a7c0fa8addb59190bfe7cf45dee8913d",
+    "prev_hash": "19b8692008a29afa628a4a1fc512786ed4ceeb650ada7d8b44642fd7f8633364",
+    "reality_level": "C5-REAL"
+  },
+  {
+    "timestamp": "2026-06-08T11:58:31.593043+00:00",
+    "subject_type": "Domestic-Subject",
+    "metrics": {
+      "AFI": 0.1,
+      "ESR": 0.2,
+      "MVO": 0.15,
+      "MII": 0.1,
+      "SADE": 0.3,
+      "AMB": 0.1
+    },
+    "obes_score": 0.1375,
+    "hash": "966ffb30c2254e07092faf123dbd085f89352df0ccf2aaef215a5f59f4e52d7f",
+    "prev_hash": "28a3e42af830a4e310242ad9be7b1257a7c0fa8addb59190bfe7cf45dee8913d",
+    "reality_level": "C5-REAL"
+  },
+  {
+    "timestamp": "2026-06-08T11:58:31.593588+00:00",
+    "subject_type": "Sovereign-Subject",
+    "metrics": {
+      "AFI": 0.95,
+      "ESR": 0.9,
+      "MVO": 0.98,
+      "MII": 0.95,
+      "SADE": 0.85,
+      "AMB": 0.92
+    },
+    "obes_score": 0.9405,
+    "hash": "b102d032abeae035d481a400b0f50f24bc5a3b54b8ea4a238f7185eb8c3338bd",
+    "prev_hash": "966ffb30c2254e07092faf123dbd085f89352df0ccf2aaef215a5f59f4e52d7f",
+    "reality_level": "C5-REAL"
+  }
+]

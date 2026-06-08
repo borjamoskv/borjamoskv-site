@@ -7,6 +7,7 @@ tags:
   - '#Biology'
   - '#Thermodynamics'
   - '#Exergy'
+sentiment: '🪫 Inercia y Desconexión (Apatía)'
 ---
 
 <div class="article-epigraph"><p><code> (AUDITORÍA FISIOLÓGICA · C5-REAL) </code></p></div>

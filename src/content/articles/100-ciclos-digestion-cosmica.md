@@ -4,6 +4,7 @@ description: "Reseteo Kármico al 100% y Entropía en el Cuarto B. Ficción Oper
 pubDate: "29 de mayo de 2026"
 tags:
   - 'Cortex'
+sentiment: '🔋 Homeostasis y Vigor (Calma y Gratitud)'
 ---
 
 <section class="article-section">
