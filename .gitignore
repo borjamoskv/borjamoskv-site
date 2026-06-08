@@ -27,3 +27,10 @@ pnpm-debug.log*
 .vercel/
 .vercel
 __pycache__/
+
+# Wrangler / Cloudflare local state
+.wrangler/
+
+# Local testing
+mock_testimonios/
+
