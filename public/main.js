@@ -423,6 +423,16 @@ document.addEventListener('DOMContentLoaded', () => {
         audioEl.src = trackSrc;
       }
       
+      // Pause persistent cyber player if it is playing to prevent clashing
+      if (window.CyberAudioStore && window.CyberAudioStore.isPlaying) {
+        window.CyberAudioStore.toggle();
+      }
+
+      // Mute background ambient pads smoothly
+      if (window.MOSKV && window.MOSKV.setAmbientVolume) {
+        window.MOSKV.setAmbientVolume(0);
+      }
+
       audioEl.play().then(() => {
         stopSynthFallback();
       }).catch(e => {
@@ -442,6 +452,11 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       stopSynthFallback();
       addTerminalLine('STOP', 'Reproducción en pausa.');
+
+      // Restore background ambient pads smoothly
+      if (window.MOSKV && window.MOSKV.setAmbientVolume) {
+        window.MOSKV.setAmbientVolume(0.15);
+      }
     }
   }
 
@@ -486,6 +501,16 @@ document.addEventListener('DOMContentLoaded', () => {
         audioEl.load();
         
         if (state.isPlaying) {
+          // Pause persistent cyber player if it is playing to prevent clashing
+          if (window.CyberAudioStore && window.CyberAudioStore.isPlaying) {
+            window.CyberAudioStore.toggle();
+          }
+
+          // Mute background ambient pads smoothly
+          if (window.MOSKV && window.MOSKV.setAmbientVolume) {
+            window.MOSKV.setAmbientVolume(0);
+          }
+
           audioEl.play().then(() => {
             stopSynthFallback();
           }).catch(e => {
@@ -1002,8 +1027,16 @@ SYSTEM INTEGRITY HASH: ${generateHash(JSON.stringify(state.logs))}
   });
 
   /* ==========================================================================
-     SYSTEM BOOT
+     CROSS-PLAYER COORDINATION & SYSTEM BOOT
      ========================================================================== */
+  
+  // Cross-player coordination event: pauses the vinyl deck when other players start
+  window.addEventListener('PauseVinylDeck', () => {
+    if (state.isPlaying) {
+      togglePlayback();
+    }
+  });
+
   bootSystem();
   requestAnimationFrame(loop);
 });

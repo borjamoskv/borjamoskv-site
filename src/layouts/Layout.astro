@@ -207,6 +207,12 @@ const { title } = Astro.props;
         // Master Gain
         const masterGain = audioCtx.createGain();
         masterGain.gain.value = 0.15; // Pleasant ambient volume
+        window.MOSKV.masterAmbientGain = masterGain;
+        window.MOSKV.setAmbientVolume = (vol) => {
+          if (masterGain && audioCtx) {
+            masterGain.gain.setTargetAtTime(vol, audioCtx.currentTime, 0.2);
+          }
+        };
 
         panner.connect(masterGain);
         masterGain.connect(audioCtx.destination);
@@ -1806,6 +1812,10 @@ const { title } = Astro.props;
                   const player = document.getElementById('cyber-player');
                   if (player) player.classList.remove('active');
                   localStorage.removeItem('cyber_player_track_index');
+                  // Restore background ambient pad smoothly
+                  if (window.MOSKV && window.MOSKV.setAmbientVolume) {
+                     window.MOSKV.setAmbientVolume(0.15);
+                  }
                };
             }
             
@@ -1872,10 +1882,13 @@ const { title } = Astro.props;
             if (artist) artist.textContent = track.artist;
             if (player) player.classList.add('active');
             
-            // Suspend background ambient pad if running to prevent clash
-            if (window.audioCtx && window.audioCtx.state === 'running') {
-               window.audioCtx.suspend();
+            // Mute background ambient pad smoothly to prevent clash
+            if (window.MOSKV && window.MOSKV.setAmbientVolume) {
+               window.MOSKV.setAmbientVolume(0);
             }
+            
+            // Pause the vinyl deck if it is playing
+            window.dispatchEvent(new CustomEvent('PauseVinylDeck'));
             
             this.audio.src = track.src;
             this.audio.play().then(() => {
@@ -1893,7 +1906,18 @@ const { title } = Astro.props;
             if (this.isPlaying) {
                this.audio.pause();
                this.isPlaying = false;
+               // Restore background ambient pad smoothly
+               if (window.MOSKV && window.MOSKV.setAmbientVolume) {
+                  window.MOSKV.setAmbientVolume(0.15);
+               }
             } else {
+               // Mute background ambient pad smoothly to prevent clash
+               if (window.MOSKV && window.MOSKV.setAmbientVolume) {
+                  window.MOSKV.setAmbientVolume(0);
+               }
+               // Pause the vinyl deck
+               window.dispatchEvent(new CustomEvent('PauseVinylDeck'));
+               
                this.audio.play().then(() => {
                   this.isPlaying = true;
                }).catch(console.warn);
