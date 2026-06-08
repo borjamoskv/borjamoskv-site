@@ -315,7 +315,8 @@ class CortexTerminal {
             'thanatos': () => this.cmdMobius('THANATOS', 'Apoptosis. Destruyendo código muerto (Exergía máxima).'),
             'pandora': () => this.cmdMobius('PANDORA', 'Mutación AST. Insertando secuencias de caos controlado.'),
             'aletheia': () => this.cmdMobius('ALETHEIA', 'Auditoría epistémica. Consolidando axiomas de verdad.'),
-            'colmena': () => this.cmdMobius('COLMENA', 'Sincronización de enjambre (Consenso de actores MÖBIUS).')
+            'colmena': () => this.cmdMobius('COLMENA', 'Sincronización de enjambre (Consenso de actores MÖBIUS).'),
+            '100agentes': () => this.cmd100agentes()
         };
 
         this.initEventListeners();
@@ -495,6 +496,7 @@ class CortexTerminal {
             { c: 'aletheia', d: 'ALETHEIA-Audit: Motor epistémico' },
             { c: 'colmena', d: 'COLMENA-Quorum: Sincronización enjambre' },
             { c: 'pandora', d: 'PANDORA-Assault: Mutación de sistema' },
+            { c: '100agentes', d: 'Simular enjambre de 100 agentes C5-REAL' },
             { c: 'clear', d: 'Purgar buffer de salida' }
         ];
         cmds.forEach(item => {
@@ -811,5 +813,71 @@ endmodule`;
         }
 
         this.print(`<span style="color:${config.color}; font-weight: bold; text-shadow: 0 0 8px ${config.color}">[${agentName}] OPERACIÓN COMPLETADA. EXERGÍA MÁXIMA.</span>`, 'exergy', 0);
+    }
+
+    async cmd100agentes() {
+        this.print('BOOTING SWARM-100 CONCURRENCY MODULE...', 'warn');
+        this.print('Deploying 100 Sovereign AI Agents across network partitions...', 'info');
+        
+        this.engine.setState('SWARM');
+        
+        const swarmWrapper = document.createElement('div');
+        swarmWrapper.className = 'cterm-swarm-3d-wrapper cterm-swarm-100-active';
+        swarmWrapper.innerHTML = `
+            <div class="cterm-swarm-overlay"></div>
+            <div class="cterm-swarm-status">SWARM-100: INITIALIZING</div>
+            <div class="cterm-swarm-grid"></div>
+        `;
+        this.output.appendChild(swarmWrapper);
+        this.output.scrollTop = this.output.scrollHeight;
+
+        const grid = swarmWrapper.querySelector('.cterm-swarm-grid');
+        const agents = [];
+        const states = ['ACTV', 'SYNC', 'NULL'];
+        for (let i = 0; i < 100; i++) {
+            const agent = document.createElement('div');
+            agent.className = 'cterm-swarm-agent';
+            const state = states[Math.floor(Math.random() * states.length)];
+            agent.setAttribute('data-state', state);
+            agent.textContent = `A-${i.toString().padStart(2, '0')}`;
+            agent.title = `Agent-${i}: State ${state}`;
+            grid.appendChild(agent);
+            agents.push(agent);
+        }
+
+        const logs = [
+            '[SWARM-100] Agent-15 verified 300 latest testimonials for David Domínguez (Exergy: 98%)',
+            '[SWARM-100] Agent-42 performed Jaccard drift analysis on recommendations graph',
+            '[SWARM-100] Agent-73 validated Manuel Algara automation pipeline status (0 errors)',
+            '[SWARM-100] Agent-09 intercepted 429 rate limit on agentesia.substack.com (Backing off)',
+            '[SWARM-100] Agent-88 computed clickbait density index for tudosisia (Smoke: 14.5%)',
+            '[SWARM-100] Agent-61 compiled new static Astro/Vite production bundles',
+            '[SWARM-100] Agent-33 synchronized reputation telemetry with SQLite database',
+            '[SWARM-100] Agent-99 locked AST cryptographic seals in 0.18ms'
+        ];
+
+        const statusDisplay = swarmWrapper.querySelector('.cterm-swarm-status');
+        
+        // Loop simulation
+        for (let step = 0; step < logs.length; step++) {
+            await new Promise(r => setTimeout(r, 600));
+            
+            // Randomly trigger glitches on 3 random agents
+            for (let j = 0; j < 3; j++) {
+                const randomAgent = agents[Math.floor(Math.random() * agents.length)];
+                randomAgent.classList.add('cterm-glitching');
+                setTimeout(() => randomAgent.classList.remove('cterm-glitching'), 300);
+            }
+            
+            statusDisplay.textContent = `SWARM-100: RUNNING STEP ${step + 1}/8`;
+            this.print(`<span class="cterm-yield-mid">⚡</span> ${logs[step]}`, 'log', 0);
+        }
+
+        await new Promise(r => setTimeout(r, 500));
+        statusDisplay.textContent = 'SWARM-100: STABILIZED';
+        swarmWrapper.classList.remove('cterm-swarm-100-active');
+        
+        this.print('<span class="cterm-yield-gold">[SWARM-100] ALL 100 SOVEREIGN AGENTS STABILIZED. EXERGY HOMEOSTASIS SECURED.</span>', 'success', 0);
+        this.print('EXERGY BALANCE: <span class="cterm-yield-gold">+92.4%</span> (Active parallel optimization loop)', 'exergy', 0);
     }
 }
