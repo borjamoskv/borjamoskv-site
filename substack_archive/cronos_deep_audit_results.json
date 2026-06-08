@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-08T11:16:08Z",
+  "timestamp": "2026-06-08T11:31:16Z",
   "results": {
     "aimafia": {
       "subdomain": "aimafia",
@@ -13,30 +13,10 @@
       "metrics": {
         "clickbait": 76.0,
         "technical": 38.2,
-        "commercial": 22.6,
-        "smoke_index": 40.6
+        "commercial": 23.9,
+        "smoke_index": 41.1
       },
       "articles": [
-        {
-          "title": "🟡 El Prompt con el que puedes superar el pensamiento humano",
-          "url": "https://aimafia.substack.com/p/prompt-mejor-pensamiento-soluciones",
-          "words": 5252,
-          "cb_score": 32.1,
-          "tech_score": 56.4,
-          "comm_score": 75.4,
-          "smoke_index": 42.8,
-          "classification": "Comercial / Patrocinado"
-        },
-        {
-          "title": "El mejor 'life hack' del mundo para un ser humano (confirmado por IA)",
-          "url": "https://hazloquequieras.substack.com/cp/186604712",
-          "words": 27,
-          "cb_score": 100.0,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 45.0,
-          "classification": "Hype-driven / Divulgativo"
-        },
         {
           "title": "Alucinaciones IA → 3 prompts + 1 sistema que hacen cualquier respuesta 100 % verificable",
           "url": "https://aimafia.substack.com/p/alucinaciones-ia",
@@ -46,6 +26,36 @@
           "comm_score": 5.8,
           "smoke_index": 34.0,
           "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "La VERDAD que Nadie te Cuenta sobre OpenClaw 🦞 y el HYPE desmedido.",
+          "url": "https://aimafia.substack.com/p/openclaw-la-verdad",
+          "words": 2711,
+          "cb_score": 100.0,
+          "tech_score": 59.0,
+          "comm_score": 16.2,
+          "smoke_index": 46.4,
+          "classification": "Técnico / Práctico"
+        },
+        {
+          "title": "🟡 Skills: La Guía Definitiva para Automatizar tu Forma de Trabajar con IA",
+          "url": "https://aimafia.substack.com/p/skills-ia",
+          "words": 3560,
+          "cb_score": 60.5,
+          "tech_score": 20.2,
+          "comm_score": 12.4,
+          "smoke_index": 30.8,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "🟡 El Prompt con el que puedes superar el pensamiento humano",
+          "url": "https://aimafia.substack.com/p/prompt-mejor-pensamiento-soluciones",
+          "words": 5252,
+          "cb_score": 32.1,
+          "tech_score": 56.4,
+          "comm_score": 75.4,
+          "smoke_index": 42.8,
+          "classification": "Comercial / Patrocinado"
         },
         {
           "title": "🟡 IA Local: Gratis, privada y potente",
@@ -58,13 +68,13 @@
           "classification": "Técnico / Práctico"
         },
         {
-          "title": "La VERDAD que Nadie te Cuenta sobre OpenClaw 🦞 y el HYPE desmedido.",
-          "url": "https://aimafia.substack.com/p/openclaw-la-verdad",
-          "words": 2711,
-          "cb_score": 100.0,
-          "tech_score": 59.0,
-          "comm_score": 16.2,
-          "smoke_index": 46.4,
+          "title": "Context Engineering para emprendedores",
+          "url": "https://aimafia.substack.com/p/memoria-ia-contexto",
+          "words": 4908,
+          "cb_score": 58.7,
+          "tech_score": 61.9,
+          "comm_score": 26.9,
+          "smoke_index": 32.3,
           "classification": "Técnico / Práctico"
         },
         {
@@ -78,24 +88,14 @@
           "classification": "Hype-driven / Divulgativo"
         },
         {
-          "title": "🟡 Skills: La Guía Definitiva para Automatizar tu Forma de Trabajar con IA",
-          "url": "https://aimafia.substack.com/p/skills-ia",
-          "words": 3560,
-          "cb_score": 60.5,
-          "tech_score": 20.2,
-          "comm_score": 12.4,
-          "smoke_index": 30.8,
+          "title": "El mejor 'life hack' del mundo para un ser humano (confirmado por IA)",
+          "url": "https://hazloquequieras.substack.com/cp/186604712",
+          "words": 2102,
+          "cb_score": 100.0,
+          "tech_score": 0.0,
+          "comm_score": 10.5,
+          "smoke_index": 49.7,
           "classification": "Hype-driven / Divulgativo"
-        },
-        {
-          "title": "Context Engineering para emprendedores",
-          "url": "https://aimafia.substack.com/p/memoria-ia-contexto",
-          "words": 4908,
-          "cb_score": 58.7,
-          "tech_score": 61.9,
-          "comm_score": 26.9,
-          "smoke_index": 32.3,
-          "classification": "Técnico / Práctico"
         }
       ]
     },
@@ -116,16 +116,6 @@
       },
       "articles": [
         {
-          "title": "👨‍💻 👩‍💻 Es hoyyyyy, es hoyyyyy.... ",
-          "url": "https://cosasdefreelance.substack.com/p/es-hoyyyyy-es-hoyyyyy",
-          "words": 380,
-          "cb_score": 0.0,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 0.0,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
           "title": "👨‍💻 👩‍💻 14 horas para cerrar. No tengo más argumentos",
           "url": "https://cosasdefreelance.substack.com/p/14-horas-para-cerrar-no-tengo-mas",
           "words": 972,
@@ -136,33 +126,13 @@
           "classification": "Comercial / Patrocinado"
         },
         {
-          "title": "👨‍💻 👩‍💻 5 extras que terminan mañana",
-          "url": "https://cosasdefreelance.substack.com/p/5-extras-que-terminan-manana",
-          "words": 1551,
+          "title": "👨‍💻 👩‍💻 Es hoyyyyy, es hoyyyyy.... ",
+          "url": "https://cosasdefreelance.substack.com/p/es-hoyyyyy-es-hoyyyyy",
+          "words": 380,
           "cb_score": 0.0,
           "tech_score": 0.0,
-          "comm_score": 85.1,
-          "smoke_index": 38.3,
-          "classification": "Comercial / Patrocinado"
-        },
-        {
-          "title": "👨‍💻 👩‍💻 10 días llevo en el Dragon Khan",
-          "url": "https://cosasdefreelance.substack.com/p/10-dias-llevo-en-el-dragon-khan",
-          "words": 1998,
-          "cb_score": 9.0,
-          "tech_score": 0.0,
-          "comm_score": 11.0,
-          "smoke_index": 9.0,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
-          "title": "👨‍💻 👩‍💻 El hack más rentable del freelance",
-          "url": "https://cosasdefreelance.substack.com/p/el-hack-mas-rentable-del-freelance",
-          "words": 1396,
-          "cb_score": 25.8,
-          "tech_score": 0.0,
           "comm_score": 0.0,
-          "smoke_index": 11.6,
+          "smoke_index": 0.0,
           "classification": "Hype-driven / Divulgativo"
         },
         {
@@ -176,6 +146,16 @@
           "classification": "Hype-driven / Divulgativo"
         },
         {
+          "title": "👨‍💻 👩‍💻 El hack más rentable del freelance",
+          "url": "https://cosasdefreelance.substack.com/p/el-hack-mas-rentable-del-freelance",
+          "words": 1396,
+          "cb_score": 25.8,
+          "tech_score": 0.0,
+          "comm_score": 0.0,
+          "smoke_index": 11.6,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
           "title": "👨‍💻 👩‍💻 200 personas te apoyan cada día",
           "url": "https://cosasdefreelance.substack.com/p/200-personas-te-apoyan-cada-dia",
           "words": 1539,
@@ -183,6 +163,16 @@
           "tech_score": 0.0,
           "comm_score": 28.6,
           "smoke_index": 23.4,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "👨‍💻 👩‍💻 10 días llevo en el Dragon Khan",
+          "url": "https://cosasdefreelance.substack.com/p/10-dias-llevo-en-el-dragon-khan",
+          "words": 1998,
+          "cb_score": 9.0,
+          "tech_score": 0.0,
+          "comm_score": 11.0,
+          "smoke_index": 9.0,
           "classification": "Hype-driven / Divulgativo"
         },
         {
@@ -194,6 +184,16 @@
           "comm_score": 26.3,
           "smoke_index": 11.9,
           "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "👨‍💻 👩‍💻 5 extras que terminan mañana",
+          "url": "https://cosasdefreelance.substack.com/p/5-extras-que-terminan-manana",
+          "words": 1551,
+          "cb_score": 0.0,
+          "tech_score": 0.0,
+          "comm_score": 85.1,
+          "smoke_index": 38.3,
+          "classification": "Comercial / Patrocinado"
         }
       ]
     },
@@ -207,32 +207,12 @@
         "removed": []
       },
       "metrics": {
-        "clickbait": 19.4,
-        "technical": 11.1,
-        "commercial": 7.7,
-        "smoke_index": 11.3
+        "clickbait": 25.5,
+        "technical": 13.8,
+        "commercial": 9.2,
+        "smoke_index": 14.5
       },
       "articles": [
-        {
-          "title": "💊 ChatGPT ahora “sueña” contigo mientras duermes",
-          "url": "https://tudosisia.substack.com/p/chatgpt-ahora-suena-contigo-mientras",
-          "words": 1880,
-          "cb_score": 19.1,
-          "tech_score": 0.0,
-          "comm_score": 11.7,
-          "smoke_index": 13.9,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
-          "title": "💊 CNN lleva a Perplexity a juicio por copiar 17.000 vídeos suyos",
-          "url": "https://tudosisia.substack.com/p/cnn-lleva-a-perplexity-a-juicio-por",
-          "words": 20,
-          "cb_score": 0.0,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 0.0,
-          "classification": "Hype-driven / Divulgativo"
-        },
         {
           "title": "💊 Anthropic se va a bolsa y deja a OpenAI a su sombra",
           "url": "https://tudosisia.substack.com/p/anthropic-se-va-a-bolsa-y-deja-a",
@@ -244,13 +224,43 @@
           "classification": "Hype-driven / Divulgativo"
         },
         {
-          "title": "💊 Un gusano en GitHub estalla cuando tu IA lee el código",
-          "url": "https://tudosisia.substack.com/p/un-gusano-en-github-estalla-cuando",
-          "words": 20,
-          "cb_score": 0.0,
+          "title": "💊 ChatGPT ahora “sueña” contigo mientras duermes",
+          "url": "https://tudosisia.substack.com/p/chatgpt-ahora-suena-contigo-mientras",
+          "words": 1880,
+          "cb_score": 19.1,
           "tech_score": 0.0,
+          "comm_score": 11.7,
+          "smoke_index": 13.9,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "💊 OpenAI te deja crear webs y apps con IA y compartirlas con un link — sin tocar código",
+          "url": "https://tudosisia.substack.com/p/openai-te-deja-crear-webs-y-apps",
+          "words": 1995,
+          "cb_score": 0.0,
+          "tech_score": 16.0,
           "comm_score": 0.0,
           "smoke_index": 0.0,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "💊 CNN lleva a Perplexity a juicio por copiar 17.000 vídeos suyos",
+          "url": "https://tudosisia.substack.com/p/cnn-lleva-a-perplexity-a-juicio-por",
+          "words": 1825,
+          "cb_score": 29.6,
+          "tech_score": 4.4,
+          "comm_score": 12.1,
+          "smoke_index": 18.3,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "💊 DeepSeek levanta 7.000 millones: la IA china que puso en jaque a OpenAI ya tiene el dinero para la guerra",
+          "url": "https://tudosisia.substack.com/p/deepseek-levanta-7000-millones-la",
+          "words": 2183,
+          "cb_score": 8.2,
+          "tech_score": 14.7,
+          "comm_score": 10.1,
+          "smoke_index": 6.8,
           "classification": "Hype-driven / Divulgativo"
         },
         {
@@ -274,23 +284,13 @@
           "classification": "Hype-driven / Divulgativo"
         },
         {
-          "title": "💊 DeepSeek levanta 7.000 millones: la IA china que puso en jaque a OpenAI ya tiene el dinero para la guerra",
-          "url": "https://tudosisia.substack.com/p/deepseek-levanta-7000-millones-la",
-          "words": 2183,
-          "cb_score": 8.2,
-          "tech_score": 14.7,
-          "comm_score": 10.1,
-          "smoke_index": 6.8,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
-          "title": "💊 OpenAI te deja crear webs y apps con IA y compartirlas con un link — sin tocar código",
-          "url": "https://tudosisia.substack.com/p/openai-te-deja-crear-webs-y-apps",
-          "words": 1995,
-          "cb_score": 0.0,
-          "tech_score": 16.0,
+          "title": "💊 Un gusano en GitHub estalla cuando tu IA lee el código",
+          "url": "https://tudosisia.substack.com/p/un-gusano-en-github-estalla-cuando",
+          "words": 1861,
+          "cb_score": 19.3,
+          "tech_score": 17.2,
           "comm_score": 0.0,
-          "smoke_index": 0.0,
+          "smoke_index": 7.0,
           "classification": "Hype-driven / Divulgativo"
         }
       ]
@@ -312,6 +312,26 @@
       },
       "articles": [
         {
+          "title": "Multiplícate con la IA (contado por un freelance)",
+          "url": "https://webreactiva.substack.com/p/multiplicate-con-la-ia-contado-por",
+          "words": 2279,
+          "cb_score": 23.7,
+          "tech_score": 59.7,
+          "comm_score": 0.0,
+          "smoke_index": 4.7,
+          "classification": "Técnico / Práctico"
+        },
+        {
+          "title": "Las skills son la herramienta de IA más infravalorada",
+          "url": "https://webreactiva.substack.com/p/las-skills-son-la-herramienta-de",
+          "words": 1809,
+          "cb_score": 29.9,
+          "tech_score": 48.6,
+          "comm_score": 0.0,
+          "smoke_index": 8.6,
+          "classification": "Técnico / Práctico"
+        },
+        {
           "title": "Desbloquea tu potencial con la IA (lecciones de un no developer)",
           "url": "https://webreactiva.substack.com/p/desbloquea-tu-potencial-con-la-ia",
           "words": 2156,
@@ -332,26 +352,6 @@
           "classification": "Técnico / Práctico"
         },
         {
-          "title": "Las skills son la herramienta de IA más infravalorada",
-          "url": "https://webreactiva.substack.com/p/las-skills-son-la-herramienta-de",
-          "words": 1809,
-          "cb_score": 29.9,
-          "tech_score": 48.6,
-          "comm_score": 0.0,
-          "smoke_index": 8.6,
-          "classification": "Técnico / Práctico"
-        },
-        {
-          "title": "Buenas prácticas contra los tokens cada vez más caros",
-          "url": "https://webreactiva.substack.com/p/buenas-practicas-contra-los-tokens",
-          "words": 2254,
-          "cb_score": 24.0,
-          "tech_score": 60.3,
-          "comm_score": 9.8,
-          "smoke_index": 9.1,
-          "classification": "Técnico / Práctico"
-        },
-        {
           "title": "Cómo empezar con la IA para crear proyectos de software",
           "url": "https://webreactiva.substack.com/p/como-empezar-con-la-ia-para-crear",
           "words": 1818,
@@ -359,16 +359,6 @@
           "tech_score": 48.4,
           "comm_score": 0.0,
           "smoke_index": 17.4,
-          "classification": "Técnico / Práctico"
-        },
-        {
-          "title": "Los agentes de IA mienten pero nosotros no leemos el código",
-          "url": "https://webreactiva.substack.com/p/los-agentes-de-ia-mienten-pero-nosotros",
-          "words": 2432,
-          "cb_score": 29.6,
-          "tech_score": 59.2,
-          "comm_score": 0.0,
-          "smoke_index": 7.4,
           "classification": "Técnico / Práctico"
         },
         {
@@ -382,13 +372,23 @@
           "classification": "Técnico / Práctico"
         },
         {
-          "title": "Multiplícate con la IA (contado por un freelance)",
-          "url": "https://webreactiva.substack.com/p/multiplicate-con-la-ia-contado-por",
-          "words": 2279,
-          "cb_score": 23.7,
-          "tech_score": 59.7,
+          "title": "Buenas prácticas contra los tokens cada vez más caros",
+          "url": "https://webreactiva.substack.com/p/buenas-practicas-contra-los-tokens",
+          "words": 2254,
+          "cb_score": 24.0,
+          "tech_score": 60.3,
+          "comm_score": 9.8,
+          "smoke_index": 9.1,
+          "classification": "Técnico / Práctico"
+        },
+        {
+          "title": "Los agentes de IA mienten pero nosotros no leemos el código",
+          "url": "https://webreactiva.substack.com/p/los-agentes-de-ia-mienten-pero-nosotros",
+          "words": 2432,
+          "cb_score": 29.6,
+          "tech_score": 59.2,
           "comm_score": 0.0,
-          "smoke_index": 4.7,
+          "smoke_index": 7.4,
           "classification": "Técnico / Práctico"
         }
       ]
@@ -403,46 +403,26 @@
         "removed": []
       },
       "metrics": {
-        "clickbait": 28.1,
-        "technical": 16.2,
+        "clickbait": 31.2,
+        "technical": 17.6,
         "commercial": 3.7,
-        "smoke_index": 12.7
+        "smoke_index": 14.0
       },
       "articles": [
         {
-          "title": "🤯🤖 La IA que amenazó con revelar una infidelidad para no ser apagada ",
-          "url": "https://iaparatodo.substack.com/p/la-ia-que-amenazo-con-revelar-una",
-          "words": 1238,
-          "cb_score": 44.1,
-          "tech_score": 38.8,
+          "title": "🗂️🤖 El truco que usan los profesionales más productivos con IA: Proyectos, archivos y una estrategia de tres herramientas",
+          "url": "https://iaparatodo.substack.com/p/el-truco-que-usan-los-profesionales",
+          "words": 1447,
+          "cb_score": 24.9,
+          "tech_score": 11.1,
           "comm_score": 0.0,
-          "smoke_index": 16.0,
-          "classification": "Técnico / Práctico"
-        },
-        {
-          "title": "🧬🤖 Guía en 4 fases para adaptar la IA a tu empresa sin fracasar ",
-          "url": "https://iaparatodo.substack.com/p/guia-en-4-fases-para-adaptar-la-ia",
-          "words": 1944,
-          "cb_score": 9.3,
-          "tech_score": 16.5,
-          "comm_score": 0.0,
-          "smoke_index": 2.5,
+          "smoke_index": 10.1,
           "classification": "Hype-driven / Divulgativo"
         },
         {
-          "title": "🧠⚡ Aprende cualquier materia en la mitad de tiempo con NotebookLM sin perecer en el intento",
-          "url": "https://iaparatodo.substack.com/p/aprende-cualquier-materia-en-la-mitad",
-          "words": 1361,
-          "cb_score": 39.7,
-          "tech_score": 35.3,
-          "comm_score": 16.2,
-          "smoke_index": 21.6,
-          "classification": "Técnico / Práctico"
-        },
-        {
-          "title": "🗂️🤖 El truco que usan los profesionales más productivos con IA: Proyectos, archivos y una estrategia de tres herramientas",
-          "url": "https://iaparatodo.substack.com/p/el-truco-que-usan-los-profesionales",
-          "words": 52,
+          "title": "🎓📊 La escala que más de 500 universidades usan para decidir cuánta IA se permite en un examen (y cómo te ayuda a ti también)",
+          "url": "https://iaparatodo.substack.com/p/la-escala-que-mas-de-500-universidades",
+          "words": 1339,
           "cb_score": 0.0,
           "tech_score": 0.0,
           "comm_score": 0.0,
@@ -460,13 +440,43 @@
           "classification": "Hype-driven / Divulgativo"
         },
         {
-          "title": "🎓📊 La escala que más de 500 universidades usan para decidir cuánta IA se permite en un examen (y cómo te ayuda a ti también)",
-          "url": "https://iaparatodo.substack.com/p/la-escala-que-mas-de-500-universidades",
-          "words": 1339,
-          "cb_score": 0.0,
-          "tech_score": 0.0,
+          "title": "🧬🤖 Guía en 4 fases para adaptar la IA a tu empresa sin fracasar ",
+          "url": "https://iaparatodo.substack.com/p/guia-en-4-fases-para-adaptar-la-ia",
+          "words": 1944,
+          "cb_score": 9.3,
+          "tech_score": 16.5,
           "comm_score": 0.0,
-          "smoke_index": 0.0,
+          "smoke_index": 2.5,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "🤯🤖 La IA que amenazó con revelar una infidelidad para no ser apagada ",
+          "url": "https://iaparatodo.substack.com/p/la-ia-que-amenazo-con-revelar-una",
+          "words": 1238,
+          "cb_score": 44.1,
+          "tech_score": 38.8,
+          "comm_score": 0.0,
+          "smoke_index": 16.0,
+          "classification": "Técnico / Práctico"
+        },
+        {
+          "title": "🧠⚡ Aprende cualquier materia en la mitad de tiempo con NotebookLM sin perecer en el intento",
+          "url": "https://iaparatodo.substack.com/p/aprende-cualquier-materia-en-la-mitad",
+          "words": 1361,
+          "cb_score": 39.7,
+          "tech_score": 35.3,
+          "comm_score": 16.2,
+          "smoke_index": 21.6,
+          "classification": "Técnico / Práctico"
+        },
+        {
+          "title": "🧠⚡ Webinar: Aprende cualquier habilidad nueva en tiempo récord con IA ",
+          "url": "https://iaparatodo.substack.com/p/webinar-aprende-cualquier-habilidad",
+          "words": 826,
+          "cb_score": 43.6,
+          "tech_score": 9.7,
+          "comm_score": 0.0,
+          "smoke_index": 18.6,
           "classification": "Hype-driven / Divulgativo"
         },
         {
@@ -477,16 +487,6 @@
           "tech_score": 0.0,
           "comm_score": 0.0,
           "smoke_index": 39.7,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
-          "title": "🧠⚡ Webinar: Aprende cualquier habilidad nueva en tiempo récord con IA ",
-          "url": "https://iaparatodo.substack.com/p/webinar-aprende-cualquier-habilidad",
-          "words": 826,
-          "cb_score": 43.6,
-          "tech_score": 9.7,
-          "comm_score": 0.0,
-          "smoke_index": 18.6,
           "classification": "Hype-driven / Divulgativo"
         }
       ]
@@ -501,72 +501,12 @@
         "removed": []
       },
       "metrics": {
-        "clickbait": 38.7,
-        "technical": 39.5,
-        "commercial": 0.0,
-        "smoke_index": 14.7
+        "clickbait": 45.9,
+        "technical": 53.0,
+        "commercial": 1.8,
+        "smoke_index": 16.6
       },
       "articles": [
-        {
-          "title": "Vibe Coding - Programación IA para Creadores [intro] (+5 mejores herramientas)",
-          "url": "https://aimafia.substack.com/cp/160190871",
-          "words": 34,
-          "cb_score": 0.0,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 0.0,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
-          "title": "Guía: Desarrollo de Aplicaciones móviles con Bolt, Expo y Trae AI, y publicación en Android o Apple ",
-          "url": "https://agentesia.substack.com/p/guia-desarrollo-de-aplicaciones-moviles",
-          "words": 32,
-          "cb_score": 100.0,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 45.0,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
-          "title": "El absurdo Loop que construye cualquier cosa mientras duermes: El Método Ralph Wiggum",
-          "url": "https://agentesia.substack.com/p/loop-ralph-vibe-coding",
-          "words": 25,
-          "cb_score": 0.0,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 0.0,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
-          "title": "OpenClaw: Guía definitiva para su instalación más segura",
-          "url": "https://agentesia.substack.com/p/openclaw-instalacion-segura",
-          "words": 19,
-          "cb_score": 100.0,
-          "tech_score": 100.0,
-          "comm_score": 0.0,
-          "smoke_index": 35.0,
-          "classification": "Técnico / Práctico"
-        },
-        {
-          "title": "Vibe Coding - Guía Iniciación a la programación IA",
-          "url": "https://agentesia.substack.com/p/vibe-coding-programacion-ia",
-          "words": 35,
-          "cb_score": 0.0,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 0.0,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
-          "title": "🪨 Modo Super-Cavernícola (PROMPT) → Gasta un 75% menos de tokens",
-          "url": "https://agentesia.substack.com/p/modo-super-cavernicola-prompt-gasta",
-          "words": 22,
-          "cb_score": 0.0,
-          "tech_score": 100.0,
-          "comm_score": 0.0,
-          "smoke_index": 0.0,
-          "classification": "Técnico / Práctico"
-        },
         {
           "title": "Guía Prompting Claude y lanzamiento Opus 4.6 ",
           "url": "https://agentesia.substack.com/p/guia-prompting-claude-y-lanzamiento",
@@ -576,6 +516,66 @@
           "comm_score": 0.0,
           "smoke_index": 5.2,
           "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "Guía: Desarrollo de Aplicaciones móviles con Bolt, Expo y Trae AI, y publicación en Android o Apple ",
+          "url": "https://agentesia.substack.com/p/guia-desarrollo-de-aplicaciones-moviles",
+          "words": 773,
+          "cb_score": 61.6,
+          "tech_score": 31.0,
+          "comm_score": 0.0,
+          "smoke_index": 24.6,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "El absurdo Loop que construye cualquier cosa mientras duermes: El Método Ralph Wiggum",
+          "url": "https://agentesia.substack.com/p/loop-ralph-vibe-coding",
+          "words": 2715,
+          "cb_score": 53.0,
+          "tech_score": 88.4,
+          "comm_score": 0.0,
+          "smoke_index": 15.0,
+          "classification": "Técnico / Práctico"
+        },
+        {
+          "title": "Vibe Coding - Guía Iniciación a la programación IA",
+          "url": "https://agentesia.substack.com/p/vibe-coding-programacion-ia",
+          "words": 2981,
+          "cb_score": 0.0,
+          "tech_score": 37.6,
+          "comm_score": 0.0,
+          "smoke_index": 0.0,
+          "classification": "Técnico / Práctico"
+        },
+        {
+          "title": "Vibe Coding - Programación IA para Creadores [intro] (+5 mejores herramientas)",
+          "url": "https://aimafia.substack.com/cp/160190871",
+          "words": 3154,
+          "cb_score": 22.8,
+          "tech_score": 17.8,
+          "comm_score": 14.0,
+          "smoke_index": 14.8,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "🪨 Modo Super-Cavernícola (PROMPT) → Gasta un 75% menos de tokens",
+          "url": "https://agentesia.substack.com/p/modo-super-cavernicola-prompt-gasta",
+          "words": 2269,
+          "cb_score": 23.8,
+          "tech_score": 88.1,
+          "comm_score": 0.0,
+          "smoke_index": 1.9,
+          "classification": "Técnico / Práctico"
+        },
+        {
+          "title": "OpenClaw: Guía definitiva para su instalación más segura",
+          "url": "https://agentesia.substack.com/p/openclaw-instalacion-segura",
+          "words": 4629,
+          "cb_score": 96.7,
+          "tech_score": 44.9,
+          "comm_score": 0.0,
+          "smoke_index": 39.0,
+          "classification": "Técnico / Práctico"
         },
         {
           "title": "Hermes vs OpenClaw",
@@ -616,16 +616,6 @@
           "classification": "Hype-driven / Divulgativo"
         },
         {
-          "title": "🏛️ IQAI-WorkLab 6 | Claude + Excel: Automatización para Análisis y Toma de Decisiones.",
-          "url": "https://futuria.substack.com/p/iqai-worklab-6-claude-excel-automatizacion",
-          "words": 789,
-          "cb_score": 0.0,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 0.0,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
           "title": "🎧 PAPER REVIEW N°73: La IA obligará a las empresas a rediseñar carreras, no solo procesos",
           "url": "https://futuria.substack.com/p/paper-review-n73-la-ia-obligara-a",
           "words": 764,
@@ -633,26 +623,6 @@
           "tech_score": 0.0,
           "comm_score": 0.0,
           "smoke_index": 10.6,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
-          "title": "🎧 PAPER REVIEW N°72: Del piloto al fracaso: cómo el 40% de los proyectos agénticos caerán antes de 2027",
-          "url": "https://futuria.substack.com/p/paper-review-n72-del-piloto-al-fracaso",
-          "words": 3770,
-          "cb_score": 9.5,
-          "tech_score": 31.8,
-          "comm_score": 5.8,
-          "smoke_index": 3.7,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
-          "title": "🛠️ FuturIApp | Decisión 360°: el consejo asesor que te ayuda en la toma de decisiones",
-          "url": "https://futuria.substack.com/p/futuriapp-decision-360-el-consejo",
-          "words": 1786,
-          "cb_score": 10.1,
-          "tech_score": 4.5,
-          "comm_score": 12.3,
-          "smoke_index": 9.6,
           "classification": "Hype-driven / Divulgativo"
         },
         {
@@ -666,14 +636,24 @@
           "classification": "Técnico / Práctico"
         },
         {
-          "title": "📍Think Skill: La nueva etapa para entender el ecosistema de Claude y su impacto en el trabajo profesional con IA",
-          "url": "https://futuria.substack.com/p/think-skill-la-nueva-etapa-para-entender",
-          "words": 1683,
+          "title": "🏛️ IQAI-WorkLab 6 | Claude + Excel: Automatización para Análisis y Toma de Decisiones.",
+          "url": "https://futuria.substack.com/p/iqai-worklab-6-claude-excel-automatizacion",
+          "words": 789,
           "cb_score": 0.0,
-          "tech_score": 76.1,
-          "comm_score": 26.1,
-          "smoke_index": 4.2,
-          "classification": "Técnico / Práctico"
+          "tech_score": 0.0,
+          "comm_score": 0.0,
+          "smoke_index": 0.0,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "🛠️ FuturIApp | Decisión 360°: el consejo asesor que te ayuda en la toma de decisiones",
+          "url": "https://futuria.substack.com/p/futuriapp-decision-360-el-consejo",
+          "words": 1786,
+          "cb_score": 10.1,
+          "tech_score": 4.5,
+          "comm_score": 12.3,
+          "smoke_index": 9.6,
+          "classification": "Hype-driven / Divulgativo"
         },
         {
           "title": "📰 FuturIA Weekly N°53 | 2026: Explora nuestro boletín semanal. Noticias, recursos tendencias en IA, y más. ",
@@ -684,6 +664,26 @@
           "comm_score": 0.0,
           "smoke_index": 8.5,
           "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "🎧 PAPER REVIEW N°72: Del piloto al fracaso: cómo el 40% de los proyectos agénticos caerán antes de 2027",
+          "url": "https://futuria.substack.com/p/paper-review-n72-del-piloto-al-fracaso",
+          "words": 3770,
+          "cb_score": 9.5,
+          "tech_score": 31.8,
+          "comm_score": 5.8,
+          "smoke_index": 3.7,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "📍Think Skill: La nueva etapa para entender el ecosistema de Claude y su impacto en el trabajo profesional con IA",
+          "url": "https://futuria.substack.com/p/think-skill-la-nueva-etapa-para-entender",
+          "words": 1683,
+          "cb_score": 0.0,
+          "tech_score": 76.1,
+          "comm_score": 26.1,
+          "smoke_index": 4.2,
+          "classification": "Técnico / Práctico"
         }
       ]
     },
@@ -716,16 +716,6 @@
           "classification": "Hype-driven / Divulgativo"
         },
         {
-          "title": "#25 OVERTIME | Nunca digas de este agua no beberé",
-          "url": "https://overxtime.substack.com/p/25-overtime-nunca-digas-de-este-agua",
-          "words": 1274,
-          "cb_score": 70.6,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 31.8,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
           "title": "#21 OVERTIME | Mear con la tuya",
           "url": "https://overxtime.substack.com/p/21-overtime-mear-con-la-tuya",
           "words": 1099,
@@ -753,6 +743,16 @@
           "tech_score": 0.0,
           "comm_score": 0.0,
           "smoke_index": 8.5,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "#25 OVERTIME | Nunca digas de este agua no beberé",
+          "url": "https://overxtime.substack.com/p/25-overtime-nunca-digas-de-este-agua",
+          "words": 1274,
+          "cb_score": 70.6,
+          "tech_score": 0.0,
+          "comm_score": 0.0,
+          "smoke_index": 31.8,
           "classification": "Hype-driven / Divulgativo"
         },
         {
@@ -797,22 +797,12 @@
         "removed": []
       },
       "metrics": {
-        "clickbait": 30.1,
-        "technical": 28.1,
-        "commercial": 20.9,
-        "smoke_index": 20.1
+        "clickbait": 31.3,
+        "technical": 31.7,
+        "commercial": 23.8,
+        "smoke_index": 21.6
       },
       "articles": [
-        {
-          "title": "Café con IA – 3 de junio de 2026",
-          "url": "https://cafeconia.substack.com/p/cafe-con-ia-3-de-junio-de-2026",
-          "words": 2156,
-          "cb_score": 25.0,
-          "tech_score": 22.3,
-          "comm_score": 30.6,
-          "smoke_index": 22.8,
-          "classification": "Hype-driven / Divulgativo"
-        },
         {
           "title": "Adiós a Claude Code?",
           "url": "https://cafeconia.substack.com/p/adios-a-claude-code",
@@ -822,6 +812,16 @@
           "comm_score": 0.0,
           "smoke_index": 7.6,
           "classification": "Técnico / Práctico"
+        },
+        {
+          "title": "Café con IA – 3 de junio de 2026",
+          "url": "https://cafeconia.substack.com/p/cafe-con-ia-3-de-junio-de-2026",
+          "words": 2156,
+          "cb_score": 25.0,
+          "tech_score": 22.3,
+          "comm_score": 30.6,
+          "smoke_index": 22.8,
+          "classification": "Hype-driven / Divulgativo"
         },
         {
           "title": "Café con IA – 4 de junio de 2026",
@@ -841,16 +841,6 @@
           "tech_score": 23.0,
           "comm_score": 0.0,
           "smoke_index": 13.2,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
-          "title": "Café con IA – 2 de junio de 2026",
-          "url": "https://cafeconia.substack.com/p/cafe-con-ia-2-de-junio-de-2026",
-          "words": 17,
-          "cb_score": 0.0,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 0.0,
           "classification": "Hype-driven / Divulgativo"
         },
         {
@@ -882,6 +872,16 @@
           "comm_score": 73.9,
           "smoke_index": 36.9,
           "classification": "Comercial / Patrocinado"
+        },
+        {
+          "title": "Café con IA – 2 de junio de 2026",
+          "url": "https://cafeconia.substack.com/p/cafe-con-ia-2-de-junio-de-2026",
+          "words": 1896,
+          "cb_score": 9.5,
+          "tech_score": 29.5,
+          "comm_score": 23.2,
+          "smoke_index": 11.8,
+          "classification": "Hype-driven / Divulgativo"
         }
       ]
     },
@@ -895,70 +895,20 @@
         "removed": []
       },
       "metrics": {
-        "clickbait": 14.4,
-        "technical": 16.4,
-        "commercial": 3.7,
-        "smoke_index": 7.8
+        "clickbait": 34.0,
+        "technical": 15.7,
+        "commercial": 12.8,
+        "smoke_index": 19.8
       },
       "articles": [
         {
-          "title": "OpenClaw. Así va a ser la IA del futuro",
-          "url": "https://spacioia.substack.com/p/openclaw-asi-va-a-ser-la-ia-del-futuro",
-          "words": 17,
-          "cb_score": 0.0,
-          "tech_score": 100.0,
-          "comm_score": 0.0,
-          "smoke_index": 0.0,
-          "classification": "Técnico / Práctico"
-        },
-        {
-          "title": "No puedo vivir sin Claude Cowork",
-          "url": "https://spacioia.substack.com/p/un-caso-practico-con-claude-cowork",
-          "words": 17,
-          "cb_score": 0.0,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 0.0,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
-          "title": "Los agentes de IA han llegado. Y están en todas partes.",
-          "url": "https://spacioia.substack.com/p/los-agentes-de-ia-han-llegado-y-estan",
-          "words": 19,
-          "cb_score": 0.0,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 0.0,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
-          "title": "🟣 ¡Prepárate para lo que viene de Google!",
-          "url": "https://spacioia.substack.com/p/preparate-para-lo-que-viene-de-google",
-          "words": 19,
-          "cb_score": 0.0,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 0.0,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
-          "title": "Microsoft se divorcia de OpenAI",
-          "url": "https://spacioia.substack.com/p/microsoft-se-divorcia-de-openai",
-          "words": 12,
-          "cb_score": 0.0,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 0.0,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
           "title": "Los mejores canales de reddit sobre IA",
           "url": "https://spacioia.substack.com/p/los-mejores-canales-de-reddit-sobre",
-          "words": 23,
-          "cb_score": 0.0,
+          "words": 1227,
+          "cb_score": 44.0,
           "tech_score": 0.0,
           "comm_score": 0.0,
-          "smoke_index": 0.0,
+          "smoke_index": 19.8,
           "classification": "Hype-driven / Divulgativo"
         },
         {
@@ -972,6 +922,16 @@
           "classification": "Hype-driven / Divulgativo"
         },
         {
+          "title": "No puedo vivir sin Claude Cowork",
+          "url": "https://spacioia.substack.com/p/un-caso-practico-con-claude-cowork",
+          "words": 1787,
+          "cb_score": 40.3,
+          "tech_score": 26.9,
+          "comm_score": 12.3,
+          "smoke_index": 21.0,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
           "title": "¿Se puede vivir sin la IA en la sociedad actual?",
           "url": "https://spacioia.substack.com/p/se-puede-vivir-sin-la-ia-en-la-sociedad",
           "words": 1585,
@@ -979,6 +939,46 @@
           "tech_score": 5.0,
           "comm_score": 0.0,
           "smoke_index": 35.3,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "Microsoft se divorcia de OpenAI",
+          "url": "https://spacioia.substack.com/p/microsoft-se-divorcia-de-openai",
+          "words": 1382,
+          "cb_score": 26.0,
+          "tech_score": 5.8,
+          "comm_score": 31.8,
+          "smoke_index": 25.5,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "Los agentes de IA han llegado. Y están en todas partes.",
+          "url": "https://spacioia.substack.com/p/los-agentes-de-ia-han-llegado-y-estan",
+          "words": 2242,
+          "cb_score": 0.0,
+          "tech_score": 25.0,
+          "comm_score": 0.0,
+          "smoke_index": 0.0,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "🟣 ¡Prepárate para lo que viene de Google!",
+          "url": "https://spacioia.substack.com/p/preparate-para-lo-que-viene-de-google",
+          "words": 1510,
+          "cb_score": 0.0,
+          "tech_score": 15.9,
+          "comm_score": 29.1,
+          "smoke_index": 11.5,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "OpenClaw. Así va a ser la IA del futuro",
+          "url": "https://spacioia.substack.com/p/openclaw-asi-va-a-ser-la-ia-del-futuro",
+          "words": 1559,
+          "cb_score": 46.2,
+          "tech_score": 20.5,
+          "comm_score": 0.0,
+          "smoke_index": 18.7,
           "classification": "Hype-driven / Divulgativo"
         }
       ]
@@ -993,10 +993,10 @@
         "removed": []
       },
       "metrics": {
-        "clickbait": 1.1,
-        "technical": 17.6,
-        "commercial": 0.0,
-        "smoke_index": 0.0
+        "clickbait": 8.6,
+        "technical": 18.5,
+        "commercial": 3.0,
+        "smoke_index": 3.4
       },
       "articles": [
         {
@@ -1020,54 +1020,24 @@
           "classification": "Hype-driven / Divulgativo"
         },
         {
-          "title": "Cómo NVIDIA bajó el poder de los dioses-servidor a tu mochila",
-          "url": "https://modoxtenx.substack.com/p/como-nvidia-bajo-el-poder-de-los",
-          "words": 36,
-          "cb_score": 0.0,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 0.0,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
-          "title": "GOOGLE MAPS SE CONVERTIRÁ EN TU COPILOTO COGNITIVO",
-          "url": "https://modoxtenx.substack.com/p/google-maps-se-convertira-en-tu-copiloto",
-          "words": 31,
-          "cb_score": 0.0,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 0.0,
-          "classification": "Hype-driven / Divulgativo"
+          "title": "Claude y GPT ya no quieren que les hables igual, te dejo una guía de como hacerlo.",
+          "url": "https://modoxtenx.substack.com/p/claude-y-gpt-ya-no-quieren-que-les",
+          "words": 1651,
+          "cb_score": 10.9,
+          "tech_score": 67.8,
+          "comm_score": 13.3,
+          "smoke_index": 4.1,
+          "classification": "Técnico / Práctico"
         },
         {
           "title": "La IA está apagándote el cerebro. Te dejo el PDF para encenderlo de nuevo.",
           "url": "https://modoxtenx.substack.com/p/la-ia-esta-apagandote-el-cerebro",
-          "words": 40,
-          "cb_score": 0.0,
-          "tech_score": 0.0,
+          "words": 2179,
+          "cb_score": 16.5,
+          "tech_score": 29.4,
           "comm_score": 0.0,
-          "smoke_index": 0.0,
+          "smoke_index": 4.5,
           "classification": "Hype-driven / Divulgativo"
-        },
-        {
-          "title": "La IA salvadora o la IA destructora",
-          "url": "https://modoxtenx.substack.com/p/la-ia-salvadora-o-la-ia-destructora",
-          "words": 18,
-          "cb_score": 0.0,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 0.0,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
-          "title": "Claude y GPT ya no quieren que les hables igual, te dejo una guía de como hacerlo.",
-          "url": "https://modoxtenx.substack.com/p/claude-y-gpt-ya-no-quieren-que-les",
-          "words": 36,
-          "cb_score": 0.0,
-          "tech_score": 100.0,
-          "comm_score": 0.0,
-          "smoke_index": 0.0,
-          "classification": "Técnico / Práctico"
         },
         {
           "title": "No necesitas prohibir ChatGPT. Necesitas diseñar mejores preguntas.",
@@ -1078,6 +1048,36 @@
           "comm_score": 0.0,
           "smoke_index": 0.1,
           "classification": "Técnico / Práctico"
+        },
+        {
+          "title": "GOOGLE MAPS SE CONVERTIRÁ EN TU COPILOTO COGNITIVO",
+          "url": "https://modoxtenx.substack.com/p/google-maps-se-convertira-en-tu-copiloto",
+          "words": 1850,
+          "cb_score": 9.7,
+          "tech_score": 0.0,
+          "comm_score": 0.0,
+          "smoke_index": 4.4,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "La IA salvadora o la IA destructora",
+          "url": "https://modoxtenx.substack.com/p/la-ia-salvadora-o-la-ia-destructora",
+          "words": 2122,
+          "cb_score": 8.5,
+          "tech_score": 3.8,
+          "comm_score": 10.4,
+          "smoke_index": 8.1,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "Cómo NVIDIA bajó el poder de los dioses-servidor a tu mochila",
+          "url": "https://modoxtenx.substack.com/p/como-nvidia-bajo-el-poder-de-los",
+          "words": 1262,
+          "cb_score": 14.3,
+          "tech_score": 6.3,
+          "comm_score": 0.0,
+          "smoke_index": 5.8,
+          "classification": "Hype-driven / Divulgativo"
         }
       ]
     },
@@ -1091,10 +1091,10 @@
         "removed": []
       },
       "metrics": {
-        "clickbait": 3.1,
+        "clickbait": 5.4,
         "technical": 0.0,
         "commercial": 0.0,
-        "smoke_index": 1.4
+        "smoke_index": 2.4
       },
       "articles": [
         {
@@ -1105,6 +1105,16 @@
           "tech_score": 0.0,
           "comm_score": 0.0,
           "smoke_index": 11.2,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "Creación de marca con IA en restauración",
+          "url": "https://enriquemartinezbermejo.substack.com/p/creacion-de-marca-con-ia-en-restauracion",
+          "words": 15,
+          "cb_score": 0.0,
+          "tech_score": 0.0,
+          "comm_score": 0.0,
+          "smoke_index": 0.0,
           "classification": "Hype-driven / Divulgativo"
         },
         {
@@ -1121,26 +1131,6 @@
           "title": "¿Cómo gestionar errores sin destruir el aprendizaje?",
           "url": "https://enriquemartinezbermejo.substack.com/p/como-gestionar-errores-sin-destruir",
           "words": 13,
-          "cb_score": 0.0,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 0.0,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
-          "title": "La influencia no se impone. Se diseña",
-          "url": "https://enriquemartinezbermejo.substack.com/p/la-influencia-no-se-impone-se-disena",
-          "words": 16,
-          "cb_score": 0.0,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 0.0,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
-          "title": "Creación de marca con IA en restauración",
-          "url": "https://enriquemartinezbermejo.substack.com/p/creacion-de-marca-con-ia-en-restauracion",
-          "words": 15,
           "cb_score": 0.0,
           "tech_score": 0.0,
           "comm_score": 0.0,
@@ -1168,13 +1158,23 @@
           "classification": "Hype-driven / Divulgativo"
         },
         {
-          "title": "Cultura: lo que dirige el comportamiento cuando tú no estás",
-          "url": "https://enriquemartinezbermejo.substack.com/p/cultura-lo-que-dirige-el-comportamiento",
-          "words": 21,
+          "title": "La influencia no se impone. Se diseña",
+          "url": "https://enriquemartinezbermejo.substack.com/p/la-influencia-no-se-impone-se-disena",
+          "words": 16,
           "cb_score": 0.0,
           "tech_score": 0.0,
           "comm_score": 0.0,
           "smoke_index": 0.0,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "Cultura: lo que dirige el comportamiento cuando tú no estás",
+          "url": "https://enriquemartinezbermejo.substack.com/p/cultura-lo-que-dirige-el-comportamiento",
+          "words": 991,
+          "cb_score": 18.2,
+          "tech_score": 0.0,
+          "comm_score": 0.0,
+          "smoke_index": 8.2,
           "classification": "Hype-driven / Divulgativo"
         }
       ]
@@ -1191,14 +1191,34 @@
       "metrics": {
         "clickbait": 0.0,
         "technical": 0.0,
-        "commercial": 6.4,
-        "smoke_index": 2.9
+        "commercial": 0.0,
+        "smoke_index": 0.0
       },
       "articles": [
+        {
+          "title": "Mi nuevo podcast daily",
+          "url": "https://hellojaume.substack.com/p/mi-nuevo-podcast-daily",
+          "words": 340,
+          "cb_score": 0.0,
+          "tech_score": 0.0,
+          "comm_score": 0.0,
+          "smoke_index": 0.0,
+          "classification": "Hype-driven / Divulgativo"
+        },
         {
           "title": "Vuelvo a estudiar y más cosas.",
           "url": "https://hellojaume.substack.com/p/vuelvo-a-estudiar-y-mas-cosas",
           "words": 446,
+          "cb_score": 0.0,
+          "tech_score": 0.0,
+          "comm_score": 0.0,
+          "smoke_index": 0.0,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "La pregunta que me estoy haciendo con 40 años",
+          "url": "https://hellojaume.substack.com/p/la-pregunta-que-me-estoy-haciendo",
+          "words": 9,
           "cb_score": 0.0,
           "tech_score": 0.0,
           "comm_score": 0.0,
@@ -1216,9 +1236,9 @@
           "classification": "Hype-driven / Divulgativo"
         },
         {
-          "title": "La pregunta que me estoy haciendo con 40 años",
-          "url": "https://hellojaume.substack.com/p/la-pregunta-que-me-estoy-haciendo",
-          "words": 9,
+          "title": "Reto: Entrenar 365 días",
+          "url": "https://hellojaume.substack.com/p/reto-entrenar-365-dias",
+          "words": 4,
           "cb_score": 0.0,
           "tech_score": 0.0,
           "comm_score": 0.0,
@@ -1246,34 +1266,14 @@
           "classification": "Hype-driven / Divulgativo"
         },
         {
-          "title": "Reto: Entrenar 365 días",
-          "url": "https://hellojaume.substack.com/p/reto-entrenar-365-dias",
-          "words": 4,
-          "cb_score": 0.0,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 0.0,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
-          "title": "Mi nuevo podcast daily",
-          "url": "https://hellojaume.substack.com/p/mi-nuevo-podcast-daily",
-          "words": 340,
-          "cb_score": 0.0,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 0.0,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
           "title": "¿Dónde compras libros?",
           "url": "https://hellojaume.substack.com/p/donde-compras-libros",
-          "words": 427,
+          "words": 3,
           "cb_score": 0.0,
           "tech_score": 0.0,
-          "comm_score": 51.5,
-          "smoke_index": 23.2,
-          "classification": "Comercial / Patrocinado"
+          "comm_score": 0.0,
+          "smoke_index": 0.0,
+          "classification": "Hype-driven / Divulgativo"
         }
       ]
     },
@@ -1287,36 +1287,16 @@
         "removed": []
       },
       "metrics": {
-        "clickbait": 13.4,
+        "clickbait": 12.5,
         "technical": 0.0,
-        "commercial": 13.6,
-        "smoke_index": 12.1
+        "commercial": 0.0,
+        "smoke_index": 5.6
       },
       "articles": [
-        {
-          "title": "Qué plan seguiría hoy para vivir de escribir",
-          "url": "https://escribepro.substack.com/p/que-plan-seguiria-hoy-para-vivir",
-          "words": 24,
-          "cb_score": 0.0,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 0.0,
-          "classification": "Hype-driven / Divulgativo"
-        },
         {
           "title": "16 usos de IA que no dan likes pero sí me ahorran tiempo y dinero (Parte 2)",
           "url": "https://escribepro.substack.com/p/16-usos-de-ia-que-no-dan-likes-pero-d6b",
           "words": 34,
-          "cb_score": 0.0,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 0.0,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
-          "title": "16 usos de IA que no dan likes pero sí me ahorran tiempo y dinero (Parte 1)",
-          "url": "https://escribepro.substack.com/p/16-usos-de-ia-que-no-dan-likes-pero",
-          "words": 36,
           "cb_score": 0.0,
           "tech_score": 0.0,
           "comm_score": 0.0,
@@ -1334,6 +1314,16 @@
           "classification": "Hype-driven / Divulgativo"
         },
         {
+          "title": "Las 5 libertades que todo autor digital debería perseguir (y el orden en que conquistarlas)",
+          "url": "https://escribepro.substack.com/p/las-5-libertades-que-todo-autor-digital",
+          "words": 41,
+          "cb_score": 0.0,
+          "tech_score": 0.0,
+          "comm_score": 0.0,
+          "smoke_index": 0.0,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
           "title": "Los 12 chivatos: cómo detectar (y corregir) que un texto está escrito con IA",
           "url": "https://escribepro.substack.com/p/los-12-chivatos-como-detectar-y-corregir",
           "words": 28,
@@ -1341,6 +1331,16 @@
           "tech_score": 0.0,
           "comm_score": 0.0,
           "smoke_index": 0.0,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "Lo que nadie te cuenta sobre montar una membresía desde cero",
+          "url": "https://escribepro.substack.com/p/lo-que-nadie-te-cuenta-sobre-montar",
+          "words": 22,
+          "cb_score": 100.0,
+          "tech_score": 0.0,
+          "comm_score": 0.0,
+          "smoke_index": 45.0,
           "classification": "Hype-driven / Divulgativo"
         },
         {
@@ -1354,23 +1354,23 @@
           "classification": "Hype-driven / Divulgativo"
         },
         {
-          "title": "Lo que nadie te cuenta sobre montar una membresía desde cero",
-          "url": "https://escribepro.substack.com/p/lo-que-nadie-te-cuenta-sobre-montar",
-          "words": 1993,
-          "cb_score": 51.1,
+          "title": "Qué plan seguiría hoy para vivir de escribir",
+          "url": "https://escribepro.substack.com/p/que-plan-seguiria-hoy-para-vivir",
+          "words": 24,
+          "cb_score": 0.0,
           "tech_score": 0.0,
-          "comm_score": 100.0,
-          "smoke_index": 68.0,
-          "classification": "Comercial / Patrocinado"
+          "comm_score": 0.0,
+          "smoke_index": 0.0,
+          "classification": "Hype-driven / Divulgativo"
         },
         {
-          "title": "Las 5 libertades que todo autor digital debería perseguir (y el orden en que conquistarlas)",
-          "url": "https://escribepro.substack.com/p/las-5-libertades-que-todo-autor-digital",
-          "words": 2570,
-          "cb_score": 56.0,
+          "title": "16 usos de IA que no dan likes pero sí me ahorran tiempo y dinero (Parte 1)",
+          "url": "https://escribepro.substack.com/p/16-usos-de-ia-que-no-dan-likes-pero",
+          "words": 36,
+          "cb_score": 0.0,
           "tech_score": 0.0,
-          "comm_score": 8.6,
-          "smoke_index": 29.1,
+          "comm_score": 0.0,
+          "smoke_index": 0.0,
           "classification": "Hype-driven / Divulgativo"
         }
       ]
@@ -1385,31 +1385,21 @@
         "removed": []
       },
       "metrics": {
-        "clickbait": 29.1,
-        "technical": 10.6,
+        "clickbait": 29.3,
+        "technical": 9.9,
         "commercial": 0.0,
-        "smoke_index": 12.0
+        "smoke_index": 12.2
       },
       "articles": [
         {
-          "title": "El profesor de IA que quiere enseñar a los niños a razonar, no a copiar",
-          "url": "https://aplicacionesai.substack.com/p/el-profesor-de-ia-que-quiere-ensenar",
-          "words": 1316,
-          "cb_score": 41.0,
-          "tech_score": 12.2,
+          "title": "Codex de OpenAI ya crea webs y apps para tu equipo en minutos, sin programar",
+          "url": "https://aplicacionesai.substack.com/p/codex-de-openai-ya-crea-webs-y-apps",
+          "words": 1383,
+          "cb_score": 13.0,
+          "tech_score": 46.3,
           "comm_score": 0.0,
-          "smoke_index": 17.2,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
-          "title": "Elon Musk pierde la batalla judicial contra OpenAI, que plantea su salida a bolsa",
-          "url": "https://aplicacionesai.substack.com/p/elon-musk-pierde-la-batalla-judicial",
-          "words": 27,
-          "cb_score": 0.0,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 0.0,
-          "classification": "Hype-driven / Divulgativo"
+          "smoke_index": 1.2,
+          "classification": "Técnico / Práctico"
         },
         {
           "title": "El Gobierno obligará a etiquetar los contenidos creados con IA",
@@ -1419,16 +1409,6 @@
           "tech_score": 0.0,
           "comm_score": 0.0,
           "smoke_index": 6.4,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
-          "title": "Anthropic lanza Claude Opus 4.8 y supera a OpenAI en valoración",
-          "url": "https://aplicacionesai.substack.com/p/anthropic-lanza-claude-opus-48-y",
-          "words": 31,
-          "cb_score": 0.0,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 0.0,
           "classification": "Hype-driven / Divulgativo"
         },
         {
@@ -1442,9 +1422,19 @@
           "classification": "Hype-driven / Divulgativo"
         },
         {
-          "title": "La IA se convierte en el eje de la primera encíclica del Papa León XIV",
-          "url": "https://aplicacionesai.substack.com/p/la-ia-se-convierte-en-el-eje-de-la",
-          "words": 37,
+          "title": "El profesor de IA que quiere enseñar a los niños a razonar, no a copiar",
+          "url": "https://aplicacionesai.substack.com/p/el-profesor-de-ia-que-quiere-ensenar",
+          "words": 1316,
+          "cb_score": 41.0,
+          "tech_score": 12.2,
+          "comm_score": 0.0,
+          "smoke_index": 17.2,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "Google ya no quiere que la IA solo responda preguntas, quiere que trabaje por nosotros todo el día",
+          "url": "https://aplicacionesai.substack.com/p/google-ya-no-quiere-que-la-ia-solo",
+          "words": 35,
           "cb_score": 0.0,
           "tech_score": 0.0,
           "comm_score": 0.0,
@@ -1452,23 +1442,33 @@
           "classification": "Hype-driven / Divulgativo"
         },
         {
-          "title": "Codex de OpenAI ya crea webs y apps para tu equipo en minutos, sin programar",
-          "url": "https://aplicacionesai.substack.com/p/codex-de-openai-ya-crea-webs-y-apps",
-          "words": 1383,
-          "cb_score": 13.0,
-          "tech_score": 46.3,
+          "title": "Anthropic lanza Claude Opus 4.8 y supera a OpenAI en valoración",
+          "url": "https://aplicacionesai.substack.com/p/anthropic-lanza-claude-opus-48-y",
+          "words": 31,
+          "cb_score": 0.0,
+          "tech_score": 0.0,
           "comm_score": 0.0,
-          "smoke_index": 1.2,
-          "classification": "Técnico / Práctico"
+          "smoke_index": 0.0,
+          "classification": "Hype-driven / Divulgativo"
         },
         {
-          "title": "Google ya no quiere que la IA solo responda preguntas, quiere que trabaje por nosotros todo el día",
-          "url": "https://aplicacionesai.substack.com/p/google-ya-no-quiere-que-la-ia-solo",
-          "words": 1393,
-          "cb_score": 64.6,
-          "tech_score": 11.5,
+          "title": "La IA se convierte en el eje de la primera encíclica del Papa León XIV",
+          "url": "https://aplicacionesai.substack.com/p/la-ia-se-convierte-en-el-eje-de-la",
+          "words": 1517,
+          "cb_score": 11.9,
+          "tech_score": 0.0,
           "comm_score": 0.0,
-          "smoke_index": 27.9,
+          "smoke_index": 5.3,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "Elon Musk pierde la batalla judicial contra OpenAI, que plantea su salida a bolsa",
+          "url": "https://aplicacionesai.substack.com/p/elon-musk-pierde-la-batalla-judicial",
+          "words": 1321,
+          "cb_score": 54.5,
+          "tech_score": 6.1,
+          "comm_score": 0.0,
+          "smoke_index": 23.9,
           "classification": "Hype-driven / Divulgativo"
         }
       ]
@@ -1480,58 +1480,58 @@
         "stability_index": 100.0,
         "drift_index": 0.0,
         "added": [
-          "explicable",
-          "vicentgadea",
-          "francorte",
-          "nextgengreg",
-          "multiversialnewsletter",
-          "capitaliaparafinanzas",
-          "limoneros",
-          "wanderwealth",
-          "digitaldata",
           "hdintelligence",
-          "iamdgarcia",
-          "aisupremacy",
-          "nagabandhu",
+          "nextgengreg",
           "mestio",
-          "itechnology",
           "luisllorens",
-          "fp32research",
           "pepeprionomy",
-          "midudev",
-          "yourlocalepidemiologist",
-          "on",
-          "makerai",
-          "cafeconia",
-          "howwegrowtoday",
-          "laiaqueimporta",
-          "osotrava",
-          "aiplusinfo",
-          "blockwareintelligence",
-          "somosbiz",
-          "albertoloyarte",
-          "7x7news",
           "unifyai",
-          "spacioia",
-          "sebastianbarros",
-          "gabrielmartinezmoreno",
-          "alcons2",
           "davidroman",
-          "spotify",
-          "carlosguadian",
-          "carloslcruz",
-          "insidemechanics",
-          "thezvi",
+          "somosbiz",
+          "wanderwealth",
+          "aisupremacy",
+          "on",
+          "capitaliaparafinanzas",
+          "albertoloyarte",
+          "laiaqueimporta",
+          "itechnology",
+          "iamdgarcia",
+          "nagabandhu",
+          "fp32research",
           "maxdividends",
+          "explicable",
+          "limoneros",
+          "francorte",
+          "aiplusinfo",
+          "vicentgadea",
+          "sebastianbarros",
+          "spacioia",
+          "bytebytego",
+          "7x7news",
+          "spotify",
+          "insidemechanics",
+          "alcons2",
+          "digitaldata",
+          "makerai",
+          "carloslcruz",
+          "yourlocalepidemiologist",
           "tuaptitud",
-          "bytebytego"
+          "cafeconia",
+          "carlosguadian",
+          "osotrava",
+          "midudev",
+          "thezvi",
+          "blockwareintelligence",
+          "howwegrowtoday",
+          "gabrielmartinezmoreno",
+          "multiversialnewsletter"
         ],
         "removed": []
       },
       "metrics": {
         "clickbait": 3.1,
-        "technical": 15.6,
-        "commercial": 4.8,
+        "technical": 15.8,
+        "commercial": 4.3,
         "smoke_index": 3.2
       },
       "articles": [
@@ -1546,29 +1546,9 @@
           "classification": "Hype-driven / Divulgativo"
         },
         {
-          "title": "Cuando tu casa se convierte en un dataset para entrenar robots con la vida cotidiana",
-          "url": "https://iaenespanol.substack.com/p/cuando-tu-casa-se-convierte-en-un",
-          "words": 39,
-          "cb_score": 0.0,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 0.0,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
-          "title": "La IA conquista a las grandes figuras de Silicon Valley.",
-          "url": "https://iaenespanol.substack.com/p/la-ia-conquista-a-las-grandes-figuras",
+          "title": "Anthropic lanzó Claude Opus 4.8 y apuesta por una IA más honesta y autónoma. ",
+          "url": "https://iaenespanol.substack.com/p/anthropic-lanzo-claude-opus-48-y",
           "words": 38,
-          "cb_score": 0.0,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 0.0,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
-          "title": "Podcast-EP68: El resumen semanal de noticias sobre Inteligencia Artificial.",
-          "url": "https://iaenespanol.substack.com/p/podcast-ep68-el-resumen-semanal-de",
-          "words": 27,
           "cb_score": 0.0,
           "tech_score": 0.0,
           "comm_score": 0.0,
@@ -1586,33 +1566,53 @@
           "classification": "Técnico / Práctico"
         },
         {
-          "title": "Microsoft presentó Scout, Google compró más cómputo y algo más está ocurriendo esta semana",
-          "url": "https://iaenespanol.substack.com/p/microsoft-presento-scout-google-compro",
-          "words": 40,
-          "cb_score": 0.0,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 0.0,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
-          "title": "Anthropic lanzó Claude Opus 4.8 y apuesta por una IA más honesta y autónoma. ",
-          "url": "https://iaenespanol.substack.com/p/anthropic-lanzo-claude-opus-48-y",
-          "words": 38,
-          "cb_score": 0.0,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 0.0,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
           "title": "Meta convierte WhatsApp en un empleado virtual para empresas",
           "url": "https://iaenespanol.substack.com/p/meta-convierte-whatsapp-en-un-empleado",
-          "words": 971,
+          "words": 35,
           "cb_score": 0.0,
-          "tech_score": 8.2,
-          "comm_score": 22.7,
-          "smoke_index": 9.4,
+          "tech_score": 0.0,
+          "comm_score": 0.0,
+          "smoke_index": 0.0,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "Cuando tu casa se convierte en un dataset para entrenar robots con la vida cotidiana",
+          "url": "https://iaenespanol.substack.com/p/cuando-tu-casa-se-convierte-en-un",
+          "words": 39,
+          "cb_score": 0.0,
+          "tech_score": 0.0,
+          "comm_score": 0.0,
+          "smoke_index": 0.0,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "La IA conquista a las grandes figuras de Silicon Valley.",
+          "url": "https://iaenespanol.substack.com/p/la-ia-conquista-a-las-grandes-figuras",
+          "words": 1130,
+          "cb_score": 0.0,
+          "tech_score": 0.0,
+          "comm_score": 19.5,
+          "smoke_index": 8.8,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "Microsoft presentó Scout, Google compró más cómputo y algo más está ocurriendo esta semana",
+          "url": "https://iaenespanol.substack.com/p/microsoft-presento-scout-google-compro",
+          "words": 1670,
+          "cb_score": 0.0,
+          "tech_score": 9.6,
+          "comm_score": 0.0,
+          "smoke_index": 0.0,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "Podcast-EP68: El resumen semanal de noticias sobre Inteligencia Artificial.",
+          "url": "https://iaenespanol.substack.com/p/podcast-ep68-el-resumen-semanal-de",
+          "words": 690,
+          "cb_score": 0.0,
+          "tech_score": 0.0,
+          "comm_score": 0.0,
+          "smoke_index": 0.0,
           "classification": "Hype-driven / Divulgativo"
         }
       ]
@@ -1630,10 +1630,10 @@
         "removed": []
       },
       "metrics": {
-        "clickbait": 13.4,
-        "technical": 3.2,
+        "clickbait": 14.1,
+        "technical": 1.7,
         "commercial": 0.0,
-        "smoke_index": 5.7
+        "smoke_index": 6.2
       },
       "articles": [
         {
@@ -1647,19 +1647,9 @@
           "classification": "Hype-driven / Divulgativo"
         },
         {
-          "title": "La IA ya está en casa. Ahora toca aprender a convivir con ella",
-          "url": "https://www.botondeayuda.com/p/la-ia-ya-esta-en-casa-ahora-toca",
-          "words": 40,
-          "cb_score": 0.0,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 0.0,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
-          "title": "El problema no es emprender: es saber dónde apoyarte",
-          "url": "https://www.botondeayuda.com/p/el-problema-no-es-emprender-es-saber",
-          "words": 23,
+          "title": "GitHub: el lugar donde se construye (casi) todo… y por qué deberías empezar a usarlo aunque no sepas programar",
+          "url": "https://www.botondeayuda.com/p/github-el-lugar-donde-se-construye",
+          "words": 34,
           "cb_score": 0.0,
           "tech_score": 0.0,
           "comm_score": 0.0,
@@ -1677,26 +1667,6 @@
           "classification": "Hype-driven / Divulgativo"
         },
         {
-          "title": "¿Le damos una oportunidad a Claude IA?",
-          "url": "https://www.botondeayuda.com/p/le-damos-una-oportunidad-a-claude",
-          "words": 36,
-          "cb_score": 0.0,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 0.0,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
-          "title": "Diez preguntas para que la IA te diga lo que tus amigos ya no se atreven",
-          "url": "https://www.botondeayuda.com/p/diez-preguntas-para-que-la-ia-te",
-          "words": 29,
-          "cb_score": 0.0,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 0.0,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
           "title": "El mapa que nadie pidió (pero todos necesitan): lo que el Top 100 de A16Z revela sobre cómo usamos la IA de verdad",
           "url": "https://www.botondeayuda.com/p/el-mapa-que-nadie-pidio-pero-todos",
           "words": 48,
@@ -1707,13 +1677,43 @@
           "classification": "Hype-driven / Divulgativo"
         },
         {
-          "title": "GitHub: el lugar donde se construye (casi) todo… y por qué deberías empezar a usarlo aunque no sepas programar",
-          "url": "https://www.botondeayuda.com/p/github-el-lugar-donde-se-construye",
-          "words": 1243,
-          "cb_score": 86.9,
-          "tech_score": 25.7,
+          "title": "El problema no es emprender: es saber dónde apoyarte",
+          "url": "https://www.botondeayuda.com/p/el-problema-no-es-emprender-es-saber",
+          "words": 23,
+          "cb_score": 0.0,
+          "tech_score": 0.0,
           "comm_score": 0.0,
-          "smoke_index": 36.5,
+          "smoke_index": 0.0,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "La IA ya está en casa. Ahora toca aprender a convivir con ella",
+          "url": "https://www.botondeayuda.com/p/la-ia-ya-esta-en-casa-ahora-toca",
+          "words": 2798,
+          "cb_score": 25.7,
+          "tech_score": 5.7,
+          "comm_score": 0.0,
+          "smoke_index": 11.0,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "¿Le damos una oportunidad a Claude IA?",
+          "url": "https://www.botondeayuda.com/p/le-damos-una-oportunidad-a-claude",
+          "words": 2329,
+          "cb_score": 23.2,
+          "tech_score": 0.0,
+          "comm_score": 0.0,
+          "smoke_index": 10.4,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "Diez preguntas para que la IA te diga lo que tus amigos ya no se atreven",
+          "url": "https://www.botondeayuda.com/p/diez-preguntas-para-que-la-ia-te",
+          "words": 2070,
+          "cb_score": 43.5,
+          "tech_score": 7.7,
+          "comm_score": 0.0,
+          "smoke_index": 18.8,
           "classification": "Hype-driven / Divulgativo"
         }
       ]
@@ -1728,22 +1728,12 @@
         "removed": []
       },
       "metrics": {
-        "clickbait": 0.0,
-        "technical": 0.0,
-        "commercial": 0.0,
-        "smoke_index": 0.0
+        "clickbait": 3.0,
+        "technical": 1.5,
+        "commercial": 3.5,
+        "smoke_index": 2.8
       },
       "articles": [
-        {
-          "title": "estrategIA #133 — Meseta, ascenso o despegue: analizamos tres futuros posibles para la IA en 2030",
-          "url": "https://estrategiabyaleph.substack.com/p/estrategia-133-meseta-ascenso-o-despegue",
-          "words": 35,
-          "cb_score": 0.0,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 0.0,
-          "classification": "Hype-driven / Divulgativo"
-        },
         {
           "title": "estrategIA #138 —  Inteligencia artificial y el arte de navegar la incertidumbre",
           "url": "https://estrategiabyaleph.substack.com/p/estrategia-138-inteligencia-artificial",
@@ -1755,9 +1745,9 @@
           "classification": "Hype-driven / Divulgativo"
         },
         {
-          "title": "estrategIA #135 — De Nano Banana Pro a ChatGPT Images 2.0: el salto de la IA visual en la comunicación política y de gobierno",
-          "url": "https://estrategiabyaleph.substack.com/p/estrategia-135-de-nano-banana-pro",
-          "words": 43,
+          "title": "estrategIA #137 - Dos errores que los gobiernos no pueden cometer si quieren que la IA sea una oportunidad y no una nueva fuente de desigualdad",
+          "url": "https://estrategiabyaleph.substack.com/p/estrategia-137-dos-errores-que-los",
+          "words": 45,
           "cb_score": 0.0,
           "tech_score": 0.0,
           "comm_score": 0.0,
@@ -1785,26 +1775,6 @@
           "classification": "Hype-driven / Divulgativo"
         },
         {
-          "title": "estrategIA #140 — Desarmar la IA: el debate global que ha abierto la encíclica de León XIV",
-          "url": "https://estrategiabyaleph.substack.com/p/estrategia-140-desarmar-la-ia-el",
-          "words": 36,
-          "cb_score": 0.0,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 0.0,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
-          "title": "estrategIA #137 - Dos errores que los gobiernos no pueden cometer si quieren que la IA sea una oportunidad y no una nueva fuente de desigualdad",
-          "url": "https://estrategiabyaleph.substack.com/p/estrategia-137-dos-errores-que-los",
-          "words": 45,
-          "cb_score": 0.0,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 0.0,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
           "title": "estrategIA #134 — La hora de los ayuntamientos inteligentes: la administración local como laboratorio de la IA pública",
           "url": "https://estrategiabyaleph.substack.com/p/estrategia-134-la-hora-de-los-ayuntamientos",
           "words": 37,
@@ -1812,6 +1782,36 @@
           "tech_score": 0.0,
           "comm_score": 0.0,
           "smoke_index": 0.0,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "estrategIA #133 — Meseta, ascenso o despegue: analizamos tres futuros posibles para la IA en 2030",
+          "url": "https://estrategiabyaleph.substack.com/p/estrategia-133-meseta-ascenso-o-despegue",
+          "words": 35,
+          "cb_score": 0.0,
+          "tech_score": 0.0,
+          "comm_score": 0.0,
+          "smoke_index": 0.0,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "estrategIA #135 — De Nano Banana Pro a ChatGPT Images 2.0: el salto de la IA visual en la comunicación política y de gobierno",
+          "url": "https://estrategiabyaleph.substack.com/p/estrategia-135-de-nano-banana-pro",
+          "words": 3130,
+          "cb_score": 11.5,
+          "tech_score": 10.2,
+          "comm_score": 28.1,
+          "smoke_index": 16.8,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "estrategIA #140 — Desarmar la IA: el debate global que ha abierto la encíclica de León XIV",
+          "url": "https://estrategiabyaleph.substack.com/p/estrategia-140-desarmar-la-ia-el",
+          "words": 4430,
+          "cb_score": 12.2,
+          "tech_score": 1.8,
+          "comm_score": 0.0,
+          "smoke_index": 5.3,
           "classification": "Hype-driven / Divulgativo"
         }
       ]
@@ -1823,53 +1823,23 @@
         "stability_index": 100.0,
         "drift_index": 0.0,
         "added": [
-          "multiversialnewsletter",
           "tendencias",
-          "fernandopolo"
+          "fernandopolo",
+          "multiversialnewsletter"
         ],
         "removed": []
       },
       "metrics": {
-        "clickbait": 14.6,
-        "technical": 16.7,
+        "clickbait": 6.0,
+        "technical": 26.9,
         "commercial": 0.0,
-        "smoke_index": 6.2
+        "smoke_index": 2.5
       },
       "articles": [
         {
           "title": "La función de Claude que mejora tus textos antes de que escribas",
           "url": "https://davidlahozmartin.substack.com/p/la-funcion-de-claude-que-mejora-tus",
           "words": 25,
-          "cb_score": 0.0,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 0.0,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
-          "title": "Te prometieron un copiloto y te han dado un nuevo cockpit",
-          "url": "https://davidlahozmartin.substack.com/p/te-prometieron-un-copiloto-y-te-han",
-          "words": 26,
-          "cb_score": 0.0,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 0.0,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
-          "title": "Lo que la paleontología nos puede enseñar del futuro de la inteligencia artificial",
-          "url": "https://davidlahozmartin.substack.com/p/lo-que-la-paleontologia-nos-puede",
-          "words": 33,
-          "cb_score": 100.0,
-          "tech_score": 0.0,
-          "comm_score": 0.0,
-          "smoke_index": 45.0,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
-          "title": "La gente ya pide que se etiquete lo hecho con IA ",
-          "url": "https://davidlahozmartin.substack.com/p/la-gente-ya-pide-que-se-etiquete",
-          "words": 32,
           "cb_score": 0.0,
           "tech_score": 0.0,
           "comm_score": 0.0,
@@ -1887,6 +1857,16 @@
           "classification": "Técnico / Práctico"
         },
         {
+          "title": "Te prometieron un copiloto y te han dado un nuevo cockpit",
+          "url": "https://davidlahozmartin.substack.com/p/te-prometieron-un-copiloto-y-te-han",
+          "words": 26,
+          "cb_score": 0.0,
+          "tech_score": 0.0,
+          "comm_score": 0.0,
+          "smoke_index": 0.0,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
           "title": "Las 4D que debes aplicar para sacar el máximo partido a la IA",
           "url": "https://davidlahozmartin.substack.com/p/las-4d-que-debes-aplicar-para-sacar",
           "words": 34,
@@ -1899,12 +1879,12 @@
         {
           "title": "No necesitas otro prompt: necesitas una skill",
           "url": "https://davidlahozmartin.substack.com/p/no-necesitas-otro-prompt-necesitas",
-          "words": 2132,
-          "cb_score": 16.9,
-          "tech_score": 33.8,
+          "words": 16,
+          "cb_score": 0.0,
+          "tech_score": 100.0,
           "comm_score": 0.0,
-          "smoke_index": 4.2,
-          "classification": "Hype-driven / Divulgativo"
+          "smoke_index": 0.0,
+          "classification": "Técnico / Práctico"
         },
         {
           "title": "De la caja de texto al panel de control: la progresiva complejidad del uso de la IA",
@@ -1914,6 +1894,26 @@
           "tech_score": 0.0,
           "comm_score": 0.0,
           "smoke_index": 0.0,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "La gente ya pide que se etiquete lo hecho con IA ",
+          "url": "https://davidlahozmartin.substack.com/p/la-gente-ya-pide-que-se-etiquete",
+          "words": 856,
+          "cb_score": 0.0,
+          "tech_score": 0.0,
+          "comm_score": 0.0,
+          "smoke_index": 0.0,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "Lo que la paleontología nos puede enseñar del futuro de la inteligencia artificial",
+          "url": "https://davidlahozmartin.substack.com/p/lo-que-la-paleontologia-nos-puede",
+          "words": 1079,
+          "cb_score": 48.4,
+          "tech_score": 14.8,
+          "comm_score": 0.0,
+          "smoke_index": 20.3,
           "classification": "Hype-driven / Divulgativo"
         }
       ]
@@ -1925,23 +1925,33 @@
         "stability_index": 100.0,
         "drift_index": 0.0,
         "added": [
+          "startupriders",
           "alancouzens",
-          "unchartedterritories",
-          "startupriders"
+          "unchartedterritories"
         ],
         "removed": []
       },
       "metrics": {
-        "clickbait": 21.4,
-        "technical": 1.5,
-        "commercial": 0.8,
-        "smoke_index": 9.8
+        "clickbait": 27.9,
+        "technical": 0.0,
+        "commercial": 0.0,
+        "smoke_index": 12.6
       },
       "articles": [
         {
-          "title": "#274 Evitando la muerte en el camino de baldosas amarillas, Magnifica Humanitas, una única inyección y adiós al colesterol, las recomendaciones oficiales de actividad física se quedan cortas",
-          "url": "https://www.sumapositiva.com/p/274-evitando-la-muerte-en-el-camino",
-          "words": 28,
+          "title": "#269 Cómo ser más funcional y conseguir más sin morir en el proceso ",
+          "url": "https://www.sumapositiva.com/p/269-como-ser-mas-funcional-y-conseguir",
+          "words": 17,
+          "cb_score": 100.0,
+          "tech_score": 0.0,
+          "comm_score": 0.0,
+          "smoke_index": 45.0,
+          "classification": "Hype-driven / Divulgativo"
+        },
+        {
+          "title": "#267 Construyendo máquinas creativas",
+          "url": "https://www.sumapositiva.com/p/267-construyendo-maquinas-creativas",
+          "words": 7,
           "cb_score": 0.0,
           "tech_score": 0.0,
           "comm_score": 0.0,
@@ -1949,19 +1959,9 @@
           "classification": "Hype-driven / Divulgativo"
         },
         {
-          "title": "#269 Cómo ser más funcional y conseguir más sin morir en el proceso ",
-          "url": "https://www.sumapositiva.com/p/269-como-ser-mas-funcional-y-conseguir",
-          "words": 3540,
-          "cb_score": 35.3,
-          "tech_score": 6.8,
-          "comm_score": 6.2,
-          "smoke_index": 18.0,
-          "classification": "Hype-driven / Divulgativo"
-        },
-        {
-          "title": "#267 Construyendo máquinas creativas",
-          "url": "https://www.sumapositiva.com/p/267-construyendo-maquinas-creativas",
-          "words": 7,
+          "title": "#272 Cómo tu tenedor reescribe tu futuro genético. Los 41 consejos de salud que mueven la aguja. Las 6 mega tendencias de 2026. Dalí siempre invitaba a cenar. ",
+          "url": "https://www.sumapositiva.com/p/272-como-tu-tenedor-reescribe-tu",
+          "words": 28,
           "cb_score": 0.0,
           "tech_score": 0.0,
           "comm_score": 0.0,
@@ -1989,9 +1989,9 @@
           "classification": "Hype-driven / Divulgativo"
         },
         {
-          "title": "#272 Cómo tu tenedor reescribe tu futuro genético. Los 41 consejos de salud que mueven la aguja. Las 6 mega tendencias de 2026. Dalí siempre invitaba a cenar. ",
-          "url": "https://www.sumapositiva.com/p/272-como-tu-tenedor-reescribe-tu",
-          "words": 28,
+          "title": "#271 Tu empresa no está lista para la IA. Despidiendo IAs para recontratar personas. ¿Por qué no trabajas en lo más importante? Tu salud depende de tu flujo energético. ",
+          "url": "https://www.sumapositiva.com/p/271-tu-empresa-no-esta-lista-para",
+          "words": 29,
           "cb_score": 0.0,
           "tech_score": 0.0,
           "comm_score": 0.0,
@@ -2009,13 +2009,13 @@
           "classification": "Hype-driven / Divulgativo"
         },
         {
-          "title": "#271 Tu empresa no está lista para la IA. Despidiendo IAs para recontratar personas. ¿Por qué no trabajas en lo más importante? Tu salud depende de tu flujo energético. ",
-          "url": "https://www.sumapositiva.com/p/271-tu-empresa-no-esta-lista-para",
-          "words": 1517,
-          "cb_score": 35.6,
-          "tech_score": 5.3,
+          "title": "#274 Evitando la muerte en el camino de baldosas amarillas, Magnifica Humanitas, una única inyección y adiós al colesterol, las recomendaciones oficiales de actividad física se quedan cortas",
+          "url": "https://www.sumapositiva.com/p/274-evitando-la-muerte-en-el-camino",
+          "words": 1546,
+          "cb_score": 23.3,
+          "tech_score": 0.0,
           "comm_score": 0.0,
-          "smoke_index": 15.5,
+          "smoke_index": 10.5,
           "classification": "Hype-driven / Divulgativo"
         }
       ]

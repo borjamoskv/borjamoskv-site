@@ -1177,7 +1177,7 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
       </div>
       <div style="text-align: right;">
         <span style="font-family: 'JetBrains Mono'; font-size: 0.8rem; background: rgba(43, 59, 229, 0.15); color: #00f3ff; border: 1px solid rgba(0, 243, 255, 0.3); border-radius: 4px; padding: 4px 8px; display: inline-block;">
-          ● DAEMON ACTIVO: 2026-06-08 11:16:08 UTC
+          ● DAEMON ACTIVO: 2026-06-08 11:31:16 UTC
         </span>
       </div>
     </div>
@@ -1197,7 +1197,7 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
           
           <div style="background: rgba(255, 51, 85, 0.1); border: 1px solid #ff335544; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
             <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #ff3355; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">40.6</div>
+            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">41.1</div>
             <div style="font-size: 0.65rem; color: #ff3355; font-family: 'JetBrains Mono';">HUMO ELEVADO / EXTRACTIVO</div>
           </div>
           
@@ -1226,10 +1226,10 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Llamadas Comerciales</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">22.6%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">23.9%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 22.6%; height: 100%; background: #2B3BE5;"></div>
+                <div style="width: 23.9%; height: 100%; background: #2B3BE5;"></div>
               </div>
             </div>
           </div>
@@ -1323,7 +1323,7 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
           
           <div style="background: rgba(0, 243, 255, 0.1); border: 1px solid #00f3ff44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
             <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #00f3ff; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">11.3</div>
+            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">14.5</div>
             <div style="font-size: 0.65rem; color: #00f3ff; font-family: 'JetBrains Mono';">ORGANIC / PURAMENTE TÉCNICO</div>
           </div>
           
@@ -1332,30 +1332,30 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">19.4%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">25.5%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 19.4%; height: 100%; background: #ff3355;"></div>
+                <div style="width: 25.5%; height: 100%; background: #ff3355;"></div>
               </div>
             </div>
             
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Densidad Técnica</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">11.1%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">13.8%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 11.1%; height: 100%; background: #00f3ff;"></div>
+                <div style="width: 13.8%; height: 100%; background: #00f3ff;"></div>
               </div>
             </div>
             
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Llamadas Comerciales</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">7.7%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">9.2%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 7.7%; height: 100%; background: #2B3BE5;"></div>
+                <div style="width: 9.2%; height: 100%; background: #2B3BE5;"></div>
               </div>
             </div>
           </div>
@@ -1449,7 +1449,7 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
           
           <div style="background: rgba(0, 243, 255, 0.1); border: 1px solid #00f3ff44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
             <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #00f3ff; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">12.7</div>
+            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">14.0</div>
             <div style="font-size: 0.65rem; color: #00f3ff; font-family: 'JetBrains Mono';">ORGANIC / PURAMENTE TÉCNICO</div>
           </div>
           
@@ -1458,20 +1458,20 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">28.1%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">31.2%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 28.1%; height: 100%; background: #ff3355;"></div>
+                <div style="width: 31.2%; height: 100%; background: #ff3355;"></div>
               </div>
             </div>
             
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Densidad Técnica</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">16.2%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">17.6%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 16.2%; height: 100%; background: #00f3ff;"></div>
+                <div style="width: 17.6%; height: 100%; background: #00f3ff;"></div>
               </div>
             </div>
             
@@ -1512,7 +1512,7 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
           
           <div style="background: rgba(0, 243, 255, 0.1); border: 1px solid #00f3ff44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
             <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #00f3ff; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">14.7</div>
+            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">16.6</div>
             <div style="font-size: 0.65rem; color: #00f3ff; font-family: 'JetBrains Mono';">ORGANIC / PURAMENTE TÉCNICO</div>
           </div>
           
@@ -1521,30 +1521,30 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">38.7%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">45.9%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 38.7%; height: 100%; background: #ff3355;"></div>
+                <div style="width: 45.9%; height: 100%; background: #ff3355;"></div>
               </div>
             </div>
             
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Densidad Técnica</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">39.5%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">53.0%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 39.5%; height: 100%; background: #00f3ff;"></div>
+                <div style="width: 53.0%; height: 100%; background: #00f3ff;"></div>
               </div>
             </div>
             
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Llamadas Comerciales</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">0.0%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">1.8%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 0.0%; height: 100%; background: #2B3BE5;"></div>
+                <div style="width: 1.8%; height: 100%; background: #2B3BE5;"></div>
               </div>
             </div>
           </div>
@@ -1701,7 +1701,7 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
           
           <div style="background: rgba(255, 159, 28, 0.1); border: 1px solid #ff9f1c44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
             <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #ff9f1c; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">20.1</div>
+            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">21.6</div>
             <div style="font-size: 0.65rem; color: #ff9f1c; font-family: 'JetBrains Mono';">DINÁMICA COMERCIAL MIXTA</div>
           </div>
           
@@ -1710,30 +1710,30 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">30.1%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">31.3%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 30.1%; height: 100%; background: #ff3355;"></div>
+                <div style="width: 31.3%; height: 100%; background: #ff3355;"></div>
               </div>
             </div>
             
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Densidad Técnica</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">28.1%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">31.7%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 28.1%; height: 100%; background: #00f3ff;"></div>
+                <div style="width: 31.7%; height: 100%; background: #00f3ff;"></div>
               </div>
             </div>
             
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Llamadas Comerciales</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">20.9%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">23.8%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 20.9%; height: 100%; background: #2B3BE5;"></div>
+                <div style="width: 23.8%; height: 100%; background: #2B3BE5;"></div>
               </div>
             </div>
           </div>
@@ -1764,7 +1764,7 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
           
           <div style="background: rgba(0, 243, 255, 0.1); border: 1px solid #00f3ff44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
             <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #00f3ff; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">7.8</div>
+            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">19.8</div>
             <div style="font-size: 0.65rem; color: #00f3ff; font-family: 'JetBrains Mono';">ORGANIC / PURAMENTE TÉCNICO</div>
           </div>
           
@@ -1773,30 +1773,30 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">14.4%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">34.0%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 14.4%; height: 100%; background: #ff3355;"></div>
+                <div style="width: 34.0%; height: 100%; background: #ff3355;"></div>
               </div>
             </div>
             
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Densidad Técnica</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">16.4%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">15.7%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 16.4%; height: 100%; background: #00f3ff;"></div>
+                <div style="width: 15.7%; height: 100%; background: #00f3ff;"></div>
               </div>
             </div>
             
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Llamadas Comerciales</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">3.7%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">12.8%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 3.7%; height: 100%; background: #2B3BE5;"></div>
+                <div style="width: 12.8%; height: 100%; background: #2B3BE5;"></div>
               </div>
             </div>
           </div>
@@ -1827,7 +1827,7 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
           
           <div style="background: rgba(0, 243, 255, 0.1); border: 1px solid #00f3ff44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
             <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #00f3ff; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">0.0</div>
+            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">3.4</div>
             <div style="font-size: 0.65rem; color: #00f3ff; font-family: 'JetBrains Mono';">ORGANIC / PURAMENTE TÉCNICO</div>
           </div>
           
@@ -1836,30 +1836,30 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">1.1%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">8.6%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 1.1%; height: 100%; background: #ff3355;"></div>
+                <div style="width: 8.6%; height: 100%; background: #ff3355;"></div>
               </div>
             </div>
             
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Densidad Técnica</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">17.6%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">18.5%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 17.6%; height: 100%; background: #00f3ff;"></div>
+                <div style="width: 18.5%; height: 100%; background: #00f3ff;"></div>
               </div>
             </div>
             
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Llamadas Comerciales</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">0.0%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">3.0%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 0.0%; height: 100%; background: #2B3BE5;"></div>
+                <div style="width: 3.0%; height: 100%; background: #2B3BE5;"></div>
               </div>
             </div>
           </div>
@@ -1890,7 +1890,7 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
           
           <div style="background: rgba(0, 243, 255, 0.1); border: 1px solid #00f3ff44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
             <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #00f3ff; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">1.4</div>
+            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">2.4</div>
             <div style="font-size: 0.65rem; color: #00f3ff; font-family: 'JetBrains Mono';">ORGANIC / PURAMENTE TÉCNICO</div>
           </div>
           
@@ -1899,10 +1899,10 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">3.1%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">5.4%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 3.1%; height: 100%; background: #ff3355;"></div>
+                <div style="width: 5.4%; height: 100%; background: #ff3355;"></div>
               </div>
             </div>
             
@@ -1953,7 +1953,7 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
           
           <div style="background: rgba(0, 243, 255, 0.1); border: 1px solid #00f3ff44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
             <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #00f3ff; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">2.9</div>
+            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">0.0</div>
             <div style="font-size: 0.65rem; color: #00f3ff; font-family: 'JetBrains Mono';">ORGANIC / PURAMENTE TÉCNICO</div>
           </div>
           
@@ -1982,10 +1982,10 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Llamadas Comerciales</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">6.4%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">0.0%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 6.4%; height: 100%; background: #2B3BE5;"></div>
+                <div style="width: 0.0%; height: 100%; background: #2B3BE5;"></div>
               </div>
             </div>
           </div>
@@ -2016,7 +2016,7 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
           
           <div style="background: rgba(0, 243, 255, 0.1); border: 1px solid #00f3ff44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
             <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #00f3ff; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">12.1</div>
+            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">5.6</div>
             <div style="font-size: 0.65rem; color: #00f3ff; font-family: 'JetBrains Mono';">ORGANIC / PURAMENTE TÉCNICO</div>
           </div>
           
@@ -2025,10 +2025,10 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">13.4%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">12.5%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 13.4%; height: 100%; background: #ff3355;"></div>
+                <div style="width: 12.5%; height: 100%; background: #ff3355;"></div>
               </div>
             </div>
             
@@ -2045,10 +2045,10 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Llamadas Comerciales</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">13.6%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">0.0%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 13.6%; height: 100%; background: #2B3BE5;"></div>
+                <div style="width: 0.0%; height: 100%; background: #2B3BE5;"></div>
               </div>
             </div>
           </div>
@@ -2079,7 +2079,7 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
           
           <div style="background: rgba(0, 243, 255, 0.1); border: 1px solid #00f3ff44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
             <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #00f3ff; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">12.0</div>
+            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">12.2</div>
             <div style="font-size: 0.65rem; color: #00f3ff; font-family: 'JetBrains Mono';">ORGANIC / PURAMENTE TÉCNICO</div>
           </div>
           
@@ -2088,20 +2088,20 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">29.1%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">29.3%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 29.1%; height: 100%; background: #ff3355;"></div>
+                <div style="width: 29.3%; height: 100%; background: #ff3355;"></div>
               </div>
             </div>
             
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Densidad Técnica</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">10.6%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">9.9%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 10.6%; height: 100%; background: #00f3ff;"></div>
+                <div style="width: 9.9%; height: 100%; background: #00f3ff;"></div>
               </div>
             </div>
             
@@ -2161,20 +2161,20 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Densidad Técnica</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">15.6%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">15.8%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 15.6%; height: 100%; background: #00f3ff;"></div>
+                <div style="width: 15.8%; height: 100%; background: #00f3ff;"></div>
               </div>
             </div>
             
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Llamadas Comerciales</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">4.8%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">4.3%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 4.8%; height: 100%; background: #2B3BE5;"></div>
+                <div style="width: 4.3%; height: 100%; background: #2B3BE5;"></div>
               </div>
             </div>
           </div>
@@ -2205,7 +2205,7 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
           
           <div style="background: rgba(0, 243, 255, 0.1); border: 1px solid #00f3ff44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
             <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #00f3ff; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">5.7</div>
+            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">6.2</div>
             <div style="font-size: 0.65rem; color: #00f3ff; font-family: 'JetBrains Mono';">ORGANIC / PURAMENTE TÉCNICO</div>
           </div>
           
@@ -2214,20 +2214,20 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">13.4%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">14.1%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 13.4%; height: 100%; background: #ff3355;"></div>
+                <div style="width: 14.1%; height: 100%; background: #ff3355;"></div>
               </div>
             </div>
             
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Densidad Técnica</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">3.2%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">1.7%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 3.2%; height: 100%; background: #00f3ff;"></div>
+                <div style="width: 1.7%; height: 100%; background: #00f3ff;"></div>
               </div>
             </div>
             
@@ -2268,7 +2268,7 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
           
           <div style="background: rgba(0, 243, 255, 0.1); border: 1px solid #00f3ff44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
             <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #00f3ff; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">0.0</div>
+            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">2.8</div>
             <div style="font-size: 0.65rem; color: #00f3ff; font-family: 'JetBrains Mono';">ORGANIC / PURAMENTE TÉCNICO</div>
           </div>
           
@@ -2277,30 +2277,30 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">0.0%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">3.0%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 0.0%; height: 100%; background: #ff3355;"></div>
+                <div style="width: 3.0%; height: 100%; background: #ff3355;"></div>
               </div>
             </div>
             
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Densidad Técnica</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">0.0%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">1.5%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 0.0%; height: 100%; background: #00f3ff;"></div>
+                <div style="width: 1.5%; height: 100%; background: #00f3ff;"></div>
               </div>
             </div>
             
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Llamadas Comerciales</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">0.0%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">3.5%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 0.0%; height: 100%; background: #2B3BE5;"></div>
+                <div style="width: 3.5%; height: 100%; background: #2B3BE5;"></div>
               </div>
             </div>
           </div>
@@ -2331,7 +2331,7 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
           
           <div style="background: rgba(0, 243, 255, 0.1); border: 1px solid #00f3ff44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
             <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #00f3ff; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">6.2</div>
+            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">2.5</div>
             <div style="font-size: 0.65rem; color: #00f3ff; font-family: 'JetBrains Mono';">ORGANIC / PURAMENTE TÉCNICO</div>
           </div>
           
@@ -2340,20 +2340,20 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">14.6%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">6.0%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 14.6%; height: 100%; background: #ff3355;"></div>
+                <div style="width: 6.0%; height: 100%; background: #ff3355;"></div>
               </div>
             </div>
             
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Densidad Técnica</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">16.7%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">26.9%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 16.7%; height: 100%; background: #00f3ff;"></div>
+                <div style="width: 26.9%; height: 100%; background: #00f3ff;"></div>
               </div>
             </div>
             
@@ -2394,7 +2394,7 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
           
           <div style="background: rgba(0, 243, 255, 0.1); border: 1px solid #00f3ff44; border-radius: 6px; padding: 8px 12px; margin-bottom: 1rem; text-align: center;">
             <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #00f3ff; font-weight: bold;">Índice de Humo</div>
-            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">9.8</div>
+            <div style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #FFF; margin: 2px 0;">12.6</div>
             <div style="font-size: 0.65rem; color: #00f3ff; font-family: 'JetBrains Mono';">ORGANIC / PURAMENTE TÉCNICO</div>
           </div>
           
@@ -2403,30 +2403,30 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Anclajes Clickbait</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">21.4%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">27.9%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 21.4%; height: 100%; background: #ff3355;"></div>
+                <div style="width: 27.9%; height: 100%; background: #ff3355;"></div>
               </div>
             </div>
             
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Densidad Técnica</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">1.5%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">0.0%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 1.5%; height: 100%; background: #00f3ff;"></div>
+                <div style="width: 0.0%; height: 100%; background: #00f3ff;"></div>
               </div>
             </div>
             
             <div style="margin-bottom: 6px;">
               <div style="display: flex; justify-content: space-between; color: #bbb; margin-bottom: 2px;">
                 <span>Llamadas Comerciales</span>
-                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">0.8%</span>
+                <span style="font-family: 'JetBrains Mono'; font-weight: bold;">0.0%</span>
               </div>
               <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
-                <div style="width: 0.8%; height: 100%; background: #2B3BE5;"></div>
+                <div style="width: 0.0%; height: 100%; background: #2B3BE5;"></div>
               </div>
             </div>
           </div>
@@ -2449,7 +2449,7 @@ AEAT: donación con contraprestación = compra. Sin deducción.</code></pre>
     <div class="cronos-terminal-container">
       <h4 style="font-family: 'Outfit', sans-serif; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; color: #888; margin-bottom: 0.5rem;">Registro Histórico de Auditorías (Drift Telemetry)</h4>
       <div class="cronos-terminal" style="background: #050505; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 6px; padding: 1rem; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #00f3ff; height: 140px; overflow-y: auto; box-shadow: inset 0 0 15px rgba(0,0,0,0.8);">
-        <div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-03T05:01:18Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-03T06:01:50Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-03T07:01:59Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-03T08:01:29Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-03T09:01:51Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-03T10:01:35Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-07T00:39:04Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=22.7 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-07T00:46:17Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=22.7 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-08T11:15:44Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=22.7 | webreactiva_smoke=12.5</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-08T11:16:08Z | aimafia_smoke=40.6 | aimafia_drift=0.0% | cosasdefreelance_smoke=22.7 | webreactiva_smoke=12.5</div>
+        <div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-03T06:01:50Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-03T07:01:59Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-03T08:01:29Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-03T09:01:51Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-03T10:01:35Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=21.2 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-07T00:39:04Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=22.7 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-07T00:46:17Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=22.7 | webreactiva_smoke=10.4</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-08T11:15:44Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=22.7 | webreactiva_smoke=12.5</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-08T11:16:08Z | aimafia_smoke=40.6 | aimafia_drift=0.0% | cosasdefreelance_smoke=22.7 | webreactiva_smoke=12.5</div><div style='margin-bottom: 4px; border-left: 2px solid rgba(0, 243, 255, 0.4); padding-left: 8px;'>2026-06-08T11:31:16Z | aimafia_smoke=41.1 | aimafia_drift=0.0% | cosasdefreelance_smoke=22.7 | webreactiva_smoke=12.5</div>
       </div>
     </div>
   </div>
