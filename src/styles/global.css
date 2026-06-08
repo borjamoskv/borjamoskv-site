@@ -469,3 +469,227 @@ a, button, .thumb-card, .blog-card, .video-scroll-card {
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
+
+/* ─── JARANA D'OR: C5-REAL SOTA DESIGN ─── */
+/* Dark Mode, Alta Legibilidad, Cero Animaciones Inútiles */
+
+.article-section {
+  margin-bottom: 4rem;
+  padding: 2rem 0;
+}
+
+.section-number {
+  font-family: var(--font-secondary);
+  color: var(--color-yinmn);
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.article-section .section-title {
+  font-family: var(--font-primary);
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--color-parchment);
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.article-section p {
+  font-family: var(--font-primary);
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: #D1D5DB;
+  max-width: 65ch;
+  margin-bottom: 2rem;
+}
+
+.motif-grid, .usage-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.motif-card, .usage-card {
+  background: #111111;
+  border: 1px solid #333333;
+  padding: 2rem;
+  border-radius: 8px;
+  /* Cero animaciones inútiles - brutalist solid feel */
+}
+
+.motif-kicker, .usage-kicker {
+  display: block;
+  font-family: var(--font-secondary);
+  color: var(--color-amber);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  margin-bottom: 1rem;
+}
+
+.motif-name, .usage-card h3 {
+  font-family: var(--font-primary);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-parchment);
+  margin-bottom: 0.75rem;
+}
+
+.motif-copy, .usage-card p {
+  font-family: var(--font-primary);
+  font-size: 1rem;
+  color: #9CA3AF;
+  line-height: 1.6;
+  margin-bottom: 0 !important;
+}
+
+.section-divider {
+  border: 0;
+  height: 1px;
+  background: #222222;
+  margin: 4rem 0;
+}
+
+.sound-card {
+  background: #0A0A0A;
+  border: 1px solid var(--color-yinmn);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 2rem;
+}
+
+.sound-card-top {
+  padding: 2rem;
+  border-bottom: 1px solid #222222;
+}
+
+.sound-label {
+  font-family: var(--font-secondary);
+  font-size: 0.75rem;
+  color: var(--color-yinmn);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.sound-copy {
+  font-size: 1.125rem;
+  color: var(--color-parchment);
+  line-height: 1.6;
+  margin: 0 !important;
+}
+
+.sound-card-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  background: #111111;
+}
+
+.sound-row {
+  padding: 1.5rem 2rem;
+  border-right: 1px solid #222222;
+}
+.sound-row:last-child {
+  border-right: none;
+}
+
+.sound-row-title {
+  display: block;
+  font-family: var(--font-secondary);
+  font-size: 0.75rem;
+  color: #6B7280;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+
+.sound-value {
+  font-family: var(--font-secondary);
+  font-size: 0.875rem;
+  color: var(--color-amber);
+  margin: 0 !important;
+}
+
+.signal-callout {
+  background: #111111;
+  border-left: 4px solid var(--color-amber);
+  padding: 1.5rem 2rem;
+  margin-top: 3rem;
+}
+
+.signal-callout p {
+  margin: 0;
+  color: var(--color-parchment);
+}
+
+.article-epilogue {
+  padding: 4rem 0;
+}
+
+.epilogue-title {
+  font-size: 2rem;
+  color: var(--color-parchment);
+  margin-bottom: 2rem;
+}
+
+.epilogue-text p {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: #D1D5DB;
+  margin-bottom: 1.5rem;
+  max-width: 65ch;
+}
+
+.nexo-link {
+  color: var(--color-yinmn);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.nexo-link:hover {
+  color: var(--color-amber);
+}
+
+.article-footer {
+  padding: 2rem 0;
+  text-align: center;
+}
+
+.article-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.article-tag {
+  background: #1A1A1A;
+  color: #9CA3AF;
+  font-family: var(--font-secondary);
+  font-size: 0.75rem;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+}
+
+.article-copyright {
+  font-size: 0.875rem;
+  color: #4B5563;
+}
+
+@media (max-width: 768px) {
+  .sound-card-grid {
+    grid-template-columns: 1fr;
+  }
+  .sound-row {
+    border-right: none;
+    border-bottom: 1px solid #222222;
+  }
+  .sound-row:last-child {
+    border-bottom: none;
+  }
+}
