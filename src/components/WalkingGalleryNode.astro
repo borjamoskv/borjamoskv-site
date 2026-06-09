@@ -1,12 +1,69 @@
 ---
 // src/components/WalkingGalleryNode.astro
+// Lúdico-Cortázar Typewriter Contact Overlay
 ---
 <div id="walking-gallery-node" class="naroa-entanglement-gradient">
   <div class="node-content">
-    <span class="node-id">NODE_N_G_G // 4K_PORTRAITS</span>
-    <a href="https://naroagutierrezgil.com" target="_blank" rel="noopener">
+    <span class="node-id">NODE_N_G_G // EL_ESPACIO</span>
+    <button id="node-trigger" class="node-trigger-btn" aria-label="Abrir Entrelazamiento Naroa">
       <img src="https://img.youtube.com/vi/Zc8QEQ8y1f8/mqdefault.jpg" alt="Walking Gallery Node" loading="lazy" />
-    </a>
+    </button>
+  </div>
+</div>
+
+<!-- Lúdico-Cortázar Typewriter Fullscreen Modal -->
+<div id="naroa-contact-modal" class="naroa-modal hidden" aria-hidden="true" role="dialog">
+  <div class="modal-backdrop"></div>
+  <div class="naroa-modal-container">
+    <button id="naroa-modal-close" class="naroa-close-btn" aria-label="Cerrar modal">&times;</button>
+    
+    <div class="naroa-modal-layout">
+      <!-- Left: Dream Video Bubble -->
+      <div class="video-bubble-panel">
+        <div class="video-bubble-frame">
+          <video id="naroa-modal-video" src="/media/videos/naroa_divergence.mp4" loop muted playsinline></video>
+          <div class="video-lens-overlay"></div>
+        </div>
+        <div class="video-bubble-caption">"EL ESPACIO ENTRE NASOTROS" // C5-REAL</div>
+      </div>
+      
+      <!-- Right: Typewriter Form -->
+      <div class="typewriter-panel">
+        <!-- Cronopio Buttons -->
+        <div class="cronopio-selectors">
+          <span class="cronopio-label">SELECCIONA CRONOPIO TEMÁTICO:</span>
+          <div class="cronopio-buttons">
+            <button class="cronopio-btn" data-category="Arte Físico">🌸 Arte Físico</button>
+            <button class="cronopio-btn" data-category="Entropía">⚡ Entropía</button>
+            <button class="cronopio-btn" data-category="Ruido de Manada">📻 Ruido</button>
+            <button class="cronopio-btn" data-category="Hilo de Silicio">📟 Hilo Silicio</button>
+          </div>
+        </div>
+        
+        <!-- Typewriter Machine Paper -->
+        <div class="typewriter-carriage">
+          <div class="typewriter-paper" id="typewriter-paper">
+            <div class="paper-margin-red"></div>
+            <div class="typewriter-content">
+              <div class="typewriter-header" id="typewriter-header">
+                ASUNTO: [ Ninguno ]
+              </div>
+              <textarea id="typewriter-textarea" placeholder="Escribe tu mensaje a la Maga aquí..." disabled></textarea>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="typewriter-actions" style="display: flex; gap: 1rem; width: 100%;">
+          <button id="naroa-submit-btn" class="submit-stamp" disabled style="flex: 1.2;">
+            [ IMPRIMIR Y ENVIAR AL CORTEX ]
+          </button>
+          <a href="https://naroagutierrezgil.com/" target="_blank" rel="noopener" class="web-link-stamp">
+            [ VER WEB OFICIAL ]
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -21,7 +78,7 @@
     overflow: hidden;
     pointer-events: auto;
     opacity: 0.15; /* Subdued, ghost-like */
-    transition: opacity 0.5s ease;
+    transition: opacity 0.5s ease, border 0.3s, box-shadow 0.3s;
     mix-blend-mode: screen;
     box-shadow: 0 0 20px var(--color-naroa-quantum);
     /* Initial state, overridden by JS */
@@ -52,6 +109,7 @@
     background: rgba(10,10,10,0.8);
     padding: 2px 4px;
     z-index: 2;
+    pointer-events: none;
   }
 
   img {
@@ -65,24 +123,341 @@
   #walking-gallery-node:hover img {
     filter: grayscale(0%) contrast(100%);
   }
+
+  /* Typewriter Modal Styling */
+  .naroa-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .naroa-modal.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(8, 8, 12, 0.93);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    z-index: 1;
+  }
+  .naroa-modal-container {
+    position: relative;
+    width: 90%;
+    max-width: 950px;
+    height: 85vh;
+    max-height: 700px;
+    background: rgba(15, 15, 20, 0.85);
+    border: 1px solid rgba(255, 183, 178, 0.25);
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 183, 178, 0.05);
+    border-radius: 12px;
+    z-index: 2;
+    padding: 2.5rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .naroa-close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 2rem;
+    cursor: pointer;
+    transition: color 0.3s;
+    z-index: 10;
+  }
+  .naroa-close-btn:hover {
+    color: var(--color-naroa-acrylic);
+  }
+  .naroa-modal-layout {
+    display: flex;
+    gap: 3rem;
+    height: 100%;
+    width: 100%;
+  }
+  
+  /* Video Bubble */
+  .video-bubble-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+  
+  .video-bubble-frame {
+    position: relative;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    border: 3px solid var(--color-naroa-quantum);
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+    animation: bubbleWarp 12s ease-in-out infinite alternate;
+  }
+  
+  @keyframes bubbleWarp {
+    0% { border-radius: 50% 50% 48% 52% / 50% 52% 48% 50%; }
+    33% { border-radius: 52% 48% 50% 50% / 48% 50% 50% 52%; }
+    66% { border-radius: 48% 52% 52% 48% / 52% 48% 52% 50%; }
+    100% { border-radius: 50% 50% 48% 52% / 50% 52% 48% 50%; }
+  }
+  
+  .video-bubble-frame video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: sepia(0.1) contrast(1.1);
+  }
+  
+  .video-lens-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, transparent 20%, rgba(10, 10, 15, 0.8) 85%);
+    pointer-events: none;
+  }
+  
+  .video-bubble-caption {
+    font-family: var(--font-secondary);
+    font-size: 0.65rem;
+    color: var(--color-naroa-mineral);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  
+  /* Typewriter Panel */
+  .typewriter-panel {
+    flex: 1.3;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+  
+  .cronopio-selectors {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .cronopio-label {
+    font-family: var(--font-secondary);
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.4);
+    letter-spacing: 0.1em;
+  }
+  
+  .cronopio-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .cronopio-btn {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px dashed rgba(255, 183, 178, 0.3);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 0.4rem 0.8rem;
+    border-radius: 100px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .cronopio-btn:hover, .cronopio-btn.selected {
+    background: rgba(255, 183, 178, 0.12);
+    border-color: var(--color-naroa-acrylic);
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(230, 57, 70, 0.2);
+  }
+  
+  /* Typewriter Carriage & Paper */
+  .typewriter-carriage {
+    flex: 1;
+    background: #111116;
+    border: 2px solid #222;
+    border-radius: 4px;
+    padding: 10px;
+    margin-block: 1.2rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.9);
+  }
+  
+  .typewriter-paper {
+    height: 100%;
+    background: #FAF6EE;
+    position: relative;
+    padding: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+    transform: translateY(100%);
+    display: flex;
+    flex-direction: column;
+  }
+  .typewriter-paper.ready {
+    transform: translateY(0);
+  }
+  .typewriter-paper.sending {
+    transform: translateY(-110%);
+    opacity: 0;
+  }
+  
+  .paper-margin-red {
+    position: absolute;
+    top: 0;
+    left: 45px;
+    bottom: 0;
+    width: 1px;
+    border-left: 1px solid rgba(230, 57, 70, 0.35);
+  }
+  
+  .typewriter-content {
+    margin-left: 45px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .typewriter-header {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #3c3c3c;
+    margin-bottom: 0.8rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    padding-bottom: 0.4rem;
+  }
+  
+  #typewriter-textarea {
+    flex: 1;
+    background: transparent;
+    border: none;
+    resize: none;
+    outline: none;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #1a1a1a;
+  }
+  #typewriter-textarea::placeholder {
+    color: rgba(0, 0, 0, 0.35);
+  }
+  
+  /* Stamp Button */
+  .submit-stamp {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 183, 178, 0.3);
+    color: rgba(255, 255, 255, 0.4);
+    padding: 0.8rem;
+    font-family: var(--font-secondary);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s;
+  }
+  .submit-stamp:not(:disabled) {
+    background: rgba(230, 57, 70, 0.08);
+    border-color: var(--color-naroa-acrylic);
+    color: #fff;
+  }
+  .submit-stamp:not(:disabled):hover {
+    background: rgba(230, 57, 70, 0.15);
+    box-shadow: 0 0 15px rgba(230, 57, 70, 0.3);
+  }
+
+  /* External Link Button */
+  .web-link-stamp {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(213, 170, 255, 0.35);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 0.8rem;
+    font-family: var(--font-secondary);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s;
+    text-align: center;
+  }
+  .web-link-stamp:hover {
+    background: rgba(213, 170, 255, 0.08);
+    border-color: var(--color-naroa-quantum);
+    color: #fff;
+    box-shadow: 0 0 15px rgba(213, 170, 255, 0.2);
+  }
+  
+  /* Trigger node wrapper reset */
+  .node-trigger-btn {
+    background: transparent;
+    border: none;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    padding: 0;
+    display: block;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  @media (max-width: 768px) {
+    .naroa-modal-layout {
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .video-bubble-frame {
+      width: 150px;
+      height: 150px;
+    }
+    .typewriter-carriage {
+      margin-block: 0.5rem;
+    }
+  }
 </style>
 
 <script>
-  // Decentralized Tactical Routing (Brownian Motion / Drifting)
+  // Dynamic visual preview node with interactive Typewriter modal
   const initWalkingGallery = () => {
     const node = document.getElementById('walking-gallery-node');
     if (!node) return;
 
+    const trigger = document.getElementById('node-trigger');
+    const modal = document.getElementById('naroa-contact-modal');
+    const closeBtn = document.getElementById('naroa-modal-close');
+    const video = document.getElementById('naroa-modal-video') as HTMLVideoElement;
+    
+    const cronopioBtns = document.querySelectorAll('.cronopio-btn');
+    const paper = document.getElementById('typewriter-paper');
+    const header = document.getElementById('typewriter-header');
+    const textarea = document.getElementById('typewriter-textarea') as HTMLTextAreaElement;
+    const submitBtn = document.getElementById('naroa-submit-btn') as HTMLButtonElement;
+
+    // 1. Drifting coordinates logic (Brownian Motion)
     let posX = Math.random() * (window.innerWidth - 240);
     let posY = Math.random() * (window.innerHeight - 140);
-    let velX = (Math.random() - 0.5) * 0.8; // Slow drift
+    let velX = (Math.random() - 0.5) * 0.8;
     let velY = (Math.random() - 0.5) * 0.8;
 
     const animate = () => {
       posX += velX;
       posY += velY;
 
-      // Bounce off walls
+      // Bounce off boundaries
       if (posX <= 0) { posX = 0; velX *= -1; }
       if (posX >= window.innerWidth - 240) { posX = window.innerWidth - 240; velX *= -1; }
       if (posY <= 0) { posY = 0; velY *= -1; }
@@ -92,14 +467,181 @@
       requestAnimationFrame(animate);
     };
 
-    // Delay start slightly to let layout settle
     setTimeout(() => {
       node.style.top = '0px';
       node.style.left = '0px';
       animate();
     }, 1000);
+
+    // 2. Synthesized WebAudio sounds
+    const playKeySound = () => {
+      // @ts-ignore
+      const ctx = window.MOSKV?.audioContext;
+      if (!ctx || ctx.state !== 'running') return;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(350 + Math.random() * 250, ctx.currentTime);
+      gain.gain.setValueAtTime(0.012, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.025);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.03);
+    };
+
+    const playDingSound = () => {
+      // @ts-ignore
+      const ctx = window.MOSKV?.audioContext;
+      if (!ctx || ctx.state !== 'running') return;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(1450, ctx.currentTime);
+      gain.gain.setValueAtTime(0.03, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.6);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.6);
+    };
+
+    const playZipSound = () => {
+      // @ts-ignore
+      const ctx = window.MOSKV?.audioContext;
+      if (!ctx || ctx.state !== 'running') return;
+      
+      const bufferSize = ctx.sampleRate * 0.45;
+      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = Math.random() * 2 - 1;
+      }
+      
+      const noise = ctx.createBufferSource();
+      noise.buffer = buffer;
+      
+      const filter = ctx.createBiquadFilter();
+      filter.type = 'bandpass';
+      filter.Q.value = 9;
+      filter.frequency.setValueAtTime(900, ctx.currentTime);
+      filter.frequency.exponentialRampToValueAtTime(6000, ctx.currentTime + 0.4);
+      
+      const gain = ctx.createGain();
+      gain.gain.setValueAtTime(0.015, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.45);
+      
+      noise.connect(filter);
+      filter.connect(gain);
+      gain.connect(ctx.destination);
+      noise.start();
+    };
+
+    // 3. Trigger Modal Setup
+    if (trigger && modal && video) {
+      trigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        modal.classList.remove('hidden');
+        modal.setAttribute('aria-hidden', 'false');
+        
+        // Load and play the divergence video loop
+        video.play().catch(err => console.warn("Modal video loop autoplay blocked", err));
+        
+        setTimeout(() => {
+          playDingSound();
+        }, 50);
+      });
+    }
+
+    const closeModal = () => {
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.setAttribute('aria-hidden', 'true');
+      }
+      if (video) video.pause();
+    };
+
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal || e.target.classList.contains('modal-backdrop')) {
+          closeModal();
+        }
+      });
+    }
+
+    // Esc closure
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) {
+        closeModal();
+      }
+    });
+
+    // 4. Typewriter interactions
+    cronopioBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        cronopioBtns.forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        
+        const category = btn.getAttribute('data-category');
+        if (header) header.textContent = `ASUNTO: [ Cronopio: ${category} ]`;
+        
+        playZipSound();
+        if (paper) paper.classList.add('ready');
+        if (textarea) {
+          textarea.removeAttribute('disabled');
+          textarea.focus();
+        }
+      });
+    });
+
+    if (textarea) {
+      textarea.addEventListener('input', () => {
+        playKeySound();
+        if (submitBtn) {
+          if (textarea.value.trim().length > 3) {
+            submitBtn.removeAttribute('disabled');
+          } else {
+            submitBtn.setAttribute('disabled', 'true');
+          }
+        }
+      });
+    }
+
+    if (submitBtn && textarea) {
+      submitBtn.addEventListener('click', () => {
+        submitBtn.setAttribute('disabled', 'true');
+        textarea.setAttribute('disabled', 'true');
+        
+        // Success animation loop
+        playZipSound();
+        if (paper) paper.classList.add('sending');
+
+        // Output to server logs (Simulation-only as requested)
+        const selectedBtn = document.querySelector('.cronopio-btn.selected');
+        console.log("%c[NAROA_TYPEWRITER_MESSAGE]", "color: #e63946; font-weight: bold; font-family: monospace;", {
+          category: selectedBtn ? selectedBtn.getAttribute('data-category') : 'Ninguno',
+          content: textarea.value,
+          timestamp: new Date().toISOString()
+        });
+
+        // Set permanent glowing aura on the node
+        node.style.boxShadow = '0 0 30px #FAF6EE, 0 0 15px var(--color-naroa-acrylic)';
+        node.style.border = '2px solid #FAF6EE';
+
+        setTimeout(() => {
+          closeModal();
+          // Reset form state
+          if (paper) paper.classList.remove('ready', 'sending');
+          if (textarea) textarea.value = '';
+          cronopioBtns.forEach(b => b.classList.remove('selected'));
+          if (header) header.textContent = 'ASUNTO: [ Ninguno ]';
+        }, 1500);
+      });
+    }
   };
 
+  // Support SPA Transitions
   document.addEventListener('astro:page-load', initWalkingGallery);
   if (document.readyState === 'complete') initWalkingGallery();
   else window.addEventListener('load', initWalkingGallery);
