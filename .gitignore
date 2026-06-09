@@ -38,4 +38,12 @@ mock_testimonios/
 CORTEX/*.db
 CORTEX/fahrenheit_real_status.json
 
+# Media files (avoid committing heavy binaries)
+*.mp4
+*.webm
+*.wav
+*.mp3
+*.zip
+*.tar.gz
+
 
