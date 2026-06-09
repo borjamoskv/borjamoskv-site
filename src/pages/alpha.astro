@@ -1,0 +1,226 @@
+---
+import { getEntry } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+
+// Fetch the ALPHA article
+const alphaPost = await getEntry('articles', 'alpha');
+if (!alphaPost) {
+  throw new Error("El artículo ALPHA no se encuentra en la colección.");
+}
+const { Content } = await alphaPost.render();
+---
+
+<Layout title="ALPHA: C5-REAL DRAFT VIEW">
+  <div class="alpha-draft-container">
+    <div class="scanline"></div>
+    <div class="noise"></div>
+    <header class="draft-header">
+      <div class="status-badge blink">C5-REAL DRAFT // TOP SECRET</div>
+      <h1 class="glitch" data-text="ALPHA">ALPHA</h1>
+      <p class="subtitle">TERMODINÁMICA COGNITIVA · AUTOPSIA 3000 NODOS</p>
+    </header>
+
+    <main class="alpha-content">
+      <Content />
+    </main>
+  </div>
+</Layout>
+
+<style>
+  .alpha-draft-container {
+    background-color: #050505;
+    color: #f3f4f6;
+    min-height: 100vh;
+    padding: 8rem 2rem 6rem 2rem;
+    font-family: 'JetBrains Mono', monospace;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scanline {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 159, 28, 0.4);
+    opacity: 0.5;
+    animation: scanline 6s linear infinite;
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  .noise {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+    opacity: 0.08;
+    pointer-events: none;
+    z-index: 99;
+  }
+
+  @keyframes scanline {
+    0% { top: -10px; }
+    100% { top: 100%; }
+  }
+
+  .draft-header {
+    max-width: 850px;
+    margin: 0 auto 4rem auto;
+    text-align: center;
+    border-bottom: 2px dashed #2B3BE5;
+    padding-bottom: 3rem;
+  }
+
+  .status-badge {
+    display: inline-block;
+    background: #ff003c;
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.4rem 1rem;
+    letter-spacing: 0.25em;
+    margin-bottom: 2.5rem;
+    text-transform: uppercase;
+    box-shadow: 0 0 15px rgba(255, 0, 60, 0.4);
+  }
+
+  .blink {
+    animation: blinker 2s step-start infinite;
+  }
+  @keyframes blinker {
+    50% { opacity: 0; }
+  }
+
+  .glitch {
+    font-size: 5rem;
+    font-weight: 900;
+    color: #fff;
+    position: relative;
+    font-family: 'Outfit', sans-serif;
+    text-transform: uppercase;
+    margin: 0 0 1rem 0;
+    letter-spacing: -0.03em;
+  }
+  
+  .glitch::before, .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .glitch::before {
+    left: 3px;
+    text-shadow: -2px 0 #ff003c;
+    clip: rect(24px, 550px, 90px, 0);
+    animation: glitch-anim 3s infinite linear alternate-reverse;
+  }
+  
+  .glitch::after {
+    left: -3px;
+    text-shadow: -2px 0 #00ffff;
+    clip: rect(85px, 550px, 140px, 0);
+    animation: glitch-anim 2.5s infinite linear alternate-reverse;
+  }
+
+  @keyframes glitch-anim {
+    0% { clip: rect(10px, 9999px, 83px, 0); }
+    20% { clip: rect(61px, 9999px, 12px, 0); }
+    40% { clip: rect(3px, 9999px, 35px, 0); }
+    60% { clip: rect(48px, 9999px, 98px, 0); }
+    80% { clip: rect(85px, 9999px, 5px, 0); }
+    100% { clip: rect(2px, 9999px, 50px, 0); }
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+    color: #2B3BE5;
+    letter-spacing: 0.4em;
+    font-weight: 700;
+  }
+
+  .alpha-content {
+    max-width: 850px;
+    margin: 0 auto;
+    background: rgba(10, 10, 10, 0.85);
+    border: 1px solid rgba(43, 59, 229, 0.4);
+    padding: 4rem;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.9), inset 0 0 30px rgba(43, 59, 229, 0.05);
+    backdrop-filter: blur(5px);
+    position: relative;
+    z-index: 2;
+  }
+
+  .alpha-content :global(h2) {
+    color: #ff9f1c;
+    font-family: 'Outfit', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    margin-top: 4rem;
+    border-left: 6px solid #ff9f1c;
+    padding-left: 1.5rem;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+
+  .alpha-content :global(p) {
+    font-size: 1.15rem;
+    line-height: 1.9;
+    color: #e5e7eb;
+    margin-bottom: 1.8rem;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+  }
+
+  .alpha-content :global(blockquote) {
+    border-left: 4px solid #2B3BE5;
+    background: rgba(43, 59, 229, 0.08);
+    padding: 2rem;
+    margin: 3rem 0;
+    font-style: italic;
+    color: #fff;
+    font-size: 1.25rem;
+  }
+
+  .alpha-content :global(ol), .alpha-content :global(ul) {
+    padding-left: 2rem;
+    margin-bottom: 2rem;
+    color: #2B3BE5;
+  }
+  
+  .alpha-content :global(li) {
+    margin-bottom: 1rem;
+    color: #e5e7eb;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+    font-size: 1.15rem;
+  }
+
+  .alpha-content :global(strong) {
+    color: #fff;
+    font-weight: 600;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+  }
+
+  .alpha-content :global(.section-number) {
+    color: rgba(255, 159, 28, 0.15);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 5rem;
+    font-weight: 900;
+    margin-bottom: -3rem;
+    position: relative;
+    z-index: -1;
+  }
+  
+  .alpha-content :global(code) {
+    background: #111;
+    color: #ff003c;
+    padding: 0.2rem 0.4rem;
+    border: 1px solid rgba(255, 0, 60, 0.3);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.95rem;
+  }
+</style>
