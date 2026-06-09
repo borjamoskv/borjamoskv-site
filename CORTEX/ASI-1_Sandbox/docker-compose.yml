@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+  target_server:
+    build:
+      context: .
+      dockerfile: Dockerfile.target
+    ports:
+      - "9090:9090"
+    networks:
+      - asi_net
+
+  agent_sandbox:
+    build:
+      context: .
+      dockerfile: Dockerfile.agent
+    environment:
+      - TARGET_HOST=target_server
+      - TARGET_PORT=9090
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    networks:
+      - asi_net
+    depends_on:
+      - target_server
+
+networks:
+  asi_net:
+    driver: bridge

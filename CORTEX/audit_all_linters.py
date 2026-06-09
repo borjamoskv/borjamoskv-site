@@ -28,6 +28,7 @@ try:
     from nash_equilibrium_linter import audit_nash
     from frankenstein_mitosis_linter import audit_frankenstein
     from maxwell_demon_linter import audit_maxwell
+    from sintetologia_grounding_linter import audit_grounding
 except ImportError as e:
     print(f"[!] Critical Import Error: {e}")
     sys.exit(1)
@@ -198,6 +199,9 @@ def run_workspace_diagnostic():
     # 13. Maxwell's Demon Entropy Linter
     res_maxwell = audit_maxwell()
 
+    # 14. Sintetología Grounding & Friction Linter
+    res_grounding = audit_grounding()
+
     # Collect All Scores
     results = [
         {
@@ -266,6 +270,11 @@ def run_workspace_diagnostic():
             "name": "Maxwell (Demon Sorting)",
             "score": res_maxwell["total_exergy"],
             "verdict": res_maxwell["verdict"],
+        },
+        {
+            "name": "Sintetología (Grounding)",
+            "score": res_grounding["total_alignment_exergy"],
+            "verdict": res_grounding["verdict"],
         },
     ]
 
