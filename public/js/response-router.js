@@ -69,7 +69,7 @@ class ResponseRouter {
         if (text.trim().length >= 3) {
             const results = this.engine.search(text.trim());
             if (results && results.length > 0) {
-                return SearchResultsRenderer.format(results, text.trim());
+                return window.MOSKV.SearchResultsRenderer.format(results, text.trim());
             }
         }
 
@@ -94,7 +94,7 @@ class ResponseRouter {
             return 'Por favor, introduce un término de búsqueda válido.';
         }
         const results = this.engine.search(query);
-        return SearchResultsRenderer.format(results, query);
+        return window.MOSKV.SearchResultsRenderer.format(results, query);
     }
 
     _fallback(lower) {
