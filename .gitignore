@@ -46,4 +46,8 @@ CORTEX/fahrenheit_real_status.json
 *.zip
 *.tar.gz
 
+# Agent telemetry and metadata
+.agents/
+
+
 

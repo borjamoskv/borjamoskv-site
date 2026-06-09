@@ -90,11 +90,27 @@ window.MOSKV.chat = {
                 // Add user message
                 this.appendMessage(text, 'user');
 
-                // Route and append bot response
-                setTimeout(() => {
-                    const reply = this._router.route(text);
-                    this.appendMessage(reply, 'bot');
-                }, 1000);
+                // Check for agent slash commands
+                if (text.startsWith('/')) {
+                    fetch('/api/agent', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ prompt: text })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        this.appendMessage(data.response || '[ERR_NO_RESPONSE]', 'bot');
+                    })
+                    .catch(err => {
+                        this.appendMessage(`[ERR_CONNECTION]: Fallo al conectar con el servidor agentico. ${err.message}`, 'bot');
+                    });
+                } else {
+                    // Route locally and append bot response
+                    setTimeout(() => {
+                        const reply = this._router.route(text);
+                        this.appendMessage(reply, 'bot');
+                    }, 1000);
+                }
             }
         });
     },

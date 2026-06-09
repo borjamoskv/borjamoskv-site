@@ -158,7 +158,17 @@ export const POST: APIRoute = async ({ request, locals }) => {
       logs.push('[PANDORA] UNLOCKING FORBIDDEN AST GEOMETRIES...');
       logs.push('[PANDORA] INJECTING CONTROLLED CHAOS SIMULATION PATTERNS...');
       
-      const env = locals?.runtime?.env as any;
+      let env: any = null;
+      try {
+        env = locals?.runtime?.env;
+      } catch (e) {}
+      if (!env) {
+        try {
+          // @ts-ignore
+          const cfWorkers = await import('cloudflare:workers');
+          env = cfWorkers.env;
+        } catch (e) {}
+      }
       if (env && env.CORTEX_ENTROPY) {
         try {
           const entropyStr = await env.CORTEX_ENTROPY.get('global_entropy');
