@@ -21,22 +21,78 @@ export const POST: APIRoute = async ({ request, locals }) => {
       return new Response(JSON.stringify({ error: 'No prompt provided' }), { status: 400 });
     }
 
+    let llmResponseText = '';
+    let usedFallback = false;
+
     const env = locals?.runtime?.env as any;
-    
-    if (!env || !env.AI) {
-      return new Response(JSON.stringify({ 
-        response: 'ERR_NO_AI_BINDING: EL ENLACE CON EL WORKERS AI ESTÁ SECCIONADO. REQUIERE VARIABLE AI EN WRANGLER.' 
-      }), { status: 200 }); 
+    if (env && env.AI) {
+      try {
+        const response = await env.AI.run('@cf/meta/llama-3-8b-instruct', {
+          messages: [
+            { role: 'system', content: SYSTEM_PROMPT },
+            { role: 'user', content: prompt }
+          ]
+        });
+        llmResponseText = response.response;
+      } catch (err: any) {
+        console.warn('Cloudflare Workers AI failed, trying local Ollama...', err);
+        usedFallback = true;
+      }
+    } else {
+      usedFallback = true;
     }
 
-    const response = await env.AI.run('@cf/meta/llama-3-8b-instruct', {
-      messages: [
-        { role: 'system', content: SYSTEM_PROMPT },
-        { role: 'user', content: prompt }
-      ]
-    });
+    if (usedFallback) {
+      try {
+        // Query local Ollama tags to find a valid model
+        const listRes = await fetch('http://127.0.0.1:11434/api/tags');
+        const listData = (await listRes.json()) as any;
+        const availableModels = listData.models?.map((m: any) => m.name) || [];
 
-    return new Response(JSON.stringify({ response: response.response }), {
+        const preferredModels = [
+          'cortex-8b-solver-pro:latest',
+          'cortex-8b-solver:latest',
+          'qwen2.5-coder:7b',
+          'llama3.2:latest'
+        ];
+        
+        let chosenModel = 'llama3.2:latest';
+        for (const pref of preferredModels) {
+          if (availableModels.includes(pref)) {
+            chosenModel = pref;
+            break;
+          }
+        }
+        if (!availableModels.includes(chosenModel) && availableModels.length > 0) {
+          chosenModel = availableModels[0];
+        }
+
+        const ollamaRes = await fetch('http://127.0.0.1:11434/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: chosenModel,
+            messages: [
+              { role: 'system', content: SYSTEM_PROMPT },
+              { role: 'user', content: prompt }
+            ],
+            stream: false
+          })
+        });
+
+        if (!ollamaRes.ok) {
+          throw new Error(`Ollama returned status ${ollamaRes.status}`);
+        }
+
+        const ollamaData = (await ollamaRes.json()) as any;
+        llmResponseText = ollamaData.message?.content || '';
+      } catch (ollamaErr: any) {
+        console.error('Local Ollama fallback error:', ollamaErr);
+        llmResponseText = `[ERR_NO_INFERENCE]: COLAPSO COMPLETO DEL EDGE. CLOUDFLARE AI INACCESIBLE Y OLLAMA LOCAL CAÍDO. CORTANTE TÉRMICO ACTIVO.`;
+      }
+    }
+
+    return new Response(JSON.stringify({ response: llmResponseText }), {
       status: 200,
       headers: {
         'Content-Type': 'application/json'
