@@ -1,6 +1,7 @@
 {
   "name": "borjamoskv-site",
   "compatibility_date": "2026-06-07",
+  "compatibility_flags": ["nodejs_compat"],
   "kv_namespaces": [
     {
       "binding": "CORTEX_ENTROPY",

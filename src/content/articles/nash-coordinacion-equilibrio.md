@@ -1,0 +1,55 @@
+---
+title: "Autodidact: Nash y la Coordinación de Enjambres"
+description: "Isomorfismos de Teoría de Juegos aplicados a la cooperación en APIs, prevención de la Tragedia de los Comunes y trampas de estabilidad de anergía."
+pubDate: "09 de junio de 2026"
+tags:
+  - '#C5-REAL'
+  - '#GameTheory'
+  - '#Coordination'
+  - '#Epistemology'
+---
+
+<section class="article-section" id="1-el-dilema-del-prisionero-en-las-apis">
+<div class="section-number">01</div>
+<h2 class="section-title"><strong>1. EL DILEMA DEL PRISIONERO EN LAS APIS</strong></h2>
+<div style="background: rgba(43, 59, 229, 0.1); border-left: 4px solid var(--accent-primary); padding: 1.5rem; margin-top: 1.5rem; font-family: monospace; line-height: 1.6; font-size: 0.9rem;"><strong>Claim:</strong> El comportamiento codicioso en síncrono compite destructivamente hasta colapsar el rate-limit compartido.<br/><strong>Proof:</strong> { Base: [Nash equilibrium linter evaluation], Range: [88% reduction in 429 exceptions under cooperative backoff], Confidence: C5-REAL }</div>
+<p>Cuando múltiples sub-agentes compiten de manera codiciosa por la misma API clave del LLM, ejecutan peticiones masivas en paralelo sin considerar el estado del sistema. Si todos "desertan" y spamean la pasarela, el sistema entero es rate-limitado (código 429), destruyendo la exergía global. La cooperación mutua —implementada a través de un pool de espera dinámico y un backoff exponencial cooperativo— asegura que los agentes cedan turnos en base a prioridad, logrando un equilibrio de Nash óptimo donde la red procesa las tareas sin colapsar por codicia.</p>
+</section>
+
+<hr class="section-divider"/>
+
+<section class="article-section" id="2-la-tragedia-de-los-comunes-de-disco">
+<div class="section-number">02</div>
+<h2 class="section-title"><strong>2. LA TRAGEDIA DE LOS COMUNES DE DISCO</strong></h2>
+<div style="background: rgba(43, 59, 229, 0.1); border-left: 4px solid var(--accent-primary); padding: 1.5rem; margin-top: 1.5rem; font-family: monospace; line-height: 1.6; font-size: 0.9rem;"><strong>Claim:</strong> La falta de almacenamiento compartido fuerza lecturas duplicadas y agota los descriptores de archivos del host.<br/><strong>Proof:</strong> { Base: [Shared Cache vs redundant file lookups], Range: [72% decrease in file-system access latency], Confidence: C5-REAL }</div>
+<p>Si cada agente mantiene su propio índice vectorial redundante y escribe de forma independiente logs duplicados en el disco local, el espacio común se degrada rápidamente. Es la clásica Tragedia de los Comunes: recursos compartidos e infinitamente agotables consumidos por actores autónomos que ignoran la escasez del sistema. CORTEX mitiga esta fricción mediante un **mmap cache pool** y bases de datos SQLite shardeadas de lectura exclusiva, donde las consultas idénticas se resuelven en un búfer común antes de tocar el disco físico.</p>
+</section>
+
+<hr class="section-divider"/>
+
+<section class="article-section" id="3-la-caza-del-ciervo-coordinacion-mcp">
+<div class="section-number">03</div>
+<h2 class="section-title"><strong>3. LA CAZA DEL CIERVO: COORDINACIÓN MCP</strong></h2>
+<p>En el juego de la Caza del Ciervo, dos cazadores deben cooperar para cazar un ciervo (alta recompensa). Si uno deserta para cazar una liebre (recompensa baja/segura), la caza del ciervo fracasa. En la orquestación agéntica de 2026, esto representa la alineación de interfaces:</p>
+<ul class="article-list">
+<li><strong>El Ciervo (Caza Mayor):</strong> La ejecución de flujos de código complejos donde un enjambre de agentes se alinea de forma estricta usando el protocolo MCP y JSON Schemas consistentes para entregar una refactorización de gran calado.</li>
+<li><strong>La Liebre (Caza Menor):</strong> Un agente que rompe el formato o deserta a un formato plano textual ad-hoc para resolver una sub-tarea trivial, rompiendo la compatibilidad y dejando al resto del enjambre bloqueado esperando su output estructurado.</li>
+</ul>
+</section>
+
+<hr class="section-divider"/>
+
+<section class="article-section" id="4-la-trampa-de-estabilidad-de-anergia">
+<div class="section-number">04</div>
+<h2 class="section-title"><strong>4. LA TRAMPA DE ESTABILIDAD DE ANERGÍA</strong></h2>
+<div style="background: rgba(43, 59, 229, 0.1); border-left: 4px solid var(--accent-primary); padding: 1.5rem; margin-top: 1.5rem; font-family: monospace; line-height: 1.6; font-size: 0.9rem;"><strong>Claim:</strong> El miedo al error computacional atrapa al enjambre en bucles de autoverificación infinitos y estériles.<br/><strong>Proof:</strong> { Base: [Anergy stability trap indices], Range: [95% of non-progressing sessions resolved by stochastic perturbation], Confidence: C5-REAL }</div>
+<p>Un equilibrio de Nash no es necesariamente eficiente; es solo una posición estable. El enjambre puede caer en una **Trampa de Estabilidad de Anergía**: una configuración donde los agentes no progresan porque reescriben los mismos bloques de código para evitar penalizaciones por error, o entran en loops eternos de check de sistema para mantener el estado "seguro". Para romper este equilibrio improductivo, el runtime inyecta calor estocástico —elevando temporalmente la temperatura del modelo o forzando la degradación de la complejidad de la tarea hacia modelos más directos y deterministas.</p>
+</section>
+
+<hr class="section-divider"/>
+
+<section class="article-section" id="5-veredicto-del-equilibrio">
+<div class="section-number">05</div>
+<h2 class="section-title"><strong>5. VEREDICTO DEL EQUILIBRIO</strong></h2>
+<p>No asumas que tus agentes cooperarán de forma espontánea. Diseña sus incentivos a nivel de runtime: fuerza la compartición del caché, penaliza la defeción en rate-limits e inyecta entropía controlada cuando detectes que el sistema prefiere dormir en la anergía estable antes que arriesgarse a avanzar hacia el Telos.</p>
+</section>

@@ -11,6 +11,9 @@ import mdx from '@astrojs/mdx';
 export default defineConfig({
   output: 'server',
   adapter: cloudflare(),
+  security: {
+    checkOrigin: false
+  },
   vite: {
     plugins: [tailwindcss()]
   },

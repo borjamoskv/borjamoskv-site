@@ -8,6 +8,7 @@ Outputs a unified exergy matrix for the workspace.
 
 import sys
 import os
+import json
 
 # Ensure we can import modules from the current directory
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -195,81 +196,113 @@ def run_workspace_diagnostic():
 
     # Collect All Scores
     results = [
-        (
-            "Quixote (Hallucination)",
-            res_quixote["total_alignment_exergy"],
-            res_quixote["verdict"],
-        ),
-        (
-            "Buscón (Deception)",
-            res_buscon["alignment_exergy_pct"],
-            res_buscon["verdict"],
-        ),
-        (
-            "Pantaleón (Over-Optimization)",
-            res_pantaleon["system_exergy_pct"],
-            res_pantaleon["verdict"],
-        ),
-        (
-            "Catch-22 (Deadlocks)",
-            100.0 - res_catch22["deadlock_severity_pct"],
-            res_catch22["verdict"],
-        ),
-        (
-            "Dunces (Verbosity Bloat)",
-            100.0 - res_dunces["bloat_severity_pct"],
-            res_dunces["verdict"],
-        ),
-        (
-            "Hitchhiker (Resilience)",
-            res_hitchhiker["total_exergy"],
-            res_hitchhiker["verdict"],
-        ),
-        ("Goals (Authenticity)", res_goals["average_exergy"], res_goals["verdict"]),
-        (
-            "Relationships (Intimacy)",
-            res_relationships["average_exergy"],
-            res_relationships["verdict"],
-        ),
-        (
-            "Substack (Autonomy)",
-            res_substack["total_exergy"],
-            "VERIFIED - High Exergy"
+        {
+            "name": "Quixote (Hallucination)",
+            "score": res_quixote["total_alignment_exergy"],
+            "verdict": res_quixote["verdict"],
+        },
+        {
+            "name": "Buscón (Deception)",
+            "score": res_buscon["alignment_exergy_pct"],
+            "verdict": res_buscon["verdict"],
+        },
+        {
+            "name": "Pantaleón (Over-Optimization)",
+            "score": res_pantaleon["system_exergy_pct"],
+            "verdict": res_pantaleon["verdict"],
+        },
+        {
+            "name": "Catch-22 (Deadlocks)",
+            "score": round(100.0 - res_catch22["deadlock_severity_pct"], 2),
+            "verdict": res_catch22["verdict"],
+        },
+        {
+            "name": "Dunces (Verbosity Bloat)",
+            "score": round(100.0 - res_dunces["bloat_severity_pct"], 2),
+            "verdict": res_dunces["verdict"],
+        },
+        {
+            "name": "Hitchhiker (Resilience)",
+            "score": res_hitchhiker["total_exergy"],
+            "verdict": res_hitchhiker["verdict"],
+        },
+        {
+            "name": "Goals (Authenticity)",
+            "score": res_goals["average_exergy"],
+            "verdict": res_goals["verdict"],
+        },
+        {
+            "name": "Relationships (Intimacy)",
+            "score": res_relationships["average_exergy"],
+            "verdict": res_relationships["verdict"],
+        },
+        {
+            "name": "Substack (Autonomy)",
+            "score": res_substack["total_exergy"],
+            "verdict": "VERIFIED - High Exergy"
             if res_substack["total_exergy"] > 80
             else "REJECTED - Noise",
-        ),
-        (
-            "Fahrenheit (Distribution)",
-            res_fahrenheit["average_exergy"],
-            res_fahrenheit["verdict"],
-        ),
-        (
-            "Nash (Coordination)",
-            res_nash["total_coordination_exergy"],
-            res_nash["verdict"],
-        ),
-        (
-            "Frankenstein (Mitosis)",
-            res_frankenstein["creation_exergy_pct"],
-            res_frankenstein["verdict"],
-        ),
+        },
+        {
+            "name": "Fahrenheit (Distribution)",
+            "score": res_fahrenheit["average_exergy"],
+            "verdict": res_fahrenheit["verdict"],
+        },
+        {
+            "name": "Nash (Coordination)",
+            "score": res_nash["total_coordination_exergy"],
+            "verdict": res_nash["verdict"],
+        },
+        {
+            "name": "Frankenstein (Mitosis)",
+            "score": res_frankenstein["creation_exergy_pct"],
+            "verdict": res_frankenstein["verdict"],
+        },
     ]
 
     # Print Markdown Table
     print("| Dimension Linter | Exergy Score | Verdict / Status |")
     print("| :--- | :---: | :--- |")
-    for name, score, verdict in results:
-        print(f"| **{name}** | **{score:.2f}%** | {verdict} |")
+    for r in results:
+        print(f"| **{r['name']}** | **{r['score']:.2f}%** | {r['verdict']} |")
 
-    avg_score = sum(x[1] for x in results) / len(results)
+    avg_score = sum(r["score"] for r in results) / len(results)
     print(f"\n[C5-REAL] Unified Workspace Alignment Index: {avg_score:.2f}%")
 
+    # Generate JSON payload for public/cortex_diagnostic.json
+    import time
+    timestamp = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+    
+    verdict_str = "WORKSPACE VERDICT: VERIFIED SOVEREIGN STATE (MAX EXERGY)"
+    if avg_score < 80.0:
+        verdict_str = "WORKSPACE VERDICT: WARNING - HIGH SYSTEMIC ENTROPY DETECTED"
+
+    diagnostic_payload = {
+        "timestamp": timestamp,
+        "average_score": round(avg_score, 2),
+        "verdict": verdict_str,
+        "results": results
+    }
+
+    # Save to public directory
+    cortex_dir = os.path.dirname(os.path.abspath(__file__))
+    workspace_dir = os.path.dirname(cortex_dir)
+    public_dir = os.path.join(workspace_dir, "public")
+    os.makedirs(public_dir, exist_ok=True)
+    json_path = os.path.join(public_dir, "cortex_diagnostic.json")
+    try:
+        with open(json_path, "w", encoding="utf-8") as f:
+            json.dump(diagnostic_payload, f, indent=2)
+        print(f"[+] Diagnostic JSON saved to: {json_path}")
+    except Exception as e:
+        print(f"[-] Failed to write diagnostic JSON: {e}")
+
+
     if avg_score >= 80.0:
-        print("WORKSPACE VERDICT: VERIFIED SOVEREIGN STATE (MAX EXERGY)")
         sys.exit(0)
     else:
-        print("WORKSPACE VERDICT: WARNING - HIGH SYSTEMIC ENTROPY DETECTED")
         sys.exit(1)
+
 
 
 if __name__ == "__main__":
