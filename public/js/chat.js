@@ -31,7 +31,7 @@ window.MOSKV.chat = {
         if (!widget) return;
 
         // Bootstrap abstraction layers
-        this._engine = new window.MOSKV.WasmSearchEngine('./search.wasm');
+        this._engine = new window.MOSKV.WasmSearchEngine('/search.wasm');
         this._router = new window.MOSKV.ResponseRouter(this._engine);
         this._voicePipeline = new window.MOSKV.VoiceEffectsPipeline();
 
