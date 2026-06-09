@@ -34,3 +34,8 @@ __pycache__/
 # Local testing
 mock_testimonios/
 
+# CORTEX local persistence & state files
+CORTEX/*.db
+CORTEX/fahrenheit_real_status.json
+
+

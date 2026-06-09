@@ -66,7 +66,26 @@ def evaluate_node(node: dict) -> dict:
 
 
 def audit_network(nodes: list) -> dict:
-    audited = [evaluate_node(n) for n in nodes]
+    import os
+    cortex_dir = os.path.dirname(os.path.abspath(__file__))
+    status_path = os.path.join(cortex_dir, "fahrenheit_real_status.json")
+    
+    nodes_to_audit = list(nodes)
+    if os.path.exists(status_path):
+        try:
+            with open(status_path, "r", encoding="utf-8") as f:
+                real_status = json.load(f)
+            nodes_to_audit.append({
+                "node_alias": real_status.get("node_alias", "Granger_Local_Edge_PoC"),
+                "centralization_ratio": real_status.get("centralization_ratio", 0.1),
+                "interception_risk": real_status.get("interception_risk", 0.05),
+                "local_persistence": real_status.get("local_persistence", 0.95),
+                "mesh_discovery": real_status.get("mesh_discovery", 0.9)
+            })
+        except Exception:
+            pass
+
+    audited = [evaluate_node(n) for n in nodes_to_audit]
     if not audited:
         return {}
 
@@ -87,6 +106,7 @@ def audit_network(nodes: list) -> dict:
         "hash": ledger_hash,
         "nodes": audited,
     }
+
 
 
 if __name__ == "__main__":
