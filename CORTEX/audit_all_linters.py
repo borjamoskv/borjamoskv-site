@@ -24,6 +24,8 @@ try:
     from relationship_exergy_linter import audit_connections as audit_relationships
     from substack_autonomy_linter import calculate_exergy as audit_substack
     from fahrenheit_distribution_linter import audit_network as audit_fahrenheit
+    from nash_equilibrium_linter import audit_nash
+    from frankenstein_mitosis_linter import audit_frankenstein
 except ImportError as e:
     print(f"[!] Critical Import Error: {e}")
     sys.exit(1)
@@ -165,6 +167,32 @@ def run_workspace_diagnostic():
     ]
     res_fahrenheit = audit_fahrenheit(fahrenheit_nodes)
 
+    # 11. Nash Equilibrium Game Coherence
+    nash_config = {
+        "cooperation_rate": 0.95,
+        "shared_resource_demand": 0.7,
+        "local_cache_hit_rate": 0.9,
+        "uses_compression": True,
+        "protocol_alignment_rate": 0.95,
+        "task_progress_rate": 0.9,
+        "exploration_factor": 0.8,
+    }
+    res_nash = audit_nash(nash_config)
+
+    # 12. Frankenstein Recursive Autogenesis
+    frankenstein_config = {
+        "subagents_count": 0,
+        "nesting_depth": 0,
+        "budget_enforced": True,
+        "parent_files_modified": 0,
+        "overwrites_system_prompt": False,
+        "has_raw_shell": False,
+        "protected_paths_accessed": 0,
+        "mismatched_imports": 0,
+        "deprecated_apis_used": 0,
+    }
+    res_frankenstein = audit_frankenstein(frankenstein_config)
+
     # Collect All Scores
     results = [
         (
@@ -214,6 +242,16 @@ def run_workspace_diagnostic():
             "Fahrenheit (Distribution)",
             res_fahrenheit["average_exergy"],
             res_fahrenheit["verdict"],
+        ),
+        (
+            "Nash (Coordination)",
+            res_nash["total_coordination_exergy"],
+            res_nash["verdict"],
+        ),
+        (
+            "Frankenstein (Mitosis)",
+            res_frankenstein["creation_exergy_pct"],
+            res_frankenstein["verdict"],
         ),
     ]
 
