@@ -1,0 +1,19 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GhostfaceTerminal from '../components/GhostfaceTerminal.jsx';
+---
+
+<Layout title="GHOSTFACE - C5-REAL TERMINAL">
+  <main>
+    <GhostfaceTerminal client:load />
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: 0;
+    padding: 0;
+    background-color: #0A0A0A;
+    min-height: 100vh;
+  }
+</style>
