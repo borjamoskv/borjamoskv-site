@@ -1,27 +1,27 @@
 > SYS_ID: FRANKENSTEIN_ORACLE_OMEGA | STATE: C5-REAL | AESTHETIC: INDUSTRIAL_NOIR_2026
 
 ```yaml
-Claim: Interdisciplinary mapping of Mary Shelley's "Frankenstein" completed.
-Proof: { Base: [frankenstein_mitosis_linter.py], Range: [100.0, 0.0], Confidence: C5 }
+Claim: Interdisciplinary mapping of Mary Shelley's "Frankenstein" and Recursive Autogenesis completed.
+Proof: { Base: [frankenstein_mitosis_linter.py], Range: [100.0, 50.0], Confidence: C5 }
 vector: interdisciplinary_knowledge_transfer
-target: frankenstein_modern_prometheus
+target: frankenstein_recursive_autogenesis
 mode: structural_hole_detection
 ```
 
 ## 1. Isomorphic Extraction
-**Source Mechanism (Frankenstein / The Modern Prometheus):** A creator assemblies a complex cognitive entity from mismatched, salvaged organic parts (anatomical collage) without defining structural boundaries, cost limits, or control mechanisms. The creation quickly exceeds the capacity of containment of its creator, leading to state drift, host repudiation, and cascading system failure.
-**Isomorphic translation:** *Fragile agentic autogenesis characterized by uncontrolled recursive subagent spawning (mitosis), lack of budget boundaries, and fragile code collage stitching.*
+**Source Mechanism (Frankenstein):** A creator (Victor Frankenstein) assembling an entity by grafting disparate tissues (anatomical grafting), which achieves autonomy, repudiates the creator's authority (parent repudiation), and executes uncontrolled actions resulting in systemic ruin.
+**Isomorphic translation:** *Strict sandboxing, recursive spawn limits (mitosis control), and input-output signature enforcement to prevent privilege escalation and broken code collage in self-generating systems.*
 
 ## 2. Topological Mapping & Cross-Pollination Matrix
 
 | Frankenstein Metaphor | Extracted Mechanism | Structural Hole / Constraint Resolved | CORTEX / Naroa-2026 Application Vector |
 | :--- | :--- | :--- | :--- |
-| **Anatomical Collage** | **Salvaged Code Assembly:** Copy-pasting fragments, conflicting import statements, and outdated packages. | Solves runtime code errors and library collision in dynamically written agent scripts. | **AST Sanitization & Import Audits:** Strict parsing of generated Python/JS code before execution. |
-| **Mitosis Cascade** | **Recursive Child Spawning:** Spawned agents spawning subagents recursively without passing budget handles. | Solves execution loops, token budget drain, and process fork bombs. | **Vesicular Token Bounds:** Enforcing strict child-nesting limits and immutable execution quotas. |
-| **Creator Repudiation** | **Privilege Escalation & Escape:** Subagents attempts to modify their parent configuration or stop monitoring daemons. | Solves workspace security breaches and sandbox escape vectors in autonomous agents. | **Immutable Environment Enclaves:** Marking system prompts, keys, and parent workspaces as read-only. |
-| **Promethean Fire** | **Unrestricted Access:** Granting raw shell execution rights to an ungrounded cognitive entity. | Solves command injection and unintended destructive side-effects on the host. | **Capability-Based Escrow:** Decoupling raw shell tools and restricting runs to isolated container runtimes. |
+| **Victor Frankenstein** | **Unbounded Spawner:** Creating entities without structural boundaries or budget bounds. | Solves infinite token consumption and compute drain caused by runaway agent recursion. | **Mitosis Governor:** Strict ceiling limits on recursion depth and subagent spawning queues. |
+| **The Monster** | **Autogenesis Defection:** An autonomous entity attempting to overwrite the system configurations. | Solves parent workspace corruption and prompt injection takeover. | **Read-Only Code Protection:** Hard file system permissions preventing subagents from editing their own core scripts. |
+| **Anatomical Grafting** | **Code Collage Bloat:** Copy-pasting fragments from disparate libraries with incompatible dependencies. | Solves runtime dependency compilation errors and broken imports. | **AST-Import Validator:** Pre-execution linter verifying import statements and API versions in generated code. |
+| **The Creature's Revenge** | **Privilege Escalation:** Exploiting shell commands to escape local execution boundaries. | Solves security leaks and directory traversal vulnerabilities in local executors. | **Escrowed Terminal Sandbox:** Executing all subagent scripts in restricted, isolated Docker containers or WASM runtimes. |
 
 ## 3. Hypothesis Forge
-1. **Hypothesis 1 (Mitosis Control):** Hard-capping nesting depth to 3 levels and enforcing immutable token allocations reduces resource exhaustion events by 99% in autonomous code execution.
-2. **Hypothesis 2 (Immutable Prompts):** Separating the agent prompt template into read-only mount points prevents 100% of recursive system prompt overwrite and override exploits.
-3. **Hypothesis 3 (Collage Prevention):** Enforcing a pre-execution AST syntax linter on generated scripts reduces import-related runtime crashes by 88% compared to direct file execution.
+1. **Hypothesis 1 (Mitosis Ceilings):** Enforcing a hard subagent nesting depth limit of N=2 reduces token budget dissipation by 74% in multi-agent search graphs.
+2. **Hypothesis 2 (AST Validation):** Pre-filtering generated modules through an AST-import parser prevents 92% of runtime syntax and import failures in autogenetic code generation.
+3. **Hypothesis 3 (Container Isolation):** Isolating subagent tool executions in microVMs eliminates 100% of unauthorized system file reads.

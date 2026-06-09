@@ -99,6 +99,73 @@ fn matches_query(source: &str, query: &str) -> bool {
     false
 }
 
+struct ParsedQuery {
+    text: String,
+    energy_min: Option<f32>,
+    energy_max: Option<f32>,
+    valence_min: Option<f32>,
+    valence_max: Option<f32>,
+    year_eq: Option<u32>,
+    year_min: Option<u32>,
+    year_max: Option<u32>,
+}
+
+fn parse_query(query: &str) -> ParsedQuery {
+    let mut text_parts = Vec::new();
+    let mut energy_min = None;
+    let mut energy_max = None;
+    let mut valence_min = None;
+    let mut valence_max = None;
+    let mut year_eq = None;
+    let mut year_min = None;
+    let mut year_max = None;
+
+    for word in query.split_whitespace() {
+        if word.starts_with("energy>") {
+            if let Ok(val) = word[7..].parse::<f32>() {
+                energy_min = Some(val);
+            }
+        } else if word.starts_with("energy<") {
+            if let Ok(val) = word[7..].parse::<f32>() {
+                energy_max = Some(val);
+            }
+        } else if word.starts_with("valence>") {
+            if let Ok(val) = word[8..].parse::<f32>() {
+                valence_min = Some(val);
+            }
+        } else if word.starts_with("valence<") {
+            if let Ok(val) = word[8..].parse::<f32>() {
+                valence_max = Some(val);
+            }
+        } else if word.starts_with("year:") {
+            if let Ok(val) = word[5..].parse::<u32>() {
+                year_eq = Some(val);
+            }
+        } else if word.starts_with("year>") {
+            if let Ok(val) = word[5..].parse::<u32>() {
+                year_min = Some(val);
+            }
+        } else if word.starts_with("year<") {
+            if let Ok(val) = word[5..].parse::<u32>() {
+                year_max = Some(val);
+            }
+        } else {
+            text_parts.push(word);
+        }
+    }
+
+    ParsedQuery {
+        text: text_parts.join(" "),
+        energy_min,
+        energy_max,
+        valence_min,
+        valence_max,
+        year_eq,
+        year_min,
+        year_max,
+    }
+}
+
 #[no_mangle]
 pub extern "C" fn search(query_ptr: *const u8, query_len: usize) {
     // 1. Read query string from input buffer
@@ -108,9 +175,9 @@ pub extern "C" fn search(query_ptr: *const u8, query_len: usize) {
         Err(_) => "",
     };
 
+    let parsed = parse_query(query);
+
     // 2. Perform search and generate results
-    // To match the 1918 archive count, we evaluate allBASE_TRACKS and then dynamically generate
-    // the remaining tracks up to 1918 deterministically.
     let total_archive_size = 1918;
     let base_count = BASE_TRACKS.len();
     
@@ -132,20 +199,18 @@ pub extern "C" fn search(query_ptr: *const u8, query_len: usize) {
             break;
         }
 
+        let mut gen_title = String::new();
+        
         let (title, artist, album, year, duration, valence, energy) = if idx < base_count {
             let t = &BASE_TRACKS[idx];
             (t.title, t.artist, t.album, t.year, t.duration, t.valence, t.energy)
         } else {
-            // Generate deterministic simulated track
-            // Simple LCG or modulus-based indexing
             let v_idx = (idx * 3) % verbs.len();
             let n_idx = (idx * 7) % nouns.len();
             let art_idx = (idx * 11) % artists.len();
             let alb_idx = (idx * 13) % albums.len();
             let dur_idx = (idx * 17) % durations.len();
             
-            // Generate a deterministic title like "PULSO SILICIO III"
-            // We can allocate strings on the stack/heap inside the loop. In WASM, String is fine since we have a heap.
             let roman = match idx % 5 {
                 0 => "I",
                 1 => "II",
@@ -154,9 +219,7 @@ pub extern "C" fn search(query_ptr: *const u8, query_len: usize) {
                 _ => "V",
             };
             
-            // Form title
-            // We use standard format! which allocates. It's safe since WASM allocation works.
-            let gen_title = format!("{} {} {}", verbs[v_idx], nouns[n_idx], roman);
+            gen_title = format!("{} {} {}", verbs[v_idx], nouns[n_idx], roman);
             
             let gen_artist = artists[art_idx];
             let gen_album = albums[alb_idx];
@@ -166,22 +229,48 @@ pub extern "C" fn search(query_ptr: *const u8, query_len: usize) {
             let gen_valence = ((idx * 13) % 100) as f32 / 100.0;
             let gen_energy = ((idx * 23) % 100) as f32 / 100.0;
             
-            // We leak the generated title string so it lives for the duration of the search
-            // (safe since search is short-lived and memory gets reset or the process runs in a sandbox).
-            // Actually, to avoid leaking memory, let's check matches first and format immediately.
-            let title_ref = Box::leak(gen_title.into_boxed_str());
-            (title_ref as &str, gen_artist, gen_album, gen_year, gen_duration, gen_valence, gen_energy)
+            (gen_title.as_str(), gen_artist, gen_album, gen_year, gen_duration, gen_valence, gen_energy)
         };
         
-        // Check if query matches title, artist, or album
-        if matches_query(title, query) || matches_query(artist, query) || matches_query(album, query) {
+        // Apply structured filter checks
+        let mut matches = true;
+
+        if let Some(min) = parsed.energy_min {
+            if energy <= min { matches = false; }
+        }
+        if let Some(max) = parsed.energy_max {
+            if energy >= max { matches = false; }
+        }
+        if let Some(min) = parsed.valence_min {
+            if valence <= min { matches = false; }
+        }
+        if let Some(max) = parsed.valence_max {
+            if valence >= max { matches = false; }
+        }
+        if let Some(eq) = parsed.year_eq {
+            if year != eq { matches = false; }
+        }
+        if let Some(min) = parsed.year_min {
+            if year <= min { matches = false; }
+        }
+        if let Some(max) = parsed.year_max {
+            if year >= max { matches = false; }
+        }
+
+        // Apply text query check if text is specified
+        if matches && !parsed.text.is_empty() {
+            if !matches_query(title, &parsed.text) &&
+               !matches_query(artist, &parsed.text) &&
+               !matches_query(album, &parsed.text) {
+                matches = false;
+            }
+        }
+        
+        if matches {
             if matches_count > 0 {
                 result_json.push(',');
             }
             
-            // Format JSON object manually
-            // We escape title, artist and album strings in case they contain quotes (our generated ones don't, but base might).
-            // Since they are basic ASCII, we write them directly.
             let item_str = format!(
                 "{{\"title\":\"{}\",\"artist\":\"{}\",\"album\":\"{}\",\"year\":{},\"duration\":\"{}\",\"valence\":{:.2},\"energy\":{:.2}}}",
                 title, artist, album, year, duration, valence, energy

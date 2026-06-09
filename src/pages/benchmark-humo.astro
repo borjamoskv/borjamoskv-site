@@ -618,10 +618,185 @@
       to { transform: rotate(360deg); }
     }
 
+    /* ── CORTEX Workspace Diagnostic ── */
+    .diagnostic-section {
+      margin-bottom: 3.5rem;
+    }
+
+    .diagnostic-container {
+      background: rgba(10, 10, 10, 0.4);
+      border: 1px solid rgba(43, 59, 229, 0.25);
+      border-radius: 8px;
+      padding: 1.5rem;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 30px rgba(43, 59, 229, 0.04);
+    }
+
+    .diagnostic-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding-bottom: 0.85rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .diagnostic-title-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .diagnostic-icon {
+      font-size: 1.2rem;
+    }
+
+    .diagnostic-title {
+      font-family: var(--font-primary);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: rgba(243, 244, 246, 0.95);
+      margin: 0;
+    }
+
+    .diagnostic-badge-group {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .diagnostic-badge {
+      font-family: var(--font-primary);
+      font-size: 0.55rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 700;
+      padding: 0.25rem 0.55rem;
+      border-radius: 4px;
+      background: rgba(43, 59, 229, 0.06);
+      border: 1px solid rgba(43, 59, 229, 0.25);
+      color: var(--blue, #2B3BE5);
+      transition: all 0.3s ease;
+    }
+
+    .diagnostic-badge.status-verified {
+      background: rgba(0, 255, 102, 0.04);
+      border-color: rgba(0, 255, 102, 0.25);
+      color: #00FF66;
+      text-shadow: 0 0 8px rgba(0, 255, 102, 0.15);
+    }
+
+    .diagnostic-badge.status-warning {
+      background: rgba(255, 159, 28, 0.04);
+      border-color: rgba(255, 159, 28, 0.25);
+      color: #FF9F1C;
+    }
+
+    .diagnostic-badge.status-rejected {
+      background: rgba(255, 0, 85, 0.04);
+      border-color: rgba(255, 0, 85, 0.25);
+      color: #FF0055;
+    }
+
+    .diagnostic-score {
+      font-family: var(--font-primary);
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: #FFF;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    }
+
+    .diagnostic-grid-layout {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .diagnostic-table-wrap {
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      border-radius: 6px;
+      background: rgba(2, 2, 2, 0.45);
+      overflow-x: auto;
+    }
+
+    .diagnostic-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      text-align: left;
+    }
+
+    .diagnostic-table th, .diagnostic-table td {
+      padding: 0.55rem 0.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    }
+
+    .diagnostic-table th {
+      font-family: var(--font-primary);
+      font-size: 0.55rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(243, 244, 246, 0.4);
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.01);
+    }
+
+    .diagnostic-table td.score-val {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      color: #FFF;
+    }
+
+    .diagnostic-summary-card {
+      background: rgba(2, 2, 2, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      border-radius: 6px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .summary-card-title {
+      font-family: var(--font-primary);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: rgba(243, 244, 246, 0.55);
+      margin: 0 0 0.75rem 0;
+    }
+
+    .summary-card-desc {
+      font-size: 0.65rem;
+      line-height: 1.5;
+      color: rgba(243, 244, 246, 0.6);
+      margin: 0 0 1rem 0;
+      flex: 1;
+    }
+
+    .summary-card-timestamp {
+      font-family: var(--font-primary);
+      font-size: 0.5rem;
+      letter-spacing: 0.05em;
+      color: rgba(243, 244, 246, 0.3);
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 768px) {
+      .diagnostic-grid-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
     /* ── Distribution Matrix & Spatial Map ── */
     .matrix-section {
       margin-bottom: 3rem;
     }
+
 
     .matrix-container-layout {
       display: grid;
@@ -939,9 +1114,55 @@
         <div class="hud-val" id="hudEfficiency">0.34</div>
         <p class="hud-subtext">Ratio Utilidad / Hype Promedio</p>
       </div>
+    <!-- CORTEX WORKSPACE DIAGNOSTIC -->
+    <section class="diagnostic-section" aria-label="Auditoría de Exergía de Workspace">
+      <div class="diagnostic-container">
+        <div class="diagnostic-header">
+          <div class="diagnostic-title-group">
+            <span class="diagnostic-icon">🛡️</span>
+            <h2 class="diagnostic-title">Diagnóstico de Alineación CORTEX (C5-REAL)</h2>
+          </div>
+          <div class="diagnostic-badge-group">
+            <span class="diagnostic-badge" id="cortexGlobalStatus">Inicializando...</span>
+            <span class="diagnostic-score" id="cortexGlobalScore">--%</span>
+          </div>
+        </div>
+        <div class="diagnostic-grid-layout">
+          <div class="diagnostic-table-wrap">
+            <table class="diagnostic-table">
+              <thead>
+                <tr>
+                  <th scope="col">Dimensión Linter</th>
+                  <th scope="col">Exergía</th>
+                  <th scope="col">Veredicto / Estatus</th>
+                </tr>
+              </thead>
+              <tbody id="cortexDiagnosticBody">
+                <tr>
+                  <td colspan="3" style="text-align: center; color: rgba(243, 244, 246, 0.4); padding: 2rem 0;">
+                    Recuperando telemetría inmutable del enjambre...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="diagnostic-summary-card">
+            <div>
+              <h3 class="summary-card-title">Resumen de Metabolismo</h3>
+              <p class="summary-card-desc" id="cortexSummaryText">
+                Cargando métricas de acoplamiento termodinámico y alineación cognitiva desde el ledger local...
+              </p>
+            </div>
+            <div class="summary-card-timestamp" id="cortexTimestamp">
+              UTC: --
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- THERMODYNAMIC DISTRIBUTION MATRIX & SPATIAL MAP -->
+
     <section class="matrix-section" aria-label="Matriz de Distribución Exérgica">
       <div class="matrix-container-layout">
         <div class="matrix-grid">
@@ -1559,6 +1780,7 @@
     // ── Boot sequence ──
     document.addEventListener('DOMContentLoaded', () => {
       initDatabase();
+      fetchDiagnostics();
     });
 
     function initDatabase() {
@@ -1992,6 +2214,110 @@
       return str.replace(/[&<>'"]/g, 
         tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
       );
+    }
+
+    async function fetchDiagnostics() {
+      const cortexGlobalStatus = document.getElementById('cortexGlobalStatus');
+      const cortexGlobalScore = document.getElementById('cortexGlobalScore');
+      const cortexDiagnosticBody = document.getElementById('cortexDiagnosticBody');
+      const cortexSummaryText = document.getElementById('cortexSummaryText');
+      const cortexTimestamp = document.getElementById('cortexTimestamp');
+
+      try {
+        const response = await fetch('/cortex_diagnostic.json');
+        if (!response.ok) {
+          throw new Error(`Error HTTP: ${response.status}`);
+        }
+        const data = await response.json();
+
+        // Update score
+        if (cortexGlobalScore) {
+          cortexGlobalScore.textContent = `${data.average_score}%`;
+        }
+
+        // Update badge status and classes
+        if (cortexGlobalStatus) {
+          cortexGlobalStatus.classList.remove('status-verified', 'status-warning', 'status-rejected');
+          if (data.average_score >= 80) {
+            cortexGlobalStatus.textContent = 'VERIFICADO';
+            cortexGlobalStatus.classList.add('status-verified');
+          } else if (data.average_score >= 50) {
+            cortexGlobalStatus.textContent = 'PRECAUCIÓN';
+            cortexGlobalStatus.classList.add('status-warning');
+          } else {
+            cortexGlobalStatus.textContent = 'RECHAZADO';
+            cortexGlobalStatus.classList.add('status-rejected');
+          }
+        }
+
+        // Update summary verdict
+        if (cortexSummaryText) {
+          cortexSummaryText.textContent = data.verdict || 'Análisis completado sin veredicto explícito.';
+        }
+
+        // Update timestamp
+        if (cortexTimestamp) {
+          cortexTimestamp.textContent = `UTC: ${data.timestamp}`;
+        }
+
+        // Update table
+        if (cortexDiagnosticBody) {
+          cortexDiagnosticBody.innerHTML = '';
+          if (data.results && data.results.length > 0) {
+            data.results.forEach(res => {
+              const tr = document.createElement('tr');
+              
+              // Score styling
+              let scoreColor = '#FF0055'; // rejected
+              if (res.score >= 80) {
+                scoreColor = '#00FF66'; // verified
+              } else if (res.score >= 50) {
+                scoreColor = '#FF9F1C'; // warning
+              }
+
+              tr.innerHTML = `
+                <td><strong>${escapeHTML(res.name)}</strong></td>
+                <td class="score-val" style="color: ${scoreColor}">${res.score.toFixed(2)}%</td>
+                <td>${escapeHTML(res.verdict)}</td>
+              `;
+              cortexDiagnosticBody.appendChild(tr);
+            });
+          } else {
+            cortexDiagnosticBody.innerHTML = `
+              <tr>
+                <td colspan="3" style="text-align: center; color: rgba(243, 244, 246, 0.4); padding: 2rem 0;">
+                  No se encontraron resultados de diagnóstico.
+                </td>
+              </tr>
+            `;
+          }
+        }
+      } catch (err) {
+        console.error('Error al cargar la telemetría CORTEX:', err);
+        if (cortexGlobalStatus) {
+          cortexGlobalStatus.textContent = 'ERROR';
+          cortexGlobalStatus.classList.remove('status-verified', 'status-warning');
+          cortexGlobalStatus.classList.add('status-rejected');
+        }
+        if (cortexGlobalScore) {
+          cortexGlobalScore.textContent = '--%';
+        }
+        if (cortexSummaryText) {
+          cortexSummaryText.textContent = 'Fallo al recuperar la telemetría del ledger. Asegúrese de que el linter de diagnóstico se haya ejecutado y generado cortex_diagnostic.json.';
+        }
+        if (cortexTimestamp) {
+          cortexTimestamp.textContent = 'UTC: ERROR';
+        }
+        if (cortexDiagnosticBody) {
+          cortexDiagnosticBody.innerHTML = `
+            <tr>
+              <td colspan="3" style="text-align: center; color: #FF0055; padding: 2rem 0; font-weight: bold;">
+                [ERROR] Telemetría no disponible. Intente reconstruir el ledger localmente.
+              </td>
+            </tr>
+          `;
+        }
+      }
     }
 
     // ── UI Event listeners ──

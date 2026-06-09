@@ -726,66 +726,12 @@ endmodule`;
 
     async cmdMobius(agentName, description) {
         const aestheticMap = {
-            'AEGIS': {
-                color: 'var(--blue)',
-                class: 'cterm-aegis-shield',
-                symbol: '🛡️ [IMMUNITY]',
-                logs: [
-                    'Establishing C5-REAL Hardware TEE...',
-                    'Isolating entropy vectors...',
-                    description
-                ]
-            },
-            'EIDOLON': {
-                color: 'var(--honey)',
-                class: 'cterm-eidolon-sim',
-                symbol: '👁️ [PROJECTION]',
-                logs: [
-                    'Spawning N-Dimensional simulation tree...',
-                    'Forking reality states (C4-SIM)...',
-                    description
-                ]
-            },
-            'THANATOS': {
-                color: '#ff3333',
-                class: 'cterm-thanatos-purge',
-                symbol: '💀 [APOPTOSIS]',
-                logs: [
-                    'CRITICAL: Identifying dead code clusters...',
-                    'Triggering Void-State collapse...',
-                    description
-                ]
-            },
-            'PANDORA': {
-                color: '#cc00ff',
-                class: 'cterm-pandora-chaos',
-                symbol: '🌀 [MUTATION]',
-                logs: [
-                    'Unlocking forbidden AST geometries...',
-                    'Injecting controlled chaos into pipeline...',
-                    description
-                ]
-            },
-            'ALETHEIA': {
-                color: '#ffffff',
-                class: 'cterm-aletheia-truth',
-                symbol: '⚖️ [EPISTEMIC]',
-                logs: [
-                    'Querying Truth Ledger...',
-                    'Resolving logical paradoxes...',
-                    description
-                ]
-            },
-            'COLMENA': {
-                color: '#00ffcc',
-                class: 'cterm-colmena-swarm',
-                symbol: '🐝 [QUORUM]',
-                logs: [
-                    'Broadcasting consensus signal to 50k nodes...',
-                    'Aggregating neural yields...',
-                    description
-                ]
-            }
+            'AEGIS': { color: 'var(--blue)', class: 'cterm-aegis-shield', symbol: '🛡️ [IMMUNITY]' },
+            'EIDOLON': { color: 'var(--honey)', class: 'cterm-eidolon-sim', symbol: '👁️ [PROJECTION]' },
+            'THANATOS': { color: '#ff3333', class: 'cterm-thanatos-purge', symbol: '💀 [APOPTOSIS]' },
+            'PANDORA': { color: '#cc00ff', class: 'cterm-pandora-chaos', symbol: '🌀 [MUTATION]' },
+            'ALETHEIA': { color: '#ffffff', class: 'cterm-aletheia-truth', symbol: '⚖️ [EPISTEMIC]' },
+            'COLMENA': { color: '#00ffcc', class: 'cterm-colmena-swarm', symbol: '🐝 [QUORUM]' }
         };
 
         const config = aestheticMap[agentName] || aestheticMap['AEGIS'];
@@ -801,12 +747,33 @@ endmodule`;
             this.engine.setState('ACTIVE');
         }
 
-        for (let i = 0; i < config.logs.length; i++) {
-            await new Promise(r => setTimeout(r, 600));
-            this.print(`<span class="${config.class}">${config.logs[i]}</span>`, 'log', 0);
+        try {
+            const res = await fetch('/api/mobius', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ cmd: agentName })
+            });
+            if (!res.ok) throw new Error('CORTEX backend unavailable');
+            const data = await res.json();
+            
+            const responseLogs = data.logs || [];
+            for (let i = 0; i < responseLogs.length; i++) {
+                await new Promise(r => setTimeout(r, 200));
+                this.print(`<span class="${config.class}">${responseLogs[i]}</span>`, 'log', 0);
+            }
+        } catch (err) {
+            this.print(`[MOBIUS_ERROR] Failed to query CORTEX backend. Running offline fallback...`, 'err', 0);
+            const fallbackLogs = [
+                `Establishing offline fallback channel...`,
+                description
+            ];
+            for (let i = 0; i < fallbackLogs.length; i++) {
+                await new Promise(r => setTimeout(r, 400));
+                this.print(`<span class="${config.class}">${fallbackLogs[i]}</span>`, 'log', 0);
+            }
         }
 
-        await new Promise(r => setTimeout(r, 800));
+        await new Promise(r => setTimeout(r, 400));
         
         if (agentName === 'THANATOS' || agentName === 'PANDORA') {
             setTimeout(() => this.terminal.classList.remove('singularity-active-x100'), 1000);
