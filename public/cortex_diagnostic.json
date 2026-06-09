@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-06-09T09:06:18Z",
-  "average_score": 93.61,
+  "timestamp": "2026-06-09T13:28:54Z",
+  "average_score": 93.62,
   "verdict": "WORKSPACE VERDICT: VERIFIED SOVEREIGN STATE (MAX EXERGY)",
   "results": [
     {
@@ -65,7 +65,7 @@
     },
     {
       "name": "Maxwell (Demon Sorting)",
-      "score": 90.21,
+      "score": 90.38,
       "verdict": "VERIFIED SANITY - Maxwell Demon Sorting Active"
     }
   ]

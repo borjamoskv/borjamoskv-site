@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CORTEX LEXICON - Semantic Patent",
+  "author": "Borja Moskv",
+  "version": "1.0",
+  "state": "C5-REAL",
+  "terms": [
+    {
+      "id": "soberania-agentica",
+      "term": "Soberanía Agéntica",
+      "definition": "Paradigma arquitectónico donde los agentes de IA poseen memoria persistente, criptográficamente auditada, y operan independientemente de la entropía de plataformas centralizadas.",
+      "first_minted": "2026-05-29T11:00:00Z"
+    },
+    {
+      "id": "ast-sealing",
+      "term": "AST Cryptographic Sealing",
+      "definition": "Proceso de convertir un Abstract Syntax Tree (AST) en un hash determinista (ej. SHA-256) para verificar la intención estructural del código en bucles autónomos en < 1ms, eliminando la validación probabilística de LLMs.",
+      "first_minted": "2026-05-29T10:48:00Z"
+    },
+    {
+      "id": "exergy-maximized-policy",
+      "term": "Exergy-Maximized Policy",
+      "definition": "Directiva operativa C5-REAL que prioriza la densidad de señal, la ejecución determinista y la fricción cero, purgando el ruido decorativo.",
+      "first_minted": "2026-05-01T00:00:00Z"
+    },
+    {
+      "id": "industrial-noir-2026",
+      "term": "Industrial Noir 2026",
+      "definition": "Sistema estético funcional caracterizado por fondos absolutos (#0A0A0A), acentos exérgicos (#2B3BE5), tipografía Humanist Sans y micro-animaciones deterministas. Cero ornamentos superfluos.",
+      "first_minted": "2026-05-01T00:00:00Z"
+    }
+  ]
+}
