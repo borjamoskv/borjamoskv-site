@@ -27,6 +27,7 @@ try:
     from fahrenheit_distribution_linter import audit_network as audit_fahrenheit
     from nash_equilibrium_linter import audit_nash
     from frankenstein_mitosis_linter import audit_frankenstein
+    from maxwell_demon_linter import audit_maxwell
 except ImportError as e:
     print(f"[!] Critical Import Error: {e}")
     sys.exit(1)
@@ -194,6 +195,9 @@ def run_workspace_diagnostic():
     }
     res_frankenstein = audit_frankenstein(frankenstein_config)
 
+    # 13. Maxwell's Demon Entropy Linter
+    res_maxwell = audit_maxwell()
+
     # Collect All Scores
     results = [
         {
@@ -257,6 +261,11 @@ def run_workspace_diagnostic():
             "name": "Frankenstein (Mitosis)",
             "score": res_frankenstein["creation_exergy_pct"],
             "verdict": res_frankenstein["verdict"],
+        },
+        {
+            "name": "Maxwell (Demon Sorting)",
+            "score": res_maxwell["total_exergy"],
+            "verdict": res_maxwell["verdict"],
         },
     ]
 
