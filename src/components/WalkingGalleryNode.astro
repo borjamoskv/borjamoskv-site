@@ -54,10 +54,13 @@
         </div>
         
         <!-- Action Buttons -->
-        <div class="typewriter-actions">
-          <button id="naroa-submit-btn" class="submit-stamp" disabled>
+        <div class="typewriter-actions" style="display: flex; gap: 1rem; width: 100%;">
+          <button id="naroa-submit-btn" class="submit-stamp" disabled style="flex: 1.2;">
             [ IMPRIMIR Y ENVIAR AL CORTEX ]
           </button>
+          <a href="https://naroagutierrezgil.com/" target="_blank" rel="noopener" class="web-link-stamp">
+            [ VER WEB OFICIAL ]
+          </a>
         </div>
       </div>
     </div>
@@ -352,7 +355,6 @@
   
   /* Stamp Button */
   .submit-stamp {
-    width: 100%;
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 183, 178, 0.3);
     color: rgba(255, 255, 255, 0.4);
@@ -372,6 +374,32 @@
   .submit-stamp:not(:disabled):hover {
     background: rgba(230, 57, 70, 0.15);
     box-shadow: 0 0 15px rgba(230, 57, 70, 0.3);
+  }
+
+  /* External Link Button */
+  .web-link-stamp {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(213, 170, 255, 0.35);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 0.8rem;
+    font-family: var(--font-secondary);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s;
+    text-align: center;
+  }
+  .web-link-stamp:hover {
+    background: rgba(213, 170, 255, 0.08);
+    border-color: var(--color-naroa-quantum);
+    color: #fff;
+    box-shadow: 0 0 15px rgba(213, 170, 255, 0.2);
   }
   
   /* Trigger node wrapper reset */
