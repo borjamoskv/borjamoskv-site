@@ -140,7 +140,7 @@ def fetch_recommendations(subdomain, pub_id, base_url, retries=3, delay=2.0):
                 break
             else:
                 time.sleep(1.0)
-        except Exception as e:
+        except Exception:
             time.sleep(1.0)
             
     return []
@@ -168,7 +168,7 @@ def fetch_archive(subdomain, base_url, limit=5, retries=3, delay=2.0):
                 break
             else:
                 time.sleep(1.0)
-        except Exception as e:
+        except Exception:
             time.sleep(1.0)
             
     return []
@@ -414,7 +414,7 @@ def main():
                     res = future.result()
                     if res:
                         audited_results.append(res)
-                except Exception as e:
+                except Exception:
                     pass
                 if completed % 100 == 0 or completed == len(to_audit_list):
                     print(f"    Audited {completed}/{len(to_audit_list)} publications (Successful: {len(audited_results)})...")
@@ -555,7 +555,7 @@ def main():
     with open(REPORT_ARTIFACT_PATH, "w", encoding="utf-8") as f:
         f.write(report_md)
         
-    print(f"[✓] Markdown reports successfully saved to:")
+    print("[✓] Markdown reports successfully saved to:")
     print(f"  - Local: {REPORT_PATH}")
     print(f"  - Artifact: {REPORT_ARTIFACT_PATH}")
     print("┌────────────────────────────────────────────────────────┐")
