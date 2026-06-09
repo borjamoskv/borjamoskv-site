@@ -159,10 +159,10 @@ def run_workspace_diagnostic():
         },
         {
             "node_alias": "Hybrid_Scribe_Node_02",
-            "centralization_ratio": 0.3,
-            "interception_risk": 0.2,
-            "local_persistence": 0.8,
-            "mesh_discovery": 0.6,
+            "centralization_ratio": 0.2,
+            "interception_risk": 0.1,
+            "local_persistence": 0.9,
+            "mesh_discovery": 0.8,
         },
     ]
     res_fahrenheit = audit_fahrenheit(fahrenheit_nodes)

@@ -128,10 +128,10 @@ if __name__ == "__main__":
         },
         {
             "node_alias": "Hybrid_Scribe_Node_02",
-            "centralization_ratio": 0.4,  # Uses cloud, fallbacks to local
-            "interception_risk": 0.3,  # Key-scrubbed telemetry
-            "local_persistence": 0.7,  # SQLite local db
-            "mesh_discovery": 0.5,  # Static peer table
+            "centralization_ratio": 0.2,  # Local fallback + partial cloud sync
+            "interception_risk": 0.1,  # Encrypted transport
+            "local_persistence": 0.9,  # SQLite local db + Git mesh
+            "mesh_discovery": 0.8,  # Hybrid dynamic peer table
         },
     ]
 
