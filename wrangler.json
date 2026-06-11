@@ -10,6 +10,13 @@
       "id": "67905ac360e4488b80731f92acdba96a"
     }
   ],
+  "d1_databases": [
+    {
+      "binding": "CORTEX_DB",
+      "database_name": "cortex_persistence",
+      "database_id": "e976aa16-d3f9-41eb-915e-3c9c99ceeed9"
+    }
+  ],
   "ai": {
     "binding": "AI"
   }
