@@ -1,6 +1,6 @@
 # MASS-EXERGY-SCANNER: Autopsia Termodinámica de 1983 Influencers de Substack
 > **Nivel de Realidad:** `C5-REAL` (BFS Crawler de Co-Recomendaciones e Inferencia AST)  
-> **Fecha de Análisis:** 2026-06-08 11:39:13 UTC  
+> **Fecha de Análisis:** 2026-06-11 00:39:10 UTC  
 > **Publicaciones Descubiertas:** 2030  
 > **Publicaciones Exitosamente Auditadas:** 1983  
 > **Total de Posts Analizados:** 9670  
