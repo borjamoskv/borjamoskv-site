@@ -86,8 +86,8 @@ export async function appendLedgerEntry(
   record: Omit<ExergyAuditRecord, 'prev_hash' | 'hash'>,
   options: { 
     ledgerPath?: string; 
-    kvNamespace?: any; 
-    dbNamespace?: any; 
+    kvNamespace?: unknown; 
+    dbNamespace?: unknown; 
     syncUrl?: string; 
   } = {}
 ): Promise<ExergyAuditRecord> {
