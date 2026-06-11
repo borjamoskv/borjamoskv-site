@@ -4,6 +4,7 @@ title: "Odio Eterno
 description: "15 razones por las que el fútbol ya no es tuyo. El deporte que inventó la clase obrera y se quedó la oligarquía global."
 pubDate: "13 de marzo de 2026"
 tags:
+  - \'C5-REAL\'
   - '#FútbolModerno'
   - '#OdioEterno'
   - '#Sportswashing'

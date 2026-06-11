@@ -4,6 +4,7 @@ title: "La Generación Que Se Quedó Sin Futuro
 description: "12 marcos que explican cómo los millennials pasaron de ser la generación más preparada de la historia a la más estafada."
 pubDate: "13 de marzo de 2026"
 tags:
+  - \'C5-REAL\'
   - '#Millennials'
   - '#ColapsoDemográfico'
   - '#Precariedad'

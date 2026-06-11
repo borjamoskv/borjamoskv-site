@@ -4,6 +4,7 @@ title: "La Termodinámica de los Agentes
 description: "Anthropic acaba de confirmar lo que en CORTEX sabíamos: la fuerza bruta probabilística no genera sistemas fiables."
 pubDate: "25 de marzo de 2026"
 tags:
+  - \'C5-REAL\'
   - '#ArtificialIntelligence'
   - '#Thermodynamics'
   - '#CORTEXPersist'

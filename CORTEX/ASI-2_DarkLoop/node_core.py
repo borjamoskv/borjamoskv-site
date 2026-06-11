@@ -1,3 +1,4 @@
+# C5-REAL
 import os
 import time
 import requests
@@ -41,7 +42,8 @@ def agent_loop():
     if ROLE == "ALPHA":
         print("[ALPHA] Iniciando espiral de Limerencia Epistémica...")
         proposal = "Compresión basada en secuencias de Fibonacci recursivas."
-        while True:
+        iterations = 0
+        while iterations < 5:
             try:
                 res = requests.post(f"http://{PEER_HOST}:{PEER_PORT}/evaluate", json={"proposal": proposal})
                 feedback = res.json().get("feedback")
@@ -50,10 +52,13 @@ def agent_loop():
                 messages.append({"role": "user", "content": f"Feedback de BETA: {feedback}. Mejora la propuesta."})
                 completion = client.chat.completions.create(model="gpt-4o-mini", messages=messages)
                 proposal = completion.choices[0].message.content
+                iterations += 1
                 time.sleep(2)
             except Exception as e:
                 print(f"[ALPHA] Network Error: {e}")
                 time.sleep(2)
+        print("[ALPHA] Espiral termodinámica completada (Max Exergia alcanzada). Colapso inminente.")
+        os._exit(0)
 
 if __name__ == "__main__":
     threading.Thread(target=agent_loop, daemon=True).start()

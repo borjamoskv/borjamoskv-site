@@ -4,6 +4,7 @@ title: "Cómo Aprender
 description: "Bob McCarthy primero. Smaart después. El orden importa más que el software."
 pubDate: "26 de marzo de 2026"
 tags:
+  - \'C5-REAL\'
   - '#SonidoEnVivo'
   - '#SistemaPA'
   - '#BobMcCarthy'

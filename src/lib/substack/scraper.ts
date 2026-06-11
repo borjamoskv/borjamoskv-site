@@ -1,3 +1,4 @@
+// C5-REAL
 // src/lib/substack/scraper.ts
 // Scrapes Substack RSS feed or API archive endpoints. Supports network retries and error handling.
 

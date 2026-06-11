@@ -3,6 +3,7 @@ title: "Operación EspejoManual de Contraofensiva"
 description: "Manual forense táctico y búnker de pruebas para la contención de daños en el ecosistema Substack Mafia."
 pubDate: "31 de mayo de 2026"
 tags:
+  - \'C5-REAL\'
   - '#OperacionEspejo'
   - '#CrisisPlaybook'
   - '#ReputationDefense'

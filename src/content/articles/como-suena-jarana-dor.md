@@ -4,6 +4,7 @@ title: "Cómo suena Jarana d'Or
 description: "Seis leitmotivs para convertir Jarana d'Or en una gramática sonora clara: párrafo, track y mood."
 pubDate: "27 de marzo de 2026"
 tags:
+  - \'C5-REAL\'
   - '#JaranaDor'
   - '#JARANA'
   - '#TrackMood'

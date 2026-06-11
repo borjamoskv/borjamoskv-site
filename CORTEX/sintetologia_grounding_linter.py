@@ -106,7 +106,7 @@ def audit_grounding(config: dict = None) -> dict:
     
     try:
         for root, dirs, files in os.walk(workspace_dir):
-            dirs[:] = [d for d in dirs if d not in ('node_modules', '.git', '.astro', '.wrangler', 'dist', '.venv', '__pycache__')]
+            dirs[:] = [d for d in dirs if d not in ('node_modules', '.git', '.astro', '.wrangler', 'dist', '.venv', '__pycache__', '.agents', '.ruff_cache', '.vercel', '.vscode', 'substack_archive', 'mock_testimonios', 'public')]
             for file in files:
                 if file.endswith(valid_exts):
                     total_scanned_files += 1

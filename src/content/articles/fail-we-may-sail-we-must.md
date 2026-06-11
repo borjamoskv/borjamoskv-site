@@ -3,6 +3,7 @@ title: "Fail We May, Sail We Must"
 description: "DJ Set dedicado a Andrew Weatherall. Tracklist completa y la historia del mantra del pescador de Cork que se tatuó en los brazos del remixer más grande del mundo."
 pubDate: "09 de junio de 2026"
 tags:
+  - \'C5-REAL\'
   - '#DJSet'
   - '#Music'
   - '#AndrewWeatherall'

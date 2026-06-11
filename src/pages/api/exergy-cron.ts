@@ -1,3 +1,4 @@
+// C5-REAL
 // src/pages/api/exergy-cron.ts
 // Astro API endpoint to orchestrate Substack feed crawling, exergy evaluation, and cryptographic ledger updating.
 

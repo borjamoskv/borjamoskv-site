@@ -3,6 +3,7 @@ title: "La Máquina de la CredibilidadTrazabilidad Narrativa"
 description: "Esto ya no es “investigación de newsletter”. Es un sistema de trazabilidad narrativa + económica + social de la Substack Mafia."
 pubDate: "31 de mayo de 2026"
 tags:
+  - \'C5-REAL\'
   - '#InfluenceGraphs'
   - '#ReputationDAO'
   - '#SocialEngineering'
