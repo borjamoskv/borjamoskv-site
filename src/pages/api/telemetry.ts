@@ -5,7 +5,7 @@ export const prerender = false;
 // C5-REAL / C4-SIM: Global Entropy Tracker
 export const GET: APIRoute = async ({ locals }) => {
   try {
-    const env = locals?.runtime?.env as any;
+    const env = locals?.runtime?.env as { CORTEX_ENTROPY?: { get: (k: string) => Promise<string | null>; put: (k: string, v: string) => Promise<void> } } | undefined;
     if (!env || !env.CORTEX_ENTROPY) {
       return new Response(JSON.stringify({ 
         entropy: 9999, 
@@ -22,8 +22,8 @@ export const GET: APIRoute = async ({ locals }) => {
       status: "C5-REAL: CLOUDFLARE KV" 
     }), { status: 200, headers: { 'Content-Type': 'application/json' } });
 
-  } catch (error: any) {
-    return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+  } catch (error) {
+    return new Response(JSON.stringify({ error: (error as Error).message }), { status: 500 });
   }
 };
 
@@ -32,7 +32,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     const { delta } = await request.json();
     const amount = Number(delta) || 1;
 
-    const env = locals?.runtime?.env as any;
+    const env = locals?.runtime?.env as { CORTEX_ENTROPY?: { get: (k: string) => Promise<string | null>; put: (k: string, v: string) => Promise<void> } } | undefined;
     if (!env || !env.CORTEX_ENTROPY) {
       return new Response(JSON.stringify({ 
         entropy: 9999 + amount, 
@@ -52,7 +52,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
       status: "C5-REAL: CLOUDFLARE KV" 
     }), { status: 200, headers: { 'Content-Type': 'application/json' } });
 
-  } catch (error: any) {
-    return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+  } catch (error) {
+    return new Response(JSON.stringify({ error: (error as Error).message }), { status: 500 });
   }
 };

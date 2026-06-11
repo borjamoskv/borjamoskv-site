@@ -106,8 +106,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
           } else {
             logs.push(`[AEGIS-WARN] Linter process exited with error code ${result.code}`);
           }
-        } catch (e: any) {
-          logs.push(`[AEGIS-ERROR] Failed to run python security linter: ${e.message}`);
+        } catch (e) {
+          logs.push(`[AEGIS-ERROR] Failed to run python security linter: ${(e as Error).message}`);
         }
       }
     }
@@ -131,8 +131,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
               }
             });
           }
-        } catch (e: any) {
-          logs.push(`[EIDOLON-ERROR] Failed to run guide linter: ${e.message}`);
+        } catch (e) {
+          logs.push(`[EIDOLON-ERROR] Failed to run guide linter: ${(e as Error).message}`);
         }
       }
     }
@@ -158,15 +158,15 @@ export const POST: APIRoute = async ({ request, locals }) => {
       logs.push('[PANDORA] UNLOCKING FORBIDDEN AST GEOMETRIES...');
       logs.push('[PANDORA] INJECTING CONTROLLED CHAOS SIMULATION PATTERNS...');
       
-      let env: any = null;
+      let env: { CORTEX_ENTROPY?: { get: (k: string) => Promise<string | null>; put: (k: string, v: string) => Promise<void> } } | null = null;
       try {
-        env = locals?.runtime?.env;
+        env = locals?.runtime?.env as { CORTEX_ENTROPY?: { get: (k: string) => Promise<string | null>; put: (k: string, v: string) => Promise<void> } };
       } catch (e) {}
       if (!env) {
         try {
           // @ts-ignore
           const cfWorkers = await import('cloudflare:workers');
-          env = cfWorkers.env;
+          env = cfWorkers.env as { CORTEX_ENTROPY?: { get: (k: string) => Promise<string | null>; put: (k: string, v: string) => Promise<void> } };
         } catch (e) {}
       }
       if (env && env.CORTEX_ENTROPY) {
@@ -203,8 +203,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
             logs.push(`[ALETHEIA] VERIFIED ${file} => HASH: ${sha256.substring(0, 16)}...`);
           }
           logs.push(`[ALETHEIA] Checked ${ledgerFiles.length} ledgers. 100% truth match (C5-REAL).`);
-        } catch (e: any) {
-          logs.push(`[ALETHEIA-ERROR] Verification failed: ${e.message}`);
+        } catch (e) {
+          logs.push(`[ALETHEIA-ERROR] Verification failed: ${(e as Error).message}`);
         }
       }
     }
@@ -227,8 +227,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
               }
             });
           }
-        } catch (e: any) {
-          logs.push(`[COLMENA-ERROR] Swarm diagnostic failed: ${e.message}`);
+        } catch (e) {
+          logs.push(`[COLMENA-ERROR] Swarm diagnostic failed: ${(e as Error).message}`);
         }
       }
     } else {
@@ -243,7 +243,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
       }
     });
 
-  } catch (error: any) {
-    return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+  } catch (error) {
+    return new Response(JSON.stringify({ error: (error as Error).message }), { status: 500 });
   }
 };

@@ -1,4 +1,4 @@
-# Test Suite Ready
+# Test Suite Ready (C5-REAL Grounded)
 
 The Substack Exergy Evaluator E2E Test Suite and Runner have been fully implemented and verified.
 

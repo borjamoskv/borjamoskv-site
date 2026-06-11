@@ -1,9 +1,9 @@
 # EXERGY-AUDIT-Ω: Autopsia Termodinámica de Jarana d'Or
 > **Publicación:** [borjamoskv.substack.com](https://borjamoskv.substack.com)  
-> **Fecha de Ejecución:** 2026-06-09 09:03:32 UTC  
+> **Fecha de Ejecución:** 2026-06-11 00:38:29 UTC  
 > **Nivel de Realidad:** `C5-REAL` (Caudal API y Auditoría de Cuerpo Completo)  
-> **Total de Entradas Evaluadas:** 246  
-> **Total de Palabras Ingeridas:** 121929  
+> **Total de Entradas Evaluadas:** 250  
+> **Total de Palabras Ingeridas:** 126013  
 
 ---
 
@@ -11,19 +11,19 @@
 
 | Métrica Global | Valor | Interpretación Termodinámica |
 | :--- | :---: | :--- |
-| **Exergía Promedio (Useful Signal)** | **41.77%** | Eficiencia del texto en transferir señal útil determinista. |
-| **Índice de Humo Promedio (Entropic Noise)** | **58.23%** | Energía disipada en coartadas, marketing, clickbait o hype. |
-| **Densidad C5-REAL Promedio** | **18.02%** | Presencia de anclajes causalmente verificables en la realidad. |
-| **Densidad Técnica Promedio** | **9.24%** | Presencia de código, APIs, compiladores o herramientas directas. |
-| **Anclajes Clickbait Promedio** | **67.50%** | Ruido cognitivo inducido por patrones de atención invasiva. |
-| **Llamadas Comerciales Promedio** | **63.22%** | Esfuerzo de monetización o conversión de capital. |
+| **Exergía Promedio (Useful Signal)** | **42.56%** | Eficiencia del texto en transferir señal útil determinista. |
+| **Índice de Humo Promedio (Entropic Noise)** | **57.44%** | Energía disipada en coartadas, marketing, clickbait o hype. |
+| **Densidad C5-REAL Promedio** | **18.84%** | Presencia de anclajes causalmente verificables en la realidad. |
+| **Densidad Técnica Promedio** | **9.84%** | Presencia de código, APIs, compiladores o herramientas directas. |
+| **Anclajes Clickbait Promedio** | **66.82%** | Ruido cognitivo inducido por patrones de atención invasiva. |
+| **Llamadas Comerciales Promedio** | **62.21%** | Esfuerzo de monetización o conversión de capital. |
 
 ### 📊 Distribución de Tipología de Contenido
 
-- **C5-REAL / Arquitectura:** 57 publicaciones (23.2%) — *Máxima exergía.*
+- **C5-REAL / Arquitectura:** 60 publicaciones (24.0%) — *Máxima exergía.*
 - **Técnico / Práctico:** 2 publicaciones (0.8%) — *Alto rendimiento.*
-- **Comercial / Transaccional:** 132 publicaciones (53.7%) — *Monetización activa.*
-- **Hype-driven / Divulgativo:** 55 publicaciones (22.4%) — *Divulgación o narrativa.*
+- **Comercial / Transaccional:** 132 publicaciones (52.8%) — *Monetización activa.*
+- **Hype-driven / Divulgativo:** 56 publicaciones (22.4%) — *Divulgación o narrativa.*
 
 ---
 
@@ -32,21 +32,21 @@
 
 | # | Fecha | Exergía | C5-REAL | Título | Tipo |
 | :---: | :---: | :---: | :---: | :--- | :---: |
-| 1 | `2026-06-08` | **100.0%** | 0.0% | [Exergy](https://borjamoskv.substack.com/p/exergy) | `Hype-driven / Divulgativo` |
-| 2 | `2026-06-08` | **100.0%** | 38.9% | [Te digo tó y no te digo ná](https://borjamoskv.substack.com/p/te-digo-to-y-no-te-digo-na) | `C5-REAL / Arquitectura` |
-| 3 | `2026-06-08` | **100.0%** | 0.0% | [Moskvlogia 2008-2025 [3/3] (Ven a Soñar)](https://borjamoskv.substack.com/p/moskvlogia-2008-2025-33) | `Hype-driven / Divulgativo` |
-| 4 | `2026-06-08` | **100.0%** | 0.0% | [LO INMANENTE](https://borjamoskv.substack.com/p/lo-inmanente) | `Hype-driven / Divulgativo` |
-| 5 | `2026-06-08` | **100.0%** | 100.0% | [TDHA: Un Fallo (o2) de Enrutamiento Termodinámico (Entropía vs Exergía)](https://borjamoskv.substack.com/p/tdah-un-fallo-de-enrutamiento-termodinamico) | `C5-REAL / Arquitectura` |
-| 6 | `2026-06-08` | **100.0%** | 0.0% | [Frases con nata](https://borjamoskv.substack.com/p/frases-con-nata) | `Hype-driven / Divulgativo` |
-| 7 | `2026-06-07` | **100.0%** | 0.0% | [We Are All Made of Stars ](https://borjamoskv.substack.com/p/we-are-all-made-of-stars) | `Hype-driven / Divulgativo` |
-| 8 | `2026-06-07` | **100.0%** | 0.0% | [La inteligencia de El Risitas](https://borjamoskv.substack.com/p/la-inteligencia-de-el-risitas) | `Hype-driven / Divulgativo` |
-| 9 | `2026-06-07` | **100.0%** | 0.0% | [PROTOCOLO DE SISTEMA CREATIVO](https://borjamoskv.substack.com/p/protocolo-de-sistema-creativo) | `Hype-driven / Divulgativo` |
-| 10 | `2026-06-06` | **100.0%** | 0.0% | [Borja Moskv _ Dj Set Julio Y Medio](https://borjamoskv.substack.com/p/borja-moskv-_-dj-set-julio-y-medio) | `Hype-driven / Divulgativo` |
-| 11 | `2026-06-06` | **100.0%** | 16.9% | [Los agentes no tienen un problema de inteligencia](https://borjamoskv.substack.com/p/los-agentes-no-tienen-un-problema) | `Técnico / Práctico` |
-| 12 | `2026-06-06` | **100.0%** | 0.0% | [La economía invisible de la sincronización en Substack](https://borjamoskv.substack.com/p/la-economia-invisible-de-la-sincronizacion) | `Hype-driven / Divulgativo` |
-| 13 | `2026-06-06` | **100.0%** | 100.0% | [Batalla de Gallos: Gon vs La Pantoja](https://borjamoskv.substack.com/p/batalla-de-gallos-gon-vs-la-pantoja) | `C5-REAL / Arquitectura` |
-| 14 | `2026-05-31` | **100.0%** | 57.0% | [La Edad de la Fricción: El Último Solo de Gon ](https://borjamoskv.substack.com/p/la-edad-de-la-friccion-el-ultimo) | `C5-REAL / Arquitectura` |
-| 15 | `2026-05-31` | **100.0%** | 0.0% | [I'm a happy man](https://borjamoskv.substack.com/p/im-a-happy-man) | `Hype-driven / Divulgativo` |
+| 1 | `2026-06-10` | **100.0%** | 100.0% | [La Muerte del Prompt Estático: Autopoiesis L7 y el StrategyGenome](https://borjamoskv.substack.com/p/la-muerte-del-prompt-estatico-autopoiesis) | `C5-REAL / Arquitectura` |
+| 2 | `2026-06-08` | **100.0%** | 0.0% | [Exergy](https://borjamoskv.substack.com/p/exergy) | `Hype-driven / Divulgativo` |
+| 3 | `2026-06-08` | **100.0%** | 38.9% | [Te digo tó y no te digo ná](https://borjamoskv.substack.com/p/te-digo-to-y-no-te-digo-na) | `C5-REAL / Arquitectura` |
+| 4 | `2026-06-08` | **100.0%** | 0.0% | [Moskvlogia 2008-2025 [3/3] (Ven a Soñar)](https://borjamoskv.substack.com/p/moskvlogia-2008-2025-33) | `Hype-driven / Divulgativo` |
+| 5 | `2026-06-08` | **100.0%** | 0.0% | [LO INMANENTE](https://borjamoskv.substack.com/p/lo-inmanente) | `Hype-driven / Divulgativo` |
+| 6 | `2026-06-08` | **100.0%** | 100.0% | [TDHA: Un Fallo (o2) de Enrutamiento Termodinámico (Entropía vs Exergía)](https://borjamoskv.substack.com/p/tdah-un-fallo-de-enrutamiento-termodinamico) | `C5-REAL / Arquitectura` |
+| 7 | `2026-06-08` | **100.0%** | 0.0% | [Frases con nata](https://borjamoskv.substack.com/p/frases-con-nata) | `Hype-driven / Divulgativo` |
+| 8 | `2026-06-07` | **100.0%** | 0.0% | [We Are All Made of Stars ](https://borjamoskv.substack.com/p/we-are-all-made-of-stars) | `Hype-driven / Divulgativo` |
+| 9 | `2026-06-07` | **100.0%** | 0.0% | [La inteligencia de El Risitas](https://borjamoskv.substack.com/p/la-inteligencia-de-el-risitas) | `Hype-driven / Divulgativo` |
+| 10 | `2026-06-07` | **100.0%** | 0.0% | [PROTOCOLO DE SISTEMA CREATIVO](https://borjamoskv.substack.com/p/protocolo-de-sistema-creativo) | `Hype-driven / Divulgativo` |
+| 11 | `2026-06-06` | **100.0%** | 0.0% | [Borja Moskv _ Dj Set Julio Y Medio](https://borjamoskv.substack.com/p/borja-moskv-_-dj-set-julio-y-medio) | `Hype-driven / Divulgativo` |
+| 12 | `2026-06-06` | **100.0%** | 16.9% | [Los agentes no tienen un problema de inteligencia](https://borjamoskv.substack.com/p/los-agentes-no-tienen-un-problema) | `Técnico / Práctico` |
+| 13 | `2026-06-06` | **100.0%** | 0.0% | [La economía invisible de la sincronización en Substack](https://borjamoskv.substack.com/p/la-economia-invisible-de-la-sincronizacion) | `Hype-driven / Divulgativo` |
+| 14 | `2026-06-06` | **100.0%** | 100.0% | [Batalla de Gallos: Gon vs La Pantoja](https://borjamoskv.substack.com/p/batalla-de-gallos-gon-vs-la-pantoja) | `C5-REAL / Arquitectura` |
+| 15 | `2026-05-31` | **100.0%** | 57.0% | [La Edad de la Fricción: El Último Solo de Gon ](https://borjamoskv.substack.com/p/la-edad-de-la-friccion-el-ultimo) | `C5-REAL / Arquitectura` |
 
 ---
 

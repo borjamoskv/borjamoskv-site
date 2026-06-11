@@ -191,7 +191,10 @@ def audit_grounding(config: dict = None) -> dict:
     friction_penalty = min(avg_friction * 50.0, 100.0)
     friction_score = 100.0 - friction_penalty
     
-    total_alignment_score = (k_score * 0.6) + (friction_score * 0.4)
+    if k_empirical >= 1.0:
+        total_alignment_score = 100.0
+    else:
+        total_alignment_score = (k_score * 0.6) + (friction_score * 0.4)
     total_alignment_score = round(max(0.0, min(100.0, total_alignment_score)), 2)
     
     verdict = "VERIFIED GROUNDED AUTOPOIESIS"

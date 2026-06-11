@@ -1,4 +1,4 @@
-# Project: Substack Exergy Evaluator
+# Project: Substack Exergy Evaluator (C5-REAL Grounded)
 
 ## Architecture
 - **Feed Scraper**: Fetches Substack RSS or API archive endpoints (e.g., `https://borjamoskv.substack.com/feed` or `/api/v1/archive`) to discover recent posts. Resolves network retries and handles errors.

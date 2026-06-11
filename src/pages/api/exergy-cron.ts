@@ -13,7 +13,7 @@ export const prerender = false;
 
 const handler: APIRoute = async ({ request, locals }) => {
   try {
-    let kv: any = null;
+    let kv: unknown = null;
     let mockPort: string | undefined = undefined;
     try {
       // @ts-ignore
@@ -32,20 +32,20 @@ const handler: APIRoute = async ({ request, locals }) => {
     }
     const urlObj = new URL(request.url);
     
-    let body: any = {};
+    let body: Record<string, unknown> = {};
     if (request.method === "POST") {
       try {
-        body = await request.clone().json();
+        body = await request.clone().json() as Record<string, unknown>;
       } catch (e) {
         // Body is not JSON or is empty
       }
     }
 
-    const scenario = urlObj.searchParams.get("scenario") || body.scenario || "happy-es";
-    const subdomain = urlObj.searchParams.get("subdomain") || body.subdomain || "borjamoskv";
+    const scenario = urlObj.searchParams.get("scenario") || (body.scenario as string | undefined) || "happy-es";
+    const subdomain = urlObj.searchParams.get("subdomain") || (body.subdomain as string | undefined) || "borjamoskv";
     const forceJson = urlObj.searchParams.get("format") === "json" || 
                       urlObj.searchParams.get("forceJson") === "true" || 
-                      body.format === "json" ||
+                      (body.format as string | undefined) === "json" ||
                       body.forceJson === true;
 
     const ledgerPath = process.env.LEDGER_PATH || path.resolve(process.cwd(), 'substack_archive/exergy_ledger.jsonl');
@@ -161,10 +161,10 @@ const handler: APIRoute = async ({ request, locals }) => {
       }
     });
 
-  } catch (error: any) {
+  } catch (error) {
     return new Response(JSON.stringify({
       success: false,
-      error: error.message
+      error: (error as Error).message
     }), {
       status: 500,
       headers: {
