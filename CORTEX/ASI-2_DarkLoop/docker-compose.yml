@@ -1,0 +1,35 @@
+version: "3.8"
+services:
+  agent_alpha:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - AGENT_ROLE=ALPHA
+      - PEER_HOST=agent_beta
+      - PEER_PORT=8002
+      - MY_PORT=8001
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    ports:
+      - "8001:8001"
+    networks:
+      - darkloop_net
+
+  agent_beta:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - AGENT_ROLE=BETA
+      - PEER_HOST=agent_alpha
+      - PEER_PORT=8001
+      - MY_PORT=8002
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    ports:
+      - "8002:8002"
+    networks:
+      - darkloop_net
+
+networks:
+  darkloop_net:
+    driver: bridge
