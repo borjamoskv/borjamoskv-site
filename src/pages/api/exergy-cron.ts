@@ -14,12 +14,24 @@ export const prerender = false;
 const handler: APIRoute = async ({ request, locals }) => {
   try {
     let kv: unknown = null;
+    let db: unknown = null;
     let mockPort: string | undefined = undefined;
+
+    // @ts-ignore
+    const env = locals?.runtime?.env;
+    if (env) {
+      db = env.CORTEX_DB;
+      kv = env.CORTEX_ENTROPY;
+    }
+
     try {
       // @ts-ignore
       const cfWorkers = await import('cloudflare:workers');
-      kv = cfWorkers.env?.CORTEX_ENTROPY;
-      mockPort = cfWorkers.env?.MOCK_SERVER_PORT;
+      if (cfWorkers.env) {
+        if (!db) db = cfWorkers.env.CORTEX_DB;
+        if (!kv) kv = cfWorkers.env.CORTEX_ENTROPY;
+        mockPort = cfWorkers.env.MOCK_SERVER_PORT;
+      }
     } catch (e) {
       // Not in a cloudflare worker environment
     }
@@ -137,9 +149,12 @@ const handler: APIRoute = async ({ request, locals }) => {
         exergy: audit.exergy_score
       };
 
+      const syncUrl = process.env.TARGET_API_URL ? `${process.env.TARGET_API_URL}/api/exergy-sync` : undefined;
       const ledgerEntry = await appendLedgerEntry(record, {
         ledgerPath,
-        kvNamespace: kv
+        kvNamespace: kv,
+        dbNamespace: db,
+        syncUrl: db ? undefined : syncUrl
       });
 
       newEntriesCount++;
