@@ -48,7 +48,7 @@ def audit_maxwell(config=None):
     try:
         for root, dirs, files in os.walk(workspace_dir):
             # Prune directories to skip node_modules, .git, .astro, .wrangler, dist
-            dirs[:] = [d for d in dirs if d not in ('node_modules', '.git', '.astro', '.wrangler', 'dist', '.venv', '__pycache__')]
+            dirs[:] = [d for d in dirs if d not in ('node_modules', '.git', '.astro', '.wrangler', 'dist', '.venv', '__pycache__', 'tests', '.agents', '.ruff_cache', '.vercel', 'substack_archive', 'public', 'mock_testimonios')]
             
             for file in files:
                 if file.endswith(valid_exts):

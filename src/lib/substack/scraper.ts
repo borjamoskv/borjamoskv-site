@@ -153,16 +153,25 @@ export async function fetchSubstackPosts(
     let data;
     try {
       data = JSON.parse(rawData);
-    } catch (err: any) {
+    } catch (err) {
       throw new SyntaxError("Invalid JSON structure");
     }
     if (!Array.isArray(data)) {
       throw new TypeError("Expected array from JSON archive");
     }
     
-    return data
-      .filter((post: any) => post !== null && post !== undefined)
-      .map((post: any) => ({
+    interface RawSubstackPost {
+      title?: string;
+      subtitle?: string;
+      description?: string;
+      canonical_url?: string;
+      link?: string;
+      post_date?: string;
+      pubDate?: string;
+    }
+    return (data as (RawSubstackPost | null)[])
+      .filter((post): post is RawSubstackPost => post !== null && post !== undefined)
+      .map((post) => ({
         title: post.title || "",
         subtitle: post.subtitle || "",
         description: post.description || "",

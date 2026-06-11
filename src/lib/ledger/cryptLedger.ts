@@ -7,7 +7,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import type { ExergyAuditRecord } from '../exergy/evaluator.ts';
 
-export async function loadLastHash(ledgerPath: string, kvNamespace?: any): Promise<string> {
+export async function loadLastHash(ledgerPath: string, kvNamespace?: unknown): Promise<string> {
   // If KV is available, try KV first
   if (kvNamespace) {
     try {
@@ -40,7 +40,7 @@ export async function loadLastHash(ledgerPath: string, kvNamespace?: any): Promi
 
 export async function appendLedgerEntry(
   record: Omit<ExergyAuditRecord, 'prev_hash' | 'hash'>,
-  options: { ledgerPath?: string; kvNamespace?: any } = {}
+  options: { ledgerPath?: string; kvNamespace?: unknown } = {}
 ): Promise<ExergyAuditRecord> {
   const defaultPath = path.resolve(process.cwd(), 'substack_archive/exergy_ledger.jsonl');
   const ledgerPath = options.ledgerPath || defaultPath;
@@ -58,8 +58,8 @@ export async function appendLedgerEntry(
         const now = Date.now().toString();
         await fs.writeFile(lockPath, now, { flag: 'wx' });
         return true;
-      } catch (err: any) {
-        if (err.code === 'EEXIST') {
+      } catch (err) {
+        if ((err as { code?: string }).code === 'EEXIST') {
           return false;
         }
         throw err;
@@ -170,8 +170,8 @@ export async function verifyLedgerIntegrity(ledgerPath: string): Promise<{ valid
       let entry: ExergyAuditRecord;
       try {
         entry = JSON.parse(line);
-      } catch (err: any) {
-        return { valid: false, message: `Line ${idx + 1} has invalid JSON syntax: ${err.message}` };
+      } catch (err) {
+        return { valid: false, message: `Line ${idx + 1} has invalid JSON syntax: ${(err as Error).message}` };
       }
 
       const required: (keyof ExergyAuditRecord)[] = ["timestamp", "title", "exergy", "hash", "prev_hash"];
@@ -196,7 +196,7 @@ export async function verifyLedgerIntegrity(ledgerPath: string): Promise<{ valid
     }
 
     return { valid: true, message: "Ledger is cryptographically valid" };
-  } catch (err: any) {
-    return { valid: false, message: `Ledger file error: ${err.message}` };
+  } catch (err) {
+    return { valid: false, message: `Ledger file error: ${(err as Error).message}` };
   }
 }
