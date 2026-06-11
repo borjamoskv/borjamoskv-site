@@ -49,5 +49,8 @@ CORTEX/fahrenheit_real_status.json
 # Agent telemetry and metadata
 .agents/
 
+# CORTEX sync queues
+.cortex/
+
 
 
