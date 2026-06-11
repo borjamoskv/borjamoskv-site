@@ -25,8 +25,11 @@ export interface ExergyAuditRecord {
   metrics: ExergyMetrics;
   smoke_index: number;
   exergy_score: number;
+  exergy?: number;        // Added for test compatibility
   prev_hash: string;
   hash?: string;          // Added during persistence
+  signature?: string;     // Added during cryptographic signature
+  pubkey?: string;        // Added during cryptographic signature
 }
 
 // Spanish Patterns
