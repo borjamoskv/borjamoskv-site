@@ -5,8 +5,6 @@ import time
 import socket
 import subprocess
 import unittest
-import urllib.request
-import urllib.error
 
 # Add parent directory to path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
@@ -90,7 +88,7 @@ def main():
             if started:
                 print(f"[✓] Astro dev server successfully started at http://localhost:{astro_port}")
             else:
-                print(f"[!] Warning: Astro dev server failed to start within 15 seconds or crashed.")
+                print("[!] Warning: Astro dev server failed to start within 15 seconds or crashed.")
                 # We do not crash the runner; we let it fall back or continue so tests can report failures
         except Exception as e:
             print(f"[!] Warning: Failed to spawn Astro dev server: {e}")
@@ -107,7 +105,7 @@ def main():
     test_result = runner.run(suite)
     
     # Check for failures / errors
-    success = test_result.wasSuccessful()
+    test_result.wasSuccessful()
 
     # 4. Check Ledger Cryptographic Integrity (if exists)
     ledger_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../substack_archive/exergy_ledger.jsonl"))

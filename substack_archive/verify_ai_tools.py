@@ -5,10 +5,8 @@ Nivel de Realidad: C5-REAL (Script ejecutable de auditoría de rendimiento y exe
 Compara y calcula las métricas de rendimiento de las Top 10 herramientas de IA en 2026.
 """
 
-import sys
 import json
 import argparse
-from pathlib import Path
 
 # Datos empíricos de las 10 herramientas de IA de codificación (2026)
 AI_TOOLS_DATA = {

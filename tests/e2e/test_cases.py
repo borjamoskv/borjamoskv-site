@@ -71,7 +71,7 @@ class PythonLedgerManager:
         try:
             last_line = json.loads(lines[-1].strip())
             return last_line.get("hash", "GENESIS")
-        except:
+        except Exception:
             return "GENESIS"
 
     def append_entry(self, title, exergy):
@@ -362,7 +362,7 @@ class SubstackExergyEvaluatorE2ETestCase(unittest.TestCase):
         # Call without auth headers
         req = urllib.request.Request(url, method="POST")
         try:
-            with urllib.request.urlopen(req, timeout=5) as res:
+            with urllib.request.urlopen(req, timeout=5):
                 # If it responds 200, authentication is not enforced.
                 pass
         except urllib.error.HTTPError as e:
@@ -541,7 +541,7 @@ class SubstackExergyEvaluatorE2ETestCase(unittest.TestCase):
         for _ in range(5):
             req = urllib.request.Request(url, method="POST")
             try:
-                with urllib.request.urlopen(req, timeout=1) as res:
+                with urllib.request.urlopen(req, timeout=1):
                     pass
             except (urllib.error.HTTPError, urllib.error.URLError):
                 # Expect errors due to missing endpoint, just verifying execution doesn't lock/hang
@@ -788,7 +788,7 @@ class SubstackExergyEvaluatorE2ETestCase(unittest.TestCase):
 
         for i in range(max_attempts):
             try:
-                data = fetch_with_retry()
+                fetch_with_retry()
                 break
             except urllib.error.HTTPError as e:
                 if e.code == 429 and i < max_attempts - 1:

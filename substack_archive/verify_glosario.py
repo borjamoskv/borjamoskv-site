@@ -203,7 +203,7 @@ def verify_glossary():
             
     print(f"   - Términos encontrados    : {found_count} / {len(GLOSSARY_TERMS)}")
     if missing_terms:
-        print(f"     [WARN] Términos faltantes:")
+        print("     [WARN] Términos faltantes:")
         for m in missing_terms:
             print(f"       * {m}")
         sys.exit(1)

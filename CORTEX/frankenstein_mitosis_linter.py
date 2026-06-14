@@ -6,7 +6,6 @@ Parent Privilege Repudiation, and Anatomical Grafting (Fragile Code Collage).
 """
 
 import json
-import sys
 
 
 def audit_frankenstein(telemetry: dict) -> dict:

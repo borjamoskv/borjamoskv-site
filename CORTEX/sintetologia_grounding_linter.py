@@ -6,7 +6,6 @@ and calculates semantic friction (F) using term-overlap cosine similarity and Sh
 """
 
 import os
-import sys
 import math
 import re
 
@@ -229,7 +228,7 @@ if __name__ == "__main__":
     print(f"Status: {res['verdict']}")
     if "thesis_to_formal" in res["friction_analysis"]:
         ta = res["friction_analysis"]["thesis_to_formal"]
-        print(f"\n[Friction Detail: Thesis -> Formal]")
+        print("\n[Friction Detail: Thesis -> Formal]")
         print(f"  -> Cosine Sim: {ta['cosine_similarity']}")
         print(f"  -> Entropy H1: {ta['entropy_state_1']} | H2: {ta['entropy_state_2']}")
         print(f"  -> Calculated Friction: {ta['semantic_friction']}")

@@ -6,7 +6,6 @@ Coordination Failures (Stag Hunt), and Sub-optimal Anergy Stability Traps.
 """
 
 import json
-import sys
 
 
 def audit_nash(game_state: dict) -> dict:

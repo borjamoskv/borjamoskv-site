@@ -1,6 +1,5 @@
 import math
 import os
-import sys
 
 def calculate_shannon_entropy(filepath_or_data):
     if os.path.exists(filepath_or_data):

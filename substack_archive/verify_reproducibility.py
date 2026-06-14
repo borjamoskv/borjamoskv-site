@@ -6,8 +6,6 @@ Autor: Antigravity-Ω / Borja Moskv Site
 """
 
 import json
-import os
-import sys
 import math
 from pathlib import Path
 
@@ -94,13 +92,13 @@ def verify_dataset():
     status["cronos_results"] = CRONOS_PATH.exists()
     status["exergy_report"] = EXERGY_PATH.exists()
     
-    print(f"1. Ficheros del Dataset:")
+    print("1. Ficheros del Dataset:")
     for name, exists in status.items():
         state = "[OK]" if exists else "[NOT FOUND]"
         print(f"   - {name:<25}: {state}")
         
     # 2. Shannon Entropy Audit
-    print(f"\n2. Entropía de Shannon:")
+    print("\n2. Entropía de Shannon:")
     if status["exergy_report"]:
         with open(EXERGY_PATH, "rb") as f:
             bytes_content = f.read()
@@ -115,7 +113,7 @@ def verify_dataset():
         print("   - exergy_audit_report.md  : N/A")
         
     # 3. Procedural vs Empirical Check
-    print(f"\n3. Detección de Distribuciones Sintéticas:")
+    print("\n3. Detección de Distribuciones Sintéticas:")
     if status["recommendations_graph"]:
         try:
             with open(GRAPH_PATH, "r", encoding="utf-8") as f:
@@ -129,7 +127,7 @@ def verify_dataset():
         print("   - recommendations_graph.json: N/A (Utilizando fallback simulated)")
         
     # 4. Check Legal Claims Consistency (Art 16, Ley 49/2002)
-    print(f"\n4. Auditoría de Consistencia Legal (Mecenazgo vs Contraprestación):")
+    print("\n4. Auditoría de Consistencia Legal (Mecenazgo vs Contraprestación):")
     # Verify if article warning is in place
     article_path = PROJECT_DIR / "src/content/articles/substack-mafia-autopsia-estructural.mdx"
     if article_path.exists():
@@ -141,7 +139,7 @@ def verify_dataset():
         print("   - substack-mafia-autopsia-estructural.mdx: N/A")
         
     # 5. Cross-Reference Consistency Check (Cronos vs recommendations_graph)
-    print(f"\n5. Consistencia Cruzada (Cronos vs Grafo de Recomendaciones):")
+    print("\n5. Consistencia Cruzada (Cronos vs Grafo de Recomendaciones):")
     if status["recommendations_graph"] and status["cronos_results"]:
         try:
             with open(GRAPH_PATH, "r", encoding="utf-8") as fg:
@@ -167,11 +165,11 @@ def verify_dataset():
             print(f"   - Coincidentes            : {matched}")
             print(f"   - Discrepancias           : {mismatched}")
             if mismatch_details:
-                print(f"     [WARN] Discrepancias encontradas en outdegrees:")
+                print("     [WARN] Discrepancias encontradas en outdegrees:")
                 for detail in mismatch_details:
                     print(f"       * {detail}")
             else:
-                print(f"     [SUCCESS] Todos los recs_count coinciden entre cronos y el grafo.")
+                print("     [SUCCESS] Todos los recs_count coinciden entre cronos y el grafo.")
         except Exception as e:
             print(f"   - Error en consistencia cruzada: {e}")
     else:

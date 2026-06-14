@@ -6,7 +6,6 @@ to maintain low workspace entropy.
 """
 
 import os
-import sys
 import math
 
 def calculate_shannon_entropy(filepath):
@@ -40,7 +39,6 @@ def audit_maxwell(config=None):
     total_files = 0
     clean_files = 0
     total_entropy = 0.0
-    any_check_failures = 0
     
     # File extensions to check
     valid_exts = ('.ts', '.tsx', '.astro', '.js', '.mjs', '.css', '.md', '.json', '.jsonl')
@@ -65,7 +63,7 @@ def audit_maxwell(config=None):
                     # - Missing comments/documentation on larger files (> 2KB)
                     is_clean = True
                     try:
-                        size = os.path.getsize(filepath)
+                        os.path.getsize(filepath)
                         if file.endswith(('.ts', '.tsx', '.astro')):
                             with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
                                 content = f.read()
