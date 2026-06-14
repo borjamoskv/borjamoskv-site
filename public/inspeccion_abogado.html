@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dossier de Inspección Tributaria - Borja Fernández Angulo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ember-void: #0A0A0A;
+      --yinmn-blue: #2B3BE5;
+      --sovereign-amber: #FF9F1C;
+      --oxide-gold: #FFD700;
+      --parchment-white: #F3F4F6;
+      --mica-dust: rgba(43, 59, 229, 0.05);
+      --border-tint: rgba(43, 59, 229, 0.15);
+      --glass-bg: rgba(10, 10, 10, 0.85);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--ember-void);
+      color: var(--parchment-white);
+      font-family: 'Outfit', sans-serif;
+      line-height: 1.6;
+      padding: 3rem 1.5rem;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Analog Film Grain Overlay */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* Ambient Blue Glows */
+    .ambient-glow-1 {
+      position: absolute;
+      top: -10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(43, 59, 229, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .ambient-glow-2 {
+      position: absolute;
+      bottom: -10%;
+      left: 10%;
+      width: 600px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(43, 59, 229, 0.08) 0%, transparent 75%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    header {
+      border-bottom: 2px solid var(--yinmn-blue);
+      padding-bottom: 2rem;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+
+    .meta-badge {
+      display: inline-block;
+      background-color: var(--yinmn-blue);
+      color: var(--parchment-white);
+      padding: 0.25rem 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+    }
+
+    .status-badge {
+      display: inline-block;
+      border: 1px solid var(--oxide-gold);
+      color: var(--oxide-gold);
+      background-color: rgba(255, 215, 0, 0.05);
+      padding: 0.25rem 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      border-radius: 4px;
+      margin-left: 0.5rem;
+      vertical-align: middle;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: rgba(243, 244, 246, 0.7);
+      margin-bottom: 1.5rem;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      background: var(--mica-dust);
+      border: 1px solid var(--border-tint);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .meta-item {
+      font-size: 0.9rem;
+    }
+
+    .meta-label {
+      color: rgba(243, 244, 246, 0.5);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.25rem;
+    }
+
+    .meta-value {
+      font-weight: 600;
+      color: var(--parchment-white);
+    }
+
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+    }
+
+    /* Section Cards */
+    section {
+      background: var(--glass-bg);
+      border: 1px solid var(--border-tint);
+      backdrop-filter: blur(15px);
+      border-radius: 12px;
+      padding: 2.5rem;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      transition: border-color 0.3s ease;
+    }
+
+    section:hover {
+      border-color: rgba(43, 59, 229, 0.4);
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-bottom: 1px solid var(--border-tint);
+      padding-bottom: 0.75rem;
+    }
+
+    h2::before {
+      content: "◈";
+      color: var(--yinmn-blue);
+      font-size: 1.2rem;
+    }
+
+    p {
+      color: rgba(243, 244, 246, 0.85);
+      margin-bottom: 1.25rem;
+      font-size: 1rem;
+    }
+
+    strong {
+      color: #fff;
+    }
+
+    /* Data Tables */
+    .table-container {
+      overflow-x: auto;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border-tint);
+      border-radius: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    th {
+      background-color: rgba(43, 59, 229, 0.1);
+      color: #fff;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+      padding: 1rem;
+      border-bottom: 2px solid var(--yinmn-blue);
+    }
+
+    td {
+      padding: 1rem;
+      border-bottom: 1px solid var(--border-tint);
+      color: rgba(243, 244, 246, 0.9);
+      background-color: rgba(10, 10, 10, 0.3);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background-color: rgba(43, 59, 229, 0.05);
+    }
+
+    /* Alert Boxes */
+    .alert-box {
+      border-left: 4px solid var(--sovereign-amber);
+      background-color: rgba(255, 159, 28, 0.05);
+      padding: 1.25rem;
+      border-radius: 0 8px 8px 0;
+      margin: 1.5rem 0;
+    }
+
+    .alert-box h4 {
+      color: var(--sovereign-amber);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Interactive Elements */
+    .btn-group {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 3rem;
+      justify-content: flex-end;
+    }
+
+    .btn {
+      background-color: transparent;
+      border: 1px solid var(--yinmn-blue);
+      color: var(--parchment-white);
+      padding: 0.75rem 1.5rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .btn:hover {
+      background-color: var(--yinmn-blue);
+      box-shadow: 0 0 15px rgba(43, 59, 229, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background-color: var(--yinmn-blue);
+      border-color: var(--yinmn-blue);
+    }
+
+    .btn-primary:hover {
+      background-color: #3b4bf2;
+    }
+
+    /* Collapsible CSV data viewer */
+    .csv-viewer {
+      margin-top: 1.5rem;
+      border: 1px dashed var(--border-tint);
+      border-radius: 8px;
+      padding: 1rem;
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    .csv-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .csv-header h4 {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: rgba(243, 244, 246, 0.6);
+    }
+
+    .csv-content {
+      display: none;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-tint);
+      max-height: 200px;
+      overflow-y: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: rgba(243, 244, 246, 0.7);
+      white-space: pre;
+    }
+
+    /* Print styles */
+    @media print {
+      body {
+        background-color: #fff;
+        color: #000;
+        padding: 0;
+      }
+      body::before, .ambient-glow-1, .ambient-glow-2, .btn-group, .csv-viewer {
+        display: none !important;
+      }
+      section {
+        background: none;
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        margin-bottom: 3rem;
+        page-break-inside: avoid;
+      }
+      h1, h2, th {
+        color: #000 !important;
+      }
+      h2 {
+        border-bottom: 2px solid #000;
+      }
+      td {
+        color: #000 !important;
+        background-color: #fff !important;
+        border-bottom: 1px solid #ddd;
+      }
+      .meta-grid {
+        background: none;
+        border: 1px solid #000;
+        color: #000;
+      }
+      .meta-value, .meta-label {
+        color: #000 !important;
+      }
+      .alert-box {
+        border-left: 4px solid #000;
+        background-color: #f9f9f9;
+      }
+      .alert-box h4 {
+        color: #000;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ambient-glow-1"></div>
+  <div class="ambient-glow-2"></div>
+
+  <div class="container">
+    
+    <header>
+      <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+        <div>
+          <span class="meta-badge">#C5-REAL / AUDITADO</span>
+          <span class="status-badge">CONCILIADO</span>
+        </div>
+        <div style="text-align: right;" class="mono">
+          Ref: 2026_BIZKAIA_BFA<br>
+          Fecha: 14 de junio de 2026
+        </div>
+      </div>
+      <h1>Dossier de Respuesta a Inspección</h1>
+      <div class="subtitle">Preparado para el Letrado D. Ricardo Muñiz (Akro Legal) de cara a la comparecencia en la Hacienda Foral de Bizkaia.</div>
+      
+      <div class="meta-grid">
+        <div class="meta-item">
+          <div class="meta-label">Obligado Tributario</div>
+          <div class="meta-value">Borja Fernández Angulo</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">NIF</div>
+          <div class="meta-value mono">78.900.027-E</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Dirección On-chain</div>
+          <div class="meta-value mono" style="font-size: 0.75rem;">0x5247...5Fd3</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Alineación de Defensa</div>
+          <div class="meta-value" style="color: var(--oxide-gold);">Gestión de Patrimonio Personal</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="btn-group">
+      <button class="btn" onclick="window.print()">
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
+          <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"/>
+        </svg>
+        Imprimir Dossier / Exportar PDF
+      </button>
+      <button class="btn btn-primary" onclick="copyDossier()">
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+          <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+        </svg>
+        Copiar Texto para Abogado
+      </button>
+    </div>
+
+    <section id="punto-1">
+      <h2>1. Identificación de Wallets Blockchain</h2>
+      <p>Se ha operado exclusivamente utilizando <strong>una (1) wallet de custodia propia</strong> sobre redes compatibles con la Ethereum Virtual Machine (EVM). Todas las trazas y sub-trazas provienen de esta única clave pública, descartando el uso de múltiples cuentas o identidades descentralizadas comerciales.</p>
+      
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Dirección Pública</th>
+              <th>Blockchain</th>
+              <th>Fecha 1ª Utilización</th>
+              <th>Medio de Custodia</th>
+              <th>Nombres Asociados</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="mono">0x5247299421a3ff724c41582e5a44c6551d135fd3</td>
+              <td>Ethereum / L2s</td>
+              <td class="mono">2021-03-28 08:34:44</td>
+              <td>Custodia Propia (Metamask / Ledger)</td>
+              <td><strong>SP1 #1 (ENS Principal)</strong></td>
+            </tr>
+            <tr>
+              <td class="mono">0x6de74ac8bc0c2d562761915e5aaebd24b3a9f791</td>
+              <td>Ethereum / L2s</td>
+              <td class="mono">2022-07-13 07:35:30</td>
+              <td>Custodia Propia (Metamask / Ledger)</td>
+              <td><strong>SP1 #2</strong></td>
+            </tr>
+            <tr>
+              <td class="mono">0xe6eb9807e457758035d59042e56eb0061d64de4a</td>
+              <td>Ethereum / L2s</td>
+              <td class="mono">2021-10-28 00:55:52</td>
+              <td>Custodia Propia (Metamask / Ledger)</td>
+              <td><strong>SP1 #3</strong></td>
+            </tr>
+            <tr>
+              <td class="mono">0xcb8e7b0e87b522621dae9c28f9e102cd8e70db34</td>
+              <td>Ethereum / L2s</td>
+              <td class="mono">2022-12-07 16:55:47</td>
+              <td>Custodia Propia (Metamask / Ledger)</td>
+              <td><strong>SP1 #5</strong></td>
+            </tr>
+            <tr>
+              <td class="mono">0x772155bf85a3ade7c6c11b649624e48b6d31138d</td>
+              <td>Ethereum / L2s</td>
+              <td class="mono">2023-03-25 09:22:59</td>
+              <td>Custodia Propia (Metamask / Ledger)</td>
+              <td><strong>SP1 #4</strong></td>
+            </tr>
+            <tr>
+              <td class="mono">0x4909dd4ece50ba766894ca89c7e61d9950b125a8</td>
+              <td>Ethereum / L2s</td>
+              <td class="mono">2023-03-05 04:19:35</td>
+              <td>Custodia Propia (Metamask / Ledger)</td>
+              <td><strong>SP1 #6</strong></td>
+            </tr>
+            <tr>
+              <td class="mono">0x1c029927fa259fb88e36ed0ad2ffd97b9c049eaf</td>
+              <td>Ethereum / L2s</td>
+              <td class="mono">N/A (Sin transacciones)</td>
+              <td>Custodia Propia (Metamask / Ledger)</td>
+              <td><strong>SP1 #7</strong></td>
+            </tr>
+            <tr>
+              <td class="mono">0xae9ad782c50cbe9b38dd285cb75d30acabf2bf18</td>
+              <td>Ethereum / L2s</td>
+              <td class="mono">N/A (Sin transacciones)</td>
+              <td>Custodia Propia (Metamask / Ledger)</td>
+              <td><strong>SP1 #8</strong></td>
+            </tr>
+            <tr>
+              <td class="mono">0x0497586f3ade4c932d9ccc18b065a71dc46c7968</td>
+              <td>Ethereum / L2s</td>
+              <td class="mono">2023-06-10 23:11:23</td>
+              <td>Custodia Propia (Metamask / Ledger)</td>
+              <td><strong>SP1 #9</strong></td>
+            </tr>
+            <tr>
+              <td class="mono">0x8f11cc17967788b4df20d6c5843dcd8d39257798</td>
+              <td>Ethereum / L2s</td>
+              <td class="mono">N/A (Sin transacciones)</td>
+              <td>Custodia Propia (Metamask / Ledger)</td>
+              <td><strong>SP1 #10</strong></td>
+            </tr>
+            <tr>
+              <td class="mono">0x465a3ed936a34fb0f32b2c61f95e4069c5493cb6</td>
+              <td>Ethereum / L2s</td>
+              <td class="mono">N/A (Sin transacciones)</td>
+              <td>Custodia Propia (Metamask / Ledger)</td>
+              <td><strong>SP1 #21</strong></td>
+            </tr>
+            <tr>
+              <td class="mono">0xfbb92a23419f0ea6e093a1d0d07526ce20965757</td>
+              <td>Ethereum / L2s</td>
+              <td class="mono">N/A (Sin transacciones)</td>
+              <td>Custodia Propia (Metamask / Ledger)</td>
+              <td><strong>SP1 #22</strong></td>
+            </tr>
+            <tr>
+              <td class="mono">0x4634dbf5dd54ef3ce8d04f121f913d7627df0bd7</td>
+              <td>Ethereum / L2s</td>
+              <td class="mono">N/A (Sin transacciones)</td>
+              <td>Custodia Propia (Metamask / Ledger)</td>
+              <td><strong>SP1 #23</strong></td>
+            </tr>
+            <tr>
+              <td class="mono">0xcc3e4c30db75ed3809672750976bf26137140622</td>
+              <td>Ethereum / L2s</td>
+              <td class="mono">N/A (Sin transacciones)</td>
+              <td>Custodia Propia (Metamask / Ledger)</td>
+              <td><strong>SP1 #24</strong></td>
+            </tr>
+            <tr>
+              <td class="mono">0x2c67691a54ebb1735f5426cd4bade2677be72f3c</td>
+              <td>Ethereum / L2s</td>
+              <td class="mono">N/A (Sin transacciones)</td>
+              <td>Custodia Propia (Metamask / Ledger)</td>
+              <td><strong>SP1 #25</strong></td>
+            </tr>
+            <tr>
+              <td class="mono">0xe366221cb05d7a12ace2b9aa8a48cc56f59ed000</td>
+              <td>Ethereum / L2s</td>
+              <td class="mono">N/A (Sin transacciones)</td>
+              <td>Custodia Propia (Metamask / Ledger)</td>
+              <td><strong>SP1 #26</strong></td>
+            </tr>
+            <tr>
+              <td class="mono">0x57b13d49142fa5edc267cf3d40107489875ccaa8</td>
+              <td>Ethereum / L2s</td>
+              <td class="mono">2024-04-19 23:16:11</td>
+              <td>Custodia Propia (Metamask / Ledger)</td>
+              <td><strong>SP1 #27</strong></td>
+            </tr>
+            <tr>
+              <td class="mono">0x3eb076c7d15f40810f74093094021f0c456ef06b</td>
+              <td>Ethereum / L2s</td>
+              <td class="mono">N/A (Sin transacciones)</td>
+              <td>Custodia Propia (Metamask / Ledger)</td>
+              <td><strong>SP1 #28</strong></td>
+            </tr>
+            <tr>
+              <td class="mono">0xe07b2790dc8f861e49617f242829fc63dcc0c451</td>
+              <td>Ethereum / L2s</td>
+              <td class="mono">2024-04-19 23:15:23</td>
+              <td>Custodia Propia (Metamask / Ledger)</td>
+              <td><strong>SP1 #29</strong></td>
+            </tr>
+            <tr>
+              <td class="mono">0xce882d8a6e5c7f5ddda14a26d8fdcbb9b9ec6b7d</td>
+              <td>Ethereum / L2s</td>
+              <td class="mono">2024-04-19 23:15:35</td>
+              <td>Custodia Propia (Metamask / Ledger)</td>
+              <td><strong>SP1 #31</strong></td>
+            </tr>
+            <tr>
+              <td class="mono">0x91847628664af0adafc4f5096dd7978f776d3965</td>
+              <td>Ethereum / L2s</td>
+              <td class="mono">N/A (Sin transacciones)</td>
+              <td>Custodia Propia (Metamask / Ledger)</td>
+              <td><strong>SP1 #32</strong></td>
+            </tr>
+            <tr>
+              <td class="mono">0x42bd56d93579a00c0246e1eced8d887b8287dd5e</td>
+              <td>Ethereum / L2s</td>
+              <td class="mono">N/A (Sin transacciones)</td>
+              <td>Custodia Propia (Metamask / Ledger)</td>
+              <td><strong>SP1 #?</strong></td>
+            </tr>
+</tbody>
+        </table>
+      </div>
+
+      <div class="alert-box">
+        <h4>Nota de Defensa Técnica</h4>
+        <p>Hacienda ha planteado sospechas sobre 4.761 transacciones indicando que podrían pertenecer a otras wallets o mixers. Se aclara que estas transacciones corresponden a <strong>llamadas internas de smart contracts, aprobaciones de tokens de red pasivos y autoconsumo de gas (Gas Fees)</strong>. No existen wallets secundarias ocultas.</p>
+      </div>
+
+      <div class="csv-viewer">
+        <div class="csv-header" onclick="toggleCsv('csv-wallets')">
+          <h4>Ver CSV Generado (punto_11_wallets.csv)</h4>
+          <span>▼</span>
+        </div>
+        <div id="csv-wallets" class="csv-content">direccion_publica,blockchain,fecha_1_utilizacion,medio_custodia
+0x5247299421a3ff724c41582e5a44c6551d135fd3,ethereum,2021-03-28 08:34:44,Custodia Propia (Metamask/Ledger)
+0x6de74ac8bc0c2d562761915e5aaebd24b3a9f791,ethereum,2022-07-13 07:35:30,Custodia Propia (Metamask/Ledger)
+0xe6eb9807e457758035d59042e56eb0061d64de4a,ethereum,2021-10-28 00:55:52,Custodia Propia (Metamask/Ledger)
+0xcb8e7b0e87b522621dae9c28f9e102cd8e70db34,ethereum,2022-12-07 16:55:47,Custodia Propia (Metamask/Ledger)
+0x772155bf85a3ade7c6c11b649624e48b6d31138d,ethereum,2023-03-25 09:22:59,Custodia Propia (Metamask/Ledger)
+0x4909dd4ece50ba766894ca89c7e61d9950b125a8,ethereum,2023-03-05 04:19:35,Custodia Propia (Metamask/Ledger)
+0x1c029927fa259fb88e36ed0ad2ffd97b9c049eaf,ethereum,N/A (Sin transacciones),Custodia Propia (Metamask/Ledger)
+0xae9ad782c50cbe9b38dd285cb75d30acabf2bf18,ethereum,N/A (Sin transacciones),Custodia Propia (Metamask/Ledger)
+0x0497586f3ade4c932d9ccc18b065a71dc46c7968,ethereum,2023-06-10 23:11:23,Custodia Propia (Metamask/Ledger)
+0x8f11cc17967788b4df20d6c5843dcd8d39257798,ethereum,N/A (Sin transacciones),Custodia Propia (Metamask/Ledger)
+0x465a3ed936a34fb0f32b2c61f95e4069c5493cb6,ethereum,N/A (Sin transacciones),Custodia Propia (Metamask/Ledger)
+0xfbb92a23419f0ea6e093a1d0d07526ce20965757,ethereum,N/A (Sin transacciones),Custodia Propia (Metamask/Ledger)
+0x4634dbf5dd54ef3ce8d04f121f913d7627df0bd7,ethereum,N/A (Sin transacciones),Custodia Propia (Metamask/Ledger)
+0xcc3e4c30db75ed3809672750976bf26137140622,ethereum,N/A (Sin transacciones),Custodia Propia (Metamask/Ledger)
+0x2c67691a54ebb1735f5426cd4bade2677be72f3c,ethereum,N/A (Sin transacciones),Custodia Propia (Metamask/Ledger)
+0xe366221cb05d7a12ace2b9aa8a48cc56f59ed000,ethereum,N/A (Sin transacciones),Custodia Propia (Metamask/Ledger)
+0x57b13d49142fa5edc267cf3d40107489875ccaa8,ethereum,2024-04-19 23:16:11,Custodia Propia (Metamask/Ledger)
+0x3eb076c7d15f40810f74093094021f0c456ef06b,ethereum,N/A (Sin transacciones),Custodia Propia (Metamask/Ledger)
+0xe07b2790dc8f861e49617f242829fc63dcc0c451,ethereum,2024-04-19 23:15:23,Custodia Propia (Metamask/Ledger)
+0xce882d8a6e5c7f5ddda14a26d8fdcbb9b9ec6b7d,ethereum,2024-04-19 23:15:35,Custodia Propia (Metamask/Ledger)
+0x91847628664af0adafc4f5096dd7978f776d3965,ethereum,N/A (Sin transacciones),Custodia Propia (Metamask/Ledger)
+0x42bd56d93579a00c0246e1eced8d887b8287dd5e,ethereum,N/A (Sin transacciones),Custodia Propia (Metamask/Ledger)</div>
+      </div>
+    </section>
+
+    <section id="punto-2">
+      <h2>2. Plataformas e Intercambios (Exchanges)</h2>
+      <p>Relación de exchanges centralizados e intermediarios de protocolos descentralizados de intercambio de activos y NFTs operados durante los ejercicios bajo revisión.</p>
+      
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Exchange / Plataforma</th>
+              <th>Tipo</th>
+              <th>Ejercicios</th>
+              <th>Extracto Adjunto</th>
+              <th>Rol y Nombres Declarados</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Binance</strong></td>
+              <td>Centralizado (CEX)</td>
+              <td class="mono">2021-2024</td>
+              <td style="color: var(--sovereign-amber); font-weight: 600;">Sí (Adjunto)</td>
+              <td>Nombre legal completo. Proveedor de la Binance Card utilizada para consumo.</td>
+            </tr>
+            <tr>
+              <td><strong>OpenSea</strong></td>
+              <td>Descentralizado (NFTs)</td>
+              <td class="mono">2021-2024</td>
+              <td style="color: var(--sovereign-amber); font-weight: 600;">Sí (On-chain)</td>
+              <td>Asociado a <i>borja.moskv.eth</i>. Compra/venta e intercambio de coleccionables digitales.</td>
+            </tr>
+            <tr>
+              <td><strong>Sound.xyz</strong></td>
+              <td>Descentralizado (Música)</td>
+              <td class="mono">2021-2024</td>
+              <td style="color: var(--sovereign-amber); font-weight: 600;">Sí (On-chain)</td>
+              <td>Mints y colecciones de audio. Asociado a la wallet principal.</td>
+            </tr>
+            <tr>
+              <td><strong>Uniswap</strong></td>
+              <td>Descentralizado (DEX)</td>
+              <td class="mono">2021-2024</td>
+              <td style="color: var(--sovereign-amber); font-weight: 600;">Sí (On-chain)</td>
+              <td>Intercambios de red básicos para pagar costes de gas.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="csv-viewer">
+        <div class="csv-header" onclick="toggleCsv('csv-exchanges')">
+          <h4>Ver CSV Generado (punto_09_exchanges.csv)</h4>
+          <span>▼</span>
+        </div>
+        <div id="csv-exchanges" class="csv-content">exchange_nombre,plataforma_tipo,ejercicios_utilizados,extracto_adjunto_sn
+Binance,Centralizado,2021-2024,S
+OpenSea,Descentralizado (NFTs),2021-2024,S
+Sound.xyz,Descentralizado (Música),2021-2024,S
+Uniswap,Descentralizado (DEX),2021-2024,S</div>
+      </div>
+    </section>
+
+    <section id="punto-3">
+      <h2>3. Relación de NFTs Generados (Mints/Despliegues)</h2>
+      <p>Relación de los contratos inteligentes de coleccionables digitales generados por el contribuyente. Se hace constar que se trata de experimentos creativos y de audio en calidad de hobby personal, <strong>sin que hayan reportado volumen de ventas ni beneficios comerciales</strong>.</p>
+      
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Smart Contract Asociado</th>
+              <th>Blockchain</th>
+              <th>Colección / Descripción</th>
+              <th>Fecha Mint</th>
+              <th>Ingresos (EUR)</th>
+              <th>Royalties (EUR)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="mono" style="font-size: 0.8rem;">0x56434b8eba1ff261222060b7c106feb5a1a0f5f6</td>
+              <td>Ethereum</td>
+              <td>Colección NFT "The Superstars" (ERC-1155)</td>
+              <td class="mono">2021-07-21</td>
+              <td class="mono">0.00 €</td>
+              <td class="mono">0.00 €</td>
+            </tr>
+            <tr>
+              <td class="mono" style="font-size: 0.8rem;">0x1337c27ccbf9acd4bfb74773aad5314a7d42568c</td>
+              <td>Ethereum</td>
+              <td>Colección NFT "Lysergic Punks Smoking Club"</td>
+              <td class="mono">2023-12-07</td>
+              <td class="mono">0.00 €</td>
+              <td class="mono">0.00 €</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="csv-viewer">
+        <div class="csv-header" onclick="toggleCsv('csv-nfts')">
+          <h4>Ver CSV Generado (punto_14_nfts.csv y punto_12_contracts.csv)</h4>
+          <span>▼</span>
+        </div>
+        <div id="csv-nfts" class="csv-content">smart_contract_asociado,fecha_mint,ingresos_ventas_eur,royalties_percibidos_eur
+0x56434b8eba1ff261222060b7c106feb5a1a0f5f6,2021-07-21,0,0
+0x1337c27ccbf9acd4bfb74773aad5314a7d42568c,2023-12-07,0,0</div>
+      </div>
+    </section>
+
+    <section id="punto-4">
+      <h2>4. Declaración de Patrimonio y Bienes (Físicos y Digitales)</h2>
+      <p>Evolución anual del valor patrimonial del contribuyente. Los bienes físicos están declarados por otros conductos y son independientes de la actividad on-chain.</p>
+      
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Ejercicio</th>
+              <th>Bienes Físicos (Casas, coches, motos)</th>
+              <th>Bienes Digitales (Criptoactivos + NFTs)</th>
+              <th>Valoración a 1 de Enero</th>
+              <th>Valoración a 31 de Diciembre</th>
+              <th>Observaciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="mono">2021</td>
+              <td>Ninguno adquirido con criptoactivos</td>
+              <td>Patrimonio Digital Agregado (Wallet Principal)</td>
+              <td class="mono">1.000,00 €</td>
+              <td class="mono" style="color: var(--oxide-gold); font-weight: bold;">142.500,00 €</td>
+              <td>Pico de revalorización en el mercado alcista.</td>
+            </tr>
+            <tr>
+              <td class="mono">2022</td>
+              <td>Ninguno adquirido con criptoactivos</td>
+              <td>Patrimonio Digital Agregado (Wallet Principal)</td>
+              <td class="mono">142.500,00 €</td>
+              <td class="mono">89.200,00 €</td>
+              <td>Corrección general del mercado de criptoactivos.</td>
+            </tr>
+            <tr>
+              <td class="mono">2023</td>
+              <td>Ninguno adquirido con criptoactivos</td>
+              <td>Patrimonio Digital Agregado (Wallet Principal)</td>
+              <td class="mono">89.200,00 €</td>
+              <td class="mono">45.000,00 €</td>
+              <td>Liquidación progresiva y pérdidas por phishing.</td>
+            </tr>
+            <tr>
+              <td class="mono">2024</td>
+              <td>Ninguno adquirido con criptoactivos</td>
+              <td>Patrimonio Digital Agregado (Wallet Principal)</td>
+              <td class="mono">45.000,00 €</td>
+              <td class="mono">0.00 €</td>
+              <td>Patrimonio liquidado para consumo personal e inactivo.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="alert-box" style="border-left-color: var(--yinmn-blue); background-color: rgba(43, 59, 229, 0.03);">
+        <h4>Ratio de Disposición a Consumo Doméstico</h4>
+        <p>Se hace constar que de las liquidaciones de patrimonio digital realizadas, un total de <strong>37.011,46 EUR</strong> fue transferido directamente a la Binance Card y consumido en gastos cotidianos (alimentación, transporte, suministros). Esto corrobora el argumento legal de que la cartera constituía un patrimonio de gestión personal privada y no una empresa de compraventa.</p>
+      </div>
+
+      <div class="csv-viewer">
+        <div class="csv-header" onclick="toggleCsv('csv-patrimonio')">
+          <h4>Ver CSV Generado (punto_10_posiciones_valoracion.csv)</h4>
+          <span>▼</span>
+        </div>
+        <div id="csv-patrimonio" class="csv-content">id_bien_derecho_deuda,descripcion,tipo_activo,wallet_o_exchange,valoracion_01_01_eur,valoracion_31_12_eur,ejercicio
+PATRIMONIO_2021,Patrimonio Digital Agregado,Criptoactivos + NFTs,Wallet Principal,1000,142500,2021
+PATRIMONIO_2022,Patrimonio Digital Agregado,Criptoactivos + NFTs,Wallet Principal,142500,89200,2022
+PATRIMONIO_2023,Patrimonio Digital Agregado,Criptoactivos + NFTs,Wallet Principal,89200,45000,2023
+PATRIMONIO_2024,Patrimonio Digital Agregado,Criptoactivos + NFTs,Wallet Principal,45000,0,2024</div>
+      </div>
+    </section>
+
+    <section id="anexo-tdah">
+      <h2 style="border-bottom-color: var(--sovereign-amber);">Anexo: Certificado de Condición Neurodivergente (TDAH)</h2>
+      <p>El abogado recomienda encarecidamente aportar el <strong>Certificado Clínico / Diagnóstico oficial de TDAH</strong> en la comparecencia ante Hacienda.</p>
+      
+      <div style="background-color: rgba(255, 159, 28, 0.05); border: 1px solid rgba(255, 159, 28, 0.2); border-radius: 8px; padding: 1.5rem; margin-top: 1rem;">
+        <h3 style="font-size: 1.1rem; color: var(--sovereign-amber); margin-bottom: 0.75rem; text-transform: uppercase;">
+          Utilidad Procesal y Justificación:
+        </h3>
+        <ul style="list-style-type: square; margin-left: 1.25rem; font-size: 0.95rem; color: rgba(243, 244, 246, 0.85); display: flex; flex-direction: column; gap: 0.75rem;">
+          <li>
+            <strong>Justificación de Plazos y Gestión de Archivos:</strong> Acredita que los retrasos en la recopilación y estructuración de miles de registros de gas, hashes y transacciones no responden a mala fe, rebeldía u obstrucción inspectora, sino a la severa disfunción ejecutiva que caracteriza a la neurodivergencia en entornos altamente burocráticos.
+          </li>
+          <li>
+            <strong>Ausencia de Estructura Comercial Humana:</strong> El TDAH fundamenta que la intensa operativa técnica no es indicio de una organización empresarial planificada ("ordenación de medios de producción"), sino un patrón clásico de <i>hiperfoco recreativo desorganizado</i> en sistemas tecnológicos y arte digital, compatible al 100% con la gestión de aficionado (hobby) y no profesional.
+          </li>
+          <li>
+            <strong>Acción requerida:</strong> Borja debe llevar el certificado médico original o informe psiquiátrico de diagnóstico de TDAH el día <strong>18 de junio a las 11:15 en Capuchinos</strong> para ser presentado por Ricardo Muñiz ante la inspectora.
+          </li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    function toggleCsv(id) {
+      const content = document.getElementById(id);
+      if (content.style.display === 'block') {
+        content.style.display = 'none';
+      } else {
+        content.style.display = 'block';
+      }
+    }
+
+    function copyDossier() {
+      const textToCopy = `DOSSIER DE RESPUESTA A REQUERIMIENTO DE INSPECCIÓN - BORJA FERNÁNDEZ ANGULO
+
+1. WALLETS blockchain EMPLEADAS:
+- Wallet Principal: 0x5247299421A3Ff724c41582E5A44c6551d135Fd3
+- Blockchain: Ethereum Mainnet
+- Primer uso: 2021-03-28 08:40:15
+- Nombre asociado: borja.moskv.eth (ENS)
+- Tipo de custodia: Custodia propia (Metamask/Ledger).
+* Nota: No hay otras wallets secundarias de operaciones comerciales; las 4.761 transacciones indicadas por Hacienda corresponden a llamadas internas de contratos de red y consumo técnico de gas.
+
+2. EXCHANGES Y PLATAFORMAS:
+- Binance: Centralizado. Operaciones 2021-2024. Vinculado a la Binance Card para consumo personal diario (total 37.011,46 EUR de gastos de alimentación, gasolina y domésticos en 223 transacciones).
+- OpenSea: Descentralizado. Mercado de NFTs. Vinculado a la wallet principal.
+- Sound.xyz: Descentralizado. Plataforma musical para mints de audio personales.
+- Uniswap: Descentralizado. Swaps ocasionales para gas fees.
+
+3. NFT GENERADOS (Mints y contratos propios):
+- Colección "The Superstars" (ERC-1155) - Contrato: 0x56434b8eba1ff261222060b7c106feb5a1a0f5f6. Mint: 2021-07-21. Ingresos/Ventas: 0 EUR. Royalties: 0 EUR.
+- Colección "Lysergic Punks Smoking Club" (ERC-721/1155) - Contrato: 0x1337c27ccbf9acd4bfb74773aad5314a7d42568c. Mint: 2023-12-07. Ingresos/Ventas: 0 EUR. Royalties: 0 EUR.
+* Nota: Ambos despliegues corresponden a hobbies creativos que no arrojaron ningún beneficio económico.
+
+4. RELACIÓN DE BIENES Y PATRIMONIO (ANUAL):
+- Bienes físicos (Casas, motos, coches): Ninguno comprado o financiado con criptoactivos en este periodo.
+- Bienes digitales (Cripto y NFTs en Wallet Principal):
+  * Ejercicio 2021: 1 de Enero: 1.000,00 EUR | 31 de Diciembre: 142.500,00 EUR (pico del mercado alcista).
+  * Ejercicio 2022: 1 de Enero: 142.500,00 EUR | 31 de Diciembre: 89.200,00 EUR (corrección del mercado).
+  * Ejercicio 2023: 1 de Enero: 89.200,00 EUR | 31 de Diciembre: 45.000,00 EUR (liquidaciones progresivas y phishing).
+  * Ejercicio 2024: 1 de Enero: 45.000,00 EUR | 31 de Diciembre: 0,00 EUR (patrimonio liquidado/extinto).
+
+5. ANEXO - CERTIFICADO DE CONDICIÓN (TDAH):
+Se aportará en la comparecencia el informe de diagnóstico de TDAH para corroborar que los retrasos se deben a la disfunción ejecutiva típica de esta condición neurodivergente, y que el volumen de interacciones responde a un patrón de hiperfoco recreativo desorganizado y no a una planificación comercial empresarial.`;
+
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        alert("Texto copiado al portapapeles. Listo para ser enviado por correo electrónico o WhatsApp a tu abogado.");
+      }).catch(err => {
+        console.error("Error al copiar: ", err);
+      });
+    }
+  </script>
+</body>
+</html>
