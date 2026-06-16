@@ -1042,19 +1042,107 @@ SYSTEM INTEGRITY HASH: ${generateHash(JSON.stringify(state.logs))}
   const dropdownWrapper = document.getElementById('bandcamp-dropdown-wrapper');
   const dropdownSearch = document.getElementById('bandcamp-search');
   const dropdownItemsList = document.getElementById('bandcamp-items-list');
+  const dropdownCount = document.getElementById('bandcamp-count');
 
   if (dropdownToggle && dropdownWrapper) {
+    const playTick = (freqStart, freqEnd, duration) => {
+      // Access audio context if initialized
+      const ctx = window.MOSKV?.audioContext || audioCtx;
+      if (ctx && ctx.state === 'running') {
+        try {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freqStart, ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(freqEnd, ctx.currentTime + duration);
+          gain.gain.setValueAtTime(0.012, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + duration);
+        } catch(err){}
+      }
+    };
+
+    const escapeHTML = (str) => {
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    };
+
+    const updateFiltering = () => {
+      if (!dropdownSearch || !dropdownItemsList) return;
+      const query = dropdownSearch.value.toLowerCase().trim();
+      const activeTab = dropdownWrapper.querySelector('.filter-tab.active');
+      const filterType = activeTab ? activeTab.dataset.filter : 'all';
+      
+      let visibleCount = 0;
+      const items = dropdownItemsList.querySelectorAll('.dropdown-item');
+      items.forEach(item => {
+        const titleEl = item.querySelector('.dropdown-item-title');
+        if (!titleEl) return;
+        if (!titleEl.dataset.original) {
+          titleEl.dataset.original = titleEl.textContent;
+        }
+        const originalText = titleEl.dataset.original;
+        const type = item.dataset.type || '';
+        
+        const matchesSearch = originalText.toLowerCase().includes(query);
+        const matchesTab = (filterType === 'all') || (type === filterType);
+        
+        if (matchesSearch && matchesTab) {
+          item.style.display = 'flex';
+          visibleCount++;
+          
+          if (query) {
+            const index = originalText.toLowerCase().indexOf(query);
+            if (index !== -1) {
+              const before = originalText.substring(0, index);
+              const match = originalText.substring(index, index + query.length);
+              const after = originalText.substring(index + query.length);
+              titleEl.innerHTML = `${escapeHTML(before)}<span class="search-highlight">${escapeHTML(match)}</span>${escapeHTML(after)}`;
+            } else {
+              titleEl.textContent = originalText;
+            }
+          } else {
+            titleEl.textContent = originalText;
+          }
+        } else {
+          item.style.display = 'none';
+        }
+      });
+      
+      const noResultsEl = dropdownItemsList.querySelector('.dropdown-no-results');
+      if (noResultsEl) {
+        noResultsEl.style.display = (visibleCount === 0) ? 'block' : 'none';
+      }
+      
+      if (dropdownCount) {
+        dropdownCount.textContent = visibleCount.toString();
+      }
+    };
+
     dropdownToggle.addEventListener('click', (e) => {
       e.stopPropagation();
       const isActive = dropdownWrapper.classList.toggle('active');
       dropdownToggle.setAttribute('aria-expanded', isActive ? 'true' : 'false');
       if (isActive && dropdownSearch) {
         dropdownSearch.focus();
+        playTick(800, 1600, 0.1);
+      } else {
+        playTick(1600, 800, 0.08);
       }
     });
 
     document.addEventListener('click', (e) => {
       if (!dropdownWrapper.contains(e.target)) {
+        if (dropdownWrapper.classList.contains('active')) {
+          playTick(1200, 600, 0.06);
+        }
         dropdownWrapper.classList.remove('active');
         dropdownToggle.setAttribute('aria-expanded', 'false');
       }
@@ -1067,18 +1155,31 @@ SYSTEM INTEGRITY HASH: ${generateHash(JSON.stringify(state.logs))}
       });
     }
 
-    if (dropdownSearch && dropdownItemsList) {
-      dropdownSearch.addEventListener('input', (e) => {
-        const query = e.target.value.toLowerCase().trim();
-        const items = dropdownItemsList.querySelectorAll('.dropdown-item');
-        
-        items.forEach(item => {
-          const title = item.dataset.title || '';
-          if (title.includes(query)) {
-            item.style.display = 'flex';
-          } else {
-            item.style.display = 'none';
-          }
+    if (dropdownSearch) {
+      dropdownSearch.addEventListener('input', updateFiltering);
+      dropdownSearch.addEventListener('keydown', () => {
+        playTick(2400, 1200, 0.03);
+      });
+    }
+
+    // Tabs controllers
+    const tabs = dropdownWrapper.querySelectorAll('.filter-tab');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', (e) => {
+        e.stopPropagation();
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        playTick(1800, 1000, 0.05);
+        updateFiltering();
+      });
+    });
+
+    // Item hover feedback
+    if (dropdownItemsList) {
+      const items = dropdownItemsList.querySelectorAll('.dropdown-item');
+      items.forEach(item => {
+        item.addEventListener('mouseenter', () => {
+          playTick(2200, 1500, 0.03);
         });
       });
     }

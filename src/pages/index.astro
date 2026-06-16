@@ -63,18 +63,32 @@ import bandcampTracks from '../data/bandcamp_tracks.json';
           <a href="javascript:void(0)" class="nav-link-ext dropdown-toggle">BANDCAMP</a>
           <div class="dropdown-menu" id="bandcamp-dropdown-menu">
             <div class="dropdown-search-container">
-              <input type="text" class="dropdown-search" id="bandcamp-search" placeholder="FILTRAR LANZAMIENTOS..." autocomplete="off" />
+              <div style="display: flex; align-items: center; gap: 0.5rem; width: 100%;">
+                <input type="text" class="dropdown-search" id="bandcamp-search" placeholder="FILTRAR LANZAMIENTOS..." autocomplete="off" style="flex-grow: 1;" />
+                <span class="dropdown-count-badge" id="bandcamp-count">{bandcampTracks.length}</span>
+              </div>
+              <div class="dropdown-filter-tabs">
+                <button class="filter-tab active" data-filter="all">ALL</button>
+                <button class="filter-tab" data-filter="album">ALBUMS</button>
+                <button class="filter-tab" data-filter="track">TRACKS</button>
+              </div>
             </div>
-            <div class="dropdown-items-list" id="bandcamp-items-list">
-              {bandcampTracks.map(track => (
-                <a href={`https://borjamoskv.bandcamp.com${track.href}`} target="_blank" rel="noopener" class="dropdown-item" data-title={track.title.toLowerCase()}>
-                  <img src={track.img} alt={track.title} class="dropdown-item-img" loading="lazy" />
-                  <div class="dropdown-item-info">
-                    <span class="dropdown-item-title">{track.title}</span>
-                    <span class="dropdown-item-badge">{track.href.includes('/album/') ? 'ALBUM' : 'TRACK'}</span>
-                  </div>
-                </a>
-              ))}
+            <div class="dropdown-items-list grid-layout" id="bandcamp-items-list">
+              <div class="dropdown-no-results" style="display: none;">
+                SIN COINCIDENCIAS / NO RELEASES FOUND
+              </div>
+              {bandcampTracks.map(track => {
+                const isAlbum = track.href.includes('/album/');
+                return (
+                  <a href={`https://borjamoskv.bandcamp.com${track.href}`} target="_blank" rel="noopener" class="dropdown-item" data-title={track.title.toLowerCase()} data-type={isAlbum ? 'album' : 'track'}>
+                    <img src={track.img} alt={track.title} class="dropdown-item-img" loading="lazy" />
+                    <div class="dropdown-item-info">
+                      <span class="dropdown-item-title">{track.title}</span>
+                      <span class="dropdown-item-badge">{isAlbum ? 'ALBUM' : 'TRACK'}</span>
+                    </div>
+                  </a>
+                );
+              })}
             </div>
           </div>
         </div>

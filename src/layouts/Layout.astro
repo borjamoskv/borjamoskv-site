@@ -92,18 +92,32 @@ const { title } = Astro.props;
             <a href="javascript:void(0)" class="nav-link-ext dropdown-toggle" aria-haspopup="true" aria-expanded="false">Bandcamp</a>
             <div class="dropdown-menu" id="bandcamp-dropdown-menu">
               <div class="dropdown-search-container">
-                <input type="text" class="dropdown-search" id="bandcamp-search" placeholder="FILTRAR LANZAMIENTOS..." autocomplete="off" />
+                <div style="display: flex; align-items: center; gap: 0.5rem; width: 100%;">
+                  <input type="text" class="dropdown-search" id="bandcamp-search" placeholder="FILTRAR LANZAMIENTOS..." autocomplete="off" style="flex-grow: 1;" />
+                  <span class="dropdown-count-badge" id="bandcamp-count">{bandcampTracks.length}</span>
+                </div>
+                <div class="dropdown-filter-tabs">
+                  <button class="filter-tab active" data-filter="all">ALL</button>
+                  <button class="filter-tab" data-filter="album">ALBUMS</button>
+                  <button class="filter-tab" data-filter="track">TRACKS</button>
+                </div>
               </div>
-              <div class="dropdown-items-list" id="bandcamp-items-list">
-                {bandcampTracks.map(track => (
-                  <a href={`https://borjamoskv.bandcamp.com${track.href}`} target="_blank" rel="noopener" class="dropdown-item" data-title={track.title.toLowerCase()}>
-                    <img src={track.img} alt={track.title} class="dropdown-item-img" loading="lazy" />
-                    <div class="dropdown-item-info">
-                      <span class="dropdown-item-title">{track.title}</span>
-                      <span class="dropdown-item-badge">{track.href.includes('/album/') ? 'ALBUM' : 'TRACK'}</span>
-                    </div>
-                  </a>
-                ))}
+              <div class="dropdown-items-list grid-layout" id="bandcamp-items-list">
+                <div class="dropdown-no-results" style="display: none;">
+                  SIN COINCIDENCIAS / NO RELEASES FOUND
+                </div>
+                {bandcampTracks.map(track => {
+                  const isAlbum = track.href.includes('/album/');
+                  return (
+                    <a href={`https://borjamoskv.bandcamp.com${track.href}`} target="_blank" rel="noopener" class="dropdown-item" data-title={track.title.toLowerCase()} data-type={isAlbum ? 'album' : 'track'}>
+                      <img src={track.img} alt={track.title} class="dropdown-item-img" loading="lazy" />
+                      <div class="dropdown-item-info">
+                        <span class="dropdown-item-title">{track.title}</span>
+                        <span class="dropdown-item-badge">{isAlbum ? 'ALBUM' : 'TRACK'}</span>
+                      </div>
+                    </a>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -133,17 +147,31 @@ const { title } = Astro.props;
           
           <div class="mobile-nav-dropdown" style="width: 100%; text-align: center;">
             <button class="mobile-dropdown-toggle" style="background: none; border: none; cursor: pointer; padding: 1rem 0; width: 100%; font-family: var(--font-secondary); font-size: 1.5rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-parchment); transition: color 0.3s ease;">Bandcamp ▾</button>
-            <div class="mobile-dropdown-menu" style="display: none; max-height: 250px; overflow-y: auto; background: rgba(5,5,5,0.95); border: 1px solid rgba(43,59,229,0.2); border-radius: 8px; padding: 0.5rem; margin: 0.5rem 0;">
-              <input type="text" class="dropdown-search mobile-dropdown-search" placeholder="FILTRAR LANZAMIENTOS..." style="margin-bottom: 0.5rem;" autocomplete="off" />
+            <div class="mobile-dropdown-menu" style="display: none; max-height: 280px; overflow-y: auto; background: rgba(5,5,5,0.95); border: 1px solid rgba(43,59,229,0.2); border-radius: 8px; padding: 0.5rem; margin: 0.5rem 0;">
+              <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; padding: 0 0.5rem;">
+                <input type="text" class="dropdown-search mobile-dropdown-search" placeholder="FILTRAR..." style="flex-grow: 1; margin-bottom: 0;" autocomplete="off" />
+                <span class="dropdown-count-badge mobile-dropdown-count">{bandcampTracks.length}</span>
+              </div>
+              <div class="dropdown-filter-tabs" style="justify-content: center; margin-bottom: 0.5rem; padding: 0 0.5rem;">
+                <button class="filter-tab active" data-filter="all">ALL</button>
+                <button class="filter-tab" data-filter="album">ALBUMS</button>
+                <button class="filter-tab" data-filter="track">TRACKS</button>
+              </div>
               <div class="mobile-dropdown-items-list">
-                {bandcampTracks.map(track => (
-                  <a href={`https://borjamoskv.bandcamp.com${track.href}`} target="_blank" rel="noopener" class="dropdown-item" data-title={track.title.toLowerCase()} style="font-size: 0.65rem; padding: 0.4rem;">
-                    <img src={track.img} alt={track.title} class="dropdown-item-img" style="width: 28px; height: 28px;" loading="lazy" />
-                    <div class="dropdown-item-info">
-                      <span class="dropdown-item-title" style="font-size: 0.65rem; color: #fff;">{track.title}</span>
-                    </div>
-                  </a>
-                ))}
+                <div class="dropdown-no-results" style="display: none; width: 100%;">
+                  SIN COINCIDENCIAS / NO RELEASES FOUND
+                </div>
+                {bandcampTracks.map(track => {
+                  const isAlbum = track.href.includes('/album/');
+                  return (
+                    <a href={`https://borjamoskv.bandcamp.com${track.href}`} target="_blank" rel="noopener" class="dropdown-item" data-title={track.title.toLowerCase()} data-type={isAlbum ? 'album' : 'track'} style="font-size: 0.65rem; padding: 0.4rem;">
+                      <img src={track.img} alt={track.title} class="dropdown-item-img" style="width: 28px; height: 28px;" loading="lazy" />
+                      <div class="dropdown-item-info">
+                        <span class="dropdown-item-title" style="font-size: 0.65rem; color: #fff;">{track.title}</span>
+                      </div>
+                    </a>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -755,6 +783,15 @@ const { title } = Astro.props;
         const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
         const mobileLinks = document.querySelectorAll('.mobile-nav-link');
 
+        const escapeHTML = (str) => {
+          return str
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+        };
+
         // Play UI synth sound feedback
         const playNavSound = (freqStart, freqEnd, duration, type = 'sine', volume = 0.03) => {
           if (!audioCtx || audioCtx.state !== 'running') return;
@@ -897,19 +934,78 @@ const { title } = Astro.props;
         const dropdownWrapper = document.getElementById('bandcamp-dropdown-wrapper');
         const dropdownSearch = document.getElementById('bandcamp-search');
         const dropdownItemsList = document.getElementById('bandcamp-items-list');
+        const dropdownCount = document.getElementById('bandcamp-count');
 
         if (dropdownToggle && dropdownWrapper) {
+          const updateFiltering = () => {
+            if (!dropdownSearch || !dropdownItemsList) return;
+            const query = dropdownSearch.value.toLowerCase().trim();
+            const activeTab = dropdownWrapper.querySelector('.filter-tab.active');
+            const filterType = activeTab ? activeTab.dataset.filter : 'all';
+            
+            let visibleCount = 0;
+            const items = dropdownItemsList.querySelectorAll('.dropdown-item');
+            items.forEach(item => {
+              const titleEl = item.querySelector('.dropdown-item-title');
+              if (!titleEl) return;
+              if (!titleEl.dataset.original) {
+                titleEl.dataset.original = titleEl.textContent;
+              }
+              const originalText = titleEl.dataset.original;
+              const type = item.dataset.type || '';
+              
+              const matchesSearch = originalText.toLowerCase().includes(query);
+              const matchesTab = (filterType === 'all') || (type === filterType);
+              
+              if (matchesSearch && matchesTab) {
+                item.style.display = 'flex';
+                visibleCount++;
+                
+                if (query) {
+                  const index = originalText.toLowerCase().indexOf(query);
+                  if (index !== -1) {
+                    const before = originalText.substring(0, index);
+                    const match = originalText.substring(index, index + query.length);
+                    const after = originalText.substring(index + query.length);
+                    titleEl.innerHTML = `${escapeHTML(before)}<span class="search-highlight">${escapeHTML(match)}</span>${escapeHTML(after)}`;
+                  } else {
+                    titleEl.textContent = originalText;
+                  }
+                } else {
+                  titleEl.textContent = originalText;
+                }
+              } else {
+                item.style.display = 'none';
+              }
+            });
+            
+            const noResultsEl = dropdownItemsList.querySelector('.dropdown-no-results');
+            if (noResultsEl) {
+              noResultsEl.style.display = (visibleCount === 0) ? 'block' : 'none';
+            }
+            
+            if (dropdownCount) {
+              dropdownCount.textContent = visibleCount.toString();
+            }
+          };
+
           dropdownToggle.addEventListener('click', (e) => {
             e.stopPropagation();
             const isActive = dropdownWrapper.classList.toggle('active');
             dropdownToggle.setAttribute('aria-expanded', isActive ? 'true' : 'false');
             if (isActive && dropdownSearch) {
               dropdownSearch.focus();
+              playNavSound(800, 1600, 0.1, 'sine', 0.025);
+            } else {
+              playNavSound(1600, 800, 0.08, 'sine', 0.02);
             }
           });
 
           document.addEventListener('click', (e) => {
             if (!dropdownWrapper.contains(e.target)) {
+              if (dropdownWrapper.classList.contains('active')) {
+                playNavSound(1200, 600, 0.06, 'sine', 0.015);
+              }
               dropdownWrapper.classList.remove('active');
               dropdownToggle.setAttribute('aria-expanded', 'false');
             }
@@ -922,18 +1018,31 @@ const { title } = Astro.props;
             });
           }
 
-          if (dropdownSearch && dropdownItemsList) {
-            dropdownSearch.addEventListener('input', (e) => {
-              const query = e.target.value.toLowerCase().trim();
-              const items = dropdownItemsList.querySelectorAll('.dropdown-item');
-              
-              items.forEach(item => {
-                const title = item.dataset.title || '';
-                if (title.includes(query)) {
-                  item.style.display = 'flex';
-                } else {
-                  item.style.display = 'none';
-                }
+          if (dropdownSearch) {
+            dropdownSearch.addEventListener('input', updateFiltering);
+            dropdownSearch.addEventListener('keydown', () => {
+              playNavSound(2400, 1200, 0.03, 'sine', 0.012);
+            });
+          }
+
+          // Tabs controllers
+          const tabs = dropdownWrapper.querySelectorAll('.filter-tab');
+          tabs.forEach(tab => {
+            tab.addEventListener('click', (e) => {
+              e.stopPropagation();
+              tabs.forEach(t => t.classList.remove('active'));
+              tab.classList.add('active');
+              playNavSound(1800, 1000, 0.05, 'sine', 0.02);
+              updateFiltering();
+            });
+          });
+
+          // Item hover feedback
+          if (dropdownItemsList) {
+            const items = dropdownItemsList.querySelectorAll('.dropdown-item');
+            items.forEach(item => {
+              item.addEventListener('mouseenter', () => {
+                playNavSound(2200, 1500, 0.03, 'sine', 0.008);
               });
             });
           }
@@ -944,8 +1053,61 @@ const { title } = Astro.props;
         const mobileDropdownMenu = document.querySelector('.mobile-dropdown-menu');
         const mobileDropdownSearch = document.querySelector('.mobile-dropdown-search');
         const mobileDropdownItemsList = document.querySelector('.mobile-dropdown-items-list');
+        const mobileDropdownCount = document.querySelector('.mobile-dropdown-count');
 
         if (mobileDropdownToggle && mobileDropdownMenu) {
+          const updateMobileFiltering = () => {
+            if (!mobileDropdownSearch || !mobileDropdownItemsList) return;
+            const query = mobileDropdownSearch.value.toLowerCase().trim();
+            const activeTab = mobileDropdownMenu.querySelector('.filter-tab.active');
+            const filterType = activeTab ? activeTab.dataset.filter : 'all';
+            
+            let visibleCount = 0;
+            const items = mobileDropdownItemsList.querySelectorAll('.dropdown-item');
+            items.forEach(item => {
+              const titleEl = item.querySelector('.dropdown-item-title');
+              if (!titleEl) return;
+              if (!titleEl.dataset.original) {
+                titleEl.dataset.original = titleEl.textContent;
+              }
+              const originalText = titleEl.dataset.original;
+              const type = item.dataset.type || '';
+              
+              const matchesSearch = originalText.toLowerCase().includes(query);
+              const matchesTab = (filterType === 'all') || (type === filterType);
+              
+              if (matchesSearch && matchesTab) {
+                item.style.display = 'flex';
+                visibleCount++;
+                
+                if (query) {
+                  const index = originalText.toLowerCase().indexOf(query);
+                  if (index !== -1) {
+                    const before = originalText.substring(0, index);
+                    const match = originalText.substring(index, index + query.length);
+                    const after = originalText.substring(index + query.length);
+                    titleEl.innerHTML = `${escapeHTML(before)}<span class="search-highlight">${escapeHTML(match)}</span>${escapeHTML(after)}`;
+                  } else {
+                    titleEl.textContent = originalText;
+                  }
+                } else {
+                  titleEl.textContent = originalText;
+                }
+              } else {
+                item.style.display = 'none';
+              }
+            });
+            
+            const noResultsEl = mobileDropdownItemsList.querySelector('.dropdown-no-results');
+            if (noResultsEl) {
+              noResultsEl.style.display = (visibleCount === 0) ? 'block' : 'none';
+            }
+            
+            if (mobileDropdownCount) {
+              mobileDropdownCount.textContent = visibleCount.toString();
+            }
+          };
+
           mobileDropdownToggle.addEventListener('click', (e) => {
             e.stopPropagation();
             const isVisible = mobileDropdownMenu.style.display === 'block';
@@ -953,24 +1115,29 @@ const { title } = Astro.props;
             mobileDropdownToggle.textContent = isVisible ? 'Bandcamp ▾' : 'Bandcamp ▴';
             if (!isVisible && mobileDropdownSearch) {
               mobileDropdownSearch.focus();
+              playNavSound(800, 1600, 0.1, 'sine', 0.025);
+            } else {
+              playNavSound(1600, 800, 0.08, 'sine', 0.02);
             }
           });
 
-          if (mobileDropdownSearch && mobileDropdownItemsList) {
-            mobileDropdownSearch.addEventListener('input', (e) => {
-              const query = e.target.value.toLowerCase().trim();
-              const items = mobileDropdownItemsList.querySelectorAll('.dropdown-item');
-              
-              items.forEach(item => {
-                const title = item.dataset.title || '';
-                if (title.includes(query)) {
-                  item.style.display = 'flex';
-                } else {
-                  item.style.display = 'none';
-                }
-              });
+          if (mobileDropdownSearch) {
+            mobileDropdownSearch.addEventListener('input', updateMobileFiltering);
+            mobileDropdownSearch.addEventListener('keydown', () => {
+              playNavSound(2400, 1200, 0.03, 'sine', 0.012);
             });
           }
+
+          const mobileTabs = mobileDropdownMenu.querySelectorAll('.filter-tab');
+          mobileTabs.forEach(tab => {
+            tab.addEventListener('click', (e) => {
+              e.stopPropagation();
+              mobileTabs.forEach(t => t.classList.remove('active'));
+              tab.classList.add('active');
+              playNavSound(1800, 1000, 0.05, 'sine', 0.02);
+              updateMobileFiltering();
+            });
+          });
         }
       };
 
