@@ -10,6 +10,26 @@ document.addEventListener('DOMContentLoaded', () => {
   console.log('[REALITY LEVEL: C5-REAL] Verified hardware and environment.');
 
   // System State
+  const playTick = (freqStart, freqEnd, duration) => {
+    // Access audio context if initialized
+    const ctx = window.MOSKV?.audioContext || audioCtx;
+    if (ctx && ctx.state === 'running') {
+      try {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freqStart, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(freqEnd, ctx.currentTime + duration);
+        gain.gain.setValueAtTime(0.012, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + duration);
+      } catch(err){}
+    }
+  };
+
   const state = {
     isPlaying: false,
     currentTrackId: 0,
@@ -169,26 +189,71 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, { passive: true });
 
-  navLinks.forEach(link => {
+  const allHeaderLinks = document.querySelectorAll('.site-nav .nav-link, .site-nav .nav-link-ext');
+  const navUnderline = document.getElementById('nav-underline');
+  const siteNavContainer = document.querySelector('.site-nav');
+
+  const updateUnderline = (target) => {
+    if (!navUnderline || !siteNavContainer) return;
+    const rect = target.getBoundingClientRect();
+    const navRect = siteNavContainer.getBoundingClientRect();
+    navUnderline.style.left = `${rect.left - navRect.left}px`;
+    navUnderline.style.width = `${rect.width}px`;
+    navUnderline.style.opacity = '1';
+  };
+
+  const resetUnderline = () => {
+    if (!navUnderline) return;
+    const activeLink = document.querySelector('.site-nav .nav-link.is-active');
+    if (activeLink) {
+      updateUnderline(activeLink);
+    } else {
+      navUnderline.style.opacity = '0';
+      navUnderline.style.width = '0';
+    }
+  };
+
+  // Initialize underline position on boot
+  setTimeout(resetUnderline, 100);
+
+  window.addEventListener('resize', resetUnderline, { passive: true });
+
+  allHeaderLinks.forEach(link => {
+    link.addEventListener('mouseenter', (e) => {
+      updateUnderline(e.target);
+      // Play soft UI tick feedback if context is running
+      playTick(2200, 800, 0.04);
+    });
+
+    link.addEventListener('mouseleave', () => {
+      resetUnderline();
+    });
+
     link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const targetId = link.getAttribute('href').substring(1);
-      
-      navLinks.forEach(l => l.classList.remove('is-active'));
-      link.classList.add('is-active');
+      // Audio click pop
+      playTick(150, 40, 0.08);
 
-      sections.forEach(section => {
-        if (section.id === targetId) {
-          section.classList.add('active');
-        } else {
-          section.classList.remove('active');
-        }
-      });
+      if (link.classList.contains('nav-link')) {
+        e.preventDefault();
+        const targetId = link.getAttribute('href').substring(1);
+        
+        navLinks.forEach(l => l.classList.remove('is-active'));
+        link.classList.add('is-active');
+        updateUnderline(link);
 
-      // Defer logging to keep click latency low (INP optimization)
-      setTimeout(() => {
-        addTerminalLine('NAV', `Sección activa cambiada a: ${targetId.toUpperCase()}`);
-      }, 0);
+        sections.forEach(section => {
+          if (section.id === targetId) {
+            section.classList.add('active');
+          } else {
+            section.classList.remove('active');
+          }
+        });
+
+        // Defer logging to keep click latency low (INP optimization)
+        setTimeout(() => {
+          addTerminalLine('NAV', `Sección activa cambiada a: ${targetId.toUpperCase()}`);
+        }, 0);
+      }
     });
   });
 
@@ -1045,25 +1110,6 @@ SYSTEM INTEGRITY HASH: ${generateHash(JSON.stringify(state.logs))}
   const dropdownCount = document.getElementById('bandcamp-count');
 
   if (dropdownToggle && dropdownWrapper) {
-    const playTick = (freqStart, freqEnd, duration) => {
-      // Access audio context if initialized
-      const ctx = window.MOSKV?.audioContext || audioCtx;
-      if (ctx && ctx.state === 'running') {
-        try {
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(freqStart, ctx.currentTime);
-          osc.frequency.exponentialRampToValueAtTime(freqEnd, ctx.currentTime + duration);
-          gain.gain.setValueAtTime(0.012, ctx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
-          osc.connect(gain);
-          gain.connect(ctx.destination);
-          osc.start();
-          osc.stop(ctx.currentTime + duration);
-        } catch(err){}
-      }
-    };
 
     const escapeHTML = (str) => {
       return str

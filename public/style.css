@@ -232,6 +232,20 @@ body {
 .site-nav {
   display: flex;
   gap: 32px;
+  position: relative;
+}
+
+.nav-underline {
+  position: absolute;
+  bottom: 0px;
+  height: 2px;
+  background: var(--color-yinmn);
+  box-shadow: 0 0 8px var(--color-yinmn);
+  transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  opacity: 0;
+  width: 0;
+  left: 0;
 }
 .nav-link, .nav-link-ext, .site-nav a {
   font-family: var(--font-mono);
