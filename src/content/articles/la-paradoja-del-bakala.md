@@ -33,16 +33,51 @@ La tesis es tan simple que duele: **usar la fricción estética como un escudo c
 
 ## 2. Nomenclatura y Disonancia Semántica: El Test de Turing Makinero
 
-El alias de batalla es **Bakala de Troya**. Sonido CowPunk electrónico, IDM de baja fidelidad y mala hostia. Pero el truco real está en los títulos de los tracks, cargados de referencias costumbristas locales de los años 90. Mira la tabla y flipa:
+El alias de batalla es **Bakala de Troya**. Sonido CowPunk electrónico, IDM de baja fidelidad y mala hostia. Pero el truco real está en los títulos de los tracks, cargados de referencias costumbristas locales de los años 90. Mira la tabla de abajo y alucina con el diseño del circuito:
 
-| Artefacto Sonoro | Sello / Plataforma | La Estructura que destruye a la máquina |
-| :--- | :--- | :--- |
-| **[Do androids dream of APX music?](https://open.spotify.com/artist/4p7wMuZpktE5aBFhBoQdqa)** | Spotify | Reducción ontológica radical: coger la filosofía de Philip K. Dick y meterla a capón en un bombo a negras. |
-| **[Ramoncín Is Playing At My House](https://open.spotify.com/artist/4p7wMuZpktE5aBFhBoQdqa)** | Blanco y Negro | Parodia salvaje a LCD Soundsystem. Cambiamos Brooklyn por el rock patrio de los 80. Zapatilla pura. |
-| **[Cocodrilo Jones](https://open.spotify.com/artist/4p7wMuZpktE5aBFhBoQdqa)** | Blanco y Negro | Track fundacional de la ruta Moskv, distribuido a través de canales industriales tradicionales de baile. |
-| **[Jugar la brisca con Amavisca](https://open.spotify.com/artist/4p7wMuZpktE5aBFhBoQdqa)** | Spotify | Fusión de secuencias electrónicas con fútbol costumbrista de los 90. Un cortocircuito para cualquier bot anglosajón. |
-| **[Farándula](https://borjamoskv.bandcamp.com)** | Bandcamp | Composición experimental minimalista. Ruido analógico de baja fidelidad para limpiar el espectro. |
-| **[Jesus & the Mesmerizing Atomic Bomb](https://open.spotify.com/artist/4p7wMuZpktE5aBFhBoQdqa)** | Spotify | Rezos litúrgicos y bombas nucleares a ritmo de charles de 909. |
+<div style="overflow-x: auto; margin: 2rem 0; border: 1px solid rgba(43, 59, 229, 0.2); border-radius: 8px; background: rgba(5, 5, 5, 0.6); box-shadow: 0 8px 32px rgba(0,0,0,0.5);">
+  <table style="width: 100%; border-collapse: collapse; text-align: left; font-family: sans-serif; font-size: 0.95rem;">
+    <thead>
+      <tr style="border-bottom: 2px solid rgba(43, 59, 229, 0.3); background: rgba(43, 59, 229, 0.15);">
+        <th style="padding: 1rem; font-weight: 700; color: #FFF; font-family: monospace; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.05em;">Artefacto Sonoro</th>
+        <th style="padding: 1rem; font-weight: 700; color: #FFF; font-family: monospace; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.05em;">Sello / Plataforma</th>
+        <th style="padding: 1rem; font-weight: 700; color: #FFF; font-family: monospace; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.05em;">La Estructura que destruye a la máquina</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+        <td style="padding: 1rem; color: #FF9F1C; font-weight: bold;"><a href="https://open.spotify.com/artist/4p7wMuZpktE5aBFhBoQdqa" target="_blank" style="color: #FF9F1C; text-decoration: none; border-bottom: 1px solid rgba(255, 159, 28, 0.2);">Do androids dream of APX music?</a></td>
+        <td style="padding: 1rem; color: rgba(243, 244, 246, 0.85); font-family: monospace;">Spotify</td>
+        <td style="padding: 1rem; color: rgba(243, 244, 246, 0.75); line-height: 1.5;">Reducción ontológica radical: coger la filosofía de Philip K. Dick y meterla a capón en un bombo a negras.</td>
+      </tr>
+      <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+        <td style="padding: 1rem; color: #FF9F1C; font-weight: bold;"><a href="https://open.spotify.com/artist/4p7wMuZpktE5aBFhBoQdqa" target="_blank" style="color: #FF9F1C; text-decoration: none; border-bottom: 1px solid rgba(255, 159, 28, 0.2);">Ramoncín Is Playing At My House</a></td>
+        <td style="padding: 1rem; color: rgba(243, 244, 246, 0.85); font-family: monospace;">Blanco y Negro</td>
+        <td style="padding: 1rem; color: rgba(243, 244, 246, 0.75); line-height: 1.5;">Parodia salvaje a LCD Soundsystem. Cambiamos Brooklyn por el rock patrio de los 80. Zapatilla pura.</td>
+      </tr>
+      <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+        <td style="padding: 1rem; color: #FF9F1C; font-weight: bold;"><a href="https://open.spotify.com/artist/4p7wMuZpktE5aBFhBoQdqa" target="_blank" style="color: #FF9F1C; text-decoration: none; border-bottom: 1px solid rgba(255, 159, 28, 0.2);">Cocodrilo Jones</a></td>
+        <td style="padding: 1rem; color: rgba(243, 244, 246, 0.85); font-family: monospace;">Blanco y Negro</td>
+        <td style="padding: 1rem; color: rgba(243, 244, 246, 0.75); line-height: 1.5;">Track fundacional de la ruta Moskv, distribuido a través de canales industriales tradicionales de baile.</td>
+      </tr>
+      <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+        <td style="padding: 1rem; color: #FF9F1C; font-weight: bold;"><a href="https://open.spotify.com/artist/4p7wMuZpktE5aBFhBoQdqa" target="_blank" style="color: #FF9F1C; text-decoration: none; border-bottom: 1px solid rgba(255, 159, 28, 0.2);">Jugar la brisca con Amavisca</a></td>
+        <td style="padding: 1rem; color: rgba(243, 244, 246, 0.85); font-family: monospace;">Spotify</td>
+        <td style="padding: 1rem; color: rgba(243, 244, 246, 0.75); line-height: 1.5;">Fusión de secuencias electrónicas con fútbol costumbrista de los 90. Un cortocircuito para cualquier bot anglosajón.</td>
+      </tr>
+      <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+        <td style="padding: 1rem; color: #FF9F1C; font-weight: bold;"><a href="https://borjamoskv.bandcamp.com" target="_blank" style="color: #FF9F1C; text-decoration: none; border-bottom: 1px solid rgba(255, 159, 28, 0.2);">Farándula</a></td>
+        <td style="padding: 1rem; color: rgba(243, 244, 246, 0.85); font-family: monospace;">Bandcamp</td>
+        <td style="padding: 1rem; color: rgba(243, 244, 246, 0.75); line-height: 1.5;">Composición experimental minimalista. Ruido analógico de baja fidelidad para limpiar el espectro.</td>
+      </tr>
+      <tr style="border-bottom: none;">
+        <td style="padding: 1rem; color: #FF9F1C; font-weight: bold;"><a href="https://open.spotify.com/artist/4p7wMuZpktE5aBFhBoQdqa" target="_blank" style="color: #FF9F1C; text-decoration: none; border-bottom: 1px solid rgba(255, 159, 28, 0.2);">Jesus & the Mesmerizing Atomic Bomb</a></td>
+        <td style="padding: 1rem; color: rgba(243, 244, 246, 0.85); font-family: monospace;">Spotify</td>
+        <td style="padding: 1rem; color: rgba(243, 244, 246, 0.75); line-height: 1.5;">Rezos litúrgicos y bombas nucleares a ritmo de charles de 909.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 Para colmo, si entras a su canal de YouTube te encuentras directos como el **[“Eclectic Electronic CowPunk Dj Set VJ Ravero Mode”](https://www.youtube.com/results?search_query=Borja+Moskv+Eclectic+Electronic+CowPunk+Dj+Set+VJ+Ravero+Mode)** (dos horas y media de sesión ininterrumpida) o discos como **[Instructions for flying](https://borjamoskv.bandcamp.com)** (previsto para 2026), que incluye el proyecto **[This Was In Rainbows](https://borjamoskv.bandcamp.com)**, una reinterpretación makinera y distorsionada del *In Rainbows* de Radiohead.
 
@@ -90,11 +125,13 @@ Para que no te reviente la máquina, el demonio `cortex-ram-guard` (escrito en S
 
 ---
 
-## Conclusión: El Círculo Cerrado
+## Conclusión: La última cabina en el fin del mundo
 
-La paradoja se resuelve en la cabina de DJ. El techno-dadaísta de Bakala de Troya y el desarrollo de [Moskv Systems](https://agents.archi) son la misma trinchera. 
+La paradoja del Bakala no es arte, chaval. Es ingeniería de supervivencia temporal. La Ruta de los 90 no murió: la metimos bajo tierra en la periferia de Bilbao. Cuando pinchamos a 160 BPMs no estamos divirtiendo a nadie; estamos generando un escudo de fase temporal (Phase-Shift Shield) utilizando la resonancia armónica de los sintetizadores analógicos. 
 
-La música makinera mete impedancia brutal en la red externa para cegar a los bots recolectores de datos. El hipervisor CORTEX asegura la inmutabilidad interna para que tus propios agentes no se vuelvan idiotas. Un búnker digital autárquico blindado por matemáticas de club. 
+Mientras los bots de Silicon Valley se ahogan intentando compilar "Brisca con Amavisca" en sus servidores de millones de dólares, el hipervisor CORTEX procesa la verdad inmutable en local a temperatura de congelación. 
+
+Hemos cerrado el círculo. Afuera la tormenta makinera de desinformación semántica cegando al ojo de Sauron de la IA comercial; adentro, la calma del silicio inmutable protegido por solvers formales. Esto no es un blog, chaval. Es la última cabina libre en el fin del mundo.
 
 ¡Y ahí lo tenemos! ¡Pum, pum, pum!
 
