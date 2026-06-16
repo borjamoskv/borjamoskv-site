@@ -361,7 +361,30 @@ body {
   display: flex;
   flex-direction: column;
   backdrop-filter: blur(15px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255,255,255,0.02);
+  transition: transform var(--transition-mid), box-shadow var(--transition-mid), border-color var(--transition-mid);
+  position: relative;
+  overflow: hidden;
+}
+
+.control-panel::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%; width: 50%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.7s var(--ease-spring);
+  pointer-events: none;
+}
+
+.control-panel:hover::before {
+  left: 150%;
+}
+
+.control-panel:hover {
+  transform: translateY(-4px);
+  border-color: rgba(43, 59, 229, 0.4);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(43, 59, 229, 0.15);
 }
 .panel-header {
   display: flex;
