@@ -1,3 +1,6 @@
+---
+import bandcampTracks from '../data/bandcamp_tracks.json';
+---
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -55,6 +58,27 @@
       <nav class="site-nav" aria-label="Navegación Principal">
         <a href="#control-deck" class="nav-link is-active">DECK</a>
         <a href="#discography" class="nav-link">OBRAS</a>
+        
+        <div class="nav-dropdown" id="bandcamp-dropdown-wrapper">
+          <a href="javascript:void(0)" class="nav-link-ext dropdown-toggle">BANDCAMP</a>
+          <div class="dropdown-menu" id="bandcamp-dropdown-menu">
+            <div class="dropdown-search-container">
+              <input type="text" class="dropdown-search" id="bandcamp-search" placeholder="FILTRAR LANZAMIENTOS..." autocomplete="off" />
+            </div>
+            <div class="dropdown-items-list" id="bandcamp-items-list">
+              {bandcampTracks.map(track => (
+                <a href={`https://borjamoskv.bandcamp.com${track.href}`} target="_blank" rel="noopener" class="dropdown-item" data-title={track.title.toLowerCase()}>
+                  <img src={track.img} alt={track.title} class="dropdown-item-img" loading="lazy" />
+                  <div class="dropdown-item-info">
+                    <span class="dropdown-item-title">{track.title}</span>
+                    <span class="dropdown-item-badge">{track.href.includes('/album/') ? 'ALBUM' : 'TRACK'}</span>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+
         <a href="#stills-gallery" class="nav-link">GALERÍA</a>
         <a href="/ghostface" class="nav-link-ext" style="color: #2B3BE5;">GHOSTFACE</a>
         <a href="/blog" class="nav-link-ext">DIARIO</a>

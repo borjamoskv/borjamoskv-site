@@ -1037,6 +1037,53 @@ SYSTEM INTEGRITY HASH: ${generateHash(JSON.stringify(state.logs))}
     }
   });
 
+  // ─── BANDCAMP DROPDOWN CONTROLS ───
+  const dropdownToggle = document.querySelector('#bandcamp-dropdown-wrapper .dropdown-toggle');
+  const dropdownWrapper = document.getElementById('bandcamp-dropdown-wrapper');
+  const dropdownSearch = document.getElementById('bandcamp-search');
+  const dropdownItemsList = document.getElementById('bandcamp-items-list');
+
+  if (dropdownToggle && dropdownWrapper) {
+    dropdownToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isActive = dropdownWrapper.classList.toggle('active');
+      dropdownToggle.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+      if (isActive && dropdownSearch) {
+        dropdownSearch.focus();
+      }
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!dropdownWrapper.contains(e.target)) {
+        dropdownWrapper.classList.remove('active');
+        dropdownToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    const dropdownMenu = document.getElementById('bandcamp-dropdown-menu');
+    if (dropdownMenu) {
+      dropdownMenu.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+    }
+
+    if (dropdownSearch && dropdownItemsList) {
+      dropdownSearch.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        const items = dropdownItemsList.querySelectorAll('.dropdown-item');
+        
+        items.forEach(item => {
+          const title = item.dataset.title || '';
+          if (title.includes(query)) {
+            item.style.display = 'flex';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    }
+  }
+
   bootSystem();
   requestAnimationFrame(loop);
 });
