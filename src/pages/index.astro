@@ -77,10 +77,10 @@ import bandcampTracks from '../data/bandcamp_tracks.json';
               <div class="dropdown-no-results" style="display: none;">
                 SIN COINCIDENCIAS / NO RELEASES FOUND
               </div>
-              {bandcampTracks.map(track => {
+              {bandcampTracks.map((track, idx) => {
                 const isAlbum = track.href.includes('/album/');
                 return (
-                  <a href={`https://borjamoskv.bandcamp.com${track.href}`} target="_blank" rel="noopener" class="dropdown-item" data-title={track.title.toLowerCase()} data-type={isAlbum ? 'album' : 'track'}>
+                  <a href={`https://borjamoskv.bandcamp.com${track.href}`} target="_blank" rel="noopener" class="dropdown-item" data-title={track.title.toLowerCase()} data-type={isAlbum ? 'album' : 'track'} style={`--item-idx: ${idx};`}>
                     <img src={track.img} alt={track.title} class="dropdown-item-img" loading="lazy" />
                     <div class="dropdown-item-info">
                       <span class="dropdown-item-title">{track.title}</span>

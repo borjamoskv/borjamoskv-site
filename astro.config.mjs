@@ -10,7 +10,9 @@ import mdx from '@astrojs/mdx';
 // https://astro.build/config
 export default defineConfig({
   output: 'server',
-  adapter: process.env.MOCK_SERVER_PORT ? undefined : cloudflare(),
+  adapter: process.env.MOCK_SERVER_PORT ? undefined : cloudflare({
+    prerenderEnvironment: 'node'
+  }),
   security: {
     checkOrigin: false
   },

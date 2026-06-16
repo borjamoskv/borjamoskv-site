@@ -106,10 +106,10 @@ const { title } = Astro.props;
                 <div class="dropdown-no-results" style="display: none;">
                   SIN COINCIDENCIAS / NO RELEASES FOUND
                 </div>
-                {bandcampTracks.map(track => {
+                {bandcampTracks.map((track, idx) => {
                   const isAlbum = track.href.includes('/album/');
                   return (
-                    <a href={`https://borjamoskv.bandcamp.com${track.href}`} target="_blank" rel="noopener" class="dropdown-item" data-title={track.title.toLowerCase()} data-type={isAlbum ? 'album' : 'track'}>
+                    <a href={`https://borjamoskv.bandcamp.com${track.href}`} target="_blank" rel="noopener" class="dropdown-item" data-title={track.title.toLowerCase()} data-type={isAlbum ? 'album' : 'track'} style={`--item-idx: ${idx};`}>
                       <img src={track.img} alt={track.title} class="dropdown-item-img" loading="lazy" />
                       <div class="dropdown-item-info">
                         <span class="dropdown-item-title">{track.title}</span>
@@ -161,10 +161,10 @@ const { title } = Astro.props;
                 <div class="dropdown-no-results" style="display: none; width: 100%;">
                   SIN COINCIDENCIAS / NO RELEASES FOUND
                 </div>
-                {bandcampTracks.map(track => {
+                {bandcampTracks.map((track, idx) => {
                   const isAlbum = track.href.includes('/album/');
                   return (
-                    <a href={`https://borjamoskv.bandcamp.com${track.href}`} target="_blank" rel="noopener" class="dropdown-item" data-title={track.title.toLowerCase()} data-type={isAlbum ? 'album' : 'track'} style="font-size: 0.65rem; padding: 0.4rem;">
+                    <a href={`https://borjamoskv.bandcamp.com${track.href}`} target="_blank" rel="noopener" class="dropdown-item" data-title={track.title.toLowerCase()} data-type={isAlbum ? 'album' : 'track'} style={`font-size: 0.65rem; padding: 0.4rem; --item-idx: ${idx};`}>
                       <img src={track.img} alt={track.title} class="dropdown-item-img" style="width: 28px; height: 28px;" loading="lazy" />
                       <div class="dropdown-item-info">
                         <span class="dropdown-item-title" style="font-size: 0.65rem; color: #fff;">{track.title}</span>
@@ -792,6 +792,16 @@ const { title } = Astro.props;
             .replace(/'/g, '&#039;');
         };
 
+        const getTitleHashFreq = (title) => {
+          let hash = 0;
+          for (let i = 0; i < title.length; i++) {
+            hash = title.charCodeAt(i) + ((hash << 5) - hash);
+          }
+          const pentatonic = [220.00, 261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33, 659.25, 783.99];
+          const index = Math.abs(hash) % pentatonic.length;
+          return pentatonic[index];
+        };
+
         // Play UI synth sound feedback
         const playNavSound = (freqStart, freqEnd, duration, type = 'sine', volume = 0.03) => {
           if (!audioCtx || audioCtx.state !== 'running') return;
@@ -1020,8 +1030,48 @@ const { title } = Astro.props;
 
           if (dropdownSearch) {
             dropdownSearch.addEventListener('input', updateFiltering);
-            dropdownSearch.addEventListener('keydown', () => {
-              playNavSound(2400, 1200, 0.03, 'sine', 0.012);
+            dropdownSearch.addEventListener('keydown', (e) => {
+              if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp' && e.key !== 'Escape' && e.key !== 'Enter') {
+                playNavSound(2400, 1200, 0.03, 'sine', 0.012);
+              }
+            });
+          }
+
+          // Keyboard Navigation
+          if (dropdownWrapper && dropdownSearch && dropdownItemsList) {
+            dropdownWrapper.addEventListener('keydown', (e) => {
+              const activeItems = Array.from(dropdownItemsList.querySelectorAll('.dropdown-item'))
+                .filter(item => item.style.display !== 'none');
+              
+              const currentFocus = document.activeElement;
+              
+              if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (currentFocus === dropdownSearch) {
+                  if (activeItems.length > 0) activeItems[0].focus();
+                } else {
+                  const index = activeItems.indexOf(currentFocus);
+                  if (index !== -1 && index < activeItems.length - 1) {
+                    activeItems[index + 1].focus();
+                  }
+                }
+              } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                const index = activeItems.indexOf(currentFocus);
+                if (index !== -1) {
+                  if (index === 0) {
+                    dropdownSearch.focus();
+                  } else {
+                    activeItems[index - 1].focus();
+                  }
+                }
+              } else if (e.key === 'Escape') {
+                e.preventDefault();
+                dropdownWrapper.classList.remove('active');
+                dropdownToggle.setAttribute('aria-expanded', 'false');
+                dropdownToggle.focus();
+                playNavSound(1600, 800, 0.08, 'sine', 0.02);
+              }
             });
           }
 
@@ -1037,13 +1087,16 @@ const { title } = Astro.props;
             });
           });
 
-          // Item hover feedback
+          // Item hover & focus sound feedback (melodic pentatonic chime)
           if (dropdownItemsList) {
             const items = dropdownItemsList.querySelectorAll('.dropdown-item');
             items.forEach(item => {
-              item.addEventListener('mouseenter', () => {
-                playNavSound(2200, 1500, 0.03, 'sine', 0.008);
-              });
+              const playMelodicChime = () => {
+                const freq = getTitleHashFreq(item.dataset.title || '');
+                playNavSound(freq, freq * 0.98, 0.15, 'sine', 0.008);
+              };
+              item.addEventListener('mouseenter', playMelodicChime);
+              item.addEventListener('focus', playMelodicChime);
             });
           }
         }
@@ -1112,6 +1165,10 @@ const { title } = Astro.props;
             e.stopPropagation();
             const isVisible = mobileDropdownMenu.style.display === 'block';
             mobileDropdownMenu.style.display = isVisible ? 'none' : 'block';
+            const parent = mobileDropdownToggle.closest('.mobile-nav-dropdown');
+            if (parent) {
+              parent.classList.toggle('active', !isVisible);
+            }
             mobileDropdownToggle.textContent = isVisible ? 'Bandcamp ▾' : 'Bandcamp ▴';
             if (!isVisible && mobileDropdownSearch) {
               mobileDropdownSearch.focus();
@@ -1123,8 +1180,42 @@ const { title } = Astro.props;
 
           if (mobileDropdownSearch) {
             mobileDropdownSearch.addEventListener('input', updateMobileFiltering);
-            mobileDropdownSearch.addEventListener('keydown', () => {
-              playNavSound(2400, 1200, 0.03, 'sine', 0.012);
+            mobileDropdownSearch.addEventListener('keydown', (e) => {
+              if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp' && e.key !== 'Escape' && e.key !== 'Enter') {
+                playNavSound(2400, 1200, 0.03, 'sine', 0.012);
+              }
+            });
+          }
+
+          // Mobile Keyboard Navigation
+          if (mobileDropdownMenu && mobileDropdownSearch && mobileDropdownItemsList) {
+            mobileDropdownMenu.addEventListener('keydown', (e) => {
+              const activeItems = Array.from(mobileDropdownItemsList.querySelectorAll('.dropdown-item'))
+                .filter(item => item.style.display !== 'none');
+              
+              const currentFocus = document.activeElement;
+              
+              if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (currentFocus === mobileDropdownSearch) {
+                  if (activeItems.length > 0) activeItems[0].focus();
+                } else {
+                  const index = activeItems.indexOf(currentFocus);
+                  if (index !== -1 && index < activeItems.length - 1) {
+                    activeItems[index + 1].focus();
+                  }
+                }
+              } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                const index = activeItems.indexOf(currentFocus);
+                if (index !== -1) {
+                  if (index === 0) {
+                    mobileDropdownSearch.focus();
+                  } else {
+                    activeItems[index - 1].focus();
+                  }
+                }
+              }
             });
           }
 
@@ -1138,6 +1229,19 @@ const { title } = Astro.props;
               updateMobileFiltering();
             });
           });
+
+          // Mobile items chime on focus/hover
+          if (mobileDropdownItemsList) {
+            const items = mobileDropdownItemsList.querySelectorAll('.dropdown-item');
+            items.forEach(item => {
+              const playMelodicChime = () => {
+                const freq = getTitleHashFreq(item.dataset.title || '');
+                playNavSound(freq, freq * 0.98, 0.15, 'sine', 0.008);
+              };
+              item.addEventListener('mouseenter', playMelodicChime);
+              item.addEventListener('focus', playMelodicChime);
+            });
+          }
         }
       };
 

@@ -1155,10 +1155,60 @@ SYSTEM INTEGRITY HASH: ${generateHash(JSON.stringify(state.logs))}
       });
     }
 
+    const getTitleHashFreq = (title) => {
+      let hash = 0;
+      for (let i = 0; i < title.length; i++) {
+        hash = title.charCodeAt(i) + ((hash << 5) - hash);
+      }
+      const pentatonic = [220.00, 261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33, 659.25, 783.99];
+      const index = Math.abs(hash) % pentatonic.length;
+      return pentatonic[index];
+    };
+
     if (dropdownSearch) {
       dropdownSearch.addEventListener('input', updateFiltering);
-      dropdownSearch.addEventListener('keydown', () => {
-        playTick(2400, 1200, 0.03);
+      dropdownSearch.addEventListener('keydown', (e) => {
+        if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp' && e.key !== 'Escape' && e.key !== 'Enter') {
+          playTick(2400, 1200, 0.03);
+        }
+      });
+    }
+
+    // Keyboard Navigation
+    if (dropdownWrapper && dropdownSearch && dropdownItemsList) {
+      dropdownWrapper.addEventListener('keydown', (e) => {
+        const activeItems = Array.from(dropdownItemsList.querySelectorAll('.dropdown-item'))
+          .filter(item => item.style.display !== 'none');
+        
+        const currentFocus = document.activeElement;
+        
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          if (currentFocus === dropdownSearch) {
+            if (activeItems.length > 0) activeItems[0].focus();
+          } else {
+            const index = activeItems.indexOf(currentFocus);
+            if (index !== -1 && index < activeItems.length - 1) {
+              activeItems[index + 1].focus();
+            }
+          }
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          const index = activeItems.indexOf(currentFocus);
+          if (index !== -1) {
+            if (index === 0) {
+              dropdownSearch.focus();
+            } else {
+              activeItems[index - 1].focus();
+            }
+          }
+        } else if (e.key === 'Escape') {
+          e.preventDefault();
+          dropdownWrapper.classList.remove('active');
+          dropdownToggle.setAttribute('aria-expanded', 'false');
+          dropdownToggle.focus();
+          playTick(1600, 800, 0.08);
+        }
       });
     }
 
@@ -1174,13 +1224,16 @@ SYSTEM INTEGRITY HASH: ${generateHash(JSON.stringify(state.logs))}
       });
     });
 
-    // Item hover feedback
+    // Item hover & focus sound feedback (melodic pentatonic chime)
     if (dropdownItemsList) {
       const items = dropdownItemsList.querySelectorAll('.dropdown-item');
       items.forEach(item => {
-        item.addEventListener('mouseenter', () => {
-          playTick(2200, 1500, 0.03);
-        });
+        const playMelodicChime = () => {
+          const freq = getTitleHashFreq(item.dataset.title || '');
+          playTick(freq, freq * 0.98, 0.15);
+        };
+        item.addEventListener('mouseenter', playMelodicChime);
+        item.addEventListener('focus', playMelodicChime);
       });
     }
   }
