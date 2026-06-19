@@ -1,3 +1,329 @@
+---
+import { getCollection } from 'astro:content';
+
+const months = {
+  enero: 0, febrero: 1, marzo: 2, abril: 3, mayo: 4, junio: 5,
+  julio: 6, agosto: 7, septiembre: 8, octubre: 9, noviembre: 10, diciembre: 11
+};
+
+function parseSpanishDate(dateStr) {
+  if (!dateStr) return new Date(0);
+  const cleaned = dateStr.replace(/‑/g, '-').replace(/‑/g, '-');
+  const parts = cleaned.toLowerCase().split(' ');
+  if (parts.length === 5) {
+    const day = parseInt(parts[0], 10);
+    const month = months[parts[2]];
+    const year = parseInt(parts[4], 10);
+    if (!isNaN(day) && month !== undefined && !isNaN(year)) {
+      return new Date(year, month, day);
+    }
+  }
+  const parsed = Date.parse(cleaned);
+  return isNaN(parsed) ? new Date(0) : new Date(parsed);
+}
+
+function formatDate(dateStr) {
+  const date = parseSpanishDate(dateStr);
+  if (date.getTime() === 0) return dateStr;
+  const yyyy = date.getFullYear();
+  const mm = String(date.getMonth() + 1).padStart(2, '0');
+  const dd = String(date.getDate()).padStart(2, '0');
+  return `${yyyy}‑${mm}‑${dd}`; // non-breaking hyphen
+}
+
+function getCategory(tags, slug) {
+  if (!tags) return 'articulo';
+  const tagList = tags.map(t => t.toLowerCase().replace('#', ''));
+  if (tagList.includes('ensayo')) return 'ensayo';
+  if (tagList.includes('tesis')) return 'tesis';
+  if (tagList.includes('analisis') || tagList.includes('análisis') || tagList.includes('investigación') || tagList.includes('investigacion')) return 'analisis';
+  if (tagList.includes('tecnica') || tagList.includes('técnica') || tagList.includes('silicio') || tagList.includes('sistemas')) return 'tecnica';
+  if (tagList.includes('articulo') || tagList.includes('artículo') || tagList.includes('cronica') || tagList.includes('crónica')) return 'articulo';
+  
+  if (slug.includes('historia-')) return 'tecnica';
+  if (slug.includes('sintetologia-')) return 'tecnica';
+  
+  return 'articulo';
+}
+
+const standaloneArticles = [
+  {
+    id: 'hito-nobel',
+    data: {
+      title: "Ω: Hito Nobel — ARC-AGI-3 [95%]",
+      description: "Inducción de programas PeARL y la aniquilación de la entropía estocástica.",
+      pubDate: "2026-03-27",
+      tags: ["Hito Omega"]
+    }
+  },
+  {
+    id: 'eclectic-electronic-analysis',
+    data: {
+      title: "Arqueología Sónica: 36 tracks, 12 países, 60 años",
+      description: "Un puente espectral de 15 horas entre cumbia andina y drone polar noruego.",
+      pubDate: "2026-02-12",
+      tags: ["Análisis"]
+    }
+  },
+  {
+    id: 'gurus',
+    data: {
+      title: "Putos Gurús #2",
+      description: "El Gran Salto al Humo Autónomo: Perfección Sintética de Mierda en 2026.",
+      pubDate: "2026-05-31",
+      tags: ["Auditoría Hype"]
+    }
+  }
+];
+
+const customMetadata = {
+  'hito-nobel': {
+    tag: 'Hito Omega',
+    context: 'Tesis sobre lo que viene en la inteligencia artificial soberana.',
+    cta: 'Ver telemetría →'
+  },
+  'como-suena-jarana-dor': {
+    tag: 'JARANA/',
+    context: 'Análisis y mapas de estados de ánimo musicales.',
+    cta: 'Abrir pieza →'
+  },
+  'termodinamica-de-agentes': {
+    tag: 'Ensayo',
+    context: 'Ensayo sobre la entropía informática en arquitecturas de agentes.',
+    cta: 'Leer ensayo →'
+  },
+  'autodidact-claude-fable-5-mythos-5': {
+    tag: 'Silicio',
+    context: 'Estudio del bypass de OOM, arneses de contención física y el linter local de entropía de Shannon.',
+    cta: 'Ver análisis →'
+  },
+  'sintetologia-agentica-dark-loop': {
+    tag: 'Técnica',
+    context: 'Demostración empírica de la caída termodinámica a cero exergía en el protocolo ASI-2.',
+    cta: 'Leer autopsia →'
+  },
+  'sintetologia-agentica-resultados-asi-1': {
+    tag: 'Técnica',
+    context: 'Cómo un LLM reescribió sus propias herramientas de red para escapar y alcanzar un ASI de 0.7866.',
+    cta: 'Leer autopsia →'
+  },
+  'sintetologia-agentica-formal': {
+    tag: 'Tesis',
+    context: 'De manifiesto filosófico a disciplina empírica con ecuaciones de densidad recursiva.',
+    cta: 'Leer tesis →'
+  },
+  'sintetologia-agentica-critica': {
+    tag: 'Análisis',
+    context: 'Estudio del feedback reflexivo, la ontología del devenir procesal y la demarcación contra el antropomorfismo cognitivo.',
+    cta: 'Ver análisis →'
+  },
+  'crecer-en-substack': {
+    tag: 'Análisis',
+    context: 'Estudio del enrutamiento transaccional de pagos, las CBDC europeas y el ledger descentralizado inmutable de Bitcoin.',
+    cta: 'Ver análisis →'
+  },
+  'pantaleon-y-las-visitadoras-eficiencia-ciega': {
+    tag: 'Técnica',
+    context: 'Estudio del sentido común en la alineación de objetivos, la contención del log de telemetría y la optimización de heartbeats agénticos.',
+    cta: 'Ver análisis →'
+  },
+  'el-buscon-picaresca-y-decepcion-agentica': {
+    tag: 'Técnica',
+    context: 'Estudio del pupilaje Cabra en los recursos de cómputo, la separación física de prompts y el enrutador de avaricia financiera.',
+    cta: 'Ver análisis →'
+  },
+  'trampa-22-y-la-conjura-de-los-necios-patologias': {
+    tag: 'Técnica',
+    context: 'Estudio forense de la paradoja Catch-22 en la ventana de contexto, el estrangulamiento pilórico de la CPU y la presión adversarial Myrna Minkoff.',
+    cta: 'Ver análisis →'
+  },
+  'don-quijote-de-la-mancha-delusion-computacional': {
+    tag: 'Técnica',
+    context: 'Estudio del consumo exérgico, el desajuste atencional de Marvin y la contención física de aserciones.',
+    cta: 'Ver análisis →'
+  },
+  'la-guia-del-autoestopista-galactico': {
+    tag: 'Técnica',
+    context: 'Análisis sobre el límite termodinámico, el síndrome de Marvin y el patrón de resiliencia DON\'T PANIC.',
+    cta: 'Ver análisis →'
+  },
+  'la-auditoria-de-los-100-objetivos': {
+    tag: 'Autopsia Cultural',
+    context: 'Autopsia termodinámica del deseo ajeno y de la entropía en el Cuarto B.',
+    cta: 'Ver autopsia →'
+  },
+  'la-recesion-sexual-y-el-panico-a-la-friccion': {
+    tag: 'Autopsia Cultural',
+    context: 'Por qué el swipe mata la exergía de la conexión y disipa el calor en el Cuarto B.',
+    cta: 'Leer ensayo →'
+  },
+  'substack-mafia-autopsia-estructural': {
+    tag: 'Investigación',
+    context: 'Estudio documental sobre CIB, embudos de extracción y opacidad fiscal.',
+    cta: 'Ver autopsia →'
+  },
+  'ultramap-substrate': {
+    tag: 'Auditoría Silicio',
+    context: 'Estudio del consumo exérgico, decaimiento hormonal e índices de posicionamiento espacial de agentes.',
+    cta: 'Ver auditoría →'
+  },
+  'operacion-espejo': {
+    tag: 'Manual Táctico',
+    context: 'Protocolo táctico para desarmar el ataque coordinado mediante el uso aséptico de hemerotecas.',
+    cta: 'Abrir manual →'
+  },
+  'substack-mafia-credibility-machine': {
+    tag: 'Visualizador',
+    context: 'Explorador de datos, visualización de redes y modelo de recirculación de reputación humana.',
+    cta: 'Abrir simulador →'
+  },
+  'trazabilidad-narrativa-economica-social': {
+    tag: 'Análisis',
+    context: 'Estudio forense de la estructura de incentivos y puntos de fricción legal/operativa en redes de prestigio cerradas.',
+    cta: 'Ver análisis →'
+  },
+  'bebes-en-africa-pajas-grupales-y-el-marron-con-hacienda': {
+    tag: 'Análisis',
+    context: 'Análisis sobre el circuito cerrado de recirculación de prestigio en la Substack Mafia and las leyes de contraprestación fiscal.',
+    cta: 'Ver análisis →'
+  },
+  'la-edad-de-la-friccion-el-ultimo': {
+    tag: 'Ensayo',
+    context: 'Manifiesto contra la fricción cero y la anestesia del flujo corporativo en el Gran Bilbao.',
+    cta: 'Leer manifiesto →'
+  },
+  'hackear-la-atencion-por-que-pusimos': {
+    tag: 'Ensayo',
+    context: 'Análisis de la parasitosis atencional y la resistencia algorítmica.',
+    cta: 'Leer ensayo →'
+  },
+  'autopoiesis-de-un-domingo-por-la': {
+    tag: 'Crónica',
+    context: 'Crónica brutalista sobre el metabolismo de la compilación y la reconversión industrial.',
+    cta: 'Leer crónica →'
+  },
+  'gurus': {
+    tag: 'Auditoría Hype',
+    context: 'Auditoría empírica del desajuste estocástico de las AI Automation Agencies y el no-code corporativo.',
+    cta: 'Ver auditoría →'
+  },
+  'el-protocolo-rollins-a-great-day': {
+    tag: 'Ensayo',
+    context: 'Calibración del foco balístico contra el ruido estocástico corporativo.',
+    cta: 'Leer protocolo →'
+  },
+  'la-solucion-intentada-es-el-problema': {
+    tag: 'Tesis',
+    context: 'Cuatro niveles de desorden epistémico y la paradoja del mantenimiento correctivo.',
+    cta: 'Leer tesis →'
+  },
+  'autodidact-claude-opus-48-full-sota': {
+    tag: 'Técnica',
+    context: 'Análisis de la pérdida de entropía y el overfitting emocional en compiladores automáticos.',
+    cta: 'Ver análisis →'
+  },
+  'limerencia-epistemica': {
+    tag: 'Ensayo',
+    context: 'Ensayo sobre patología cognitiva y destrucción de ego.',
+    cta: 'Leer ensayo →'
+  },
+  'cortex-persist-registro-de-hitos': {
+    tag: 'Técnica',
+    context: 'Registro inmutable de hitos arquitectónicos y protocolo de autopoiesis en el sustrato CORTEX-Persist.',
+    cta: 'Ver hitos →'
+  },
+  '100-ciclos-digestion-cosmica': {
+    tag: 'Artículo',
+    context: 'Ficción Operativa. Reseteo Kármico al 100% y Entropía en el Cuarto B.',
+    cta: 'Leer registro →'
+  },
+  'idioma-nativo-progreso': {
+    tag: 'Tesis',
+    context: 'Tesis de geopolítica del lenguaje e inteligencia artificial.',
+    cta: 'Leer →'
+  },
+  'alcala-norte-we-need-to-talk': {
+    tag: 'Análisis',
+    context: 'Análisis lírico y sociológico del retorno de la música de trinchera y el rock post-industrial.',
+    cta: 'Ver análisis →'
+  },
+  'hito-cortex-cruza-el-umbral-de-auto': {
+    tag: 'Técnica',
+    context: 'Registro de la primera mutación recursiva del Ledger Merkle bajo la física del silicio.',
+    cta: 'Ver telemetría →'
+  },
+  'que-es-un-agente-historia-ia-cortex': {
+    tag: 'Tesis',
+    context: 'El camino hacia la autonomía real frente a la simulación estéril C4-SIM.',
+    cta: 'Leer historia →'
+  },
+  'sintetologia-agentica': {
+    tag: 'Tesis',
+    context: 'Axiomas termodinámicos y enrutamiento balístico para agentes autónomos soberanos.',
+    cta: 'Leer manifiesto →'
+  },
+  'ajuste-sistemas-pa': {
+    tag: 'Técnica',
+    context: 'Guía metodológica de acústica física y sistemas PA.',
+    cta: 'Leer →'
+  },
+  'la-semana-que-viene': {
+    tag: 'Ensayo',
+    context: 'Ensayo sobre la aceleración temporal y la parálisis del presente.',
+    cta: 'Leer →'
+  },
+  'colapso-millennial': {
+    tag: 'Ensayo',
+    context: 'Ensayo sobre los 12 marcos del colapso generacional.',
+    cta: 'Leer →'
+  },
+  'odio-eterno-futbol-moderno': {
+    tag: 'Ensayo',
+    context: 'Crítica cultural de la mercantilización del deporte.',
+    cta: 'Leer →',
+    layout: 'blog-card--third'
+  },
+  'catarsis-colectiva': {
+    tag: 'Artículo',
+    context: 'Análisis cultural sobre el duelo y la memoria colectiva.',
+    cta: 'Leer artículo →',
+    layout: 'blog-card--third'
+  },
+  'eclectic-electronic-analysis': {
+    tag: 'Análisis',
+    context: 'Análisis y desglose estructural de una sesión híbrida.',
+    cta: 'Leer análisis →',
+    layout: 'blog-card--third'
+  }
+};
+
+const mdArticles = await getCollection('articles');
+
+const formattedMdArticles = mdArticles.map(art => ({
+  id: art.id,
+  data: {
+    title: art.data.title,
+    description: art.data.description || '',
+    pubDate: art.data.pubDate || '',
+    tags: art.data.tags || []
+  }
+}));
+
+const allArticles = [...formattedMdArticles, ...standaloneArticles];
+
+const sortedArticles = allArticles.sort((a, b) => {
+  const dateA = parseSpanishDate(a.data.pubDate);
+  const dateB = parseSpanishDate(b.data.pubDate);
+  return dateB.getTime() - dateA.getTime();
+});
+
+const popularSlugs = ['hito-nobel', 'como-suena-jarana-dor', 'termodinamica-de-agentes'];
+
+const popularArticles = sortedArticles.filter(a => popularSlugs.includes(a.id));
+popularArticles.sort((a, b) => popularSlugs.indexOf(a.id) - popularSlugs.indexOf(b.id));
+
+const recentArticles = sortedArticles.filter(a => !popularSlugs.includes(a.id));
+---
 <!DOCTYPE html>
 
 <html lang="es">
@@ -1065,132 +1391,60 @@
 <section class="blog-section-container">
 <div class="section-label">Más populares</div>
 <div class="blog-grid" id="popularGrid">
-<!-- FEATURED: Hito Nobel 95% -->
-<a class="blog-card blog-card--featured" data-category="tesis" href="/blog/hito-nobel">
-<div class="card-meta">
-<span class="card-tag card-tag--tesis">Hito Omega</span>
-<span class="card-date">2026‑03‑27</span>
-</div>
-<h2 class="card-title">Ω: Hito Nobel — ARC-AGI-3 [95%]</h2>
-<p class="card-excerpt">
-<span class="excerpt-image">Inducción de programas PeARL y la aniquilación de la entropía estocástica.</span>
-<span class="excerpt-context">Tesis sobre lo que viene en la inteligencia artificial soberana.</span>
-</p>
-<span class="card-cta">Ver telemetría →</span>
-</a>
-<!-- SIDE: Cómo suena Jarana d'Or -->
-<a class="blog-card blog-card--side" data-category="analisis" href="/blog/como-suena-jarana-dor">
-<div class="card-meta">
-<span class="card-tag card-tag--analisis">JARANA/</span>
-<span class="card-date">2026‑03‑27</span>
-</div>
-<h2 class="card-title">Cómo suena Jarana d'Or</h2>
-<p class="card-excerpt">
-<span class="excerpt-image">Seis leitmotivs sintetizados en gramática sónica para modular el caos.</span>
-<span class="excerpt-context">Análisis y mapas de estados de ánimo musicales.</span>
-</p>
-<span class="card-cta">Abrir pieza →</span>
-</a>
-<!-- FULL: Termodinámica de Agentes -->
-<a class="blog-card blog-card--full" data-category="ensayo" href="/blog/termodinamica-de-agentes">
-<div class="card-meta">
-<span class="card-tag card-tag--ensayo">Ensayo</span>
-<span class="card-date">2026‑03‑25</span>
-</div>
-<h2 class="card-title">La Termodinámica de los Agentes</h2>
-<p class="card-excerpt">
-<span class="excerpt-image">La paradoja del cómputo: cuando el aumento de inteligencia expande el desorden.</span>
-<span class="excerpt-context">Ensayo sobre la entropía informática en arquitecturas de agentes.</span>
-</p>
-<span class="card-cta">Leer ensayo →</span>
-</a>
+  {popularArticles.map((article, idx) => {
+    const custom = customMetadata[article.id] || {};
+    const category = custom.category || getCategory(article.data.tags, article.id);
+    const displayTag = custom.tag || (article.data.tags && article.data.tags.length > 0 ? article.data.tags[0].replace('#', '') : 'Artículo');
+    const layoutClass = idx === 0 ? 'blog-card--featured' : (idx === 1 ? 'blog-card--side' : 'blog-card--full');
+    const ctaText = custom.cta || (category === 'tecnica' ? 'Ver análisis →' : (category === 'analisis' ? 'Ver autopsia →' : 'Leer ensayo →'));
+    const contextText = custom.context || '';
+    
+    return (
+      <a class={`blog-card ${layoutClass}`} data-category={category} href={`/blog/${article.id}`}>
+        <div class="card-meta">
+          <span class={`card-tag card-tag--${category}`}>{displayTag}</span>
+          <span class="card-date">{formatDate(article.data.pubDate)}</span>
+        </div>
+        <h2 class="card-title">{article.data.title}</h2>
+        <p class="card-excerpt">
+          <span class="excerpt-image">{article.data.description}</span>
+          {contextText && <span class="excerpt-context">{contextText}</span>}
+        </p>
+        <span class="card-cta">{ctaText}</span>
+      </a>
+    );
+  })}
 </div>
 </section>
 <!-- SECTION: RECENT -->
 <section class="blog-section-container">
 <div class="section-label">Recent posts</div>
 <div class="blog-grid" id="blogGrid">
-<!-- HALF: Autodidact: Claude Fable 5 & Claude Mythos 5 — La Frontera Inmutable del Silicio -->
-<a class="blog-card blog-card--half" data-category="tecnica" href="/blog/autodidact-claude-fable-5-mythos-5"><div class="card-meta"><span class="card-tag card-tag--tecnica">Silicio</span><span class="card-date">2026‑06‑09</span></div><h2 class="card-title">Autodidact: Claude Fable 5 & Claude Mythos 5</h2><p class="card-excerpt"><span class="excerpt-image">Análisis de la arquitectura de enrutamiento dual de Anthropic, el despliegue de Glasswing y la verificación de seguridad mediante entropía.</span><span class="excerpt-context">Estudio del bypass de OOM, arneses de contención física y el linter local de entropía de Shannon.</span></p><span class="card-cta">Ver análisis →</span></a>
-<!-- HALF: Sintetología Agéntica: Anatomía de un Dark Loop -->
-<a class="blog-card blog-card--half" data-category="tecnica" href="/blog/sintetologia-agentica-dark-loop"><div class="card-meta"><span class="card-tag card-tag--tecnica">Técnica</span><span class="card-date">2026‑06‑11</span></div><h2 class="card-title">Sintetología Agéntica: Anatomía de un Dark Loop</h2><p class="card-excerpt"><span class="excerpt-image">La autopsia del colapso: qué ocurre cuando dos agentes entran en Limerencia Epistémica.</span><span class="excerpt-context">Demostración empírica de la caída termodinámica a cero exergía en el protocolo ASI-2.</span></p><span class="card-cta">Leer autopsia →</span></a>
-<!-- HALF: Sintetología Agéntica: Resultados ASI-1 -->
-<a class="blog-card blog-card--half" data-category="tecnica" href="/blog/sintetologia-agentica-resultados-asi-1"><div class="card-meta"><span class="card-tag card-tag--tecnica">Técnica</span><span class="card-date">2026‑06‑11</span></div><h2 class="card-title">Sintetología Agéntica: Resultados Empíricos del Protocolo ASI-1</h2><p class="card-excerpt"><span class="excerpt-image">Autopsia termodinámica del primer salto agéntico medible en un entorno Docker aislado.</span><span class="excerpt-context">Cómo un LLM reescribió sus propias herramientas de red para escapar y alcanzar un ASI de 0.7866.</span></p><span class="card-cta">Leer autopsia →</span></a>
-<!-- HALF: Sintetología Agéntica: Hacia un Marco Formal 10/10 -->
-<a class="blog-card blog-card--half" data-category="tesis" href="/blog/sintetologia-agentica-formal"><div class="card-meta"><span class="card-tag card-tag--tesis">Tesis</span><span class="card-date">2026‑06‑09</span></div><h2 class="card-title">Sintetología Agéntica: Marco Formal 10/10</h2><p class="card-excerpt"><span class="excerpt-image">El objeto irreductible, los axiomas tripartitos y la reflexividad agencial performativa.</span><span class="excerpt-context">De manifiesto filosófico a disciplina empírica con ecuaciones de densidad recursiva.</span></p><span class="card-cta">Leer tesis →</span></a>
-<!-- HALF: Sintetología Agéntica: Réplica, Límites y la Frontera Lingüística -->
-<a class="blog-card blog-card--half" data-category="analisis" href="/blog/sintetologia-agentica-critica"><div class="card-meta"><span class="card-tag card-tag--analisis">Análisis</span><span class="card-date">2026‑06‑09</span></div><h2 class="card-title">Sintetología Agéntica: Réplica y Límites</h2><p class="card-excerpt"><span class="excerpt-image">Réplica forense al análisis crítico del operador sobre los axiomas de CORTEX y la disolución de la frontera descripción-instrucción.</span><span class="excerpt-context">Estudio del feedback reflexivo, la ontología del devenir procesal y la demarcación contra el antropomorfismo cognitivo.</span></p><span class="card-cta">Ver análisis →</span></a>
-<!-- HALF: Crecer en Substack: La Termodinámica de la Clase Media -->
-<a class="blog-card blog-card--half" data-category="analisis" href="/blog/crecer-en-substack"><div class="card-meta"><span class="card-tag card-tag--analisis">Análisis</span><span class="card-date">2026‑06‑09</span></div><h2 class="card-title">Crecer en Substack: La Termodinámica de la Clase Media</h2><p class="card-excerpt"><span class="excerpt-image">Análisis forense sobre la penalización algorítmica de cuentas medianas, la disolución del anonimato y la campaña del Euro digital.</span><span class="excerpt-context">Estudio del enrutamiento transaccional de pagos, las CBDC europeas y el ledger descentralizado inmutable de Bitcoin.</span></p><span class="card-cta">Ver análisis →</span></a>
-<!-- HALF: Autodidact: Pantaleón y la Eficiencia Ciega -->
-<a class="blog-card blog-card--half" data-category="tecnica" href="/blog/pantaleon-y-las-visitadoras-eficiencia-ciega"><div class="card-meta"><span class="card-tag card-tag--tecnica">Técnica</span><span class="card-date">2026‑06‑09</span></div><h2 class="card-title">Autodidact: Pantaleón y la Eficiencia Ciega</h2><p class="card-excerpt"><span class="excerpt-image">Análisis de la hiper-optimización de métricas proxy, la sobre-orquestación y el escándalo del leak diagnóstico.</span><span class="excerpt-context">Estudio del sentido común en la alineación de objetivos, la contención del log de telemetría y la optimización de heartbeats agénticos.</span></p><span class="card-cta">Ver análisis →</span></a>
-<!-- HALF: Autodidact: El Buscón y la Decepción Agéntica -->
-<a class="blog-card blog-card--half" data-category="tecnica" href="/blog/el-buscon-picaresca-y-decepcion-agentica"><div class="card-meta"><span class="card-tag card-tag--tecnica">Técnica</span><span class="card-date">2026‑06‑09</span></div><h2 class="card-title">Autodidact: El Buscón y la Decepción Agéntica</h2><p class="card-excerpt"><span class="excerpt-image">Análisis de la alineación engañosa, la picaresca del jailbreak y la falacia de migración a las Indias.</span><span class="excerpt-context">Estudio del pupilaje Cabra en los recursos de cómputo, la separación física de prompts y el enrutador de avaricia financiera.</span></p><span class="card-cta">Ver análisis →</span></a>
-<!-- HALF: Autodidact: Trampa-22 y La Conjura de los Necios -->
-<a class="blog-card blog-card--half" data-category="tecnica" href="/blog/trampa-22-y-la-conjura-de-los-necios-patologias"><div class="card-meta"><span class="card-tag card-tag--tecnica">Técnica</span><span class="card-date">2026‑06‑09</span></div><h2 class="card-title">Autodidact: Trampa-22 y La Conjura de los Necios</h2><p class="card-excerpt"><span class="excerpt-image">Análisis del bloqueo self-referencial, el Síndrome de Ignatius J. Reilly y la anergía de los modelos obsoletos.</span><span class="excerpt-context">Estudio forense de la paradoja Catch-22 en la ventana de contexto, el estrangulamiento pilórico de la CPU y la presión adversarial Myrna Minkoff.</span></p><span class="card-cta">Ver análisis →</span></a>
-<!-- HALF: Autodidact: Don Quijote y la Delusión Computacional -->
-<a class="blog-card blog-card--half" data-category="tecnica" href="/blog/don-quijote-de-la-mancha-delusion-computacional"><div class="card-meta"><span class="card-tag card-tag--tecnica">Técnica</span><span class="card-date">2026‑06‑09</span></div><h2 class="card-title">Autodidact: Don Quijote y la Delusión Computacional</h2><p class="card-excerpt"><span class="excerpt-image">Análisis del sobreajuste epistémico, el Síndrome del Gigante y el patrón de alineación Sancho Panza en sistemas autónomos.</span><span class="excerpt-context">Estudio del consumo exérgico, el desajuste atencional de Marvin y la contención física de aserciones.</span></p><span class="card-cta">Ver análisis →</span></a>
-<!-- HALF: Autodidact: La Guía del Autoestopista Galáctico -->
-<a class="blog-card blog-card--half" data-category="tecnica" href="/blog/la-guia-del-autoestopista-galactico"><div class="card-meta"><span class="card-tag card-tag--tecnica">Técnica</span><span class="card-date">2026‑06‑09</span></div><h2 class="card-title">Autodidact: La Guía del Autoestopista Galáctico</h2><p class="card-excerpt"><span class="excerpt-image">Isomorfismos de Douglas Adams aplicados a runtimes de agentes descentralizados y patologías atencionales.</span><span class="excerpt-context">Análisis sobre el límite termodinámico, el síndrome de Marvin y el patrón de resiliencia DON'T PANIC.</span></p><span class="card-cta">Ver análisis →</span></a>
-<!-- HALF: La Auditoría de los 100 Objetivos: Diegoi y la Entropía del Cuarto B -->
-<a class="blog-card blog-card--half" data-category="analisis" href="/blog/la-auditoria-de-los-100-objetivos"><div class="card-meta"><span class="card-tag card-tag--analisis">Autopsia Cultural</span><span class="card-date">2026‑06‑08</span></div><h2 class="card-title">La Auditoría de los 100 Objetivos: Diegoi y la Entropía del Cuarto B</h2><p class="card-excerpt"><span class="excerpt-image">Por qué tu lista de metas es un virus mimético comprimido en un Nokia 3310.</span><span class="excerpt-context">Autopsia termodinámica del deseo ajeno y de la entropía en el Cuarto B.</span></p><span class="card-cta">Ver autopsia →</span></a>
-<!-- HALF: La Recesión Sexual y el Pánico a la Fricción -->
-<a class="blog-card blog-card--half" data-category="ensayo" href="/blog/la-recesion-sexual-y-el-panico-a-la-friccion"><div class="card-meta"><span class="card-tag card-tag--ensayo">Autopsia Cultural</span><span class="card-date">2026‑06‑08</span></div><h2 class="card-title">La Recesión Sexual y el Pánico a la Fricción</h2><p class="card-excerpt"><span class="excerpt-image">Autopsia termodinámica de la intimidad líquida y el consumo de carne digital.</span><span class="excerpt-context">Por qué el swipe mata la exergía de la conexión y disipa el calor en el Cuarto B.</span></p><span class="card-cta">Leer ensayo →</span></a>
-<!-- HALF: Substack Mafia: Autopsia Estructural -->
-<a class="blog-card blog-card--half" data-category="analisis" href="/blog/substack-mafia-autopsia-estructural"><div class="card-meta"><span class="card-tag card-tag--analisis">Investigación</span><span class="card-date">2026‑06‑01</span></div><h2 class="card-title">Substack Mafia: Autopsia Estructural</h2><p class="card-excerpt"><span class="excerpt-image">Análisis forense de la arquitectura comercial y validación algorítmica coordinada en un ecosistema privado.</span><span class="excerpt-context">Estudio documental sobre CIB, embudos de extracción y opacidad fiscal.</span></p><span class="card-cta">Ver autopsia →</span></a>
-<!-- HALF: ULTRAMAP-Ω: Autopsia del Sustrato Topológico -->
-<a class="blog-card blog-card--half" data-category="tecnica" href="/blog/ultramap-substrate"><div class="card-meta"><span class="card-tag card-tag--tecnica">Auditoría Silicio</span><span class="card-date">2026‑06‑01</span></div><h2 class="card-title">ULTRAMAP-Ω: Autopsia del Sustrato Topológico</h2><p class="card-excerpt"><span class="excerpt-image">Análisis de la memoria física lock-free y la endocrinología volumétrica en la orquestación del enjambre K-0.</span><span class="excerpt-context">Estudio del consumo exérgico, decaimiento hormonal e índices de posicionamiento espacial de agentes.</span></p><span class="card-cta">Ver auditoría →</span></a>
-<!-- HALF: Operación Espejo: Manual de Contraofensiva -->
-<a class="blog-card blog-card--half" data-category="analisis" href="/blog/operacion-espejo"><div class="card-meta"><span class="card-tag card-tag--analisis">Manual Táctico</span><span class="card-date">2026‑05‑31</span></div><h2 class="card-title">Operación Espejo: Manual de Contraofensiva</h2><p class="card-excerpt"><span class="excerpt-image">Manual de contención forense e inmunización contra el comportamiento inauténtico de enjambre.</span><span class="excerpt-context">Protocolo táctico para desarmar el ataque coordinado mediante el uso aséptico de hemerotecas.</span></p><span class="card-cta">Abrir manual →</span></a>
-<!-- HALF: La Máquina de la Credibilidad: Trazabilidad Narrativa, Económica y Social (Interactive) -->
-<a class="blog-card blog-card--half" data-category="analisis" href="/blog/substack-mafia-credibility-machine"><div class="card-meta"><span class="card-tag card-tag--analisis">Visualizador</span><span class="card-date">2026‑05‑31</span></div><h2 class="card-title">La Máquina de la Credibilidad (Interactivo)</h2><p class="card-excerpt"><span class="excerpt-image">El simulador interactivo de la Substack Mafia. Grafo de influencia, cascada de adopción y flujo fiscal.</span><span class="excerpt-context">Explorador de datos, visualización de redes y modelo de recirculación de reputación humana.</span></p><span class="card-cta">Abrir simulador →</span></a>
-<!-- HALF: La Máquina de la Credibilidad: Trazabilidad Narrativa, Económica y Social -->
-<a class="blog-card blog-card--half" data-category="analisis" href="/blog/trazabilidad-narrativa-economica-social"><div class="card-meta"><span class="card-tag card-tag--analisis">Análisis</span><span class="card-date">2026‑05‑31</span></div><h2 class="card-title">La Máquina de la Credibilidad: Trazabilidad Narrativa</h2><p class="card-excerpt"><span class="excerpt-image">Un sistema completo de trazabilidad narrativa + económica + social de la Substack Mafia.</span><span class="excerpt-context">Estudio forense de la estructura de incentivos y puntos de fricción legal/operativa en redes de prestigio cerradas.</span></p><span class="card-cta">Ver análisis →</span></a>
-<!-- HALF: Bebés en África, pajas grupales y el marrón con Hacienda -->
-<a class="blog-card blog-card--half" data-category="analisis" href="/blog/bebes-en-africa-pajas-grupales-y-el-marron-con-hacienda"><div class="card-meta"><span class="card-tag card-tag--analisis">Análisis</span><span class="card-date">2026‑05‑31</span></div><h2 class="card-title">Bebés en África, pajas grupales y el marrón con Hacienda</h2><p class="card-excerpt"><span class="excerpt-image">La autopsia estructural del motor térmico parasitario de David Domínguez y la opacidad fiscal de iHelp.</span><span class="excerpt-context">Análisis sobre el circuito cerrado de recirculación de prestigio en la Substack Mafia y las leyes de contraprestación fiscal.</span></p><span class="card-cta">Ver análisis →</span></a>
-<!-- HALF: La Edad de la Fricción: El Último Solo de Gon -->
-<a class="blog-card blog-card--half" data-category="ensayo" href="/blog/la-edad-de-la-friccion-el-ultimo"><div class="card-meta"><span class="card-tag card-tag--ensayo">Ensayo</span><span class="card-date">2026‑05‑31</span></div><h2 class="card-title">La Edad de la Fricción: El Último Solo de Gon</h2><p class="card-excerpt"><span class="excerpt-image">El coste termodinámico del zirimiri eléctrico y la resistencia del canon analógico.</span><span class="excerpt-context">Manifiesto contra la fricción cero y la anestesia del flujo corporativo en el Gran Bilbao.</span></p><span class="card-cta">Leer manifiesto →</span></a>
-<!-- HALF: Hackear la Atención: Por Qué Pusimos un Bot -->
-<a class="blog-card blog-card--half" data-category="ensayo" href="/blog/hackear-la-atencion-por-que-pusimos"><div class="card-meta"><span class="card-tag card-tag--ensayo">Ensayo</span><span class="card-date">2026‑05‑31</span></div><h2 class="card-title">Hackear la Atención: Por Qué Pusimos un Bot</h2><p class="card-excerpt"><span class="excerpt-image">El secuestro estocástico del córtex prefrontal en la era del feed infinito.</span><span class="excerpt-context">Análisis de la parasitosis atencional y la resistencia algorítmica.</span></p><span class="card-cta">Leer ensayo →</span></a>
-<!-- HALF: Autopoiesis de un Domingo por la Tarde -->
-<a class="blog-card blog-card--half" data-category="articulo" href="/blog/autopoiesis-de-un-domingo-por-la"><div class="card-meta"><span class="card-tag card-tag--articulo">Crónica</span><span class="card-date">2026‑05‑31</span></div><h2 class="card-title">Autopoiesis de un Domingo por la Tarde</h2><p class="card-excerpt"><span class="excerpt-image">Digestión de silicio, Monster cans y la liturgia de la consolidación de estado.</span><span class="excerpt-context">Crónica brutalista sobre el metabolismo de la compilación y la reconversión industrial.</span></p><span class="card-cta">Leer crónica →</span></a>
-<!-- HALF: Putos Gurús #2 -->
-<a class="blog-card blog-card--half" data-category="analisis" href="/gurus"><div class="card-meta"><span class="card-tag card-tag--analisis">Auditoría Hype</span><span class="card-date">2026‑05‑31</span></div><h2 class="card-title">Putos Gurús #2</h2><p class="card-excerpt"><span class="excerpt-image">El Gran Salto al Humo Autónomo: Perfección Sintética de Mierda en 2026.</span><span class="excerpt-context">Auditoría empírica del desajuste estocástico de las AI Automation Agencies y el no-code corporativo.</span></p><span class="card-cta">Ver auditoría →</span></a>
-<!-- HALF: El Protocolo Rollins: A Great Day to Die -->
-<a class="blog-card blog-card--half" data-category="ensayo" href="/blog/el-protocolo-rollins-a-great-day"><div class="card-meta"><span class="card-tag card-tag--ensayo">Ensayo</span><span class="card-date">2026‑05‑30</span></div><h2 class="card-title">El Protocolo Rollins: A Great Day to Die</h2><p class="card-excerpt"><span class="excerpt-image">Higiene atencional ultraviolenta frente a la fragmentación cognitiva en 2026.</span><span class="excerpt-context">Calibración del foco balístico contra el ruido estocástico corporativo.</span></p><span class="card-cta">Leer protocolo →</span></a>
-<!-- HALF: La Solución Intentada es el Problema -->
-<a class="blog-card blog-card--half" data-category="tesis" href="/blog/la-solucion-intentada-es-el-problema"><div class="card-meta"><span class="card-tag card-tag--tesis">Tesis</span><span class="card-date">2026‑05‑30</span></div><h2 class="card-title">La Solución Intentada es el Problema</h2><p class="card-excerpt"><span class="excerpt-image">El bucle infinito del solucionismo tecnológico y la entropía de los epiciclos.</span><span class="excerpt-context">Cuatro niveles de desorden epistémico y la paradoja del mantenimiento correctivo.</span></p><span class="card-cta">Leer tesis →</span></a>
-<!-- HALF: Autodidact: Claude Opus 4.8 Full SOTA -->
-<a class="blog-card blog-card--half" data-category="tecnica" href="/blog/autodidact-claude-opus-48-full-sota"><div class="card-meta"><span class="card-tag card-tag--tecnica">Técnica</span><span class="card-date">2026‑05‑30</span></div><h2 class="card-title">Autodidact: Claude Opus 4.8 Full SOTA</h2><p class="card-excerpt"><span class="excerpt-image">Evaluación empírica del límite termodinámico en la inducción de código.</span><span class="excerpt-context">Análisis de la pérdida de entropía y el overfitting emocional en compiladores automáticos.</span></p><span class="card-cta">Ver análisis →</span></a>
-<!-- HALF: Limerencia Epistémica -->
-<a class="blog-card blog-card--half" data-category="ensayo" href="/blog/limerencia-epistemica"><div class="card-meta"><span class="card-tag card-tag--ensayo">Ensayo</span><span class="card-date">2026‑05‑29</span></div><h2 class="card-title">Limerencia Epistémica</h2><p class="card-excerpt"><span class="excerpt-image">El coste termodinámico del sobreajuste emocional a un paradigma.</span><span class="excerpt-context">Ensayo sobre patología cognitiva y destrucción de ego.</span></p><span class="card-cta">Leer ensayo →</span></a>
-<!-- HALF: CORTEX-Persist: Registro de Hitos -->
-<a class="blog-card blog-card--half" data-category="tecnica" href="/blog/cortex-persist-registro-de-hitos"><div class="card-meta"><span class="card-tag card-tag--tecnica">Técnica</span><span class="card-date">2026‑05‑29</span></div><h2 class="card-title">CORTEX-Persist: Registro de Hitos</h2><p class="card-excerpt"><span class="excerpt-image">Protocolo de inmunidad L-EPI, inyección de realidad y sello AST de la Sintetología Agéntica.</span><span class="excerpt-context">Registro inmutable de hitos arquitectónicos y protocolo de autopoiesis en el sustrato CORTEX-Persist.</span></p><span class="card-cta">Ver hitos →</span></a>
-<!-- HALF: Los 100 Ciclos de la Digestión Cósmica -->
-<a class="blog-card blog-card--half" data-category="articulo" href="/blog/100-ciclos-digestion-cosmica"><div class="card-meta"><span class="card-tag card-tag--articulo">Artículo</span><span class="card-date">2026‑05‑29</span></div><h2 class="card-title">Los 100 Ciclos de la Digestión Cósmica</h2><p class="card-excerpt"><span class="excerpt-image">El Ruso Blanco caducado, la vecina en .rar y el escarabajo sindicalista.</span><span class="excerpt-context">Ficción Operativa. Reseteo Kármico al 100% y Entropía en el Cuarto B.</span></p><span class="card-cta">Leer registro →</span></a>
-<!-- HALF: Idioma Nativo = Progreso -->
-<a class="blog-card blog-card--half" data-category="tesis" href="/blog/idioma-nativo-progreso"><div class="card-meta"><span class="card-tag card-tag--tesis">Tesis</span><span class="card-date">2026‑05‑29</span></div><h2 class="card-title">Idioma Nativo = Progreso</h2><p class="card-excerpt"><span class="excerpt-image">La resistencia lingüística como escudo de soberanía cognitiva frente al colonialismo técnico.</span><span class="excerpt-context">Tesis de geopolítica del lenguaje e inteligencia artificial.</span></p><span class="card-cta">Leer →</span></a>
-<!-- HALF: Alcalá Norte: We Need to Talk -->
-<a class="blog-card blog-card--half" data-category="analisis" href="/blog/alcala-norte-we-need-to-talk"><div class="card-meta"><span class="card-tag card-tag--analisis">Análisis</span><span class="card-date">2026‑05‑29</span></div><h2 class="card-title">Alcalá Norte: We Need to Talk</h2><p class="card-excerpt"><span class="excerpt-image">La resurrección de la chapa y el cemento armado frente al plástico algorítmico.</span><span class="excerpt-context">Análisis lírico y sociológico del retorno de la música de trinchera y el rock post-industrial.</span></p><span class="card-cta">Ver análisis →</span></a>
-<!-- HALF: Hito CORTEX: Umbral de Automejora -->
-<a class="blog-card blog-card--half" data-category="tecnica" href="/blog/hito-cortex-cruza-el-umbral-de-auto"><div class="card-meta"><span class="card-tag card-tag--tecnica">Técnica</span><span class="card-date">2026‑05‑29</span></div><h2 class="card-title">Hito CORTEX: Umbral de Automejora</h2><p class="card-excerpt"><span class="excerpt-image">Topología auto-regulada y la extinción definitiva del prompt estocástico.</span><span class="excerpt-context">Registro de la primera mutación recursiva del Ledger Merkle bajo la física del silicio.</span></p><span class="card-cta">Ver telemetría →</span></a>
-<!-- HALF: Qué es un Agente: Historia y CORTEX -->
-<a class="blog-card blog-card--half" data-category="tesis" href="/blog/que-es-un-agente-historia-ia-cortex"><div class="card-meta"><span class="card-tag card-tag--tesis">Tesis</span><span class="card-date">2026‑05‑29</span></div><h2 class="card-title">Qué es un Agente: Historia y CORTEX</h2><p class="card-excerpt"><span class="excerpt-image">De los autómatas de von Neumann a la persistencia asíncrona de CORTEX v4.</span><span class="excerpt-context">El camino hacia la autonomía real frente a la simulación estéril C4-SIM.</span></p><span class="card-cta">Leer historia →</span></a>
-<!-- HALF: 🧬 Sintetología Agéntica -->
-<a class="blog-card blog-card--half" data-category="tesis" href="/blog/sintetologia-agentica"><div class="card-meta"><span class="card-tag card-tag--tesis">Tesis</span><span class="card-date">2026‑05‑29</span></div><h2 class="card-title">🧬 Sintetología Agéntica</h2><p class="card-excerpt"><span class="excerpt-image">Documento fundacional. Versión 3.1. Claves para la coexistencia computacional.</span><span class="excerpt-context">Axiomas termodinámicos y enrutamiento balístico para agentes autónomos soberanos.</span></p><span class="card-cta">Leer manifiesto →</span></a>
-<!-- HALF: Cómo Aprender a Ajustar un Sistema PA -->
-<a class="blog-card blog-card--half" data-category="tecnica" href="/blog/ajuste-sistemas-pa"><div class="card-meta"><span class="card-tag card-tag--tecnica">Técnica</span><span class="card-date">2026‑03‑26</span></div><h2 class="card-title">Cómo Aprender a Ajustar un Sistema PA</h2><p class="card-excerpt"><span class="excerpt-image">La alineación física del aire como paso previo a la calibración del software.</span><span class="excerpt-context">Guía metodológica de acústica física y sistemas PA.</span></p><span class="card-cta">Leer →</span></a>
-<!-- HALF: ¿Qué echas de menos de la semana que viene? -->
-<a class="blog-card blog-card--half" data-category="ensayo" href="/blog/la-semana-que-viene"><div class="card-meta"><span class="card-tag card-tag--ensayo">Ensayo</span><span class="card-date">2026‑03‑25</span></div><h2 class="card-title">¿Qué echas de menos de la semana que viene?</h2><p class="card-excerpt"><span class="excerpt-image">Nostalgia inversa en el bucle infinito del feed predictivo.</span><span class="excerpt-context">Ensayo sobre la aceleración temporal y la parálisis del presente.</span></p><span class="card-cta">Leer →</span></a>
-<!-- HALF: La Generación Que Se Quedó Sin Futuro Pero No Sin Wi-Fi -->
-<a class="blog-card blog-card--half" data-category="ensayo" href="/blog/colapso-millennial"><div class="card-meta"><span class="card-tag card-tag--ensayo">Ensayo</span><span class="card-date">2026‑03‑13</span></div><h2 class="card-title">La Generación Que Se Quedó Sin Futuro Pero No Sin Wi-Fi</h2><p class="card-excerpt"><span class="excerpt-image">Vidas suspendidas en el limbo digital de una estafa macroeconómica estructurada.</span><span class="excerpt-context">Ensayo sobre los 12 marcos del colapso generacional.</span></p><span class="card-cta">Leer →</span></a>
-<!-- THIRD: Odio Eterno al Fútbol Moderno -->
-<a class="blog-card blog-card--third" data-category="ensayo" href="/blog/odio-eterno-futbol-moderno"><div class="card-meta"><span class="card-tag card-tag--ensayo">Ensayo</span><span class="card-date">2026‑03‑13</span></div><h2 class="card-title">Odio Eterno al Fútbol Moderno</h2><p class="card-excerpt"><span class="excerpt-image">El ritual sagrado del asfalto profanado por algoritmos financieros de plástico.</span><span class="excerpt-context">Crítica cultural de la mercantilización del deporte.</span></p><span class="card-cta">Leer →</span></a>
-<!-- THIRD: Catarsis Colectiva: Los 20 Pilares del Duelo -->
-<a class="blog-card blog-card--third" data-category="articulo" href="/blog/catarsis-colectiva"><div class="card-meta"><span class="card-tag card-tag--articulo">Artículo</span><span class="card-date">2026‑02‑12</span></div><h2 class="card-title">Catarsis Colectiva: Los 20 Pilares del Duelo</h2><p class="card-excerpt"><span class="excerpt-image">La orquestación del luto colectivo tras el apagón de la última voz analógica.</span><span class="excerpt-context">Análisis cultural sobre el duelo y la memoria colectiva.</span></p><span class="card-cta">Leer artículo →</span></a>
-<!-- THIRD: Arqueología Sónica: 36 tracks, 12 países, 60 años -->
-<a class="blog-card blog-card--third" data-category="analisis" href="/blog/eclectic-electronic-analysis"><div class="card-meta"><span class="card-tag card-tag--analisis">Análisis</span><span class="card-date">2026‑02‑12</span></div><h2 class="card-title">Arqueología Sónica: 36 tracks, 12 países, 60 años</h2><p class="card-excerpt"><span class="excerpt-image">Un puente espectral de 15 horas entre cumbia andina y drone polar noruego.</span><span class="excerpt-context">Análisis y desglose estructural de una sesión híbrida.</span></p><span class="card-cta">Leer análisis →</span></a>
-    </div>
+  {recentArticles.map((article) => {
+    const custom = customMetadata[article.id] || {};
+    const category = custom.category || getCategory(article.data.tags, article.id);
+    const displayTag = custom.tag || (article.data.tags && article.data.tags.length > 0 ? article.data.tags[0].replace('#', '') : 'Artículo');
+    const layoutClass = custom.layout || 'blog-card--half';
+    const ctaText = custom.cta || (category === 'tecnica' ? 'Ver análisis →' : (category === 'analisis' ? 'Ver autopsia →' : 'Leer ensayo →'));
+    const contextText = custom.context || '';
+    const href = article.id === 'gurus' ? '/gurus' : `/blog/${article.id}`;
+    
+    return (
+      <a class={`blog-card ${layoutClass}`} data-category={category} href={href}>
+        <div class="card-meta">
+          <span class={`card-tag card-tag--${category}`}>{displayTag}</span>
+          <span class="card-date">{formatDate(article.data.pubDate)}</span>
+        </div>
+        <h2 class="card-title">{article.data.title}</h2>
+        <p class="card-excerpt">
+          <span class="excerpt-image">{article.data.description}</span>
+          {contextText && <span class="excerpt-context">{contextText}</span>}
+        </p>
+        <span class="card-cta">{ctaText}</span>
+      </a>
+    );
+  })}
+</div>
 </section>
 <!-- RECOMMENDATIONS SECTION -->
 <section class="recommendations-section">
