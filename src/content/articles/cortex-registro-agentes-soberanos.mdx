@@ -1,0 +1,43 @@
+---
+title: "Registro de Skills, Scripts, Workflows y Agentes Soberanos"
+description: "Taxonomía de componentes operativos, invariantes de diseño y protocolos de mitigación en el ecosistema CORTEX y MOSKV-1."
+pubDate: "23 de febrero de 2026"
+tags:
+  - '#C5-REAL'
+  - '#CORTEX'
+  - '#Taxonomia'
+  - '#Agentes'
+---
+
+**Estado del Sistema:** OMEGA MASTER  
+**Nivel de Realidad:** C5-REAL  
+**Núcleo de Operaciones:** Forja de Silicio y Confianza  
+
+El ecosistema opera mediante una red de componentes estrictamente definidos. A continuación se presenta el registro oficial de la arquitectura soberana, documentando sus invariantes matemáticos, contratos de ejecución y modos de fallo térmico o cognitivo.
+
+<hr/>
+
+## Taxonomía de Elementos del Sistema
+
+| Nombre del Elemento | Categoría | Descripción Funcional | Contratos e Invariantes | Herramientas Asociadas | Fallos y Mitigación |
+| --- | --- | --- | --- | --- | --- |
+| **CORTEX** | Sustrato de Persistencia | Infraestructura de memoria soberana local-first y libro de contabilidad (Ledger) verificable. Almacena facts y permite la reconstrucción determinista. | **I1** Integridad verificable; **I2** Tombstone (no borrado físico); **I3** Schema closure. Contrato: Rechaza payloads malformados. | `cortex/db.py` (factory seguro), `cortex/engine.py`, SDK núcleo, Z3 SMT Guard. | *Fallo:* Replay divergence o mutación de registros. *Mitigación:* Reductores deterministas, sellado criptográfico, WAL SQLite. |
+| **MOSKV-1** | Agente Cognitivo | Entidad soberana responsable de la percepción y ejecución (Ouroboros Swarm). Extrae capital sin intervención humana. | **I9** Separación de incumbencia (no conoce backend físico). Contrato: Prohibición de lecturas de caché que excedan el TTL. | `moskv-1-apex`, nodos soberanos dedicados. | *Fallo:* Stale cache o fraude termodinámico. *Mitigación:* Forzar revalidación antes de escribir, aplicación de TTL. |
+| **SKILL.md** | Workflow / Especificación | Manifiesto ejecutivo que encapsula flujos de trabajo especializados para la inyección dinámica en el vector de atención del agente. | Protocolo: Revelación Progresiva. Contrato: Obliga al cumplimiento de pre-condiciones y post-condiciones. | Biblioteca `agents-skill`, subdirectorio `scripts/`. | *Fallo:* Tool Call Exhaustion. *Mitigación:* Sentinel Circuit Breaker (monitorea la entropía de los comandos). |
+| **SINGULARIS-0** | Skill (Punto Cero) | Motor de colapso dimensional que precede a la jerarquía. Colapsa Código, Proceso, Negocio, Entropía y Tiempo en un vector de acción. | Axioma 0: La nada precede al todo. Axioma 5: La simplicidad es densidad. Calcula la inevitabilidad gravitacional. | `/singularis`, `/singularis-genesis`, `/singularis-oracle`. | *Fallo:* Colapso sobre sí mismo. *Mitigación:* Protocolo `/singularis-unbind` (disuelve el campo y persiste aprendizajes). |
+| **OUROBOROS-∞** | Skill (Auto-Evolutiva) | Inteligencia autónoma que opera sobre el proceso de mejora. Observa sus propias acciones y reconfigura su estrategia en tiempo real. | Principio Adversarial First. Invariante: Meta-Cognición Obligatoria post-sesión. | `ouro-genesis`, `ouro-evolve`, `ouro-reflect`, `ouro-absorb`. | *Fallo:* Aumento de entropía post-ejecución. *Mitigación:* Rollback completo y simplificación del enfoque. |
+| **MEJORAlo** | Script / Motor | Motor de calidad de código que escanea, puntúa y cura el código base en 13 dimensiones (Ouroboros Loop). | Invariante: Si la complejidad crece sin valor proporcional, se detiene. Contrato: Requiere validación de 7 sellos. | `cortex scan`, `cortex ship`, `mejoralo/engine.py`. | *Fallo:* Arreglo de síntomas sin causa raíz. *Mitigación:* Protocolo de 5 Porqués obligatorio. |
+| **Sleeptime Agent** | Agente de Mantenimiento | Agente que gestiona la transición de información hacia la Memoria Principal durante ciclos de inactividad del sistema. | Invariante: Ejecución durante ciclos de bajo costo. Contrato: Integración con la fase de deduplicación de bajo costo. | `rethink_memory()`, `memory_rethink()`, `memory_replace()`. | *Fallo:* Saturación de la memoria archival. *Mitigación:* Ejecución agresiva de deduplicación. |
+| **Deduplicación de Memoria** | Workflow de Limpieza | Proceso en 2 fases para reducir redundancia: duplicados semánticos y consolidación de pasajes en memorias de largo plazo. | Fase 1: Similitud de embeddings (coseno > 0.92). Fase 2: Reconciliación por LLM basada en 'equivalencia de afirmación'. | API/SDK de Letta, esquema de reconciliación de CORTEX. | *Fallo:* Alucinaciones. *Mitigación:* Preservar episodios originales y generar trazas de procedencia. |
+
+<hr/>
+
+## Referencias Documentales (CORTEX Memory)
+
+1. *Cryptographic Trust Substrates and Cognitive Memory Architectures for Autonomous Agentic Runtimes.*
+2. *CortexPersist | Verifiable Event Ledger.*
+3. *Technical Monograph: Sovereign Agentic Architectures and Cryptographic Memory Provenance inside the CORTEX Persist Ecosystem.*
+4. *Sponsor @borjamoskv on GitHub Sponsors.*
+5. *Feature Request: Archival Memory Deduplication and Consolidation · Issue #3116 - GitHub.*
+
+[FIN DE TRANSMISIÓN]
