@@ -54,3 +54,9 @@ CORTEX/fahrenheit_real_status.json
 
 
 
+
+.cortex/agent_key.pub.pem
+
+.cortex/agent_key.pem
+
+*.pem
