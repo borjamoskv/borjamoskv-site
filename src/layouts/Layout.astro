@@ -1,5 +1,5 @@
 ---
-// ─── C5-REAL SOTA EDGE CACHING ───
+// ─── C5-REAL EDGE CACHING ───
 // Cloudflare Edge Cache: 1 day, Browser Cache: 1 hour.
 Astro.response.headers.set('Cache-Control', 'public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800');
 
@@ -21,7 +21,7 @@ const { title } = Astro.props;
     <title>{title}</title>
     <meta name="description" content="Borja Moskv — Música, Vídeo y Ensayos de Vanguardia. Síntesis C5-REAL, Colapso Termodinámico y Auditoría del Silicio." />
 
-    <!-- ─── SOTA METRICS OPTIMIZATION (LCP / FCP) ─── -->
+    <!-- ─── METRICS OPTIMIZATION (LCP / FCP) ─── -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=JetBrains+Mono:wght@300;400;700&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" />
@@ -85,7 +85,7 @@ const { title } = Astro.props;
         
         <!-- Desktop Links -->
         <div class="nav-links-desktop">
-          <a href="/#laboratorio" class="nav-link" aria-label="Laboratorio SOTA">Laboratorio</a>
+          <a href="/#laboratorio" class="nav-link" aria-label="Laboratorio">Laboratorio</a>
           <a href="/#musica" class="nav-link" aria-label="Sección de música">Música</a>
           <a href="/crear-musica" class="nav-link" aria-label="Crear Música con YuE">Crear Música</a>
           
@@ -593,7 +593,7 @@ const { title } = Astro.props;
           };
         }
 
-        // ─── 06/06 SOTA: GENERATIVE DOM SYNTHESIZER ───
+        // ─── 06/06 GENERATIVE DOM SYNTHESIZER ───
         const initDOMSynth = () => {
           // Master DOM Synth Bus
           const domSynthBus = audioCtx.createGain();
@@ -776,8 +776,8 @@ const { title } = Astro.props;
       };
       requestAnimationFrame(loop);
 
-      // ─── SOTA WEB NAVIGATION SYSTEM ───
-      const initSOTANavigation = () => {
+      // ─── WEB NAVIGATION SYSTEM ───
+      const initNavigation = () => {
         const nav = document.querySelector('.top-nav');
         const underline = document.getElementById('nav-underline');
         const links = document.querySelectorAll('.nav-links-desktop .nav-link');
@@ -1248,9 +1248,9 @@ const { title } = Astro.props;
       };
 
       document.addEventListener('astro:page-load', () => {
-        initSOTANavigation();
+        initNavigation();
         
-      // ─── SOTA Fallbacks (Safari/Firefox) ───
+      // ─── Fallbacks (Safari/Firefox) ───
       if (!CSS.supports('animation-timeline', 'scroll()')) {
         const progress = document.getElementById('omega-progress');
         const nav = document.querySelector('.top-nav');
@@ -1632,8 +1632,8 @@ const { title } = Astro.props;
       
       
       
-      // ─── 20/10 SOTA WEB AUDIO (Convolution Reverb & HRTF Spatialization) ───
-      const initSotaAudio = () => {
+      // ─── 20/10 WEB AUDIO (Convolution Reverb & HRTF Spatialization) ───
+      const initAudio = () => {
          const pollAudio = setInterval(() => {
             if (typeof audioCtx !== 'undefined' && typeof masterGain !== 'undefined') {
                clearInterval(pollAudio);
@@ -1693,13 +1693,13 @@ const { title } = Astro.props;
                };
                orbitPanner();
 
-               console.log("%c[SOTA WEB AUDIO] ConvolverNode (IR 3.5s) y HRTF Panner (Orbita) activados. Modo Físico.", "color: #00ff00; font-weight: bold;");
+               console.log("%c[WEB AUDIO] ConvolverNode (IR 3.5s) y HRTF Panner (Orbita) activados. Modo Físico.", "color: #00ff00; font-weight: bold;");
             }
          }, 1000);
       };
 
-      document.addEventListener('DOMContentLoaded', initSotaAudio);
-      document.addEventListener('astro:page-load', initSotaAudio);
+      document.addEventListener('DOMContentLoaded', initAudio);
+      document.addEventListener('astro:page-load', initAudio);
 
       // ─── 19/10 TYPOGRAPHIC EXERGY (Audio-Reactive Font Weight & Kerning) ───
       const initExergy = () => {
@@ -1847,7 +1847,7 @@ const { title } = Astro.props;
 
       // ─── 15/10 GENERATIVE HALLUCINATION PROTOCOL (Lexical Mutation) ───
       const initHallucination = () => {
-        const lexicon = ['entropía', 'cortex', 'colapso', 'ruido', 'simbionte', 'aniquilación', 'SOTA', 'C5-REAL', 'vacío', 'glitch', 'oscuridad', 'flujo', 'sistema', 'latencia', 'hardware', 'vibración', 'ruina', 'código', 'memoria', 'quemar'];
+        const lexicon = ['entropía', 'cortex', 'colapso', 'ruido', 'simbionte', 'aniquilación', 'C5-REAL', 'vacío', 'glitch', 'oscuridad', 'flujo', 'sistema', 'latencia', 'hardware', 'vibración', 'ruina', 'código', 'memoria', 'quemar'];
         
         const hallucinateText = (node) => {
            if (node.nodeType === Node.TEXT_NODE) {
