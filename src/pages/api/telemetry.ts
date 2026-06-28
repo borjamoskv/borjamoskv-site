@@ -5,7 +5,7 @@ export const prerender = false;
 // C5-REAL / C4-SIM: Global Entropy Tracker
 export const GET: APIRoute = async ({ locals }) => {
   try {
-    const env = locals?.runtime?.env as { CORTEX_ENTROPY?: { get: (k: string) => Promise<string | null>; put: (k: string, v: string) => Promise<void> } } | undefined;
+    const env = (locals as any)?.runtime?.env as { CORTEX_ENTROPY?: { get: (k: string) => Promise<string | null>; put: (k: string, v: string) => Promise<void> } } | undefined;
     if (!env || !env.CORTEX_ENTROPY) {
       return new Response(JSON.stringify({ 
         entropy: 9999, 
@@ -32,7 +32,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     const { delta } = await request.json();
     const amount = Number(delta) || 1;
 
-    const env = locals?.runtime?.env as { CORTEX_ENTROPY?: { get: (k: string) => Promise<string | null>; put: (k: string, v: string) => Promise<void> } } | undefined;
+    const env = (locals as any)?.runtime?.env as { CORTEX_ENTROPY?: { get: (k: string) => Promise<string | null>; put: (k: string, v: string) => Promise<void> } } | undefined;
     if (!env || !env.CORTEX_ENTROPY) {
       return new Response(JSON.stringify({ 
         entropy: 9999 + amount, 

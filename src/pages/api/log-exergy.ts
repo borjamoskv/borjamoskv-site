@@ -1,8 +1,9 @@
+import type { APIRoute } from 'astro';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import crypto from 'node:crypto';
 
-export const POST = async ({ request }) => {
+export const POST: APIRoute = async ({ request }) => {
   try {
     const body = await request.json();
     const { prompt } = body;
@@ -61,6 +62,6 @@ export const POST = async ({ request }) => {
       headers: { 'Content-Type': 'application/json' }
     });
   } catch (error) {
-    return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+    return new Response(JSON.stringify({ error: (error as Error).message }), { status: 500 });
   }
 };

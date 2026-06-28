@@ -1,5 +1,6 @@
 // C5-REAL
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { z } from 'astro:schema';
 import { glob } from 'astro/loaders';
 
 const articles = defineCollection({

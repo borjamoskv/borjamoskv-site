@@ -82,7 +82,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
     let exergyScore = 100.0;
 
     // Check environment support
-    const isCloudflare = !('exec' in require('node:child_process') || {});
+    // Use typeof process check to avoid TypeScript require() errors
+    const isCloudflare = typeof process === 'undefined' || !process.versions || !process.versions.node;
 
     // 1. AEGIS: Sandbox security audit
     if (command === 'aegis') {
@@ -160,7 +161,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
       
       let env: { CORTEX_ENTROPY?: { get: (k: string) => Promise<string | null>; put: (k: string, v: string) => Promise<void> } } | null = null;
       try {
-        env = locals?.runtime?.env as { CORTEX_ENTROPY?: { get: (k: string) => Promise<string | null>; put: (k: string, v: string) => Promise<void> } };
+        env = (locals as any)?.runtime?.env as { CORTEX_ENTROPY?: { get: (k: string) => Promise<string | null>; put: (k: string, v: string) => Promise<void> } };
       } catch (e) {}
       if (!env) {
         try {

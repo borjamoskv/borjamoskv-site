@@ -7,7 +7,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import type { ExergyAuditRecord } from '../exergy/evaluator.ts';
 
-export async function loadLastHash(ledgerPath: string, kvNamespace?: unknown): Promise<string> {
+export async function loadLastHash(ledgerPath: string, kvNamespace?: any): Promise<string> {
   // If KV is available, try KV first
   if (kvNamespace) {
     try {
@@ -86,8 +86,8 @@ export async function appendLedgerEntry(
   record: Omit<ExergyAuditRecord, 'prev_hash' | 'hash'>,
   options: { 
     ledgerPath?: string; 
-    kvNamespace?: unknown; 
-    dbNamespace?: unknown; 
+    kvNamespace?: any; 
+    dbNamespace?: any; 
     syncUrl?: string; 
   } = {}
 ): Promise<ExergyAuditRecord> {
