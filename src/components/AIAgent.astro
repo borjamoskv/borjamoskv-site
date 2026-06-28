@@ -562,6 +562,7 @@
     });
 
     function closeHUD() {
+      if (!hud) return;
       hud.classList.add('hidden');
       hudActive = false;
       document.body.style.overflow = ''; // Unlock scrolling
@@ -656,7 +657,8 @@
 
     sDist.addEventListener('input', () => {
       const val = parseFloat(sDist.value);
-      document.getElementById('val-distortion').textContent = `${val.toFixed(1)}x`;
+      const el = document.getElementById('val-distortion');
+      if (el) el.textContent = `${val.toFixed(1)}x`;
       // Direct WebGL shader binding
       // @ts-ignore
       window.globalDistortionRatio = val;
@@ -665,7 +667,8 @@
 
     sTime.addEventListener('input', () => {
       const val = parseFloat(sTime.value);
-      document.getElementById('val-time').textContent = `${val.toFixed(1)}x`;
+      const el = document.getElementById('val-time');
+      if (el) el.textContent = `${val.toFixed(1)}x`;
       
       // We can modulate shader time speed by scaling time parameter increment
       // Let's bind it to window object so initGLSL can read it!
@@ -676,7 +679,8 @@
 
     sGrain.addEventListener('input', () => {
       const val = parseInt(sGrain.value);
-      document.getElementById('val-grain').textContent = `${val}%`;
+      const el = document.getElementById('val-grain');
+      if (el) el.textContent = `${val}%`;
       
       // Mutate actual global CSS grain overlay opacity
       const bodyBefore = document.querySelector('body');
@@ -698,21 +702,25 @@
     const btnCorrupt = document.getElementById('btn-corrupt');
     const btnPulse = document.getElementById('btn-pulse');
 
-    btnCorrupt.addEventListener('click', () => {
-      playTick(1200, 300, 0.4);
-      setTimeout(() => {
-        corruptViewportHeaders();
-        incrementGlobalEntropy(10);
-      }, 0);
-    });
+    if (btnCorrupt) {
+      btnCorrupt.addEventListener('click', () => {
+        playTick(1200, 300, 0.4);
+        setTimeout(() => {
+          corruptViewportHeaders();
+          incrementGlobalEntropy(10);
+        }, 0);
+      });
+    }
 
-    btnPulse.addEventListener('click', () => {
-      playTick(80, 2800, 0.6);
-      setTimeout(() => {
-        injectVisualPulse();
-        incrementGlobalEntropy(25);
-      }, 0);
-    });
+    if (btnPulse) {
+      btnPulse.addEventListener('click', () => {
+        playTick(80, 2800, 0.6);
+        setTimeout(() => {
+          injectVisualPulse();
+          incrementGlobalEntropy(25);
+        }, 0);
+      });
+    }
 
     // 5.5 LLM AGENT COMMUNICATION (Ritxie Hawting)
     const agentForm = document.getElementById('agent-form');
@@ -887,7 +895,7 @@
     if (!ctx) return;
 
     function render() {
-      if (!hudActive) return;
+      if (!hudActive || !ctx) return;
       spectrogramAnimFrame = requestAnimationFrame(render);
 
       // Drawing Spectrogram logic

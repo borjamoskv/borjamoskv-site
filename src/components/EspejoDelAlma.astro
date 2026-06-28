@@ -89,8 +89,6 @@
 
     const mirror = document.getElementById('recursive-mirror');
     if (mirror) {
-      let currentScroll = window.scrollY;
-      
       const renderReflection = () => {
         const docHeight = Math.max(document.body.scrollHeight, document.body.offsetHeight) - window.innerHeight;
         if (docHeight > 0) {

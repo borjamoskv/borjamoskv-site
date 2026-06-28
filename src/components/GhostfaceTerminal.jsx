@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 const videoDictionary = {
   idle: 'https://www.w3schools.com/html/mov_bbb.mp4', // Fallback/Idle loop
@@ -13,6 +13,7 @@ export default function GhostfaceTerminal() {
   const [status, setStatus] = useState('SYS_READY');
   const videoRef = useRef(null);
 
+  /** @param {string} text */
   const speakTTS = (text) => {
     if (!('speechSynthesis' in window)) return;
     window.speechSynthesis.cancel();
@@ -29,6 +30,7 @@ export default function GhostfaceTerminal() {
     window.speechSynthesis.speak(msg);
   };
 
+  /** @param {import('react').FormEvent} e */
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!input.trim()) return;
@@ -62,7 +64,7 @@ export default function GhostfaceTerminal() {
             console.log("C5-REAL Hash Generated:", ledgerData.hash);
             setStatus(`ERR: COMMAND_UNREGISTERED. LEDGER_UPDATED [${ledgerData.hash.slice(0,8)}]`);
           }
-        }).catch(err => {
+        }).catch(() => {
           setStatus('ERR: COMMAND_UNREGISTERED. FALLBACK_ENGAGED.');
         });
       } else {
@@ -77,6 +79,7 @@ export default function GhostfaceTerminal() {
     }
   };
 
+  /** @param {string} src */
   const playSequence = (src) => {
     setCurrentVideo(src);
     if (videoRef.current) {
