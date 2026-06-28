@@ -1,4 +1,0 @@
-{
-  "buildCommand": "astro build",
-  "framework": "astro"
-}
