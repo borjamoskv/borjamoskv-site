@@ -11,7 +11,7 @@ const articlesWithSentiment = allArticles
   .sort((a, b) => new Date(b.data.pubDate || 0).valueOf() - new Date(a.data.pubDate || 0).valueOf());
 
 // Agrupar por sentimiento
-const sentimentGroups = articlesWithSentiment.reduce((acc, article) => {
+const sentimentGroups = articlesWithSentiment.reduce((acc: Record<string, any[]>, article: any) => {
   const sentiment = article.data.sentiment;
   if (!acc[sentiment]) {
     acc[sentiment] = [];
@@ -24,7 +24,7 @@ const sentimentGroups = articlesWithSentiment.reduce((acc, article) => {
 const availableSentiments = Object.keys(sentimentGroups);
 
 // Mapas de colores / estilos según el sentimiento
-const sentimentStyles = {
+const sentimentStyles: Record<string, { border: string; bg: string }> = {
   "🚨 Incertidumbre y Alerta (Ansiedad)": { border: "var(--accent-red)", bg: "rgba(255,51,85,0.05)" },
   "💔 Vacío y Fractura (Duelo y Pérdida)": { border: "var(--accent-purple)", bg: "rgba(163,51,255,0.05)" },
   "⚡ Distorsión y Ruido (Inseguridad y Estrés Social)": { border: "var(--accent-yellow)", bg: "rgba(255,204,51,0.05)" },
@@ -68,7 +68,7 @@ const sentimentStyles = {
             {sentiment}
           </h2>
           <div class="article-grid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;">
-            {articles.map(article => (
+            {(articles as any[]).map((article: any) => (
               <article class="article-card" style={`background: rgba(10,10,10,0.5); border: 1px solid ${sentimentStyles[sentiment]?.border || 'rgba(43,59,229,0.2)'}; border-radius: 8px; padding: 1.5rem; transition: transform 0.2s ease;`}>
                 <h3 style="font-family:'Inter', sans-serif; font-size:1.1rem; margin-top:0; margin-bottom:0.5rem;">
                   <a href={`/blog/${article.id}`} style="color:var(--text-primary); text-decoration:none;">{article.data.title}</a>

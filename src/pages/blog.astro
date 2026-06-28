@@ -1,12 +1,12 @@
 ---
 import { getCollection } from 'astro:content';
 
-const months = {
+const months: Record<string, number> = {
   enero: 0, febrero: 1, marzo: 2, abril: 3, mayo: 4, junio: 5,
   julio: 6, agosto: 7, septiembre: 8, octubre: 9, noviembre: 10, diciembre: 11
 };
 
-function parseSpanishDate(dateStr) {
+function parseSpanishDate(dateStr: any) {
   if (!dateStr) return new Date(0);
   const cleaned = dateStr.replace(/‑/g, '-').replace(/‑/g, '-');
   const parts = cleaned.toLowerCase().split(' ');
@@ -22,7 +22,7 @@ function parseSpanishDate(dateStr) {
   return isNaN(parsed) ? new Date(0) : new Date(parsed);
 }
 
-function formatDate(dateStr) {
+function formatDate(dateStr: any) {
   const date = parseSpanishDate(dateStr);
   if (date.getTime() === 0) return dateStr;
   const yyyy = date.getFullYear();
@@ -31,7 +31,7 @@ function formatDate(dateStr) {
   return `${yyyy}‑${mm}‑${dd}`; // non-breaking hyphen
 }
 
-function getCategory(tags, slug) {
+function getCategory(tags: any, slug: any) {
   if (!tags) return 'articulo';
   const tagList = tags.map(t => t.toLowerCase().replace('#', ''));
   if (tagList.includes('ensayo')) return 'ensayo';
@@ -46,7 +46,7 @@ function getCategory(tags, slug) {
   return 'articulo';
 }
 
-const standaloneArticles = [
+const standaloneArticles: any[] = [
   {
     id: 'hito-nobel',
     data: {
@@ -76,7 +76,7 @@ const standaloneArticles = [
   }
 ];
 
-const customMetadata = {
+const customMetadata: Record<string, any> = {
   'hito-nobel': {
     tag: 'Hito Omega',
     context: 'Tesis sobre lo que viene en la inteligencia artificial soberana.',
@@ -1466,6 +1466,7 @@ const recentArticles = sortedArticles.filter(a => !popularSlugs.includes(a.id));
 </section>
 
 <script>
+  // @ts-nocheck
   const surrealReviews = [
     { name: "JULEN GUERRERO", role: "// Leyenda de San Mamés", quote: "Puro pundonor. Este ecosistema tiene más garra que el Athletic en los 90. Cero humo, todo músculo." },
     { name: "Doraemon", role: "// Gato Cósmico", quote: "Borja ha sacado de su bolsillo mágico un código tan puro que ni mis mejores inventos del siglo XXII. Y sin gorrocóptero." },
@@ -1551,6 +1552,7 @@ const recentArticles = sortedArticles.filter(a => !popularSlugs.includes(a.id));
 <script src="/js/voice-effects-pipeline.js" type="module" is:inline></script>
 <script src="/js/chat.js" type="module" is:inline></script>
 <script>
+  // @ts-nocheck
     document.addEventListener('DOMContentLoaded', () => {
       // ── Site Header Scroll ──────────────────────────
       const header = document.getElementById('header');
