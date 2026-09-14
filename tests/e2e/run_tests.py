@@ -5,6 +5,8 @@ import time
 import socket
 import subprocess
 import unittest
+import urllib.request
+import urllib.error
 
 # Add parent directory to path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
@@ -27,20 +29,11 @@ def main():
 
     # Configuration ports
     mock_port = 8012
-    astro_port = 4322
-
-    # Clear integration ledger file if exists
-    ledger_file = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../substack_archive/exergy_ledger.jsonl"))
-    if os.path.exists(ledger_file):
-        try:
-            os.remove(ledger_file)
-        except Exception as e:
-            print(f"[!] Warning: Failed to remove old ledger file: {e}")
+    astro_port = 4321
 
     # Set environment variables for tests
     os.environ["MOCK_SERVER_PORT"] = str(mock_port)
     os.environ["TARGET_API_URL"] = f"http://localhost:{astro_port}"
-    os.environ["LEDGER_PATH"] = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../substack_archive/exergy_ledger.jsonl"))
 
     # 1. Start Mock RSS and API Server
     print(f"[*] Starting Mock RSS and API server on port {mock_port}...")
@@ -61,16 +54,12 @@ def main():
     else:
         print(f"[*] Astro dev server not detected on port {astro_port}. Starting it...")
         try:
-            # Launch Astro dev server in the background with environment variables
-            env = os.environ.copy()
-            env["MOCK_SERVER_PORT"] = str(mock_port)
-            env["TARGET_API_URL"] = f"http://localhost:{astro_port}"
+            # Launch Astro dev server in the background
             astro_process = subprocess.Popen(
                 ["npx", "astro", "dev", "--port", str(astro_port)],
                 cwd=os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")),
                 stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL,
-                env=env
+                stderr=subprocess.DEVNULL
             )
             
             # Wait for the server to spin up (up to 15 seconds)
@@ -88,7 +77,7 @@ def main():
             if started:
                 print(f"[✓] Astro dev server successfully started at http://localhost:{astro_port}")
             else:
-                print("[!] Warning: Astro dev server failed to start within 15 seconds or crashed.")
+                print(f"[!] Warning: Astro dev server failed to start within 15 seconds or crashed.")
                 # We do not crash the runner; we let it fall back or continue so tests can report failures
         except Exception as e:
             print(f"[!] Warning: Failed to spawn Astro dev server: {e}")
@@ -105,7 +94,7 @@ def main():
     test_result = runner.run(suite)
     
     # Check for failures / errors
-    test_result.wasSuccessful()
+    success = test_result.wasSuccessful()
 
     # 4. Check Ledger Cryptographic Integrity (if exists)
     ledger_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../substack_archive/exergy_ledger.jsonl"))

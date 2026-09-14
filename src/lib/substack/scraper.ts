@@ -1,8 +1,7 @@
-// C5-REAL
 // src/lib/substack/scraper.ts
 // Scrapes Substack RSS feed or API archive endpoints. Supports network retries and error handling.
 
-import type { SubstackPost } from '../exergy/evaluator';
+import { SubstackPost } from '../exergy/evaluator';
 
 function decodeEntities(str: string): string {
   return str
@@ -16,48 +15,11 @@ function decodeEntities(str: string): string {
 
 export function parseRss(xmlText: string): SubstackPost[] {
   const posts: SubstackPost[] = [];
-  let idx = 0;
+  const itemRegex = /<item>([\s\S]*?)<\/item>/g;
+  let match;
   
-  while (true) {
-    const itemStart = xmlText.indexOf("<item>", idx);
-    if (itemStart === -1) {
-      break;
-    }
-    
-    const contentStart = itemStart + 6;
-    let itemEnd = -1;
-    let inCdata = false;
-    let j = contentStart;
-    
-    while (j < xmlText.length) {
-      if (!inCdata) {
-        if (xmlText.startsWith("<![CDATA[", j)) {
-          inCdata = true;
-          j += 9;
-          continue;
-        }
-        if (xmlText.startsWith("</item>", j)) {
-          itemEnd = j;
-          break;
-        }
-        j++;
-      } else {
-        if (xmlText.startsWith("]]>", j)) {
-          inCdata = false;
-          j += 3;
-          continue;
-        }
-        j++;
-      }
-    }
-    
-    if (itemEnd === -1) {
-      // No matching </item> tag found, move past itemStart to avoid infinite loop
-      idx = contentStart;
-      continue;
-    }
-    
-    const itemContent = xmlText.substring(contentStart, itemEnd);
+  while ((match = itemRegex.exec(xmlText)) !== null) {
+    const itemContent = match[1];
     
     const extractTag = (tag: string): string => {
       // Handles both simple tags and CDATA wrapped tags
@@ -79,8 +41,6 @@ export function parseRss(xmlText: string): SubstackPost[] {
       link,
       pubDate
     });
-    
-    idx = itemEnd + 7;
   }
   
   return posts;
@@ -153,31 +113,20 @@ export async function fetchSubstackPosts(
     let data;
     try {
       data = JSON.parse(rawData);
-    } catch (err) {
+    } catch (err: any) {
       throw new SyntaxError("Invalid JSON structure");
     }
     if (!Array.isArray(data)) {
       throw new TypeError("Expected array from JSON archive");
     }
     
-    interface RawSubstackPost {
-      title?: string;
-      subtitle?: string;
-      description?: string;
-      canonical_url?: string;
-      link?: string;
-      post_date?: string;
-      pubDate?: string;
-    }
-    return (data as (RawSubstackPost | null)[])
-      .filter((post): post is RawSubstackPost => post !== null && post !== undefined)
-      .map((post) => ({
-        title: post.title || "",
-        subtitle: post.subtitle || "",
-        description: post.description || "",
-        link: post.canonical_url || post.link || "",
-        pubDate: post.post_date || post.pubDate || ""
-      }));
+    return data.map((post: any) => ({
+      title: post.title || "",
+      subtitle: post.subtitle || "",
+      description: post.description || "",
+      link: post.canonical_url || post.link || "",
+      pubDate: post.post_date || post.pubDate || ""
+    }));
   } else {
     const xmlText = await response.text();
     // Verify XML structure starts correctly or we throw a parse error for malformed XML tests

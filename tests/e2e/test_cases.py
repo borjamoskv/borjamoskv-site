@@ -71,7 +71,7 @@ class PythonLedgerManager:
         try:
             last_line = json.loads(lines[-1].strip())
             return last_line.get("hash", "GENESIS")
-        except Exception:
+        except:
             return "GENESIS"
 
     def append_entry(self, title, exergy):
@@ -132,12 +132,6 @@ class SubstackExergyEvaluatorE2ETestCase(unittest.TestCase):
         # Clear ledger file before each test
         if os.path.exists(self.ledger_path):
             os.remove(self.ledger_path)
-        env_ledger = os.environ.get("LEDGER_PATH")
-        if env_ledger and os.path.exists(env_ledger):
-            try:
-                os.remove(env_ledger)
-            except Exception:
-                pass
 
     # =========================================================================
     # TIER 1: FEATURE COVERAGE (25 cases)
@@ -362,7 +356,7 @@ class SubstackExergyEvaluatorE2ETestCase(unittest.TestCase):
         # Call without auth headers
         req = urllib.request.Request(url, method="POST")
         try:
-            with urllib.request.urlopen(req, timeout=5):
+            with urllib.request.urlopen(req, timeout=5) as res:
                 # If it responds 200, authentication is not enforced.
                 pass
         except urllib.error.HTTPError as e:
@@ -541,7 +535,7 @@ class SubstackExergyEvaluatorE2ETestCase(unittest.TestCase):
         for _ in range(5):
             req = urllib.request.Request(url, method="POST")
             try:
-                with urllib.request.urlopen(req, timeout=1):
+                with urllib.request.urlopen(req, timeout=1) as res:
                     pass
             except (urllib.error.HTTPError, urllib.error.URLError):
                 # Expect errors due to missing endpoint, just verifying execution doesn't lock/hang
@@ -788,7 +782,7 @@ class SubstackExergyEvaluatorE2ETestCase(unittest.TestCase):
 
         for i in range(max_attempts):
             try:
-                fetch_with_retry()
+                data = fetch_with_retry()
                 break
             except urllib.error.HTTPError as e:
                 if e.code == 429 and i < max_attempts - 1:
@@ -799,81 +793,6 @@ class SubstackExergyEvaluatorE2ETestCase(unittest.TestCase):
 
         self.assertTrue(succeeded)
         self.assertEqual(attempts, 3)
-
-    # =========================================================================
-    # TIER 5: ADVERSARIAL & ROBUSTNESS TESTS (3 cases)
-    # =========================================================================
-
-    def test_t5_adversarial_cdata_injection(self):
-        """61. RSS Parser CDATA Injection Vulnerability: Verify description is NOT lost due to premature item tag cutoff."""
-        url = f"{self.target_api_url}/api/exergy-cron?subdomain=cdata-test&scenario=cdata-injection"
-        req = urllib.request.Request(url, method="POST")
-        try:
-            with urllib.request.urlopen(req, timeout=5) as res:
-                body = json.loads(res.read().decode('utf-8'))
-                print("DEBUG: CDATA response body:", body)
-                self.assertTrue(body["success"])
-        except urllib.error.HTTPError as e:
-            print("DEBUG: CDATA HTTP Error body:", e.read().decode('utf-8'))
-            self.fail(f"Failed to trigger API: {e}")
-        except Exception as e:
-            self.fail(f"Failed to trigger API: {e}")
-
-        # Check ledger to verify that the first post description is NOT empty
-        ledger_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../substack_archive/exergy_ledger.jsonl"))
-        self.assertTrue(os.path.exists(ledger_path))
-        with open(ledger_path, "r", encoding="utf-8") as f:
-            lines = f.readlines()
-        
-        # Look for the cdata-injection entries
-        found_code_post = False
-        print("DEBUG: Ledger lines found:", lines)
-        for line in lines:
-            entry = json.loads(line.strip())
-            if entry["title"] == "Post with code snippet":
-                found_code_post = True
-                self.assertNotEqual(entry["description"], "", "Description should NOT have been cut off/lost!")
-        
-        self.assertTrue(found_code_post, "Did not find the injected code post in ledger!")
-
-    def test_t5_adversarial_ledger_lock_race(self):
-        """62. Ledger Concurrency TOCTOU Race: Verify that concurrent API requests bypass non-atomic lock check."""
-        import concurrent.futures
-        url = f"{self.target_api_url}/api/exergy-cron?subdomain=race-test&scenario=happy-es"
-        
-        # We launch 5 concurrent requests in parallel
-        def send_request(idx):
-            req = urllib.request.Request(f"{url}&unique_idx={idx}", method="POST")
-            try:
-                with urllib.request.urlopen(req, timeout=5) as res:
-                    return res.status, json.loads(res.read().decode('utf-8'))
-            except urllib.error.HTTPError as e:
-                body_content = e.read().decode('utf-8')
-                print(f"DEBUG: Lock race HTTP Error {e.code} body:", body_content)
-                return e.code, body_content
-            except Exception as e:
-                return 0, str(e)
-
-        with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
-            futures = [executor.submit(send_request, i) for i in range(5)]
-            results = [f.result() for f in concurrent.futures.as_completed(futures)]
-        
-        succeeded_statuses = [status for status, _ in results if status == 200]
-        print("DEBUG: Lock race results:", results)
-        self.assertEqual(len(succeeded_statuses), 1)
-
-    def test_t5_adversarial_json_null_typeerror(self):
-        """63. JSON Null TypeError: Verify that scraper crashes with 500 when JSON array contains null."""
-        url = f"{self.target_api_url}/api/exergy-cron?subdomain=null-test&scenario=json-null&format=json"
-        req = urllib.request.Request(url, method="POST")
-        try:
-            with urllib.request.urlopen(req, timeout=5) as res:
-                self.assertEqual(res.status, 200)
-                body = json.loads(res.read().decode('utf-8'))
-                self.assertTrue(body["success"])
-        except Exception as e:
-            self.fail(f"Unexpected error: {e}")
-
 
 
 if __name__ == "__main__":

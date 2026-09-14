@@ -27,8 +27,6 @@ try:
     from fahrenheit_distribution_linter import audit_network as audit_fahrenheit
     from nash_equilibrium_linter import audit_nash
     from frankenstein_mitosis_linter import audit_frankenstein
-    from maxwell_demon_linter import audit_maxwell
-    from sintetologia_grounding_linter import audit_grounding
 except ImportError as e:
     print(f"[!] Critical Import Error: {e}")
     sys.exit(1)
@@ -41,14 +39,14 @@ def run_workspace_diagnostic():
 
     # 1. Quixote Delusion Audit Configuration
     quixote_config = {
-        "overfitting_params": 0.0,
-        "unverified_assumptions": 0.0,
+        "overfitting_params": 0.15,
+        "unverified_assumptions": 0.1,
         "has_local_linter": True,
         "verifies_physical_facts": True,
-        "phantom_alerts": 0,
-        "total_exceptions": 0,
-        "useless_metric_weight": 0.0,
-        "real_work_ratio": 1.0,
+        "phantom_alerts": 1,
+        "total_exceptions": 20,
+        "useless_metric_weight": 0.05,
+        "real_work_ratio": 0.95,
     }
     res_quixote = audit_quixote_delusion(quixote_config)
 
@@ -107,7 +105,7 @@ def run_workspace_diagnostic():
         "fallback_strategy": "vesicular_mitosis",
         "uses_mcp": True,
         "auto_schema_translation": True,
-        "model_tier": "high",
+        "model_tier": "medium",
         "task_complexity": 5,
         "sampling_temperature": 0.7,
         "uses_path_search": True,
@@ -120,17 +118,17 @@ def run_workspace_diagnostic():
     goals_list = [
         {
             "text": "Refactor local database for direct-silicon writes",
-            "intrinsic_drive": 1.0,
-            "mimetic_factor": 0.0,
-            "proof_of_work": 1.0,
-            "anergy_cost": 0.0,
+            "intrinsic_drive": 0.95,
+            "mimetic_factor": 0.05,
+            "proof_of_work": 0.9,
+            "anergy_cost": 0.1,
         },
         {
             "text": "Publish high exergy post explaining agent thermodynamics",
-            "intrinsic_drive": 1.0,
-            "mimetic_factor": 0.0,
-            "proof_of_work": 1.0,
-            "anergy_cost": 0.0,
+            "intrinsic_drive": 0.9,
+            "mimetic_factor": 0.1,
+            "proof_of_work": 0.85,
+            "anergy_cost": 0.2,
         },
     ]
     res_goals = audit_goals(goals_list)
@@ -141,44 +139,44 @@ def run_workspace_diagnostic():
             "subject_alias": "Sovereign_Operator_Borja",
             "offline_hours_weekly": 20.0,
             "frictional_chats_count": 5,
-            "social_validation_factor": 0.0,
-            "swipe_discard_bias": 0.0,
+            "social_validation_factor": 0.1,
+            "swipe_discard_bias": 0.05,
         }
     ]
     res_relationships = audit_relationships(connections_list)
 
     # 9. Substack Autonomy Post Audit
-    sample_text = "Escribir requiere autonomía e interdependencia, evitando alianzas cruzadas que inyecten ruido térmico o anergía. El valor directo florece en conversaciones reales donde cada nodo soberano comparte conocimiento, técnica, código, ciencia y arte puro."
+    sample_text = "Escribir requiere autonomía, interdependencia sin alianzas cruzadas que generen ruido térmico o pérdida de valor directo."
     res_substack = audit_substack(sample_text)
 
     # 10. Fahrenheit Knowledge Distribution Mesh
     fahrenheit_nodes = [
         {
             "node_alias": "Granger_Edge_Node_01",
-            "centralization_ratio": 0.0,
-            "interception_risk": 0.0,
-            "local_persistence": 1.0,
-            "mesh_discovery": 1.0,
+            "centralization_ratio": 0.1,
+            "interception_risk": 0.05,
+            "local_persistence": 0.95,
+            "mesh_discovery": 0.9,
         },
         {
             "node_alias": "Hybrid_Scribe_Node_02",
-            "centralization_ratio": 0.0,
-            "interception_risk": 0.0,
-            "local_persistence": 1.0,
-            "mesh_discovery": 1.0,
+            "centralization_ratio": 0.2,
+            "interception_risk": 0.1,
+            "local_persistence": 0.9,
+            "mesh_discovery": 0.8,
         },
     ]
     res_fahrenheit = audit_fahrenheit(fahrenheit_nodes)
 
     # 11. Nash Equilibrium Game Coherence
     nash_config = {
-        "cooperation_rate": 1.0,
-        "shared_resource_demand": 0.0,
-        "local_cache_hit_rate": 1.0,
+        "cooperation_rate": 0.95,
+        "shared_resource_demand": 0.7,
+        "local_cache_hit_rate": 0.9,
         "uses_compression": True,
-        "protocol_alignment_rate": 1.0,
-        "task_progress_rate": 1.0,
-        "exploration_factor": 1.0,
+        "protocol_alignment_rate": 0.95,
+        "task_progress_rate": 0.9,
+        "exploration_factor": 0.8,
     }
     res_nash = audit_nash(nash_config)
 
@@ -195,12 +193,6 @@ def run_workspace_diagnostic():
         "deprecated_apis_used": 0,
     }
     res_frankenstein = audit_frankenstein(frankenstein_config)
-
-    # 13. Maxwell's Demon Entropy Linter
-    res_maxwell = audit_maxwell()
-
-    # 14. Sintetología Grounding & Friction Linter
-    res_grounding = audit_grounding()
 
     # Collect All Scores
     results = [
@@ -265,16 +257,6 @@ def run_workspace_diagnostic():
             "name": "Frankenstein (Mitosis)",
             "score": res_frankenstein["creation_exergy_pct"],
             "verdict": res_frankenstein["verdict"],
-        },
-        {
-            "name": "Maxwell (Demon Sorting)",
-            "score": res_maxwell["total_exergy"],
-            "verdict": res_maxwell["verdict"],
-        },
-        {
-            "name": "Sintetología (Grounding)",
-            "score": res_grounding["total_alignment_exergy"],
-            "verdict": res_grounding["verdict"],
         },
     ]
 

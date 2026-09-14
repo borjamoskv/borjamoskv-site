@@ -82,8 +82,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     let exergyScore = 100.0;
 
     // Check environment support
-    // Use typeof process check to avoid TypeScript require() errors
-    const isCloudflare = typeof process === 'undefined' || !process.versions || !process.versions.node;
+    const isCloudflare = !('exec' in require('node:child_process') || {});
 
     // 1. AEGIS: Sandbox security audit
     if (command === 'aegis') {
@@ -107,8 +106,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
           } else {
             logs.push(`[AEGIS-WARN] Linter process exited with error code ${result.code}`);
           }
-        } catch (e) {
-          logs.push(`[AEGIS-ERROR] Failed to run python security linter: ${(e as Error).message}`);
+        } catch (e: any) {
+          logs.push(`[AEGIS-ERROR] Failed to run python security linter: ${e.message}`);
         }
       }
     }
@@ -132,8 +131,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
               }
             });
           }
-        } catch (e) {
-          logs.push(`[EIDOLON-ERROR] Failed to run guide linter: ${(e as Error).message}`);
+        } catch (e: any) {
+          logs.push(`[EIDOLON-ERROR] Failed to run guide linter: ${e.message}`);
         }
       }
     }
@@ -159,15 +158,15 @@ export const POST: APIRoute = async ({ request, locals }) => {
       logs.push('[PANDORA] UNLOCKING FORBIDDEN AST GEOMETRIES...');
       logs.push('[PANDORA] INJECTING CONTROLLED CHAOS SIMULATION PATTERNS...');
       
-      let env: { CORTEX_ENTROPY?: { get: (k: string) => Promise<string | null>; put: (k: string, v: string) => Promise<void> } } | null = null;
+      let env: any = null;
       try {
-        env = (locals as any)?.runtime?.env as { CORTEX_ENTROPY?: { get: (k: string) => Promise<string | null>; put: (k: string, v: string) => Promise<void> } };
+        env = locals?.runtime?.env;
       } catch (e) {}
       if (!env) {
         try {
           // @ts-ignore
           const cfWorkers = await import('cloudflare:workers');
-          env = cfWorkers.env as { CORTEX_ENTROPY?: { get: (k: string) => Promise<string | null>; put: (k: string, v: string) => Promise<void> } };
+          env = cfWorkers.env;
         } catch (e) {}
       }
       if (env && env.CORTEX_ENTROPY) {
@@ -204,8 +203,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
             logs.push(`[ALETHEIA] VERIFIED ${file} => HASH: ${sha256.substring(0, 16)}...`);
           }
           logs.push(`[ALETHEIA] Checked ${ledgerFiles.length} ledgers. 100% truth match (C5-REAL).`);
-        } catch (e) {
-          logs.push(`[ALETHEIA-ERROR] Verification failed: ${(e as Error).message}`);
+        } catch (e: any) {
+          logs.push(`[ALETHEIA-ERROR] Verification failed: ${e.message}`);
         }
       }
     }
@@ -228,8 +227,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
               }
             });
           }
-        } catch (e) {
-          logs.push(`[COLMENA-ERROR] Swarm diagnostic failed: ${(e as Error).message}`);
+        } catch (e: any) {
+          logs.push(`[COLMENA-ERROR] Swarm diagnostic failed: ${e.message}`);
         }
       }
     } else {
@@ -244,7 +243,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
       }
     });
 
-  } catch (error) {
-    return new Response(JSON.stringify({ error: (error as Error).message }), { status: 500 });
+  } catch (error: any) {
+    return new Response(JSON.stringify({ error: error.message }), { status: 500 });
   }
 };

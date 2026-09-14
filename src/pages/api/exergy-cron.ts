@@ -1,4 +1,3 @@
-// C5-REAL
 // src/pages/api/exergy-cron.ts
 // Astro API endpoint to orchestrate Substack feed crawling, exergy evaluation, and cryptographic ledger updating.
 
@@ -13,54 +12,41 @@ export const prerender = false;
 
 const handler: APIRoute = async ({ request, locals }) => {
   try {
-    let kv: unknown = null;
-    let db: unknown = null;
-    let mockPort: string | undefined = undefined;
-
-    // @ts-ignore
-    const env = locals?.runtime?.env;
-    if (env) {
-      db = env.CORTEX_DB;
-      kv = env.CORTEX_ENTROPY;
-    }
-
+    let kv: any = null;
     try {
       // @ts-ignore
       const cfWorkers = await import('cloudflare:workers');
-      if (cfWorkers.env) {
-        if (!db) db = cfWorkers.env.CORTEX_DB;
-        if (!kv) kv = cfWorkers.env.CORTEX_ENTROPY;
-        mockPort = cfWorkers.env.MOCK_SERVER_PORT;
-      }
+      kv = cfWorkers.env?.CORTEX_ENTROPY;
     } catch (e) {
       // Not in a cloudflare worker environment
     }
-    if (!mockPort) {
-      mockPort = process.env.MOCK_SERVER_PORT;
+    if (!kv) {
+      try {
+        kv = (locals as any)?.runtime?.env?.CORTEX_ENTROPY;
+      } catch (e) {
+        // Astro v6 throws on locals.runtime
+      }
     }
-    if (!mockPort) {
-      // @ts-ignore
-      mockPort = import.meta.env?.MOCK_SERVER_PORT;
-    }
+    const mockPort = process.env.MOCK_SERVER_PORT;
     const urlObj = new URL(request.url);
     
-    let body: Record<string, unknown> = {};
+    let body: any = {};
     if (request.method === "POST") {
       try {
-        body = await request.clone().json() as Record<string, unknown>;
+        body = await request.clone().json();
       } catch (e) {
         // Body is not JSON or is empty
       }
     }
 
-    const scenario = urlObj.searchParams.get("scenario") || (body.scenario as string | undefined) || "happy-es";
-    const subdomain = urlObj.searchParams.get("subdomain") || (body.subdomain as string | undefined) || "borjamoskv";
+    const scenario = urlObj.searchParams.get("scenario") || body.scenario || "happy-es";
+    const subdomain = urlObj.searchParams.get("subdomain") || body.subdomain || "borjamoskv";
     const forceJson = urlObj.searchParams.get("format") === "json" || 
                       urlObj.searchParams.get("forceJson") === "true" || 
-                      (body.format as string | undefined) === "json" ||
+                      body.format === "json" ||
                       body.forceJson === true;
 
-    const ledgerPath = process.env.LEDGER_PATH || path.resolve(process.cwd(), 'substack_archive/exergy_ledger.jsonl');
+    const ledgerPath = path.resolve(process.cwd(), 'substack_archive/exergy_ledger.jsonl');
 
     // Load existing ledger to find duplicates
     const existingTitles = new Set<string>();
@@ -149,12 +135,9 @@ const handler: APIRoute = async ({ request, locals }) => {
         exergy: audit.exergy_score
       };
 
-      const syncUrl = process.env.TARGET_API_URL ? `${process.env.TARGET_API_URL}/api/exergy-sync` : undefined;
       const ledgerEntry = await appendLedgerEntry(record, {
         ledgerPath,
-        kvNamespace: kv,
-        dbNamespace: db,
-        syncUrl: db ? undefined : syncUrl
+        kvNamespace: kv
       });
 
       newEntriesCount++;
@@ -166,9 +149,7 @@ const handler: APIRoute = async ({ request, locals }) => {
       processed_count: processedCount,
       processed_posts_count: processedCount,
       new_ledger_entries: newEntriesCount,
-      latest_hash: latestHash,
-      ledger_path: ledgerPath,
-      cwd: process.cwd()
+      latest_hash: latestHash
     }), {
       status: 200,
       headers: {
@@ -176,10 +157,10 @@ const handler: APIRoute = async ({ request, locals }) => {
       }
     });
 
-  } catch (error) {
+  } catch (error: any) {
     return new Response(JSON.stringify({
       success: false,
-      error: (error as Error).message
+      error: error.message
     }), {
       status: 500,
       headers: {

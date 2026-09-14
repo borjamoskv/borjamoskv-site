@@ -25,11 +25,8 @@ export interface ExergyAuditRecord {
   metrics: ExergyMetrics;
   smoke_index: number;
   exergy_score: number;
-  exergy?: number;        // Added for test compatibility
   prev_hash: string;
   hash?: string;          // Added during persistence
-  signature?: string;     // Added during cryptographic signature
-  pubkey?: string;        // Added during cryptographic signature
 }
 
 // Spanish Patterns
@@ -95,7 +92,7 @@ export function detectLang(title: string, subtitle?: string, description?: strin
   const esWords = new Set(["de", "la", "en", "el", "que", "los", "un", "una", "con", "para", "por", "del", "y", "como", "mas", "o"]);
   const enWords = new Set(["the", "of", "and", "to", "in", "is", "that", "it", "with", "for", "on", "this", "be", "are", "you", "or"]);
 
-  const words = textLower.match(/\p{L}+/gu) || [];
+  const words = textLower.match(/\b\w+\b/g) || [];
   
   let esCount = 0;
   let enCount = 0;

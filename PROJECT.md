@@ -1,4 +1,4 @@
-# Project: Substack Exergy Evaluator (C5-REAL Grounded)
+# Project: Substack Exergy Evaluator
 
 ## Architecture
 - **Feed Scraper**: Fetches Substack RSS or API archive endpoints (e.g., `https://borjamoskv.substack.com/feed` or `/api/v1/archive`) to discover recent posts. Resolves network retries and handles errors.
@@ -10,12 +10,12 @@
 | # | Name | Scope | Dependencies | Status |
 |---|------|-------|-------------|--------|
 | E1 | E2E Testing Track | Define test architecture, write test cases (Tiers 1-4), and publish `TEST_READY.md`. | None | DONE |
-| I1 | Scraper Module | Build feed extraction logic from Substack feed/API, extracting title, subtitle, and description. | None | DONE |
-| I2 | Exergy Evaluator | Port formula and patterns from `mass_exergy_scanner.py` to TS/JS. | None | DONE |
-| I3 | Cryptographic Ledger | Develop JSONL append-only persistence with SHA-256 chaining and Cloudflare KV support. | None | DONE |
-| I4 | API Route Integration | Integrate scraper, evaluator, and ledger into `src/pages/api/exergy-cron.ts`. | I1, I2, I3 | DONE |
-| I5 | E2E Validation | Verify implementation passes 100% of E2E tests from `TEST_READY.md`. | E1, I4 | DONE |
-| I6 | Adversarial Hardening | Challenger-led Tier 5 test coverage and robustness audit. | I5 | DONE |
+| I1 | Scraper Module | Build feed extraction logic from Substack feed/API, extracting title, subtitle, and description. | None | PLANNED |
+| I2 | Exergy Evaluator | Port formula and patterns from `mass_exergy_scanner.py` to TS/JS. | None | PLANNED |
+| I3 | Cryptographic Ledger | Develop JSONL append-only persistence with SHA-256 chaining and Cloudflare KV support. | None | PLANNED |
+| I4 | API Route Integration | Integrate scraper, evaluator, and ledger into `src/pages/api/exergy-cron.ts`. | I1, I2, I3 | PLANNED |
+| I5 | E2E Validation | Verify implementation passes 100% of E2E tests from `TEST_READY.md`. | E1, I4 | PLANNED |
+| I6 | Adversarial Hardening | Challenger-led Tier 5 test coverage and robustness audit. | I5 | PLANNED |
 
 ## Interface Contracts
 ### Scraper ↔ Evaluator

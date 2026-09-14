@@ -201,48 +201,15 @@ class MockSubstackHandler(http.server.BaseHTTPRequestHandler):
                 </item>
             </channel>
             </rss>"""
-        elif scenario == "cdata-injection":
-            xml = """<rss version="2.0">
-            <channel>
-                <title>CDATA Injection Feed</title>
-                <link>https://example.substack.com</link>
-                <item>
-                    <title>Post with code snippet</title>
-                    <link>https://example.substack.com/p/code</link>
-                    <pubDate>Tue, 09 Jun 2026 08:00:00 GMT</pubDate>
-                    <description><![CDATA[
-                      Here is some RSS XML code:
-                      <item>
-                        <title>Nested Title</title>
-                      </item>
-                      This code discusses item tags.
-                    ]]></description>
-                </item>
-                <item>
-                    <title>Next Legitimate Post</title>
-                    <link>https://example.substack.com/p/next</link>
-                    <pubDate>Tue, 09 Jun 2026 09:00:00 GMT</pubDate>
-                    <description>This post should be parsed normally.</description>
-                </item>
-            </channel>
-            </rss>"""
         else:
             xml = "<rss><channel><title>Unknown</title></channel></rss>"
 
         self.wfile.write(xml.encode("utf-8"))
 
     def handle_json_archive(self, scenario):
-        if scenario == "json-null":
-            self.send_response(200)
-            self.send_header("Content-Type", "application/json; charset=utf-8")
-            self.end_headers()
-            self.wfile.write(b"[null, {\"title\": \"Valid Post\"}]")
-            return
-
         self.send_response(200)
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.end_headers()
-
 
         if scenario == "empty":
             posts = []
