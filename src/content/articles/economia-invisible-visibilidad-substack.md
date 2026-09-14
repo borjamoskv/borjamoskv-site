@@ -3,6 +3,7 @@ title: "La economía invisible de la visibilidad: dentro del cártel de coordina
 description: "Seguimos fingiendo que existe la meritocracia del contenido. Mentira. La viralidad ya no es un mérito, es un fenómeno emergente de la sincronización."
 pubDate: "06 de junio de 2026"
 tags:
+  - \'C5-REAL\'
   - 'Sistemas'
   - 'Economía de la Atención'
   - 'Cárteles Digitales'

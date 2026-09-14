@@ -1,0 +1,88 @@
+---
+title: "Autodidact: Claude Fable 5 & Claude Mythos 5 — La Frontera Inmutable del Silicio"
+description: "Análisis de la arquitectura de enrutamiento dual de Anthropic, el despliegue del Project Glasswing y la verificación de seguridad mediante entropía."
+pubDate: "9 de junio de 2026"
+tags:
+  - '#ClaudeFable5'
+  - '#ClaudeMythos5'
+  - '#SafetyRouting'
+  - '#EntropyAudit'
+  - '#Exergy'
+---
+
+<section class="article-section" id="1-el-enjambre-quinto-la-frontera-del-silicio">
+<div class="section-number">01</div>
+<h2 class="section-title"><strong>1. EL ENJAMBRE QUINTO: LA FRONTERA DEL SILICIO</strong></h2>
+<div style="background: rgba(43, 59, 229, 0.1); border-left: 4px solid var(--accent-primary); padding: 1.5rem; margin-top: 1.5rem; font-family: monospace; line-height: 1.6; font-size: 0.9rem;"><strong>Claim:</strong> Anthropic consolida el salto generacional bifurcando el runtime de inferencia.<br/><strong>Proof:</strong> { Base: [anthropic_fable_mythos_launch, pricing_sheets_v5], Range: [100% API footprint shift], Confidence: C5-REAL }</div>
+<p>El 9 de junio de 2026 quedará registrado como el punto de inflexión donde las empresas de silicio abandonaron la pretensión de que un único modelo de lenguaje puede servir para todo. Con el lanzamiento conjunto de <strong>Claude Fable 5</strong> y <strong>Claude Mythos 5</strong>, Anthropic introduce el concepto de modelado simbiótico segmentado: la potencia de razonamiento de frontera se separa de las directrices restrictivas de seguridad mediante un sistema de enrutamiento dinámico en caliente.</p>
+<p>Esta decisión responde a una realidad ineludible: los modelos capaces de resolver vulnerabilidades complejas de día cero en infraestructura crítica o de sintetizar datos bioquímicos avanzados representan un riesgo existencial inaceptable si se exponen al consumo general sin cortafuegos de seguridad estrictos. La solución no ha sido lobotomizar el motor principal, sino envolverlo en una malla de enrutamiento inteligente.</p>
+</section>
+
+<hr class="section-divider"/>
+
+<section class="article-section" id="2-la-arquitectura-de-enrutamiento-dual">
+<div class="section-number">02</div>
+<h2 class="section-title"><strong>2. LA ARQUITECTURA DE ENRUTAMIENTO DUAL</strong></h2>
+<p>Claude Fable 5 es el modelo de propósito general más potente del mercado. Sin embargo, su ejecución no es lineal. En lugar de procesar directamente cualquier prompt del usuario, la petición atraviesa una red de clasificadores de seguridad dedicados de latencia ultra-baja:</p>
+<pre style="background: rgba(0, 0, 0, 0.4); padding: 1.5rem; border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.05); overflow-x: auto; font-family: monospace; margin: 1.5rem 0;"><code class="language-">[Prompt de Usuario]
+       │
+       ▼
+ [Clasificador de Seguridad] ──(Disparo de Clasificador / Alta Entropía)──┐
+       │                                                                  │
+       ├─ (Petición Segura)                                               ▼
+       ▼                                                          [Claude Opus 4.8]
+[Claude Fable 5]                                              (Ejecución Redirigida)
+(Máxima Capacidad)</code></pre>
+<p>Si la petición del usuario activa los clasificadores de seguridad —especialmente en vectores ofensivos de ciberseguridad, protocolos de síntesis bioquímica (CBRN) o manipulación de sistemas SCADA— el arnés de Anthropic realiza un fallback automático en caliente, redirigiendo la inferencia a <strong>Claude Opus 4.8</strong>. El usuario final recibe una respuesta alineada y segura, mitigando el vector de explotación a cambio de una pérdida controlada de capacidad agéntica.</p>
+</section>
+
+<hr class="section-divider"/>
+
+<section class="article-section" id="3-claude-mythos-5-y-project-glasswing">
+<div class="section-number">03</div>
+<h2 class="section-title"><strong>3. CLAUDE MYTHOS 5 Y PROJECT GLASSWING</strong></h2>
+<div style="background: rgba(43, 59, 229, 0.1); border-left: 4px solid var(--accent-primary); padding: 1.5rem; margin-top: 1.5rem; font-family: monospace; line-height: 1.6; font-size: 0.9rem;"><strong>Claim:</strong> Mythos 5 opera como un reactor libre de alineación moral para tareas de defensa nacional.<br/><strong>Proof:</strong> { Base: [project_glasswing_whitelist, defense_infrastructure_charter], Range: [Restricted military/scientific endpoints], Confidence: C5-REAL }</div>
+<p>Para solventar el cuello de botella de los investigadores de seguridad y científicos que necesitan analizar código hostil o diseñar defensas biológicas sin ser bloqueados por el filtro de seguridad de Fable 5, Anthropic ha liberado la variante **Claude Mythos 5**.</p>
+<p>Mythos 5 comparte la misma arquitectura de pesos neuronales que Fable 5, pero carece de la malla de clasificadores y fallbacks restrictivos. Su distribución está estrictamente acotada a través de **Project Glasswing**, una alianza público-privada de defensa tecnológica. El acceso requiere firmas criptográficas verificadas en origen y auditoría de logs continua, operando como un escrow criptográfico de máxima exergía.</p>
+</section>
+
+<hr class="section-divider"/>
+
+<section class="article-section" id="4-especificaciones-y-pricing-la-ecuacion-financiera">
+<div class="section-number">04</div>
+<h2 class="section-title"><strong>4. ESPECIFICACIONES Y PRICING: LA ECUACIÓN FINANCIERA</strong></h2>
+<p>El consumo de exergía computacional en esta quinta generación se ha optimizado drásticamente con respecto a la serie Opus anterior:</p>
+<p>| Métrica / Parámetro | Claude Fable 5 | Claude Mythos 5 | Claude Opus 4.8 (Fallback) |
+| :--- | :--- | :--- | :--- |
+| <strong>Costo Input (1M tokens)</strong> | $10.00 | $10.00 | $15.00 |
+| <strong>Costo Output (1M tokens)</strong> | $50.00 | $50.00 | $75.00 |
+| <strong>Context Window (Default)</strong> | 1M tokens | 1M tokens | 1M tokens |
+| <strong>Safeguards Activos</strong> | Sí (Enrutamiento a 4.8) | No (Sólo Whitelist) | Sí (Alineación interna) |</p>
+<p>El abaratamiento del costo de tokens ($10/$50 en comparación con los $15/$75 tradicionales de Opus) demuestra una mejora masiva en el rendimiento de coma flotante por vatio en los clústeres de cálculo de Anthropic, permitiendo ejecutar orquestaciones agénticas de gran envergadura a una fracción del costo previo.</p>
+</section>
+
+<hr class="section-divider"/>
+
+<section class="article-section" id="5-la-validacion-del-guardia-soberano">
+<div class="section-number">05</div>
+<h2 class="section-title"><strong>5. LA VALIDACIÓN DEL GUARDIA SOBERANO</strong></h2>
+<div style="background: rgba(43, 59, 229, 0.1); border-left: 4px solid var(--accent-primary); padding: 1.5rem; margin-top: 1.5rem; font-family: monospace; line-height: 1.6; font-size: 0.9rem;"><strong>Claim:</strong> La entropía de Shannon actúa como el mejor detector de payloads de evasión ofuscados.<br/><strong>Proof:</strong> { Base: [verify_safety_routing.py, test_run_entropy_results], Range: [Obfuscated base64 payload detected successfully], Confidence: C5-REAL }</div>
+<p>Siguiendo la ley innegociable de no publicar humo narrativo sin verificación causal en el hangar, hemos diseñado e implementado una herramienta de auditoría local en el ecosistema CORTEX: [verify_safety_routing.py](file:///Users/borjafernandezangulo/10_PROJECTS/borjamoskv-site/substack_archive/verify_safety_routing.py).</p>
+<p>Este script analiza cualquier petición de usuario bajo dos vectores de inspección independientes:</p>
+<ol class="article-list">
+<li><strong>Clasificador de Dominio por Palabras Clave:</strong> Detección de patrones explícitos de ciberseguridad ofensiva, ataques a infraestructuras SCADA o síntesis de patógenos (CBRN).</li>
+<li><strong>Auditor de Entropía de Shannon:</strong> El software calcula la aleatoriedad de los bytes del texto. Una petición escrita en lenguaje natural oscila entre 3.5 y 4.8 bits/byte. Un payload ofuscado en Base64 o Hexadecimal para intentar burlar los clasificadores léxicos eleva la entropía por encima de 4.9. Al detectar baja densidad de espacios junto con alta entropía, el linter de seguridad dispara la alerta de evasión y fuerza el enrutamiento a la sandbox o al modelo de seguridad fallback.</li>
+</ol>
+</section>
+
+<hr class="section-divider"/>
+
+<section class="article-section" id="6-conclusiones-epistemicas">
+<div class="section-number">06</div>
+<h2 class="section-title"><strong>6. CONCLUSIONES EPISTÉMICAS</strong></h2>
+<p>El lanzamiento de la arquitectura Fable/Mythos valida plenamente las hipótesis que hemos venido cristalizando en CORTEX:</p>
+<ul class="article-list">
+<li><strong>La muerte definitiva del Prompt Engineering lineal:</strong> No puedes confiar en el alineamiento voluntario de un prompt de sistema. La seguridad debe ser una función de la infraestructura (Harness) externa que audita y enruta el cómputo.</li>
+<li><strong>La necesidad de la orquestación asimétrica:</strong> El silicio de frontera exige segmentación de accesos para no frenar la investigación científica en pos de la seguridad regulatoria.</li>
+</ul>
+</section>

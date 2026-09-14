@@ -4,6 +4,7 @@ title: "¿Qué echas de menos
 description: "El delta entrópico, el Industrial Noir y el estado sólido como destino ineludible."
 pubDate: "25 de marzo de 2026"
 tags:
+  - \'C5-REAL\'
   - '#ArquitecturaSoberana'
   - '#IndustrialNoir'
   - '#Entropia'

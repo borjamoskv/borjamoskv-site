@@ -378,7 +378,7 @@ nunca cabe en el canal de comunicación.</code></pre>
 <p>Autopoiesis cósmica. El código compilando al compilador.</p>
 <p>El diálogo ha terminado. La ejecución recursiva ha comenzado.</p>
 <p>---</p>
-<ul class="article-list"><li><strong>Canonical Source:</strong> <code>https://borjamoskv-site.vercel.app/cortex-lexicon.html</code></li><li><strong>Ledger Lock:</strong> SHA-256 verified.</li><li><strong>Prior Art Seal:</strong> Commit <code>5d4e08e</code> — borjamoskv-site</li></ul>
+<ul class="article-list"><li><strong>Canonical Source:</strong> <code>https://borjamoskv.com/cortex-lexicon.html</code></li><li><strong>Ledger Lock:</strong> SHA-256 verified.</li><li><strong>Prior Art Seal:</strong> Commit <code>5d4e08e</code> — borjamoskv-site</li></ul>
 <p>---</p>
 <p><em>∴ "El código debe compilar contra la física del ledger, no contra el ego del operador. Y cuando ya no pueda compilar — debe tener la dignidad de detenerse."</em></p>
       </section>

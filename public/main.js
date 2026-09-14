@@ -10,6 +10,26 @@ document.addEventListener('DOMContentLoaded', () => {
   console.log('[REALITY LEVEL: C5-REAL] Verified hardware and environment.');
 
   // System State
+  const playTick = (freqStart, freqEnd, duration) => {
+    // Access audio context if initialized
+    const ctx = window.MOSKV?.audioContext || audioCtx;
+    if (ctx && ctx.state === 'running') {
+      try {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freqStart, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(freqEnd, ctx.currentTime + duration);
+        gain.gain.setValueAtTime(0.012, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + duration);
+      } catch(err){}
+    }
+  };
+
   const state = {
     isPlaying: false,
     currentTrackId: 0,
@@ -169,26 +189,71 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, { passive: true });
 
-  navLinks.forEach(link => {
+  const allHeaderLinks = document.querySelectorAll('.site-nav .nav-link, .site-nav .nav-link-ext');
+  const navUnderline = document.getElementById('nav-underline');
+  const siteNavContainer = document.querySelector('.site-nav');
+
+  const updateUnderline = (target) => {
+    if (!navUnderline || !siteNavContainer) return;
+    const rect = target.getBoundingClientRect();
+    const navRect = siteNavContainer.getBoundingClientRect();
+    navUnderline.style.left = `${rect.left - navRect.left}px`;
+    navUnderline.style.width = `${rect.width}px`;
+    navUnderline.style.opacity = '1';
+  };
+
+  const resetUnderline = () => {
+    if (!navUnderline) return;
+    const activeLink = document.querySelector('.site-nav .nav-link.is-active');
+    if (activeLink) {
+      updateUnderline(activeLink);
+    } else {
+      navUnderline.style.opacity = '0';
+      navUnderline.style.width = '0';
+    }
+  };
+
+  // Initialize underline position on boot
+  setTimeout(resetUnderline, 100);
+
+  window.addEventListener('resize', resetUnderline, { passive: true });
+
+  allHeaderLinks.forEach(link => {
+    link.addEventListener('mouseenter', (e) => {
+      updateUnderline(e.target);
+      // Play soft UI tick feedback if context is running
+      playTick(2200, 800, 0.04);
+    });
+
+    link.addEventListener('mouseleave', () => {
+      resetUnderline();
+    });
+
     link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const targetId = link.getAttribute('href').substring(1);
-      
-      navLinks.forEach(l => l.classList.remove('is-active'));
-      link.classList.add('is-active');
+      // Audio click pop
+      playTick(150, 40, 0.08);
 
-      sections.forEach(section => {
-        if (section.id === targetId) {
-          section.classList.add('active');
-        } else {
-          section.classList.remove('active');
-        }
-      });
+      if (link.classList.contains('nav-link')) {
+        e.preventDefault();
+        const targetId = link.getAttribute('href').substring(1);
+        
+        navLinks.forEach(l => l.classList.remove('is-active'));
+        link.classList.add('is-active');
+        updateUnderline(link);
 
-      // Defer logging to keep click latency low (INP optimization)
-      setTimeout(() => {
-        addTerminalLine('NAV', `Sección activa cambiada a: ${targetId.toUpperCase()}`);
-      }, 0);
+        sections.forEach(section => {
+          if (section.id === targetId) {
+            section.classList.add('active');
+          } else {
+            section.classList.remove('active');
+          }
+        });
+
+        // Defer logging to keep click latency low (INP optimization)
+        setTimeout(() => {
+          addTerminalLine('NAV', `Sección activa cambiada a: ${targetId.toUpperCase()}`);
+        }, 0);
+      }
     });
   });
 
@@ -1036,6 +1101,188 @@ SYSTEM INTEGRITY HASH: ${generateHash(JSON.stringify(state.logs))}
       togglePlayback();
     }
   });
+
+  // ─── BANDCAMP DROPDOWN CONTROLS ───
+  const dropdownToggle = document.querySelector('#bandcamp-dropdown-wrapper .dropdown-toggle');
+  const dropdownWrapper = document.getElementById('bandcamp-dropdown-wrapper');
+  const dropdownSearch = document.getElementById('bandcamp-search');
+  const dropdownItemsList = document.getElementById('bandcamp-items-list');
+  const dropdownCount = document.getElementById('bandcamp-count');
+
+  if (dropdownToggle && dropdownWrapper) {
+
+    const escapeHTML = (str) => {
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    };
+
+    const updateFiltering = () => {
+      if (!dropdownSearch || !dropdownItemsList) return;
+      const query = dropdownSearch.value.toLowerCase().trim();
+      const activeTab = dropdownWrapper.querySelector('.filter-tab.active');
+      const filterType = activeTab ? activeTab.dataset.filter : 'all';
+      
+      let visibleCount = 0;
+      const items = dropdownItemsList.querySelectorAll('.dropdown-item');
+      items.forEach(item => {
+        const titleEl = item.querySelector('.dropdown-item-title');
+        if (!titleEl) return;
+        if (!titleEl.dataset.original) {
+          titleEl.dataset.original = titleEl.textContent;
+        }
+        const originalText = titleEl.dataset.original;
+        const type = item.dataset.type || '';
+        
+        const matchesSearch = originalText.toLowerCase().includes(query);
+        const matchesTab = (filterType === 'all') || (type === filterType);
+        
+        if (matchesSearch && matchesTab) {
+          item.style.display = 'flex';
+          visibleCount++;
+          
+          if (query) {
+            const index = originalText.toLowerCase().indexOf(query);
+            if (index !== -1) {
+              const before = originalText.substring(0, index);
+              const match = originalText.substring(index, index + query.length);
+              const after = originalText.substring(index + query.length);
+              titleEl.innerHTML = `${escapeHTML(before)}<span class="search-highlight">${escapeHTML(match)}</span>${escapeHTML(after)}`;
+            } else {
+              titleEl.textContent = originalText;
+            }
+          } else {
+            titleEl.textContent = originalText;
+          }
+        } else {
+          item.style.display = 'none';
+        }
+      });
+      
+      const noResultsEl = dropdownItemsList.querySelector('.dropdown-no-results');
+      if (noResultsEl) {
+        noResultsEl.style.display = (visibleCount === 0) ? 'block' : 'none';
+      }
+      
+      if (dropdownCount) {
+        dropdownCount.textContent = visibleCount.toString();
+      }
+    };
+
+    dropdownToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isActive = dropdownWrapper.classList.toggle('active');
+      dropdownToggle.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+      if (isActive && dropdownSearch) {
+        dropdownSearch.focus();
+        playTick(800, 1600, 0.1);
+      } else {
+        playTick(1600, 800, 0.08);
+      }
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!dropdownWrapper.contains(e.target)) {
+        if (dropdownWrapper.classList.contains('active')) {
+          playTick(1200, 600, 0.06);
+        }
+        dropdownWrapper.classList.remove('active');
+        dropdownToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    const dropdownMenu = document.getElementById('bandcamp-dropdown-menu');
+    if (dropdownMenu) {
+      dropdownMenu.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+    }
+
+    const getTitleHashFreq = (title) => {
+      let hash = 0;
+      for (let i = 0; i < title.length; i++) {
+        hash = title.charCodeAt(i) + ((hash << 5) - hash);
+      }
+      const pentatonic = [220.00, 261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33, 659.25, 783.99];
+      const index = Math.abs(hash) % pentatonic.length;
+      return pentatonic[index];
+    };
+
+    if (dropdownSearch) {
+      dropdownSearch.addEventListener('input', updateFiltering);
+      dropdownSearch.addEventListener('keydown', (e) => {
+        if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp' && e.key !== 'Escape' && e.key !== 'Enter') {
+          playTick(2400, 1200, 0.03);
+        }
+      });
+    }
+
+    // Keyboard Navigation
+    if (dropdownWrapper && dropdownSearch && dropdownItemsList) {
+      dropdownWrapper.addEventListener('keydown', (e) => {
+        const activeItems = Array.from(dropdownItemsList.querySelectorAll('.dropdown-item'))
+          .filter(item => item.style.display !== 'none');
+        
+        const currentFocus = document.activeElement;
+        
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          if (currentFocus === dropdownSearch) {
+            if (activeItems.length > 0) activeItems[0].focus();
+          } else {
+            const index = activeItems.indexOf(currentFocus);
+            if (index !== -1 && index < activeItems.length - 1) {
+              activeItems[index + 1].focus();
+            }
+          }
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          const index = activeItems.indexOf(currentFocus);
+          if (index !== -1) {
+            if (index === 0) {
+              dropdownSearch.focus();
+            } else {
+              activeItems[index - 1].focus();
+            }
+          }
+        } else if (e.key === 'Escape') {
+          e.preventDefault();
+          dropdownWrapper.classList.remove('active');
+          dropdownToggle.setAttribute('aria-expanded', 'false');
+          dropdownToggle.focus();
+          playTick(1600, 800, 0.08);
+        }
+      });
+    }
+
+    // Tabs controllers
+    const tabs = dropdownWrapper.querySelectorAll('.filter-tab');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', (e) => {
+        e.stopPropagation();
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        playTick(1800, 1000, 0.05);
+        updateFiltering();
+      });
+    });
+
+    // Item hover & focus sound feedback (melodic pentatonic chime)
+    if (dropdownItemsList) {
+      const items = dropdownItemsList.querySelectorAll('.dropdown-item');
+      items.forEach(item => {
+        const playMelodicChime = () => {
+          const freq = getTitleHashFreq(item.dataset.title || '');
+          playTick(freq, freq * 0.98, 0.15);
+        };
+        item.addEventListener('mouseenter', playMelodicChime);
+        item.addEventListener('focus', playMelodicChime);
+      });
+    }
+  }
 
   bootSystem();
   requestAnimationFrame(loop);

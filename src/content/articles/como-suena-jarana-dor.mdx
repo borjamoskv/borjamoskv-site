@@ -4,6 +4,7 @@ title: "Cómo suena Jarana d'Or
 description: "Seis leitmotivs para convertir Jarana d'Or en una gramática sonora clara: párrafo, track y mood."
 pubDate: "27 de marzo de 2026"
 tags:
+  - \'C5-REAL\'
   - '#JaranaDor'
   - '#JARANA'
   - '#TrackMood'
@@ -229,7 +230,7 @@ tags:
         <div class="epilogue-text">
           <p>Jarana d'Or sube de verdad cuando deja de ser intuición privada y se vuelve sistema reconocible. No hace falta domesticar la rareza; hace falta darle una firma legible.</p>
           <p>Esta pieza es esa firma en modo operativo. Un mapa para que el archivo, el diario y el sonido compartan el mismo esqueleto.</p>
-          <p>Si quieres ver cómo esta gramática se despliega en serie, la continuación natural está en el <a href="blog.html" class="nexo-link"><strong>Diario</strong></a> y en el flujo de <a href="https://borjamoskv.substack.com" target="_blank" rel="noopener" class="nexo-link"><strong>Substack</strong></a>.</p>
+          <p>Si quieres ver cómo esta gramática se despliega en serie, la continuación natural está en el <a href="/blog" class="nexo-link"><strong>Diario</strong></a> y en el flujo de <a href="https://borjamoskv.substack.com" target="_blank" rel="noopener" class="nexo-link"><strong>Substack</strong></a>.</p>
         </div>
       </section>
 

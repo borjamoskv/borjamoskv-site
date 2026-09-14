@@ -1,3 +1,6 @@
+---
+import bandcampTracks from '../data/bandcamp_tracks.json';
+---
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -11,6 +14,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet" />
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50,15 L20,80 L80,80 Z' fill='none' stroke='%232B3BE5' stroke-width='8'/></svg>" type="image/svg+xml" />
+    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1614680376593-902f74fa0d41?q=80&w=800&auto=format&fit=crop" />
     <link rel="stylesheet" href="/style.css" />
   </head>
   <body>
@@ -54,12 +58,49 @@
       <nav class="site-nav" aria-label="Navegación Principal">
         <a href="#control-deck" class="nav-link is-active">DECK</a>
         <a href="#discography" class="nav-link">OBRAS</a>
+        
+        <div class="nav-dropdown" id="bandcamp-dropdown-wrapper">
+          <a href="javascript:void(0)" class="nav-link-ext dropdown-toggle">BANDCAMP</a>
+          <div class="dropdown-menu" id="bandcamp-dropdown-menu">
+            <div class="dropdown-search-container">
+              <div style="display: flex; align-items: center; gap: 0.5rem; width: 100%;">
+                <input type="text" class="dropdown-search" id="bandcamp-search" placeholder="FILTRAR LANZAMIENTOS..." autocomplete="off" style="flex-grow: 1;" />
+                <span class="dropdown-count-badge" id="bandcamp-count">{bandcampTracks.length}</span>
+              </div>
+              <div class="dropdown-filter-tabs">
+                <button class="filter-tab active" data-filter="all">ALL</button>
+                <button class="filter-tab" data-filter="album">ALBUMS</button>
+                <button class="filter-tab" data-filter="track">TRACKS</button>
+              </div>
+            </div>
+            <div class="dropdown-items-list grid-layout" id="bandcamp-items-list">
+              <div class="dropdown-no-results" style="display: none;">
+                SIN COINCIDENCIAS / NO RELEASES FOUND
+              </div>
+              {bandcampTracks.map((track, idx) => {
+                const isAlbum = track.href.includes('/album/');
+                return (
+                  <a href={`https://borjamoskv.bandcamp.com${track.href}`} target="_blank" rel="noopener" class="dropdown-item" data-title={track.title.toLowerCase()} data-type={isAlbum ? 'album' : 'track'} style={`--item-idx: ${idx};`}>
+                    <img src={track.img} alt={track.title} class="dropdown-item-img" loading="lazy" />
+                    <div class="dropdown-item-info">
+                      <span class="dropdown-item-title">{track.title}</span>
+                      <span class="dropdown-item-badge">{isAlbum ? 'ALBUM' : 'TRACK'}</span>
+                    </div>
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
         <a href="#stills-gallery" class="nav-link">GALERÍA</a>
         <a href="/ghostface" class="nav-link-ext" style="color: #2B3BE5;">GHOSTFACE</a>
         <a href="/blog" class="nav-link-ext">DIARIO</a>
         <a href="/gurus" class="nav-link-ext">GURÚS</a>
         <a href="/benchmark-humo" class="nav-link-ext">BENCHMARK</a>
         <a href="/blog/gon-intervalo" class="nav-link-ext">GON</a>
+        <!-- Sliding Underline -->
+        <div class="nav-underline" id="nav-underline"></div>
       </nav>
       <div class="system-status">
         <span class="status-indicator"></span>
@@ -136,7 +177,7 @@
                 
                 <!-- Vinyl Sleeve / Jacket Mockup -->
                 <div class="vinyl-sleeve" id="vinyl-sleeve">
-                  <img src="https://images.unsplash.com/photo-1614680376593-902f74fa0d41?q=80&w=800&auto=format&fit=crop" alt="Album Cover" id="sleeve-cover" />
+                  <img src="https://images.unsplash.com/photo-1614680376593-902f74fa0d41?q=80&w=800&auto=format&fit=crop" alt="Album Cover" id="sleeve-cover" fetchpriority="high" decoding="sync" />
                   <div class="sleeve-glow"></div>
                 </div>
 
@@ -251,7 +292,7 @@
             <!-- Track Card 2 -->
             <div class="track-card" data-track-id="1" data-src="/media/videos/bizarro-loop.mp4" data-title="HIPOTENUSAS ILEGALES" data-desc="Geometría torcida, pulso seco y borde urbano del puerto de Bilbao." data-cover="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=800&auto=format&fit=crop">
               <div class="card-cover">
-                <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=800&auto=format&fit=crop" alt="Hipotenusas Ilegales" />
+                <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=800&auto=format&fit=crop" alt="Hipotenusas Ilegales" loading="lazy" decoding="async" />
                 <div class="cover-overlay">
                   <div class="play-icon">
                     <svg viewBox="0 0 24 24" width="32" height="32"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
@@ -270,7 +311,7 @@
             <!-- Track Card 3 -->
             <div class="track-card" data-track-id="2" data-src="/media/videos/hortaliza-deep.mp4" data-title="PATADAS" data-desc="Ritmo físico descarnado, gesto corto y energía frontal analógica." data-cover="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=800&auto=format&fit=crop">
               <div class="card-cover">
-                <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=800&auto=format&fit=crop" alt="Patadas" />
+                <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=800&auto=format&fit=crop" alt="Patadas" loading="lazy" decoding="async" />
                 <div class="cover-overlay">
                   <div class="play-icon">
                     <svg viewBox="0 0 24 24" width="32" height="32"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
@@ -289,7 +330,7 @@
             <!-- Track Card 4 -->
             <div class="track-card" data-track-id="3" data-src="/media/no-sleep-in-my-city.mp4" data-title="COHERENCIA RARA 42" data-desc="Electrónica de ángulo extraño: repetición matemática y tensión sostenida." data-cover="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=800&auto=format&fit=crop">
               <div class="card-cover">
-                <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=800&auto=format&fit=crop" alt="Coherencia Rara 42" />
+                <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=800&auto=format&fit=crop" alt="Coherencia Rara 42" loading="lazy" decoding="async" />
                 <div class="cover-overlay">
                   <div class="play-icon">
                     <svg viewBox="0 0 24 24" width="32" height="32"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
@@ -308,6 +349,20 @@
         </div>
       </section>
 
+      <!-- Section: Invariante -->
+      <section class="workspace-section" id="manifiesto" aria-label="Invariante Estructural">
+        <div class="section-container" style="max-width: 800px; margin: 0 auto; margin-bottom: 6rem;">
+          <div class="section-header">
+            <h2>INVARIANTE ESTRUCTURAL</h2>
+          </div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; line-height: 1.8; color: var(--color-parchment); opacity: 0.8; display: flex; flex-direction: column; gap: 1rem; border-left: 2px solid var(--color-yinmn); padding-left: 1.5rem; text-transform: uppercase;">
+            <p>[01] EJECUCIÓN CONTINUA. EL CÓDIGO SUSTITUYE LA NARRATIVA.</p>
+            <p>[02] COLISIÓN DETERMINISTA DE SONIDO, DISEÑO Y LÓGICA.</p>
+            <p>[03] PERSISTENCIA FÍSICA. COMPRESIÓN TERMODINÁMICA. CERO ANERGÍA.</p>
+          </div>
+        </div>
+      </section>
+
       <!-- Section 3: Premium Stills / Interactive Collage -->
       <section class="workspace-section" id="stills-gallery" aria-label="Galería de Fotogramas">
         <div class="section-container">
@@ -319,7 +374,7 @@
           <div class="gallery-grid">
             <!-- Still Item 1 -->
             <div class="gallery-item" data-src="https://images.unsplash.com/photo-1539683255143-73a6b838b106?q=80&w=800&auto=format&fit=crop">
-              <img src="https://images.unsplash.com/photo-1539683255143-73a6b838b106?q=80&w=800&auto=format&fit=crop" alt="Estética Industrial Noir" />
+              <img src="https://images.unsplash.com/photo-1539683255143-73a6b838b106?q=80&w=800&auto=format&fit=crop" alt="Estética Industrial Noir" loading="lazy" decoding="async" />
               <div class="item-overlay">
                 <div class="item-meta">
                   <span class="item-hash">SHA256: 0x93f6c5...</span>
@@ -330,7 +385,7 @@
             
             <!-- Still Item 2 -->
             <div class="gallery-item" data-src="https://images.unsplash.com/photo-1518609878373-06d740f60d8b?q=80&w=800&auto=format&fit=crop">
-              <img src="https://images.unsplash.com/photo-1518609878373-06d740f60d8b?q=80&w=800&auto=format&fit=crop" alt="Estética Synth" />
+              <img src="https://images.unsplash.com/photo-1518609878373-06d740f60d8b?q=80&w=800&auto=format&fit=crop" alt="Estética Synth" loading="lazy" decoding="async" />
               <div class="item-overlay">
                 <div class="item-meta">
                   <span class="item-hash">SHA256: 0xe3b0c4...</span>
@@ -341,7 +396,7 @@
 
             <!-- Still Item 3 -->
             <div class="gallery-item" data-src="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=800&auto=format&fit=crop">
-              <img src="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=800&auto=format&fit=crop" alt="Geometría puerto" />
+              <img src="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=800&auto=format&fit=crop" alt="Geometría puerto" loading="lazy" decoding="async" />
               <div class="item-overlay">
                 <div class="item-meta">
                   <span class="item-hash">SHA256: 0x8f4b1d...</span>
@@ -352,7 +407,7 @@
 
             <!-- Still Item 4 -->
             <div class="gallery-item" data-src="https://images.unsplash.com/photo-1516280440614-37939bbacd6a?q=80&w=800&auto=format&fit=crop">
-              <img src="https://images.unsplash.com/photo-1516280440614-37939bbacd6a?q=80&w=800&auto=format&fit=crop" alt="Micrófono y oscilador" />
+              <img src="https://images.unsplash.com/photo-1516280440614-37939bbacd6a?q=80&w=800&auto=format&fit=crop" alt="Micrófono y oscilador" loading="lazy" decoding="async" />
               <div class="item-overlay">
                 <div class="item-meta">
                   <span class="item-hash">SHA256: 0x7c9c0f...</span>

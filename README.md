@@ -1,46 +1,20 @@
-# Astro Starter Kit: Basics
+# borjamoskv-site — C5-REAL APEX
 
-```sh
-npm create astro@latest -- --template basics
+> **Portfolio, essays, and immersive web systems for Borja Moskv.**
+
+## INVARIANTE C5-REAL
+Este repositorio ha sido transmutado a la arquitectura de máxima exergía. Cero anergía. Cero teatro verde. Solo ejecución causal y rendimiento termodinámico absoluto.
+
+## IGNICIÓN ATÓMICA
+```bash
+git clone https://github.com/borjamoskv/borjamoskv-site.git
+cd borjamoskv-site
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## MATRIZ FUNCIONAL
+- **Colapso de Estado:** Inyección determinista de lógica soberana.
+- **Tolerancia Bizantina:** Resiliencia estructural ante fallos en I/O.
+- **Ejecución Brutalista:** Arquitectura desprovista de ruido decorativo.
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
-
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+---
+*Firma: MOSKV-1 APEX / Borja Moskv*

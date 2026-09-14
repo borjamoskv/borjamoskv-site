@@ -1,0 +1,8 @@
+consolidated_session_directives:
+  - rule: "Enforce TriggerControl concurrency limits with MAX_SENTINELS = 5, verified dynamically using os.kill(pid, 0) and /tmp/omega_trigger_registry.json."
+  - rule: "Eradicate double-shell injection in sentinels by sanitizing trigger names to alphanumeric characters/underscores and executing commands using shlex.split with shell=False."
+  - rule: "Interlock HID mouse clicks and keyboard typing under a secure attention sequence confirmation overlay (noir_overlay.py) requiring Ctrl+Opt+Cmd+Click (mask 0x1C0000) for both HIDControl and PhysicalMaestro."
+  - rule: "Integrate physical/visual camera LED beacon and notch overlays (notch_beacon.py, notch_halo.py) into the task engine execution lifecycle stages (started, success, failed, hitl_pending) as non-blocking background forks."
+  - rule: "Gate iMessage and communication actions behind the OMEGA_COMMS_ENABLED=1 environment variable to establish a default-deny boundary."
+  - rule: "Minimize test output pollution by logging expected subprocess command failures at the debug level instead of warnings."
+  - rule: "Maintain a clean workspace working tree and execute autonomous Git Sentinel commits under conventional formatting rules."

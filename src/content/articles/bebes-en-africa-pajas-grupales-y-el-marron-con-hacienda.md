@@ -3,6 +3,7 @@ title: "Bebés en África, pajas grupalesy el marrón con Hacienda"
 description: "Autopsia estructural de la Substack Mafia, el circuito cerrado de recirculación de prestigio de David Domínguez y la opacidad fiscal de su campaña iHelp."
 pubDate: "31 de mayo de 2026"
 tags:
+  - \'C5-REAL\'
   - '#SubstackMafia'
   - '#TaxLegality'
   - '#Ethics'

@@ -21,8 +21,8 @@ async function runLocalCommand(command: string, cwd: string): Promise<{ stdout: 
       const util = await import('util');
       const exec = util.promisify(cp.exec);
       return await exec(command, { cwd });
-    } catch (e: any) {
-      return { stdout: '', stderr: `Failed to execute command: ${e.message}` };
+    } catch (e) {
+      return { stdout: '', stderr: `Failed to execute command: ${(e as Error).message}` };
     }
   }
   return { stdout: '', stderr: 'Execution not supported in this environment' };
@@ -90,7 +90,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
           const url = new URL('/cortex_diagnostic.json', request.url);
           const res = await fetch(url.toString());
           if (res.ok) {
-            const data = await res.json() as any;
+            const data = await res.json() as { timestamp: string; average_score: number; verdict: string; results?: { name: string; score: number; verdict: string }[] };
             let mdTable = `### CORTEX PRE-COMPILED DIAGNOSTICS (PRODUCTION)\n\n`;
             mdTable += `**Timestamp**: ${data.timestamp}\n`;
             mdTable += `**Average Score**: ${data.average_score}%\n`;
@@ -105,9 +105,9 @@ export const POST: APIRoute = async ({ request, locals }) => {
               headers: { 'Content-Type': 'application/json' }
             });
           }
-        } catch (e: any) {
+        } catch (e) {
           return new Response(JSON.stringify({
-            response: `[ERR_AUDIT_FALLBACK]: Failed to retrieve pre-compiled diagnostics: ${e.message}`
+            response: `[ERR_AUDIT_FALLBACK]: Failed to retrieve pre-compiled diagnostics: ${(e as Error).message}`
           }), { status: 200, headers: { 'Content-Type': 'application/json' } });
         }
         return new Response(JSON.stringify({
@@ -173,8 +173,8 @@ ${ledgerContent.replace(/^>.*$/m, '') /* strip ledger metadata header */}
             await runLocalCommand(`git commit -m "feat(cortex): distribute ${ledgerName} ledger"`, workspaceRoot);
             gitMessage += `[+] Staged, validated, and committed via Git Sentinel.\n`;
           }
-        } catch (gitErr: any) {
-          gitMessage += `[!] Git Sync error: ${gitErr.message}\n`;
+        } catch (gitErr) {
+          gitMessage += `[!] Git Sync error: ${(gitErr as Error).message}\n`;
         }
 
         return new Response(JSON.stringify({
@@ -193,15 +193,15 @@ ${ledgerContent.replace(/^>.*$/m, '') /* strip ledger metadata header */}
     let llmResponseText = '';
     let usedFallback = false;
 
-    let env: any = null;
+    let env: { AI?: { run: (model: string, input: unknown) => Promise<{ response: string }> } } | null = null;
     try {
-      env = locals?.runtime?.env;
+      env = locals?.runtime?.env as { AI?: { run: (model: string, input: unknown) => Promise<{ response: string }> } };
     } catch (e) {}
     if (!env) {
       try {
         // @ts-ignore
         const cfWorkers = await import('cloudflare:workers');
-        env = cfWorkers.env;
+        env = cfWorkers.env as { AI?: { run: (model: string, input: unknown) => Promise<{ response: string }> } };
       } catch (e) {}
     }
     if (env && env.AI) {
@@ -213,7 +213,7 @@ ${ledgerContent.replace(/^>.*$/m, '') /* strip ledger metadata header */}
           ]
         });
         llmResponseText = response.response;
-      } catch (err: any) {
+      } catch (err) {
         console.warn('Cloudflare Workers AI failed, trying local Ollama...', err);
         usedFallback = true;
       }
@@ -224,9 +224,9 @@ ${ledgerContent.replace(/^>.*$/m, '') /* strip ledger metadata header */}
     if (usedFallback) {
       try {
         const listRes = await fetch('http://127.0.0.1:11434/api/tags');
-        const listData = (await listRes.json()) as any;
-        const availableModels = listData.models?.map((m: any) => m.name) || [];
-
+        const listData = (await listRes.json()) as { models?: { name: string }[] };
+        const availableModels = listData.models?.map((m) => m.name) || [];
+        
         const preferredModels = [
           'cortex-8b-solver-pro:latest',
           'cortex-8b-solver:latest',
@@ -262,9 +262,9 @@ ${ledgerContent.replace(/^>.*$/m, '') /* strip ledger metadata header */}
           throw new Error(`Ollama returned status ${ollamaRes.status}`);
         }
 
-        const ollamaData = (await ollamaRes.json()) as any;
+        const ollamaData = (await ollamaRes.json()) as { message?: { content?: string } };
         llmResponseText = ollamaData.message?.content || '';
-      } catch (ollamaErr: any) {
+      } catch (ollamaErr) {
         console.error('Local Ollama fallback error:', ollamaErr);
         llmResponseText = `[ERR_NO_INFERENCE]: COLAPSO COMPLETO DEL EDGE. CLOUDFLARE AI INACCESIBLE Y OLLAMA LOCAL CAÍDO. CORTANTE TÉRMICO ACTIVO.`;
       }
@@ -277,10 +277,10 @@ ${ledgerContent.replace(/^>.*$/m, '') /* strip ledger metadata header */}
       }
     });
 
-  } catch (error: any) {
+  } catch (error) {
     console.error('Agent API Error:', error);
     return new Response(JSON.stringify({ 
-      response: `[FATAL EXCEPTION]: COLAPSO EN LA SÍNTESIS DEL LLM. DETALLES: ${error.message}` 
+      response: `[FATAL EXCEPTION]: COLAPSO EN LA SÍNTESIS DEL LLM. DETALLES: ${(error as Error).message}` 
     }), { status: 200 });
   }
 };

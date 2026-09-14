@@ -1,4 +1,6 @@
 {
-  "buildCommand": "astro build",
-  "framework": "astro"
+  "github": {
+    "silent": true,
+    "enabled": false
+  }
 }

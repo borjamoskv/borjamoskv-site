@@ -3,6 +3,7 @@ title: "La Auditoría Innegociable: El Lloriqueo del Músico Moderno"
 description: "Cuando hacer música deja de ser un privilegio caro, el verdadero pánico no es la tecnología. Es que tu mediocridad queda al descubierto."
 pubDate: "06 de junio de 2026"
 tags:
+  - \'C5-REAL\'
   - 'Música'
   - 'IA'
   - 'Autopsia Cultural'

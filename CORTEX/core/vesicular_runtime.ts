@@ -9,7 +9,7 @@
 
 export interface ContextPayload {
   sessionId: string;
-  transientState: Record<string, any>;
+  transientState: Record<string, unknown>;
   instruction: string;
 }
 
@@ -20,7 +20,7 @@ export interface EscrowCredentials {
 
 export interface AgentResponse {
   action: string;
-  output: any;
+  output: unknown;
   cryptographicSignature: string;
 }
 
@@ -82,12 +82,12 @@ export class VesicularRuntime {
    * Cross-docking execution: Context is routed directly into the vesicle
    * and results are routed out, with no state stored inside the agent.
    */
-  public async routeExecution(agent: AgentVesicle, context: ContextPayload): Promise<any> {
-    console.log(`[CORTEX-RUNTIME] Routing context to Vesicle ${agent.id}...`);
+  public async routeExecution(agent: AgentVesicle, context: ContextPayload): Promise<unknown> {
+    console.info(`[CORTEX-RUNTIME] Routing context to Vesicle ${agent.id}...`);
     
     // 1. Agent processes pure context
     const response = agent.execute(context);
-    console.log(`[CORTEX-RUNTIME] Vesicle yielded action: ${response.action}`);
+    console.info(`[CORTEX-RUNTIME] Vesicle yielded action: ${response.action}`);
 
     // 2. Escrow verifies and injects credentials (Trustless)
     const injectedCreds = this.escrow.verifyAndInject(agent.id, response.action, response.cryptographicSignature);
@@ -97,7 +97,7 @@ export class VesicularRuntime {
     }
 
     // 3. Execution finalized within the environment
-    console.log(`[CORTEX-RUNTIME] Escrow Approved. Executing with injected credentials...`);
+    console.info(`[CORTEX-RUNTIME] Escrow Approved. Executing with injected credentials...`);
     
     return {
       status: "C5-REAL_SUCCESS",
@@ -126,6 +126,6 @@ if (import.meta.main || process.argv[1] === new URL(import.meta.url).pathname) {
   };
 
   runtime.routeExecution(workerAgent, payload)
-    .then(res => console.log(JSON.stringify(res, null, 2)))
+    .then(res => console.info(JSON.stringify(res, null, 2)))
     .catch(err => console.error(err));
 }

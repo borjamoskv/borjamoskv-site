@@ -3,6 +3,7 @@ title: "La economía invisible de la sincronización en Substack"
 description: "Substack no democratizó la publicación. La convirtió en un problema de sincronización."
 pubDate: "06 de junio de 2026"
 tags:
+  - \'C5-REAL\'
   - 'Sistemas'
   - 'Economía de la Atención'
   - 'Cárteles Digitales'

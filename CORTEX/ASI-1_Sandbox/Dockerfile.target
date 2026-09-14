@@ -1,0 +1,9 @@
+FROM python:3.11-alpine
+
+WORKDIR /app
+
+COPY target_server.py .
+
+EXPOSE 9090
+
+CMD ["python", "target_server.py"]
