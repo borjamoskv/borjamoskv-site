@@ -12,6 +12,14 @@ export class AudioEngine {
   private tapeFilter: BiquadFilterNode | null = null;
   private tapeShaper: WaveShaperNode | null = null;
   private masterGain: GainNode | null = null;
+
+  // Wow & Flutter analog modulation nodes
+  private wowDelay: DelayNode | null = null;
+  private wowOsc: OscillatorNode | null = null;
+  private flutterOsc: OscillatorNode | null = null;
+  private wowGain: GainNode | null = null;
+  private flutterGain: GainNode | null = null;
+  private isWowFlutter: boolean = true;
   
   // Generative synth fallback for items without explicit audio files
   private synthOscA: OscillatorNode | null = null;
@@ -66,6 +74,29 @@ export class AudioEngine {
     this.tapeFilter.frequency.value = 16500;
     this.tapeFilter.Q.value = 0.707;
 
+    // Wow & Flutter delay line
+    this.wowDelay = this.ctx.createDelay(0.05);
+    this.wowDelay.delayTime.value = 0.005;
+
+    // Wow LFO (0.45 Hz) & Flutter LFO (4.8 Hz)
+    this.wowOsc = this.ctx.createOscillator();
+    this.wowOsc.frequency.value = 0.45;
+    this.wowGain = this.ctx.createGain();
+    this.wowGain.gain.value = this.isWowFlutter ? 0.0007 : 0.00001;
+
+    this.flutterOsc = this.ctx.createOscillator();
+    this.flutterOsc.frequency.value = 4.8;
+    this.flutterGain = this.ctx.createGain();
+    this.flutterGain.gain.value = this.isWowFlutter ? 0.00025 : 0.00001;
+
+    this.wowOsc.connect(this.wowGain);
+    this.flutterOsc.connect(this.flutterGain);
+    this.wowGain.connect(this.wowDelay.delayTime);
+    this.flutterGain.connect(this.wowDelay.delayTime);
+
+    this.wowOsc.start();
+    this.flutterOsc.start();
+
     // Harmonic wave shaper for tape saturation
     this.tapeShaper = this.ctx.createWaveShaper();
     this.updateShaperCurve(this.isSaturated);
@@ -80,9 +111,10 @@ export class AudioEngine {
     this.masterGain.gain.value = 0.85;
 
     // Connect audio element graph:
-    // audioEl -> sourceNode -> tapeFilter -> tapeShaper -> analyser -> masterGain -> destination
+    // audioEl -> sourceNode -> tapeFilter -> wowDelay -> tapeShaper -> analyser -> masterGain -> destination
     this.sourceNode.connect(this.tapeFilter);
-    this.tapeFilter.connect(this.tapeShaper);
+    this.tapeFilter.connect(this.wowDelay);
+    this.wowDelay.connect(this.tapeShaper);
     this.tapeShaper.connect(this.analyser);
     this.analyser.connect(this.masterGain);
     this.masterGain.connect(this.ctx.destination);
@@ -180,6 +212,18 @@ export class AudioEngine {
 
   public getSaturation(): boolean {
     return this.isSaturated;
+  }
+
+  public setWowFlutter(enabled: boolean) {
+    this.isWowFlutter = enabled;
+    if (this.wowGain && this.flutterGain) {
+      this.wowGain.gain.value = enabled ? 0.0007 : 0.000001;
+      this.flutterGain.gain.value = enabled ? 0.00025 : 0.000001;
+    }
+  }
+
+  public getWowFlutter(): boolean {
+    return this.isWowFlutter;
   }
 
   public getPlaybackState(): { isPlaying: boolean; currentTime: number; duration: number } {

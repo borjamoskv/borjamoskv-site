@@ -6,15 +6,21 @@ export class EditorialView {
   private reelPlayer: ReelPlayer;
   private currentWorkIndex: number = 0;
   private onWorkChange: (work: WorkItem) => void;
+  private onOpenBook?: (url: string) => void;
+  private onOpenLightbox?: (imgUrl: string, title: string, meta: string) => void;
 
   constructor(
     container: HTMLElement,
     reelPlayer: ReelPlayer,
-    onWorkChange: (work: WorkItem) => void
+    onWorkChange: (work: WorkItem) => void,
+    onOpenBook?: (url: string) => void,
+    onOpenLightbox?: (imgUrl: string, title: string, meta: string) => void
   ) {
     this.container = container;
     this.reelPlayer = reelPlayer;
     this.onWorkChange = onWorkChange;
+    this.onOpenBook = onOpenBook;
+    this.onOpenLightbox = onOpenLightbox;
 
     this.render();
   }
@@ -97,13 +103,16 @@ export class EditorialView {
               ${work.essay.map((p) => `<p class="text-neutral-300/90">${p}</p>`).join('')}
             </div>
 
-            <!-- Action Links: PDF Download / Bandcamp Store -->
+            <!-- Action Links: Read Online / PDF Download / Bandcamp Store -->
             <div class="flex flex-wrap items-center gap-3 pt-2">
               ${
                 work.documentUrl
                   ? `
-                <a href="${work.documentUrl}" download="ciencia_friccion_libro.pdf" class="inline-flex items-center gap-2 px-4 py-2.5 bg-amber-500 hover:bg-amber-400 text-black font-bold font-mono text-xs uppercase tracking-widest rounded shadow transition-all hover:scale-[1.01]">
-                  <span>⬇ DOWNLOAD COMPLETE TREATISE [PDF // 3.5 MB]</span>
+                <button id="btn-read-online" class="inline-flex items-center gap-2 px-4 py-2.5 bg-amber-500 hover:bg-amber-400 text-black font-bold font-mono text-xs uppercase tracking-widest rounded shadow transition-all hover:scale-[1.01]">
+                  <span>📖 READ ONLINE [INLINE PDF]</span>
+                </button>
+                <a href="${work.documentUrl}" download="ciencia_friccion_libro.pdf" class="inline-flex items-center gap-2 px-4 py-2.5 bg-neutral-900 hover:bg-neutral-800 text-neutral-300 font-bold font-mono text-xs uppercase tracking-widest rounded border border-neutral-700 shadow transition-all hover:scale-[1.01]">
+                  <span>⬇ DOWNLOAD PDF [3.5 MB]</span>
                 </a>
               `
                   : ''
@@ -157,11 +166,11 @@ export class EditorialView {
 
         </div>
 
-        <!-- RIGHT COLUMN: FULL-BLEED CINEMATIC ARTWORK (Cols 7-12) -->
+        <!-- RIGHT COLUMN: 5:4 CINEMATIC ARTWORK FRAME (Cols 7-12) -->
         <div class="lg:col-span-6 relative min-h-[450px] lg:min-h-full bg-neutral-950 overflow-hidden flex items-center justify-center p-4 sm:p-8">
           
-          <!-- Background image container with optical grain and framing marks -->
-          <div class="relative w-full h-full max-h-[85vh] flex items-center justify-center group">
+          <!-- Background container with optical reticles -->
+          <div class="relative w-full h-full max-h-[85vh] flex items-center justify-center">
             
             <!-- Registration / Reticle Marks (+) at 4 corners -->
             <span class="absolute top-2 left-2 text-neutral-600 font-mono text-sm select-none z-10">+</span>
@@ -169,16 +178,26 @@ export class EditorialView {
             <span class="absolute bottom-2 left-2 text-neutral-600 font-mono text-sm select-none z-10">+</span>
             <span class="absolute bottom-2 right-2 text-neutral-600 font-mono text-sm select-none z-10">+</span>
 
-            <!-- Main High-Contrast Artwork -->
-            <div class="relative overflow-hidden rounded border border-neutral-800/90 shadow-2xl max-w-full max-h-full">
+            <!-- Main 5:4 Aspect Ratio Frame (1350x1080 standard) -->
+            <div id="artwork-frame" class="relative overflow-hidden rounded border border-neutral-800/90 shadow-2xl w-full max-w-[620px] aspect-[5/4] bg-black cursor-zoom-in group/img" title="Click to open full-screen lightbox">
               <img 
                 src="${work.imageUrl}" 
                 alt="${work.title}" 
-                class="w-full h-full object-cover max-h-[75vh] filter contrast-110 saturate-[0.85] transition-transform duration-700 group-hover:scale-[1.02]"
+                class="w-full h-full object-cover filter contrast-110 saturate-[0.85] transition-transform duration-700 group-hover/img:scale-[1.03]"
               />
               
               <!-- Subtle vignette overlay -->
-              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 pointer-events-none"></div>
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none"></div>
+
+              <!-- Top-Left 5:4 Cinematic Badge -->
+              <div class="absolute top-4 left-4 z-10 font-mono text-[9px] text-amber-400/90 bg-black/80 backdrop-blur-md px-2.5 py-1 rounded border border-amber-500/30 uppercase tracking-widest">
+                ASPECT RATIO 5:4
+              </div>
+
+              <!-- Top-right discipline pill -->
+              <div class="absolute top-4 right-4 z-10 font-mono text-[10px] text-neutral-200 bg-black/80 backdrop-blur-md px-2.5 py-1 rounded border border-neutral-700/70 uppercase tracking-widest">
+                ${work.section}
+              </div>
 
               <!-- Metadata Badge at bottom left -->
               <div class="absolute bottom-4 left-4 z-10 font-mono text-[11px] text-neutral-300 bg-black/80 backdrop-blur-md px-3 py-1.5 rounded border border-neutral-700/70">
@@ -187,9 +206,9 @@ export class EditorialView {
                 <span class="text-neutral-400">${work.year}</span>
               </div>
 
-              <!-- Top-right discipline pill -->
-              <div class="absolute top-4 right-4 z-10 font-mono text-[10px] text-neutral-200 bg-black/80 backdrop-blur-md px-2.5 py-1 rounded border border-neutral-700/70 uppercase tracking-widest">
-                ${work.section}
+              <!-- Bottom-right zoom icon cue -->
+              <div class="absolute bottom-4 right-4 z-10 font-mono text-[10px] text-neutral-400 bg-black/80 backdrop-blur-md px-2 py-1 rounded border border-neutral-800 group-hover/img:text-amber-400 transition-colors">
+                [ZOOM ⊕]
               </div>
             </div>
 
@@ -209,5 +228,19 @@ export class EditorialView {
     // Attach Prev/Next events
     this.container.querySelector('#btn-prev-work')?.addEventListener('click', () => this.prevWork());
     this.container.querySelector('#btn-next-work')?.addEventListener('click', () => this.nextWork());
+
+    // Attach Read Online Book event
+    this.container.querySelector('#btn-read-online')?.addEventListener('click', () => {
+      if (this.onOpenBook && work.documentUrl) {
+        this.onOpenBook(work.documentUrl);
+      }
+    });
+
+    // Attach Lightbox event
+    this.container.querySelector('#artwork-frame')?.addEventListener('click', () => {
+      if (this.onOpenLightbox) {
+        this.onOpenLightbox(work.imageUrl, work.title, `${work.catalogNumber} // ${work.section} // ${work.year}`);
+      }
+    });
   }
 }

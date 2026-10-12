@@ -24,6 +24,7 @@ export class ReelPlayer {
   private playBtn!: HTMLButtonElement;
   private timeDisplay!: HTMLElement;
   private satBtn!: HTMLButtonElement;
+  private wowBtn!: HTMLButtonElement;
   private progressSlider!: HTMLInputElement;
 
   constructor(container: HTMLElement, audioEngine: AudioEngine) {
@@ -134,7 +135,18 @@ export class ReelPlayer {
       this.updateSatBtnText();
     };
 
+    this.wowBtn = document.createElement('button');
+    this.wowBtn.className = 'px-2.5 py-1.5 bg-amber-500/10 text-amber-400 text-xs rounded border border-amber-500/50 uppercase tracking-widest font-mono text-[10px] transition-colors';
+    this.wowBtn.textContent = 'WOW/FLUTTER: [ON]';
+    this.wowBtn.title = 'Toggle analog tape wow and flutter speed variation';
+    this.wowBtn.onclick = () => {
+      const cur = this.audioEngine.getWowFlutter();
+      this.audioEngine.setWowFlutter(!cur);
+      this.updateWowBtnText();
+    };
+
     rightButtons.appendChild(this.satBtn);
+    rightButtons.appendChild(this.wowBtn);
 
     buttonsWrap.appendChild(leftButtons);
     buttonsWrap.appendChild(rightButtons);
@@ -154,6 +166,16 @@ export class ReelPlayer {
       this.satBtn.className = 'px-3 py-1.5 bg-amber-500/10 text-amber-400 text-xs rounded border border-amber-500/50 uppercase tracking-widest font-mono text-[10px]';
     } else {
       this.satBtn.className = 'px-3 py-1.5 bg-neutral-900 text-neutral-400 text-xs rounded border border-neutral-700 uppercase tracking-widest font-mono text-[10px]';
+    }
+  }
+
+  private updateWowBtnText() {
+    const isW = this.audioEngine.getWowFlutter();
+    this.wowBtn.textContent = `WOW/FLUTTER: [${isW ? 'ON' : 'OFF'}]`;
+    if (isW) {
+      this.wowBtn.className = 'px-2.5 py-1.5 bg-amber-500/10 text-amber-400 text-xs rounded border border-amber-500/50 uppercase tracking-widest font-mono text-[10px]';
+    } else {
+      this.wowBtn.className = 'px-2.5 py-1.5 bg-neutral-900 text-neutral-400 text-xs rounded border border-neutral-700 uppercase tracking-widest font-mono text-[10px]';
     }
   }
 
@@ -388,6 +410,17 @@ export class ReelPlayer {
     this.ctx.strokeStyle = 'rgba(210, 210, 210, 0.85)';
     this.ctx.lineWidth = 3;
     this.ctx.stroke();
+
+    // Stroboscopic speed calibration marks (36 radial ticks along the rim)
+    this.ctx.strokeStyle = 'rgba(240, 240, 240, 0.6)';
+    this.ctx.lineWidth = 1.2;
+    for (let s = 0; s < 36; s++) {
+      const sa = (s * Math.PI * 2) / 36;
+      this.ctx.beginPath();
+      this.ctx.moveTo(Math.cos(sa) * (maxRadius * 0.94), Math.sin(sa) * (maxRadius * 0.94));
+      this.ctx.lineTo(Math.cos(sa) * maxRadius, Math.sin(sa) * maxRadius);
+      this.ctx.stroke();
+    }
 
     // 3 large cutouts (precision cut spokes)
     const spokeCount = 3;
