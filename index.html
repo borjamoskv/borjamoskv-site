@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BORJA MOSKV // AVANT-GARDE ART & SYSTEMS RESEARCH</title>
+    <meta name="description" content="Sovereign artistic codex of Borja Moskv. Music, Cinematic Art, and Complex Systems Theory." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Google Fonts Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS (Fast, Zero-Config Play CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                dark: '#0a0a0a',
+                card: '#121212',
+                amber: '#f59e0b',
+                gold: '#d97706',
+              }
+            },
+            fontFamily: {
+              sans: ['Inter', 'system-ui', 'sans-serif'],
+              mono: ['JetBrains Mono', 'Menlo', 'monospace'],
+              serif: ['Playfair Display', 'Georgia', 'serif'],
+            }
+          }
+        }
+      }
+    </script>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body class="bg-[#0a0a0a] text-neutral-200 antialiased selection:bg-amber-500 selection:text-black">
+    <!-- Film Grain Overlay -->
+    <div class="film-grain-overlay"></div>
+
+    <div id="app" class="min-h-screen flex flex-col justify-between">
+      <!-- Navigation Mount Point -->
+      <div id="nav-root"></div>
+
+      <!-- Main Editorial & Reel-to-Reel Split Screen -->
+      <main id="main-root" class="flex-1 w-full"></main>
+
+      <!-- Bottom Global Footer -->
+      <footer class="w-full border-t border-neutral-800 bg-[#0d0d0d] px-6 py-4 flex flex-col sm:flex-row items-center justify-between text-[11px] font-mono text-neutral-500 gap-3">
+        <div class="flex items-center gap-2">
+          <span class="inline-block w-2 h-2 rounded-full bg-amber-500"></span>
+          <span>BORJA MOSKV // CODEX [BM-01 TO BM-14]</span>
+        </div>
+        <div class="flex items-center gap-4 text-neutral-400">
+          <span>HIGH EXERGY SOVEREIGN ARCHIVE</span>
+          <span class="text-neutral-700">|</span>
+          <span class="text-amber-500/80">APPLE SILICON HOSTED</span>
+        </div>
+      </footer>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
