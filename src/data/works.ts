@@ -269,7 +269,7 @@ export const WORKS: WorkItem[] = [
     year: '2025',
     discipline: 'Narrative Art / Illustrated Volume',
     format: 'Screenprinted Hardcover Edition',
-    imageUrl: '/media/portada_cocodrilo.jpg',
+    imageUrl: '/media/works/portada_cocodrilo.jpg',
     essayTitle: 'The Crocodile Trap: Bureaucracy as a Miscalibrated Regulator',
     essay: [
       'An allegorical graphic monograph on systemic capture. The predatory beast embodies the state regulatory apparatus: cold, reptilian, and thermodynamically inefficient.',
@@ -289,7 +289,7 @@ export const WORKS: WorkItem[] = [
     year: '2024',
     discipline: 'Satirical Graphic Essay',
     format: 'Lithographic Broadside Sheet',
-    imageUrl: '/media/comic_elige_trastorno.jpg',
+    imageUrl: '/media/works/comic_elige_trastorno.jpg',
     essayTitle: 'The Industrialization of Human Divergence',
     essay: [
       'A sharp critique of contemporary psychiatric diagnostic inflation. The pharmaceutical-industrial complex converts existential and neurodivergent complexity into standardized consumption categories.',
