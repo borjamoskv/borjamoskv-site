@@ -97,21 +97,30 @@ export class EditorialView {
               ${work.essay.map((p) => `<p class="text-neutral-300/90">${p}</p>`).join('')}
             </div>
 
-            <!-- If treatise book has document PDF, show prominent download button -->
-            ${
-              work.documentUrl
-                ? `
-              <div class="pt-2">
-                <a href="${work.documentUrl}" download="ciencia_friccion_libro.pdf" class="inline-flex items-center gap-3 px-5 py-3 bg-amber-500 hover:bg-amber-400 text-black font-bold font-mono text-xs uppercase tracking-widest rounded shadow-lg transition-all hover:scale-[1.01]">
+            <!-- Action Links: PDF Download / Bandcamp Store -->
+            <div class="flex flex-wrap items-center gap-3 pt-2">
+              ${
+                work.documentUrl
+                  ? `
+                <a href="${work.documentUrl}" download="ciencia_friccion_libro.pdf" class="inline-flex items-center gap-2 px-4 py-2.5 bg-amber-500 hover:bg-amber-400 text-black font-bold font-mono text-xs uppercase tracking-widest rounded shadow transition-all hover:scale-[1.01]">
                   <span>⬇ DOWNLOAD COMPLETE TREATISE [PDF // 3.5 MB]</span>
                 </a>
-              </div>
-            `
-                : ''
-            }
+              `
+                  : ''
+              }
+              ${
+                work.bandcampUrl
+                  ? `
+                <a href="${work.bandcampUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2.5 bg-neutral-900 hover:bg-neutral-800 text-amber-400 hover:text-amber-300 font-bold font-mono text-xs uppercase tracking-widest rounded border border-amber-500/40 shadow transition-all hover:scale-[1.01]">
+                  <span>ACQUIRE ON BANDCAMP ➔</span>
+                </a>
+              `
+                  : ''
+              }
+            </div>
 
             <!-- REEL-TO-REEL DECK COMPONENT CONTAINER -->
-            <div id="reel-deck-mount-point" class="pt-4">
+            <div id="reel-deck-mount-point" class="pt-2">
               <!-- ReelPlayer mounts here -->
             </div>
 

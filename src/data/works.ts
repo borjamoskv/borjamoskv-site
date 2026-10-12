@@ -12,6 +12,7 @@ export interface WorkItem {
   audioUrl?: string;
   imageUrl: string;
   documentUrl?: string;
+  bandcampUrl?: string;
   essayTitle: string;
   essay: string[];
   specs: {
@@ -22,11 +23,161 @@ export interface WorkItem {
 
 export const WORKS: WorkItem[] = [
   // ==========================================
-  // SECTION: MUSIC
+  // SECTION: MUSIC (BANDCAMP DISCOGRAPHY & SOVEREIGN MASTERS)
   // ==========================================
   {
-    id: 'antes-de-las-guerras',
+    id: 'this-was-in-rainbows',
     catalogNumber: 'BM-01',
+    title: 'THIS WAS IN RAINBOWS',
+    section: 'MUSIC',
+    year: '2024',
+    discipline: 'IDM / Granular Radiohead Deconstruction',
+    duration: '04:12',
+    format: '10-Track LP // Digital & Master Tape',
+    audioUrl: '/audio/bandcamp/this_was_in_rainbows_15_step.mp3',
+    imageUrl: '/media/bandcamp/this_was_in_rainbows.jpg',
+    bandcampUrl: 'https://borjamoskv.bandcamp.com/album/this-was-in-rainbows',
+    essayTitle: 'Acoustic Autopsy: In Rainbows Reimagined as IDM',
+    essay: [
+      "A dark, uncompromising reinterpretation of Radiohead's iconic 'In Rainbows', dissected through the lens of IDM, acid-house, and granular synthesis.",
+      'Every acoustic element of the original album is fragmented into micro-transients, re-pitched, and suspended within asynchronous delay lines. Organic guitar phrases collide with abrasive, mathematically precise rhythm beds.',
+      'Featured Track: "15 Step (Borja Moskv Rework)". An inquiry into how rock songwriting can be transducted into modern kinetic electronic architecture without losing its emotional center.'
+    ],
+    specs: [
+      { label: 'Release Type', value: '10-Track Long Play Album' },
+      { label: 'Featured Track', value: '15 Step (Rework)' },
+      { label: 'Synthesis', value: 'Granular Buffer Modulation & Acid 303' },
+      { label: 'Bandcamp Store', value: 'borjamoskv.bandcamp.com' }
+    ]
+  },
+  {
+    id: 'cactuses',
+    catalogNumber: 'BM-02',
+    title: 'CACTUSES',
+    section: 'MUSIC',
+    year: '2023',
+    discipline: 'Botanical Minimal Synth / Desert IDM',
+    duration: '03:52',
+    format: '23-Track Botanical Catalogue // Archival Master',
+    audioUrl: '/audio/bandcamp/cactuses_peyote.mp3',
+    imageUrl: '/media/bandcamp/cactuses.jpg',
+    bandcampUrl: 'https://borjamoskv.bandcamp.com/album/cactuses-2',
+    essayTitle: 'Xerophytic Resilience as an Informational Metaphor',
+    essay: [
+      'A 23-track botanical-electronic compendium where desert plant species serve as sonic blueprints for survival under severe thermodynamic friction.',
+      'Each composition takes the scientific name of a succulent adapted to drought (Coryphantha, Geohintonia, Cholla, Peyote, Islaya minor). The audio mirrors this biological austerity: sparse textures, bone-dry synth transients, zero decorative reverb.',
+      'Featured Track: "Peyote". A rhythmic meditation on enduring harsh environments through radical energetic conservation.'
+    ],
+    specs: [
+      { label: 'Catalogue Scope', value: '23 Canonical Species Tracks' },
+      { label: 'Featured Track', value: 'Peyote (Track 04)' },
+      { label: 'Acoustic Model', value: 'Sub-bass Spine & Resonant Wood' },
+      { label: 'Bandcamp Store', value: 'Available on Bandcamp' }
+    ]
+  },
+  {
+    id: 'miarma',
+    catalogNumber: 'BM-03',
+    title: 'MIARMA',
+    section: 'MUSIC',
+    year: '2023',
+    discipline: 'Contemplative Club / Microhouse',
+    duration: '04:58',
+    format: '3-Track EP // 12-Inch Vinyl Cut',
+    audioUrl: '/audio/bandcamp/miarma_silence_also_dance.mp3',
+    imageUrl: '/media/bandcamp/miarma.jpg',
+    bandcampUrl: 'https://borjamoskv.bandcamp.com/album/miarma',
+    essayTitle: 'Silence Also Dances: The Slowness of the Night',
+    essay: [
+      'An introspective portrait of silence, slowness, and the inner dance floor. MIARMA exists at the exact intersection between monastic contemplation and somatic club resonance.',
+      'Stillness transforms into rhythm, sub-bass into breath. The arrangements are stripped of frantic builds and drops, allowing the groove to breathe and unfold with patient hypnotic authority.',
+      'Featured Track: "Silence Also Dance". Deep microhouse frequencies designed for late-night listening.'
+    ],
+    specs: [
+      { label: 'Format', value: '3-Track Extended Play' },
+      { label: 'Featured Track', value: 'Silence Also Dance' },
+      { label: 'Tempo & Groove', value: '122 BPM Hypnotic Minimal' },
+      { label: 'Mastering', value: 'Pure Tape Headroom (-14 LUFS)' }
+    ]
+  },
+  {
+    id: 'lo-inmanente',
+    catalogNumber: 'BM-04',
+    title: 'LO INMANENTE',
+    section: 'MUSIC',
+    year: '2023',
+    discipline: 'Downtempo / Consciousness Archaeology',
+    duration: '03:42',
+    format: '4-Track Spatial Meditation // 24-bit',
+    audioUrl: '/audio/bandcamp/lo_inmanente_title.mp3',
+    imageUrl: '/media/bandcamp/lo_inmanente.jpg',
+    bandcampUrl: 'https://borjamoskv.bandcamp.com/album/lo-inmanente',
+    essayTitle: 'Recursive Interiority: When the Mystery Stares Back',
+    essay: [
+      'An intimate sonic expedition into the internal architecture of consciousness. Lo Inmanente maps the boundary where the ego dissolves into pure phenomenological perception.',
+      'Featuring tracks such as "Dentro de mí", "Hyperdentro de mí", and "Me mira el misterio", the work constructs a sonic hall of mirrors using generative acoustic reverberations and pitch-shifted field recordings.',
+      'Featured Track: "Lo inmanente". A haunting downtempo transmission from the core of subjective experience.'
+    ],
+    specs: [
+      { label: 'Format', value: '4-Track Concept Suite' },
+      { label: 'Featured Track', value: 'Lo inmanente (Title Track)' },
+      { label: 'Psychoacoustics', value: 'Binaural Drift & Phase Coherence' },
+      { label: 'Bandcamp Store', value: 'Direct Digital Acquisition' }
+    ]
+  },
+  {
+    id: 'album-b',
+    catalogNumber: 'BM-05',
+    title: '[B]',
+    section: 'MUSIC',
+    year: '2023',
+    discipline: 'Dark Disco / Microhouse / Electronic Decay',
+    duration: '04:15',
+    format: '6-Track EP // Heavyweight Cassette',
+    audioUrl: '/audio/bandcamp/album_b_butwhatthefuck.mp3',
+    imageUrl: '/media/bandcamp/album_b.jpg',
+    bandcampUrl: 'https://borjamoskv.bandcamp.com/album/b',
+    essayTitle: 'Tenderness in the Electronic Rubble',
+    essay: [
+      'Suspended between wild nocturnal abandon and morning lucidity, [B] chronicles the vulnerability that surfaces once the strobe lights fade and the smoke settles.',
+      'Dark disco basslines and microhouse drums meet linguistic satire and poetic vulnerability in Spanish: "[B]UTWHATTHEFUCKARETHOSESAYTHEY", "[B]alas de [B]randy", "[B]elleza que duele".',
+      'Featured Track: "[B]UTWHATTHEFUCKARETHOSESAYTHEY". An infectious, gritty dancefloor excursion wrapped in warm tape saturation.'
+    ],
+    specs: [
+      { label: 'Format', value: '6-Track Concept EP' },
+      { label: 'Featured Track', value: '[B]UTWHATTHEFUCKARETHOSESAYTHEY' },
+      { label: 'Vibe', value: 'Dark Disco meets Analog Microhouse' },
+      { label: 'Tape Saturation', value: 'Harmonic 2nd Order Overdrive' }
+    ]
+  },
+  {
+    id: 'farandula',
+    catalogNumber: 'BM-06',
+    title: 'FARÁNDULA',
+    section: 'MUSIC',
+    year: '2024',
+    discipline: 'Cultural Satire / Broken Flamenco / Glitch',
+    duration: '03:30',
+    format: '10-Track LP // Sovereign Web Release',
+    audioUrl: '/audio/bandcamp/farandula_que_puta.mp3',
+    imageUrl: '/media/bandcamp/farandula.jpg',
+    bandcampUrl: 'https://borjamoskv.bandcamp.com/album/far-ndula',
+    essayTitle: 'Demolishing the Spectacle: Acid Irony & Flamenco Noise',
+    essay: [
+      'A ferocious cultural critique directed at modern vanity, influencers, and intellectual complacency. FARÁNDULA takes scissors to cultural clichés, combining broken flamenco compases with glitch-hop and speech deconstruction.',
+      'Tracks like "Qué puta!", "Ciclistas", "El método Nicolás", and "Cubista y Narcista" dissect public hysteria with razor-sharp black humor and uncompromising beatcraft.',
+      'Featured Track: "Qué puta!". Raw energy, rapid syncopation, and sardonic brilliance.'
+    ],
+    specs: [
+      { label: 'Format', value: '10-Track Full Album' },
+      { label: 'Featured Track', value: 'Qué puta!' },
+      { label: 'Rhythm Matrix', value: 'Asymmetric 128 BPM Syncopation' },
+      { label: 'Bandcamp Store', value: 'Direct Bandcamp Acquisition' }
+    ]
+  },
+  {
+    id: 'antes-de-las-guerras',
+    catalogNumber: 'BM-07',
     title: 'ANTES DE LAS GUERRAS',
     section: 'MUSIC',
     year: '2026',
@@ -38,106 +189,12 @@ export const WORKS: WorkItem[] = [
     essayTitle: 'Acoustic Transduction of the Pre-Conflict Threshold',
     essay: [
       'The composition examines the precise millisecond before kinetic collapse. Traditional nylon guitar rasgueados are recorded dry, devoid of digital reverb, and subjected to sharp nonlinear tape compression.',
-      'The bassline operates at the limits of low-frequency audibility (28Hz - 55Hz), creating a physical displacement of air that anchors the erratic flamenco compás into an inescapable mechanical grid.',
-      'Here, technique is not an exhibition of artistic vanity; it functions as an acoustic transducer of somatic tension.'
+      'The bassline operates at the limits of low-frequency audibility (28Hz - 55Hz), creating a physical displacement of air that anchors the erratic flamenco compás into an inescapable mechanical grid.'
     ],
     specs: [
       { label: 'Tape Speed', value: '15 IPS (38.1 cm/s)' },
-      { label: 'Harmonic Saturation', value: '2nd & 3rd Order Analog Curve' },
       { label: 'Dynamic Range', value: '14.2 LUFS Integrated' },
       { label: 'Tuning System', value: 'A=432Hz Xen-Derived Microtonal' }
-    ]
-  },
-  {
-    id: 'ecos-del-cosmos',
-    catalogNumber: 'BM-02',
-    title: 'ECOS DEL COSMOS',
-    section: 'MUSIC',
-    year: '2026',
-    discipline: 'Deep Spatial Ambient / Drone Physics',
-    duration: '05:12',
-    format: 'Continuous Magnetic Tape Loop // 1/4 inch',
-    audioUrl: '/audio/ecos_del_cosmos.mp3',
-    imageUrl: '/media/works/02.webp',
-    essayTitle: 'Acoustic Horizon & Psychoacoustic Masking',
-    essay: [
-      'Constructed from slow-evolving recursive feedback matrices and analog filter modulation. The spectral content is carved along the 24 Bark critical bands to stimulate bilateral neuroacoustic entrainment.',
-      'Silence is treated as an active material, not merely the absence of signal. As the tape loops circulate across the magnetic heads, physical hiss and microscopic wow-and-flutter introduce entropy into the sonic architecture.'
-    ],
-    specs: [
-      { label: 'Sub-bass Peak', value: '34.8 Hz Resonant Core' },
-      { label: 'Stereo Coherence', value: '+0.88 Phase Correlation' },
-      { label: 'Signal-to-Noise', value: 'Vintage Tape Saturation (-62dB)' },
-      { label: 'Acoustic Space', value: 'Synthesized Convolved Room' }
-    ]
-  },
-  {
-    id: 'glitch-in-the-mirror',
-    catalogNumber: 'BM-03',
-    title: 'GLITCH IN THE MIRROR',
-    section: 'MUSIC',
-    year: '2026',
-    discipline: 'Microtonal Deconstruction / Broken Beat',
-    duration: '04:30',
-    format: 'Multitrack Stems Direct // Pure Phase',
-    audioUrl: '/audio/glitch_in_the_mirror.mp3',
-    imageUrl: '/media/works/03.webp',
-    essayTitle: 'Somatic Fracture and Markov State Transitions',
-    essay: [
-      'An audit of internal dissonance. The percussion sections avoid quantized loops, relying instead on causal groove humanization with asymmetric micro-delays modeled on biological motor tremor.',
-      'High-frequency transient bursts rupture the harmonic drone, creating moments of sudden auditory awakening. The mirror is not a reflection of the ego, but a detector of structural breakdown.'
-    ],
-    specs: [
-      { label: 'Tempo Metric', value: '124.00 BPM (Fluid Modulation)' },
-      { label: 'Bark Bands Carved', value: 'Bands 3, 7, 14 Psychoacoustic EQ' },
-      { label: 'Phase Inversion', value: 'Dynamic Mid/Side Matrix' },
-      { label: 'Head Type', value: 'Amorphous Cobalt Heads' }
-    ]
-  },
-  {
-    id: 'jar-to-the-system',
-    catalogNumber: 'BM-04',
-    title: 'JAR TO THE SYSTEM',
-    section: 'MUSIC',
-    year: '2025',
-    discipline: 'Kinetic Industrial / Volterra Kernels',
-    duration: '03:15',
-    format: 'Analog WDF Tape Master // 96kHz',
-    audioUrl: '/audio/jar_to_the_system.mp3',
-    imageUrl: '/media/works/04.webp',
-    essayTitle: 'Mechanical Exergy & Transient Shockwaves',
-    essay: [
-      'A blunt-force exercise in energy conservation. Every transient is calculated to deliver maximum mechanical punch without engaging digital brickwall limiters.',
-      'Distortion is achieved strictly through physical circuit emulation (Wave Digital Filters) and nonlinear tape bias overload, eliminating synthetic digital harshness in favor of thick, tactile low-end impact.'
-    ],
-    specs: [
-      { label: 'Punch Ratio', value: '12.4 dB Crest Factor' },
-      { label: 'Transient Attack', value: '1.2 ms Pre-Filter' },
-      { label: 'Tape Flux', value: '355 nWb/m High-Output' },
-      { label: 'Distortion Profile', value: 'Triode-Pentode Analog Cascade' }
-    ]
-  },
-  {
-    id: 'patadas',
-    catalogNumber: 'BM-05',
-    title: 'PATADAS',
-    section: 'MUSIC',
-    year: '2025',
-    discipline: 'Avant Flamenco / Percussive Transduction',
-    duration: '04:02',
-    format: '12-Beat Compás Stem Reel',
-    audioUrl: '/audio/patadas.mp3',
-    imageUrl: '/media/works/05.webp',
-    essayTitle: 'The Kinetic Impact: Footwork as Shock Oscillator',
-    essay: [
-      'The sonic signature of timber floorboards under the violent impact of flamenco boots (taconeo), filtered through granular delay buffers and micro-gated reverb.',
-      'The polyrhythm shifts between 12-beat Bulería and 4/4 syncopation, demonstrating how ancestral folk tension and forward-looking synthesis share the identical mathematical root.'
-    ],
-    specs: [
-      { label: 'Rhythm Engine', value: '12-Compás Generative Sequencer' },
-      { label: 'Transient Sculpting', value: 'Multiband Envelope Shaper' },
-      { label: 'Frequency Scope', value: '20 Hz - 22 kHz Uncompressed' },
-      { label: 'Substrate', value: 'Pure Silicon Realtime Rendering' }
     ]
   },
 
@@ -146,7 +203,7 @@ export const WORKS: WorkItem[] = [
   // ==========================================
   {
     id: 'industrial-phantom-sound',
-    catalogNumber: 'BM-06',
+    catalogNumber: 'BM-08',
     title: 'INDUSTRIAL REICH & PHANTOM SOUND',
     section: 'ART',
     year: '2026',
@@ -161,13 +218,12 @@ export const WORKS: WorkItem[] = [
     specs: [
       { label: 'Film Stock', value: 'Kodak Double-X 5222 B&W 35mm' },
       { label: 'Optics', value: 'Anamorphic 40mm T2.1 Prime' },
-      { label: 'Aspect Ratio', value: '2.39:1 CinemaScope' },
-      { label: 'Grading', value: 'Silver Halide Photochemical Emulation' }
+      { label: 'Aspect Ratio', value: '2.39:1 CinemaScope' }
     ]
   },
   {
     id: 'displacement-of-form',
-    catalogNumber: 'BM-07',
+    catalogNumber: 'BM-09',
     title: 'THE DISPLACEMENT OF FORM',
     section: 'ART',
     year: '2026',
@@ -182,13 +238,12 @@ export const WORKS: WorkItem[] = [
     specs: [
       { label: 'Geometry', value: 'Strict Euclidean Planar Slices' },
       { label: 'Contrast Ratio', value: '1000:1 Dynamic Range' },
-      { label: 'Paper Grain', value: 'Heavyweight Baryta Fiber' },
-      { label: 'Curatorial State', value: 'Permanent Codex Edition' }
+      { label: 'Paper Grain', value: 'Heavyweight Baryta Fiber' }
     ]
   },
   {
     id: 'archive-of-subtlety',
-    catalogNumber: 'BM-08',
+    catalogNumber: 'BM-10',
     title: 'THE ARCHIVE OF SUBTLETY',
     section: 'ART',
     year: '2025',
@@ -203,13 +258,12 @@ export const WORKS: WorkItem[] = [
     specs: [
       { label: 'Resolution', value: '150 Megapixel Scan Matrix' },
       { label: 'Illumination', value: 'Grazing Cross-Polarized Light' },
-      { label: 'Color Depth', value: '16-bit Linear Raw' },
-      { label: 'Edition', value: '08 of 60 Canonical Copies' }
+      { label: 'Color Depth', value: '16-bit Linear Raw' }
     ]
   },
   {
     id: 'portada-cocodrilo',
-    catalogNumber: 'BM-09',
+    catalogNumber: 'BM-11',
     title: 'COCODRILO: CHRONICLES OF VOLUNTARY ERROR',
     section: 'ART',
     year: '2025',
@@ -224,13 +278,12 @@ export const WORKS: WorkItem[] = [
     specs: [
       { label: 'Printing Technique', value: '4-Color Hand Screenprint' },
       { label: 'Substrate', value: 'Fedrigoni Materica Kraft 360g' },
-      { label: 'Typographic Tone', value: 'Pre-Digital Grotesque Woodtype' },
-      { label: 'Status', value: 'Private Press Archival Record' }
+      { label: 'Typographic Tone', value: 'Pre-Digital Grotesque Woodtype' }
     ]
   },
   {
     id: 'comic-elige-trastorno',
-    catalogNumber: 'BM-10',
+    catalogNumber: 'BM-12',
     title: 'CHOOSE YOUR DISORDER (SEQUENTIAL ART)',
     section: 'ART',
     year: '2024',
@@ -245,8 +298,7 @@ export const WORKS: WorkItem[] = [
     specs: [
       { label: 'Medium', value: 'India Ink on Bristol Vellum' },
       { label: 'Dimension', value: '420 × 594 mm (A2 Broadside)' },
-      { label: 'Lettering', value: 'Hand-Cut Mechanical Transfer' },
-      { label: 'Discourse Filter', value: 'Popperian Falsification Level 3' }
+      { label: 'Lettering', value: 'Hand-Cut Mechanical Transfer' }
     ]
   },
 
@@ -255,7 +307,7 @@ export const WORKS: WorkItem[] = [
   // ==========================================
   {
     id: 'science-of-friction-book',
-    catalogNumber: 'BM-11',
+    catalogNumber: 'BM-13',
     title: 'THE SCIENCE OF FRICTION (TREATISE)',
     section: 'COMPLEX SYSTEMS',
     year: '2026',
@@ -272,13 +324,12 @@ export const WORKS: WorkItem[] = [
     specs: [
       { label: 'Document Type', value: 'Canonical Research Monograph' },
       { label: 'Mathematical Spine', value: 'Chentsov Uniqueness Theorem' },
-      { label: 'Page Count', value: 'Complete Bound Manuscript' },
       { label: 'Open Access', value: 'Direct Download via Sovereign Vault' }
     ]
   },
   {
     id: 'babylon-60-kernel',
-    catalogNumber: 'BM-12',
+    catalogNumber: 'BM-14',
     title: 'BABYLON-60 & SOVEREIGN EXERGY',
     section: 'COMPLEX SYSTEMS',
     year: '2026',
@@ -293,13 +344,12 @@ export const WORKS: WorkItem[] = [
     specs: [
       { label: 'Latency Horizon', value: 'Sub-Microsecond Zero-Copy IPC' },
       { label: 'Concurrency Model', value: 'Lock-Free Seqlock Atomic CAS' },
-      { label: 'Hardware Root', value: 'Apple Silicon UMA & Touch ID Gate' },
-      { label: 'Failure Strategy', value: 'Fail-Closed Deterministic DROP' }
+      { label: 'Hardware Root', value: 'Apple Silicon UMA & Touch ID Gate' }
     ]
   },
   {
     id: 'the-five-aphorisms',
-    catalogNumber: 'BM-13',
+    catalogNumber: 'BM-15',
     title: 'THE FIVE FOUNDATIONAL APHORISMS',
     section: 'COMPLEX SYSTEMS',
     year: '2026',
@@ -308,7 +358,7 @@ export const WORKS: WorkItem[] = [
     imageUrl: '/media/works/11.webp',
     essayTitle: 'The Detector of Cognitive and Structural Delusion',
     essay: [
-      '1. Transform noise into concepts: Intelligence is compression constrained by Chentsov geometric uniqueness. Anything else is confabulation.',
+      '1. Transform noise into concepts: Intelligence is compression constrained by Chentsov geometric uniqueness. Any abstraction that departs from the Fisher Information Metric is mere confabulation.',
       '2. Confuse map with territory: The false isomorphism fallacy. Treating mental models as physical reality ensures terminal collision with the substrate.',
       '3. The attempted solution is the problem: Feedback loops of miscalibrated regulators feed the very error they seek to remedy.',
       '4. Change arises when the pain of staying the same exceeds that of changing: Thermodynamic activation barriers govern systemic mutations.',
@@ -316,14 +366,13 @@ export const WORKS: WorkItem[] = [
     ],
     specs: [
       { label: 'Epistemic Standard', value: 'C5-REAL Constitutional Axioms' },
-      { label: 'Falsification Gate', value: 'Strict Popperian Null-Hypothesis' },
       { label: 'Compression Yield', value: 'Maximum Kolmogorov Density' },
       { label: 'Classification', value: 'Universal Error Detectors' }
     ]
   },
   {
     id: 'autopoiesis-closure',
-    catalogNumber: 'BM-14',
+    catalogNumber: 'BM-16',
     title: 'AUTOPOIESIS & COGNITIVE CLOSURE',
     section: 'COMPLEX SYSTEMS',
     year: '2026',
@@ -337,7 +386,6 @@ export const WORKS: WorkItem[] = [
     ],
     specs: [
       { label: 'Formalism', value: 'Friston Free Energy Principle' },
-      { label: 'Boundary Geometry', value: 'Stochastic Markov Cloak' },
       { label: 'Substrate Affinity', value: 'Decoupled P2P Zero-Trust Nodes' },
       { label: 'Theoretical Climax', value: 'Fixed Point Omega Convergence' }
     ]

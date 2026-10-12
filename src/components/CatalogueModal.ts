@@ -36,10 +36,10 @@ export class CatalogueModal {
         <!-- Filter and Search Toolbar -->
         <div class="p-4 border-b border-neutral-800/80 bg-[#161616] flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
           <div class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 text-xs">
-            <button data-filter="ALL" class="filter-tab px-3 py-1.5 rounded border border-amber-500 bg-amber-500/20 text-amber-400 font-bold">ALL [14]</button>
-            <button data-filter="MUSIC" class="filter-tab px-3 py-1.5 rounded border border-neutral-800 bg-neutral-900 text-neutral-400 hover:text-neutral-200">MUSIC [05]</button>
-            <button data-filter="ART" class="filter-tab px-3 py-1.5 rounded border border-neutral-800 bg-neutral-900 text-neutral-400 hover:text-neutral-200">ART [05]</button>
-            <button data-filter="COMPLEX SYSTEMS" class="filter-tab px-3 py-1.5 rounded border border-neutral-800 bg-neutral-900 text-neutral-400 hover:text-neutral-200">COMPLEX SYSTEMS [04]</button>
+            <button data-filter="ALL" class="filter-tab px-3 py-1.5 rounded border border-amber-500 bg-amber-500/20 text-amber-400 font-bold">ALL [${WORKS.length}]</button>
+            <button data-filter="MUSIC" class="filter-tab px-3 py-1.5 rounded border border-neutral-800 bg-neutral-900 text-neutral-400 hover:text-neutral-200">MUSIC [${WORKS.filter(w => w.section === 'MUSIC').length}]</button>
+            <button data-filter="ART" class="filter-tab px-3 py-1.5 rounded border border-neutral-800 bg-neutral-900 text-neutral-400 hover:text-neutral-200">ART [${WORKS.filter(w => w.section === 'ART').length}]</button>
+            <button data-filter="COMPLEX SYSTEMS" class="filter-tab px-3 py-1.5 rounded border border-neutral-800 bg-neutral-900 text-neutral-400 hover:text-neutral-200">COMPLEX SYSTEMS [${WORKS.filter(w => w.section === 'COMPLEX SYSTEMS').length}]</button>
           </div>
           <div class="relative min-w-[200px]">
             <input id="cat-search-input" type="text" placeholder="SEARCH TITLE / SPECS..." class="w-full bg-[#0a0a0a] border border-neutral-800 rounded px-3 py-1.5 text-xs text-neutral-200 placeholder-neutral-600 focus:outline-none focus:border-amber-500 font-mono" />
