@@ -267,6 +267,28 @@ export class AudioEngine {
     return this.isMuted;
   }
 
+  /**
+   * Real-time multi-band spectrum FFT data
+   */
+  public getSpectrumData(bands: number = 24): Float32Array {
+    if (!this.analyser || !this.isPlaying) {
+      return new Float32Array(bands);
+    }
+    const freqData = new Uint8Array(this.analyser.frequencyBinCount);
+    this.analyser.getByteFrequencyData(freqData);
+
+    const out = new Float32Array(bands);
+    const step = Math.max(1, Math.floor(freqData.length / bands));
+    for (let i = 0; i < bands; i++) {
+      let sum = 0;
+      for (let j = 0; j < step; j++) {
+        sum += freqData[i * step + j] / 255;
+      }
+      out[i] = Math.min(1.0, (sum / step) * 1.25);
+    }
+    return out;
+  }
+
   public getPlaybackState(): { isPlaying: boolean; currentTime: number; duration: number } {
     if (this.isSynthesizing) {
       return { isPlaying: this.isPlaying, currentTime: 0, duration: 60 };

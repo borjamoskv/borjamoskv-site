@@ -18,6 +18,8 @@ export class ReelPlayer {
   // VU Meter needles ballistics
   private needleLeft: number = 0;
   private needleRight: number = 0;
+  private meterMode: 'VU' | 'RTA' = 'VU';
+  private peakHoldBars: Float32Array = new Float32Array(24);
 
   // DOM controls
   private controlsContainer!: HTMLElement;
@@ -55,11 +57,23 @@ export class ReelPlayer {
         <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
         <span class="font-bold text-neutral-200">STUDER A-60 / REVOX TRANSDUCTION DECK</span>
       </div>
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2.5">
+        <button id="btn-toggle-meter" class="hover:text-amber-400 text-neutral-400 border border-neutral-800 hover:border-amber-500/40 px-2 py-0.5 rounded cursor-pointer transition-colors text-[10px] bg-neutral-900/80">METER: [VU]</button>
         <span class="hidden sm:inline text-neutral-500">SPEED: 15 IPS</span>
         <span class="text-neutral-400">FLUX: 355 nWb/m</span>
       </div>
     `;
+
+    const meterBtn = deckHeader.querySelector('#btn-toggle-meter') as HTMLButtonElement;
+    if (meterBtn) {
+      meterBtn.onclick = () => {
+        this.meterMode = this.meterMode === 'VU' ? 'RTA' : 'VU';
+        meterBtn.textContent = `METER: [${this.meterMode}]`;
+        meterBtn.className = this.meterMode === 'RTA'
+          ? 'text-emerald-400 border border-emerald-500/50 px-2 py-0.5 rounded cursor-pointer transition-colors text-[10px] bg-emerald-500/10 font-bold'
+          : 'hover:text-amber-400 text-neutral-400 border border-neutral-800 hover:border-amber-500/40 px-2 py-0.5 rounded cursor-pointer transition-colors text-[10px] bg-neutral-900/80';
+      };
+    }
 
     // Canvas container
     const canvasWrap = document.createElement('div');
@@ -357,8 +371,12 @@ export class ReelPlayer {
     // 4. Center Tape Head Block
     this.drawHeadBlock(w * 0.5, h * 0.78, w * 0.22, h * 0.22);
 
-    // 5. Dual Analog Needle VU Meters
-    this.drawVUMeters(w * 0.5, h * 0.22, w * 0.32, h * 0.28);
+    // 5. Dual Analog Needle VU Meters or 24-Band RTA Spectrum Analyzer
+    if (this.meterMode === 'VU') {
+      this.drawVUMeters(w * 0.5, h * 0.22, w * 0.32, h * 0.28);
+    } else {
+      this.drawSpectrumAnalyzer(w * 0.5, h * 0.22, w * 0.32, h * 0.28);
+    }
   }
 
   private drawFaceplate(w: number, h: number) {
@@ -634,6 +652,78 @@ export class ReelPlayer {
 
     this.drawSingleVU(leftX, cy - meterH / 2, meterW, meterH, this.needleLeft, 'CH-1 LEFT');
     this.drawSingleVU(rightX, cy - meterH / 2, meterW, meterH, this.needleRight, 'CH-2 RIGHT');
+  }
+
+  private drawSpectrumAnalyzer(cx: number, cy: number, w: number, h: number) {
+    this.ctx.save();
+    const x = cx - w / 2;
+    const y = cy - h / 2;
+
+    // Housing screen with subtle green/amber CRT glow
+    this.ctx.fillStyle = '#080d0a';
+    this.ctx.fillRect(x, y, w, h);
+    this.ctx.strokeStyle = '#1e2922';
+    this.ctx.lineWidth = 1.5;
+    this.ctx.strokeRect(x, y, w, h);
+
+    // Phosphor scanline grid
+    this.ctx.fillStyle = 'rgba(16, 185, 129, 0.035)';
+    for (let sy = y; sy < y + h; sy += 3) {
+      this.ctx.fillRect(x, sy, w, 1);
+    }
+
+    const spectrum = this.audioEngine.getSpectrumData(24);
+    const numBars = 24;
+    const barPad = 2;
+    const barWidth = (w - (numBars + 1) * barPad) / numBars;
+
+    for (let i = 0; i < numBars; i++) {
+      const val = spectrum[i];
+      if (val >= this.peakHoldBars[i]) {
+        this.peakHoldBars[i] = val;
+      } else {
+        this.peakHoldBars[i] = Math.max(0, this.peakHoldBars[i] - 0.015);
+      }
+
+      const bx = x + barPad + i * (barWidth + barPad);
+      const barH = val * (h - 18);
+      const by = y + h - 8 - barH;
+
+      // Vertical LED gradient from phosphor emerald to amber/red on peaks
+      const bGrad = this.ctx.createLinearGradient(0, y + h, 0, y);
+      bGrad.addColorStop(0, '#10b981');
+      bGrad.addColorStop(0.55, '#34d399');
+      bGrad.addColorStop(0.8, '#f59e0b');
+      bGrad.addColorStop(1, '#ef4444');
+
+      this.ctx.fillStyle = bGrad;
+      this.ctx.fillRect(bx, by, barWidth, barH);
+
+      // Peak hold indicator bar
+      if (this.peakHoldBars[i] > 0.05) {
+        const peakY = y + h - 8 - this.peakHoldBars[i] * (h - 18);
+        this.ctx.fillStyle = '#f59e0b';
+        this.ctx.fillRect(bx, peakY, barWidth, 1.5);
+      }
+    }
+
+    // Top Header Label
+    this.ctx.font = 'bold 7.5px monospace';
+    this.ctx.fillStyle = '#10b981';
+    this.ctx.textAlign = 'center';
+    this.ctx.fillText('RTA FFT-512 SPECTRUM // 20Hz - 20kHz', cx, y + 9);
+
+    // Bottom frequency labels
+    this.ctx.font = '500 6.5px monospace';
+    this.ctx.fillStyle = '#4ade80';
+    this.ctx.textAlign = 'left';
+    this.ctx.fillText('SUB', x + 4, y + h - 2);
+    this.ctx.textAlign = 'center';
+    this.ctx.fillText('1 kHz', cx, y + h - 2);
+    this.ctx.textAlign = 'right';
+    this.ctx.fillText('16 kHz', x + w - 4, y + h - 2);
+
+    this.ctx.restore();
   }
 
   private drawSingleVU(

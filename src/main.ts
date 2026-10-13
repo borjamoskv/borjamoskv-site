@@ -158,6 +158,26 @@ class App {
           this.bookModal.open();
           this.hudToast.show('VIEWER // THE SCIENCE OF FRICTION');
           break;
+        case '1':
+          e.preventDefault();
+          this.handleSectionChange('MUSIC');
+          this.hudToast.show('FILTER // MUSIC [7 WORKS]');
+          break;
+        case '2':
+          e.preventDefault();
+          this.handleSectionChange('ART');
+          this.hudToast.show('FILTER // ART [6 WORKS]');
+          break;
+        case '3':
+          e.preventDefault();
+          this.handleSectionChange('COMPLEX SYSTEMS');
+          this.hudToast.show('FILTER // COMPLEX SYSTEMS [4 WORKS]');
+          break;
+        case '0':
+          e.preventDefault();
+          this.handleSectionChange('ALL');
+          this.hudToast.show(`FILTER // ALL [${WORKS.length} WORKS]`);
+          break;
       }
     });
   }
