@@ -148,6 +148,45 @@ export class ReelPlayer {
     rightButtons.appendChild(this.satBtn);
     rightButtons.appendChild(this.wowBtn);
 
+    const volWrap = document.createElement('div');
+    volWrap.className = 'flex items-center gap-1.5 bg-neutral-900 px-2 py-1 rounded border border-neutral-700/60';
+    
+    const muteBtn = document.createElement('button');
+    muteBtn.className = 'text-[10px] text-amber-400 font-mono hover:text-amber-300';
+    muteBtn.textContent = 'VOL';
+    muteBtn.title = 'Click to toggle mute';
+    
+    const volSlider = document.createElement('input');
+    volSlider.type = 'range';
+    volSlider.min = '0';
+    volSlider.max = '100';
+    volSlider.value = String(Math.round(this.audioEngine.getVolume() * 100));
+    volSlider.className = 'w-16 h-1 bg-neutral-800 rounded appearance-none cursor-pointer accent-amber-500';
+    volSlider.title = 'Master Output Level';
+
+    const volLabel = document.createElement('span');
+    volLabel.className = 'text-[10px] text-neutral-400 font-mono w-7 text-right select-none';
+    volLabel.textContent = `${volSlider.value}%`;
+
+    volSlider.oninput = () => {
+      const val = parseInt(volSlider.value, 10) / 100;
+      this.audioEngine.setVolume(val);
+      volLabel.textContent = `${volSlider.value}%`;
+      muteBtn.textContent = val === 0 ? 'MUT' : 'VOL';
+    };
+
+    muteBtn.onclick = () => {
+      const muted = this.audioEngine.toggleMute();
+      muteBtn.textContent = muted ? 'MUT' : 'VOL';
+      volLabel.textContent = muted ? '0%' : `${Math.round(this.audioEngine.getVolume() * 100)}%`;
+      volLabel.className = muted ? 'text-[10px] text-red-400 font-mono w-7 text-right select-none' : 'text-[10px] text-neutral-400 font-mono w-7 text-right select-none';
+    };
+
+    volWrap.appendChild(muteBtn);
+    volWrap.appendChild(volSlider);
+    volWrap.appendChild(volLabel);
+    rightButtons.appendChild(volWrap);
+
     buttonsWrap.appendChild(leftButtons);
     buttonsWrap.appendChild(rightButtons);
 

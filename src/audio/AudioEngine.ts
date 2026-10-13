@@ -31,6 +31,8 @@ export class AudioEngine {
   private isPlaying: boolean = false;
   private isSaturated: boolean = true;
   private currentTrackUrl: string | null = null;
+  private volume: number = 0.85;
+  private isMuted: boolean = false;
 
   public onTimeUpdate?: (currentTime: number, duration: number) => void;
   public onPlayStateChange?: (isPlaying: boolean) => void;
@@ -152,7 +154,7 @@ export class AudioEngine {
 
     if (this.masterGain && this.ctx) {
       this.masterGain.gain.setValueAtTime(0.001, this.ctx.currentTime);
-      this.masterGain.gain.exponentialRampToValueAtTime(0.85, this.ctx.currentTime + 0.04);
+      this.masterGain.gain.exponentialRampToValueAtTime(this.isMuted ? 0.0001 : this.volume, this.ctx.currentTime + 0.04);
     }
 
     if (this.currentTrackUrl) {
@@ -239,6 +241,30 @@ export class AudioEngine {
 
   public getWowFlutter(): boolean {
     return this.isWowFlutter;
+  }
+
+  public setVolume(vol: number) {
+    this.volume = Math.max(0, Math.min(1, vol));
+    if (this.masterGain && this.ctx && !this.isMuted) {
+      this.masterGain.gain.setValueAtTime(this.volume, this.ctx.currentTime);
+    }
+  }
+
+  public getVolume(): number {
+    return this.volume;
+  }
+
+  public toggleMute(): boolean {
+    this.isMuted = !this.isMuted;
+    if (this.masterGain && this.ctx) {
+      const target = this.isMuted ? 0.0001 : this.volume;
+      this.masterGain.gain.setValueAtTime(target, this.ctx.currentTime);
+    }
+    return this.isMuted;
+  }
+
+  public getIsMuted(): boolean {
+    return this.isMuted;
   }
 
   public getPlaybackState(): { isPlaying: boolean; currentTime: number; duration: number } {

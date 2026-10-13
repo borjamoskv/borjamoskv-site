@@ -128,11 +128,23 @@ class App {
           this.hudToast.show(state.isPlaying ? 'DECK // PAUSED' : 'DECK // PLAYING');
           this.audioEngine.togglePlay();
           break;
+        case 'ArrowUp':
+          e.preventDefault();
+          const newVolUp = Math.min(1, Math.round((this.audioEngine.getVolume() + 0.05) * 100) / 100);
+          this.audioEngine.setVolume(newVolUp);
+          this.hudToast.show(`VOLUME // ${Math.round(newVolUp * 100)}%`);
+          break;
+        case 'ArrowDown':
+          e.preventDefault();
+          const newVolDown = Math.max(0, Math.round((this.audioEngine.getVolume() - 0.05) * 100) / 100);
+          this.audioEngine.setVolume(newVolDown);
+          this.hudToast.show(`VOLUME // ${Math.round(newVolDown * 100)}%`);
+          break;
         case 'c':
         case 'C':
           e.preventDefault();
           this.catalogueModal.open();
-          this.hudToast.show('DRAWER // CATALOGUE [16 WORKS]');
+          this.hudToast.show(`DRAWER // CATALOGUE [${WORKS.length} WORKS]`);
           break;
         case 'm':
         case 'M':
