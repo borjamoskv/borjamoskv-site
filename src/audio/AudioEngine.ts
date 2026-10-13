@@ -150,6 +150,11 @@ export class AudioEngine {
       await this.ctx.resume();
     }
 
+    if (this.masterGain && this.ctx) {
+      this.masterGain.gain.setValueAtTime(0.001, this.ctx.currentTime);
+      this.masterGain.gain.exponentialRampToValueAtTime(0.85, this.ctx.currentTime + 0.04);
+    }
+
     if (this.currentTrackUrl) {
       try {
         await this.audioEl.play();
@@ -169,7 +174,17 @@ export class AudioEngine {
     if (this.isSynthesizing) {
       this.stopDroneSynthesis();
     } else {
-      this.audioEl.pause();
+      if (this.masterGain && this.ctx) {
+        try {
+          this.masterGain.gain.setValueAtTime(this.masterGain.gain.value, this.ctx.currentTime);
+          this.masterGain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 0.025);
+        } catch {
+          // Fallback
+        }
+      }
+      setTimeout(() => {
+        this.audioEl.pause();
+      }, 30);
     }
     this.isPlaying = false;
     if (this.onPlayStateChange) this.onPlayStateChange(false);
