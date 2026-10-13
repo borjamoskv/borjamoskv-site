@@ -1,6 +1,6 @@
 export class LightboxModal {
   private overlay: HTMLElement;
-  private imgEl: HTMLImageElement;
+  private mediaContainer: HTMLElement;
   private titleEl: HTMLElement;
   private metaEl: HTMLElement;
 
@@ -18,7 +18,7 @@ export class LightboxModal {
           [ESC // CLOSE]
         </button>
       </div>
-      <div class="relative max-w-full max-h-[82vh] overflow-hidden rounded border border-neutral-800/80 shadow-2xl flex items-center justify-center bg-black">
+      <div id="lb-media-box" class="relative max-w-full max-h-[82vh] overflow-hidden rounded border border-neutral-800/80 shadow-2xl flex items-center justify-center bg-black">
         <img id="lb-img" src="" alt="" class="max-w-full max-h-[82vh] object-contain" />
       </div>
       <div class="w-full max-w-6xl pt-3 text-center text-neutral-600 text-[10px] tracking-widest uppercase">
@@ -28,7 +28,7 @@ export class LightboxModal {
 
     document.body.appendChild(this.overlay);
 
-    this.imgEl = this.overlay.querySelector('#lb-img')!;
+    this.mediaContainer = this.overlay.querySelector('#lb-media-box')!;
     this.titleEl = this.overlay.querySelector('#lb-title')!;
     this.metaEl = this.overlay.querySelector('#lb-meta')!;
 
@@ -42,8 +42,23 @@ export class LightboxModal {
     });
   }
 
-  public open(imgUrl: string, title: string, meta: string) {
-    this.imgEl.src = imgUrl;
+  public open(mediaUrl: string, title: string, meta: string, isVideo: boolean = false) {
+    if (isVideo) {
+      this.mediaContainer.innerHTML = `
+        <video 
+          src="${mediaUrl}" 
+          controls 
+          autoplay 
+          loop 
+          playsinline 
+          class="max-w-full max-h-[82vh] object-contain"
+        ></video>
+      `;
+    } else {
+      this.mediaContainer.innerHTML = `
+        <img id="lb-img" src="${mediaUrl}" alt="${title}" class="max-w-full max-h-[82vh] object-contain" />
+      `;
+    }
     this.titleEl.textContent = title;
     this.metaEl.textContent = meta;
     this.overlay.classList.remove('opacity-0', 'pointer-events-none');
@@ -53,5 +68,9 @@ export class LightboxModal {
   public close() {
     this.overlay.classList.remove('opacity-100', 'pointer-events-auto');
     this.overlay.classList.add('opacity-0', 'pointer-events-none');
+    const video = this.mediaContainer.querySelector('video');
+    if (video) {
+      video.pause();
+    }
   }
 }

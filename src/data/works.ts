@@ -11,6 +11,7 @@ export interface WorkItem {
   format: string;
   audioUrl?: string;
   imageUrl: string;
+  videoUrl?: string;
   documentUrl?: string;
   bandcampUrl?: string;
   essayTitle: string;
@@ -302,12 +303,35 @@ export const WORKS: WorkItem[] = [
     ]
   },
 
+  {
+    id: 'moby-moncloa-54',
+    catalogNumber: 'BM-13',
+    title: 'MOBY MONCLOA: 5:4 CINEMATIC SURREALISM',
+    section: 'ART',
+    year: '2026',
+    discipline: 'Sovereign Cinema / 5:4 Aspect Ratio',
+    format: '1350×1080 Aspect // Continuous Video Loop',
+    imageUrl: '/media/works/moby_moncloa_54_poster.jpg',
+    videoUrl: '/media/works/moby_moncloa_54_loop.mp4',
+    essayTitle: 'Kinetic Dialectics in 1.25:1 Framing',
+    essay: [
+      'A cinematic experiment adhering strictly to the 5:4 (1350×1080) aspect ratio standard. Developed using the gflow-cli sovereign pipeline to bypass traditional cinematic horizontalism.',
+      'The composition forces vertical compression and dynamic tension, eliminating wasted peripheral space and confronting the observer with raw kinetic energy and absurd narrative montage.',
+      'Features full-bleed continuous loop playback with zero compression artifacts.'
+    ],
+    specs: [
+      { label: 'Aspect Ratio', value: '5:4 Standard (1350 × 1080 px)' },
+      { label: 'Synthesis Engine', value: 'Google Flow Veo & Imagen' },
+      { label: 'Optics Standard', value: '1.25:1 Direct Film Gate' }
+    ]
+  },
+
   // ==========================================
   // SECTION: COMPLEX SYSTEMS
   // ==========================================
   {
     id: 'science-of-friction-book',
-    catalogNumber: 'BM-13',
+    catalogNumber: 'BM-14',
     title: 'THE SCIENCE OF FRICTION (TREATISE)',
     section: 'COMPLEX SYSTEMS',
     year: '2026',
@@ -329,13 +353,13 @@ export const WORKS: WorkItem[] = [
   },
   {
     id: 'babylon-60-kernel',
-    catalogNumber: 'BM-14',
+    catalogNumber: 'BM-15',
     title: 'BABYLON-60 & SOVEREIGN EXERGY',
     section: 'COMPLEX SYSTEMS',
     year: '2026',
     discipline: 'Ring-0 Architecture & Autonomic Systems',
     format: 'Formally Verified Kernel Architecture',
-    imageUrl: '/media/works/10.webp',
+    imageUrl: '/media/works/gflow_cyber_codex_54.jpg',
     essayTitle: 'Decoupling Machine Intelligence from Bureaucratic Decay',
     essay: [
       'A blueprint for Ring-0 software resilience. Built around lock-free SPMC circular queues (KUDURRU-64), zero-copy unified memory buffers on Apple Silicon, and deterministic 7-tuple decision verifiers.',
@@ -349,7 +373,7 @@ export const WORKS: WorkItem[] = [
   },
   {
     id: 'the-five-aphorisms',
-    catalogNumber: 'BM-15',
+    catalogNumber: 'BM-16',
     title: 'THE FIVE FOUNDATIONAL APHORISMS',
     section: 'COMPLEX SYSTEMS',
     year: '2026',
@@ -372,7 +396,7 @@ export const WORKS: WorkItem[] = [
   },
   {
     id: 'autopoiesis-closure',
-    catalogNumber: 'BM-16',
+    catalogNumber: 'BM-17',
     title: 'AUTOPOIESIS & COGNITIVE CLOSURE',
     section: 'COMPLEX SYSTEMS',
     year: '2026',

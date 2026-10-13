@@ -50,8 +50,8 @@ class App {
         this.bookModal.open(pdfUrl);
         this.hudToast.show('VIEWER // THE SCIENCE OF FRICTION');
       },
-      (imgUrl: string, title: string, meta: string) => {
-        this.lightboxModal.open(imgUrl, title, meta);
+      (mediaUrl: string, title: string, meta: string, isVideo?: boolean) => {
+        this.lightboxModal.open(mediaUrl, title, meta, isVideo);
         this.hudToast.show(`LIGHTBOX // ${title}`);
       }
     );
@@ -71,7 +71,7 @@ class App {
       },
       () => {
         this.catalogueModal.open();
-        this.hudToast.show('DRAWER // CATALOGUE [16 WORKS]');
+        this.hudToast.show(`DRAWER // CATALOGUE [${WORKS.length} WORKS]`);
       },
       () => {
         this.manifestoModal.open();

@@ -26,7 +26,7 @@ export class CatalogueModal {
         <div class="p-4 sm:p-6 border-b border-neutral-800 flex items-center justify-between bg-[#121212]">
           <div class="flex items-center gap-3">
             <span class="text-amber-500 font-bold text-sm tracking-widest">[BM // CATALOGUE]</span>
-            <span class="text-neutral-500 text-xs hidden sm:inline">COMPLETE CANONICAL CODEX (01 - 14)</span>
+            <span class="text-neutral-500 text-xs hidden sm:inline">COMPLETE CANONICAL CODEX (01 - ${String(WORKS.length).padStart(2, '0')})</span>
           </div>
           <button id="close-cat-btn" class="px-3 py-1 bg-neutral-900 hover:bg-neutral-800 border border-neutral-700 text-xs uppercase tracking-wider text-neutral-300 rounded transition-colors">
             [ESC // CLOSE]

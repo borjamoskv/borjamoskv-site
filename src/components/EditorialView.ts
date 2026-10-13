@@ -7,14 +7,14 @@ export class EditorialView {
   private currentWorkIndex: number = 0;
   private onWorkChange: (work: WorkItem) => void;
   private onOpenBook?: (url: string) => void;
-  private onOpenLightbox?: (imgUrl: string, title: string, meta: string) => void;
+  private onOpenLightbox?: (mediaUrl: string, title: string, meta: string, isVideo?: boolean) => void;
 
   constructor(
     container: HTMLElement,
     reelPlayer: ReelPlayer,
     onWorkChange: (work: WorkItem) => void,
     onOpenBook?: (url: string) => void,
-    onOpenLightbox?: (imgUrl: string, title: string, meta: string) => void
+    onOpenLightbox?: (mediaUrl: string, title: string, meta: string, isVideo?: boolean) => void
   ) {
     this.container = container;
     this.reelPlayer = reelPlayer;
@@ -180,18 +180,35 @@ export class EditorialView {
 
             <!-- Main 5:4 Aspect Ratio Frame (1350x1080 standard) -->
             <div id="artwork-frame" class="relative overflow-hidden rounded border border-neutral-800/90 shadow-2xl w-full max-w-[620px] aspect-[5/4] bg-black cursor-zoom-in group/img" title="Click to open full-screen lightbox">
-              <img 
-                src="${work.imageUrl}" 
-                alt="${work.title}" 
-                class="w-full h-full object-cover filter contrast-110 saturate-[0.85] transition-transform duration-700 group-hover/img:scale-[1.03]"
-              />
+              ${
+                work.videoUrl
+                  ? `
+                <video 
+                  src="${work.videoUrl}" 
+                  poster="${work.imageUrl}"
+                  autoplay 
+                  loop 
+                  muted 
+                  playsinline 
+                  class="w-full h-full object-cover filter contrast-110 saturate-[0.85] transition-transform duration-700 group-hover/img:scale-[1.03]"
+                ></video>
+              `
+                  : `
+                <img 
+                  src="${work.imageUrl}" 
+                  alt="${work.title}" 
+                  class="w-full h-full object-cover filter contrast-110 saturate-[0.85] transition-transform duration-700 group-hover/img:scale-[1.03]"
+                />
+              `
+              }
               
               <!-- Subtle vignette overlay -->
               <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none"></div>
 
-              <!-- Top-Left 5:4 Cinematic Badge -->
-              <div class="absolute top-4 left-4 z-10 font-mono text-[9px] text-amber-400/90 bg-black/80 backdrop-blur-md px-2.5 py-1 rounded border border-amber-500/30 uppercase tracking-widest">
-                ASPECT RATIO 5:4
+              <!-- Top-Left 5:4 Cinematic Badge with Motion Pulse -->
+              <div class="absolute top-4 left-4 z-10 font-mono text-[9px] text-amber-400/90 bg-black/80 backdrop-blur-md px-2.5 py-1 rounded border border-amber-500/30 uppercase tracking-widest flex items-center gap-1.5">
+                <span class="inline-block w-1.5 h-1.5 rounded-full ${work.videoUrl ? 'bg-amber-400 animate-pulse' : 'bg-neutral-500'}"></span>
+                <span>${work.videoUrl ? '5:4 MOTION LOOP' : 'ASPECT RATIO 5:4'}</span>
               </div>
 
               <!-- Top-right discipline pill -->
@@ -239,7 +256,11 @@ export class EditorialView {
     // Attach Lightbox event
     this.container.querySelector('#artwork-frame')?.addEventListener('click', () => {
       if (this.onOpenLightbox) {
-        this.onOpenLightbox(work.imageUrl, work.title, `${work.catalogNumber} // ${work.section} // ${work.year}`);
+        if (work.videoUrl) {
+          this.onOpenLightbox(work.videoUrl, work.title, `${work.catalogNumber} // ${work.section} // ${work.year}`, true);
+        } else {
+          this.onOpenLightbox(work.imageUrl, work.title, `${work.catalogNumber} // ${work.section} // ${work.year}`, false);
+        }
       }
     });
   }
