@@ -161,17 +161,17 @@ class App {
         case '1':
           e.preventDefault();
           this.handleSectionChange('MUSIC');
-          this.hudToast.show('FILTER // MUSIC [7 WORKS]');
+          this.hudToast.show(`FILTER // MUSIC [${WORKS.filter((w) => w.section === 'MUSIC').length} WORKS]`);
           break;
         case '2':
           e.preventDefault();
           this.handleSectionChange('ART');
-          this.hudToast.show('FILTER // ART [6 WORKS]');
+          this.hudToast.show(`FILTER // ART [${WORKS.filter((w) => w.section === 'ART').length} WORKS]`);
           break;
         case '3':
           e.preventDefault();
           this.handleSectionChange('COMPLEX SYSTEMS');
-          this.hudToast.show('FILTER // COMPLEX SYSTEMS [4 WORKS]');
+          this.hudToast.show(`FILTER // COMPLEX SYSTEMS [${WORKS.filter((w) => w.section === 'COMPLEX SYSTEMS').length} WORKS]`);
           break;
         case '0':
           e.preventDefault();

@@ -177,25 +177,53 @@ export const WORKS: WorkItem[] = [
     ]
   },
   {
-    id: 'antes-de-las-guerras',
+    id: 'instructions-for-flying',
     catalogNumber: 'BM-07',
-    title: 'ANTES DE LAS GUERRAS',
+    title: 'INSTRUCTIONS FOR FLYING',
     section: 'MUSIC',
-    year: '2026',
-    discipline: 'Dark Cyber-Flamenco / Sub-Bass',
-    duration: '03:45',
-    format: 'Analog 2-Track Master // 24-bit 48kHz',
+    year: '2024',
+    discipline: 'Aerodynamic Sub-Bass / Granular Electronics',
+    duration: '04:50',
+    format: 'Full LP // Master Tape & Vinyl Edition',
     audioUrl: '/audio/antes_de_las_guerras.mp3',
-    imageUrl: '/media/works/01.webp',
-    essayTitle: 'Acoustic Transduction of the Pre-Conflict Threshold',
+    imageUrl: '/media/works/06.webp',
+    bandcampUrl: 'https://borjamoskv.bandcamp.com/album/instructions-for-flying',
+    essayTitle: 'Aerodynamic Transduction: The Physics of Flight in Mechanical Sound',
     essay: [
-      'The composition examines the precise millisecond before kinetic collapse. Traditional nylon guitar rasgueados are recorded dry, devoid of digital reverb, and subjected to sharp nonlinear tape compression.',
-      'The bassline operates at the limits of low-frequency audibility (28Hz - 55Hz), creating a physical displacement of air that anchors the erratic flamenco compás into an inescapable mechanical grid.'
+      'A long-play concept album exploring the physical mechanics of aerodynamic lift, sub-bass pressure, and microtonal drift.',
+      'Dissecting tracks such as "JAR TO THE SYSTEM", "Ecos del Cosmos", "Antes de las Guerras", "Glitch in the Mirror", and "Patadas en la Boca". Organic rasgueados and industrial synthesis anchor erratic rhythms into an inescapable mechanical grid.',
+      'Featured Track: "Antes de las Guerras". Pre-conflict acoustic tension translated through bone-dry nylon guitar rasgueados and sub-bass operating down to 28Hz.'
     ],
     specs: [
-      { label: 'Tape Speed', value: '15 IPS (38.1 cm/s)' },
-      { label: 'Dynamic Range', value: '14.2 LUFS Integrated' },
-      { label: 'Tuning System', value: 'A=432Hz Xen-Derived Microtonal' }
+      { label: 'Catalogue Code', value: 'MOSKV-LP01' },
+      { label: 'Featured Track', value: 'Antes de las Guerras' },
+      { label: 'Mastering', value: '44.1 kHz / 24-bit · -8.5 LUFS Integrated' },
+      { label: 'Hardware Gear', value: 'Erica Synths Black System III, Elektron Octatrack, Moog Sub 37' }
+    ]
+  },
+  {
+    id: 'heimatflug',
+    catalogNumber: 'BM-08',
+    title: 'HEIMATFLUG',
+    section: 'MUSIC',
+    year: '2024',
+    discipline: 'Dual Mix Electronics / Deep Resonance',
+    duration: '06:15',
+    format: 'Single // Dual Mix (FLAC & WAV 24-bit)',
+    audioUrl: '/audio/ecos_del_cosmos.mp3',
+    imageUrl: '/media/works/07.webp',
+    bandcampUrl: 'https://soundcloud.com/borja-moskv',
+    essayTitle: 'Bipolar Velocity: The Bouncy Morning & Organic Deep Mixes',
+    essay: [
+      'A dual-state production structured across complementary polarities: the driving kinetic traction of the Bouncy Morning Mix and the deep organic resonance of the Organic Deep Mix.',
+      'Constructed with analog synthesizers, discrete basslines, and spatialized acoustic reflections, capturing the threshold between nocturnal velocity and dawn stillness.',
+      'Featured Track: "Ecos del Cosmos". Orbital topology and deep space acoustic drifts rendered with slow-wave drone oscillators and microtonal modulation.'
+    ],
+    specs: [
+      { label: 'Catalogue Code', value: 'MOSKV-SN02' },
+      { label: 'Mix Structure', value: 'Dual Polarity: Bouncy (126 BPM) / Organic (122 BPM)' },
+      { label: 'Mastering', value: 'Lossless 24-bit Full Dynamic Range' },
+      { label: 'Synthesis', value: 'Discrete Analog Basslines & Spatial Reverberation' }
     ]
   },
 
@@ -203,68 +231,74 @@ export const WORKS: WorkItem[] = [
   // SECTION: ART
   // ==========================================
   {
-    id: 'industrial-phantom-sound',
-    catalogNumber: 'BM-08',
-    title: 'INDUSTRIAL REICH & PHANTOM SOUND',
-    section: 'ART',
-    year: '2026',
-    discipline: 'Cinematic Essay / 35mm Grain Film',
-    format: 'Archival Monochrome Print // 4K Negative',
-    imageUrl: '/media/works/06.webp',
-    essayTitle: 'Architectural Decay and the Archaeology of Noise',
-    essay: [
-      'Post-industrial monoliths captured during the blue hour. Heavy concrete slabs, oxidized iron pipes, and silent cooling towers become acoustic resonators long after human labor has ceased.',
-      'The camera approaches each structure not as scenic photography, but as a forensic investigation into lost kinetic potential and the persistent reverberation of past energy.'
-    ],
-    specs: [
-      { label: 'Film Stock', value: 'Kodak Double-X 5222 B&W 35mm' },
-      { label: 'Optics', value: 'Anamorphic 40mm T2.1 Prime' },
-      { label: 'Aspect Ratio', value: '2.39:1 CinemaScope' }
-    ]
-  },
-  {
-    id: 'displacement-of-form',
+    id: 'moby-moncloa-54',
     catalogNumber: 'BM-09',
-    title: 'THE DISPLACEMENT OF FORM',
+    title: 'MOBY MONCLOA: 5:4 CINEMATIC SURREALISM',
     section: 'ART',
     year: '2026',
-    discipline: 'Brutalist Photography / Spatial Mass',
-    format: 'Large-Format Silver Gelatin Study',
-    imageUrl: '/media/works/07.webp',
-    essayTitle: 'Weight, Shadow, and the Elimination of Ornament',
+    discipline: 'Sovereign Cinema / 5:4 Direct Film Gate',
+    format: '1350×1080 Aspect // Continuous Video Loop',
+    imageUrl: '/media/works/moby_moncloa_54_poster.jpg',
+    videoUrl: '/media/works/moby_moncloa_54_loop.mp4',
+    essayTitle: 'The Moncloa Surrealist Clash: Rajoy, Chiquito, Doraemon & E.T.',
     essay: [
-      'An inquiry into geometric severity. When decorative flourishes are stripped away, space collapses into pure dialectics: light against dense matte black, volume against void.',
-      'Inspired by the uncompromising ethos of Peter Saville and the architectural legacy of brutalist civil engineering. The form does not ask for permission to exist.'
+      'A high-voltage kinetic surrealist collision of Spanish collective memory, political satire, and 90s big beat adrenaline, cut to Moby\'s "Bodyrock".',
+      'Structured in four explosive acts: Act I captures Mariano Rajoy powerwalking past the Moncloa columns; Act II unleashes Chiquito de la Calzada in full robotic "fistro" footwork and rapid quiebros; Act III stages a synchronized B-boy windmill breakdance battle between Doraemon and Espinete; Act IV culminates in an E.T. boyband climax in a white suit.',
+      'Rendered natively in strict 5:4 (1350×1080 px) aspect ratio using the Google Flow video synthesis pipeline to reject conventional horizontal cinematic complacency.'
     ],
     specs: [
-      { label: 'Geometry', value: 'Strict Euclidean Planar Slices' },
-      { label: 'Contrast Ratio', value: '1000:1 Dynamic Range' },
-      { label: 'Paper Grain', value: 'Heavyweight Baryta Fiber' }
+      { label: 'Aspect Ratio', value: '5:4 Standard (1350 × 1080 px)' },
+      { label: 'Soundtrack Source', value: 'Moby — Bodyrock (Big Beat)' },
+      { label: 'Narrative Acts', value: 'Rajoy Powerwalk · Chiquito · Doraemon/Espinete · E.T.' },
+      { label: 'Pipeline Engine', value: 'Google Flow Veo & Imagen (Sovereign Cinema)' }
     ]
   },
   {
-    id: 'archive-of-subtlety',
+    id: 'blac-cinema',
     catalogNumber: 'BM-10',
-    title: 'THE ARCHIVE OF SUBTLETY',
+    title: 'BLAC: TEN KILOMETERS OF ELECTRIC INSOMNIA',
     section: 'ART',
-    year: '2025',
-    discipline: 'Visual Codex / Lithographic Plates',
-    format: 'Limited Monograph // Folio Box',
-    imageUrl: '/media/works/08.webp',
-    essayTitle: 'Micro-Topologies of Paper, Tape, and Rust',
+    year: '2024',
+    discipline: 'Brutalist CinemaScope / 4K Film Essay',
+    format: '2.39:1 CinemaScope // 4K UHD Master',
+    audioUrl: '/audio/jar_to_the_system.mp3',
+    imageUrl: '/media/works/01.webp',
+    essayTitle: 'Bilbao Nocturne: Damp Concrete on the Nervión',
     essay: [
-      'Macrophotographic plates documenting physical deterioration. The oxidation of iron oxide on recording tape, the yellowing of acid-free cotton fibers, the erosion of granite.',
-      'To observe decay is to measure the thermodynamic arrow of time. Entropy ceases to be an abstract equation and becomes visible texture.'
+      'A relentless rhythmic descent into the nocturnal pulse of the Nervión estuary. Ten kilometers of electric insomnia captured under sodium vapor illumination and analog 35mm grain.',
+      'Brutalist concrete architecture, industrial docks, and wet asphalt become acoustic and visual resonators long after the city has fallen silent. Everything emits; nobody listens.',
+      'Audio: "JAR TO THE SYSTEM" (WDF analog modeling, nonlinear FM, granular transient processing).'
     ],
     specs: [
-      { label: 'Resolution', value: '150 Megapixel Scan Matrix' },
-      { label: 'Illumination', value: 'Grazing Cross-Polarized Light' },
-      { label: 'Color Depth', value: '16-bit Linear Raw' }
+      { label: 'Optics & Aspect', value: '2.39:1 Anamorphic CinemaScope' },
+      { label: 'Location', value: 'Ría del Nervión / Bilbao Industrial Axis' },
+      { label: 'Audio Synthesis', value: 'Wave Digital Filters (WDF) + Nonlinear FM' },
+      { label: 'Film Archive', value: '4K Master (YouTube: 4Cb-Iu8DnJM)' }
+    ]
+  },
+  {
+    id: 'retratos-naroa',
+    catalogNumber: 'BM-11',
+    title: 'RETRATOS · NAROA GUTIÉRREZ GIL',
+    section: 'ART',
+    year: '2023',
+    discipline: 'Cinematic Portraiture / Visual Documentary',
+    format: 'Large-Format Moving Still // 4K UHD',
+    imageUrl: '/media/works/08.webp',
+    essayTitle: 'The Permeable Boundary: Human Flesh as an Open Sensor',
+    essay: [
+      'A moving visual study and intimate documentary portrait of artist and photographer Naroa Gutiérrez Gil. Studio lighting meets slow kinetic observation.',
+      'Accompanied by an organic soundscape of prepared piano, reel tape flutter, and thermal noise. The human body is approached not as an object, but as a porous sensory gate through which all the noise of the world enters unfiltered.'
+    ],
+    specs: [
+      { label: 'Subject', value: 'Naroa Gutiérrez Gil (Artist / Photographer)' },
+      { label: 'Audio Texture', value: 'Prepared Piano & Studer Reel Flutter' },
+      { label: 'Film Archive', value: 'YouTube: Zc8QEQ8y1f8' }
     ]
   },
   {
     id: 'portada-cocodrilo',
-    catalogNumber: 'BM-11',
+    catalogNumber: 'BM-12',
     title: 'COCODRILO: CHRONICLES OF VOLUNTARY ERROR',
     section: 'ART',
     year: '2025',
@@ -284,12 +318,12 @@ export const WORKS: WorkItem[] = [
   },
   {
     id: 'comic-elige-trastorno',
-    catalogNumber: 'BM-12',
+    catalogNumber: 'BM-13',
     title: 'CHOOSE YOUR DISORDER (SEQUENTIAL ART)',
     section: 'ART',
     year: '2024',
-    discipline: 'Satirical Graphic Essay',
-    format: 'Lithographic Broadside Sheet',
+    discipline: 'Satirical Graphic Essay / Underground Comix',
+    format: 'Lithographic Broadside Sheet (A2)',
     imageUrl: '/media/works/comic_elige_trastorno.jpg',
     essayTitle: 'The Industrialization of Human Divergence',
     essay: [
@@ -303,29 +337,6 @@ export const WORKS: WorkItem[] = [
     ]
   },
 
-  {
-    id: 'moby-moncloa-54',
-    catalogNumber: 'BM-13',
-    title: 'MOBY MONCLOA: 5:4 CINEMATIC SURREALISM',
-    section: 'ART',
-    year: '2026',
-    discipline: 'Sovereign Cinema / 5:4 Aspect Ratio',
-    format: '1350×1080 Aspect // Continuous Video Loop',
-    imageUrl: '/media/works/moby_moncloa_54_poster.jpg',
-    videoUrl: '/media/works/moby_moncloa_54_loop.mp4',
-    essayTitle: 'Kinetic Dialectics in 1.25:1 Framing',
-    essay: [
-      'A cinematic experiment adhering strictly to the 5:4 (1350×1080) aspect ratio standard. Developed using the gflow-cli sovereign pipeline to bypass traditional cinematic horizontalism.',
-      'The composition forces vertical compression and dynamic tension, eliminating wasted peripheral space and confronting the observer with raw kinetic energy and absurd narrative montage.',
-      'Features full-bleed continuous loop playback with zero compression artifacts.'
-    ],
-    specs: [
-      { label: 'Aspect Ratio', value: '5:4 Standard (1350 × 1080 px)' },
-      { label: 'Synthesis Engine', value: 'Google Flow Veo & Imagen' },
-      { label: 'Optics Standard', value: '1.25:1 Direct Film Gate' }
-    ]
-  },
-
   // ==========================================
   // SECTION: COMPLEX SYSTEMS
   // ==========================================
@@ -335,20 +346,21 @@ export const WORKS: WorkItem[] = [
     title: 'THE SCIENCE OF FRICTION (TREATISE)',
     section: 'COMPLEX SYSTEMS',
     year: '2026',
-    discipline: 'Theoretical Physics & Information Theory',
-    format: 'Full Monograph (PDF Document) // 480 Pages',
+    discipline: 'Theoretical Physics & Information Geometry',
+    format: 'Full Monograph (PDF Document) // 29 Pages · 34,230 Words',
     imageUrl: '/media/works/09.webp',
     documentUrl: '/ciencia_friccion_libro.pdf',
     essayTitle: 'A Mathematical and Somatic Foundation of Systemic Resistance',
     essay: [
-      'The magnum opus unifying Chentsov information geometry, Fisher information metrics, non-equilibrium thermodynamics, and institutional cybernetics.',
-      'Friction is not a nuisance to be eliminated; it is the physical cost of causal mutation. Systems that suppress natural friction inevitably suffer catastrophic collapse when confronted with territory anomalies.',
-      'Click the download button below to access the complete unabridged theoretical treatise.'
+      'The foundational treatise unifying Chentsov information geometry, Fisher information metrics, non-equilibrium thermodynamics, and institutional cybernetics.',
+      'Written under strict Perec-style linguistic constraint: zero qualifying adjectives and zero adverbial -mente suffixes across the entire body of the text. Information lives strictly in nouns (entities) and verbs (operators).',
+      'Includes primary legal and clinical dossiers on psychiatric iatrogenia (Study 329, Moncrieff 2022, Rosenhan experiment, Ashton manual). Click the reading button to inspect the unabridged 29-page treatise online.'
     ],
     specs: [
-      { label: 'Document Type', value: 'Canonical Research Monograph' },
+      { label: 'Page Count', value: '29 Pages (Canonical A5 Bound PDF)' },
+      { label: 'Word Density', value: '34,230 Words (Zero Adjectives)' },
       { label: 'Mathematical Spine', value: 'Chentsov Uniqueness Theorem' },
-      { label: 'Open Access', value: 'Direct Download via Sovereign Vault' }
+      { label: 'Access', value: 'Direct PDF Reader & Download' }
     ]
   },
   {
@@ -380,10 +392,10 @@ export const WORKS: WorkItem[] = [
     discipline: 'Epistemic Invariants & Dialectics',
     format: 'C5-REAL Constitution // High Exergy',
     imageUrl: '/media/works/11.webp',
-    essayTitle: 'The Detector of Cognitive and Structural Delusion',
+    essayTitle: 'The Universal Detector of Cognitive and Structural Delusion',
     essay: [
-      '1. Transform noise into concepts: Intelligence is compression constrained by Chentsov geometric uniqueness. Any abstraction that departs from the Fisher Information Metric is mere confabulation.',
-      '2. Confuse map with territory: The false isomorphism fallacy. Treating mental models as physical reality ensures terminal collision with the substrate.',
+      '1. Transform noise into concepts: Intelligence is compression constrained by Chentsov geometric uniqueness. Anything else is confabulation.',
+      '2. Confuse map with territory: The false isomorphism fallacy. Treating mental abstractions as physical reality ensures terminal collision with the substrate.',
       '3. The attempted solution is the problem: Feedback loops of miscalibrated regulators feed the very error they seek to remedy.',
       '4. Change arises when the pain of staying the same exceeds that of changing: Thermodynamic activation barriers govern systemic mutations.',
       '5. The voluntary is worth less than the involuntary: Signals controlled by will carry high manipulation entropy; involuntary biological signals reveal the genuine causal policy.'
