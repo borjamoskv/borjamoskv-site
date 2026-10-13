@@ -186,4 +186,11 @@ class App {
 // Bootstrap application on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
   new App();
+
+  // Register Service Worker for offline PWA codex
+  if ('serviceWorker' in navigator && import.meta.env.PROD) {
+    navigator.serviceWorker.register('/sw.js').catch(() => {
+      // Offline fallback silent
+    });
+  }
 });
