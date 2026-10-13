@@ -18,7 +18,7 @@ export class ReelPlayer {
   // VU Meter needles ballistics
   private needleLeft: number = 0;
   private needleRight: number = 0;
-  private meterMode: 'VU' | 'RTA' = 'VU';
+  private meterMode: 'VU' | 'RTA' | 'PHASE' = 'VU';
   private peakHoldBars: Float32Array = new Float32Array(24);
 
   // DOM controls
@@ -67,11 +67,18 @@ export class ReelPlayer {
     const meterBtn = deckHeader.querySelector('#btn-toggle-meter') as HTMLButtonElement;
     if (meterBtn) {
       meterBtn.onclick = () => {
-        this.meterMode = this.meterMode === 'VU' ? 'RTA' : 'VU';
+        if (this.meterMode === 'VU') this.meterMode = 'RTA';
+        else if (this.meterMode === 'RTA') this.meterMode = 'PHASE';
+        else this.meterMode = 'VU';
+
         meterBtn.textContent = `METER: [${this.meterMode}]`;
-        meterBtn.className = this.meterMode === 'RTA'
-          ? 'text-emerald-400 border border-emerald-500/50 px-2 py-0.5 rounded cursor-pointer transition-colors text-[10px] bg-emerald-500/10 font-bold'
-          : 'hover:text-amber-400 text-neutral-400 border border-neutral-800 hover:border-amber-500/40 px-2 py-0.5 rounded cursor-pointer transition-colors text-[10px] bg-neutral-900/80';
+        if (this.meterMode === 'PHASE') {
+          meterBtn.className = 'text-cyan-400 border border-cyan-500/50 px-2 py-0.5 rounded cursor-pointer transition-colors text-[10px] bg-cyan-500/10 font-bold';
+        } else if (this.meterMode === 'RTA') {
+          meterBtn.className = 'text-emerald-400 border border-emerald-500/50 px-2 py-0.5 rounded cursor-pointer transition-colors text-[10px] bg-emerald-500/10 font-bold';
+        } else {
+          meterBtn.className = 'hover:text-amber-400 text-neutral-400 border border-neutral-800 hover:border-amber-500/40 px-2 py-0.5 rounded cursor-pointer transition-colors text-[10px] bg-neutral-900/80';
+        }
       };
     }
 
@@ -371,11 +378,13 @@ export class ReelPlayer {
     // 4. Center Tape Head Block
     this.drawHeadBlock(w * 0.5, h * 0.78, w * 0.22, h * 0.22);
 
-    // 5. Dual Analog Needle VU Meters or 24-Band RTA Spectrum Analyzer
+    // 5. Dual Analog Needle VU Meters, 24-Band RTA, or Stereo Lissajous Phase Scope
     if (this.meterMode === 'VU') {
       this.drawVUMeters(w * 0.5, h * 0.22, w * 0.32, h * 0.28);
-    } else {
+    } else if (this.meterMode === 'RTA') {
       this.drawSpectrumAnalyzer(w * 0.5, h * 0.22, w * 0.32, h * 0.28);
+    } else {
+      this.drawPhaseScope(w * 0.5, h * 0.22, w * 0.32, h * 0.28);
     }
   }
 
@@ -722,6 +731,91 @@ export class ReelPlayer {
     this.ctx.fillText('1 kHz', cx, y + h - 2);
     this.ctx.textAlign = 'right';
     this.ctx.fillText('16 kHz', x + w - 4, y + h - 2);
+
+    this.ctx.restore();
+  }
+
+  private drawPhaseScope(cx: number, cy: number, w: number, h: number) {
+    this.ctx.save();
+    const x = cx - w / 2;
+    const y = cy - h / 2;
+
+    // Housing screen with deep phosphor cyan glow
+    this.ctx.fillStyle = '#050a0d';
+    this.ctx.fillRect(x, y, w, h);
+    this.ctx.strokeStyle = '#152e3d';
+    this.ctx.lineWidth = 1.5;
+    this.ctx.strokeRect(x, y, w, h);
+
+    // Radar circular reticles & 45-degree M/S axis
+    const scopeRadius = Math.min(w, h) * 0.38;
+    this.ctx.strokeStyle = 'rgba(6, 182, 212, 0.16)';
+    this.ctx.lineWidth = 1;
+
+    // Concentric rings
+    for (let r = scopeRadius * 0.33; r <= scopeRadius; r += scopeRadius * 0.33) {
+      this.ctx.beginPath();
+      this.ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      this.ctx.stroke();
+    }
+
+    // Crosshairs: Mono (vertical) & Side (horizontal)
+    this.ctx.beginPath();
+    this.ctx.moveTo(cx, cy - scopeRadius);
+    this.ctx.lineTo(cx, cy + scopeRadius);
+    this.ctx.moveTo(cx - scopeRadius, cy);
+    this.ctx.lineTo(cx + scopeRadius, cy);
+    this.ctx.stroke();
+
+    // 45-degree diagonal axes (L & R)
+    this.ctx.strokeStyle = 'rgba(6, 182, 212, 0.08)';
+    const diag = scopeRadius * 0.707;
+    this.ctx.beginPath();
+    this.ctx.moveTo(cx - diag, cy - diag);
+    this.ctx.lineTo(cx + diag, cy + diag);
+    this.ctx.moveTo(cx - diag, cy + diag);
+    this.ctx.lineTo(cx + diag, cy - diag);
+    this.ctx.stroke();
+
+    // Time-domain Lissajous curve
+    const waveData = this.audioEngine.getTimeDomainData();
+    if (waveData.length > 0) {
+      this.ctx.strokeStyle = '#22d3ee';
+      this.ctx.lineWidth = 1.4;
+      this.ctx.shadowColor = '#06b6d4';
+      this.ctx.shadowBlur = 4;
+
+      this.ctx.beginPath();
+      const step = 4;
+      const count = Math.min(waveData.length, 256);
+      for (let i = 0; i < count; i += step) {
+        // Pseudo-stereo phase divergence from waveform derivative
+        const s1 = (waveData[i] - 128) / 128;
+        const s2 = (waveData[(i + 8) % waveData.length] - 128) / 128;
+
+        // Rotate 45 degrees into M/S coordinates
+        const px = cx + (s1 - s2) * scopeRadius * 1.05;
+        const py = cy - (s1 + s2) * scopeRadius * 0.85;
+
+        if (i === 0) this.ctx.moveTo(px, py);
+        else this.ctx.lineTo(px, py);
+      }
+      this.ctx.stroke();
+      this.ctx.shadowBlur = 0;
+    }
+
+    // Top Header Label
+    this.ctx.font = 'bold 7.5px monospace';
+    this.ctx.fillStyle = '#22d3ee';
+    this.ctx.textAlign = 'center';
+    this.ctx.fillText('LISSAJOUS STEREO PHASE SCOPE // M/S', cx, y + 9);
+
+    // Axis labels
+    this.ctx.font = '600 6px monospace';
+    this.ctx.fillStyle = '#06b6d4';
+    this.ctx.fillText('+1 M', cx, cy - scopeRadius + 6);
+    this.ctx.fillText('-1 S', cx - scopeRadius + 9, cy - 2);
+    this.ctx.fillText('+1 S', cx + scopeRadius - 9, cy - 2);
 
     this.ctx.restore();
   }

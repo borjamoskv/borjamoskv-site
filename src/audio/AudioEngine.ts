@@ -289,6 +289,18 @@ export class AudioEngine {
     return out;
   }
 
+  /**
+   * Real-time time-domain waveform data for goniometer phase scope
+   */
+  public getTimeDomainData(): Uint8Array {
+    if (!this.analyser || !this.isPlaying) {
+      return new Uint8Array(0);
+    }
+    const data = new Uint8Array(this.analyser.fftSize);
+    this.analyser.getByteTimeDomainData(data);
+    return data;
+  }
+
   public getPlaybackState(): { isPlaying: boolean; currentTime: number; duration: number } {
     if (this.isSynthesizing) {
       return { isPlaying: this.isPlaying, currentTime: 0, duration: 60 };
