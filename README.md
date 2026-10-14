@@ -1,12 +1,36 @@
 # BORJA MOSKV // Sovereign Codex
 
-> **Avant-Garde Art, Sound Engineering & Complex Systems Theory**  
-> Canonical Workspace: `~/10_PROJECTS/borjamoskv-site`  
-> Live Production Target: `borjamoskv.com`
+> **Avant-Garde Art, Sound Engineering, Studer A800 WebAudio Physics & Complex Systems Theory (`borjamoskv.com`).**
+
+[![CI Actions](https://img.shields.io/badge/CI_Workflow-Passing-brightgreen?style=flat-square)](https://github.com/borjamoskv/borjamoskv-site/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](./LICENSE)
+[![Bundle Payload](https://img.shields.io/badge/Payload-~20KB_Gzipped-orange?style=flat-square)](#6-build--local-inspection)
 
 ---
 
-## 1. Architectural Philosophy
+## ⚡ Quickstart & Installation
+
+```bash
+pnpm install
+pnpm run dev
+pnpm run build
+```
+
+---
+
+## 1. Architecture & Editorial Philosophy
+
+```mermaid
+flowchart TD
+    classDef core fill:#1e293b,stroke:#38bdf8,stroke-width:2px,color:#f8fafc
+    classDef dsp fill:#064e3b,stroke:#34d399,stroke-width:2px,color:#f8fafc
+    classDef visual fill:#450a0a,stroke:#f87171,stroke-width:2px,color:#f8fafc
+
+    A["Sovereign Codex Matrix (BM-01 to BM-16)<br/>Music · Brutalist Photography · Complex Systems"]:::core --> B["Acoustic Engine (Web Audio API + Canvas 2D)<br/>Studer A800 60/120 FPS Physics · Wow/Flutter · Tape Saturation"]:::dsp
+    A --> C["5:4 Cinematic Standard (1350x1080)<br/>Optical Framing Reticles · Silver Halide Grain · Lightbox"]:::visual
+    B --> D["Zero-Bloat Static Production Bundle (~20 KB Gzipped)"]:::core
+    C --> D
+```
 
 Constructed from the ground up following the **C5-REAL Sovereign Standards** and inspired by the brutalist editorial tradition of **Steidl** and **Peter Saville (Factory Records)**. The digital space rejects superficial ornamentation and corporate platform aesthetics, providing an uncompressed tactile environment for high-exergy research, sound, and visual art.
 
@@ -94,3 +118,9 @@ pnpm run preview
 * Zero heavy runtime dependencies.
 * Build time: `< 300 ms`.
 * Bundle payload: `~73 KB` JS *(~20 KB gzipped)*.
+
+---
+
+## 7. License & Security
+
+Engineered by **Borja Moskv** (`@borjamoskv`). Code architecture licensed under **MIT** (`LICENSE`); musical works, visual plates, and *The Science of Friction* retain full artistic copyright. Security disclosures and contribution protocols follow `SECURITY.md` and `CONTRIBUTING.md`.
