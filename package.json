@@ -13,22 +13,22 @@
     "check": "NODE_OPTIONS=--max-old-space-size=8192 astro check"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^13.6.1",
-    "@astrojs/mdx": "^6.0.2",
-    "@astrojs/react": "^5.0.6",
-    "@tailwindcss/vite": "^4.3.0",
-    "@types/react": "^19.2.16",
-    "@types/react-dom": "^19.2.3",
-    "astro": "^6.4.2",
+    "@astrojs/cloudflare": "^14.4.0",
+    "@astrojs/mdx": "^8.1.0",
+    "@astrojs/react": "^7.1.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "astro": "^7.4.0",
     "clsx": "^2.1.1",
-    "marked": "^18.0.5",
-    "react": "^19.2.7",
-    "react-dom": "^19.2.7",
-    "tailwind-merge": "^3.6.0",
+    "marked": "^18.1.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "tailwind-merge": "^3.7.0",
     "tailwindcss": "^4.3.0"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.9",
-    "typescript": "^6.0.3"
+    "@astrojs/check": "^0.9.10",
+    "typescript": "^7.0.2"
   }
 }
