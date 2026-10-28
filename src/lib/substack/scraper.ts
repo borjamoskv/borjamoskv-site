@@ -1,7 +1,7 @@
 // src/lib/substack/scraper.ts
 // Scrapes Substack RSS feed or API archive endpoints. Supports network retries and error handling.
 
-import { SubstackPost } from '../exergy/evaluator';
+import type { SubstackPost } from '../exergy/evaluator';
 
 function decodeEntities(str: string): string {
   return str

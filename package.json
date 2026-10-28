@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.1",
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=22.23.4"
   },
   "scripts": {
     "dev": "astro dev",
@@ -13,13 +13,13 @@
     "check": "NODE_OPTIONS=--max-old-space-size=8192 astro check"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^13.6.1",
-    "@astrojs/mdx": "^6.0.2",
-    "@astrojs/react": "^5.0.6",
+    "@astrojs/cloudflare": "^14.4.3",
+    "@astrojs/mdx": "^8.1.2",
+    "@astrojs/react": "^7.1.2",
     "@tailwindcss/vite": "^4.3.0",
     "@types/react": "^19.2.16",
     "@types/react-dom": "^19.2.3",
-    "astro": "^6.4.2",
+    "astro": "^7.4.4",
     "clsx": "^2.1.1",
     "marked": "^18.0.5",
     "react": "^19.2.7",
