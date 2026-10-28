@@ -1,5 +1,5 @@
 ---
-import { getEntry } from 'astro:content';
+import { getEntry, render } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 
 // Fetch the ALPHA article
@@ -7,7 +7,7 @@ const alphaPost = await getEntry('articles', 'alpha');
 if (!alphaPost) {
   throw new Error("El artículo ALPHA no se encuentra en la colección.");
 }
-const { Content } = await alphaPost.render();
+const { Content } = await render(alphaPost);
 ---
 
 <Layout title="ALPHA: C5-REAL DRAFT VIEW">
@@ -53,7 +53,7 @@ const { Content } = await alphaPost.render();
   .noise {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+    background: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url%28%23noiseFilter%29"/%3E%3C/svg%3E');
     opacity: 0.08;
     pointer-events: none;
     z-index: 99;

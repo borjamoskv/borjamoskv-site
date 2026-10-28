@@ -4,7 +4,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import crypto from 'node:crypto';
-import { ExergyAuditRecord } from '../exergy/evaluator';
+import type { ExergyAuditRecord } from '../exergy/evaluator';
 
 export async function loadLastHash(ledgerPath: string, kvNamespace?: any): Promise<string> {
   // If KV is available, try KV first
