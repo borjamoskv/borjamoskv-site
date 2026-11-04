@@ -25,8 +25,10 @@ export class ReelPlayer {
   private controlsContainer!: HTMLElement;
   private playBtn!: HTMLButtonElement;
   private timeDisplay!: HTMLElement;
+  private loopBtn!: HTMLButtonElement;
   private satBtn!: HTMLButtonElement;
   private wowBtn!: HTMLButtonElement;
+  private speedLabelEl!: HTMLElement;
   private progressSlider!: HTMLInputElement;
 
   constructor(container: HTMLElement, audioEngine: AudioEngine) {
@@ -59,10 +61,12 @@ export class ReelPlayer {
       </div>
       <div class="flex items-center gap-2.5">
         <button id="btn-toggle-meter" class="hover:text-amber-400 text-neutral-400 border border-neutral-800 hover:border-amber-500/40 px-2 py-0.5 rounded cursor-pointer transition-colors text-[10px] bg-neutral-900/80">METER: [VU]</button>
-        <span class="hidden sm:inline text-neutral-500">SPEED: 15 IPS</span>
+        <span id="deck-speed-label" class="hidden sm:inline text-neutral-500">SPEED: 15 IPS</span>
         <span class="text-neutral-400">FLUX: 355 nWb/m</span>
       </div>
     `;
+
+    this.speedLabelEl = deckHeader.querySelector('#deck-speed-label') as HTMLElement;
 
     const meterBtn = deckHeader.querySelector('#btn-toggle-meter') as HTMLButtonElement;
     if (meterBtn) {
@@ -144,7 +148,16 @@ export class ReelPlayer {
     leftButtons.appendChild(fwdBtn);
 
     const rightButtons = document.createElement('div');
-    rightButtons.className = 'flex items-center gap-2';
+    rightButtons.className = 'flex items-center gap-2 flex-wrap';
+
+    this.loopBtn = document.createElement('button');
+    this.loopBtn.className = 'px-2.5 py-1.5 bg-neutral-900 hover:bg-neutral-800 text-neutral-400 hover:text-neutral-200 rounded border border-neutral-700 uppercase tracking-widest font-mono text-[10px] transition-colors';
+    this.loopBtn.textContent = 'LOOP: [OFF]';
+    this.loopBtn.title = 'Cycle V6 Autonomous Tape Installation: OFF -> 7.5 IPS DRONE -> 11-TRACK ARCHIVE ∞ (Shortcut: L)';
+    this.loopBtn.onclick = () => {
+      this.audioEngine.cycleLoopMode();
+      this.syncLoopUI();
+    };
 
     this.satBtn = document.createElement('button');
     this.satBtn.className = 'px-3 py-1.5 bg-neutral-900 text-amber-400/90 text-xs rounded border border-amber-500/40 uppercase tracking-widest font-mono text-[10px] transition-colors';
@@ -166,6 +179,7 @@ export class ReelPlayer {
       this.updateWowBtnText();
     };
 
+    rightButtons.appendChild(this.loopBtn);
     rightButtons.appendChild(this.satBtn);
     rightButtons.appendChild(this.wowBtn);
 
@@ -239,9 +253,39 @@ export class ReelPlayer {
     }
   }
 
+  public syncLoopUI() {
+    const mode = this.audioEngine.getLoopMode();
+    const isPlaying = this.audioEngine.getPlaybackState().isPlaying;
+
+    if (mode === 'ARCHIVE') {
+      this.loopBtn.textContent = 'LOOP: [ARCHIVE ∞]';
+      this.loopBtn.className =
+        'px-2.5 py-1.5 bg-cyan-500/15 text-cyan-300 rounded border border-cyan-500/50 uppercase tracking-widest font-mono text-[10px] font-bold transition-colors';
+    } else if (mode === 'DRONE') {
+      this.loopBtn.textContent = 'LOOP: [DRONE 7.5]';
+      this.loopBtn.className =
+        'px-2.5 py-1.5 bg-emerald-500/15 text-emerald-300 rounded border border-emerald-500/50 uppercase tracking-widest font-mono text-[10px] font-bold transition-colors';
+    } else {
+      this.loopBtn.textContent = 'LOOP: [OFF]';
+      this.loopBtn.className =
+        'px-2.5 py-1.5 bg-neutral-900 hover:bg-neutral-800 text-neutral-400 hover:text-neutral-200 rounded border border-neutral-700 uppercase tracking-widest font-mono text-[10px] transition-colors';
+    }
+
+    if (this.speedLabelEl) {
+      this.speedLabelEl.textContent = mode === 'OFF' ? 'SPEED: 15 IPS' : 'SPEED: 7.5 IPS';
+      this.speedLabelEl.className =
+        mode === 'OFF'
+          ? 'hidden sm:inline text-neutral-500'
+          : 'hidden sm:inline text-emerald-400 font-bold';
+    }
+
+    this.targetAngularVelocity = isPlaying ? (mode === 'OFF' ? 2.8 : 1.45) : 0;
+  }
+
   private setupEvents() {
     this.audioEngine.onPlayStateChange = (isPlaying) => {
-      this.targetAngularVelocity = isPlaying ? 2.8 : 0;
+      const mode = this.audioEngine.getLoopMode();
+      this.targetAngularVelocity = isPlaying ? (mode === 'OFF' ? 2.8 : 1.45) : 0;
       this.playBtn.textContent = isPlaying ? '❚❚ PAUSE' : '▶ PLAY';
       if (isPlaying) {
         this.playBtn.classList.add('bg-amber-500', 'text-black');
@@ -274,9 +318,14 @@ export class ReelPlayer {
 
   public loadWork(work: WorkItem) {
     this.currentWork = work;
+    const keepLoopRunning =
+      this.audioEngine.getLoopMode() !== 'OFF' && this.audioEngine.getPlaybackState().isPlaying;
     this.audioEngine.loadTrack(work.audioUrl);
-    this.timeDisplay.textContent = `00:00 / ${work.duration || '00:00'}`;
-    this.progressSlider.value = '0';
+    if (!keepLoopRunning) {
+      this.timeDisplay.textContent = `00:00 / ${work.duration || '00:00'}`;
+      this.progressSlider.value = '0';
+    }
+    this.syncLoopUI();
   }
 
   private resizeCanvas() {
@@ -370,8 +419,21 @@ export class ReelPlayer {
     this.drawTapePath(reelAX, reelY, leftTapeRadius, reelBX, reelY, rightTapeRadius, h);
 
     // 3. Draw Reel A (Supply) and Reel B (Takeup)
-    const reelALabel = this.currentWork ? `${this.currentWork.catalogNumber} REEL A` : 'BM-REEL 01';
-    const reelBLabel = this.currentWork ? `${this.currentWork.section.substring(0, 6)} MASTER` : 'TAKEUP MASTER';
+    const loopMode = this.audioEngine.getLoopMode();
+    const reelALabel =
+      loopMode === 'ARCHIVE'
+        ? 'ARCHIVE ∞ REEL'
+        : loopMode === 'DRONE'
+          ? '7.5 IPS DRONE'
+          : this.currentWork
+            ? `${this.currentWork.catalogNumber} REEL A`
+            : 'BM-REEL 01';
+    const reelBLabel =
+      loopMode !== 'OFF'
+        ? 'INSTALLATION'
+        : this.currentWork
+          ? `${this.currentWork.section.substring(0, 6)} MASTER`
+          : 'TAKEUP MASTER';
     this.drawPrecisionReel(reelAX, reelY, reelRadius, leftTapeRadius, this.reelRotation, reelALabel);
     this.drawPrecisionReel(reelBX, reelY, reelRadius, rightTapeRadius, this.reelRotation * 1.05, reelBLabel);
 

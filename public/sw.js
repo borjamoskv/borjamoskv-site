@@ -1,5 +1,5 @@
 // Sovereign Service Worker for borjamoskv.com
-const CACHE_NAME = 'borjamoskv-codex-v1';
+const CACHE_NAME = 'borjamoskv-codex-v2';
 const STATIC_ASSETS = [
   '/',
   '/index.html',

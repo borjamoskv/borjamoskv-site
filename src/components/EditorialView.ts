@@ -1,3 +1,4 @@
+import { getLinkedCodexEdgesForWork } from '../data/codexEdges';
 import { WorkItem, WORKS } from '../data/works';
 import { ReelPlayer } from './ReelPlayer';
 
@@ -6,21 +7,24 @@ export class EditorialView {
   private reelPlayer: ReelPlayer;
   private currentWorkIndex: number = 0;
   private onWorkChange: (work: WorkItem) => void;
-  private onOpenBook?: (url: string) => void;
+  private onOpenBook?: (url: string, title?: string, badge?: string) => void;
   private onOpenLightbox?: (mediaUrl: string, title: string, meta: string, isVideo?: boolean) => void;
+  private onOpenCodexSlug?: (slug: string) => void;
 
   constructor(
     container: HTMLElement,
     reelPlayer: ReelPlayer,
     onWorkChange: (work: WorkItem) => void,
-    onOpenBook?: (url: string) => void,
-    onOpenLightbox?: (mediaUrl: string, title: string, meta: string, isVideo?: boolean) => void
+    onOpenBook?: (url: string, title?: string, badge?: string) => void,
+    onOpenLightbox?: (mediaUrl: string, title: string, meta: string, isVideo?: boolean) => void,
+    onOpenCodexSlug?: (slug: string) => void
   ) {
     this.container = container;
     this.reelPlayer = reelPlayer;
     this.onWorkChange = onWorkChange;
     this.onOpenBook = onOpenBook;
     this.onOpenLightbox = onOpenLightbox;
+    this.onOpenCodexSlug = onOpenCodexSlug;
 
     this.render();
   }
@@ -34,11 +38,13 @@ export class EditorialView {
     this.onWorkChange(work);
   }
 
-  public setWorkById(id: string) {
+  public setWorkById(id: string): boolean {
     const idx = WORKS.findIndex((w) => w.id === id);
     if (idx !== -1) {
       this.setWorkByIndex(idx);
+      return true;
     }
+    return false;
   }
 
   public nextWork() {
@@ -60,6 +66,8 @@ export class EditorialView {
     const totalWorks = WORKS.length;
     const pageNumStr = (this.currentWorkIndex + 1).toString().padStart(2, '0');
     const totalStr = totalWorks.toString().padStart(2, '0');
+    const linkedEssays = getLinkedCodexEdgesForWork(work.id);
+    const hasSimulator = work.id === 'comic-elige-trastorno';
 
     this.container.innerHTML = `
       <div class="grid grid-cols-1 lg:grid-cols-12 min-h-[calc(100vh-64px)] w-full border-t border-neutral-800">
@@ -103,8 +111,8 @@ export class EditorialView {
               ${work.essay.map((p) => `<p class="text-neutral-300/90">${p}</p>`).join('')}
             </div>
 
-            <!-- Action Links: Read Online / PDF Download / Bandcamp Store -->
-            <div class="flex flex-wrap items-center gap-3 pt-2">
+            <!-- Action Links: Read Online / PDF Download / 125-Node Simulator / Bandcamp Store -->
+            <div class="flex flex-wrap items-center gap-3 pt-1">
               ${
                 work.documentUrl
                   ? `
@@ -114,6 +122,15 @@ export class EditorialView {
                 <a href="${work.documentUrl}" download="ciencia_friccion_libro.pdf" class="inline-flex items-center gap-2 px-4 py-2.5 bg-neutral-900 hover:bg-neutral-800 text-neutral-300 font-bold font-mono text-xs uppercase tracking-widest rounded border border-neutral-700 shadow transition-all hover:scale-[1.01]">
                   <span>⬇ DOWNLOAD PDF [3.5 MB]</span>
                 </a>
+              `
+                  : ''
+              }
+              ${
+                hasSimulator
+                  ? `
+                <button id="btn-launch-sim" class="inline-flex items-center gap-2 px-4 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-black font-bold font-mono text-xs uppercase tracking-widest rounded shadow transition-all hover:scale-[1.01]">
+                  <span>⚡ LAUNCH 125-NODE SIMULATOR</span>
+                </button>
               `
                   : ''
               }
@@ -128,8 +145,33 @@ export class EditorialView {
               }
             </div>
 
+            <!-- V5 TOPOLOGICAL EDGES // COUPLED BLOG CRYSTALS -->
+            ${
+              linkedEssays.length > 0
+                ? `
+              <div class="p-3 rounded bg-[#111111] border border-neutral-800/90 space-y-2">
+                <div class="flex items-center justify-between text-[10px] font-mono uppercase tracking-widest text-neutral-400">
+                  <span class="text-amber-400 font-bold">TOPOLOGICAL EDGES // LINKED ESSAYS & APHORISMS</span>
+                  <span>[V5 CODEX]</span>
+                </div>
+                <div class="flex flex-wrap gap-1.5">
+                  ${linkedEssays
+                    .map(
+                      (node) => `
+                    <button data-codex-slug="${node.slug}" class="px-2.5 py-1 rounded bg-[#181818] hover:bg-amber-500/15 border border-neutral-700/80 hover:border-amber-500/60 text-[11px] font-mono text-neutral-200 hover:text-amber-300 transition-colors text-left">
+                      <span class="text-amber-400 font-bold">${node.code}</span> · ${node.title} <span class="text-neutral-500">[${node.readingTime}]</span>
+                    </button>
+                  `
+                    )
+                    .join('')}
+                </div>
+              </div>
+            `
+                : ''
+            }
+
             <!-- REEL-TO-REEL DECK COMPONENT CONTAINER -->
-            <div id="reel-deck-mount-point" class="pt-2">
+            <div id="reel-deck-mount-point" class="pt-1">
               <!-- ReelPlayer mounts here -->
             </div>
 
@@ -158,7 +200,7 @@ export class EditorialView {
             <button id="btn-prev-work" class="px-4 py-2 bg-neutral-900 hover:bg-neutral-800 active:bg-neutral-700 text-neutral-200 border border-neutral-700/60 rounded uppercase tracking-wider flex items-center gap-2 transition-colors">
               <span>◀ [PREVIOUS]</span>
             </button>
-            <span class="text-neutral-500 tracking-widest hidden sm:inline">USE ARROW KEYS [← / →] TO NAVIGATE</span>
+            <span class="text-neutral-500 tracking-widest hidden sm:inline">KEYS: [←/→] NAV · [T] BLOG · [L] LOOP</span>
             <button id="btn-next-work" class="px-4 py-2 bg-neutral-900 hover:bg-neutral-800 active:bg-neutral-700 text-neutral-200 border border-neutral-700/60 rounded uppercase tracking-wider flex items-center gap-2 transition-colors">
               <span>[NEXT] ▶</span>
             </button>
@@ -184,6 +226,7 @@ export class EditorialView {
                 work.videoUrl
                   ? `
                 <video 
+                  id="artwork-video"
                   src="${work.videoUrl}" 
                   poster="${work.imageUrl}"
                   autoplay 
@@ -192,6 +235,12 @@ export class EditorialView {
                   playsinline 
                   class="w-full h-full object-cover filter contrast-110 saturate-[0.85] transition-transform duration-700 group-hover/img:scale-[1.03]"
                 ></video>
+                <img
+                  id="artwork-fallback-img"
+                  src="${work.imageUrl}"
+                  alt="${work.title}"
+                  class="hidden w-full h-full object-cover filter contrast-110 saturate-[0.85] transition-transform duration-700 group-hover/img:scale-[1.03]"
+                />
               `
                   : `
                 <img 
@@ -207,8 +256,8 @@ export class EditorialView {
 
               <!-- Top-Left 5:4 Cinematic Badge with Motion Pulse -->
               <div class="absolute top-4 left-4 z-10 font-mono text-[9px] text-amber-400/90 bg-black/80 backdrop-blur-md px-2.5 py-1 rounded border border-amber-500/30 uppercase tracking-widest flex items-center gap-1.5">
-                <span class="inline-block w-1.5 h-1.5 rounded-full ${work.videoUrl ? 'bg-amber-400 animate-pulse' : 'bg-neutral-500'}"></span>
-                <span>${work.videoUrl ? '5:4 MOTION LOOP' : 'ASPECT RATIO 5:4'}</span>
+                <span id="artwork-motion-dot" class="inline-block w-1.5 h-1.5 rounded-full ${work.videoUrl ? 'bg-amber-400 animate-pulse' : 'bg-neutral-500'}"></span>
+                <span id="artwork-motion-label">${work.videoUrl ? '5:4 MOTION LOOP' : 'ASPECT RATIO 5:4'}</span>
               </div>
 
               <!-- Top-right discipline pill -->
@@ -242,6 +291,23 @@ export class EditorialView {
       mountPoint.appendChild(this.reelPlayer['container']);
     }
 
+    // Resilient fallback if video asset is absent in working tree (CP-1 finding on BM-09)
+    let videoFailed = false;
+    const videoEl = this.container.querySelector<HTMLVideoElement>('#artwork-video');
+    if (videoEl) {
+      const degradeToPoster = () => {
+        videoFailed = true;
+        videoEl.classList.add('hidden');
+        this.container.querySelector('#artwork-fallback-img')?.classList.remove('hidden');
+        const label = this.container.querySelector('#artwork-motion-label');
+        const dot = this.container.querySelector('#artwork-motion-dot');
+        if (label) label.textContent = 'ASPECT RATIO 5:4';
+        if (dot) dot.className = 'inline-block w-1.5 h-1.5 rounded-full bg-neutral-500';
+      };
+      videoEl.addEventListener('error', degradeToPoster);
+      videoEl.querySelector('source')?.addEventListener('error', degradeToPoster);
+    }
+
     // Attach Prev/Next events
     this.container.querySelector('#btn-prev-work')?.addEventListener('click', () => this.prevWork());
     this.container.querySelector('#btn-next-work')?.addEventListener('click', () => this.nextWork());
@@ -253,13 +319,44 @@ export class EditorialView {
       }
     });
 
+    // Attach 125-Node Interactive Simulator event on BM-13
+    this.container.querySelector('#btn-launch-sim')?.addEventListener('click', () => {
+      if (this.onOpenBook) {
+        this.onOpenBook(
+          '/simulador.html',
+          'ELIGE TU TRASTORNO — 125-NODE SIMULATOR',
+          '[SIMULATOR // BM-13]'
+        );
+      }
+    });
+
+    // Attach Topological Codex Edge buttons
+    this.container.querySelectorAll<HTMLButtonElement>('[data-codex-slug]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const slug = btn.getAttribute('data-codex-slug');
+        if (slug && this.onOpenCodexSlug) {
+          this.onOpenCodexSlug(slug);
+        }
+      });
+    });
+
     // Attach Lightbox event
     this.container.querySelector('#artwork-frame')?.addEventListener('click', () => {
       if (this.onOpenLightbox) {
-        if (work.videoUrl) {
-          this.onOpenLightbox(work.videoUrl, work.title, `${work.catalogNumber} // ${work.section} // ${work.year}`, true);
+        if (work.videoUrl && !videoFailed) {
+          this.onOpenLightbox(
+            work.videoUrl,
+            work.title,
+            `${work.catalogNumber} // ${work.section} // ${work.year}`,
+            true
+          );
         } else {
-          this.onOpenLightbox(work.imageUrl, work.title, `${work.catalogNumber} // ${work.section} // ${work.year}`, false);
+          this.onOpenLightbox(
+            work.imageUrl,
+            work.title,
+            `${work.catalogNumber} // ${work.section} // ${work.year}`,
+            false
+          );
         }
       }
     });
